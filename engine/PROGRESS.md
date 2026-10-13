@@ -327,3 +327,15 @@ counter helpers and tests for the handoff, batch separation and signed boundarie
 Ring-growth failure behavior and nested locking remain qualified dependencies.
 
 Validation: all 394 independent tests pass.
+
+
+## Destruction ring growth contract
+
+Decoded preserving resize copy geometry and metadata reset, plus equal-capacity
+and fresh-allocation branches. Added a bounded geometry planner and wrapped FIFO,
+shrink and clear tests. Empty allocation can visibly leave capacity zero before
+the caller still increments staged; nonempty growth lacks a visible null check
+before copy. Allocator failure guarantees remain unproved rather than replaced
+with an invented recoverable fallback.
+
+Validation: all 397 independent tests pass.

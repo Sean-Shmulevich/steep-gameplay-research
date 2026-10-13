@@ -38,3 +38,35 @@ def stop_poll_passes(observed_pending, observed_busy):
     _i32(observed_pending)
     _i32(observed_busy)
     return observed_pending == 0 and observed_busy == 0
+
+
+def ring_resize_plan(capacity, count, read_index, write_index, requested, *, preserve=True):
+    """Recovered copy geometry for a valid ring, excluding allocator behavior.
+
+    Adapter scope requires nonnegative bounded capacities and canonical indices.
+    The resized write index is retained_count, even when equal to capacity.
+    """
+    for value in (capacity, count, read_index, write_index, requested):
+        if type(value) is not int or value < 0:
+            raise ValueError('ring geometry must contain nonnegative integers')
+    if type(preserve) is not bool or max(capacity, requested) > (2**31-1)//8:
+        raise ValueError('invalid preserve flag or allocation-size scope')
+    if count > capacity or (capacity == 0 and (count or read_index or write_index)):
+        raise ValueError('inconsistent ring occupancy')
+    if capacity and (read_index >= capacity or write_index > capacity):
+        raise ValueError('ring index outside geometry')
+    if requested == capacity:
+        return dict(action='unchanged' if preserve else 'clear', segments=[],
+                    capacity=capacity, count=count if preserve else 0,
+                    read_index=read_index if preserve else 0,
+                    write_index=write_index if preserve else 0)
+    retained = min(count, requested) if preserve else 0
+    segments = []
+    if retained:
+        first = min(retained, capacity-read_index)
+        segments.append(dict(source_index=read_index, destination_index=0, count=first))
+        if retained > first:
+            segments.append(dict(source_index=0, destination_index=first, count=retained-first))
+    return dict(action='copy_and_replace' if retained else 'clear_and_allocate',
+                segments=segments, capacity=requested, count=retained,
+                read_index=0, write_index=retained)

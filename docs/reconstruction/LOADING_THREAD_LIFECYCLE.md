@@ -145,3 +145,48 @@ staging, publication and batch-capture boundaries with int32 arithmetic. Tests
 show the stop-poll blind spot, later publication surviving an earlier capture,
 zero-count notification suppression and signed overflow. They model neither ring
 growth nor resource destruction and must not be exposed as a native pause API.
+
+
+## Ring growth, copy order and allocation boundary
+
+The growth helper preserves the oldest `min(count, requested_capacity)` entries
+for ordinary nonnegative ring geometry. It copies the suffix beginning at the read
+index, then the wrapped prefix if needed. It resets both indices, replaces the
+storage and records count and write index as the retained count. The write index
+is not reduced modulo capacity at this point, even on a preserving shrink that
+leaves the ring full. The destruction caller grows by 1024 rather than shrinking.
+
+```text
+retained = min(old_count, requested_capacity)
+first = min(retained, old_capacity - old_read_index)
+second = retained - first
+copy(new_buffer, old_buffer + old_read_index, first)
+if second > 0:
+    copy(new_buffer + first, old_buffer, second)
+# On the preserving replacement path:
+read_index = 0
+write_index = retained
+count = retained
+capacity = requested_capacity
+```
+
+Equal capacity with preserve enabled returns unchanged. Equal capacity with
+preserve disabled clears indices/count without reallocating. A different capacity
+with no retained data takes the clear/free then fresh-allocation path. Fresh
+allocation checks for null and sets capacity zero on that branch. In contrast,
+the nonempty preserving path passes its allocation result to the copy helper
+without a visible null check. Whether the allocator throws, terminates or supplies
+other guarantees remains unresolved.
+
+This qualifies the insertion invariant: after an empty-ring allocation returns
+null, the visible insertion check skips the object write, yet the staged count
+increment still occurs. We have not observed this branch live and cannot claim a
+recoverable out-of-memory contract. For nonempty preserving growth, treating null
+as a no-op would also misrepresent the inspected control flow.
+
+[The resize planner](../../engine/loading_destruction.py) implements valid bounded
+ring copy geometry and metadata only. It neither allocates nor releases objects,
+and explicitly excludes signed overflow and allocation-size overflow. Tests check
+wrapped growth, oldest-entry retention on shrink, the full write index and equal-
+capacity/nonpreserving branches. This permits future owned implementations to use
+the known FIFO geometry while choosing and labeling their own allocation policy.

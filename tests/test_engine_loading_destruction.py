@@ -1,9 +1,35 @@
 import unittest
 from engine.loading_destruction import (stage_increment, take_staged,
-                                       publish_captured, take_pending, stop_poll_passes)
+                                       publish_captured, take_pending, stop_poll_passes,
+                                       ring_resize_plan)
 
 
 class LoadingDestructionTests(unittest.TestCase):
+    def test_wrapped_growth_preserves_fifo_order(self):
+        plan = ring_resize_plan(4, 4, 3, 3, 1028)
+        source = ['b', 'c', 'd', 'a']
+        copied = []
+        for segment in plan['segments']:
+            start = segment['source_index']
+            copied.extend(source[start:start+segment['count']])
+        self.assertEqual(copied, ['a', 'b', 'c', 'd'])
+        self.assertEqual((plan['count'], plan['read_index'], plan['write_index']), (4, 0, 4))
+
+    def test_shrink_retains_oldest_and_preserves_full_write_index(self):
+        plan = ring_resize_plan(8, 6, 6, 4, 3)
+        self.assertEqual(plan['segments'], [
+            dict(source_index=6, destination_index=0, count=2),
+            dict(source_index=0, destination_index=2, count=1)])
+        self.assertEqual(plan['write_index'], plan['capacity'])
+
+    def test_same_capacity_and_nonpreserving_resize(self):
+        self.assertEqual(ring_resize_plan(4, 2, 1, 3, 4)['action'], 'unchanged')
+        cleared = ring_resize_plan(4, 2, 1, 3, 4, preserve=False)
+        self.assertEqual((cleared['action'], cleared['count']), ('clear', 0))
+        fresh = ring_resize_plan(4, 2, 1, 3, 8, preserve=False)
+        self.assertEqual((fresh['action'], fresh['segments'], fresh['write_index']),
+                         ('clear_and_allocate', [], 0))
+
     def test_staged_work_is_invisible_to_stop_poll(self):
         staged = stage_increment(0)
         self.assertEqual(staged, 1)

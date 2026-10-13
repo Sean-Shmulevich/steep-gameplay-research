@@ -55,7 +55,7 @@ The ordinary action-completion route now reaches the [EndFrame callback](reconst
 
 The engine-owned [event consumer and stop request](reconstruction/ENGINE_EVENT_CONSUMER.md) join restart, end-frame notification and the outer caller sequence. Protected platform operations, the outer interface callback and destruction remain unresolved. No safe native pause/step API is claimed.
 
-The [mixed scheduler reference](reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) combines range, callback, terminal and conditional jobs with immediate normal/alternate dependency effects. Its synthetic three-cycle probe preserves EndFrame overlap and a skipped middle route. The full independent suite passes 394 tests. Native thread context, concurrent queue operations and dynamic graph rebuilding remain outside that model.
+The [mixed scheduler reference](reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) combines range, callback, terminal and conditional jobs with immediate normal/alternate dependency effects. Its synthetic three-cycle probe preserves EndFrame overlap and a skipped middle route. The full independent suite passes 397 tests. Native thread context, concurrent queue operations and dynamic graph rebuilding remain outside that model.
 
 The input investigation has recovered [repopulation callbacks](reconstruction/ACTION_RESET_CALLBACK.md), two-axis publication and the [fallback processor](reconstruction/ACTION_PROCESSOR.md). Runtime player selection, configured alternatives and source freshness remain open. [Indexed membership](reconstruction/SCHEDULER_MEMBERSHIP_FOLLOWUP.md) and [batch consumption](reconstruction/SCHEDULER_BATCH_EPOCH.md) are known, but the selected player/world/request join still requires current identity evidence.
 
