@@ -51,8 +51,17 @@ def explore(definitions, queue_policy, roots, *, max_nodes=2000, max_depth=64):
                 errors.append(dict(job=name, issue='dispatch/accounting mismatch'))
             if job['remaining'] < 0:
                 errors.append(dict(job=name, issue='negative receiver count'))
-        claimed, returned = {}, {}
+        for name, job in snapshot['jobs'].items():
+            incoming = sum(deps['successors'].count(name)
+                for branches in snapshot['lists'].values() for deps in branches.values() if deps['active'])
+            if job['holds'] != incoming:
+                errors.append(dict(job=name, issue='dependency hold conservation failed'))
+        claimed, returned, trace_executions = {}, {}, {}
         for event in snapshot['trace']['records']:
+            if event['kind'] in ('mixed_dispatch_reserved', 'mixed_execution_returned'):
+                trace_executions[event['job']] = event['executions']
+            if event['kind'] == 'mixed_normal_list_cleared' and trace_executions.get(event['owner'],0) > 0:
+                errors.append(dict(job=event['owner'], issue='dependencies released before worker return'))
             if event['kind'] == 'mixed_range_claimed':
                 name = event['job']
                 indices = set(range(event['start'], event['start'] + event['count']))
@@ -86,7 +95,9 @@ def explore(definitions, queue_policy, roots, *, max_nodes=2000, max_depth=64):
             else:
                 enabled.append((worker,'claim' if snapshot['jobs'][dispatch['job']]['remaining'] > 0 else 'finish'))
         if not enabled:
-            quiet = not dispatches and all(j['state']=='UNSCHEDULED' and j['holds']==0 for j in snapshot['jobs'].values())
+            quiet = (not dispatches
+                and all(j['state']=='UNSCHEDULED' and j['holds']==0 and not j['deferred'] for j in snapshot['jobs'].values())
+                and not any(d['active'] for branches in snapshot['lists'].values() for d in branches.values()))
             result['quiescent_leaves' if quiet else 'blocked_leaves'] += 1
             if len(result['examples']) < 4:
                 result['examples'].append(dict(path=path, quiescent=quiet))

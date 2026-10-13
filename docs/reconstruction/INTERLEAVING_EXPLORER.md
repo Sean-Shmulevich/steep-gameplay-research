@@ -34,7 +34,9 @@ nested helping are outside this exploration alphabet.
 
 At each visited boundary, execution/outstanding counts must equal retained
 dispatch counts, workers must not hold multiple dispatches, and remaining receiver
-counts must be nonnegative. Trace-based checks reject overlapping or out-of-bounds
+counts must be nonnegative. Dependency holds must equal active incoming-list entries.
+Normal dependency release must follow returned execution accounting. Trace-based
+checks reject overlapping or out-of-bounds
 claims, duplicate or unclaimed receiver returns, and loss of receiver-count
 conservation. The driver has no mid-callback checkpoint requirement: replay
 constructs new tokens and executes the recorded worker/action prefix.
@@ -48,7 +50,9 @@ semantics, callback workload correctness or native pause safety.
 `complete` means all enabled paths in this model finished exploration within the
 bounds, with no detected invariant violation. It does not mean every path drained.
 `quiescent_leaves` and `blocked_leaves` remain separate. A job rejected by affinity
-can yield a complete exploration whose only leaf is blocked.
+can yield a complete exploration whose only leaf is blocked. Deferred credit work
+and active dependency lists also prevent a quiescent classification, even when
+no worker remains and hold counts are zero.
 
 `status: bounded` means pending paths or depth cutoffs remain. `status: violation`
 contains the worker/action path and failed invariant. Counts are traversal counts,
@@ -59,3 +63,17 @@ report because random dispatch-capability identities are excluded from reports.
 Adapter limits are 10,000 nodes and depth 128. The default bounds intentionally
 make larger experiments report incompleteness rather than silently skipping work.
 The graph, worker layout and root submissions are fixed for each exploration.
+
+
+## Oracle validation and conditional coverage
+
+An additional fixture explores both fixed outcomes of a conditional route into a
+shared join: 48 completed schedules for the one-receiver selected route and two
+for the immediate bypass. These are separate fixed-input explorations, not
+runtime predicate timing.
+
+Fault-injection tests deliberately release successors before a worker returns and
+leak an outstanding-dispatch count. The explorer reports violations for both.
+A credit-gated fixture exposed and corrected the initial report's classification
+of deferred work as quiescent. This correction affects reporting, not native
+research or the scheduler's credit behavior.
