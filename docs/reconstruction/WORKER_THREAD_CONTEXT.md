@@ -163,7 +163,8 @@ service.enabled_predicate():
 service.worker_operation():
     index = uint32(0)
     while index < unsigned(global_callback_count):
-        global_callback_table[index](0)
+        callback = global_callback_table[index]
+        callback(0)
         index = uint32(index + 1)
 ```
 
