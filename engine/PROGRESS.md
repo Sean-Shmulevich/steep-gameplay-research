@@ -221,3 +221,13 @@ Startup writes execution mode six before the loop. The concrete exit hook uses a
 separate latch-gated indirect cleanup target, then clears the run flag after loop
 return. Event API identity, cleanup producer and the preceding stop cause remain
 open. Static-only pass; last full suite remains 370 tests.
+
+
+## Initial worker release join
+
+Joined the worker initializer to a direct event broadcast over the registered
+worker array. It bypasses the ordinary notification counter and occurs after
+per-worker startup handshakes. The initializer marker follows signal calls, with
+no worker-resume acknowledgment. Distinguished the initializer-owned collection
+from runtime registration storage. Bounded stop-writer searches did not close the
+external stop path. Documentation-only pass; last full suite remains 370 tests.

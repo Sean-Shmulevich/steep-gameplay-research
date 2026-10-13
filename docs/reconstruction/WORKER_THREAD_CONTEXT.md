@@ -386,3 +386,54 @@ The base destructor releases the event holder and local queue storage before
 entering the base thread destructor. Whether outer ownership already stopped and
 joined the thread remains open. No safe destruction or pause operation follows
 from this local cleanup sequence alone.
+
+
+## Initial release differs from ordinary work notification
+
+A direct event broadcast is called after the worker-construction loop. It walks
+the queue manager's registered worker array and invokes the notify adapter for
+each event holder. It neither reads nor updates the idle notification counter.
+This supplies the concrete caller for the initial wait in the worker loop:
+
+```text
+initialize_workers(requested_count):
+    count = recovered_worker_count_clamp(requested_count)
+    for index in unsigned_range(count):
+        worker = construct_concrete_worker()
+        worker.required_mask = rotate_left32(1, index)
+        append_to_initializer_owned_worker_collection(worker)
+        setup_and_start(worker, index)
+        # setup waits on the shared startup holder before returning
+    for worker in queue_manager.registered_workers:
+        notify_adapter(worker.event_holder)
+    global_initializer_marker = 1
+```
+
+The initializer-owned collection and queue manager's registered array are separate
+storage. The startup hook populates the latter. Both retain the same worker pointer
+on the inspected construction path; do not collapse their ownership contracts.
+The configured upper bound can clamp the count to zero, in which case the local
+construction loop is skipped and the broadcast still runs over the registered
+array. A fresh empty manager must not be assumed solely from that branch.
+
+The direct broadcast has no matching completion wait in this initializer. The
+final marker is written after all notification calls return, not after all workers
+leave their waits. If a worker has not entered its initial wait when the broadcast
+arrives, retained-notification semantics are required there too. Protected platform
+behavior remains the same unresolved boundary as for ordinary idle wakeups.
+
+A separate global notification function implements the saturating CAS protocol
+already decoded in the execution wrapper. Another scoped helper compares a saved
+queue generation with the current one and performs that counter-aware walk only
+when they differ. Direct startup release and counter-aware work notification must
+therefore remain separate operations in any future native adapter.
+
+The direct-call search found the initializer as a caller of the direct broadcast.
+It did not establish that this is its only possible caller: indirect calls and
+code outside the decoded exception ranges remain open. A displacement-based scan
+of decoded runtime-function ranges found no additional verified worker run-flag
+writer. Several equal-offset accesses belong to other objects. The known leaf
+run-flag-clear routine is outside those ranges; a separate direct-call search
+found its concrete exit-hook caller. These bounded results leave external virtual
+stop calls, adjusted-pointer stores and protected writers unresolved. They do not
+prove that the only way to stop the engine is forced thread termination.
