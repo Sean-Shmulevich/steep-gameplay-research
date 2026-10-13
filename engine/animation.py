@@ -12,6 +12,7 @@ copies state and never writes its rig, clips, inputs or physical body.
 """
 import copy
 import math
+import bisect
 from reference import skeleton, skinning, animation_blending, animation_playback
 
 
@@ -74,17 +75,28 @@ def validate_resources(rig, clips):
         if duration <= 0 or type(clip['loop']) is not bool:
             raise ValueError('clip needs positive duration and explicit boolean loop')
         missing[name] = sorted(set(clip['channels']) - set(names))
-        for keys in clip['channels'].values():
-            if not keys:
-                raise ValueError('empty channel')
-            last = -1.
-            for key in keys:
-                t = _finite(key['time'], 'key time')
-                if not 0 <= t <= duration or t <= last:
-                    raise ValueError('key times must be strictly increasing within clip')
-                if policy=='recovered_60hz' and abs(t*60-round(t*60))>1e-5:raise ValueError('Recovered sampler requires authored 60 Hz key ticks')
-                last = t
-                _pose(key)
+        for channel in clip['channels'].values():
+            if isinstance(channel,dict):
+                if not channel or set(channel)-{'translation','rotation'}:raise ValueError('Unknown separate track kind')
+                for kind,keys in channel.items():
+                    if not keys:raise ValueError('Empty separate track')
+                    last=-1.
+                    for key in keys:
+                        t=_finite(key['time'],'key time')
+                        if not 0<=t<=duration+1e-5 or t<last:raise ValueError('Unordered separate track')
+                        if policy=='recovered_60hz' and abs(t*60-round(t*60))>1e-5:raise ValueError('Expected 60 Hz key ticks')
+                        last=t
+                        _vector(key['value'],3 if kind=='translation' else 4,'track value')
+                        if kind=='rotation':_quat(key['value'])
+            else:
+                keys=channel
+                if not keys:raise ValueError('empty channel')
+                last=-1.
+                for key in keys:
+                    t=_finite(key['time'],'key time')
+                    if not 0<=t<=duration or t<=last:raise ValueError('key times must be strictly increasing within clip')
+                    if policy=='recovered_60hz' and abs(t*60-round(t*60))>1e-5:raise ValueError('Recovered sampler requires authored 60 Hz key ticks')
+                    last=t;_pose(key)
     return {'missing_channels': {n: m for n, m in missing.items() if m}}
 
 
@@ -117,18 +129,29 @@ def _time(clip, value):
 
 def _sample(clip, time, name, fallback):
     recovered=clip.get('sampling_policy')=='recovered_60hz'
-    if recovered:time=math.trunc(animation_playback.mul(animation_playback.f32(time),60.))/60.
     keys = clip['channels'].get(name)
     if keys is None:
         return copy.deepcopy(fallback)
+    if isinstance(keys,dict):
+        result=copy.deepcopy(fallback)
+        for kind,track in keys.items():
+            result['translation' if kind=='translation' else 'quaternion_xyzw']=_sample_separate(track,time,kind,recovered)
+        return result
+    if recovered:
+        # The integer tick chooses a segment; interpolation still uses continuous time.
+        frame=math.trunc(animation_playback.mul(animation_playback.f32(time),60.))
+        frames=[round(key['time']*60) for key in keys]
+        i=max(0,min(bisect.bisect_right(frames,frame)-1,len(keys)-1))
+        if i==len(keys)-1:return _pose(keys[i])
+        left,right=keys[i],keys[i+1]
+        weight=max(0.,min(1.,(time-left['time'])/(right['time']-left['time'])))
+        return {'translation':animation_blending.linear_blend(left['translation'],right['translation'],weight),
+                'quaternion_xyzw':animation_blending.bone_rotation_blend(left['quaternion_xyzw'],right['quaternion_xyzw'],weight)}
     if time <= keys[0]['time']:
         return _pose(keys[0])
     for left, right in zip(keys, keys[1:]):
         if time <= right['time']:
             weight=(time-left['time'])/(right['time']-left['time'])
-            if recovered:
-                return {'translation':animation_blending.linear_blend(left['translation'],right['translation'],weight),
-                        'quaternion_xyzw':animation_blending.bone_rotation_blend(left['quaternion_xyzw'],right['quaternion_xyzw'],weight)}
             return _blend(_pose(left), _pose(right), weight)
     return _pose(keys[-1])
 
@@ -235,3 +258,15 @@ def default_resources():
              'bend': {'duration': 1., 'loop': False, 'channels': {'knee': [key(0, 0, [0,0,-.4]), key(1, .7, [0,0,-.4])]}},
              'lean': {'duration': 1., 'loop': True, 'channels': {'root': [key(0, .2, [0,0,0])]}}}
     return rig, clips
+
+
+def _sample_separate(keys,time,kind,recovered):
+    query=math.trunc(animation_playback.mul(animation_playback.f32(time),60.)) if recovered else time
+    coordinates=[round(key['time']*60) if recovered else key['time'] for key in keys]
+    i=max(0,min(bisect.bisect_right(coordinates,query)-1,len(keys)-1))
+    a=keys[i]['value']
+    if i==len(keys)-1:return list(a) if kind=='translation' else _quat(a)
+    left,right=keys[i],keys[i+1]
+    weight=max(0.,min(1.,(time-left['time'])/(right['time']-left['time'])))
+    if kind=='translation':return animation_blending.linear_blend(a,right['value'],weight)
+    return animation_blending.bone_rotation_blend(a,right['value'],weight) if recovered else _slerp(a,right['value'],weight)

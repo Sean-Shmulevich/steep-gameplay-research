@@ -1,7 +1,7 @@
 """Owned simulation transactions, checkpoints and inspection APIs."""
 import copy
 import math
-from . import animation, domains, physics, scheduler, scoring, camera, rigid
+from . import animation, domains, physics, scheduler, scoring, camera, rigid, graph
 from .assets import canonical, digest
 from .input import validate
 from .math3d import vector
@@ -39,7 +39,7 @@ class Engine:
             rig,clips=copy.deepcopy(bundle['rig']),copy.deepcopy(bundle['clips'])
         else:rig,clips=animation.default_resources()
         animation.validate_resources(rig,clips)
-        pose=animation.evaluate(rig,clips,{},0,{})
+        pose=_evaluate_animation(rig,clips,{},0,body,validate({}),scenario.get('animation',{}))
         state=dict(tick=0,time=0.,body=body,environment={'time_of_day':12.,'weather_scalar':0.},scheduler={},scoring={},animation=pose['state'],pose=pose,controls=validate({}),input_generation=0,paused=False,diagnostics={},camera={})
         # Only publish a new scenario after validation succeeds.
         self.scenario=scenario;self.world=world;self.rig=rig;self.clips=clips;self.state=state
@@ -62,10 +62,37 @@ class Engine:
         candidate=Engine(checkpoint['scenario']);state=checkpoint['state'];canonical(state);self._validate_body(state['body'])
         if set(state)!=set(candidate.state) or type(state['tick']) is not int or state['tick']<0 or state['time']<0:raise ValueError('Invalid checkpoint state')
         state['controls']=validate(state['controls'])
-        animation.evaluate(candidate.rig,candidate.clips,state['animation'],0,{})
+        _evaluate_animation(candidate.rig,candidate.clips,state['animation'],0,state['body'],state['controls'],candidate.scenario.get('animation',{}))
         candidate.replay_base=copy.deepcopy(checkpoint);candidate.commands=[]
         candidate.state=state;candidate.journal=checkpoint['journal'];candidate.events=checkpoint['events'];candidate.last_good=copy.deepcopy(state)
         self.__dict__.update(candidate.__dict__)
+        return self.snapshot()
+    def replace_resources(self,bundle):
+        """Validated local asset replacement; resets visual clocks, preserves physics.
+
+        Starts a checkpoint-based replay segment with the new resource content.
+        A complete original-game hot reload protocol is not claimed.
+        """
+        scenario=copy.deepcopy(self.scenario);scenario['resources']=copy.deepcopy(bundle)
+        candidate=Engine(scenario)
+        pose=_evaluate_animation(candidate.rig,candidate.clips,{},0,self.state['body'],self.state['controls'],scenario.get('animation',{}))
+        self.scenario=scenario;self.rig=candidate.rig;self.clips=candidate.clips
+        self.state['animation']=pose['state'];self.state['pose']=pose
+        self.last_good=copy.deepcopy(self.state);self.replay_base=self.checkpoint();self.commands=[]
+        return self.snapshot()
+    def tune(self,changes):
+        """Change explicit subsystem settings atomically and begin a replay segment."""
+        allowed={'physics','air','rigid','camera','environment','scoring'}
+        if not isinstance(changes,dict) or not changes or set(changes)-allowed:raise ValueError('Unsupported tuning section')
+        scenario=copy.deepcopy(self.scenario)
+        for section,values in changes.items():
+            if not isinstance(values,dict):raise ValueError('Tuning section must be an object')
+            scenario[section]={**scenario.get(section,{}),**copy.deepcopy(values)}
+        # Validate on an isolated next-tick probe, never on the published engine.
+        candidate=Engine(scenario);candidate.state=copy.deepcopy(self.state)
+        candidate._tick(scenario.get('scheduler',{}).get('fixed_dt',1/120),scenario.get('scheduler',{}).get('fixed_dt',1/120))
+        self.scenario=scenario;self.last_good=copy.deepcopy(self.state)
+        self.replay_base=self.checkpoint();self.commands=[]
         return self.snapshot()
     def set_input(self,actions):
         actions=validate(actions)
@@ -106,11 +133,7 @@ class Engine:
                 if event.get('type')=='landing':info['landing_clean']=event['quality']=='clean';info['crashed']=event['quality']=='crash'
             env=domains.step_environment(self.state['environment'],dt,self.scenario.get('environment',{}))
             score_events=scoring.update(self.state['scoring'],b,info,dt,self.scenario.get('scoring',{}))
-            # Explicit synthetic selector; do not retarget an unfinished fade.
-            anim_input={}
-            if 'transition' not in self.state['animation'] and 'bend' in self.clips:
-                anim_input['clip']='bend' if controls['jump'] or not b['grounded'] else ('idle' if 'idle' in self.clips else next(iter(self.clips)))
-            pose=animation.evaluate(self.rig,self.clips,self.state['animation'],dt,anim_input)
+            pose=_evaluate_animation(self.rig,self.clips,self.state['animation'],dt,b,controls,self.scenario.get('animation',{}))
             self.state['animation']=pose['state'];self.state['pose']=pose
             camera.update(self.state['camera'],b,dt,self.scenario.get('camera',{}))
             self.state['tick']+=1;self.state['time']+=dt
@@ -147,3 +170,15 @@ class Engine:
             self.state=before;self.events=events;self.last_good=last_good
             raise
         return self.snapshot()
+
+
+def _evaluate_animation(rig,clips,state,dt,body,controls,config):
+    if 'graph' in config:
+        values=dict(controls,grounded=body['grounded'],air=not body['grounded'],speed=math.sqrt(sum(v*v for v in body['velocity'])))
+        result=graph.evaluate_pose(rig,clips,state.get('graph_state',{}),dt,config['graph'],values)
+        result['state']={'graph_state':result['state']}
+        return result
+    request={}
+    if 'transition' not in state and 'bend' in clips:
+        request['clip']='bend' if controls['jump'] or not body['grounded'] else ('idle' if 'idle' in clips else next(iter(clips)))
+    return animation.evaluate(rig,clips,state,dt,request)

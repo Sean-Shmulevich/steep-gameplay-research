@@ -67,3 +67,30 @@ class RuntimeTests(unittest.TestCase):
         e=Engine({'world':{'slope':[0,0],'bumps':[{'center':[0,0],'height':.2,'radius':10}]},'body':{'position':[0,0,.2],'velocity':[1,0,0]}})
         for _ in range(240):e.step()
         self.assertFalse(any(x['type']=='landing' for x in e.events))
+
+    def test_graph_scene_replay(self):
+        definition={'schema_version':1,'root':'mix','nodes':{'idle':{'type':'clip','clip':'idle'},'bend':{'type':'clip','clip':'bend'},'mix':{'type':'blend','children':['idle','bend'],'weights':[1,{'input':'jump'}]}}}
+        e=Engine({'animation':{'graph':definition}});e.step(10);e.set_input({'jump':True});e.step(40)
+        self.assertIn('graph_state',e.state['animation']);self.assertIn('bend',e.state['pose']['diagnostics']['visited'])
+        self.assertEqual(replay(record(e)).state_hash(),e.state_hash())
+        cp=e.checkpoint();e.step(3);e.restore(cp);self.assertEqual(e.state,cp['state'])
+
+    def test_resource_hot_reload_preserves_body_and_replays(self):
+        from engine.animation import default_resources
+        e=Engine();e.step(20);body=copy.deepcopy(e.state['body']);rig,clips=default_resources()
+        rig['bones'][0]['local_bind']['translation'][2]=1.2
+        e.replace_resources({'category':'synthetic','rig':rig,'clips':clips})
+        self.assertEqual(body,e.state['body']);e.step(5)
+        self.assertEqual(replay(record(e)).state_hash(),e.state_hash())
+    def test_bad_resource_reload_is_transactional(self):
+        e=Engine();old=e.state_hash()
+        with self.assertRaises(ValueError):e.replace_resources({'category':'recovered_guess','rig':{},'clips':{}})
+        self.assertEqual(old,e.state_hash())
+    def test_tune_creates_reproducible_segment(self):
+        e=Engine();e.step(50);before=e.snapshot();e.tune({'physics':{'brake_deceleration':4}})
+        self.assertEqual(before,e.state);e.set_input({'brake':True});e.step(20)
+        self.assertEqual(replay(record(e)).state_hash(),e.state_hash())
+    def test_invalid_tune_does_not_mutate_state_or_scenario(self):
+        e=Engine();before=e.checkpoint()
+        with self.assertRaises(ValueError):e.tune({'physics':{'spring_mass':0}})
+        self.assertEqual(before,e.checkpoint())

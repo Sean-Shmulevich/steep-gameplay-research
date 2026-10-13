@@ -10,7 +10,7 @@ def main():
     args=p.parse_args()
     if args.serve:
         from .server import serve
-        serve(args.port);return
+        serve(args.port,json.loads(Path(args.scenario).read_text()) if args.scenario else None);return
     if args.replay:engine=replay(json.loads(Path(args.replay).read_text()))
     else:
         scenario=json.loads(Path(args.scenario).read_text()) if args.scenario else {'sport':args.sport}

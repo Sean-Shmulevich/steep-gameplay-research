@@ -97,11 +97,11 @@ class AnimationTests(unittest.TestCase):
         self.assertEqual(single, second)
 
 
-    def test_recovered_tick_quantization(self):
+    def test_recovered_query_tick_preserves_subframe_interpolation(self):
         self.clips['bend']['sampling_policy']='recovered_60hz'
         a1=a.evaluate(self.rig,self.clips,{'clip':'bend','time':0},.101,{})
         a2=a.evaluate(self.rig,self.clips,{'clip':'bend','time':0},.109,{})
-        self.assertEqual(a1['local_pose'],a2['local_pose'])
+        self.assertNotEqual(a1['local_pose'],a2['local_pose'])
         a3=a.evaluate(self.rig,self.clips,{'clip':'bend','time':0},.12,{})
         self.assertNotEqual(a1['local_pose'],a3['local_pose'])
     def test_inclusive_wrap_compatibility(self):

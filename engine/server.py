@@ -6,8 +6,8 @@ from .runtime import Engine
 from .replay import record
 from .inspection import inspect_rig
 
-def make_server(port=8770):
-    engine=Engine(); saved={}
+def make_server(port=8770,scenario=None):
+    engine=Engine(scenario); saved={}
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*args):pass
         def send(self,value,status=200,content_type='application/json'):
@@ -16,7 +16,7 @@ def make_server(port=8770):
         def do_GET(self):
             if self.path=='/':self.send(Path(__file__).with_name('view.html').read_bytes(),content_type='text/html; charset=utf-8')
             elif self.path=='/state':self.send(engine.snapshot())
-            elif self.path=='/resources':self.send(dict(rig=engine.rig,inspection=inspect_rig(engine.rig,engine.clips),world=engine.world.to_dict()))
+            elif self.path=='/resources':self.send(dict(rig=engine.rig,category=engine.scenario.get('resources',{}).get('category','synthetic'),inspection=inspect_rig(engine.rig,engine.clips),world=engine.world.to_dict()))
             elif self.path=='/replay':self.send(record(engine))
             else:self.send({'error':'Not found'},404)
         def do_POST(self):
@@ -41,6 +41,8 @@ def make_server(port=8770):
                 elif op=='checkpoint':saved['checkpoint']=engine.checkpoint()
                 elif op=='restore':engine.restore(saved['checkpoint'])
                 elif op=='recover':engine.recover()
+                elif op=='resources':engine.replace_resources(req['bundle'])
+                elif op=='tune':engine.tune(req['changes'])
                 elif op=='inspect':
                     self.send(inspect_rig(engine.rig,engine.clips));return
                 elif op=='cell':
@@ -55,8 +57,8 @@ def make_server(port=8770):
     server=HTTPServer(('127.0.0.1',port),Handler);server.engine=engine
     return server
 
-def serve(port=8770):
-    server=make_server(port);print(f'Engine inspector: http://127.0.0.1:{server.server_port}',flush=True)
+def serve(port=8770,scenario=None):
+    server=make_server(port,scenario);print(f'Engine inspector: http://127.0.0.1:{server.server_port}',flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()

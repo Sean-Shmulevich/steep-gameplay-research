@@ -49,12 +49,12 @@ engine.restore(checkpoint)
 | contact | Clipped tetrahedron, pressure/contact impulses, point impulse application | Standalone probe, also used by optional rigid_cells mode |
 | domains | Wingsuit/paraglider local response laws, environment clock/weather overlays | Synthetic presets and selectors; unknown zones/track evaluator |
 | animation | Rig/clip validation, crossfade/additive, hierarchy, palette; optional recovered 60 Hz sampling and inclusive wrap | Default sampling/selection designed; active addon merge unresolved |
-| graph | Lazy producer readiness and deferred evaluation kernel | Standalone caller-supplied gates/callbacks; not assumed active rider graph |
+| graph | Serializable clip/blend/axial/additive/mask/select graph; separate readiness kernel | Graph wiring and clock policy are caller designs, not the recovered active rider graph |
 | procedural | Recovered limb target, weighted orientation and landing alignment | Explicit caller mapping/order; not full-body IK |
 | camera | Recovered spring math with an explicit follow policy | Default distances/FOV and arbitration are designed |
 | scoring | Recovered local quantization/commit with flight detector | Detector and event ownership are designed |
 | inspection | Rig bindings, sign-invariant pose comparison, aligned trace differences | Inputs must share frames/units and compatible joints |
-| assets | Versioned evidence-labeled resource registry | No original archive importer/repacker yet |
+| assets/archive/asset_adapter | Evidence labels, read-only v27 index and compression framing, typed local pose adapter | Supported observed layouts only; no repacker, automatic rig merge or root-motion extraction |
 | server/view | HTTP operations and diagnostic canvas | Local research interface, not production renderer |
 
 The reference modules retain provenance in REFERENCE_MANIFEST.json. Default rigs, clips, geometry and tuning are synthetic. Studio-authored and video-estimated resources have distinct categories and must never silently become recovered evidence.
@@ -65,10 +65,29 @@ A scenario is a schema-version-1 JSON object with sport, world, body, physics_mo
 
 A resource bundle has `category`, `rig` and `clips`; their schema is documented in animation.py. Supply original resources only locally with appropriate access. Missing clip channels remain visible in diagnostics. No heuristic base/addon rig merge is disguised as recovered behavior.
 
-The JSON API accepts POST /api with op: input, step, run, pause, reset, checkpoint, restore, recover, inspect, cell or limb. `run` includes actions and count; `cell` supplies vertices, surface, dt and settings; `limb` supplies a request matching procedural.limb_target. GET /state, /resources and /replay return JSON. Invalid operations return a structured error. Standalone probes do not mutate the engine.
+The JSON API accepts POST /api with op: input, step, run, pause, reset, checkpoint, restore, recover, resources, tune, inspect, cell or limb. `run` includes actions and count; `cell` supplies vertices, surface, dt and settings; `limb` supplies a request matching procedural.limb_target. GET /state, /resources and /replay return JSON. Invalid operations return a structured error. Standalone probes do not mutate the engine.
 
 ## Validation and next passes
 
 See [implementation progress](PROGRESS.md). Tests cover formulas, meaningful boundaries, phase/state transitions, mutation isolation, all sport runtimes, replay after restoration, failed-tick rollback, stable slope contact and HTTP controls. Passing tests establishes these contracts, not recovered coverage of the full game.
 
 For the optional hull mode, use `Engine({"physics_mode":"rigid_cells"})`. It is supported for snowboard and ski, with dt at most 1/60 second. The default point controller remains available for comparison. `python3 -m engine.scenarios --ticks 3600` runs all five sports through scripted controls and verifies exact replay hashes.
+
+## Animation graphs and local assets
+
+Set `scenario.animation.graph` to a version-1 graph with `root` and a `nodes` map. Nodes support clip playback, ordered weighted blending, axial interpolation, additive deltas, per-bone byte masks and explicit selectors. Scalar parameters accept constants or `{"input":"speed"}` references. Inputs include controls, speed, grounded and air. See [graph tests](../tests/test_engine_pose_graph.py) for executable examples. All node clocks are checkpointed; shared nodes evaluate once per invocation and inactive clocks retain their time. Those scheduling policies are independent implementation choices.
+
+Compatibility playback uses an integer 60 Hz query to select a key interval, then continuous time to interpolate within that interval. It does not quantize the entire pose to 60 Hz. Translation and rotation streams can have different key times. Unbound tracks and unsupported auxiliary channels are reported.
+
+`Engine.replace_resources(bundle)` validates and replaces visual resources without moving the body. `Engine.tune(changes)` accepts physics, air, rigid, camera, environment and scoring sections. Both create a new replay base so later replay includes the new configuration. Invalid replacements leave the current state intact. HTTP operations use `{"op":"resources","bundle":...}` and `{"op":"tune","changes":...}`.
+
+The optional local importer accepts the existing decoded pose-assembly JSON schema:
+
+```sh
+python3 -m engine.importer /private/path/decoded.json --rig male --clip CLIP_NAME --unit-scale 1 --loop --output /tmp/private-scene.json
+python3 -m engine.cli --scenario /tmp/private-scene.json --serve --port 8771
+```
+
+The scale and loop policy are explicit caller choices. The importer rejects output inside this public source repository. It does not infer active gameplay bindings, merge addon rigs, or extract root motion. The inspector displays the supplied resource category.
+
+`engine.archive.Archive` reads the observed version-27 archive index. `decode_blocks` validates observed compression framing, Adler checksums and output bounds; `NativeCodecs` optionally calls locally installed Zstandard/LZO libraries. Explicit library paths may be needed when system discovery fails. The simulation itself has no native codec dependency. These APIs read local files without modifying archives. See [validation scope](VALIDATION.md) before extending format support.
