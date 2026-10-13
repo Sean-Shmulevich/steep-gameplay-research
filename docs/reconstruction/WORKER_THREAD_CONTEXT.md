@@ -186,3 +186,49 @@ Another function references the same table during a separate callback-entry path
 its full protocol remains open. The current evidence closes the concrete service
 and its loop, but not the registration writers, table lifetime, callback meanings
 or exception behavior. The image hash and no-live-execution boundary above apply.
+
+## Shared callback protocol at thread entry
+
+The other callback-table reference resolves to an entry wrapper supplied as a
+function argument to a protected thread-creation-shaped adapter. Exact platform
+API identity remains unresolved. Its own ordinary instructions are decoded:
+
+```text
+entry_wrapper(descriptor):
+    body = descriptor.body
+    argument = descriptor.argument
+    notify_callbacks = descriptor.notify_callbacks
+    descriptor.started = true
+    if notify_callbacks:
+        visit_global_callbacks_with_live_count(1)
+    body(argument)
+    if notify_callbacks:
+        visit_global_callbacks_with_live_count(3)
+    return 0
+```
+
+Both callback walks use the same table/count as the scheduler service's
+argument-zero walk. The entry and exit walks each start at index zero and reread
+the global count after callbacks. These are established stage codes and ordering;
+formal enum names, registration writers and individual callback behavior are not
+recovered. The table now has a concrete thread-lifecycle relationship, rather than
+an unclassified worker-only service association.
+
+The descriptor fields needed afterward are copied to registers before `started`
+is set. The surrounding creation-shaped function passes a temporary descriptor and
+later polls that byte. This is consistent with a descriptor-consumption handshake,
+not proof that callback initialization has completed. Protected calls in that
+surrounding function prevent claiming the full OS thread-start protocol or memory
+ordering from this local sequence alone.
+
+In particular, `started == true` can coexist with entry callbacks still running,
+the supplied body not yet entered, and the scheduler worker's separate one-time
+hook not yet reached. The scheduler hook's mode zero is not interchangeable with
+the entry wrapper's mode one. Exit mode three occurs after ordinary body return;
+exception unwinding, forced termination and callback failure remain outside this
+normal-return analysis.
+
+The stored count and first inspected table entries are zero in the analyzed image.
+That is not a live registration inventory. The bounded direct writer search did
+not locate a population path, so callback identities remain an explicit missing
+producer. No native callback is supplied or emulated in the independent runtime.

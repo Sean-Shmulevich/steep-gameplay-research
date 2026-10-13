@@ -196,3 +196,7 @@ Resolved the wrapper before/after slots through the table installed by worker in
 ## Worker service implementation closure
 
 Traced the global service writer through its factory and concrete table. Enabled reads a global byte; worker operation follows jump adapters into a callback-table loop passing zero and rereading count. Combined with the worker latch, an enabled empty table still consumes the one-time hook. Registration producers, callback semantics and lifetime remain open. Documentation-only pass; packaging verified; last full suite remains 366 tests.
+
+## Thread callback stage protocol
+
+Decoded the separate entry wrapper using the same callback table: stage one precedes the supplied thread body, stage three follows normal return, while the scheduler hook uses stage zero. The descriptor started flag is set before initialization callbacks and cannot prove initialization completion. Registration producers and protected thread-creation semantics remain open. Documentation-only pass; packaging verified.
