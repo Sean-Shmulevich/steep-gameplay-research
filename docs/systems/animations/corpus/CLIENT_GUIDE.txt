@@ -1,0 +1,16 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+ANIMATION CORPUS AND SKELETON LINKS
+
+The catalog contains 5838 indexed clips: 5800 with exported bone tracks and 38 without. All 1879 unique clips in the existing graph catalog match by resource ID and their durations agree within 0.00001 seconds. Nine imported skeleton sets and 38 physical-rig records are included. These are metadata, not complete pose payloads.
+
+Use decimal-string resource IDs for identity. Display labels are aliases. Join bones by CRC identifier, reject duplicate target identifiers, and retain missing bindings explicitly. Shared bone names across body variants do not establish which skeleton instance to choose. Export may drop unbound or accessory tracks; a successful export is not proof of a complete composite pose.
+
+Reported format timing:
+  curveSeconds = curveTicks/60
+  eventSeconds = eventTicks/120
+These timing findings come from the companion format analysis and were not independently remeasured from raw tracks here. A common 30 fps sample cadence is separate from the curve tick unit.
+
+illustrative_state_map.json contains 60 companion-prototype choices, not the original state selector. It can bootstrap a viewer but cannot establish transition priorities, blend weights, trick eligibility or landing decisions. physical_rigs.json includes alternate records; presence does not establish active runtime selection. Keep the existing pose assembly formulas. The companion's interpolation and fallback policies do not replace those formulas. Full pose payloads, live animation selection and physics-to-animation ownership remain separate requirements.
+
+Run python3 reference.py for worked examples and python3 test_reference.py for checks.

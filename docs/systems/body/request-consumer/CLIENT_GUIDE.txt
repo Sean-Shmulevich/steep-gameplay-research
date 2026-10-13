@@ -1,0 +1,61 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Request registry and one selected request consumer
+
+The earlier recovery chapter ends at a callback visitor. This supplement
+explains its registry traversal and a request-consumer descriptor connected to
+an alias of that same registered selector. It does not prove every recovery
+instance uses this consumer, nor identify the numeric states as named sports
+or recovery animations. Supply that binding explicitly when integrating it.
+
+The registry is sorted by a packed key. Initialization performs lower_bound
+using (packed >> 3) & 0x0fffffff. Iteration skips negative signed packed records,
+then checks (packed >> 3) & 0xffff against the requested selector. A different
+selector ends the traversal; it does not search arbitrarily farther ahead.
+Resolved callbacks continue only when their return value is 2 or 3.
+
+Callback resolution has a direct-record form and a paged-handle form. The direct
+form carries an owner and an indirect callback. Paged handles select a page by
+handle >> 4 and a slot by handle & 15, with sixteen records per page. Record
+form four reads a different handle field from the ordinary form. Invalid
+sentinel handles are not a safe default callback. The portable reference uses
+already-resolved callback names, rather than modeling pointer storage.
+
+One descriptor-associated consumer follows this exact branch structure:
+
+  if requested == current:
+      handler_for(requested).repeat(requested)
+  else if requested != pending and pending == current:
+      pending = requested
+      controller_tag = 13
+      queue_event(requested, reason)
+  return 0
+
+The portable function assumes its supplied getter values remain stable during
+dispatch. The inspected consumer rereads getters; no concurrent-update guarantee
+is established.
+
+A request matching an already pending state does nothing. A new request while
+a different request is pending also does nothing. A request for the current
+state calls its repeat handler even if a different state is pending. Return
+zero stops the outer visitor after this consumer. These observations do not
+establish when a queued event finishes or how a state becomes current.
+
+Handler selection is not uniform. Numerical selectors 0,2,5,9 use an entity
+interface lookup. Selectors 1,3,4,10,11 use the same interface through module50.
+Selector6 uses module55; selector8 uses module54. Selector7 uses an alternate
+service adapter. Other selectors return no handler. The repeated-state caller
+assumes a valid handler; the host must not silently replace an absent handler
+with a successful transition.
+
+Examples include queued, duplicate, busy and repeated-state requests. They use
+synthetic numerical states with no invented anatomical or activity names.
+Run python3 reference.py and python3 test_reference.py. Four portable tests
+include all 1728 combinations of twelve current/pending/requested values and
+visitor stop conditions. This supplement was checked against static control
+flow and registration data. No additional native-emulation comparison was run.
+
+Still unresolved: every live registry population, the event's eventual state
+consumer, named state meanings, automatic recovery animation selection,
+teleport destination, obstacle clearance and final respawn placement. The new
+consumer narrows the delivery path but does not supply a complete recovery plan.

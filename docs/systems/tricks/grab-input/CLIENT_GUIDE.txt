@@ -1,0 +1,94 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Grab direction capture and controller-to-animation inputs
+
+This chapter closes a live/local-controller producer that feeds the animation
+graph. It complements animations/selection, whose earlier routine copies cached
+values. This is a proven local branch, not a complete controller-to-clip selector.
+Run python3 reference.py beside this guide using only Python's standard library.
+
+Direction and intensity
+The selected input action supplies an XY vector. For ordinary finite input with
+zero Z/W padding:
+    intensity = sqrt(x*x+y*y)
+    angle = 0
+    if intensity > 0.000009999999747:
+        angle = signed_angle_from_positive_Y(x/intensity,y/intensity)
+        angle = angle*180/pi
+The implementation uses acos of the normalized Y component and the sign of X.
+The reference preserves the included float32 arithmetic and endpoint branches.
+Geometrically this is atan2(x,y), with the negative-Y endpoint represented as +180.
+
+    XY input      angle in degrees     intensity
+    (0,1)                   0                1
+    (1,0)                  90                1
+    (0,-1)                180                1
+    (-1,0)                -90                1
+    (1,1)                  45          about 1.414214
+    (0,0)                   0                0
+
+There is no local intensity clamp, dead-zone subtraction or rescaling. The tiny
+threshold only prevents the angle calculation near zero; the original magnitude
+still reaches the graph. Upstream action-service shaping is a separate step.
+The inputs here are action vectors, not a claim about unprocessed hardware axes.
+
+Capture on action onset
+Before writing the new action values, read the graph's previous Action1 and
+Action3 values. Then, if the controller exists, write its current Action1 and
+Action3. Let old_active and new_active be the respective OR combinations.
+
+    if (not old_active and new_active) or force_refresh:
+        action_id = 113 if source_mode == 9 else 115
+        angle,intensity = polar(input_action[action_id])
+        graph.GrabPadAngle = angle
+        graph.GrabPadIntensity = intensity
+
+A held action alone does not continually refresh this grab pair in this branch.
+Changing from Action1 to Action3 while their combined value stays true is not a
+new onset. Releasing both actions does not zero the stored angle or intensity.
+A release followed by another activation captures a new direction. The separate
+force-refresh flag bypasses the onset condition, even with no active action.
+The runtime registry now identifies this flag's setter as the Grab markup callback.
+It stores the markup boolean and, when enabled, forwards it to the main scoring
+bonus gate. See tricks/events for the complete named event and scoring rules.
+The reference retains force_refresh as its functional argument name.
+
+When the controller is absent, this block does not write Action1 or Action3;
+new_active is false. Force-refresh may still request the grab-vector write.
+The function returns writes rather than a replacement graph dictionary so that
+unwritten properties retain their prior state.
+
+Ragdoll route and numeric selectors
+Independently, source_mode 7 reads action ID112 and writes RagdollPadAngle and
+RagdollPadIntensity every time this selected block executes. This may coexist
+with a grab-vector update. The graph field names establish the destination;
+the integer source-mode labels and input-action physical bindings remain open.
+Do not relabel mode9 as ski or snowboard or action113 as a particular stick.
+
+The enclosing routine has additional owner/local-control gates. The reference
+starts after those gates. Other writers may update these graph properties in
+other states, including the cached route documented in animations/selection.
+Consequently this establishes a specific capture policy, not a universal claim
+that grab direction can never change during a held trick.
+
+Forward-condition timer
+The graph also receives ConditionForwardTime, which measures consecutive time
+with small TurnIntensity in the included producer:
+    if abs(TurnIntensity) < 0.10000000149:
+        timer = timer + delta_time
+    else:
+        timer = 0
+    graph.ConditionForwardTime = timer
+Equality resets the timer. The producer does not clamp delta_time or cap the
+timer. Preserve the caller's time units. This is a graph input clock; its authored
+transition consumers are not yet decoded. 
+
+Examples and validation
+EXAMPLE_OUTPUT.json shows axis conventions and a press, hold, forced-hold and
+release sequence with graph state preserved between updates. The examples cover the capture rules; full controller and animation integration still requires testing.
+
+Remaining connection
+The authored graph must still map these named angle/intensity/action fields to
+specific clips, masks and transitions. This chapter does not invent angle sectors
+for Indy, melon or other grabs. The capture rule is available to implement now;
+clip selection requires additional authored graph evidence. The 113 registration records connect dictionary keys to the Grab/Tweak and sport-qualified marker names used in tricks/events.

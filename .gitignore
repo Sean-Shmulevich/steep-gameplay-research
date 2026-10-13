@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.exe
+*.dll
+*.bin
+*.dump
+*.dmp
+*.pak
+*.forge
+*.zip
+*.mov
+*.mp4
+*.png
+*.jpg
+*.asm
+*.c

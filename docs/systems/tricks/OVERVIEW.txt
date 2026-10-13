@@ -1,0 +1,170 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS SIXTEEN UPDATE: tricks/motion-lifecycle and tricks/sequence connect input latches, contact clocks, landing resets and event flags. Scalar and vector rotation paths remain alternatives; do not apply them all each frame.
+
+PASS FOURTEEN UPDATE: tricks/assistance-transition distinguishes slowing assistance from the successor that permits bounded acceleration; tricks/response-delay supplies the separate logarithmic onset delay.
+
+PASS THIRTEEN UPDATE: tricks/selection supplies scalar gain selection, player/NPC applicability, motion-history arithmetic and local non-accelerating assistance.
+
+PASS TWELVE UPDATE: tricks/dynamics supplies selected configuration limits, time shaping and weighted rotation history.
+
+CURRENT UPDATE: PASS_ELEVEN.txt covers runtime graph conversion rules, physical
+rider constraints and recovery request producers. Full input-to-clip selection
+remains open.
+
+CURRENT UPDATE: PASS_TEN.txt and animations/paths give current coverage.
+Successor-based graph associations and their earlier counts are superseded by
+the node-to-owned-output catalog. Named scalar predicates remain valid.
+
+NINTH UPDATE: snow/integration connects charge release to jump impulse;
+animations/decisions supplies named grab-angle/intensity predicates;
+body/landing-quality connects landing amount to numerical display quality.
+See PASS_NINE.txt for additions and remaining boundaries.
+
+EIGHTH-PASS UPDATE
+
+animations/paths links authored animation data nodes to their own output clip
+resources. animations/decisions supplies named grab-angle/intensity predicates.
+Neither catalog membership nor a scalar predicate alone proves trick activation.
+body/recovery adds motion producers and automatic recovery dispatch gates.
+
+Spin, flip and tricks: implementation guide after seven passes
+
+This is the entry point for ski/snowboard trick implementation. The package now
+connects named animation markers to runtime controller callbacks and conditional
+scoring. Full input-to-clip selection remains incomplete. Use the equations and
+state rules below without treating a clip name or duration as a complete trick.
+
+1. Physical spin and flip motion
+
+body/CLIENT_GUIDE.txt and body/reference.py contain input dead zones, the angular
+proposal, ski-specific local-axis swapping and stance-related inversion,
+intensity/sign acceptance, secondary-axis escalation, SpinVelocity and alignment
+curves, whole-turn completion and angular-motion-to-pose targets.
+
+tricks/rotation adds direction lock, mixed-axis boost, magnitude feedback,
+auxiliary pose angle and angular-output assembly. Its gated direction lock
+rejects changes of 22.5 degrees or more. Mixed-axis boost survives separately
+from main-vector normalization.
+
+One selected BigAir branch uses 450 degrees per time unit as its angular limit.
+Actual timing also depends on input intensity, completion adjustment, mixed-axis
+boost and alignment/contact rules. There is no universal documented seconds per
+360 or per flip. The same scoring settings do not imply identical ski/board axes.
+
+2. Grab input capture now has a named controller connection
+
+tricks/grab-input gives the actual polar convention:
+    intensity = sqrt(x*x+y*y)
+    angle_degrees = signed angle from +Y toward +X
+For finite planar inputs, this is geometrically atan2(x,y) in degrees. The tiny
+near-zero threshold suppresses angle calculation only; it does not zero or clamp
+intensity. The action service may perform earlier input shaping.
+
+The selected live-controller block refreshes the grab pair when the combined
+Action1/Action3 value rises from false to true, OR when the controller's stored
+Grab markup boolean is true. A held physical action alone does not force refresh.
+The named Grab callback sets that stored boolean. When its scoring callback is
+enabled, the same event also sets the main rotation-bonus gate.
+
+Unwritten graph fields retain their values. Release does not automatically zero
+the stored grab angle/intensity. The reference preserves these state rules and
+the separately selected ragdoll-pad branch. Physical button bindings and the
+integer mode names remain unresolved.
+
+The same chapter describes ConditionForwardTime:
+    if abs(TurnIntensity) < float32(0.1): timer += delta_time
+    else: timer = 0
+It forwards the result into the graph; transition consumers remain separate.
+
+3. Named grab and tweak events reach scoring
+
+tricks/events joins 45 actual marker names to their installed callbacks:
+40 sport-qualified grab markers, Grab, and Tweak_L/Tweak_R/Tweak_F/Tweak_B.
+The names come from decoded dictionaries and exact runtime registration keys.
+They are not inferred from neighboring IDs or clip filenames.
+
+Ski entries include left/right Brebis, Japan, Mute, Nosegrab, Octograb, Safety,
+Tailgrab, Truckdriver, Venom and BAA, plus Daffy, Spread and Cross.
+Snow entries include Truckdriver, Seatbelt, Stalefish, Tailgrab, Popair, Rocketair,
+Nosegrab, Melon, Mutail, Mute, Holycrail, Indy, Crail and Drunkdriver, plus Stiffy,
+ClassicMethod and DoubleNoseGrab. The exact authored spellings are in named_data.
+These are marker variants, not a count of distinct score display names.
+
+For the shared ski/snowboard SnowboardScoring configuration, an eligible rotation
+tick adds:
+    bonus = 0
+    if main_gate:
+        bonus = 5
+        if secondary_gate: bonus += 10
+
+Ordinary named grab events update the main gate. Stiffy_Snow, ClassicMethod_Snow,
+Daffy_Ski and Spread_Ski update both. Named tweaks update the secondary gate.
+DoubleNoseGrab_Snow and Cross_Ski update only the main gate and retain the prior
+secondary value. All these gates follow the latest relevant event; they are not
+computed by checking whether any grab or tweak remains active.
+
+A concrete documented sequence, with the rotation-phase predicate satisfied:
+    Indy on          -> eligible tick bonus 5
+    Tweak_R on       -> eligible tick bonus 15
+    Tweak_L off      -> eligible tick bonus 5
+    Spread on        -> eligible tick bonus 15
+    Cross on         -> eligible tick bonus 15
+    Cross off        -> eligible tick bonus 0
+
+Tweak_L-off can clear the shared secondary gate while the Tweak_R modifier bit
+remains set. Cross-off can clear the main gate while Spread's slot remains active.
+Preserve event order. These are components of an eligible rotation tick, not
+unconditional points per grab or a complete banking/commit formula.
+
+The earlier scoring chapter supplies rotation quantization, continuation bonuses,
+multiplier progression, banking/cancellation, history and proximity rules. Its
+primary half-turn count weighs 5 and its secondary full-turn counts weigh 10.
+The new event chapter explains the previously unnamed conditional bonus gates.
+CancelledTrick is connected to its graph producer, but it is not by itself a
+proven instruction to clear banked score.
+
+4. Authored clips, playback and equipment
+
+animations/pose-assembly catalogs 805 trick/air/jump/landing clip resources.
+Ten clips are fully decoded into 1,744 tracks and 15,673 samples, including:
+    AIR_BACKFLIP                    about 1.333333 duration
+    AIR_FRONTFLIP                   about 1.333333
+    AIR_BACKFLIP_SPINLEFT            about 1.333333
+    GRAB_INDY_TWEAK_SPINRIGHT         about 0.666667
+    DOUBLEGRAB_DRUNKDRIVER           about 2.333333
+These are stored clip lengths, not physical times to complete those tricks.
+The decoded flip clips show small pose changes; procedural motion supplies
+additional rotation independently.
+
+animations/selection includes 530 flip/spin/grab/barrel records embedded in the
+main graph, plus 133 main-graph and 29 paraglide typed interface fields. Its clip
+catalog overlaps the 805-entry catalog, so the counts must not be added.
+animations/graph-decoding supplies newly decoded animation dictionaries.
+animations/playback supplies marker-coordinate, loop, duration and transition
+policies. These are runtime rules; concrete rider state selection must
+still be established from authored nodes.
+
+animations/equipment supplies actual ski/board graphic-plus-addon selection
+pairs and foot-descendant mesh bindings. Board bridge vertices mix the two foot
+anchors, while included ski vertices never mix left/right skis. Pole mesh bones
+follow hand descendants. The guide separates deformation from physical constraints
+and preserves the unresolved runtime addon-merge policy.
+
+5. Other sports and remaining work
+
+The scoring data include WingsuitScoring, ParaglideScoring, SpeedRidingGround and
+Air, SledScoring, RocketWingsuitScoring and BaseJumpScoring. Their documented values
+and selected formulas are available. The snow rotation controller and named grab
+callbacks are not assumed to drive every sport. Paraglide's 25/50/75 values are
+progression rate divisors, not medal tiers or named trick thresholds.
+
+The largest remaining gap is authored selection: which input/state combination
+chooses each named clip, its rate, mask and interruption policy. Also open are
+physical button mapping, every anatomical rotation channel, complete score-name
+classification, physical root-motion ownership, runtime addon merging and full
+equipment-specific procedural IK. Documented components and missing links should
+remain separate in an implementation.
+
+Run python3 verify.py at the package root. Every supplied reference runs offline
+using bundled files and Python's standard library. 

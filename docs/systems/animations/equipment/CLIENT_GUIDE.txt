@@ -1,0 +1,144 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+SKI / SNOWBOARD EQUIPMENT RIG BINDINGS
+
+Run python3 reference.py beside named-bindings.json. These files contain actual
+resource relationships, male/female addon hierarchies, mesh joint mappings,
+inverse binds and selected weight statistics. 
+
+Equipment selection relationships
+The player package contains a Ski gear table with four primary component tables:
+Ski_Poles, SkiShoes, Skis and Ski_Binds. Its Snowboard gear table has three:
+SnowboardBoots, Snowboards and SnowboardBinds. Full resource names are in the JSON.
+These are actual referenced BuildTable cells, not categories inferred from filenames.
+
+For ski model 001, the gender selector has two authored rows:
+male asset row -> SG_M_Ski_001 + SG_SkelAddon_M_Ski
+female asset row -> SG_F_Ski_001 + SG_SkelAddon_F_Ski
+
+For snowboard model 001:
+male asset row -> SG_M_Snowboard_001 + SG_SkelAddon_M_Snowboard
+female asset row -> SG_F_Snowboard_001 + SG_SkelAddon_F_Snowboard
+
+Each pair occurs in the same authored row, coupling the graphic resource and
+addon skeleton choice. The runtime BuildTable, BuildRow, BuildColumn, BuildTag
+and RowSelector readers were documented to identify these cells. The row's first
+numeric parameter is 1 for the male asset row and 0 for the female asset row;
+its semantic role is unresolved and is not labeled probability or gender enum.
+The tag-registry interpretation and upstream row-match policy remain unresolved.
+The reference therefore accepts an already selected asset family and returns its
+actual resource pair. It does not claim to reproduce the entire runtime selector.
+
+Pole model 001 similarly chooses male/female pole graphics. Ski boot and snowboard
+binding model 001 tables choose the corresponding male/female graphics. Distinct
+backpack selectors and backpack addon rigs also exist; these are separate from
+the active ski/board mappings decoded here.
+
+Actual foot-to-equipment chains
+The male and female ski addon rigs each contain 34 bones. Their ten-joint ski
+LOD0 meshes match ten bone names in those rigs. All ten are foot descendants:
+
+LeftFoot -> LeftSkiAnchor
+    LeftSkiAnchor -> LeftSkiBranchA -> LeftSkiBranchAEnd
+    LeftSkiAnchor -> LeftSkiBranchB -> LeftSkiBranchBEnd
+RightFoot -> RightSkiAnchor
+    RightSkiAnchor -> RightSkiBranchA -> RightSkiBranchAEnd
+    RightSkiAnchor -> RightSkiBranchB -> RightSkiBranchBEnd
+
+The corresponding mesh slot order is:
+0 LeftSkiBranchA, 1 LeftSkiBranchAEnd,
+2 LeftSkiBranchB, 3 LeftSkiBranchBEnd, 4 LeftSkiAnchor,
+5 RightSkiBranchA, 6 RightSkiBranchAEnd,
+7 RightSkiBranchB, 8 RightSkiBranchBEnd, 9 RightSkiAnchor.
+
+The male and female snowboard addon rigs each contain 29 bones. Their ten-joint
+board LOD0 meshes match these foot-descendant chains:
+LeftFoot -> LeftBoardAnchor -> LeftBoardSegmentA -> LeftBoardSegmentB
+LeftBoardSegmentB -> LeftBoardSegmentC -> LeftBoardSegmentD
+RightFoot -> RightBoardAnchor -> RightBoardSegmentA -> RightBoardSegmentB
+RightBoardSegmentB -> RightBoardSegmentC -> RightBoardSegmentD
+
+Mesh slot order is:
+0 LeftBoardSegmentA, 1 LeftBoardSegmentB,
+2 LeftBoardSegmentC, 3 LeftBoardSegmentD, 4 LeftBoardAnchor,
+5 RightBoardSegmentA, 6 RightBoardSegmentB,
+7 RightBoardSegmentC, 8 RightBoardSegmentD, 9 RightBoardAnchor.
+
+These gear labels are descriptive functional labels derived from actual parent
+links and mesh membership. They are not claimed as readable bone names.
+LeftFoot, RightFoot and other human bone spellings are CRC-matched names. The JSON
+marks the distinction and preserves every bone, including unmapped branches.
+It does not assign unverified front/back meanings to the two ski branches.
+
+Actual ski-pole linkage
+The male pole LOD0 mesh has two mesh joints. They resolve to descendants of
+LeftHand and RightHand in the ski addon:
+LeftHand -> LeftPoleAnchorParent -> LeftPoleMeshAnchor
+RightHand -> RightPoleAnchorParent -> RightPoleMeshAnchor
+The final descendant in each chain is the mesh joint. No pole mesh joint is
+bound to a foot. Individual pole physics/controller behavior is outside this
+render-binding result.
+
+Two skis versus one board: actual vertex weights
+Male ski LOD0: 2,758 vertices, 1,365 using only left ski joints and 1,393 using
+only right ski joints. Female ski LOD0: 2,671 vertices, split 1,329 left and
+1,342 right. Neither ski mesh has a vertex mixing the two sides.
+
+Each male/female snowboard LOD0 has 1,750 vertices: 857 use only left-foot board
+joints, 857 only right-foot board joints, and 36 bridge vertices mix both sides.
+An actual bridge record uses slots 4 and 9, the two board anchors, with weight
+bytes 128 and 127. Thus the board mesh itself contains a coupling region between
+the two foot-driven halves; the skis have no corresponding cross-side weights.
+This describes the authored deformation relationship, not a physical constraint
+between the feet.
+
+Using the normalized-byte interpretation, the bridge position is
+    bridge(p) = (128/255)*left_anchor_palette(p)
+                + (127/255)*right_anchor_palette(p)
+For point (.3,.4,.5), a left transform translated by +.1 along X and a right
+transform translated by -.2 along X produce (.2505882353,.4,.5).
+The authored bytes and their slot meanings are proven. The runtime GPU view that
+converts packed weight bytes into floats remains unresolved from the previous
+skinning pass, so the /255 step is explicitly an interpretation in the reference.
+
+Pose and palette equations
+Bone hierarchy propagation is the documented rigid composition:
+    model_translation = parent_translation
+                        + rotate(parent_quaternion, local_translation)
+    model_quaternion = parent_quaternion * local_quaternion
+The runtime model-pose kernel normalizes each resulting quaternion. Its LOD gate
+can skip a bone and its contiguous subtree. This chapter's bind-data check uses
+all bones and checks each stored descendant count against the actual hierarchy.
+All 126 bones across the four addon rigs reproduce their stored model bind
+translations within 0.000001082 game units.
+
+The selected addon bone is not the same index as the mesh slot. Resolve by the
+authored bone name, then use the selected rig model transform and the mesh's
+stored inverse bind. The previously documented renderer palette is, in its unit
+scale branch:
+    palette[mesh_slot] = global_pose_root
+                        * selected_model_bone
+                        * stored_mesh_inverse_bind
+    palette.translation += render_origin_shift
+The existing four-input position shader then combines those palette results with
+weights. The JSON includes all ten inverse-bind matrices for each selected mesh.
+
+Bind-frame caution
+The addon Hips root is expressed in its own authored frame. The JSON includes the
+base rig's Hips model bind as an explicit comparison frame. For the male board,
+base_hips * addon_model_bind * mesh_inverse_bind gives identity for all ten mesh
+joints within 0.000000800, supporting that frame relationship.
+For skis, the same comparison gives a shared nonidentity placement transform for
+each side's five mesh joints. This is a real difference between the authored
+addon pose and mesh bind pose; it is not discarded as rounding or silently
+corrected to identity. The female board also has a small nonidentity difference.
+The reference accepts the comparison root frame explicitly. Runtime runtime addon
+merging, duplicate human-bone overrides and animation constraints are not fully
+specified here, so the bind comparison is not presented as a live initialization rule.
+
+Remaining boundaries
+Upstream BuildTable tag matching, runtime addon merge/override policy, live motion
+of gear-specific bones, backpack variant activation, and equipment-specific
+animation masks remain open. This chapter closes the actual selected resource
+pairs, foot/hand parent chains, complete mesh joint mappings and authored
+left/right vertex coupling without replacing those gaps with assumed behavior.

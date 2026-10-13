@@ -1,0 +1,88 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+AUTHORED SNOW MATERIALS AND THEIR FORCE RESPONSE
+
+This package closes the missing environmental fluid settings for the documented snow-force equations. It contains actual named profiles from the latest supplied Region_A, Region_B and Region_C world revisions, all their coefficient samples, and collision-material bindings. Run python 3 reference.py offline with the standard library. Actor geometry, motion, effective contact mass, activation and simulation gains remain explicit supplied state; this is not a complete terrain or rigid-body engine.
+
+Selection is a resource chain, not a visual-label guess:
+  collision material -> physics collision material -> fluid-characteristics profile
+The collision-material reader requests a physics collision material; that reader requests the fluid-characteristics resource. The contact query retains the decoded profile and its wrapper values. The package now resolves all 22 named collision materials. The six Region_B and Region_C Thin, Crunchy and Powder ground bindings use a shared standard-snow profile, with layer range and query thickness approximately 0.30. The full settings match the previously supplied powder coefficient tables; wrapper depths remain distinct. See snow/terrain-binding for the terrain group chain and complete fluid library.
+
+Actual values, not estimated real-world snow densities
+
+Profile family          volumicMass   layer range   query thickness   Lua thickness
+Region_A groomed                  1000          .02              .30             .15
+Region_A powder 30CM               1000          .30              .30             .30
+Region_A powder 52CM               1000          .52              .52             .30
+Region_A powder 74CM               1000          .74              .74             .30
+Region_A powder 96CM               1000          .96              .96             .30
+Rock                           5000         .015              .30            .015
+Ice                            1000         .015              .30            .015
+
+The hardground, pipeground and regional repeated resources retain their exact wrapper values in named_data.json. Treat volumicMass as the authored gameplay-density scalar used with submerged volume. These values are not measured physical powder densities. World-distance and mass units must stay consistent with the caller; this package does not independently calibrate them to metres or kilograms.
+
+Three thickness quantities must stay separate. The serialized wrapper provides layer_range and query_thickness. The ordinary contact-query branch uses query_thickness; the special observed-gap branch uses
+  effectiveThickness = max(observedGap,.001)*query_thickness/layer_range
+The nominal range therefore matters even when its value differs from query thickness. The included Lua tables also contain thickness, but the documented fluid parser does not consume that key: it reads six response records, linearDampingSlopeCurve, superficialTensionCoeff and volumicMass. Lua thickness is retained as authored metadata and is not used by these reference equations. A groomed material named 2CM does not justify replacing its .30 query thickness with .02 or its .15 Lua value.
+
+The ordinary intersection adjustment is
+  adjustedPoint = hitPoint + queryDirection*
+                  (hitNormal.z*queryThickness/dot(hitNormal,queryDirection))
+then planeOffset=-dot(hitNormal,adjustedPoint). Preserve the runtime branch's normal/direction assumptions. The query has additional alternate height and gap branches; the formula above describes the ordinary branch.
+
+Normalized vertical depth at point p is
+  signedDistance=dot(planeNormal,p)+planeOffset
+  if thickness<=0: depthFraction=1
+  elif abs(planeNormal.z)>.00051:
+      depthFraction=clamp(-signedDistance/planeNormal.z/thickness,0,1)
+  else: depthFraction=0
+Use the effective query thickness from the selected branch, not the Lua metadata. This depth fraction is different from total immersed-volume fraction.
+
+Coefficient curves and coordinates
+
+Every profile has hullPush, hullPull, hullDrag, foilPush, foilPull and foilDrag. Each record has baseMultiplier and eight curves. For each curve clamp its result to at least zero, multiply all eight results, clamp the product nonnegative, then multiply by baseMultiplier. The supplied reference evaluates the documented padded-domain piecewise linear curve construction; it does not substitute a spline through the samples.
+
+Let n_face be the unit contact-face normal, n_plane the material-plane normal, and v the relative point velocity:
+  v = bodyLinearVelocity + cross(bodyAngularVelocity,point-bodyCOM)
+                          - materialLinearVelocity
+  vn=dot(n_face,v)
+  vt=v-vn*n_face
+Let L be the documented normalized signed-asin lookup. It maps approximately [-1,1] to [-1,1], where the output endpoints mean signed 90-degree incidence. The coordinates are:
+  flowAngleCurve: L(-clamp(vn/length(v),-1,1))
+  normalSpeedCurve: abs(vn)
+  tangentialSpeedCurve: length(vt)
+  normal surfaceAngleCurve: -L(clamp(dot(n_face,n_plane)*sign(vn),-1,1))
+  drag surfaceAngleCurve: L(clamp(dot(-vt/length(vt),n_plane),-1,1))
+  depthCurve: normalized vertical depth
+  legCoilCurve: cooked leg coil
+  butteringCurve: clamp(abs(butteringAngle)/(pi/2),0,1)
+  steeringCurve: abs(cooked horizontal steering)
+Use zero for the drag surface angle when tangent speed is zero. These angle curves consume normalized incidence, not radians. ButteringAngle itself is supplied in radians. Curve speed coordinates use runtime velocity units, without the input-preset selector's separate 3.6 conversion.
+
+Negative flow selects Push; nonnegative flow selects Pull. Hull contacts select hull records; foil contacts select foil records. Drag always selects the matching hullDrag or foilDrag record. The normal and drag records use different surface-angle coordinates. Do not reuse the face's normal incidence for its tangential drag.
+
+The Region_A groomed and powder profiles have base multipliers hullPush 15, hullPull 2, hullDrag 1, foilPush 20, foilPull 0, foilDrag 6.5. Rock uses 15,2,0,20,0,6.5; ice uses 7,2,0,2,0,4. Full curves—not these base values alone—determine the response. The four Region_A powder profiles share the same decoded Lua settings while their wrappers change layer depth. All documented profiles have superficialTensionCoeff 0, so this configured surface-tension contribution is absent.
+
+Force and impulse
+
+Supply effectiveMass=contactActivation*totalBodyMass/totalContactFaceWeight*retainedFaceWeight. Total contact-face weight is distinct from geometric hull volume. Let f_normal and f_drag be the coefficient products described above:
+  K(m,f)=clamp(m*f*f*39.47842025756836,1.0000000116860974e-7,999999995904)
+  F_normal=-dt*K(m,f_normal)*vn*n_face
+  cap length(F_normal) at m*abs(vn)/dt
+  F_drag=-dt*K(m,f_drag)*vt
+  J_contact=dt*(F_normal+F_drag)
+There is no corresponding stopping cap on drag. Retain both timestep factors. Velocity terms require effectiveMass>0, depth>0 and relative speed>.0001; the normal/tangent components have their own .0001 thresholds. The positive minimum in K can leave a tiny response even when an evaluated frequency is zero.
+
+The density contribution for a clipped cell is
+  P_cell = volumicMass*submergedVolume*simulationDepthGain*n_plane
+  J_pressure = P_cell*abs(gravityZ)*simulationTiltGain*
+               simulationSpeedGain*activation*dt
+The simulation depth/tilt/speed gains are separate from the fluid record's eight-curve frequency product. They remain supplied inputs here. Apply these as point impulses: linearVelocity+=J/mass and angularVelocity+=inverseWorldInertia*cross(point-COM,J). Choosing the same contact point, normal and profile does not eliminate the surrounding contact/activity gates.
+
+Worked examples and limits
+
+EXAMPLE_OUTPUT.json uses actual Region_A groomed, powder 30/52, rock and ice settings with a deliberately supplied state: velocity(10,0,-2), downward face normal, upward plane normal, depthFraction .5, legCoil .5, no buttering, steering .25, effective contact mass 20 and dt 1/60. The effective mass 20 is synthetic and is not a decoded full rider mass. These produce normal frequencies approximately 2.326718,1.745038,1.745038,2.326718,1.085802, respectively. Rock's density impulse for supplied submerged volume .01, gravity 9.81 and unit external gains is 8.175; the other examples yield 1.635. All geometry, gravity and gains in this example are supplied illustrative state.
+
+The selected example's tangent surface angle is zero, which drives its drag coefficient to zero. Its near-zero drag impulse is not evidence of a groomed or powder terminal speed. Terminal speed requires the actual terrain incidence, geometry, current controls, state gates and body dynamics. Nor does a base multiplier alone prove friction or restitution of a physics-backend contact.
+
+Validation checks all 735 authored curves across 15 profile instances, their domains and finite values, the exact resource joins, unresolved-binding behavior, zero-speed behavior, force direction and worked examples. Python arithmetic expresses the documented equations and is not a bit-identical reproduction of every float32 operation. The material data close a major numerical gap; the remaining activity gates, external common ground profile and complete dynamic terrain contact selection remain explicit limits.

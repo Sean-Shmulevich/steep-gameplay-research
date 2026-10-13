@@ -1,0 +1,179 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Ordinary local-pose space, bind seeding and additive conversion are now documented in animations/pose-assembly/CLIENT_GUIDE.txt.
+
+ANIMATION CLIPS: REAL SAMPLES AND DOCUMENTED SAMPLING
+
+Run python3 reference.py for real clip examples. named_data.json contains a
+catalog of 3,760 actual Animation resources and six fully decoded representative
+clips. The six clips contain 1,052 tracks and 13,112 samples. All data needed by
+the reference are included; no game installation or other analysis folder is
+required. This package does not implement the complete animation state machine.
+
+Actual resources and bindings
+
+The six representative clips are:
+  Group00_Set01_male_NAV_MED_FWD_SPEED_TIME                duration 2.0
+  Group00_Set01_male_LANDING_TO_FWD_MED_SPEED              duration 1.0
+  Group00_Set00_female_DOUBLEGRAB_DRUNKDRIVER              duration 2.333333254
+  Group01_Set01_male_NAV_MED_FWD_SWITCH_Taunt_01           duration 2.266666651
+  Group00_Set01_male_AIR_SPEED                            duration 2.333333254
+  Group02_Set01_male_START_JUMP_BACKLEFT                  duration 1.666666627
+
+All six are referenced by AnimationRuntimeData (RuntimeData). The female double-grab
+is also referenced by AnimationVariantSetData SG_F. This proves actual resource
+bindings. It does not prove which controller transitions select a clip, whether
+an ID prefix denotes ski/snowboard, or that clip naming alone establishes the
+runtime activity. The catalog names are preserved without inventing selectors.
+
+Clip duration values range from 0.2333333343 to 41.60000229. All 3,760 align
+with multiples of 1/30 to float32 precision. That is an observed authoring grid.
+The runtime sample clock is separately initialized to 60 frames per time unit:
+keyframe time = stored_frame/60. Do not replace the sampler clock with 30 merely
+because authoring durations use that grid.
+
+Track bindings and bone counts
+
+Tracks carry 32-bit binding hashes. Vector and quaternion tracks often share a
+hash, so mapping_count is not a bone count. Some hashes additionally identify
+auxiliary byte/float channels. Six clip mapping counts are 174,174,182,170,174,
+178 respectively. The first two also have 85 distinct hashes; other clips have
+a different number. The data preserve mapping counts and distinct hashes.
+
+A real 72-bone human skeleton was decoded independently. Sixty-two of its bone
+hashes intersect each of the first five selected clips. All 72 intersect the
+jump clip. Sixty-four of the 72 skeleton bones have resolved names. sample_pose therefore
+exposes 54 named bones in each of the first five clips and 64 in the jump clip.
+The other intersecting hashes identify real bones whose names remain unresolved.
+Only names confirmed against that skeleton are exposed as bone_name.
+Unmatched hashes are retained as unresolved bindings; they are not discarded
+or assigned anatomy based on their array positions.
+
+sample_pose(clip,time_seconds,integer_frame=None) maps those proved bone names
+to translation and quaternion_xyzw sample values. It ignores auxiliary channels
+and rejects duplicate transform assignments rather than silently overwriting.
+It returns an explicit transform_space warning: absolute versus additive and
+local versus model space have not yet been proved at the runtime pose consumer.
+
+The values are strongly consistent with absolute local transforms. For example,
+female grab LeftLeg translation starts approximately (0.43053615,0,0), compared
+with its decoded local bind translation (0.43053609,0,0), while its model bind
+translation is approximately (0.12815,-0.02653,0.50675). Hips starts near zero,
+as does its local bind translation. These comparisons are evidence, not proof
+of every animation mode. The reference does not automatically add the bind pose
+or propagate these tracks into model space.
+
+Serialized track reconstruction
+
+The actual selected clips were parsed to their exact ends, including all sample
+payloads. The track registry has 72 format selectors. Selected clips use:
+  three-float vector samples;
+  32-bit, 48-bit, three-float and one-axis 16-bit quaternion samples;
+  auxiliary byte and float samples;
+  byte, wider and bitmap-compressed keyframe encodings.
+The named data provide decoded values, actual keyframes, selector numbers, and
+encoded first samples for quaternion formats. Selector numbers are format IDs,
+not pointers. The reference implements the documented formats used here.
+
+Simple time encoding stores the first frame implicitly as zero, followed by
+one absolute frame index per additional sample. Compact forms use one byte per
+index; wider forms use unsigned 16-bit indices. These are absolute keyframes,
+not per-gap durations.
+
+Bitmap encoding stores a flag byte and a byte array. The flag's lower six bits
+are the array length; its upper two bits are a frame shift. Each set bit at
+position i denotes keyframe i*2^shift. The number of set bits equals the sample
+count for every decoded selected track. This reconstruction closes the landing
+clip's compressed timing; it does not leave its keyframes as opaque byte strings.
+
+Sampling and interpolation
+
+The sampler receives a float time, an integer frame query, and a saved key index.
+For simple times it advances from a usable saved index, or uses binary search.
+Select the last keyframe <=integer_frame, and the next keyframe when it exists.
+Equality advances to the key beginning at that frame. Before the first key use
+the first value; after the last use the last value. Constant tracks return their
+single value. Bitmap search similarly scans set bits around the shifted query.
+The saved index is a performance cache; the reference searches directly.
+
+For frames f0,f1, t0=f0/60 and t1=f1/60:
+  u=(clamp(time,t0,t1)-t0)/(t1-t0)
+  vector=(1-u)*v0+u*v1
+The fourth output component of a vector sample is zero in the runtime sampler.
+The reference returns only its three meaningful components.
+
+The complete upstream conversion from float time to the separate integer query
+has not been specified for every caller. If integer_frame is omitted, the portable
+API uses the conventional truncate(time*60); a caller can supply its actual
+integer query explicitly. Playback speed scaling, clock wrapping, reverse
+playback, blend weights and animation state selection remain outside this API.
+
+Quaternion compression
+
+The encodings reconstruct a positive omitted component:
+  omitted=sqrt(1-sum(stored_component^2))
+Insert it at the selected component index in the XYZW vector. Valid encodings
+are expected; the reference does not hide a malformed negative radicand.
+The runtime square root uses reciprocal-square-root approximation plus refinement;
+the portable code uses mathematical sqrt.
+
+32-bit quaternion:
+  index=word>>30
+  codes=[(word>>20)&1023,(word>>10)&1023,word&1023]
+  components=code*0.0013837706064805388-0.7071067690849304
+The code preserves float32 multiply/subtract rounding before reconstruction.
+
+48-bit quaternion has three unsigned 16-bit words:
+  index=bit15(word0)+2*bit15(word1)
+  components=(word&32767)*0.00004316100603318773-0.7071067690849304
+
+Three-float quaternion stores the three component float32 bit patterns directly.
+The low bit of the first float and low bit of the second float select index
+as bit0(first)+2*bit0(second). They remain part of the stored float values;
+the included decoder does not simply clear them before computing the norm.
+
+The one-axis 16-bit form supplies X=Y=0. Let
+  c=(word&32767)*0.00004316100603318773-0.7071067690849304
+  m=sqrt(1-c*c)
+If the high bit is clear, (Z,W)=(c,m); otherwise (Z,W)=(m,c).
+This is a quaternion component encoding, not a direct stored angle in degrees.
+
+Quaternion interpolation uses a normalized, angle-dependent approximation.
+Let d=dot(q0,q1). If abs(abs(d)-1)<=1.1920928955078125e-7, return q0.
+Otherwise negate q1 when d<0 to take the short orientation path.
+For d>=0.9893559813499451 use weight u directly. Otherwise:
+  A=0.5854921936988831*(1-0.8227968811988831*abs(d))^2
+  weight=u+A*u*(1-u)*(1-2*u)
+Return normalize(q0+(q1-q0)*weight).
+This is not a claim that the runtime code calls an exact textbook SLERP.
+The signed d controls the near-alignment branch before negation, as observed.
+
+Root motion and events
+
+The named Reference bone has real changing translation and quaternion tracks.
+For the jump clip its Reference translation starts approximately
+(-0.00184844,0.04659143,0.94964123) and ends near
+(0.00004536,0.00015736,0.00003529). The reference exposes
+measured_reference_translation_delta(clip,t0,t1) to inspect the difference
+between sampled Reference translations. This is measured clip motion; it does
+not prove that the game applies that delta to the physical character body.
+
+The game consumer that extracts, removes, scales or applies root motion remains
+unresolved. No physics integration is fabricated from that track. Animation
+resource headers and event-related references exist, but authored event playback,
+contact markers, grab activation and gameplay notifications have not been fully
+decoded here. Clip-name words such as LANDING and GRAB are not substituted for
+runtime event tracks or automatic state transitions.
+
+Validation and examples
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+Selected clip records have checked body sizes, keyframe counts, bitmap counts, increasing frames, sample widths and finite values. Floating-point results may differ slightly across implementations.
+
+EXAMPLE_OUTPUT.json contains samples at time zero, midpoint and end for each
+clip's Reference vector/quaternion tracks, resolved bone counts, measured
+Reference displacement, and a labeled synthetic quaternion blend. These are
+usable real samples, while complete state-machine playback, pose space, event
+semantics and physical root-motion application remain explicit gaps.

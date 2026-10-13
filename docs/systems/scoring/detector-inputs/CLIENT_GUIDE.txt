@@ -1,0 +1,60 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Jump acceptance event and independent category activation
+
+This pass extends the minimum-jump-duration selector with the side-effect
+ordering around acceptance. reference.py models finite supplied durations,
+minimum durations, numerical activity/category fields and bit flags.
+Run python3 reference.py for examples; test_reference.py has six checks.
+
+The caller marks either endpoint special when its surface identifier is 21,
+22 or 23. If either endpoint is special and any of the four low subflags is
+active, it first clears those four bits. If numerical category 2 is active and
+no remaining subflag exists, it requests category 2 deactivation. It then
+publishes a separate signal. This occurs BEFORE duration acceptance and can
+happen even when the jump is rejected for insufficient duration.
+
+The selected minimum remains the prior scoring selector's result. Duration
+accepts at equality: supplied_duration >= selected_minimum. Acceptance publishes
+a payload with duration and both endpoint-special booleans. Only numerical
+activity 2 explicitly writes the extra caller boolean into its payload field.
+Other activities leave that field untouched here; the reference omits it
+rather than inventing its constructor default.
+
+Payload publication precedes and does not require the later category gate.
+Category 4 activation additionally requires its enabled bit and either bit 0
+of the secondary mask, or bit 1 together with at least one special endpoint.
+An accepted jump can therefore publish its event without activating category 4.
+If the gate passes and category 4 is inactive, request its activation. Then,
+only when bit 0 of the channel mask was clear, increment the stored counter,
+write a pair of byte latches true, and set channel bit 0. Repeated accepted
+calls with that bit set retain the counter. This is a latch, not an unconditional
+one-point-per-event rule and not a score-bank commit.
+
+New proven ordering:
+    special-surface subflag cleanup and separate signal
+    minimum-duration comparison
+    accepted payload publication
+    independently gated category activation
+    guarded counter increment and latch writes
+
+Producer boundary
+
+The duration getter reads a cached component scalar. A targeted static scan
+found its getter and other reads but no proven writer in that component's
+nearby code. Generic same-offset writes elsewhere use different indexed object
+layouts and cannot establish the duration producer. Bulk copies and aliased
+base pointers also prevent treating a literal-offset scan as exhaustive.
+The accumulator/capture chain in landing-producers is a DIFFERENT proved
+consumer chain; this pass does not equate that accumulator with this cache.
+The exact cached-duration writer, raw detector timing, payload listeners and
+acceptance-to-score-bank effect remain unresolved. Numerical categories and
+the extra activity field are kept unnamed.
+
+Validation
+
+Six portable tests check strict rejection/equality acceptance, special signal
+before rejection, event publication independent of category eligibility,
+guarded repeated counter updates, activity-specific field write and exact
+special-surface identifier range. Tests are static equation/ordering checks.
+No native emulation or game execution was used for this scoring pass.

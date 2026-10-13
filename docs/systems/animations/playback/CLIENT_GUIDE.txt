@@ -1,0 +1,133 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+ANIMATION PLAYBACK, MARKERS AND LOOP BOUNDARIES
+
+This standard-library package reconstructs generic AnimationRootNode and
+AnimationDataNode runtime policies. Run `python3 reference.py` for examples.
+No game files or other analysis directories are required. Marker identifiers
+are opaque packed keys, not fabricated names for gameplay events. Equipment-
+specific rider state transitions are not established by these generic rules.
+
+Duration and reset behavior
+
+AnimationRootNode computes effective_duration=child_duration/source_multiplier.
+When abs(source_multiplier)<=0.00001, it substitutes one. It does not clamp a
+negative multiplier. The source comes from the graph playback context; its
+complete rider-input producer remains unresolved. A phase offset expressed in
+clip time becomes offset_time/clip_duration when abs(clip_duration)>0.00001,
+and zero otherwise.
+
+A reset operation queues initialization, stores its requested phase, clears a
+synchronization-result flag, sets a two-valued runtime status to2, and clears a
+runtime scalar. Cached evaluation consumes the initialization request only
+when it equals1. A nonnegative requested phase is capped at1; a negative phase
+requests marker/context entry resolution. Those marker/context selectors have
+not been reconstructed as complete rider transition policies.
+
+Inclusive phase wrap and delta
+
+Wrap preserves any value already in [0,1], including exactly1. Outside that
+interval it uses floating remainder. Thus1 remains1, but2 maps to0. A span with
+absolute magnitude<=0.00001 returns the lower bound. A reversed interval also
+returns its lower bound.
+
+After offsetting and wrapping both endpoints, delta=end-start. If negative,
+record a boundary crossing and repeatedly add1 until delta is nonnegative.
+This is forward phase travel, not a signed playback delta.
+
+Marker coordinates
+
+phase_to_marker maps normalized phase to a local fraction and adjacent marker
+keys. Its table consists of marker keys, segment durations and a total duration.
+The example's durations are synthetic [0.25,0.75,0]; actual authored clip markers
+must be supplied by the caller. For time=phase*total_duration, scan in order:
+
+    if time < accumulated+segment_duration:
+        fraction=clamp((time-accumulated)/((accumulated+duration)-accumulated),0,1)
+        first=current marker; second=next marker
+    else: accumulated += segment_duration
+
+An exact boundary belongs to the NEXT interval. If no interval is found, only
+the fraction becomes the invalid sentinel; previous keys remain unchanged.
+For abs(phase-1)<=0.00001, the nonloop path returns the final two keys with
+fraction1. The loop path returns last marker followed by the next occurrence
+of the first marker, also with fraction1. Packed occurrence advancement is
+implemented in next_cycle_marker, using the actual category/occurrence masks.
+Invalid tables or abs(total_duration)<=0.00001 return clamp(phase,0,1) with zero
+keys.
+
+marker_to_phase_nonloop implements the documented nonloop inverse path:
+
+    phase=(sum(durations before matching pair)+duration*local_fraction)/total
+    return min(phase,1)
+
+The first matching pair wins. In strict mode, a first-key match followed by a
+wrong second key immediately fails with the invalid sentinel. Category mode
+can continue searching. Invalid tables bypass mapping and return the supplied
+local fraction unchanged. Full repeated-cycle marker repair is not included.
+
+Loop boundary sampling schedule
+
+When no crossing is recorded, the node samples once using start phase, positive
+delta, frame time, and original flags. A crossing samples only if its cache is
+invalid, flagbit0 is set, flagbit2 is set while boundary cache is unready, or
+flagbit5 is set. If all fail, it emits NO sample.
+
+When allowed, the exact observed arithmetic is:
+
+    tail_delta=1-start
+    first_frame_time=tail_delta/(1-positive_delta)*frame_time
+    sample(start,tail_delta,first_frame_time,flags with bit5 cleared)
+    reset boundary state
+    sample(0,end,frame_time-first_frame_time,original flags)
+
+The denominator is1-positive_delta. It is not replaced with positive_delta.
+Preserve this unusual time allocation when implementing the boundary split.
+For start0.9,end0.1,delta approximately0.2 and frame_time0.016, the first sample
+receives about0.002 seconds and the second0.014. The two times sum to the input
+frame time. The function does not clamp the split; unusual inputs can produce
+negative remaining time. A delta of1 divides by zero in the runtime branch;
+Python raises ValueError instead of fabricating a split.
+
+Between the samples the engine resets boundary cache state and a channel
+tracker. Optional pose/context callbacks run when flagbit2 is set. Their full
+payload semantics remain unresolved, so the numeric flag gates are preserved.
+This is proved sample/cache ordering, not a complete gameplay-event policy.
+
+Transition duration and custom specification selection
+
+choose_transition_duration preserves the initializer's precedence:
+
+    if override is supplied and differs from invalid_sentinel:
+        duration=override
+    elif variable mode:
+        duration=max(variable_lookup_result,0)
+    else:
+        duration=literal_duration
+
+Only the variable result is clamped. Negative explicit overrides and negative
+literal durations pass through unchanged. The variable lookup provider and its
+key are external inputs; this package does not invent their rider semantics.
+The invalid sentinel is the largest finite float32 value in named_data.json.
+
+select_custom_transition scans source candidates in stored order and, for each,
+scans target candidates in stored order. Equal selectors and two nonzero
+eligibility values replace the selected target. Consequently the LAST eligible
+pair wins. The runtime selector and eligibility fields are unsigned 16-bit
+values; callers should preserve that domain. The target is an opaque custom
+transition definition. This rule chooses a custom transition specification,
+not a global state-machine edge or interrupt winner. Subsequent allocation,
+cloning and provider lookup remain engine-side boundaries.
+
+Validation and remaining scope
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+Remaining scope: rider-selected state-machine edges, interrupt arbitration,
+transition progress/rate update, complete playback multiplier and variable
+lookup producers, looping marker occurrence repair, and gameplay meanings of
+boundary flags/events. These are generic engine kernels; authored rider graphs
+have not been proved to select these branches. The examples and client files
+are self-contained.

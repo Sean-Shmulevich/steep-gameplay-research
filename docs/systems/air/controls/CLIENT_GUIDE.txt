@@ -1,0 +1,161 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: The response denominator, special roll gain and environmental velocity publication are now specified in air/integration/CLIENT_GUIDE.txt. Initialized preset breakpoints and mode/brake selection are now in air/selection.
+
+AIR CONTROL INPUTS, PRESET SELECTION AND PARAGLIDER ANGULAR RESPONSE
+
+This supplement describes further input producers and angular-control formulas.
+reference.py and named-settings.json work together offline with Python's standard
+library. Run python 3 reference.py for worked examples. No game files are needed.
+The examples use mathematical real arithmetic; runtime calculations use floats.
+
+Input meanings and scope
+
+Each ordinary live air update reads a primary control vector and a secondary
+control vector. Their first two components are called turn_x/turn_y and
+secondary_x/secondary_y here. These are functional names: the physical stick,
+key, controller remapping and device dead-zone bindings remain unproven.
+Wingsuit and paraglider use different primary action sources and share the
+ordinary secondary source. Paraglider has an alternate input mode that switches
+both action sources. The exact device/mode label is unresolved.
+
+The primary x component drives yaw. Primary y chooses the flight preset and
+produces paraglider pitch control. Secondary x drives wingsuit strafe. The value
+compared against its magnitude in the strafe dominance gate is secondary y,
+not a previous frame or the primary yaw input. Thus the documented strafe gate is:
+  if abs(secondary_x) <= 0.000009999999747378752
+     or abs(secondary_x) < abs(secondary_y):
+      arm the strafe trigger; command zero strafe
+  else:
+      evaluate the impulse timer and direction latch
+Equality of the two magnitudes permits the strafe branch. The existing impulse
+hold/retrigger law then consumes the same secondary x. No input clamp appears
+in this consumer.
+
+Wingsuit turn response scaling
+
+Let x=turn_x, s=secondary_x and gain=1.5 in the decoded Wingsuit settings:
+  scale = 1                         if abs(s)<=epsilon or abs(gain)<=epsilon
+  scale = 1                         if abs(x)>epsilon and sign(x)!=sign(s)
+  scale = gain*abs(s)                otherwise
+The yaw filter window is max(dt, configured_yaw_window/scale). This is not a
+universal speedup: s=.2 produces scale=.3 and lengthens the response window.
+Same-direction x=.2,s=.8 produces 1.2; opposite-direction x=-.2,s=.8 produces 1.
+The physical input range remains an external input contract.
+
+Preset interval selection
+
+The normal live update uses primary turn_y directly for selection:
+  selector = (turn_y+1)/2
+  result = (first preset, first preset, blend zero)
+  for each of the two adjacent runtime breakpoint intervals, in order:
+      if lower < selector <= upper:
+          result = (left preset, right preset,
+                    (selector-lower)/(upper-lower))
+          stop
+The consumer interpolates the selected settings, then applies its documented
+response filter. The interval search does not clamp selector. A value outside
+all intervals returns the first preset. At a shared breakpoint the earlier
+interval wins. air/selection establishes initialized breakpoints [0,.5,1].
+reference.py retains explicit arguments to support runtime overrides. With those
+inputs: turn_y=-.5 blends presets A/B equally; 0 selects B; +.5 blends B/C equally;
++1 selects C; values above +1 fall back to A. At -1 the initialized A result remains.
+
+There is also a separate prediction/non-live branch with a persistent selection
+accumulator and adjustment gates. This supplement does not claim that branch's
+accumulator is the normal player preset input. A third separately read control
+vector is response-filtered by the common update; it is not the normal live
+preset selector proven above.
+
+Paraglider moment-like control contributions
+
+Angles are radians and angular rates are radians per second in the angular
+integrator. The returned contributions are multiplied by a separate angular
+response scalar before integration. They are not claimed to be physical torque
+in newton metres; inertia, mass and that response scalar's producer remain open.
+The output order in reference.py is pitch, roll, yaw.
+
+Let p be pitch, wp pitch rate, wy yaw rate, x/y primary input components, b the
+resolved brake scalar and F(abs(p)*180/pi) the decoded pitch-factor curve.
+For the ordinary update that permits new pitch/yaw control:
+  pitchMoment = -200 * F(abs(p)*180/pi) * y
+  suppress pitchMoment when either complete gate is true:
+    abs(p)>1.1344640254974365
+      AND (wp-sign(wp)*0.8726646304130554)*y>0
+    b>0.10000000149011612
+      AND y<-0.10000000149011612
+      AND p>1.0471975803375244
+  yawMoment = -165*x
+Then, including the preserve-control branch:
+  pitchMoment *= 1 + 2.200000047683716*b
+  yawMoment   *= 1 + 1.850000023841858*b
+The preserve-control branch retains the prior pitch/yaw contributions instead
+of recomputing them and skips those suppression gates, but still applies the
+brake multipliers again. Reference inputs expose this behavior explicitly.
+The angular pitch thresholds are approximately 65 and 60 degrees; the rate
+threshold is approximately 50 degrees per second. Comparisons are strict.
+
+Roll contribution uses yaw rate, not turn_x:
+  rollMoment = -250 * abs(wy) * wy
+  if b>0.10000000149011612 AND roll_brake_suppression_flag is false:
+      if special_input_mode:
+          rollMoment = special_roll_gain * secondary_x * 100
+      rollMoment *= 0.9350000023841858
+The special_roll_gain remains an explicit runtime input. Do not substitute a
+physical coefficient or assign this branch an unproven controller layout.
+A separate flag preserves old pitch/yaw values; another suppresses the braked
+roll modification. The caller state producers for these flags remain open.
+
+Brake input source
+
+Ordinary mode reads a scalar brake action. Alternate mode can substitute
+abs(secondary_x) when a separate action gate is inactive. A persistent latch can
+force that substituted value to zero until the secondary input returns to zero.
+reference.py starts at the resolved scalar b and does not manufacture the
+unresolved action gate/latch state. Brake is not clamped in the moment consumer.
+
+Pitch factor curve and its actual use
+
+The control consumer proves both degree conversion and multiplication into
+pitchMoment. The decoded TorquePitchFactorCurveOfTorqueAngle_Paraglide has
+knots (0,1),(90,1),(180,.05000000074505806). The first segment is linear and flat;
+the second uses cubic Bezier x and y coordinates, with x inverted to find its
+parameter. named-settings.json contains all authored handles. F(120 degrees)
+is approximately .7637290694. Wrapped normal pitch gives abs(p) in 0..pi, covering
+the verified 0..180 degree domain. The reference extends endpoint values outside
+that domain as an explicit convenience; out-of-domain runtime curve behavior is
+not validated here. The stored optional x clamp flag is false; it is not proof
+of extrapolation or endpoint handling.
+
+Worked examples
+
+At x=.25,y=.5,p=30 degrees,wp=0,wy=.2,b=0:
+  pitch=-100,roll=-10,yaw=-41.25.
+At the same inputs with b=.5:
+  pitch=-210.0000023842,roll=-9.35000002384,yaw=-79.4062504917.
+At p=70 degrees,y=-.5,b=.5,wp=0:
+  the second pitch gate suppresses pitch to 0; roll/yaw retain those braked values.
+At wy=-.2 the unmodified roll contribution is +10. This sign follows yaw rate.
+
+Decoded angular coefficients
+
+named-settings.json preserves the complete actual 19-float block, including
+unresolved coefficients rather than giving them invented names. The known
+linear damping values are pitch/yaw .00009999999747378752 and roll .3000000119;
+quadratic resistance gains are pitch 24.5,yaw 165,roll 150. Those belong to the
+previously documented angular integrator, in addition to the contributions above.
+Do not add rollMoment a second time as quadratic roll resistance: they depend on
+different rates (yaw for this control term, roll for resistance).
+
+Validation and remaining boundary
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+Moment equations and pitch-factor evaluation are separate stages. Their examples do not validate actor notifications or the complete flight simulation.
+
+Open inputs: later preset overrides; device bindings; remaining mode/state producers;
+response scalar; special roll gain; initial moment state. Lift-zone geometry and
+sampling remain in the earlier air guide; this pass does not claim a completed
+lift-manager signal-to-authoritative-player-velocity chain. The moment formulas
+are a documented local control law, not a complete flight simulator.

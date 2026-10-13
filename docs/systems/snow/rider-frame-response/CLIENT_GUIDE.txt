@@ -1,0 +1,53 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Rider longitudinal bias from frame alignment
+
+This closes the producer of offset_response in snow/rider-targets. Previously
+that multiplier was an explicit unknown input. It is a projected directional
+response, approximately normalized asin, rather than a constant.
+
+Given cached source direction v, cached axis n and cached reference vector r:
+    p = v - dot(v,n)*n
+    u = p / length(p)
+    cosine = dot(u,r)
+    response = sampled_normalized_asin(cosine)
+
+For a unit frame, the ideal curve is 2/pi * asin(cosine). Directions aligned,
+perpendicular and opposed to r produce approximately +1, 0 and -1. A direction
+60 degrees from r has cosine .5 and response approximately 1/3. This is an
+alignment response: do not substitute the angle itself or a linear cosine gain.
+The exact world meanings and all writers of these three cached vectors remain
+open. The inspected arithmetic does not normalize n or r.
+
+Connection to the existing rider target:
+    longitudinal = -height*sin(pitch) + neutralLongitudinalOffset*response
+The lateral target and final vertical=height rule are unchanged. For synthetic
+neutral offset .2 and zero pitch, the bias changes from about +.2 to 0 to -.2
+as alignment changes. This is a physical rider target connection, not proof of
+an authored animation blend or the complete leg-constraint solve.
+
+Curve construction details
+
+There are 256 linear segments sampled at x=-1+i/128, i=0..256. Each y is
+asin(x)*0.6366197466850281. Slopes and intercepts use the unpadded sample positions.
+The INDEX range is padded separately:
+    padding = 0.0005000000237487257
+    origin = -1 - 2*padding
+    scale = 256 / (2 + 4*padding)
+    index = floor((x-origin)*scale)
+Below range, use segment0 at origin. Above range, use segment255 at
+origin+256/scale. Otherwise evaluate slope[index]*x+intercept[index].
+
+Do not sample asin outside [-1,1], and do not silently clamp the final response
+to [-1,1]. The padded endpoints extrapolate slightly beyond unit output. The
+reference reproduces this indexing in mathematical precision; platform asin,
+float rounding and reciprocal-square-root approximation are not bit-exact.
+
+Implementation boundary
+
+Supply the actual cached frame when known. A prototype may choose a compatible
+unit frame, but that choice is an approximation until its source mapping is
+closed. A zero projected direction has no established safe native fallback.
+The portable helper raises an error there so the caller must choose a policy.
+Run reference.py for examples and test_reference.py for geometry, curve shape,
+boundary, sign and degenerate-input checks. No live-game validation was run.

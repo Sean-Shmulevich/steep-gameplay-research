@@ -1,0 +1,45 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+JUMP, ROTATION AND LANDING INTEGRATION FIXTURE
+
+Run python3 reference.py from the complete package. It imports the existing body, snow/integration and tricks/rotation formulas plus the new motion-lifecycle and angular-routing contracts. This is an executable integration fixture with supplied inputs and gates. It is not a recovered universal per-frame scheduler, a playable simulation or proof of flight trajectory parity.
+
+The two cases use the same synthetic primary input and selected 360-degree limit. They differ by the established ski X/Y remapping. A separate target-angle calculation yields a quarter-second procedural rotation. This does not choose a clip or prescribe animation playback speed.
+
+Useful sequence, with unresolved joins kept explicit:
+
+  sample terrain group -> resolve material and fluid wrapper
+  clip immersed hull and assemble snow forces/impulses
+  update immersion-derived contact and air clocks
+  cook charge and evaluate release signal
+  if jump gates allow: apply configured mass-split central impulse
+
+  choose motion state                         [global selection remains open]
+  on primary entry: initialize its limit, inputs and rotation caches
+  update input activation latches
+  compute vector rotation proposal with sport-axis mapping
+  apply intensity/sign acceptance
+  apply direction lock and optional mixed-axis boost
+  restore magnitude from saved intensity and selected angular limit
+  assemble heading/auxiliary angular output
+  build procedural target pose
+  publish target matrix                      [complete physical consumer open]
+
+  evaluate landing candidate using air clock and approach direction
+  evaluate upright correction/frozen branch
+  conditionally assign body linear velocity and zero angular velocity
+  publish target, request successor state, reset specified motion fields
+
+  refresh animation angular cache when its mode gate allows
+  apply any special graph override
+  publish ordinary and combined animation inputs with write guards
+  traverse authored graph                    [binding/selection remains open]
+  sample, blend and apply IK using existing animation modules
+
+Only the local orders explicitly described in each module are traced. The ordering between snow, state-machine, graph evaluation and rendering phases still needs caller evidence. The scalar-assistance states are alternative motion paths with their own saved gains, horizon and successor correction. Do not apply all scalar and vector rules cumulatively to every frame.
+
+The worked fixture supplies a release signal of 1, not a measured controller event. It uses 80 total mass and the authored rider split only as a chosen numerical example. With no new accepted proposal, zero input does not automatically replace the stored rotation with zero. Conditional landing reset then clears body angular velocity while an independently demonstrated graph override may still publish (0,0,150). These are deliberately separate state stores.
+
+clip_anchors.json provides 12 confirmed resource matches: takeoff, airborne and pre-landing clips for backflip and left spin in each of two authored groups. Every match retains duration, export metadata and all matching serialized output GUIDs. Group labels are not a proven mapping to runtime sport enums. The stage words come from asset labels. Their existence does not prove legal transitions or that clip duration equals time for one physical turn. Complete transition priorities, binding lowering, playback-rate choice and blend weights remain open.
+
+The corresponding new tests are integration/regression checks, not comparisons with a running game. No game or original-instruction emulator was launched.

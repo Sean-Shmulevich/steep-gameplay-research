@@ -1,0 +1,85 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PROCEDURAL TARGET-POSE ALIGNMENT AND DELAYED TILT
+
+This module supplies inspected arithmetic and portable examples. It is a partial
+procedural pose builder, not a complete animation controller or a landing timer.
+All examples use synthetic inputs. Float64 reference math is not bit-exact SIMD.
+Vectors here use Z up, XYZ direction components and zero homogeneous direction W.
+
+1. Alignment weight
+
+Inputs retain neutral names because their producers are not completely mapped:
+  elapsed, horizon, configured minimum_horizon, start_marker
+
+  weight = elapsed/horizon if horizon > minimum_horizon else 0
+  if start_marker > 0:
+      weight = 0.8999999761581421 * (elapsed-start_marker)/(horizon-start_marker)
+  weight = clamp(weight, 0, 1)
+
+The positive start marker OVERRIDES the minimum-horizon branch. At elapsed equal
+to horizon this variant reaches approximately 0.9, not 1. It can reach 1 later.
+Do not call horizon predicted landing time until its producer is established.
+Division guards in reference.py are portable error policy; no such native guard
+was observed for coincident horizon and positive start marker.
+
+Two independent runtime predicates suppress alignment. Their complete gameplay
+meanings remain open. Call align_basis only when both permit it.
+
+2. Directional alignment
+
+  axis = cross(source_direction, target_direction)
+  if length(axis) <= 0.009999999776482582: leave basis unchanged
+  else:
+      axis = normalize(axis)
+      angle = acos(clamp(dot(normalize(source), normalize(target)), -1, 1))
+      rotate each of the three basis vectors around axis by weight*angle
+
+The threshold precedes direction normalization. Exactly antiparallel directions
+therefore also skip alignment. Do not invent a half-turn fallback. Translation
+is unchanged by this helper. The reference uses Rodrigues rotation, equivalent
+to the axis-angle quaternion operation for valid finite direction inputs.
+
+3. Delayed response now has a procedural pose consumer
+
+tricks/response-delay explains the delay producer. Its separate response is:
+  t = elapsed-delay
+  angle = 0 if t < 0 else -gain*(tau*(exp(-t/tau)-1)+t)
+
+The stored result is consumed as an ANGLE IN RADIANS, not angular velocity:
+  horizontal = (cached_motion.x, cached_motion.y, 0)
+  if every abs(component) <= 0.000009999999747378752: skip tilt
+  else:
+      axis = normalize(cross(world_up, normalize(horizontal)))
+      rotate all three basis vectors around axis by angle
+
+Positive X cached motion produces a positive Y axis. A negative response tips
+the up vector toward negative X. Vertical motion is excluded from the axis.
+The cached vector's full producer remains to be joined; this does not establish
+complete rigid-body actuation or claim every animation graph uses this pose.
+
+4. Observed builder sequence
+
+Copy saved pose; conditionally align directions; save the resulting third basis;
+apply the existing world-up rotation stages (one raw angle, a degree-to-radian
+heading, then an optional raw angle); apply the delayed tilt described above;
+finally set translation.xyz -= position_a-position_b and translation.w = 1.
+Position meanings and the full surrounding controller schedule remain open.
+reference.py isolates alignment, tilt and translation. It intentionally does not
+pretend to implement the unresolved surrounding controller or state predicates.
+
+5. Remaining animation/timing gaps
+
+Known: skeleton hierarchy, selected sampled tracks, ordinary/additive assembly,
+playback/marker arithmetic, blend operators, angular routing, several procedural
+and absorption formulas, and the conditional alignment/tilt rules above.
+
+Incomplete: authored input-to-state-to-clip selection, active transition and mask
+selection, live timing/weight inputs, contact-lock and IK activation scheduling,
+full root-motion/body coupling and sport-specific selection. Generic playback
+and blending arithmetic being known does not establish the selected durations
+or weights for a particular landing.
+
+The current small prototype still uses a procedural rider. Its chosen landing
+settle duration should not be represented as a recovered authored timing. No
+prototype change is made by this research module.

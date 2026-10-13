@@ -1,0 +1,63 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Current camera routing and cached configured-angle reads
+
+The configured-angle getter does not refresh projection state. It queries the
+current camera through a mode selector and reads that camera's cached aspect.
+A second selector uses the same mode branches, then updates the selected
+camera's projection cache. Keeping these operations separate matters when
+viewport settings or the selected camera change.
+
+Current camera routing
+  mode 1 and external owner present: external owner's camera
+  mode 2: secondary camera
+  modes 3, 4, 5: shared camera
+  every other mode: default camera
+
+For mode 1, absent external owner uses the default. A present external owner
+whose camera is null returns null, without trying the default. The selected
+secondary/shared pointers can also be null. Numeric modes are preserved;
+there is no documented gameplay name assignment for them in this supplement.
+
+Refresh query selects the same pointer and calls projection-cache update only
+when that pointer is nonnull. A direct query does not perform that update.
+Horizontal configured-angle mode uses a direct query. Its float32 operations are:
+  a = raw_angle
+  numerator = 1 * 0.5
+  denominator = (1 / cached_aspect) * 0.5
+  t = tan(a * 0.5)
+  half_angle = atan(numerator / (denominator / t))
+  output = half_angle + half_angle
+
+For finite, positive aspect and ordinary nonzero angles, the algebra reduces
+to 2*atan(cached_aspect*tan(raw_angle/2)). The reference retains the observed
+operation order instead of replacing all divisions with that simplification.
+Other configured-angle modes return the raw angle. Horizontal mode also returns
+raw when the current-camera query yields null. Zero aspect, zero tangent and
+nonfinite values are outside this portable arithmetic example.
+
+Worked example
+A mode-2 router selects a secondary camera with cached aspect 2. With a raw
+angle of pi/3 and configured mode 1, the first read uses that existing cache.
+An explicit refresh updates only the secondary cache to .75, and the second
+read produces a smaller angle. The default camera receives no update. These
+values are synthetic. The refresh function is supplied by the caller in the
+portable example; the projection preparation chapter supplies actual ratio
+production rules. This supplement does not establish global update scheduling.
+
+Correction to an earlier investigation boundary
+An execution-wrapper method previously called an angle delegate takes output
+pointers used as angular limits by a caller accumulating interactive camera
+rotation. Its forwarding slot alone cannot establish scalar FOV production.
+The caller clamps one accumulated component against those returned limits.
+Do not connect that method directly to the renderer's projection-angle field.
+
+Verification and remaining limits
+Run python3 reference.py and python3 test_reference.py. Six structural tests
+cover mode routing, absent/present external owners, null camera fallback,
+read-versus-refresh behavior and cached conversion. No native comparison was
+run for this module. Static instruction and constant inspection support
+the documented connections. The full selected configured-angle-to-renderer
+angle writer, mode producers and actor condition producers remain unresolved.
+The query's lack of refresh does not prove that the live cache is stale; another
+caller may have refreshed it earlier.

@@ -1,0 +1,26 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+snow_game flight command consumer boundary
+
+The documented flight controller publishes base velocity plus processed
+environmental velocity. Its live branch adds position correction divided by dt
+and copies the result unchanged into the actor component's selected movement
+request. Actor construction supplies that request to the flight controller.
+This object also receives an orientation update through a separate setter.
+
+The next request-to-collision/body step remains unresolved. Treat the published
+velocity as a command until a host movement backend resolves it. Its length is
+not independent proof of actual travel speed after collision handling. This
+supplement supplies no invented collision projection or direct rigid-body force
+law for that boundary.
+
+A separate pose/physical postprocess performs spatial queries, writes a result
+vector into physical state, and conditionally enters a snow-runtime update.
+That postprocess has not been joined to the flight movement request. Equal
+numeric field offsets in separate objects do not establish the connection.
+
+The bounded static search inspected nearby actor functions and full-image
+vector-field candidates, then rejected several serialization/container and
+pose-state matches. It does not prove that a consumer is absent elsewhere or
+that indirect dispatch cannot connect the request. No new native equivalence
+or complete gameplay result is claimed by this supplement.

@@ -1,0 +1,75 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Viewport framing and projection preparation
+
+This supplement connects normalized framing to pixel spans, the renderer's
+aspect cache and its narrow-viewport angle adjustment. Run python3 reference.py
+for finite-input examples. Angles are radians. Arithmetic uses float32 rounding;
+host tangent/atan results may differ slightly across math libraries.
+
+Normalized framing
+The framing calculation takes two positive viewport spans X,Y and a mode.
+Mode 2 fits a centered 16:9 rectangle; modes 1 and 3 fit a centered 4:3 rectangle.
+Other modes use the full rectangle, except mode 4 which leaves the existing
+normalized rectangle unchanged. These numeric modes are viewport framing modes,
+not the separate Vertical/Horizontal configuration enum.
+
+For target ratio r, choose an inner rectangle:
+    innerX = X
+    innerY = X/r
+    if Y <= innerY:
+        innerX = Y*r
+        innerY = Y
+    normalized = [(X-innerX)/2/X, (Y-innerY)/2/Y, innerX/X, innerY/Y]
+The actual float constants are .5625 and 1.7777777910232544 for mode 2,
+and .75 and 1.3333333730697632 for modes 1 and 3. reference.py preserves
+multiplication by these stored reciprocals instead of replacing it with division.
+
+Pixel rectangle
+Given viewport origin O and spans S, each normalized component is multiplied
+by its corresponding span and rounded with floor(value+.5). The origin is added
+only to the first two components, after rounding. This is not bankers rounding.
+With no viewport, the calculation uses origin [0,0] and spans [1,1].
+
+A 1920 by 1080 viewport framed to 4:3 produces [240,0,1440,1080]. The latter
+two components are the spans passed to projection-aspect preparation. A separate
+viewport-size multiplier affects another output rectangle; it is not applied
+to the two spans used for this aspect calculation.
+
+Projection aspect and angle
+The cached ratio is produced as follows:
+    aspect = configured_aspect_scale
+    if viewport_exists:
+        factor = 4/3 if framing_mode == 3 else 1
+        if spanX != 0 and spanY != 0:
+            factor *= spanX/spanY
+        aspect = configured_aspect_scale * factor
+        if global_aspect_override_enabled:
+            aspect = supplied_global_aspect
+        if aspect < reference_aspect:
+            angle = 2*atan(tan(angle/2)*reference_aspect/aspect)
+The reference uses the stored float32 4/3 constant and documented operation
+order. The override supersedes the computed ratio only in the viewport-present
+branch. A zero span skips division but does not skip override or angle handling.
+Zero resulting aspect and nonfinite inputs are outside the portable examples.
+
+The resulting aspect is saved in the same camera cache used by the separately
+documented mode-1 configured-angle conversion. Its value is therefore not
+universally an unmodified viewport ratio: configured scale, framing mode 3 and
+a global override can change it. Do not substitute a fixed height/width value.
+
+The prepared angle is passed to the perspective matrix path when projection
+mode is zero. Other projection modes use a separate size selection. This is
+still not proof of the complete configured-angle-to-live-projection path.
+
+Limits and checks
+The framing, pixel-rounding, cache connection and local projection branches
+were checked against their instruction/control flow. The portable examples
+exercise wide and tall viewports, preserved mode-4 state, mode-3 scaling,
+missing-viewport behavior and an explicit aspect override. This supplement has no additional isolated runtime comparison; its checks
+cover the included branches and portable examples.
+
+The producer of the configured aspect scale, global override value, selected
+projection angle and all physical viewport-axis conventions remain integration
+boundaries. This supplement does not assign state names to framing modes or
+supply camera shake, occlusion or complete live camera selection.

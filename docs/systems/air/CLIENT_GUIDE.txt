@@ -1,0 +1,162 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS TWELVE UPDATE: air/collision-coupling records request ownership and the still-unresolved collision consumer; no new motion formula is claimed.
+
+CURRENT UPDATE: Controls and movement integration are in air/controls and air/integration. Initialized presets, mode selection, brake lifetime and recovery hysteresis are in air/selection.
+
+DOCUMENTED AIR MOTION — OFFLINE IMPLEMENTATION NOTES
+
+This folder contains usable local motion equations and actual decoded settings.
+Run python3 reference.py. It needs only Python's standard library and the adjacent
+named-settings.json. The lift subfolder separately documents real thermal/ridge
+sampling and supplies its own reference implementation and settings.
+
+Coordinates and conventions
+Velocity components are metres per second. World up is positive Z. At zero yaw,
+horizontal forward is positive Y. Positive yaw rotates forward toward negative X.
+Angles in the runnable examples are radians; explicitly marked settings use
+degrees. Time is seconds. Angular state order is pitch, roll, yaw.
+
+PARAGLIDER: ACTUAL FORCE LAW
+Inputs: velocity v, oriented unit surface-up n, lift gain L, drag gain D, timestep
+h, an averaged brake signal, optional gravity boost signal and its multiplier.
+The gains are game tuning coefficients, not conventional dimensionless CL/CD.
+
+H2 = vx*vx + vy*vy
+Qdown = H2 + min(vz, 0)^2
+Qup = max(vz, 0)^2
+lift = L * Qdown * n - Qup * world_up
+horizontal_drag = -D * H2 * unit((vx,vy,0))
+gravity = (0,0,-9.8100004196167)
+
+If both abs(vx) and abs(vy) are <=0.000009999999747, the branch returns
+(vx,vy,0) unchanged as its drag output. Otherwise it normalizes and applies the
+negative quadratic gain above. At ordinary speed this is quadratic horizontal drag. Upward speed is
+not included in the lift coefficient term: it instead produces a separate,
+unscaled downward squared-speed contribution. There is no square root of Qdown.
+
+If boost > 0, gravity is multiplied by 1 + (gravity_multiplier - 1)*boost.
+This branch does not clamp boost to one.
+
+Normal update:
+    if brake_signal > 0.1:
+        vx *= 1 - 0.04*brake_signal
+        vy *= 1 - 0.04*brake_signal
+        vz *= 1 - 0.03*brake_signal
+    compute forces using the resulting velocity
+    velocity += h*(gravity + lift + horizontal_drag)
+The brake attenuation is per update; the factors do not contain h.
+
+Surface-up comes from Rz(yaw)*Rx(surface_pitch)*Ry(limited_body_roll) applied to
+world up. Surface pitch, body pitch, and flight angle are distinct quantities.
+
+Actual three presets (rounded here; JSON retains decoded float precision):
+response(s)  body pitch(deg)  L       D       surface pitch(deg)
+0.6          +10              .363    .370    -80
+0.8          -20              .165    .175    -80
+0.5          -60              .015    .015    -30
+The selected pair and blend fraction are supplied by upstream behavior. This
+implementation does not claim that a particular input button always selects a
+particular row.
+
+Analytically derived still-air equilibria of this force law, without brake,
+boost, bank, external lift or time-varying selection:
+row 1: horizontal 12.262364 m/s, sink 2.294335 m/s, glide ratio 5.344626
+row 2: horizontal 17.830193 m/s, sink 4.946636 m/s, glide ratio 3.604509
+row 3: horizontal 19.431601 m/s, sink 19.431600 m/s, glide ratio 1.000000
+These are calculated equilibria, not separately stored game trim constants.
+For surface tilt theta = -surface_pitch:
+    r2 = D/(L*sin(theta)) - 1
+    horizontal = sqrt(g/(L*cos(theta)*(1+r2)))
+    sink = horizontal*sqrt(r2)
+A descending equilibrium needs positive gains, cos(theta)>0, and r2>=0.
+The reference checks that all three force components cancel at each equilibrium.
+
+A prediction branch uses the same force law for 30 explicit Euler steps of 0.25
+seconds, a 7.5-second forecast, with interpolated preset gains and surface pitch.
+This is separate from the normal per-update integration.
+
+A saved-trajectory branch replaces normal force integration while its timer is
+active: velocity = saved_velocity * configured_curve(normalized_timer_progress).
+The curve resource is named TorquePitchFactorCurveOfTorqueAngle_Paraglide, but
+this documented consumer supplies timer progress, not torque angle. Its actual
+curve is flat at 1 from argument 0 through 90, followed by a cubic segment toward
+0.05 at 180. Thus ordinary normalized progress in [0,1] leaves saved velocity
+unchanged. A physical torque-angle interpretation is not established by its name.
+
+WINGSUIT: PRESET VELOCITY, INTERPOLATION AND RESPONSE
+Documented normal motion reconstructs a commanded velocity from filtered
+horizontal and downward speeds rather than evaluating the paraglider force law:
+    velocity = (-H*sin(yaw), H*cos(yaw), -S)
+Actual presets:
+response(s) body pitch(deg) speed(km/h) flight angle(deg) H(m/s)    S(m/s)
+0.8         -30             125         25                31.469023  14.674248
+0.8         -35             160         65                18.783033  40.280350
+1.5         -90             210         80                10.129473  57.447124
+Stored components agree with speed/3.6*cos(flight angle) and
+speed/3.6*sin(flight angle) to float rounding. Body pitch is not flight angle.
+
+Given selected rows A,B and fraction a, clamp a to [0,1]. Interpolate response
+window, H, S linearly. Body pitch uses shortest-angle interpolation. These targets
+feed duration-weighted trapezoidal response channels:
+    W = max(h, selected_response_window)
+    new_integral = (old_integral/old_window)*(W-h)
+                   + 0.5*(new_target+old_target)*h
+    output = new_integral/W
+    store new_target, new_integral, W
+Initial channel state must come from the caller; this formula assumes a nonzero
+old window. It is a recurrent filter, not a simple exponential interpolation.
+For example, old target=2, integral=2, window=1, new target=4, h=.1 and window=1
+produce output 2.1. The midpoint of the first two presets targets H=25.126028,
+S=27.477299, body pitch=-32.5 degrees and response=.8 seconds.
+
+Documented strafe tuning sets target lateral speed to
+    6 + 0.12*sqrt(filtered_H^2 + filtered_S^2)
+with a .35-second speed filter and .35-second impulse duration. The retrigger
+threshold is 2.2 and turn-response gain is 1.5. Further envelope settings include
+zero rise and decay rates and a peak of 1.5. These are decoded inputs to the
+stateful strafe controller; the full trigger/hold/release state machine is not
+reconstructed here. The speed is m/s, including the camera's 10 m/s full-strafe
+response endpoint. Remaining earlier device-feedback fields are not relabeled as
+aerodynamic coefficients.
+
+ANGULAR RESPONSE AND ROLL RECOVERY
+For pitch p, roll r, angular rate w and tuning gain K:
+    restoring = (-g*K*sin(p)*cos(r), -g*K*sin(r), 0)
+    resistance_i = -quadratic_gain_i*w_i*abs(w_i)
+    acceleration_i = response_scale*(input_moment_i + restoring_i + resistance_i)
+Input moments and response-scale producers remain caller inputs; they are not
+assigned unproven SI torque/inertia meanings.
+
+The documented integrator evaluates old acceleration, advances wrapped angles by
+w*h + .5*a_old*h^2, evaluates new acceleration at the new angles and old rates,
+then advances rates by .5*(a_old+a_new)*h. Each rate is subsequently multiplied by
+1-h*its_linear_damping. A slow yaw rate receives extra damping when its magnitude
+is below the configured threshold and either the special braking flag is active
+or its magnitude is smaller than the prior rate's magnitude. Damping factors are
+not clamped; unusually large h can reverse their sign.
+
+When roll recovery is enabled and abs(roll_degrees)>=85:
+    roll_rate = sign(roll_rate)*5
+    pitch_rate = -pitch_angle*.3
+    set both recovery flags
+At abs(roll_degrees)<=15 clear both flags. Otherwise at <=50 clear the secondary
+flag. The forced rate and pitch gain are actual decoded settings; normal angular
+resistance and damping remain explicit functional tuning inputs in the reference.
+
+Boundaries and validation
+The paraglider force arithmetic was executed independently for 300 controlled
+random cases. Orientation/limiter helpers were replaced by supplied unit surface
+vectors and gravity boost was zero. Maximum absolute difference against the
+reference algebra was 0.000158, consistent with float rounding. This validates
+the local arithmetic, not a complete game simulation. No game was launched.
+The portable examples also check equilibrium cancellation, wingsuit reconstruction,
+angle interpolation, response recurrence and the upward-speed force branch.
+
+Additional preset interval and angular input-moment producers are now
+explained in air/controls. Still unresolved: full state/device bindings and
+all strafe trigger branches;
+complete integration of manager lift signals into player velocity; runtime
+animation motion graphs beyond the documented runtime motion routines. The lift
+subfolder labels manager signals as signals where acceleration units have not
+been proven. None of these gaps are filled with assumed textbook aerodynamics.

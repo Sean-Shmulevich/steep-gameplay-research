@@ -1,0 +1,74 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CLASSIC RAGDOLL: ANIMATED POSES TO JOINT MOTOR TARGETS
+
+The previous pose-drive chapter described the PoseDrive controller. This chapter
+adds a separate Classic controller path that converts an animated pose into
+physical-parent-relative transforms and joint motor targets. These are documented
+engine operations. Selecting the Classic controller for every rider state is
+not established by this chapter.
+
+Physical parents differ from animation parents
+
+For each physical body, the runtime path chooses its physical parent index. An
+absent parent chooses the supplied external frame. It then computes:
+  relative_t = rotate(conjugate(parent_q), child_t-parent_t)
+  relative_q = conjugate(parent_q) * child_q
+This step assumes unit XYZW quaternions and does not normalize its result.
+It operates on the physical-body pose array, not directly on all 72 animation
+bones. The fifth-pass physical rig contains 21 bodies; intermediary animation
+bones must not be mistaken for physical parents.
+
+Joint motor target
+
+The Classic update dispatches motor targets only for enabled motor instances
+with an active request count. Two supported paths differ:
+
+Hinge-like path:
+  target_q = normalize(inverse(frame_a_q) * relative_q * frame_b_q)
+  target_angle = signed_twist_about_X(target_q)
+  write_angle_motor(target_angle, strength, angular_rate)
+
+The frame quaternions come from the physical joint's attachment transforms.
+Signed twist removes swing and measures the remaining rotation about X. Away
+from a 180-degree swing singularity, a mathematical equivalent projects the
+quaternion onto (x,0,0,w), normalizes it, and returns 2*acos(abs(w)), negated when
+x*w<0. The reference uses that equivalent. The runtime swing helper has additional
+near-parallel/antiparallel branches, so singular inputs are explicitly rejected
+by the portable helper rather than silently assigned an arbitrary twist.
+
+Three-axis path:
+  target_matrix = quaternion_to_matrix(normalize(relative_q))
+  write_matrix_motor(target_matrix, strength, angular_rate)
+This branch uses the relative quaternion directly; it does not apply the hinge
+branch's attachment-frame conversion a second time. The stored matrix is three
+columns. The Python API returns conventional row lists.
+
+Strength and rate
+
+The two motor endpoints are interpolated with the component's factor:
+  factor = 1 if force_endpoint_b else component_factor
+  strength = endpoint_a + (endpoint_b-endpoint_a)*factor
+  angular_rate = authored_turn_rate * 360 * pi / 180
+There is no clamp in this local interpolation. Its upstream component updater
+is separate. Do not treat either motor endpoint as the percentage gains from
+the PoseDrive controller: these are different fields and different consumers.
+
+Actual male/female player joint records contain endpoint pairs including
+(10,4), (8,3), and (10,5), with authored_turn_rate=1. Thus factor0.25 selects
+8.5 from (10,4), and the angular-rate argument is 2*pi. Runtime target generation
+passes those arguments to the motor setters. The underlying solver's complete
+force/torque response is outside this reference; the endpoint units are not
+invented as newtons, spring stiffness or damping.
+
+Validation
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+The examples cover composition, matrix generation and parameter arithmetic. They do not validate the complete constraint solver or behavior at the twist singularity.
+
+Run python3 reference.py. No game installation is required. Remaining inputs
+are explicit: physical parent mapping, supplied external frame, selected motor
+instance, component factor and controller activation. Complete crash-state
+selection, collision shapes and downstream constraint dynamics remain open.

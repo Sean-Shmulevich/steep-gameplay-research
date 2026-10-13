@@ -1,0 +1,98 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+ANIMATION TARGETS AND PHYSICAL RAGDOLL DRIVE
+
+This chapter describes the engine's PoseDrive pose-drive controller and actual
+male/female player ragdoll resources. The connection selecting this controller
+for a particular rider state remains open. Do not treat its presence as proof
+that every crash or animation uses this controller.
+
+named-ragdolls.json contains two actual resources. Each has 21 named bones,
+one shape per bone, and 20 constraints joining those bones. The attachment
+transforms are supplied as four stored columns. The joint tree includes the
+pelvis, three spine segments, shoulders, arms, hands, thighs, shins, feet, neck
+and head. These are physical bodies, distinct from the 72-bone animation rig.
+The complete constraint limit/motor semantics and shape geometries are not
+claimed decoded by this chapter.
+
+The six stored drive gains, in position/velocity/acceleration order, are:
+  linear:  0.5, 4.0, 0.5
+  angular: 0.5, 4.0, 0.5
+Both player resources have these values. The controller interprets each as a
+percentage: clamp(value*0.01,0,1), giving 0.005,0.04,0.005 for each triplet.
+These are decoded resource values, not an assumed human mass or spring constant.
+
+Target sampling
+
+Use a positive physics timestep h. Transform the body's local center of mass
+by its animation target pose to obtain desired position pT. Preserve history:
+  vT = (pT - previous_pT)/h
+  aT = (vT - previous_vT)/h
+Choose the desired quaternion sign so dot(qT,previous_qT)>=0, then:
+  wT = rotation_vector(qT * inverse(previous_qT))/h
+  alphaT = (wT - previous_wT)/h
+Quaternions use XYZW and Hamilton multiplication. The rotation vector's axis
+is the relative quaternion's normalized vector part, and angle is 2*acos(w).
+The physical body's current position, orientation and velocities are sampled
+separately; its accelerations also come from finite differences of velocities.
+This makes previous-state initialization and timestep consistency important.
+
+Linear drive
+
+Let p,v,a be current physical center of mass, velocity and acceleration. Let
+kp,kv,ka be the normalized linear gains, and m the sum of this bone's shape
+masses. It is not the full rider mass or the tuning value 20.
+  pPred = p + h*v + 0.5*h*h*a
+  vPred = v + h*a
+  correction = kp*(pT-pPred)/(h*h)
+             + kv*(vT-vPred)/h + ka*(aT-a)
+  linear_impulse = m*h*correction
+
+Example: a stationary 10-unit-mass body, target displacement 0.01 along X,
+h=0.02, position gain 50 and other gains 0 receives impulse (2.5,0,0).
+These example gains are synthetic; the actual player gains are listed above.
+
+Angular drive
+
+The controller predicts orientation using first-order quaternion integration:
+  qPred = normalize(q + 0.5*h*((wx,wy,wz,0)*q))
+Choose qT's sign to agree with qPred. With e the raw angle-axis rotation vector
+of qT*inverse(qPred):
+  correction = kp*e/(h*h)
+             + kv*(wT-(w+h*alpha))/h + ka*(alphaT-alpha)
+  angular_impulse = h * drive_matrix * correction
+The double inverse timestep in the orientation term is intentional: the
+orientation-error helper first divides by h, then the caller divides again.
+
+The documented matrix operation is literally body_basis*cached_body_inertia.
+The portable API accepts matrices as rows; stored runtime matrices used columns.
+Do not silently substitute a textbook world inertia tensor R*I*transpose(R).
+The downstream physical impulse application is separate from this controller.
+
+Example: identity drive matrix, zero angular motion, target 0.2 radians around Z,
+h=0.02, angular position gain 50 and other gains 0 gives impulse (0,0,5).
+
+Branches and numerical limits
+
+The continuous branch applies these impulses each update. An entry-only branch
+applies them when entering that mode, then holds on repeated updates. Other
+branches set the pose directly, with velocity reset or a kinematic operation.
+The reference uses functional mode names rather than inventing game enum labels.
+
+Runtime code clears nonfinite orientation-error output and skips a nonfinite
+angular correction. Near identity it has a componentwise epsilon gate using
+0.00001, and its normalization uses approximate reciprocal square roots.
+reference.py implements the corresponding geometric rotation vector with host
+sqrt/acos and explicit positive-timestep checks. It is a mathematical reference,
+not a bit-identical implementation of those tiny-angle and invalid-input paths.
+Valid, finite, normalized input poses are the intended portable input domain.
+
+Validation and remaining work
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+Run python3 reference.py for portable worked examples. Still open: actual rider controller selection, complete constraint
+solver/limits, final animated-to-physical pose blend, collision shape decoding,
+and the full crash/get-up state machine.

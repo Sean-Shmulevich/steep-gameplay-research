@@ -1,0 +1,13 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+VIDEO OBSERVATIONS AND CALIBRATION
+
+240 rows from 11 measurement tables retain reported values, uncertainty, units, methods and video-segment identifiers where supplied. These are imported observations, predominantly from gameplay video. Footage was not remeasured in this pass. producer_status describes the source team's assessment, not independent verification here.
+
+For numeric symmetric error rows, nominal_interval returns [value-error,value+error]. This is not automatically a statistical confidence interval. Qualitative entries and bounds must not be coerced into this form. chord_speed_floor computes sum(segment distances)/elapsed time; unsampled curvature makes that a geometric lower bound under accurate scale and timing.
+
+Examples: the race estimate is 18.9 +/- 2 m/s and includes a reported 1.15 path-weave correction. The ski spin observation is 626 +/- 30 degrees/s derived from labelled rotation over airtime; it is not an input cap or proof of world-axis angular velocity. Reported camera FOV estimates depend on projection assumptions and do not establish every mode's FOV convention.
+
+Use observations to compare output trajectories and timing, while preserving uncertainty in terrain registration, input, camera and playback. Do not replace traced formulas with a fitted constant merely because one clip matches. The old 7/12 m/s blend interpretation conflicts with the existing traced projected-speed conversion by 3.6. Test units explicitly. No observational row proves an internal transition, torque equation or contact solver.
+
+Run python3 reference.py for worked examples and python3 test_reference.py for checks.

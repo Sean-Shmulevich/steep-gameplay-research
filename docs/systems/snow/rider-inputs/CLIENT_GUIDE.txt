@@ -1,0 +1,53 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS FOURTEEN UPDATE: snow/rider-frame-response supplies the separate longitudinal offset-response producer; weightShift and coil bindings below remain valid.
+
+Named cooked inputs for the physical rider target
+
+The two previously anonymous control slots are now connected to cooked
+weightShift.horizontal and weightShift.vertical, respectively. They are not
+simply the attitude/edge input pair. The target still uses the earlier coupled
+quaternion formula and deliberately restores vertical height.
+
+The connection is:
+    raw named weight-shift pair
+      -> horizontal and vertical weightShift cookers
+      -> physical target control_0 and control_1
+    cooked leg coil -> physical target coil
+    saved cooked-coil derivative -> absorber speed-rescale input
+
+The settings loader names weightShift, the property selector chooses that group,
+and the cooker destinations are the same pair passed to target construction.
+The horizontal cooker receives the horizontal raw slot; vertical receives the
+vertical raw slot. A bypass branch copies the raw pair directly. Its complete
+state-driven selection remains an explicit caller input in the portable model.
+Raw device-to-weightShift mixing and every activity override are not closed.
+
+The derivative is written only when the release-state update flag equals 1:
+    rate = (newCookedCoil - previousCookedCoil) / inputStepDuration
+Otherwise the stored derivative is retained. The target caller forwards the
+stored derivative without recomputing it; the absorber evaluates abs(rate).
+The denominator comes from the controller's input-step duration field, while
+absorber convergence receives its own simulation-step duration. Do not silently
+replace both with one clock unless your integration deliberately unifies them.
+
+For a change .5 -> .6 over 1/60, the rate is approximately 6. Both speed-rescale
+curves have authored domains ending at .5, so such a rate reaches their upper
+region under the documented padded curve evaluation. This is a derivative,
+not the coil level .6 and not the rider's terrain speed.
+
+Prototype consequence
+
+The current prototype maps lateral physical target input to attitude and has
+only a vertical weight-shift channel. A faithful next change should calculate
+both weightShift channels and pass their cooked pair. Its coil-rate choice is
+supported on the release-update path; retaining versus refreshing that value
+must follow the chosen update policy. No prototype code is changed by this
+research supplement. Longitudinal offset-response production remains open.
+
+Verification
+
+Static producer/consumer and settings-loader inspection. The runnable reference
+isolates binding, bypass and derivative retention. It accepts an existing cooker
+callback rather than duplicating the separately documented input filter. No
+full rider constraint, raw device map or skeletal IK binding is claimed.

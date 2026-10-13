@@ -1,0 +1,37 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS SIXTEEN UPDATE: The direct angular forwarding block below is conditional. animations/angular-routing explains its retained source cache, one-update override and combined-speed/angle formulas. It must not be treated as an unconditional body angular-velocity read.
+
+CURRENT UPDATE: Named dictionaries, runtime marker registration, grab capture and scoring callbacks are now linked in animations/graph-decoding and tricks/events. See tricks/grab-input for the live capture producer.
+
+RIDER ANIMATION INPUTS AND AUTHORED TRICK RESOURCES
+
+Run python3 reference.py. This package needs only Python's standard library and the supplied named-settings.json. It contains documented graph interface data, runtime input-routing equations and real authored clip names/durations. 
+
+Actual authored graphs
+snow_game_Graph contains 133 validated typed interface fields and 1,915 embedded Animation resources. snow_game_Paragliding_Graph contains 29 validated typed interface fields and 57 embedded Animation resources. Exported fields retain their type labels and serialized name keys. Presentation aliases may differ from the labels used to compute those keys. Each counted animation has a valid specialized header, repeated body type, resource identity, finite duration and bounded body. The large main graph contains 530 clips whose actual names include FLIP, SPIN, GRAB or BARREL. named-settings.json preserves those names and durations. Graph membership is an authored relationship, not proof that a particular runtime condition selects that clip.
+
+The main graph exposes actual trick-related fields including GrabOnTrigger, GrabPadAngle, GrabPadIntensity, JumpGrabLeftIntensity, JumpGrabRightIntensity, CancelledTrick, InAir, InitialInAirSwitch, Switch, ManualSwitch, AutoSwitch, PitchAngle, PitchSpeed, RollAngle, RollAngleSpeed, RollSpeed, AngularVelocityZ, AirAngularVelocity, StartRotationAngle, ShiftyAngle and TimeToLand. It also exposes Archetype, AnimationSet and Mode integer fields. The separate paraglide graph exposes a smaller overlapping interface, including pitch/roll speeds, trigger inputs and base-jump inclination/state fields. Read the typed field lists for the exact authored interface rather than assigning names to unnamed memory fields.
+
+Control-pad routing into the graph
+The documented routing routine receives cached pad_angle, pad_intensity, left_jump_grab and right_jump_grab values, a ragdoll override flag and a runtime mode.
+  If ragdoll_override is true, write RagdollPadAngle=pad_angle and RagdollPadIntensity=pad_intensity.
+  Otherwise write GrabPadAngle=pad_angle. For runtime modes 21,22 or23, write GrindPressIntensity=pad_intensity; for other modes write GrabPadIntensity=pad_intensity.
+  Always write JumpGrabLeftIntensity=left_jump_grab and JumpGrabRightIntensity=right_jump_grab.
+Only the chosen intensity property is written. The routine does not clear the unused grab, grind or ragdoll properties. Do not substitute zero for an unwritten property in a persistent graph store. The reference returns the set of writes, which callers can merge into their state.
+
+The alternate flag takes priority over the grind-mode branch. Mode numbers21..23 have a proven GrindPressIntensity route, but their source enum labels remain unresolved. The routing routine applies no additional clamp or angle conversion. Its cached values are also read back from graph properties elsewhere in the rider update. This establishes a bidirectional graph interface; it does not independently establish raw controller-stick preprocessing or a universal grab-sector-to-clip rule. 
+
+Speed and rotation values reaching the graph
+The common producer computes PlayerSpeed=sqrt(vx*vx+vy*vy+vz*vz+vw*vw), using all four lanes of its cached velocity vector. A homogeneous w=0 is customary, but the actual local calculation does not exclude it. The reference preserves float32 rounding and the included paired addition order.
+
+The actual angular vector is forwarded as AirAngularVelocity, with x also written to PitchSpeed, y to RollSpeed and z to AngularVelocityZ. These scalar values are copied without an additional unit conversion in that forwarding block. RollAngle and PitchAngle are converted from their cached radians with a negative sign: output=-180*source_angle/pi. The reference names the source radians explicitly so a client does not silently assume a different positive-angle convention. Broader upstream angle-frame definitions are outside this local bridge.
+
+Archetype and appearance selection
+One runtime selector bridge maps source selector 0 to Archetype 0, selector 2 to Archetype 1, selector 5 to Archetype 6, and selector 9 to Archetype 5. Other source values leave the prior Archetype unchanged. The source enum labels have not been proved, so the reference preserves the numeric mapping and names its input source_selector. AnimationSet is copied from an owner appearance/customization component when present, with a zero fallback. Do not infer that the clip group prefix equals Archetype or that set prefixes are sport IDs.
+
+Using the real clip data
+The authored_trick_clips function searches the actual main graph's 530 flip/spin/grab/barrel clip records. For example, searching FRONTFLIP returns real named authored resources with their durations. This is an asset query, not a runtime clip selector. Naming tokens such as SPINLEFT, SPINRIGHT, BACKFLIP, FRONTFLIP, DOUBLEGRAB and named grabs are preserved exactly. The clip chapter separately supplies decoded poses, sampling and additional bootstrap catalog resources. These graphs contain further resources: only 49 main-graph clips and 2 paraglide-graph clips share resource identities with the previously decoded bootstrap clip catalog, so the graph catalog is not a duplicate of that catalog.
+
+Scope and remaining work
+The complete confirmed chain here is authored named graph fields plus runtime speed/angle/rotation forwarding and grab/grind/ragdoll writes. It is sufficient to reproduce these graph inputs and routing branches. Full authored state-machine transitions, branch weights selecting individual trick clips, clip playback rates, concrete bone-mask selection and named event-to-transition policies remain unproved. The runtime registered blend and IK callbacks are documented in the related chapters, but a particular authored graph node invoking each callback has not been decoded from these assets. The package does not invent a complete ski or snowboard animation controller from naming conventions.

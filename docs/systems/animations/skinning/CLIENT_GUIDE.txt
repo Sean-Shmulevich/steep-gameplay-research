@@ -1,0 +1,158 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+MESH SKINNING AND BONE-ANCHORED TRANSFORMS
+
+This chapter describes the actual four/eight-influence GPU position programs,
+authored mesh joints and weight bytes, stored inverse-bind matrices, and a runtime
+bone-anchored render transform. Run python3 reference.py beside named-mesh.json.
+
+Actual position skinning programs
+Two compiled compute shaders in the game implement the following complete local
+calculation, with N=4 or N=8. Position is a three-float input. Each joint palette
+entry consists of three four-float rows, representing an affine transform.
+Joint indices are unsigned integers and input weights are floats.
+
+    result = (0,0,0)
+    p = (position.x, position.y, position.z, 1)
+    for influence in range(N):
+        joint = joint_indices[vertex*N + influence]
+        weight = weights[vertex*N + influence]
+        transformed.x = dot(palette[joint].row_x, p)
+        transformed.y = dot(palette[joint].row_y, p)
+        transformed.z = dot(palette[joint].row_z, p)
+        result += weight * transformed
+    store result
+
+The loop runs exactly N times. It does not normalize weights, clamp them, skip
+zero weights, or guard the vertex/joint indices. Even a zero-weight influence
+performs its joint lookup. Callers must supply valid buffers and dispatch bounds.
+The programs launch 128 threads per work group. There is no in-program test for
+a final partial group. The output resource's record size exceeds the three values
+written by this operation; the other values are not reconstructed here.
+
+Example: position (1,2,3), identity joint with weight .25, and joint translated by
+(2,0,0) with weight .75 produce (2.5,2,3). Giving the identity joint twice with
+weights 1 and 1 produces (2,4,6), confirming that the kernel does not divide by
+the sum of weights. The reference supports both fixed influence counts.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+Actual mesh and joint bindings
+snow_game_Group00_Head_NS_LOD0 contains 4,222 authored vertices and 14 MeshBone entries.
+Each mesh joint has a name hash, a full four-by-four matrix and a flag. Eight
+joint hashes match bones in the decoded base male player skeleton:
+mesh slot 0 Head -> base bone 43
+mesh slot 3 LeftArm -> base bone 14
+mesh slot 4 LeftShoulder -> base bone 13
+mesh slot 5 Neck -> base bone 41
+mesh slot 6 Neck1 -> base bone 42
+mesh slot 11 RightArm -> base bone 45
+mesh slot 12 RightShoulder -> base bone 44
+mesh slot 13 Spine2 -> base bone 12
+
+The remaining six mesh joints do not occur in that decoded base rig. They keep
+explicit unresolved labels. They are not silently mapped to a nearby base bone.
+Vertex joint numbers refer to these mesh slots, not directly to base rig indices.
+The documented runtime remapper looks up each mesh bone name in the active actor
+rig. If at least one joint resolves, every missing entry aliases the first
+resolved joint in mesh order. If no joints resolve, it clears the entire mapping.
+The reference implements this fallback. Thus querying only the 72-bone base rig
+would alias the six missing entries to Head, but the actual active rig may contain
+additional bones. That base-only result is not claimed as the live game mapping.
+
+Stored inverse-bind matrices
+For all eight matched joints, multiplying the actual player model bind transform
+by the matrix stored in the mesh gives identity. The largest matrix component
+error is 0.000000635. This establishes that the stored matrices are inverse bind
+transforms for those joints. The exported JSON uses ordinary matrix rows; it
+already converts the stored matrix layout.
+
+Actual final palette production
+The renderer prepares the palette, then binds position, weight, joint-index and
+palette resources to the documented compute program. It chooses the four-input
+program only when the mesh influence count is exactly four; otherwise it chooses
+the eight-input program. Dispatch groups are ceil(vertex_count/128). The shader
+has no final-group bounds gate, so the resource policy outside this routine is
+still relevant for extra launched threads.
+
+Inputs to the runtime palette producer: stored inverse binds B, resolved joint
+indices, a model bone pose, its global root transform G, an origin shift o, and
+render scale s. The origin shift is the negative translation of the render
+object's transform, so its output positions are rebased to that render origin.
+For valid joint j:
+    W = matrix(G) * matrix(model_pose[j])
+    if abs(s-1) > 0.000009999999747:
+        M = W * scale_matrix(s) * B[mesh_slot]
+    else:
+        M = W * B[mesh_slot]
+    M.translation += origin_shift
+    palette[mesh_slot] = first three rows of M
+Scale therefore precedes the inverse bind when acting on a vertex; it also scales
+the inverse-bind translation. Values sufficiently close to one take the exact
+unit-scale branch. The packed output rows are precisely the matrix layout the
+compute shader consumes.
+
+Complete exceptional local branches:
+- With no model pose, each palette entry is a diagonal scale matrix. It does not
+  apply inverse binds or origin shift, even when s is close to one.
+- In the non-unit-scale branch, an unresolved joint produces a diagonal scale
+  matrix followed by the origin shift.
+- The unit-scale branch has no unresolved-joint guard. The reference rejects that
+  invalid combination; it does not fabricate a runtime fallback for it.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+Actual weight data
+Each authored vertex in this mesh carries eight joint bytes and eight weight
+bytes. Every joint byte is in 0..13. All 4,222 vertices have weight bytes summing
+exactly to 255. The JSON contains the full influence-count histogram and twelve
+actual example records. Example vertex zero:
+    joint slots: 2,5,9,10,12,13,0,0
+    weight bytes: 8,21,18,80,110,18,0,0
+Only six of its eight influences are nonzero.
+
+The shader's weight input is float. Dividing the authored bytes by 255 is the
+normalized-byte interpretation supplied as a reference utility; the runtime
+resource-view conversion connecting these bytes to the float buffer is not yet
+proven. Likewise, the packed signed-short position records are included as
+uninterpreted authored values. Their conversion into the shader's float positions
+has not been specified. The client data does not pretend these packed numbers are
+already world coordinates.
+
+Bone-anchored render transform
+A separate documented runtime routine resolves an authored anchor bone by name,
+reads its pose transform and computes a final render matrix:
+    if pose_requires_global_root:
+        bone_world = global_pose_root * selected_bone_pose
+    else:
+        bone_world = selected_bone_pose
+    output = matrix(bone_world) * authored_anchor_transform
+
+The authored anchor transform is applied on the right: it acts in bone space.
+For example, a bone at (0,2,0), rotated +90 degrees about Z, with an anchor local
+translation (1,0,0) places the anchored object at (0,3,0). This is appropriate for
+bone-attached render objects; the individual ski/board model's attachment resource
+has not been matched to this routine in this chapter.
+
+If the anchor is unspecified, the pose is absent, or the name lookup fails, the
+routine leaves the existing output untouched. Its missing-name marker and gate
+are represented as named boolean/optional inputs in the reference. The pose's
+root-handling flag determines the global-root composition; it does not change
+the authored anchor transform.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+Remaining boundaries
+Packed-position conversion, byte-weight resource-view conversion, active-rig
+addon selection and selection of specific ski/board attachment resources remain
+unresolved. The local runtime palette preparation and joint-remap fallback are
+documented. The shader arithmetic, actual
+weight data, eight inverse-bind identities and anchored-transform arithmetic are
+separate confirmed results; the reference marks compatible or inferred steps.
+

@@ -1,0 +1,128 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: snow/mass-selection explains representation branches and additional mass writers. snow/leg-constraints supplies physical spring and target calculations.
+
+snow_game body construction
+
+Files
+reference.py is a standalone Python module. named_data.json supplies 12 tuning
+profiles. hull_data.json supplies their selected physical hull vertices and
+26 tetrahedra. EXAMPLE_OUTPUT.json contains an actual selected-hull calculation
+and a separate synthetic example. All examples run with the standard library.
+
+Selected geometry and actual construction values
+The 12 supplied patched gameplay hulls have identical physical geometry:
+24 physical vertices and 26 tetrahedra. Auxiliary tagged foil/rudder vertices
+are excluded from rigid-body mass geometry. The supplied geometry is the
+physical subset of a 42-vertex resource. The two supplied patched datasets
+agree on all physical geometry records. Older base geometry varies by profile.
+These values describe the supplied patched selection, not every older variant.
+
+Summing positive tetra volumes in float32 gives 0.009479999542236328.
+Every supplied tuning profile has hull density 600, rider mass 20 and rider
+collision radius 0.3. The initial custom main-body mass submission is therefore
+5.687999725341797. In the separate dynamic-rider representation, the initial
+combined mass is 25.687999725341797. Use the live backend mass getters during
+simulation. These construction values are not substitutes for runtime state.
+
+For each tetra with vertices a,b,c,d:
+    volume = abs(dot(a-d, cross(c-d,b-d)))/6
+    centroid = (a+b+c+d)/4
+    totalVolume = sum(volume)
+    weightedCenter = sum(volume*centroid)/totalVolume
+Let extent = physicalVertexBounds.max - physicalVertexBounds.min.
+The configured center is:
+    center.x = 0
+    center.y = weightedCenter.y + 0.045*extent.y
+    center.z = weightedCenter.z - 0.5*extent.z
+The x/y labels in the configuration's center offset are the two offset slots;
+the construction applies them to stored Y/Z. The guide makes no world-forward
+or world-lateral claim for these stored geometry coordinates.
+
+Geometric tensor
+Subtract the configured center from each tetra vertex. For a coordinate array
+q containing the four vertex components, define:
+    Q(q) = sum(q_i*q_i) + sum(q_i*q_j for i<j)
+For coordinate arrays p,q define:
+    B(p,q) = sum(p)*sum(q) + sum(p_i*q_i)
+Each tetra contributes:
+    D0 = volume/10 * (Q(y)+Q(z))
+    D1 = volume/10 * (Q(x)+Q(z))
+    D2 = volume/10 * (Q(x)+Q(y))
+    A  = -volume/20 * B(z,y)
+    B  = -volume/20 * B(x,z)
+    C  = -volume/20 * B(x,y)
+The documented nine-component arrangement is:
+    [ D0, A, B,
+      A, D1, C,
+      B, C, D2 ]
+This arrangement is intentional. Do not reorder its mixed terms to match an
+assumed textbook tensor convention. The reference preserves the stored and
+submitted component order. The downstream interpretation of those components
+as world-axis names is not established here.
+
+Each local component with magnitude below float32(1e-6) becomes zero before
+accumulation. The completed accumulated tensor is cleaned by the same cutoff.
+The reference uses float32 operations. Its equivalent sum grouping differs
+slightly from the low-level addition order, so tensor comparisons need
+a small numerical tolerance.
+
+Submission to a dynamic body
+    submittedMass = density*totalVolume
+    submittedInertia[k] = density*geometryTensor[k]
+Mass is set before the positive-diagonal check. The custom center and inertia
+are submitted only when all three geometric diagonal components are positive.
+If that test fails, the backend's existing center/inertia are retained. Static
+bodies bypass this dynamic custom mass/inertia stage.
+
+Separate rider sphere
+A separate rider body is created only in the relevant physical representation
+and with configured mass greater than zero. Its sphere properties are:
+    sphereVolume = float32(4.188790321350098)*radius^3
+    riderDensity = configuredRiderMass/sphereVolume
+    geometricDiagonal = sphereVolume*float32(0.4)*radius^2
+    submittedMass = riderDensity*sphereVolume
+    submittedDiagonal = riderDensity*geometricDiagonal
+At mass20 and radius0.3, the diagonal is approximately0.72. The reference
+retains intermediate float32 rounding. Geometric center and off-diagonals are
+zero. The body's initial world placement and subsequent constraint targets
+belong to the caller; this module computes its local mass properties.
+
+Runtime mass and jump integration
+combined_mass resolves an immovable main body to float32 max,
+3.4028234663852886e38, instead of returning its dynamic stored mass. It applies
+the same rule to an optional immovable rider, then adds in float32. Two such
+sentinels can overflow to positive infinity.
+
+The jump stage receives live combined mass and configured rider mass20:
+    mainImpulse.z = (liveCombinedMass-20)*factor
+    riderImpulse.z = 20*factor, only when a separate rider exists
+    deltaVelocity = impulse/liveBodyMass for each dynamic body
+There is no clamp of liveCombinedMass-20. For the initial selected two-body
+masses, both bodies receive approximately the same upward velocity change.
+snow/mass-selection now establishes the sphere-style main construction for
+the scalar-rider branch. Its custom mass still uses geometry volume times
+density; copied masses and child-mass recomputation can change live state.
+No automatic rider-mass addition or clamp is established. A supplied live
+mass below rider mass still gives a negative main impulse for positive factor.
+This does not prove that a selected gameplay jump runs with that state.
+
+Usage
+    import reference as body
+    import json
+    hulls = json.load(open('hull_data.json'))
+    main = body.hull_body(**hulls['freestyle_bigair_gameplay'])
+    rider = body.rider_body()
+    jump = body.jump_velocity_changes(main['mass'], rider['mass'], 2)
+Run python3 reference.py to regenerate the examples.
+
+Limits
+This module closes the local tetrahedral mass, geometric tensor, configured
+center, density scaling, sphere rider and backend mass summation stages.
+snow/leg-constraints supplies local target bounds and physical spring
+coefficients. snow/mass-selection supplies representation branches and additional
+mass writers. Full activity selection, complete constraint solving, all possible
+later mass writers and a verified world-axis convention remain open. Actual
+hull coordinates are provided in their stored resource order. Volume and mass
+are invariant under a coordinate permutation; orientation-dependent center and
+inertia integration must preserve the host's geometry convention.

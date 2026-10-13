@@ -1,0 +1,119 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+snow_game AIR INTEGRATION
+
+This supplement connects angular-control contributions to their response scale
+and connects processed environmental air to the published flight velocity.
+Run python3 reference.py. All required values are in named-settings.json;
+Python's standard library is sufficient.
+
+Angular response initialization
+
+The paraglider initializes angular response to the reciprocal of the configured
+response denominator. The supplied preset uses denominator 90:
+  response_scale = 1/90 = .011111111111111112
+The same denominator multiplies the restoring contribution. It is not necessary
+to supply an arbitrary inertia or assign physical torque units to control inputs.
+The denominator's physical interpretation remains unspecified.
+
+For angles p= pitch, r= roll, and rates wp/wr/wy, the acceleration equations are:
+  ap = (pitchMoment - 9.8100004196167*90*sin(p)*cos(r)
+                    - 24.5*wp*abs(wp))/90
+  ar = (rollMoment - 9.8100004196167*90*sin(r)
+                   - 150*wr*abs(wr))/90
+  ay = (yawMoment - 165*wy*abs(wy))/90
+Angles are radians, rates radians per second, acceleration radians per second
+squared. These are the inputs to the previously specified angular integration,
+linear damping and recovery stages. The restoration multiplier and response
+scale cancel algebraically, but reference.py retains their separate operations.
+Initialization sets this scale; later state overrides are outside this supplement.
+
+For zero angles, rates(0,.2,0), and contributions(-100,-10,-41.25), the acceleration
+is approximately (-1.1111111111,-.1777777778,-.4583333333). The roll acceleration
+includes both the roll contribution and resistance against the current roll rate.
+
+Special braked roll gain
+
+The special input-mode branch uses a configured gain 5. Its complete contribution
+under the brake gate is:
+  rollMoment = 5 * secondary_x * 100 * .9350000023841858
+             = 467.5000011920929 * secondary_x
+At secondary_x=.5 this is 233.75000059604645, and its acceleration contribution
+before restoring/resistance is 2.597222228845 radians per second squared.
+This branch replaces the ordinary yaw-rate-driven roll contribution. It runs
+only when resolved brake > .10000000149011612 and the roll-brake suppression flag
+is clear. The special-mode flag and physical input-device mapping remain external
+state inputs. The same configured 5 also participates in extreme-roll recovery;
+these uses are distinct branches and should not be applied simultaneously merely
+because the numeric gain is shared.
+
+Environmental air enters as velocity
+
+The normal paraglider update obtains two separate outputs:
+  base_velocity = flight-force integration or the active trajectory branch
+  air_velocity = processed environmental air-manager output
+It then publishes:
+  commanded_velocity = base_velocity + air_velocity
+  published_speed = sqrt(vx*vx + vy*vy + vz*vz)
+There is no multiplication of air_velocity by dt at this addition. It is not
+added to aerodynamic acceleration. Its role at this interface is an additive
+velocity in metres per second. The base flight state remains separate from the
+published sum, so this addition does not accumulate the environmental vector
+into the base state every frame.
+
+The update stores the sum as the actor velocity and sends it into the movement
+request. In the free position-update branch:
+  next_position = position + commanded_velocity*dt + external_position_correction
+The live movement branch sends the velocity plus any correction/dt into its
+movement request. Actual displacement can subsequently differ because collision
+resolution and other movement handling lie outside this supplement. Published
+velocity is a motion command; it is not a promise of collision-resolved travel.
+
+Static/intermittent combination and brake attenuation
+
+Zone gating and duration-weighted channel filters precede the following stage.
+Let S be filtered static air, I be filtered intermittent air and b the filtered
+brake scalar. The supplied settings give:
+  factor = 1
+  if b>.10000000149011612:
+      factor = min(1, .20000000298023224 / min(1, b))
+  air_velocity = factor*S + I
+Only the static channel receives this attenuation. No dt appears in the factor.
+The scalar b at this stage is filtered; it need not equal the immediate brake
+action used by the angular-control branch. For b=.5, factor is approximately.4;
+for b>=1 it is approximately.2. Negative/low brake values retain factor 1.
+
+After combination, if at least one absolute vector component exceeds
+.000009999999747378752, the vector is cleared when its length is at most
+.02500000037252903. The length test includes equality. If all components are
+within the component epsilon, this particular length-clear branch is skipped.
+reference.py preserves that small-vector distinction.
+
+Example: filtered static air(0,0,15), intermittent air(0,0,0), and filtered brake .5
+produce air velocity approximately (0,0,6). Base velocity(12,0,-4) then publishes
+(12,0,2), speed approximately 12.1655250753. With no collision or extra correction,
+.1seconds gives displacement(1.2,0,.2). The 15 in this example is a supplied
+filtered channel value; it does not imply immediate response on entering a zone.
+
+Preset breakpoint boundary
+
+The preceding control supplement specifies the exact lower-exclusive,
+upper-inclusive interval selector, initialized first-preset fallback and scalar
+mapping(turn_y+1)/2. air/selection now supplies the initialized breakpoints
+[0,.5,1], mode-dependent action selection, brake latch behavior and prediction
+selection. Later overrides remain external.
+
+Validation and limits
+
+Angular contribution/resistance/response arithmetic passed 1,000 isolated arithmetic
+cases, maximum absolute error .000003926368147944004. The restoring
+vector was supplied at its helper boundary in that check. Velocity addition and
+actor velocity publication passed 300 cases, maximum absolute error
+.000005611908406422117. The base and air outputs were supplied at their dispatch
+boundaries, so that check does not validate zone sampling or collision solving.
+The standard-library examples and cutoff checks also pass.
+
+Remaining external inputs: zone acceptance gates; filtered channel history;
+resolved brake/filter state; special-mode flags; later preset overrides;
+position correction; movement collision handling. This is a local integration
+specification, not a complete terrain or flight simulation.

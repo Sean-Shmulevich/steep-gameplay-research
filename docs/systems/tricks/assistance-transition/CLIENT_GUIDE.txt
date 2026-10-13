@@ -1,0 +1,94 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Scalar assistance transition and the following correction state
+
+The slowing-only rule in tricks/selection is one stage. Its assistance callback
+can request a successor whose correction permits bounded acceleration as well.
+This matters when implementing release momentum: these rules cannot be replaced
+with one damping factor applied to every airborne frame.
+
+1. Transition request and ordering
+
+The callback accepts only machine kind0, outer state4, inner state7. It removes
+an existing pending inner-state object, clears that pending slot, then installs
+a pending inner state8 with the same parent and machine. Other state combinations
+reject the request. The numeric labels are known; sport and user-facing state
+names are not assigned here.
+
+This request occurs inside the triggered assistance branch BEFORE the final
+rule that restores oldRate if speed increased or direction reversed. Restoring
+the scalar rate does not cancel the pending transition in the inspected path.
+The wrapper uses reentrant locking and transition scheduling; the portable
+request helper models only accepted/rejected and pending replacement. It does
+not claim immediate activation or model allocation failure.
+
+2. Successor's directional error
+
+The next state updates correction only if its saved correction-enabled flag is
+set AND remaining horizon > float32(.01). In the three-component direction case:
+    predicted = rotate(savedDirection, axis, remaining*oldRate)
+    current = currentMotion - dot(currentMotion,axis)*axis
+    predicted = normalize(predicted)
+    current = normalize(current)
+    cosine = dot(predicted,current)
+    if cosine >= 1 or cosine <= -1: error = 0
+    else:
+        error = acos(cosine)
+        if dot(axis,cross(predicted,current)) < 0: error = -error
+        if error > pi/2: error -= pi
+        elif error < -pi/2: error += pi
+
+The half-turn equivalence is deliberate: exactly opposed directions yield zero,
+and +135 degrees becomes -45 degrees. The rotation helper normalizes its axis;
+the projection uses the stored axis directly. The portable geometric helper
+therefore requires a unit axis and nonzero directions. The native instructions
+also carry a fourth SIMD lane; the supplied helper specializes to direction
+vectors whose fourth lane is zero. Full live meanings of savedDirection, axis
+and currentMotion remain unresolved.
+
+3. Rate correction
+
+    delta = error / remaining
+    if (oldRate + delta)*oldRate <= 0:
+        newRate = oldRate * float32(.99)
+    else:
+        ratio = delta/oldRate
+        if ratio > float32(.1): delta = oldRate*float32(.1)
+        elif ratio < -float32(.1): delta = oldRate*(-float32(.1))
+        newRate = oldRate + delta
+
+Unlike the preceding state, this permits up to 10% MORE angular speed per update.
+For oldRate=2 rad/s and remaining=1, errors +.5 and -.5 radians yield about 2.2
+and 1.8 rad/s. Error -3 would reverse direction, so it yields about 1.98 instead.
+Negative rates obey the same relative rule. Zero rate remains zero. The .99 and
+10% bounds are per CALL, not dt-scaled constants. Caller cadence is a remaining
+integration boundary; transplanting them into a variable render loop changes
+behavior. Even when correction is skipped, this state publishes the saved scalar
+rate along the source Z axis, copies it into the next output vector and updates
+the separate delayed-response scalar described in tricks/response-delay.
+
+4. Remaining horizon and motion-cache connection
+
+The inspected active output stage writes:
+    remaining = savedDuration - elapsed
+It does not clamp negative results. An elapsed producer adds the supplied update
+delta; another inspected update adds its clock delta. Do not add both producers
+as if both necessarily execute in one frame.
+
+An entry copies the current horizon into savedDuration. A later successful
+prediction-refresh branch writes savedDuration = elapsed + refreshedHorizon.
+The prediction function's complete terrain/collision logic remains open, so
+savedDuration is an explicit input rather than a claimed exact time to landing.
+
+The same active output stage copies its current-motion vector into the actor
+cache read by the motion-history calculation in tricks/selection. This closes
+one cache transfer, not every writer or its full physical interpretation.
+
+Verification and limits
+
+Tests cover strict gates, rejected requests, pending replacement, half-turn
+geometry, signed bounds and 1000 randomized rate envelopes. The code is portable
+mathematical behavior checked against static instructions; no live execution or
+complete state-machine scheduling has been validated. The correction-enabled
+flag's full lifetime, global sport selection and final physical consumer remain
+open. Keep these limits visible when integrating the formulas.

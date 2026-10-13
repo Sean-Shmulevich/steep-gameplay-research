@@ -1,0 +1,110 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+WORLD, SKY AND WEATHER: DECODED DATA AND LIMITS
+
+named_weather_settings.json is a self-contained record of the decoded
+ENV_B_NEW_Foggy_01 season. It includes a named resource binding graph and actual
+float32 sample values from its weather, wind and time-of-day controllers.
+
+These are authoring-controller values, not claimed physical fog or wind units.
+
+Documented binding graph
+
+The season ENV_B_NEW_Foggy_01 selects:
+  WorldAmbiance: WA_ENV_B_NEW_Foggy_01
+  TimeOfDayPropertyControllerData: TOD_ENV_B_NEW_Foggy_01
+  TimeOfDayPropertyControllerData: TOD_ENV_B_NEW_Foggy_01_MV
+  WeatherPropertyControllerData: WEA_ENV_B_NEW_Foggy_01
+  WindPropertyControllerData: GRN_SSN_SUNNY_Wind_CD
+  TextureMap: SG_WORLD_AMBIANCE_REGION_B21_Map
+
+WorldAmbiance selects LayeredSky LS_ENV_B_NEW_Foggy_01 and translucency settings
+GRN_Test_Terrain. The sky's matte chain includes mesh SG_ENV_B_Matte_01_LOD0,
+material SG_ENV_B_Matte_PerfectDay2_01, and its same-named texture set.
+The complete named references are in the JSON. A season called Foggy therefore
+uses a wind controller whose name contains SUNNY; naming alone cannot establish
+an aerodynamic state, or that all weather appearance comes from a single asset.
+
+Actual numeric controller samples
+
+Each weather and wind entry resolves to an AnimTrackLinearFloat record. The
+entry number is preserved as channel_number because terminal property names
+have not been documented. Assigning such names as fog density, snowfall rate,
+wind direction or wind speed would be unsupported.
+
+All 21 weather channels have two equal samples. Their values, rounded only
+for readability here, are:
+  channel  1: 0.6       channel  2: 0        channel  3: 80
+  channel  4: 0.01      channel  5: 40       channel  6: 50
+  channel  7: 10        channel  8: 0.1      channel  9: 0
+  channel 10: 1         channel 11: 0        channel 12: 0.03
+  channel 13: 0.8       channel 14: 0.03     channel 15: 0.8
+  channel 16: 0         channel 17: 100      channel 18: 50
+  channel 19: 1         channel 20: 0.1      channel 21: 0.2
+
+The JSON retains actual decoded float32 values, for example channel 1 is
+0.5999999642372131 and channel 4 is 0.009999999776482582. Equal endpoints
+make these channels constant under a linear interpolation between the samples:
+(1-u)*a+u*a=a. This establishes their authored constant values within a segment;
+it does not prove how different controllers are combined or their physical units.
+
+The six wind channels contain sample pairs:
+  1: 160 ->160
+  2:   0 ->100
+  3:   1 ->100
+  4:   1 ->1
+  5:   1 ->1
+  6:   1 ->1
+Their property paths include LayeredSky. A direct connection of these values
+to rider aerodynamics has not been established, so they must not be interpreted
+as metres/second without an additional consumer mapping.
+
+Each time-of-day controller has 137 authored property entries. Of these, 128
+have decoded linear-float sample arrays in the supplied JSON; the other nine
+are not represented as floats. Some float tracks have three or more samples.
+For example channel 1 is [0,360,0] in both variants. The number 360 is preserved
+as data; its property has not been proven to be the sun angle.
+
+The two time-of-day variants differ in seven decoded float channels: 59,110,
+114,120,124,127,135. For example channel 114 in the ordinary resource has
+[6.200000286102295,6.223072528839111], while the _MV resource has
+[0.05347242206335068,0.05347242206335068]. The suffix _MV is preserved as an
+asset name; its gameplay selection meaning is not inferred from that name.
+
+Time encoding and curve playback
+
+The serialized float track stores a sample count, one unsigned 16-bit interval
+code per gap, then one float32 value per sample. Counts, interval arrays and
+value arrays were checked to consume every selected track exactly, including
+its final flags. The JSON preserves stored_interval_codes as integers.
+An ordinary two-sample weather track commonly stores 12000, while some wind
+tracks store 2880 or 10800. Their conversion into seconds, hours, normalized
+weather blend or another clock has not been established. Do not treat these
+integers as actual game time or assume uniform sample spacing.
+
+A piecewise linear interpolation is the mathematical meaning of the identified
+track type, but the actual playback clock, wrapping behavior, controller blend
+order and property-path bindings still require consumer recovery. This folder
+therefore provides real samples and exact named bindings rather than a fabricated
+weather simulation or a renderer equation.
+
+Fog and snow rendering
+
+The included fog-update path hashes a 16-byte configuration block and rebuilds
+its derived state when that hash changes. That establishes update invalidation;
+it does not establish density, extinction, scattering, height falloff, volumetric
+ray integration or the sky lookup-table equations. The presence of a sky asset
+and its matte texture chain does not specify shader arithmetic.
+
+No snowfall intensity, fog-density unit, scattering coefficient, snow albedo,
+exposure, tone-mapping curve or shader implementation is supplied as a known
+value. Reproducing the visual appearance needs the downstream property names,
+selected materials/textures and shader consumers. The documented snow contact
+and density-response physics in the companion guide do not imply snow rendering.
+
+Validation
+
+The decoded season contains 12 fully bounded named resources. Weather has
+21/21 linear float tracks, wind 6/6, and each time-of-day resource 128 decoded
+linear float tracks out of 137 entries. All included tracks satisfy their exact
+serialized count/interval/value bounds. Unresolved field meanings remain explicit in the named JSON.

@@ -1,0 +1,76 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS SIXTEEN UPDATE: The stored Grab and tweak flags also feed a landing-failure branch when an additional sport predicate passes. See tricks/motion-lifecycle for the exact conjunction; physical held buttons alone are insufficient.
+
+TRICK EVENT STATE AND CONDITIONAL SCORING BONUSES
+
+This package describes the event-driven state behind two conditional rotation-score bonuses. It connects controller setters, their installed callbacks and scoring state. Runtime marker registration now joins numeric source IDs to the decoded sport-qualified names. The exact mapping is retained in named_data.json, rather than inferred from dictionary ordering. 
+
+Controller relationship
+
+The same controller object used by the grab-angle capture path owns the event setters and scoring callback slots. Its force-refresh setter stores the supplied boolean. When the general callback is enabled, it forwards that boolean to scoring: update the dedicated general-event slot when present, then set the main bonus gate. The modifier setters share one stored modifier-refresh boolean; when their callback is enabled they forward modifier code1 or2 and the supplied boolean. Callback enablement is a real guard, not an implicit assumption that every setter always changes score state.
+
+The force-refresh flag can cause the grab capture path to refresh its pad values without a new action-button rising edge. Thus graph capture and scoring gate changes can share a controller event. This does not prove that holding a particular physical button continuously adds points, nor that a force-refresh event is itself a completed grab. The surrounding graph and rotation-score event eligibility still matter.
+
+Subtype events and source mapping
+
+Observed subscriptions route Grab (source91) to the general force-refresh setter, Tweak_L (source132) to modifier1, Tweak_R/Tweak_F/Tweak_B (sources133/134/135) to modifier2, and the40 named grab sources98..131 plus142..147 to the subtype setter. registered_controller_event implements this installed subscription list with explicit callback guards. Other source IDs are not proven subscribed.
+
+The subtype setter interprets its source ID as signed32 bits. IDs at most97 do not dispatch. With subtype callback enabled, it maps:
+  sources98..117: subtype=3*floor((source-98)/2)
+  sources118..131: subtype=30+3*(source-118)
+  sources142..147: subtype=75+3*(source-142)
+  all other signed sources greater than97: subtype95
+When this subtype setter is invoked directly with an unknown higher ID, it dispatches subtype95; do not silently discard that fallback. This does not prove unknown IDs are subscribed by the controller.
+
+The scoring setter interprets the subtype as unsigned32 bits:
+  slotIndex=floor(subtype/3)
+  if slotIndex is present: slots[slotIndex].active=enabled
+  mainBonusGate=enabled
+  if subtype is in75..84 inclusive: secondaryBonusGate=enabled
+The gate updates happen even when the slot is absent. Stiffy_Snow, ClassicMethod_Snow, Daffy_Ski and Spread_Ski (sources142..145) update both gates. DoubleNoseGrab_Snow and Cross_Ski (sources146/147) update only the main gate and retain the previous secondary gate. Paired source IDs98/99 share slot0,100/101 share slot1, and so on. No reference counting is applied to paired sources.
+
+Modifier events
+
+Find the first active slot in ascending index order. Tweak_L supplies modifier1 and updates its first modifier boolean; Tweak_R, Tweak_F and Tweak_B supply modifier2 and update its second. If no slot is active, or the modifier code is different, no slot modifier is written. In every case set secondaryBonusGate=enabled. It is not a reduction over all active slot modifiers.
+
+These are last-event state writes. For example, enabling subtype75 sets both gates. Enabling subtype3 sets slot1 and the main gate. A modifier1 event targets slot1 rather than slot25 because slot1 is the first active slot. Disabling subtype3 then clears the main gate even while slot25 remains active; the secondary gate remains true. This ordering produces zero gated rotation bonus, not a bonus for the remaining active slot. The reference preserves this behavior.
+
+Score connection
+
+For an eligible rotation-score snapshot:
+  if mainBonusGate:
+      bonus=mainEventBonus
+      if secondaryBonusGate: bonus+=secondaryEventBonus
+  else: bonus=0
+This bonus is conditional on the scorer's eligible rotation-phase predicate. The runtime input mask accepts either of two phase flags; their physical names are not established here. Supply eligible_rotation_phase explicitly to rotation_event_bonus. The resulting bonus is one component of the previously documented rotation tick, not a standalone score commit.
+
+The actual decoded SnowboardScoring resource, selected by both ski and snowboard, uses mainEventBonus5 and secondaryEventBonus10. An ordinary named grab enables the main gate and contributes5 points when the eligible tick runs. Any named tweak event can enable the secondary gate and add10 more; the four special grab markers above also set it directly. Both gates therefore add15 points. This is an event-latch result, not a claim that each grab always scores15: event order and the phase predicate still apply. SledScoring stores10 and40 in the corresponding fields; named_data.json retains all eight decoded configurations without claiming that every sport calls the same rotation scorer.
+
+Recognition latch
+
+A separate documented event ID latch behaves as follows:
+  if event disabled and eventID==currentID: currentID=0
+  elif currentID==0: currentID=eventID
+  else: retain currentID
+Enabling another ID cannot replace an occupied latch. An unmatched disable can fill an empty latch, because the routine does not require enabled=true in its empty-latch branch. Preserve this detail rather than implementing a conventional set of held inputs. The physical meaning of these event IDs remains unproved.
+
+Named cancellation input
+
+CancelledTrick is a real boolean graph input. Its writer obtains a player cancellation-state byte, copies it through a controller cache and submits it under that graph input name. This closes the source-to-graph binding. The upstream state setter and a causal link from this named graph input to score-bank cancellation remain unproved. Do not use the graph flag alone to clear banked points. The independently documented scoring commit/cancel rules remain separate.
+
+Runnable examples
+
+  import reference
+  state=reference.new_state(32)
+  controller={'general_callback_enabled':True,
+              'modifier_callback_enabled':True,
+              'subtype_callback_enabled':True}
+  reference.marker_event(controller,state,'Stiffy_Snow',True)
+  data=reference.load_data()
+  weights=data['scoring_settings']['SnowboardScoring']
+  points=reference.rotation_event_bonus(state,True,
+      weights['main_event_bonus'],weights['secondary_event_bonus'])
+  assert points==15
+
+Run python3 reference.py for worked state-ordering and named-marker examples. The named sequence Indy-on, Tweak_R-on, Tweak_L-off, Spread-on, Cross-on, Cross-off produces eligible tick bonuses5,15,5,15,15,0. Tweak_L-off clears the secondary gate even when the previously set Tweak_R slot modifier remains true; Cross-off clears the main gate while Spread remains active. The library also exposes set_force_refresh and set_modifier_refresh with explicit callback-enable guards. This package requires only the standard library and its named_data.json. The source-to-marker names and scoring subtype mappings are documented. Physical button mapping, animation-clip selection and the producer of the cancellation state remain explicit limits. Marker names do not by themselves prove which named animation clip is selected.

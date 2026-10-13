@@ -1,0 +1,49 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS TWELVE UPDATE: body/request-consumer adds sorted registry traversal and a descriptor-associated consumer. Final recovery placement remains open.
+
+Recovery signal producers and request delivery
+
+Run python3 reference.py. This module adds bounded producer and request-delivery
+rules to the earlier eligibility calculation. It does not reconstruct a complete
+state machine, respawn placement or an animation timeline.
+
+A selected contact scan invokes two numerical controller callback slots.
+For the recovery-controller callback binding, those slots set retained gate_a
+for group identifier 15 and gate_b for identifier 18.
+The scan requires a contact record, a controller different from the current
+controller, an eligible group and a successful comparison filter. The filter
+uses unsigned 16-bit endpoints and passes when:
+
+    global_lower > other_lower OR other_upper > global_upper
+
+The endpoint meanings and anatomical names of the two group identifiers remain
+unproved. The reference accepts the surrounding contact conditions explicitly.
+It does not simulate the physical engine or claim every contact sets a signal.
+The recovery_callbacks_bound input must be true only when both scan callbacks
+resolve to the retained recovery-signal setters. This table binding is available,
+but the complete caller graph proving that every runtime instance of the scan
+uses it remains open. Other controller subclasses can give those same callback
+slots different meanings. The examples explicitly supply this binding.
+The physical group scan can supply the two signals at different times; the
+existing common reset still clears both.
+
+The automatic recovery path delivers a state request through a visitor list.
+For each visited callback it forwards the selected request pair. Callback result
+2 or 3 allows iteration to continue. Any other result ends iteration. An absent
+list or an exhausted iterator ends without invoking another callback. These
+result codes are numerical control flow, without invented result names.
+The default request first obtains a module-provided request selector; the
+alternate request supplies its selector directly. Request delivery itself
+does not store a final rider state or a respawn transform.
+
+The outer recovery path may update an auxiliary flag and publish its stored
+eight-lane payload. Publication occurs only when the requested flag differs
+from the stored flag and the requested flag is nonzero. A repeated nonzero
+request does not publish again. A transition to zero stores zero without
+publication. The payload's meaning and consumer remain unproved.
+
+The runnable examples check branch translations with supplied state. They
+do not validate full gameplay. Full callback effects, complete controller dispatch
+bindings, final state names, request-consumer ordering, physical placement and
+animation completion timing remain unresolved.

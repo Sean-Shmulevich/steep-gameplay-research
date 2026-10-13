@@ -1,0 +1,76 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Runtime output descriptors, allocation, clone resizing and scalar binding reads are explained in animations/conversion. Authored conversion remains open.
+
+Animation data and scalar operators
+
+Run python3 reference.py. It needs only the Python standard library.
+
+The rider catalog contains 6,880 data records and 1,877 distinct clip identifiers.
+The paraglider catalog contains 102 data records and 55 distinct clip identifiers.
+Each record joins a data node to its own following output, preserving that
+output's GUID, clip identifier, display label and duration. The GUID identifies
+the serialized output record. Its meaning beyond that record is unresolved.
+
+Use clip_uid to join records to the clips dictionary. Several records may use
+one clip. Counts of records, GUIDs and distinct clips are separate quantities.
+The catalog corrects an earlier association that looked forward from an output
+to the next node. A following node does not own the preceding output.
+
+reference.py decodes the five input records and following output as one unit.
+The encoded examples exercise that complete unit. graph_context retains typed
+inputs and raw type-signature counts. Raw signature occurrences are not node
+instance counts and do not prove graph connections.
+
+scalar_remap(value, input_min, input_max, output_min, output_max) computes:
+  span = input_max - input_min
+  result = 0 when abs(span) <= 0.00001
+  otherwise fraction = clamp((value-input_min)/span, 0, 1)
+  result = output_min + fraction*(output_max-output_min)
+Operations use float32 rounding in the same evaluation order as the helper.
+The reciprocal precedes multiplication. Degenerate spans return zero even
+when output_min is nonzero. Reversed ranges are allowed.
+
+conditional_value(condition, true_value, false_value) selects the second
+input when the condition is true and the third input otherwise. The scalar
+branch also stores the current condition in per-node state. The reference
+returns the selected value; the caller owns any persistent state.
+
+These helpers implement scalar value operations. State transitions, animation
+sample generation, playback damping, masks and authored source-index resolution
+are not implemented here. This catalog does not claim that a named input picks
+a particular clip at runtime. Use the separate scalar predicate module for
+comparison semantics. Its predicate records remain valid.
+
+The settings also contain 408 named scalar remap records. Their inputs cover
+grab angle, player speed, walk slope, pole-gate distance, altitude, walking stick
+length, absorption distance and vertical-axis angular velocity. The decoder
+reads the named scalar input and four constant range values from the remap's
+own five input ports. evaluate_scalar_remap applies that record to an input map.
+Eight examples cover all named inputs. Constant, vector and connected-input
+variants outside this grammar are rejected instead of guessed.
+
+Runtime graph output table
+
+Once the runtime graph exists, its local output table has this ordering:
+    table = []
+    for node in runtime_graph.nodes_in_stored_order:
+        for output in node.outputs_in_stored_order:
+            table.append(output)
+    index(node_n, output_o) = sum(output_count(node_i) for i<n) + o
+Each entry identifies an output record, not a whole node. There is no sorting
+or node-type grouping at this stage. Compilation temporarily installs this
+graph-local table, compiles each node in stored order, then restores the
+previous table. Connected binding variants 8 and 9 resolve their integer index
+through this table while retaining their binding classification. Their later
+value-getter semantics are separate from this pointer resolution.
+
+This rule applies to runtime objects. It does not establish that the authored
+records in this catalog instantiate the same node/output order or cardinality.
+The remap factory's five default outputs are not a permanent cardinality:
+its inherited copy operation resizes the collection to the source count.
+animations/conversion supplies that correction and the direct-scalar versus
+animation-timeline getter distinction. Authored schema conversion and binding
+lowering still require proof before applying this formula to authored links.
+The table rule is based on included control flow; isolated execution of its
+builder was not completed. It is not part of the validated remap/If cases.

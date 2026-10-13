@@ -1,0 +1,110 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Duration records are in camera/settings; predecessor bindings and camera parent chains are in camera/routing.
+
+CAMERA TRANSITION SELECTION, TIMING AND FIELD-OF-VIEW BLENDING
+
+This extends the main camera chapter. reference.py contains the documented
+selection and numeric stages .
+
+1. Which transition specification wins
+
+A camera node has an enabled flag, two ordered traversal groups and an ordered
+list of transition entries. Each entry identifies an ancestor of the previous
+camera and supplies a transition specification.
+
+select_transition(node, previous, new_camera):
+    if not node.enabled: return none
+    if node is not new_camera:
+        for group in [first_group, second_group]:
+            for child in group in stored order:
+                result = select_transition(child, previous, new_camera)
+                if result exists: return result
+    best_distance = infinity
+    for entry in node.entries in stored order:
+        distance = distance_from_previous_up_parent_chain(entry.ancestor)
+        if distance exists and distance < best_distance:
+            best = entry.specification
+            best_distance = distance
+    return best or none
+
+The closest previous-camera ancestor wins within the local entry list. An exact
+previous-camera match beats its parent. Equal-distance ties keep the first entry.
+Recursive child traversal returns its first successful result; it does not rank
+all descendants by distance. When node equals new_camera, both traversal groups
+are skipped. The caller included here starts with the newly selected camera,
+so that direct call selects among its local entries. The generic recursion is
+still included for other callers or uses.
+
+This selects a transition specification after camera selection. It does not
+replace the previously documented first-valid-child camera selector. It is also
+separate from the animation graph's custom transition matcher.
+
+2. Duration and progress
+
+An unconfigured transition starts with duration 0.6 and elapsed time zero.
+A supplied specification replaces that duration with its duration getter result.
+Its force/hold flag can mark the old execution before initialization. The exact
+external meaning of that flag remains unresolved.
+
+Each ordinary update:
+    elapsed += dt
+    progress = clamp(elapsed / duration, 0, 1), if abs(duration) > 0.00001
+               1, otherwise
+    conditional = old_identifier != 0 and old_identifier == new_identifier
+    factor = target_condition.evaluate(actor), if conditional
+             1, otherwise
+    raw_weight = clamp(progress * factor, 0, 1)
+    shaped_weight = transition_curve(raw_weight), if a curve exists
+                    raw_weight, otherwise
+
+Conditional evaluation also invokes the target condition's update callback.
+The curve result is stored without another clamp at this stage. Negative duration
+is not silently made positive: for nonnegative elapsed time, division by a
+negative duration clamps progress to zero. The default duration has the same
+units as the caller's dt, conventionally seconds; no frame conversion occurs here.
+
+A special owner bypass branch increments elapsed and writes duration zero, but
+preserves the old progress, factor and raw_weight for that call. It still applies
+the transition curve. On a later ordinary update, zero duration produces progress
+one. Its external owner predicates remain explicit unresolved inputs; do not
+replace this branch with an assumed immediate weight-one transition.
+
+Progress below one is one continuation predicate. Equal nonzero identifiers form
+another continuation predicate. The outer update also tests old/new camera
+conditions. Therefore elapsed >= duration does not alone establish that the
+transition object has been retired.
+
+3. Field-of-view blend
+
+A second optional curve transforms shaped_weight specifically for the angle
+blend and an adjacent scalar field. Its output is clamped by the scalar blend:
+    angle_weight = angle_curve(shaped_weight), if supplied
+                   shaped_weight, otherwise
+    w = clamp(angle_weight, 0, 1)
+    angle = (1-w) * old_angle + w * new_angle
+
+The arithmetic interpolates angle values themselves. It does not interpolate
+projection-matrix scale or the tangent of half the angle. Both source angles must
+already be expressed in the same unit. Other camera fields use shaped_weight
+instead of the second curve, so one universal blend weight would lose behavior.
+The main camera guide covers angle mode conversion and projection; this new
+stage does not establish every final renderer binding.
+
+Example: duration 0.6, elapsed 0.3 and condition factor 0.5 gives raw_weight 0.25.
+Without either curve, blending 60 to 90 gives 67.5. With angle_curve(w)=w*w,
+the result is 61.875. These are illustrative inputs, not a documented authored
+transition preset.
+
+4. Evidence and remaining gaps
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+Condition-service outputs and curve samples remain explicit inputs. The examples do not establish frame-by-frame camera selection or visual fidelity.
+
+Still unresolved: player-state meanings of some conditions and identifiers,
+all authored transition curves/durations selected in every scene, full retirement
+arbitration, occlusion and shake coupling, and the complete selected-camera to
+rendered-viewport chain. The separate two-curve structure and ancestor matching
+are documented; the missing live inputs remain explicit rather than guessed.

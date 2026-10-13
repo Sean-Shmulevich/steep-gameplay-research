@@ -1,0 +1,18 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+TERRAIN MATERIAL BINDINGS
+
+39 terrain groups across three regions now link raster groups to physics materials and all 11 fluid tables. The six previously missing ground bindings resolve to one shared standard-snow table. Its wrapper range and query thickness are both approximately 0.30; retain these separately from the Lua thickness field. All 15 previously supplied world/profile settings exactly match the new source tables.
+
+Lookup:
+  col = floor((worldX-originX)/spacing)
+  row = floor((worldY-originY)/spacing)
+  index = row*8192+col
+  g = layers[index]
+  material = groups[g]
+  settings = fluid_library[material.fluid.script]
+The domain is half-open; reject coordinates outside it. Spacing is 1.953125 and each region spans 16000 world metres. The decoded wire material code is 3*g, while the exported layers raster stores g. Do not divide an already exported raster value by three. Surface class alone is insufficient: several groups share a class but have different depth wrappers.
+
+The rasters themselves are not bundled. A caller supplies its raster sample. reference.py demonstrates lookup, coordinate indexing and ambiguity inspection; it does not simulate contact. Feed the selected settings into the existing snow/materials and force references. Visual tiling and some producer field names remain interpretations, not established physical behavior.
+
+Run python3 reference.py for worked examples and python3 test_reference.py for checks.

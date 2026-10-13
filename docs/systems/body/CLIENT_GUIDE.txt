@@ -1,0 +1,305 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Rotation stages are in tricks/rotation; recovery producers are in body/recovery; the landing-amount event and display-quality ranges are now connected in body/landing-quality/CLIENT_GUIDE.txt.
+
+Documented body, landing, recovery and procedural rotation behavior
+
+Use reference.py and named_data.json together. They contain the functions and
+all twelve selected curves needed by the examples. Run python3 reference.py.
+ The numerical examples use the actual BigAir landing configuration
+unless a value is explicitly called illustrative.
+
+What this package closes
+
+The documented blocks are initial controller-to-angular-velocity proposal,
+equipment-dependent axis remapping, secondary-axis rate escalation, angle-error
+to alignment-rate selection, whole-rotation completion rescaling, upright landing
+correction, squared-speed landing history, crash accumulation and decay,
+collision accumulation, and penalty-gated recovery eligibility. The scalar rider
+spring equation is included as an absorption/pose-response building block.
+
+These are connected pieces of the body system, not a complete animation graph.
+Clip selection, clip weights, root-motion extraction, procedural foot placement,
+full board/leg IK, and automatic respawn behavior remain unresolved. The code
+does not invent those systems from animation names or isolated settings.
+
+Controller input to rotation proposal
+
+requested_rotational_velocity consumes two already-produced primary input axes,
+one secondary input axis, two activation latches, a configured angular limit,
+and equipment/axis-inversion flags. Raw device filtering before these inputs is
+outside this documented block.
+
+If primary_active is false, both primary axes become zero. Otherwise primary_x
+is unchanged and primary_y becomes zero when abs(primary_y)<0.3. Equality at the
+stored float32 threshold is accepted. If secondary_active is false, secondary_y
+becomes zero; otherwise it becomes zero when abs(secondary_y)<0.4.
+
+Let x,y,z be these gated inputs. The initial direction is
+ q = (z, 1.4140000343*y, -1.4140000343*x).
+If norm(q)<=0.01, the proposal is zero. Otherwise
+ magnitude = max(sqrt(x*x+y*y),abs(z))*angular_limit_degrees*pi/180
+ proposal = normalize(q)*magnitude.
+
+Ski swaps the proposal's first and second components. A separate stance-related
+flag condition optionally negates its first component after that swap. The
+flag's exact stance producer remains unresolved, so the API names its observed
+effect invert_local_x rather than assuming a particular stance label.
+
+At an illustrative 450-degree angular limit, full primary_x proposes
+(0,0,-7.853982), full secondary_y proposes (7.853982,0,0) for snowboard and
+(0,7.853982,0) for ski. The included BigAir behavior contains 450 in one
+angular-limit selection branch. This is not evidence that every activity and
+state always selects 450. The angular limit remains an explicit function input.
+The proposal vector uses radians per time unit. Its world-axis interpretation
+depends on the orientation frame supplied downstream.
+
+There is no magnitude clamp in this block. Diagonal primary input can produce
+sqrt(2) times the angular limit if both primary components reach one. Preserve
+this unless the preceding input producer supplies a different bounded domain.
+
+Proposal acceptance preserves previous motion
+
+rotation_proposal_accepted implements the observed acceptance gate:
+ previous_intensity*0.95 < proposed_intensity
+ AND (previous_intensity<0.99 OR NOT rotation_state_gate)
+ AND (dot(previous_rate,proposed_rate)>=0
+      OR (previous_intensity<0.6 AND proposed_intensity>0.8)).
+
+After acceptance, a separate direction-dependent adjustment can add a component
+and rescale the vector. A later feedback stage also changes its magnitude.
+Those complete adjustment functions are not reproduced here. The initial
+proposal therefore must not be advertised as the final integrated rotation or
+a torque equation.
+
+The secondary-axis curve and state latch
+
+secondary_axis_rate uses the actual curve named SpinVelocity. Its knots are
+(0,170) and (1.8,85), joined by a cubic Bezier segment whose complete handles
+are in named_data.json. Exterior input holds the endpoint value. The input is a
+saved airborne-duration argument; its exact upstream clock producer remains
+unresolved. The coefficient response is fully documented.
+
+When the caller's activation/state gates pass:
+ candidate = -axis_input*SpinVelocity(saved_duration)*pi/180.
+Update the saved angular component only if candidate!=0,
+ current_rate*candidate>=0, and abs(current_rate)<abs(candidate).
+Thus a stronger same-sign candidate is accepted. Reversal and weakening are
+rejected. Full input at duration zero proposes -2.967060; at duration 1.8 it
+proposes -1.483530. A current rate of -1 rejects the opposite-sign candidate
+produced by input -1.
+
+The caller additionally requires its equipment permission check,
+a valid curve, non-Sled equipment, an activation latch, and a timing scalar
+strictly greater than 0.3. Latch creation depends on changed input, a configured
+count threshold, and a distinct caller mode. It can request rotation states 3
+or 4 according to duration and sticky-state conditions. Those numeric state
+labels are not assigned animation clip names here. gates_passed represents this
+external conjunction rather than silently allowing the rate update every frame.
+
+The curve name alone does not identify yaw-spin or a flip in world space. This
+package uses the functional name secondary-axis rate for its proven consumer.
+
+Alignment rate from orientation error
+
+alignment_rate first honors an explicit override. Otherwise it chooses an
+actual configured curve using a rotation-state selector in {1,2,3}, a stance
+selector in {0,1,2}, and whether a separate rotation-mode selector equals 5.
+Other selectors, absent configuration or null curves return 2*pi radians.
+The selector producers' exact animation meanings remain unresolved; do not
+replace them with guessed grab, crouch or equipment labels.
+
+The selected function is
+ rate_radians = curve(error_radians*180/pi)*pi/180.
+
+For rotation mode 5 the three stance rows select:
+ row0: Default, STD_v2, STD_V3
+ row1: null, null, null
+ row2: PRN, PRN, null.
+For other rotation modes all three rows select Default, Default, STD_V3.
+Default is a cubic curve from (0,45) to (45,360); STD_v2 from (0,48.2) to
+(45,350); STD_V3 holds 360; PRN from (0,10) to (45,45). These names are the
+resource names, not inferred poses. The complete controls and clamps are in
+named_data.json. At 45 degrees the Default rate is 2*pi and PRN is pi/4.
+
+The consumer constructs target directions from the saved/current orientation
+and measures their angular separation before selecting this rate. This supports
+an alignment-response interpretation. It does not prove that this rate is the
+player's unrestricted spin speed.
+
+Whole-rotation completion and pose targets
+
+quantize_rotational_completion consumes angular velocity w, remaining_duration,
+already_rotated_angle and a quantum, normally 2*pi. In the positive-travel branch
+ travel = norm(w)*remaining_duration + already_rotated_angle
+ turns = truncate(travel/quantum)
+ if 1-fraction(travel/quantum)<=stored_float32(0.3): turns += 1
+ w_new = w*(turns*quantum/travel).
+
+This rounds the selected completion upward near 0.7 of a turn, not at half a
+turn. At 0.69 turns the selected target is zero; at 0.71 it is one whole turn.
+The branch sets completion/pose state flags and copies the rescaled vector to
+another motion state. When the previous complete-turn count is below one,
+one special sticky-axis branch can restore the old secondary component after
+that copy. That state-transition exception is outside the pure rescaling API.
+The function requires positive travel; preceding zero-motion gates are separate.
+
+angular_target_increment describes the following target construction:
+ target_duration = max(first_time,0)+additional_time
+ if norm(w)>0.01:
+     axis = normalize(w)
+     angle = norm(w)*target_duration.
+The path rotates a saved orientation matrix around this axis, then
+applies separate twist corrections and contact-dependent adjustment. This is
+a real procedural angular-state-to-pose-target connection. It is not proof of
+animation clip root motion driving rigid-body motion.
+
+Landing severity from squared-speed history
+
+History stores 300 samples. sample_history makes at most one sample per call
+once elapsed+carry reaches 0.03200000152. It records change in squared speed and
+the PREVIOUS sample interval, then replaces that interval with the current
+elapsed duration. Initial previous interval is 0.03330000117. It clears elapsed
+and retains carry = total_elapsed - sampling_period. Preserve the lag and the
+one-sample-per-call behavior.
+
+history_deceleration walks newest samples backward, adding only negative changes
+in squared speed until accumulated stored intervals reach the window. Its
+boundary adjustment compares the next older change with min(newest_change,0).
+If older_change is smaller, add their difference and older_dt-newest_dt to the
+sums. This is not proportional window trimming.
+
+ H = -sum_negative_squared_speed_changes/sum_stored_intervals,
+or zero when the denominator is nonpositive. H is a rate of squared-speed loss,
+not ordinary acceleration or an already-normalized G value. The physical unit
+definition of the velocity/time producers remains open.
+
+The actual BigAir window is 0.200000003 and its landing conversion is
+ amount = surface_gain*H*0.002624999965 + optional_curve_term.
+Surface gain defaults to 1, with material ID 4 selecting 1.200000048. First
+matching material group wins. H=4000 produces 10.5 by default or 12.6 for ID 4.
+The optional term is supplied separately because its saved-input producer and
+selected jump-time binding are not closed.
+
+Crash load and grace
+
+BigAir accepts landing/other-impact amounts only when amount>9. An amount equal
+to 9 is ignored. The cumulative maximum and single-impact grace cutoff are 12;
+the previous-load grace fraction is 0.75; accepted additions set a hold deadline
+0.75 seconds later using 30000 clock ticks per second.
+
+After adding an accepted amount, ordinary landing grace applies exactly when
+ NOT special_context_active AND mode==landing AND new_load>=12
+ AND previous_load<12*0.75 AND amount<12.
+An explicit suppression flag also grants grace when new_load>=12. Grace sets
+load to 12-stored_float32(0.05). Then clamp load to [0,12]. State is empty at
+zero, partial below 12, full at 12. Notify only when entering full state.
+Other-impact mode has no ordinary landing grace; unconditional mode adds without
+the minimum check. The special context's gameplay label remains unresolved.
+
+With previous load 8, amount 10 gets grace to 11.95. With previous load exactly
+9, amount 10 reaches full state because the previous-load comparison is strict.
+A fresh single amount 12 reaches full state because the amount cutoff is strict.
+Sled chooses a different configuration branch. Its thresholds must be supplied
+explicitly; BigAir normal values are not silently reused as universal Sled data.
+
+Upright correction
+
+upright uses the contact normal N, saved contact-up axis U, incoming velocity V,
+impact orientation axes X,Y,Z, current player axes Cx,Cy,Cz, saved angular
+components W_x/W_y and absolute normal velocity s.
+If dot(U,N)<0, it immediately reports correction-needed and failure.
+Otherwise let a=asin(dot(X,N))*180/pi and b=asin(dot(Y,N))*180/pi.
+Both must be strictly inside their separate 45-degree limits to pass initially.
+The included normal, Sled and SpeedRiding settings share these limits and gains.
+
+If an axis fails, construct Vn=-s*N, Vt=V-Vn, and Yt=Y-dot(Y,N)*N. Tangent
+correction is enabled only when norm(Yt)>0.01 and norm(Vt)>0.1. Its signed angle
+gamma is acos(dot(normalize(Yt),normalize(Vt))), with sign from their cross product
+dotted with N. Parallel and antiparallel cases become zero and pi respectively.
+Current comparison angles ca/cb use asin of current-axis dots. When dot(Cz,N)<0,
+cb becomes 180-cb if nonnegative, otherwise -180-cb. ca is not adjusted that way.
+
+For failed axis a, using r=a*pi/180:
+ A=.07*abs(W_x)*180/pi*(+1 if a-ca>0 else -1)
+ B=.08*norm(Vn)*(-cos(r) if dot(X,N)>0 else r)
+ C=40*abs(sin(r)*sin(gamma))*sign(dot(Vt,U)*dot(X,N)), or zero outside gates.
+ a_corrected=a+A+B+C.
+For failed axis b, using r=b*pi/180:
+ A=.07*abs(W_y)*180/pi*(+1 if b-cb>0 else -1)
+ B=2*norm(Vn)*abs(cos(r))*(-1 if dot(Y,N)>0 else +1)
+ C=40*abs(cos(gamma)*sin(r))*sign(dot(Vt,U)*dot(Y,N)), or zero outside gates.
+ b_corrected=b+A+B+C.
+Here sign returns +1 for a nonnegative product, -1 otherwise.
+
+A failed positive angle describes when its correction is strictly below +45;
+a failed negative angle describes when its correction is strictly above -45.
+This is one-sided crossing, not abs(corrected_angle)<45. Overshoot across the
+opposite limit can still pass. Failure remains unless both axes pass or recover.
+Unit axes/normals are expected; the initial asin inputs are not explicitly clamped.
+
+Collision accumulation and decay
+
+For the eligible BigAir collision path, the linked deceleration curve has an
+enabled output clamp [0,0], making that contribution identically zero. The
+effective increment is
+ dt*RockGForceVsSpeed(player_speed)*sin(acos(clamp(direction_z,-1,1))).
+RockGForceVsSpeed reaches 12 at speed argument 5.5, stays 12 thereafter, and is
+zero through 2.2. The full curved transition is in named_data.json. External
+collision-eligibility gates must pass before applying this increment. It is not
+continuous damage to apply indiscriminately every frame.
+
+decay_crash_load subtracts dt*DizzinessDecrease(player_speed) only when load>0
+AND now_tick>=hold_deadline. Before the deadline its rate is zero. An absent
+curve uses the configured fallback, 0.2 for BigAir. A SpeedRiding active-state
+override applies only inside the valid-curve branch. Clamp load and derive its
+empty/partial/full state afterward. The hold deadline is not extended by decay.
+
+DizzinessDecrease is linear through (0,12),(1,12),(2,6),(8.33,3),(13.89,1.2),
+(19.44,.9),(25,.6),(27.78,.3),(33.33,.12), holding exterior endpoints. At speed
+argument 1.5 its rate is 9; a 0.1-duration update after the deadline subtracts
+0.9. The rate's speed argument is the norm of the player velocity vector. Its
+absolute physical speed unit has not been independently established here.
+
+Penalty-gated recovery, not a respawn timer
+
+retain_recovery_penalty keeps max(previous_penalty,PenaltyTime(impact_event_amount)).
+This input is the caller-supplied impact for the current event. One body-impact
+caller aggregates contact groups within that event; the included landing
+caller supplies its current impact value. It is not the cumulative crash-load
+accumulator. The actual penalty curve is nonlinear, from (0,1) to (100,10), with an enabled
+input clamp [0,100]. Impact argument 50 maps to about 4.882465 seconds. Larger
+subsequent impacts can extend the retained penalty; smaller ones do not reduce it.
+
+Recovery eligibility stays false until (now_tick-start_tick)/30000>=penalty.
+Then let m=movement_metric*movement_scale and t=material_threshold. It becomes
+true only when m<t*3.5 AND (recovery_gate_a AND recovery_gate_b OR m<t*.5).
+The movement metric and its fallback producers are now explained in
+body/recovery. The two gate meanings remain unresolved. A documented per-frame
+caller automatically dispatches a state request once its outer gates and this
+eligibility pass. That does not establish teleport respawn or its destination.
+Ragdoll duration therefore cannot be set to the penalty curve value alone.
+
+Rider/leg response building block
+
+The rider scalar spring has configured mass 20 in the included simulation
+tables. Its setup uses k=clamp(mass*f_frequency^2*4*pi^2,min_k,max_k) and
+c=2*damping_ratio*sqrt(mass*k). Its acceleration is
+ [k*(target_position-position)+c*(target_velocity-velocity)]/mass
+ +external_acceleration.
+The update uses fourth-order Runge-Kutta with ten substeps and advances
+the target position between substeps. This is a scalar absorption/response
+model. The complete IK targets, board/leg constraints and their animation
+binding remain unresolved. Mass 20 is not a proved total rigid-body mass.
+
+Validation and practical limits
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+reference.py uses standard Python arithmetic. Selected cubic curve inversion
+uses monotone numerical bisection rather than the float32 Cardano
+implementation. The functions are useful mathematical reconstructions, not
+bit-identical ports. Preserve the stated order, comparisons, latches and
+clamps when adapting them to the client's own simulation.

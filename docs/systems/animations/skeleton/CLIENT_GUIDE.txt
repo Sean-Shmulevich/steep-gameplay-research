@@ -1,0 +1,128 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Actual ski/board graphic and addon rig pairs, equipment mesh mappings and hand-driven poles are supplied in animations/equipment/CLIENT_GUIDE.txt.
+
+SKELETONS, BIND POSES AND TRANSFORM COMPOSITION
+
+Run python3 reference.py beside named-rigs.json. 
+
+Actual decoded rigs
+SG_Skel_M: 72 bones, male player base hierarchy.
+SG_Skel_F: 72 bones, female player base hierarchy.
+SG_SkelAddon_M_Ski: 34 bones, ski equipment/attachment hierarchy.
+SG_SkelAddon_M_Snowboard: 29 bones, snowboard equipment/attachment hierarchy.
+Every bone in named-rigs.json contains its parent index, a local bind transform,
+and a model bind transform. Parent index -1 means no parent. These are actual
+serialized resources in the character package, not a fabricated demonstration
+skeleton. Addon rigs are separate resources; their attachment onto the base player
+is not reconstructed as one merged hierarchy.
+
+Bone names
+Names such as Reference, Hips, LeftUpLeg, LeftLeg, LeftFoot, LeftToeBase, Spine,
+Spine1, Spine2, LeftArm and numbered fingers were matched by CRC32 against the
+serialized bone-name hashes. They are labeled CRC-matched spelling in the JSON.
+That proves a matching spelling, subject to the usual hash collision limitation;
+it does not mean each name was stored as a readable string in this resource.
+Unmatched bones have a descriptive UnnamedBone label and explicit status.
+
+The first male chains are:
+Reference -> Hips -> LeftUpLeg -> LeftLeg -> LeftFoot -> LeftToeBase
+Reference -> Hips -> RightUpLeg -> RightLeg -> RightFoot -> RightToeBase
+Reference -> Hips -> Spine -> Spine1 -> Spine2
+Spine2 branches into shoulders/arms and the neck/head chain. The JSON retains
+all 72 bones, including fingers, rather than omitting small bones.
+
+Transform representation
+A documented runtime API named GetBindPoseLocalBoneTransform reads one packed
+record for the selected bone and returns a translation vector and quaternion.
+Each record contains four translation floats followed by four quaternion floats;
+the runtime pose table therefore uses 32 bytes per bone. Translation's fourth
+lane is zero in the decoded examples. Quaternion order is x,y,z,w.
+The bone resources store two such transforms. The first is model-space bind;
+the second is parent-relative bind. Their relationship is validated across all
+207 decoded bones. Translation units are game units; this pose path alone does
+not establish metres. No per-bone scale is present in these two packed transforms.
+Additional scalar tuning fields exist and are not relabeled as scale.
+
+Exact rigid-transform composition supported by the decoded data
+Let a transform T=(t,q) act on a point v as rotate(q,v)+t. For parent P and local
+bone L, compose parent first, local second:
+    model_translation = parent_translation
+                        + rotate(parent_quaternion, local_translation)
+    model_quaternion = parent_quaternion * local_quaternion
+For a root, its model transform equals its local transform. Traverse parents
+before children; the reference supports arbitrary bone ordering and rejects
+cycles. Quaternion q and -q encode the same rotation.
+
+Quaternion multiplication, with q=(a,w), r=(b,s):
+    vector_part = w*b + s*a + cross(a,b)
+    scalar_part = w*s - dot(a,b)
+Unit-quaternion vector rotation:
+    u = 2*cross(q.vector,v)
+    rotate(q,v) = v + q.w*u + cross(q.vector,u)
+
+Worked example: parent translation (0,2,0), parent rotation +90 degrees about Z,
+and child local translation (1,0,0) produce child model translation (0,3,0).
+The portable program also recomposes the actual male/female/gear bind poses:
+maximum translation difference 0.0000013241 game units; maximum quaternion
+component difference 0.0000010976 after accounting for quaternion sign. These
+small differences reflect the stored float precision and slightly non-unit
+serialized quaternions. The reference does not silently normalize all inputs.
+
+Inverse-bind transforms and skinning boundary
+For a unit quaternion:
+    inverse_rotation = conjugate(q)
+    inverse_translation = rotate(inverse_rotation,-t)
+A conventional rigid skinning palette would be
+    palette[bone] = animated_model[bone] * inverse(bind_model[bone])
+The reference includes this algebra as an explicitly labeled mathematical utility.
+It is not claimed as the documented runtime rendering palette implementation.
+The decoded resources contain model/local bind transforms, not an identified
+array of stored inverse-bind matrices. The actual renderer's matrix packing,
+palette remapping, blend weights, four/eight-bone kernels and scale handling are
+not reconstructed in this chapter. See animations/skinning for the four/eight-influence formulas.
+
+Runtime pose behavior documented so far
+Bind-pose acquisition reuses a cached pose object and copies the component's bind
+pose when needed. The local-bind query remaps the caller's bone index before
+reading the packed pose record. General pose-copy logic has a full-copy branch
+and a masked branch; its complete channel-mask semantics are still unresolved.
+These facts support the pose representation and access path. The dirty-pose update calls a documented hierarchy conversion kernel. Its actual
+normal branch composes each local bone onto its already computed parent and
+normalizes the resulting quaternion. The first root is composed onto identity
+and normalized, regardless of its LOD gate. For later bones, if current LOD is
+strictly less than that bone's minimum LOD, the kernel skips that bone and its
+contiguous subtree; skipped output records retain their previous contents.
+Otherwise it advances one bone. Parent ordering is required by this runtime loop.
+The runtime minimum-LOD and subtree-count producers have not been mapped to the
+serialized rig fields, so the reference accepts them as functional caller inputs.
+
+Its translation arithmetic is exactly:
+    d = dot(parent_q.vector, local_translation)
+    rotated = 2*(d*parent_q.vector
+                 + parent_q.w*cross(parent_q.vector,local_translation)
+                 + (parent_q.w^2-0.5)*local_translation)
+    result_translation = parent_translation + rotated
+    result_quaternion = normalize(parent_q * local_q)
+This rotation equals the usual unit-quaternion rotation when parent_q is unit.
+Normalization uses a SIMD reciprocal-square-root estimate with one Newton
+refinement; the reference uses an ordinary square root. Zero-length quaternion
+behavior is not protected by a documented guard and is invalid reference input.
+
+A documented model-to-local conversion performs the inverse operation on a
+separate source model pose:
+    local_translation = rotate(conjugate(parent_q), child_t-parent_t)
+    local_quaternion = normalize(conjugate(parent_q)*child_q)
+Its vector rotation uses the same expanded SIMD expression above; its root is
+composed onto identity and normalized. It uses the same strict LOD/subtree gate.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+What is still needed for a complete animation renderer
+The runtime final skinning palette, mesh joint remapping, serialized LOD/subtree
+metadata mapping and vertex weight decoding remain open. Animation blending
+and compressed clip evaluation are documented separately. This chapter provides
+actual player hierarchy and bind data plus a tested composition reference without
+assuming that every renderer detail follows a textbook implementation.

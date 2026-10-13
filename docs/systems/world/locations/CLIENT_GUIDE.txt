@@ -1,0 +1,9 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+WORLD LOCATIONS AND CHALLENGES
+
+193 authored start/exit locations comprise 147 drop zones and 46 exit points. Another 272 points of interest bring the location inventory to 465. The separate challenge catalog contains 347 entries. Positions, headings and available preset/condition metadata are retained from the extracted records.
+
+nearest_location finds argmin(distance(query, candidate.position)) within a chosen region and kind. It is an inspection example, not an original automatic respawn algorithm. Do not infer availability, unlock state, spawn priority, recovery timing or nearest-point policy from the presence of coordinates. Runtime state and rule selection remain open. These catalogs contain metadata, not terrain rasters or challenge geometry.
+
+Run python3 reference.py for worked examples and python3 test_reference.py for checks.

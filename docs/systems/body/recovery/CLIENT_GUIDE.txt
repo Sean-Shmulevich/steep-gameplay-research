@@ -1,0 +1,120 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: body/recovery-transitions adds latch producers and specifies the limits of the recovery dispatch path.
+
+Recovery motion, history and automatic dispatch
+
+Run python3 reference.py. All portable files use only the standard library and bundled data. This pass closes motion producers and the automatic dispatch
+gate behind previously documented penalty eligibility. Destination state names,
+physical vector units and automatic respawn placement remain unresolved.
+
+Physical recovery metric
+
+If the physical controller is absent, or its physical runtime is absent, use
+norm(cached_motion). Otherwise start largest_squared_motion at zero and scan
+body groups in stored order. Skip a group if either exclusion flag is true,
+its physical pointer is absent, or the pointed physical object is absent.
+Read the physical object's three-component motion vector and compute:
+
+    square=x*x+(y*y+z*z)
+    if largest_squared_motion<square: largest_squared_motion=square
+    return sqrt(largest_squared_motion)
+
+An empty eligible physical set returns zero. It does not fall back to cached
+motion once the physical branch was selected. This is the fastest eligible
+body-vector magnitude. The field's full engine meaning has not been proved,
+so physical_motion is the API name. It is not claimed to be total rider speed.
+
+Failure-entry cached motion
+
+The active-state entry handler calls a cached-motion initializer. For each
+group whose two exclusion flags are both false, obtain its history-derived
+motion and sum its subrecord weights. Start the total weight at 0.001, then:
+
+    total_weight += group_weight
+    weighted_motion += group_weight*group_motion
+    cached_motion=weighted_motion/total_weight
+
+With this seed, a single group's result is
+slightly smaller than its motion when its weight is positive. The subrecord
+weight's physical unit is unproved. This code does not assume it is mass.
+The initializer stores a three-component vector and clears its fourth lane.
+The motion scalar used later multiplies the norm, outside this initializer.
+
+Group translation-history producer
+
+The fallback is cached_motion. History replaces it only when there are more
+than one samples and now_seconds-latest_sample_time is strictly below 0.5.
+Equality at 0.5 keeps the fallback. A future latest timestamp passes this
+comparison too; there is no lower-bound age clamp.
+
+When fresh, start a zero vector and process adjacent samples, oldest first:
+
+    dt=second.time-first.time
+    if dt>0:
+        total += (second.translation-first.translation)/dt
+        count += 1
+    motion=total/count if count>0 else total
+    result=motion+added_motion
+
+This averages interval derivatives equally. It does not divide total
+displacement by total elapsed time. Zero or negative intervals contribute
+nothing. A fresh history with no positive interval produces added_motion,
+not the fallback. The same routine computes a separate angular-history output
+through a quaternion conversion helper; this package reconstructs translation
+only. History clock ticks convert to seconds by division by 1000.
+
+For translations 0,1,2 at times 0,0.1,0.3, derivatives are 10 and 5. Their mean
+is 7.5. Added motion 1 produces 8.5, as the runnable example shows.
+
+Penalty and automatic recovery gates
+
+After the retained penalty expires, let m=motion_metric*motion_scale and
+ t=material_threshold. The exact eligibility rule remains:
+
+    elapsed_seconds>=penalty
+    AND m<t*3.5
+    AND ((gate_a AND gate_b) OR m<t*0.5)
+
+The comparisons on motion are strict. At t=10 and both gates false, m=5 fails;
+a value immediately below 5 can pass. Even with both gates true, m=35 fails.
+The caller uses a clock at 30000 ticks per second. The reference API takes
+elapsed seconds explicitly and does not emulate unsigned tick wraparound.
+
+New caller closure: a per-frame update runs this path for the local player.
+It calls eligibility only while recovery_active is true and recovery_blocked
+is false. When eligible, it dispatches one of two state requests depending on
+an external alternate-dispatch predicate. It also updates associated modules
+and may issue a local mode request. The state target is unnamed here. The
+reference returns the selected dispatch kind instead of simulating those
+external effects. This proves an automatic dispatch after the gates; it does
+not prove automatic respawn, teleport placement or a complete recovery graph.
+
+Optional landing contribution fallback
+
+When neither the normal curve nor selected alternate curve is available, the
+runtime helper uses a fixed fallback. For argument x:
+
+    x<=5: 0
+    x>=10: 36
+    otherwise: (1-(10-x)/5)*6
+
+The discontinuity at 10 is present in this helper. It is not smoothed
+in the reference. Loaded curve interpolation, authored curve values and the
+landing-history conversion were documented in earlier packages; this fallback
+is not substituted when an actual curve exists. The caller's argument producer
+and its exact unit remain unresolved. A behavior predicate suppresses the
+optional contribution; that predicate reads the bound behavior's active byte.
+Its broader state meaning is not fabricated here.
+
+Validation and limits
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+
+The eligibility and outer dispatch formulas are included branch translations;
+this pass does not claim independent runtime testing of their external actions.
+Clean/sketchy/crash range input binding, the two recovery gate meanings, full
+physical-motion semantics, destination state labels, respawn placement and
+ragdoll motor handoff remain open. These limits also apply to the examples.

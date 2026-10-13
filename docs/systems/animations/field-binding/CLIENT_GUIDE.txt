@@ -1,0 +1,64 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS THIRTEEN UPDATE: animations/scheduling identifies a conditional readiness reset after full evaluation; deferred updates preserve readiness.
+
+External animation field binding and lazy production
+
+This closes a runtime input connection. An external binding contains a two-word
+128-bit identifier before compilation. The compiler looks it up in a registry,
+replaces its payload with the resulting integer field index, and preserves
+binding class zero. The identifier is not a literal name string. The mapping
+between authored named fields and this registry remains a separate boundary.
+
+Successful lookups append the field index to a dependency list only if it is
+absent. Existing order remains intact. A missing nonzero identifier produces
+index zero and error bit one. An all-zero identifier leaves the compiler's
+initial index minus one and produces error bit one. The compiler still replaces
+the payload on failure. An implementation must handle that error before reading;
+it must not silently treat field zero as a valid fallback.
+
+A scalar read follows this sequence:
+  index = resolved_binding.field_index
+  group = producer_group[index]
+  if group != 255 and not ready[group]:
+      producergroup (`owner_context`; source artifact, not distributed)
+      ready[group] = true
+  offset = field_offsets[index]
+  result = read_float32(field_arena, offset)
+
+The group index is a byte. Its record stride is 72 bytes. The producer's ready
+flag is shared by every field mapped to that group. The callback runs before the
+flag is set. A missing callback on an unready group reaches a fatal branch.
+The scalar copy acquires the field storage's read lock and releases it after
+copying four bytes. This explains why a binding index is neither a byte offset
+nor a clip identifier. Offset lookup is a separate step.
+
+The observed function does not reset ready flags. Its reset producer and cadence
+remain unresolved. The reference exposes ready explicitly. Clearing it is a
+caller action supplied by the example, not a claimed per-frame runtime policy.
+Callbacks have an owner-context argument whose complete schema is unresolved.
+The reference callback receives the portable Fields object as an interface choice.
+Its error guard is also an implementation choice; the runtime getter assumes a
+valid compiled index and has no matching guard.
+
+Worked example
+Two successful identifiers resolve to fields zero and one. Their offsets are
+12 and zero and both use producer group four. That producer writes 0.75 to field
+zero and -0.25 to field one. Reads zero, one, zero return 0.75, -0.25, 0.75 and
+run the producer once. Dependency capture yields [0, 1]. This is synthetic data,
+not a claimed rider selection or a documented live input value.
+
+Verification
+Run python3 test_reference.py and python3 reference.py. Five portable tests cover
+failed lookup, dependency order, shared producer groups and explicit reset.
+An isolated native check passed 600 scalar reads across no-producer and two
+producer-group cases. It ran the original scalar getter, lazy dispatcher, lock
+wrapper and field-offset lookup on synthetic buffers. The operating-system
+thread identifier and producer body were return stubs. Callback dispatch counts
+were observed. No authored graph deserialization or game execution occurred.
+
+Remaining boundary
+This does not resolve the authored class-nine operator references, graph record
+order, state transitions, named input-to-clip selection, root motion or equipment
+IK selection. External field binding and output-descriptor binding are distinct
+contracts. Their enum conversion cannot be inferred from similar numeric labels.

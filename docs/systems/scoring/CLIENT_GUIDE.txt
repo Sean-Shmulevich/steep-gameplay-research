@@ -1,0 +1,315 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS TWELVE UPDATE: scoring/detector-inputs adds the new detector input evidence.
+
+CURRENT UPDATE: Named grab and tweak producers for the conditional rotation bonuses are now documented in tricks/events/CLIENT_GUIDE.txt.
+
+Scoring implementation guide
+
+This chapter supplies the documented arithmetic, actual selected settings,
+history selection and sampling rules. reference.py runs with the Python standard
+library. settings.json, curves.json, cadence-settings.json and activity-settings.json
+contain the named values used here. 
+
+Scope and state
+
+Keep separate state for pending points, committed totals, multiplier progress,
+progression remainder banks, rotation tick count, repeated proximity count,
+and the trail sample history. The documented routines do not replace the
+gameplay detectors that decide when a trick, collision or proximity event occurs.
+Unresolved detectors are explicit boolean inputs below. This is intentional:
+calling a bonus input "grab" without establishing that cause would mislead a port.
+
+Eight score channels participate in the documented commit operation. Cancellation
+also clears a ninth pending slot and nine progression remainder slots. The complete
+gameplay names of those channels have not all been established. Use indexed score
+channels with a separately documented category mapping, rather than inventing one.
+
+1. Actual discipline selection
+
+Activity number       Selected configuration
+0 Snowboard           SnowboardScoring
+1 Wingsuit            WingsuitScoring
+2 Ski                 SnowboardScoring
+3 Paraglide           ParaglideScoring
+4                     WingsuitScoring
+5 SpeedRiding         SpeedRidingScoringGround
+6,7,8                 Unresolved shared configuration
+9 Sled                SledScoring
+10 RocketWingsuit     RocketWingsuitScoring
+11 FreeFall           BaseJumpScoring
+13                    Same as entry0
+
+Skis and snowboards genuinely share the selected scoring configuration in this
+dataset. This does not establish identical motion or animation. SpeedRidingGround
+also references SpeedRidingAir, but the complete switching condition remains open.
+The supplied data therefore includes both configurations without silently choosing
+one based on an assumed airborne flag.
+
+2. Rotation points
+
+Inputs are three accumulated rotation magnitudes in radians. The two secondary
+axes are kept as secondary_a and secondary_b because their anatomical labels are
+not established by this scorer. Convert using float32 operations in this order:
+
+    degrees = float32(float32(float32(radians)*180) / float32(pi))
+    primary_turns = float32(primary_degrees/180)
+    secondary_turns = float32(secondary_degrees/360)
+
+For each count, round down unless the fractional remainder reaches its threshold:
+
+    count(x,t) = ceil(x) if float32(x-floor(x)) >=t else floor(x)
+    primary_count = count(primary_turns,.25)
+    secondary_a_count = count(secondary_a_turns,.125)
+    secondary_b_count = count(secondary_b_turns,.125)
+
+Actual loaded weights are5 points per primary half-turn and10 per secondary
+full-turn for all eight decoded configurations. Sum the three weighted counts
+with float32 intermediate additions, then truncate to an integer. Preserve
+unsigned32 wrap behavior if reproducing extreme values.
+
+Continuation bonus:
+    if previous_ticks >1:
+        add continuation_points
+        if continuation_scales: multiply this bonus by previous_ticks-1
+
+Conditional bonus:
+    if bonus_input and bonus_allowed:
+        add bonus_points
+        if extra_bonus_allowed: add extra_bonus_points
+
+The loaded values are continuation_points1, continuation_scales false,
+bonus_points5 and extra_bonus_points10. The precise gameplay producers of
+these bonus booleans remain a separate integration requirement.
+
+Example: nominal225,405,44 degrees, with both bonuses enabled, gives counts
+1,1,0 and30 points. Float32 conversion puts nominal225 and405 just below their
+round-up boundaries. Algebraically canceling the degree conversion can change
+these results. reference.py preserves the documented order.
+
+The counter increments once per scoring invocation. It must not automatically
+increment once per rendered frame. The sampling and event rules are below.
+
+3. Multiplier progression and committed points
+
+Multiplier progress is an integer with1000 units per level. All decoded records
+use multiplier values[2,3,4]. Level0 gives1x; levels1,2,3+ give2x,3x,4x.
+
+Progression rates are[25,50,75], except SpeedRidingAir uses[200,400,600]. These
+are divisors that control progress gain. They are not medal thresholds.
+
+    level = progress //1000
+    rate = rates[level] if level is in the array else1
+    quantum = 1000 //rate
+    bank += newly_earned_points
+    crossings = bank //category_threshold
+    progress += crossings * category_gain * quantum
+    bank %= category_threshold
+
+Choose the rate once at the start of the update. Do not reselect it halfway
+through a batch that crosses a level. The ordinary first three quanta are40,20,13.
+The array fallback rate1 is literal behavior even after the multiplier saturates.
+
+Example: progress1000, bank12, new points75, threshold20, gain1:
+quantum20, four crossings, new progress1080, remainder7, displayed multiplier2x.
+Threshold/gain here are explicit example inputs; different categories have
+different settings. A zero threshold or zero rate is not a valid input.
+
+There is also a conditional special-multiplier path. When both its condition
+and state predicates hold, it either replaces the multiplier with the configured
+replacement or multiplies it by a configured integer factor. settings.json
+contains the selected values. The full gameplay meaning of the predicates is
+still unresolved, so reference.py exposes them separately.
+
+Commit each of eight channels:
+    added = truncate(float32(float32(pending)*float32(multiplier)))
+    committed += added
+    pending =0
+Successful commit preserves multiplier progress. Cancellation clears pending
+points, progression remainder banks and multiplier progress, but preserves
+committed totals. Complete live triggers for these operations remain partial.
+For pending1 and multiplier2.75, commit adds2, not3.
+
+4. Terrain proximity scoring
+
+The input distance is distance to terrain in meters. Settings are:
+
+Configuration                Near  Far  Near points  Far points
+Snowboard/Sled                 2    10       20          20
+Paraglide                      1    20       10           2
+SpeedRidingGround              0     0       20           0
+SpeedRidingAir                 1     5       20          10
+Wingsuit/Rocket/BaseJump       1     8       10           2
+
+    if distance <near: return near_points
+    if distance >far: return0
+    fraction=clamp((distance-near)/(far-near),0,1)
+    return truncate((1-fraction)*near_points + fraction*far_points)
+
+The degenerate equal/reversed-range helper uses fraction1 in this middle branch.
+Use float32 operations for exact boundaries. Paraglide distances0,1,5,10,20,
+20.001m yield10,10,8,6,2,0 points. The discontinuity beyond the far limit is real.
+
+5. History suppression, newly explained
+
+Before the proximity category accrues points, its history guard walks backward
+through stored trail records. It counts only records whose skip flag is false.
+The configured count12 is TWELVE ELIGIBLE RECORDS, not12 seconds. The latest
+eligible record counts as one. If fewer than12 exist, this guard does not suppress.
+
+    index=history.length
+    remaining=12
+    while remaining>0:
+        if index==0: return not_suppressed
+        index-=1
+        if not history[index].skip: remaining-=1
+    old_xy=history[index].position.xy
+    latest_xy=history[-1].position.xy
+    suppress = length(old_xy-latest_xy) < distance_setting*distance_setting
+
+The latest position comes from the last stored record, even if its skip flag
+is set. It is not the new position currently being evaluated. The loaded
+distance_setting is2, so the literal length cutoff is4 position-distance units.
+Do not change this into a squared-distance comparison. Equality at4 passes.
+A debug override can disable this guard; ordinary implementation need not expose
+the internal debug service.
+
+Examples: twelve eligible samples on a straight line at x=0..11 do not suppress.
+Changing the last sample to x=3 does suppress. Marking the first sample skipped
+leaves only eleven eligible samples and therefore does not suppress. 
+
+6. Repeat/event contributions and actual nonlinear curves
+
+The category contains six event channels. Channel five drives repeated-point
+accrual; channel six drives terrain proximity. The physical event meanings of
+the first four channels are not all resolved. Treat them as detector outputs.
+
+    points=0
+    if repeat_active:
+        if previous_repeat_count !=0:
+            points += truncate(repeat_curve(speed_kmh)) if bound else fallback
+        repeat_count+=1
+    else: repeat_count=0
+    if terrain_proximity_active:
+        points += terrain_proximity_points(distance_m, settings)
+    for active in selected_first_four_channels:
+        if active:
+            points += truncate(event_curve(speed_kmh)) if bound else fallback
+
+Speed supplied to the curves is3.6 times the snapshot velocity magnitude. All
+four vector lanes participate in that magnitude; a direction vector should have
+a zero fourth lane in a conventional port.
+
+Snowboard/Sled/SpeedRidingGround use CliffScoring as the repeat curve and
+DodgeScoring as the event curve. Para/SpeedRidingAir use DodgeScoringParagliding;
+Wingsuit/Rocket/BaseJump use DodgeScoringWingsuit. Those air configurations have
+no repeat curve and use their fallback points. See settings.json.
+
+Curve evaluation is fully described by knots, absolute incoming/outgoing
+handles, interpolation modes and clamps in curves.json. Modes are constant,
+linear and cubic. For a cubic interval, solve the monotone equation
+x=Bezier(x0,outgoing_x,incoming_x,x1,t), then evaluate the matching Y polynomial.
+The supplied evaluator uses bisection; it is mathematically equivalent for these
+segments but not a bit-identical reproduction of the closed-form cubic solver.
+
+At50km/h: CliffScoring gives6.67536483, DodgeScoring33.23042514 and
+DodgeScoringParagliding53.24007701. The scoring consumer truncates these to
+6,33 and53. Wingsuit's event curve gives2.23116184 at75km/h and80 at100km/h.
+
+Optional previous-event filtering is unusual. If current and previous masks
+are equal, all current channels remain selected. If they differ, the calculation
+uses current AND (63-previous), which removes prior channels within the six-bit
+domain. It is not a conventional "always award only newly rising bits" rule.
+The caller's comparison trigger remains an explicit input in reference.py.
+
+7. Actual distance-based scoring cadence
+
+Trail recording selects a four-value spacing record per activity:
+
+    lo=low_speed_kmh/3.6; hi=high_speed_kmh/3.6
+    if speed<=lo: spacing=low_speed_spacing
+    elif speed>=hi: spacing=high_speed_spacing
+    else: spacing=low_speed_spacing
+                  +(high_speed_spacing-low_speed_spacing)*(speed-lo)/(hi-lo)
+
+Actual selected data:
+* Activity0..8: low and high spacing are both3. The speed endpoints therefore
+  have no effect on spacing. Wingsuit's endpoints are125/210km/h; the others
+  are25/100km/h.
+* Sled, RocketWingsuit and FreeFall: spacing falls from8 to4 between25 and100km/h.
+* Activity13 selects the first record, giving constant3.
+
+These are position-distance units. The surrounding world uses meter-labelled
+distances, but this sampler's complete coordinate-unit proof remains separate.
+The constructor had4/8 for all records; the selected data overrides most to3/3.
+
+The distance gate, preserving carry, is:
+    travelled=length4(current_position-last_eligible_recorded_position)
+    needed=spacing-carry
+    if force_sample or travelled>=needed:
+        carry=travelled-needed
+        if local_player: compute_score_and_append_record()
+
+This branch emits at most one record per update, not a loop that fills every
+spacing interval crossed. Carry can exceed the nominal spacing after a large
+step. Example: spacing3, carry0, travelled3.7 records once and leaves carry.7.
+If forced early at travelled1, it records and leaves carry-2. Preserve that sign.
+
+Eligibility, start-up and timer guards surround this branch. Lifecycle events
+also force records, and some records explicitly skip scoring. The sample rule
+is therefore not a universal "points every3meters" rule. Complete event causes
+remain an integration boundary.
+
+8. Minimum jump duration and proximity activation
+
+The minimum-duration selector is now explained. It scans the configured terrain
+entries in order. An entry qualifies when its surface identifier matches, or
+when the caller marks the surface special and the entry applies to special
+surfaces. The first match wins. If nothing matches, use the base duration/curve.
+If the selected curve exists, evaluate it at the supplied vertical height
+difference; otherwise return the selected constant duration.
+
+All eight decoded base durations are.75 and their base curves are absent.
+SnowboardScoring has one override: surface identifier-1, applies_to_special=true,
+duration0, no curve. The identifier-1 is not an unconditional wildcard. Ordinary
+surface4 therefore retains.75; a qualifying special surface selects0. The caller
+marks identifiers21,22,23 special. Their physical material names remain open.
+The caller accepts when supplied jump duration >= the selected minimum.
+
+Proximity activation also has an explicit gate:
+    reject if either surface-block condition is active
+    for the terrain-distance channel, if configured delay is nonzero:
+        reject unless its timer has started and its deadline has elapsed
+    reject unless both the category and requested channel are enabled
+    activate the category
+    if the requested channel was previously inactive:
+        activate that channel and request a forced trail sample
+
+The configured terrain delay is0 for most settings and1.5 for both SpeedRiding
+settings. The timer starts when the relevant movement transition installs its
+scoring settings. The complete external transition naming is still unspecified;
+do not start a fresh delay on every proximity sample. The supplied reference
+exposes timer_started and timer_elapsed explicitly.
+
+9. Rotation labels and unresolved awards
+
+Displayed trick rotation differs from score quantization:
+    whole,remainder=divmod(truncate_unsigned(degrees),divisor)
+    label=(whole + (remainder>remainder_threshold))*display_step
+    if same_stance and label is not a multiple of360: label+=180
+    if changed_stance and label is a multiple of360: label+=180
+This uses a strict greater-than test, unlike the score count's greater-or-equal.
+The full trick naming/classification state is not implemented here.
+
+Decoded landing-quality ranges exist as category1:[0,3], category2:[3,5],
+category3:[5,9999]. Until their input and consumer are fully established, they
+must not be called clean/sketchy/crash or assumed to be G-force thresholds.
+
+Still unresolved: complete live event detectors and commit/cancel causes,
+every scoring channel's display name, SpeedRiding settings switching, and
+challenge/medal award selection. These are specific missing integrations;
+the formulas and supplied data above remain usable without them.
+
+Naming note: activity 11 is FreeFall; its selected scoring resource is named
+BaseJumpScoring. BaseJump in scoring-configuration comparisons refers to that
+resource, not an independently documented activity enum label.

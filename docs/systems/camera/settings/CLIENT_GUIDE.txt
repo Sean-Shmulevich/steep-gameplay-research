@@ -1,0 +1,59 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Camera transition settings
+
+This chapter connects the duration used by camera/transitions to included camera
+settings. named-settings.json contains 456 local transition records owned by 125
+camera resources. Each record has an explicit duration; the constructor's 0.6
+default is not a universal camera transition time.
+
+The duration field is read directly by the transition duration getter. Its unit
+is the same as the transition update dt. For ordinary second-based simulation
+updates, use seconds. Values in the included records range from 0 to 5.
+
+Pseudocode
+
+  duration = selected_transition.duration if selected_transition else 0.6
+  elapsed += dt
+  progress = clamp(elapsed / duration, 0, 1) if abs(duration) > 0.00001 else 1
+  raw_weight = clamp(progress * condition_factor, 0, 1)
+  shaped_weight = general_curve(raw_weight) if general_curve else raw_weight
+  angle_weight = angle_curve(shaped_weight) if angle_curve else shaped_weight
+  angle = lerp(old_angle, new_angle, clamp(angle_weight, 0, 1))
+
+The ten channel-curve references in every one of these 456 records are null.
+Consequently these included records do not supply an extra general or angle
+curve. This does not remove the condition factor, channel-specific interpolation,
+camera response filters, or the special owner-bypass behavior documented in
+camera/transitions. A zero-duration clock reaches progress 1 on the ordinary
+update path; it does not prove every camera state exits immediately.
+
+Examples, using local record 0 in each named resource:
+  snow_game_Player_Grind_Cam: duration about 0.3; at elapsed 0.15, progress about 0.5.
+  snow_game_Player_Paraglide: duration about 0.9; at elapsed 0.15, progress about 1/6.
+  snow_game_Player_FreeFall: duration about 0.9.
+  snow_game_Auto_Ragdoll: duration 0; ordinary progress is immediately 1.
+These are authored candidates, not proof of which transition wins in a scene.
+A resource can own several records; record order is only a local identifier.
+
+The portable decoder accepts the supplied 141-byte record variant, validates
+its type/header and ten fixed external/null reference entries, and rejects
+inline curve definitions. Four embedded parameters and four flags are preserved;
+this chapter does not assign unproved semantics to them. Their storage is
+separate from the duration and ten weak curve references.
+
+Limits
+
+Parent-camera matching and first-entry selection are described in
+camera/transitions. camera/routing now supplies predecessor-to-holder bindings
+and parent chains, including external-reference limits. Use those relationships
+to select the record; do not choose record 0 merely because an example uses it.
+Additional resources or runtime configuration may supply other transition types
+and non-null curves. Final renderer viewport bindings and some camera-condition
+producers remain open.
+
+Verification
+
+All 456 settings pass the bounded decoder and null-reference checks. Four raw
+record samples are bundled; reference.py decodes them and checks their example
+clock calculations. These checks do not establish full-scene camera selection.

@@ -1,0 +1,9 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+EQUIPMENT AND ATTACHMENT CATALOG
+
+2438 equipment records expose identifiers, categories, sport masks and body-specific part references. loadouts.json retains authored loadout links and producer qualifications. Query by decimal-string ID and select the requested body variant explicitly; an empty part list remains empty rather than borrowing another body's parts.
+
+These links can help assemble riders and accessories once mesh payloads are supplied. They do not establish changes to mass, inertia, friction or handling. Default pole selection remains unverified. No mesh, texture or pose payload is included here, and a catalog entry does not prove a complete rendered item. The reference demonstrates identity and part lookup, not runtime equipment selection.
+
+Run python3 reference.py for worked examples and python3 test_reference.py for checks.

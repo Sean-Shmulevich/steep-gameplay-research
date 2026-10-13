@@ -1,0 +1,234 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Additional target solving, quaternion writes and graph integration are documented in animations/ik-solve/CLIENT_GUIDE.txt.
+
+PROCEDURAL BIPED FOOT IK: DOCUMENTED RULES
+
+This package adds skeletal target generation, contact blending, knee reach,
+hip height, and foot-on-slope corrections. reference.py needs only standard
+Python. Run `python3 reference.py` for worked examples. named_data.json lists
+documented constants. No game files are required.
+
+Scope matters: these are the engine's generic BipedFootIK routines. A direct
+link from the snowboard or ski animation graph to this particular solver has
+not been proved. This package does not identify a full board IK solver or a
+complete final bone-rotation solve. It does specify transforms that the
+biped system emits, including their position and rotation blend rules.
+
+1. Activation and contact influence
+
+The entry point first requires its enable flag, skeleton/context objects, and
+valid root and both leg bone references. Missing references return failure.
+The requested enable state ramps a persistent pose weight:
+
+    sign = +1 if requested_enabled else -1
+    pose_weight = clamp(pose_weight + sign * activation_rate * dt, 0, 1)
+
+If pose_weight is zero, the entry does not emit an IK output. Initial activation
+clears accumulated pivot motion and resets contact/prediction state. This is
+an engine activation rule, not a documented ski-specific animation transition.
+
+A caller-maintained contact age accumulates dt. It resets to zero when the
+queried contact payload has a valid actor link. Positive age selects the
+no-contact fade branch. The contact blend state stores weight, recovery elapsed
+time, and the weight saved at the start of recovery:
+
+    if contact_age > 0:
+        elapsed = 0
+        weight = max(1 - contact_age / 0.2, 0)
+        recovery_start = weight
+    elif weight < 1:
+        weight = min(recovery_start + elapsed / 0.2, 1)
+        elapsed += dt
+
+Recovery uses the OLD elapsed value. For contact_age 0.1, then three recovery
+updates of dt 0.05, weights are 0.5, 0.5, 0.75, 1.0. A continuous recovery is
+therefore delayed by one update relative to incrementing elapsed first.
+
+    smooth_pose_weight = clamp(3*p*p - 2*p*p*p, 0, 1)
+    final_weight = smooth_pose_weight * contact_weight
+
+Final output uses the blend path when abs(final_weight - 1) > 0.00001.
+Otherwise it copies the solved target transforms. Position interpolation is
+original + weight * (solved - original). The output also interpolates a scalar
+as 1 + weight * (solved_scalar - 1). It includes root position/rotation and two
+transforms per leg. Their complete final bone binding remains unresolved.
+
+2. Endpoint constraint from the animated leg pose
+
+Inputs are the root, middle and end positions of the animated three-point leg
+chain; an endpoint target; a body translation; a knee_limit_ratio; and a signed
+selector. Keep the three pose positions separate from the requested target.
+
+    L = length(middle-root) + length(end-middle)
+    r = clamp(length(end-root)/L, 0, 1)
+    theta = pi - 2*acos(r)
+    maximum = 175 degrees if selector > 0 else 165 degrees
+    selected = min(theta, maximum)
+    outer_angle = maximum + knee_limit_ratio*(selected-maximum)
+    outer_radius = L*cos((pi-outer_angle)/2)
+    inner_radius = L*cos((pi-min(theta,20 degrees))/2)
+    center = root + body_translation
+    radius = lengthXYZ(target-center)
+
+The runtime pose lengths include all four stored components; normal position
+usage keeps the fourth component equal across the pose. Target radius uses XYZ.
+This uses the sum of segment lengths, rather than the unequal-segment law of
+cosines. Replacing it with a general two-bone solve changes the documented rule.
+The ratio has no documented global default. The example supplies ratio=1.
+
+Branch order is exact:
+
+    if radius > outer_radius: rescale target-center to outer_radius
+    elif radius < inner_radius: rescale target-center to inner_radius
+    else: leave target unchanged
+
+The outer branch runs first even if unusual caller values reverse the bounds.
+Equality stays unchanged. Add the target change to accumulated correction.
+The algorithm has no zero-chain guard and can divide by zero for a target at the
+center when a positive inner correction is required. The Python implementation
+raises ValueError for those undefined cases.
+
+For a straight chain with two lengths of 0.5, selector nonpositive and ratio=1,
+outer_radius is about 0.991445 and inner_radius about 0.173648. A target at
+radius 1.2 moves inward; a target at radius 0.1 moves outward. This establishes
+pose-to-target coupling without claiming the last skeleton bone solve.
+
+3. Prediction height lock and support-foot choice
+
+A cached contact position can retain its vertical height. All gates must pass:
+
+    prediction enabled AND lock active
+    abs(cached_z-current_z) < abs(requested_vertical_correction)
+    abs(cached_z-reference_height) <= vertical_tolerance
+    speed > 0.1
+    horizontal distance(current,cached) <= 0.05
+
+On success, replace only the requested correction's Z with cached_z-current_z.
+On failure, clear the lock flag and keep the original correction. A speed of
+exactly 0.1 fails; horizontal drift of exactly 0.05 passes. reference_height is
+the caller's root/reference height plus its vertical adjustment.
+
+A support-foot selector requires active AND NOT invalid for each foot. It uses
+only XY distance to the current root. With both valid, select the nearer foot;
+exact ties select foot B. One valid foot wins; neither valid returns no support.
+The foot A/B labels are functional. Anatomical left/right binding was not
+proved for these indices.
+
+4. Hip-height limits
+
+A minimum hip-height routine applies two lower bounds in sequence:
+
+    h = max(requested_h, max(targetA_z,targetB_z) + 0.15)
+    a = targetA_z + abs(animatedA_middle_z-animatedA_end_z)
+    b = targetB_z + abs(animatedB_middle_z-animatedB_end_z)
+    h = max(h, max(a,b) - 0.15)
+
+The second expression uses the animated lower segment's vertical projection.
+It is not a clamp to full leg length. The routine never lowers requested_h.
+
+A separate positive sphere-intersection helper computes:
+
+    radius_squared = length4(root-reference_position)^2
+    horizontal_squared = (root.x-target.x)^2 + (root.y-target.y)^2
+    if horizontal_squared < radius_squared:
+        height = target.z + sqrt(radius_squared-horizontal_squared)
+    else:
+        height = root.z
+
+The reference_position producer remains unresolved. The reference function
+therefore requires it explicitly. Further body-height filtering and motion
+constraints exist; these two helpers alone do not reproduce the complete hip
+trajectory.
+
+5. Quaternion output interpolation
+
+Quaternions use XYZW and expect unit inputs. The runtime IK blend is a true
+trigonometric blend with a shortest-sign choice and unusual copy branches:
+
+    dot = dot(original,target)
+    if dot <= -1 OR dot >= 1: return target
+    theta = acos(abs(dot))
+    first = sin((1-weight)*theta)
+    second = sin(weight*theta) * (-1 if dot < 0 else +1)
+    if abs(theta) <= epsilon: return target
+    mixed = (first*original + second*target)/sin(theta)
+    return normalize(mixed)
+
+Both copy branches ignore weight. Preserve this behavior instead of replacing
+it with a conventional interpolation library. Runtime normalization uses a
+reciprocal-square-root estimate and one Newton refinement. The portable
+version uses host square root; it preserves the mathematical rule and branches
+but does not promise bit-identical normalization.
+
+6. Foot-on-slope correction and contact pivot
+
+foot_slope_core starts AFTER the runtime normal spring. It takes a reference
+normal, a filtered target normal, current foot rotation, endpoint rotation and
+position, smoothed contact pivot, and a separately filtered correction weight.
+Both normals must be unit vectors. If every component differs by at most
+0.00001, it leaves the output unchanged.
+
+Otherwise construct a rotation C that maps reference_normal to filtered_normal.
+The runtime vector rotation helper returns [cross(a,b),1+dot(a,b)] and then the
+caller normalizes it. If dot is negative and every cross component is within
+0.00001 of zero, use a 180-degree quaternion around normalize(cross(a,X)); if
+that axis is also too small, use normalize(cross(a,Y)).
+
+When the ankle-limit option is enabled:
+
+    limit = 0.34906587 * (1-clamp(length(ankle_motion_vector)/3,0,1))
+    local_axis = rotate(current_foot_rotation, [0,0,1])
+    v = rotate(C, local_axis)
+    limited_v = normalize([v.x,v.y,clamp(v.z,-limit,+limit)])
+    extra = rotation_between(normalize(v),limited_v)
+    C = extra * C
+
+This is a clamp on a VECTOR COMPONENT. Despite the setting's ankle-roll name,
+do not implement it as a direct 20-degree angular clamp. The full motion-vector
+producer is not resolved, so the reference requires that vector explicitly.
+The selected local bone Z axis is not proved to be anatomical foot-up.
+
+    B = ik_quaternion_blend(identity,C,correction_blend)
+    new_foot_rotation = C * old_foot_rotation
+    new_endpoint_rotation = B * old_endpoint_rotation
+    new_endpoint_position = contact_pivot + rotate(B, old_position-contact_pivot)
+
+The foot rotation receives full C; the endpoint receives blended B. Position
+and rotation therefore share the same contact pivot correction. This is actual
+procedural pose/contact coupling. It is not proof that clip root motion drives
+the player's rigid-body trajectory.
+
+The surrounding routine selects a contact normal, springs it, and springs the
+correction blend. Those two filters are intentionally explicit inputs here.
+Contact lookup includes an eligible flag pattern and actor-distance gates.
+Their full collision-query behavior is not reconstructed by this helper.
+
+7. Graph-side request gate
+
+The named BipedFootIKNode forwards its child pose during pose traversal and
+updates a separate IK request. Two boolean graph inputs replace request A and
+request B while preserving the previous active-result state. Its final graph
+operation runs when previous_active OR request_A. Request B alone does not
+start it. If the required context exists, it passes both requests to an engine
+IK callback and stores the callback result as the new active state. If context
+is missing, the previous active state remains. graph_ik_dispatch implements
+this gate with an explicit callback. A/B meanings remain unresolved.
+
+This proves named graph-side IK request behavior. The engine callback table is
+installed externally; its concrete bridge to the generic biped solver and a
+rider-selected graph were not closed in this pass. The package therefore keeps
+its generic-versus-equipment boundary.
+
+8. Validation and remaining scope
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+Filter outputs and reference-position inputs remain explicit. The examples do not establish the full procedural foot or hip trajectory.
+
+Remaining work: specify equipment-specific animation graph invocation and implement
+final bone bindings and bone rotations, close normal and correction filtering,
+board/ski contact IK, full procedural lean and weight-shift poses, and bone pose
+to rigid-body feedback. The documented biped rules should not be silently used
+as a complete snowboard animation model.

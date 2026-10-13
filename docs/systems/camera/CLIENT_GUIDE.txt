@@ -1,0 +1,38 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS TWELVE UPDATE: camera/final-output supplies current-camera routing and cached angle reads; final renderer angle binding remains open.
+
+CURRENT UPDATE: camera/projection-setup connects viewport framing, pixel spans and the cached projection ratio. Full selected-angle binding remains open.
+
+CURRENT UPDATE: Transition ancestor matching, clock, conditional weights and separate angle curves are now explained in camera/transitions/CLIENT_GUIDE.txt.
+
+CAMERA IMPLEMENTATION REFERENCE
+
+Run: python3 reference.py
+Only Python's standard library is required. named-settings.json contains 130 named camera nodes, their configured angles, validated ordered children and documented condition expressions. example-results.json records runnable examples. The bundled files provide all inputs used by the examples.
+
+SPRING UPDATE
+Inputs: current position x, velocity v, target t, damping frequency omega, elapsed time dt. Define y=x-t, q=omega*dt, d=1/(1+q+0.48*q*q+0.235*q*q*q), u=(v+omega*y)*dt. Output x=t+(y+u)*d and v=(v-omega*u)*d. The reference rounds arithmetic to float32. Omega has inverse-time dimensions; this is a rational decay approximation, not exact exponential integration. Position and velocity settle when both absolute error and absolute velocity are below epsilon. Tiny omega snaps position but preserves velocity in the symmetric routine. The asymmetric routine chooses the rising coefficient when target>position, otherwise the falling coefficient; its tiny-frequency branch clears velocity. Vector filtering applies the same equation to each lane, with four-lane norm settle tests.
+
+DISTANCE-SENSITIVE FILTER
+The producer measures anchor displacement norm divided by elapsed time, then smooths that rate with the asymmetric spring. An alternate producer first multiplies rate by a gain clamped to [0,1]. The main scalar consumer computes speed=max(smoothed_anchor_speed, MinimumSpeed), then fraction=min(speed/NormalSpeed,1). Tiny NormalSpeed gives fraction=1. There is no lower fraction clamp. Effective dt is elapsed*fraction; omega is DampingFactor*frequency_multiplier. A tiny fraction clears velocity; tiny DampingFactor snaps position while retaining velocity; tiny multiplier or effective dt holds. The angle variant wraps the integration error and result to [-pi,pi], but uses raw error for its settle test. This is anchor-motion response, not a documented rider-speed FOV equation. Defaults from constructors are DampingFactor=15, NormalSpeed=0 and MinimumSpeed=25, not a claim that every selected camera uses those values. Main-target filtering temporarily installs two callback-supplied frequencies and restores them afterward; a global override can force both to 20. The callback input producer remains unresolved.
+
+CONFIGURED ANGLES AND PROJECTION
+Serialized angle mode names are proven by enum metadata: 0=Vertical, 1=Horizontal. All 130 included named nodes select Vertical. Examples include BasicCam 60 degrees, SpeedPosition 90 degrees, Root 55 degrees and Riding 45 degrees; use the exact names in named-settings.json. A computed property getter passes Vertical through. Horizontal computes 2*atan(conversion_ratio*tan(raw_angle/2)) if a current camera is available, otherwise raw_angle. The second serialized angle slot is a computed/cache property, not a second independent requested angle.
+
+camera/projection-setup traces conversion_ratio to the cached span ratio with
+configured scale, mode-dependent correction and possible global override.
+The complete physical viewport-axis convention remains unresolved. The example explicitly supplies height/width as a hypothetical horizontal-to-vertical conversion; this does not claim that the engine cache has that orientation. The included renderer helper forms half=near*tan(projection_angle/2), left/right from crop X times half*aspect, and top/bottom from crop Y times half. reference.py provides the full row-major matrix. Its parameter named vertical_angle denotes the angle measured in the matrix's second coordinate; aspect denotes first-span/second-span. Physical viewport coordinate order remains unproven. A preceding renderer helper widens its angle when actual_aspect<reference_aspect using 2*atan(tan(angle/2)*reference_aspect/actual_aspect). The configured computed property to selected execution value to renderer angle connection is not completely established, so these local equations must not be represented as a closed end-to-end FOV pipeline.
+
+ORDERED SELECTION AND CONDITIONS
+A node can become the fallback selection before its ordered children are searched. Enabled children with absent, inactive or true conditions are recursively considered. The first result not excluded wins; an excluded result clears the shared selection and scanning continues. This can erase the fallback. At the outer level, no new selection retains the previous camera. named-settings.json preserves validated serialized priority order. SpeedPosition is gated by a stance predicate, not a documented numeric speed threshold; BasicCam uses a different stance predicate.
+
+Boolean AND/OR skip disabled children. An actually empty child list returns false. A nonempty list whose children are all disabled yields true for AND and false for OR. Other operations return false. Enabled leaves can be inverted. Owner state, discipline, stance and override leaves query the actor camera interface; invalid owner binding or sentinel enum yields false. Producer definitions for all these actor flags are not documented. Descriptive input names in the reference represent functional flags, not inferred game state machines.
+
+The ActionCamera configuration requires (first_action_camera_override OR second_action_camera_override) AND NOT action_camera_menu_block AND NOT action_camera_item_block. The Paraglide configuration requires a continuously true NOT paraglide_exit_guard for two configured seconds, then paraglide_follow_state AND paraglide_discipline AND automatic_camera_override. The delay gate ORs enabled child predicates, resets whenever none is true, sets deadline on the first true evaluation and returns false on that evaluation even for zero duration. Subsequent evaluations succeed when now_ticks>=deadline. Delay ticks are trunc(float32(delay_seconds*30000)). The observed timer scale is 30000 ticks per time unit; the surrounding clock conversion is consistent with seconds but this local gate does not independently establish every clock producer's units.
+
+INTERACTIVE ANGLE AND LIMITS
+A nonnegative absolute angle override has priority. Otherwise, while angle input is active, candidate=current_angle+input_rate*dt and output=min(max(candidate,1/lower_inverse_limit),1/upper_inverse_limit). Inactive input retains the current angle. Names describe the limits' functional roles; their settings labels and the full input_rate producer are unresolved. This is an additional selected-angle update, not proof of a general speed-to-FOV law.
+
+IMPLEMENTATION BOUNDARY
+The spring, distance filter, local angle conversion, projection matrix, ordered selection, Boolean logic, delay behavior and interactive clamp are implementable local blocks. Transition duration and routing are supplied in camera/transitions, camera/settings and camera/routing. Complete actor flag producers, the full speed/shake/occlusion pipeline and end-to-end FOV binding remain incomplete. The package does not silently replace those missing producers with fabricated rules. 

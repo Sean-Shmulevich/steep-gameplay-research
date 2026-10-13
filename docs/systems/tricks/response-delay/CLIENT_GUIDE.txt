@@ -1,0 +1,47 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Delay producer for the separate scalar response
+
+This resolves the formula that supplies the delay in tricks/selection's
+integrated-exponential response. Three inputs retain neutral names because
+their full physical meanings and live bindings are not all established:
+    c = selected configuration scalar
+    s = saved state scalar
+    a = actor scalar
+
+The arithmetic is:
+    total = c + s
+    if total < 0: delay = 0
+    else:
+        delay = -log(c/total)*c/a
+        if delay < 0: delay = 0
+
+log is the natural logarithm. The strict negative-sum branch does not include
+zero. The inspected arithmetic has no extra guard for total==0, a==0 or a
+nonpositive logarithm argument. The portable helper raises on those domains;
+that is an explicit implementation policy, not a claimed native recovery rule.
+It preserves the negative-sum early return even if the later division would
+otherwise be invalid.
+
+The consumer is the previously documented separate response:
+    t = duration - delay
+    response = 0 if t < 0 else -gain*(tau*(exp(-t/tau)-1)+t)
+
+For synthetic inputs c=2, s=2, a=4, delay=log(2)/2, about .34657359.
+With gain=.01 and tau=.01, evaluating .1 later gives about -.00090000454.
+These three delay inputs are example values, not selected game settings.
+The selected gain/tau reset connection was established in tricks/selection.
+
+For positive tau, the response is continuous with zero initial slope at onset.
+Its slope afterward is -gain*(1-exp(-t/tau)); for positive gain it approaches
+-gain. This is an integrated response rather than a simple exponentially
+decaying angular velocity. Do not reinterpret the selected tau as a universal
+spin-release damping constant.
+
+The successor scalar-correction state also evaluates this consumer and stores
+its output. A procedural target-pose consumer is now established: the stored value is an
+angle in radians around an axis perpendicular to horizontal cached motion. See
+animations/landing-pose. Complete rigid-body coupling, input bindings and every
+call that refreshes delay remain open. reference.py uses
+expm1 for stable portable evaluation near onset. It is not bit-exact float math.
+Run test_reference.py for delay domains, scaling and response continuity/slope.

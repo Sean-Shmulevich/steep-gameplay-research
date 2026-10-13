@@ -1,0 +1,46 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+ANGULAR ANIMATION INPUT OWNERSHIP
+
+This module qualifies the earlier direct-forwarding description in animations/selection. The local forwarding arithmetic remains correct, but its source cache, guards and competing writer matter. Numeric mode IDs below belong to the inspected controller, not automatically to the motion-state IDs in tricks/motion-lifecycle.
+
+Cache refresh
+
+An owner angular cache is replaced from a controller's three-component angular state when controller mode is any of 1,3,4,10,11, or actor mode 5 and a separate actor gate are both true. The fourth lane is set to zero. Otherwise this branch retains the old cache. The same setter also copies two angle values. A getter returns this cache; it does not read rigid-body angular velocity directly. Other paths or initializers may populate state outside the inspected branch.
+
+Ordinary publication copies the cached vector to AirAngularVelocity and x/y/z to PitchSpeed/RollSpeed/AngularVelocityZ. No unit conversion is applied to those four writes. This is insufficient to assign universal physical units to every cache producer. PitchAngle and RollAngle used by the combined helper are already converted to degrees by the caller, with the existing negative radians-to-degrees convention.
+
+Combined values
+
+For vector (x,y,z), pitch p and roll r in degrees:
+  RollAndPitchCombinedSpeed = sqrt(x*x+y*y)
+  RollAndPitchCombinedHorizontalAngle =
+      atan2(sin(r*pi/180), sin(p*pi/180))*180/pi
+For (3,4,9), p=r=30 degrees, these are 5 and 45 degrees. Z does not contribute to the combined speed. The angle derives from orientation sines, not atan2(y,x) of angular velocity. Native exceptional-input and signed-zero behavior is not fully reproduced by the host helper.
+
+One-update angular override
+
+A separate Archetype writer has this priority:
+  controller modes 1 or 4 -> Archetype 2
+  otherwise mode 10 -> Archetype 7
+  otherwise mode 11 -> Archetype 8
+  otherwise actor selector 3 -> Archetype 4
+  otherwise no writes from this branch
+
+In the actor-selector-3 branch, it reads the PREVIOUS primary Archetype. Only if that value is already 4 does it write:
+  AirAngularVelocity = (0,0,150)
+  PitchSpeed = 0
+  RollSpeed = 0
+  AngularVelocityZ = 150
+  suppress_normal_angular_write = true
+It also publishes the same values to an available enabled secondary graph, setting that graph's PitchAngle and RollAngle to zero. The Archetype writes occur whether or not the previous value was 4. Thus the first update into Archetype 4 differs from a later update already in it.
+
+The ordinary publisher respects this flag for its direct angular writes to the supplied destination and secondary graph. It still updates the combined values from the ordinary cached vector and supplied angles, then clears the flag. That can intentionally leave direct angular fields and combined fields describing different sources for this update. Unwritten values remain in the graph store; do not replace them with zero.
+
+The ordinary publisher receives its main graph destination as an argument; the combined helper and override writer use the controller's primary graph pointer. The reference returns normal_destination and primary writes separately. Their identity is not assumed globally. The worked fixture explicitly aliases these stores to illustrate the shared-destination case.
+
+The value 150 is a graph override. This branch does not install it as a physical angular velocity, a maximum spin rate or a torque. The order in which these two writers are scheduled globally remains an integration boundary. The reference demonstrates the confirmed suppression behavior when the override writer runs before the ordinary publisher.
+
+This closes more of the state-to-animation input contract, not authored input-to-clip traversal. No single clip ID is inferred from these flags. See tricks/sequence/clip_anchors.json for confirmed asset families and their graph output identities.
+
+Run python3 reference.py and python3 test_reference.py. Tests check first-entry differences, write priority, cache retention, combined-angle quadrants and one-update override protection. No original instruction execution was used for this pass.

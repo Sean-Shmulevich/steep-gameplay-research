@@ -1,0 +1,80 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+The fourth pass describes actual thermal membership, an embedded thermal's
+coordinates, and the terrain ridge-lift scalar equation. These are runtime air
+signals. Their physical units and the player motion law that consumes them
+need separate evidence.
+
+The named AirSystemManager resource contains a Thermal centered at
+(-4176, -4032.5, 1120). Its radius is 100, height is 1500, and upward strength
+is 15. The sampler accepts a position if its height above the center lies
+between 0 and 1500 inclusive and its squared horizontal distance is strictly
+less than 100 squared. It emits (0, 0, 15). There is no radial or height taper
+inside this sampler. The side boundary is excluded; the top and bottom are
+included. Multiple matching thermals contribute independently and add.
+
+For example, the center and the point directly above it at height 2620 both
+produce strength 15. A point 100 units east is outside. A point 99 units east
+is inside. This is one actual configured thermal, not an exhaustive list of
+world thermal locations. Its geographic place name is not established.
+
+Ridge lift comes from collision sampling. The sampler uses a segment between
+the current sample position and another component position. It extends both
+ends by five times the segment plus five units along its normalized direction.
+Additional rays
+check that segment and horizontal probes extending 25 units in both directions
+along an actor basis axis. Qualifying secondary hits must have a particular
+runtime object classification. The classification's descriptive name remains
+unresolved. The closest accepted collision distance controls the strength.
+No contribution is emitted when that distance exceeds 25.
+
+Let n be the primary collision normal, up=(0,0,1), and
+    t=(n cross up) cross n.
+For a unit normal, t=up-n*n.z. Let d be the accepted collision distance.
+The distance factor is 1 through d=9.375. Beyond that it is
+    distance_factor=((25-d)*0.35)/(0.625*25)+0.65.
+It reaches 0.65 at d=25. The slope factor is
+    slope_factor=clamp(1-0.55+0.55*t.z,0,1).
+
+The sampler projects t and an actor basis direction into the horizontal plane,
+normalizes them, and takes their angle in degrees. A nearly zero horizontal t
+uses an angle factor of 1. Otherwise the actual configured curve is
+    angle_factor=1                         for angle<=119.45 degrees
+    angle_factor=(143.15-angle)/23.70       for 119.45<angle<143.15
+    angle_factor=0                         for angle>=143.15 degrees.
+The underlying stored breakpoints have float32 rounding. Although the curve
+stores Bezier handles, all four knots select linear interpolation.
+
+The emitted scalar is
+    ridge_strength=18.5*angle_factor*distance_factor*slope_factor.
+This gives 18.5 for a vertical collision face, favorable heading and d<=9.375;
+12.025 for the same face at d=25; and half those values when the curve returns
+0.5. Exact flat-ground normals fail an earlier horizontal-normal check.
+
+The direction starts as t. The runtime direction adjustment tests
+    17-acos(clamp(t.z,-1,1))*180/pi <= 0.00001.
+When the test passes, it rotates t by 17 degrees around normalized(t cross up).
+It preserves the magnitude of t. Since t is not normalized before the test,
+this must not be described as a final 17-degree direction cap.
+
+The air component combines these ridge and thermal contributions into a static
+channel and processes intermittent air into a separate channel. Each channel
+uses duration-weighted trapezoidal smoothing:
+    T=max(dt,window)
+    integral=(old_integral/old_duration)*(T-dt)
+             +0.5*(target+previous_target)*dt
+    filtered=integral/T.
+The configured windows are 1 second for a nonzero static target, 3 seconds
+for a nearly zero static target, and 0.1 seconds for the intermittent channel.
+Player settings can suppress, attenuate or impose a minimum on these signals.
+One suppression uses the second scalar returned by a component method. Its
+meaning must be bound before labeling it vertical speed or pitch.
+
+The named ENV_B_RegionLayout_RidgeLift resource remains a small layout record.
+This scalar does not turn it into a geographic zone list. Thermal shaders
+and arrow meshes still provide rendering evidence only.
+
+reference.py provides portable thermal membership, ridge distance/slope/angle
+factors, the runtime direction adjustment, and the smoothing recurrence.
+Sixteen checks pass. Collision queries are explicit inputs to the ridge model;
+the reference does not invent terrain intersections or flight accelerations.

@@ -1,0 +1,138 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS TWELVE UPDATE: snow/rider-targets supplies the coupled target producer and convergence call-site gains.
+
+Physical rider leg targets and constraint coefficients
+
+Run python3 reference.py. The module has no dependencies beyond the standard
+library. named_data.json supplies one complete physical leg tuning profile. Its fields
+match the authored freestyle_bigair_gameplay, freestyle_cross_gameplay,
+freestyle_halfpipe_gameplay and freestyle_slopestyle_gameplay profiles.
+Target coordinates below are stored local slots, not anatomical bone names.
+These physical targets do not reproduce a skeletal two-segment IK solve.
+
+Selection and timestep order
+
+The physical update first cooks controls, then prepares leg targets and
+constraint coefficients. With a separate rider body, it updates the rider
+constraint and later enables that constraint under the physics lock. Without
+that body, a positive configured rider mass permits the scalar spring to run
+for ten substeps. A nonpositive configured rider mass skips leg preparation.
+
+At body construction a representation flag selects hull plus separate rider,
+or a sphere-style main representation. The hull branch creates a separate
+rider only when configured rider mass is positive. Runtime presence of that
+body selects the constraint path. Do not run both rider representations.
+For the separate-body coefficient conversion, mass is the live sum of main
+and optional rider backend masses. The scalar conversion uses the configured
+rider spring mass. This distinction matters even when tuning values match.
+
+Complete per-axis coefficient conversion
+
+The tuning fields called stiffness enter this conversion as frequency-like
+inputs. They are squared and scaled by mass and a stored four-pi-squared
+constant. Do not pass those configured values directly to a force spring.
+For each axis with frequency f, damping ratio z and conversion mass m:
+
+    raw_k = ((f*m)*f)*39.47842025756836
+    k = min(999999995904.0, max(1.0000000116860974e-7, raw_k))
+    root = sqrt(k*m) if k > 1.0000000116860974e-7 else 0.5
+    damping = (z+z)*root
+
+Arithmetic is float32 at each operation. The strict comparison at the floor
+is part of the rule. Negative f is squared without a preceding clamp in this
+helper. It clears the observed auxiliary row controls as well as writing the
+coefficients. Input axis order is lateral, longitudinal, vertical. Backend row
+write order is longitudinal, vertical, lateral; reference returns input order.
+
+The selected profile supplies base lateral 15.5, longitudinal 4 and vertical 4,
+base damping .0015, and base constraint error damping .025. Positive coil
+stiffness and damping curve outputs scale their respective bases. Damping is
+clamped nonnegative at the initial base-times-coil stage. The vertical ratio
+also adds baseConstraintErrorDamping*constraintErrorDampingCurve(error).
+The error is actual local vertical coordinate minus the selected target's
+vertical coordinate. That additional term is not clamped again in this block.
+The vertical and longitudinal frequency products retain a very large fallback
+when their computed value is negative. The lateral product likewise replaces
+its fallback only when nonnegative. The reference takes the final resolved
+frequency vector explicitly; it does not invent missing controller states.
+
+Scalar rider spring coefficients
+
+Only vertical final frequency f and ratio z feed the scalar branch:
+
+    k = clamp(((f*configuredRiderMass)*f)*39.47842025756836, floor, ceiling)
+    damping = 2*z*sqrt(k*configuredRiderMass)
+
+It always uses square root, including at the floor. For mass 20, f 0 and z .0015,
+the three-axis helper writes damping .0015. The scalar branch writes about
+.00000424264. The scalar target velocity is copied from main-body vertical
+velocity. Its target position is the generated local vertical target.
+
+The scalar spring evolves target position each substep at target velocity.
+Its acceleration is:
+
+    a = ((targetPosition-position)*k
+         +(targetVelocity-velocity)*damping)/mass + externalAcceleration
+
+The existing scalar integration kernel uses ten RK4 substeps. Its physical
+position is a spring degree of freedom. It is not a skeleton foot position.
+
+Generated bounds
+
+The bounds fold two endpoints into initial +/-999999995904 sentinels, then
+expand by travel tolerances. For roll response r supplied by the physical
+controller, let c=neutralLongitudinalOffset*r. Construct in local slot order
+lateral, longitudinal, vertical:
+
+    A = [-neutralMaxLateralOffset, c-sternwardMaxLongitudinalOffset,
+         neutralVerticalOffset]
+    B = [ neutralMaxLateralOffset, c+bowwardMaxLongitudinalOffset,
+         coiledVerticalOffset]
+    tolerance = [lateralTravelTolerance, longitudinalTravelTolerance,
+                 verticalTravelTolerance]
+    lower[i] = min(sentinel,A[i],B[i])-tolerance[i]
+    upper[i] = max(-sentinel,A[i],B[i])+tolerance[i]
+
+The neutral/coiled endpoint interpolation is ordinary unbounded linear
+interpolation. No clamp is inserted into that interpolation helper.
+The supplied values give lower [-.4,-.975,-.05] and upper [.4,1.025,.6] at r=.5.
+The coiled height is .15, neutral height .4, neutral lateral range .3 and neutral
+longitudinal offset .05. Travel tolerances are lateral .1, vertical .2 and
+longitudinal 0. The target smoothing path clamps each final local coordinate to
+these bounds before storing it. A separate reset path bypasses smoothing and
+clamping, writes the prepared target directly, and can reposition the rider
+body and restore supplied velocities. Therefore bounds are not an unconditional
+postcondition for every controller path.
+
+Target frame
+
+The hull representation transforms the local target through the cached board
+basis and translation. The other representation adds the local offset to the
+cached board position. The reference accepts explicit basis columns. Supply
+columns in the same slot convention as local target coordinates. The stored
+controller target is lateral, longitudinal, vertical; its frame transform
+reorders the latter two components to match the cached basis. The portable
+helper expects caller columns already reordered to target slot order.
+
+    hull: worldTarget = translation + sum(local[i]*basisColumn[i])
+    other: worldTarget = boardPosition + local
+
+A separate rider reset keeps that body's current orientation, replaces its
+position with worldTarget, and submits the supplied linear and angular
+velocities. The scalar reset stores its current vertical coordinate and zeros
+its current velocity. That reset is state-selected, not a continuous impulse.
+
+Validation and remaining scope
+
+303 offline runtime comparisons matched the per-axis coefficient helper exactly.
+Its square-root callback used host sqrt rounded to float32. This verifies
+coefficient arithmetic, saturation, floor behavior and row mapping, not the
+physics backend's constraint solver. One runtime bounds block also matched the portable result. Bounds and branch equations were checked
+against the physical controller's instruction sequence. This verifies the bounds block, not a complete runtime controller test.
+
+Remaining work includes the full sign-selected lateral/longitudinal target
+orientation, smart absorber convergence callback, all reset-state producers,
+backend Jacobian and impulse solve, actual equipment-to-skeleton binding, and
+all downstream pose feedback. The references accept resolved controls and
+frames where those producers remain outside the documented kernels.

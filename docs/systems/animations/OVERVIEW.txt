@@ -1,0 +1,172 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS SEVENTEEN UPDATE: animations/landing-pose supplies conditional alignment weights, the raw cross-product guard and a radians pose-tilt consumer for the delayed response. Timing producers and authored clip selection remain incomplete. No prototype changes.
+
+PASS SIXTEEN UPDATE: animations/angular-routing adds angular-cache retention, a special graph override and combined-angle equations. Twelve matched clip anchors are in tricks/sequence. Authored clip selection remains open.
+
+PASS THIRTEEN UPDATE: animations/scheduling supplies deferred evaluation and post-evaluation producer-cache invalidation.
+
+PASS TWELVE UPDATE: animations/field-binding supplies external field resolution and shared lazy production; full authored clip selection remains open.
+
+CURRENT UPDATE: PASS_ELEVEN.txt covers runtime graph conversion rules, physical
+rider constraints and recovery request producers. Full input-to-clip selection
+remains open.
+
+CURRENT UPDATE: PASS_TEN.txt and animations/paths give current coverage.
+Successor-based graph associations and their earlier counts are superseded by
+the node-to-owned-output catalog. Named scalar predicates remain valid.
+
+NINTH UPDATE: animations/decisions specifies 321 authored comparisons as five
+named grab predicates, including equality tolerance and boundary examples.
+Their outgoing state/clip/mask destinations remain open. See PASS_NINE.txt.
+
+EIGHTH-PASS UPDATE
+
+animations/paths/CLIENT_GUIDE.txt supplies the current authored node catalog:
+6,880 main-rider data nodes reference 1,877 clips; 102 paraglider data nodes
+reference 55 clips. Complete records join each node to its own output.
+Typed inputs and raw signature counts are separate data, not connection claims.
+animations/decisions specifies scalar comparator enums and named grab predicates.
+Full active state, clip and mask selection remains open.
+
+ANIMATION AND SKELETAL SYSTEM: SEVENTH-PASS IMPLEMENTATION GUIDE
+
+For spin, flip, grab and other trick coverage, start with TRICKS_GUIDE.txt.
+This chapter explains how the decoded rig, clip, pose, IK and mesh components
+fit together. It supersedes earlier pose-space and skeletal gap summaries.
+Topic guides preserve precise limits and tested branches. 
+
+1. Actual skeletons and pose hierarchy
+
+animations/skeleton supplies male/female 72-bone player rigs and 34-bone ski and
+29-bone snowboard addon rigs, 207 bones total. Parent indices and local/model bind
+transforms are actual decoded data. Unknown bone names remain placeholders.
+The runtime local-to-model and model-to-local routines each passed checks over
+2,400 bones, including the documented composition order. Runtime LOD subtree skip
+logic is known, though its serialized field mapping remains incomplete.
+
+2. Ordinary and additive animation poses
+
+animations/pose-assembly extends the earlier clip chapter. The ordinary caller
+seeds a local bind pose and overwrites mapped channels with sampled values.
+Absent channels retain their seed. The runtime integer query is truncation of
+float32(time*60), distinct from the 30-Hz authoring duration grid.
+
+This closes the earlier ordinary-pose local/model ambiguity. Alternate seed
+selection and runtime remap flags remain explicit. The writer applies documented
+component mappings and an optional half-turn transform; use the topic's branch
+conditions instead of assuming all clips always use mapping 0.
+
+The separate additive path builds a reference pose, then forms:
+  translation_delta = current_translation-reference_translation
+  quaternion_delta = inverse(reference_quaternion)*current_quaternion
+The inverse divides by quaternion norm squared. That conversion does not add
+the bind pose and does not silently normalize the result.
+
+Ten clips now contain 1,744 tracks and 15,673 samples. In addition to navigation,
+landing, air, taunt, jump and double-grab clips, they include backflip, frontflip,
+backflip with spin-left and Indy tweak with spin-right. The new catalog lists 805
+actual named trick/air/jump/landing clips, preserving durations and resource links.
+These are not 805 distinct scored tricks. ID prefixes are not guessed sport names.
+
+The decoded flip clips show small local pose variation. They do not individually
+encode a full physical/world flip in the included ordinary pose samples.
+Procedural rotation remains a separate documented part of the motion pipeline.
+Reference-bone movement is decoded, but its full physical root-motion policy
+remains unproved.
+
+3. Graph inputs and blending
+
+animations/selection describes actual authored graph input tables and runtime input
+routing: 133 main-graph fields and 29 paraglide fields. The main graph contains
+1,915 embedded clips, including 530 named flip/spin/grab/barrel records; the
+paraglide graph contains 57 clips. These catalogs overlap the earlier catalog
+and must not be summed as unique tricks. It distinguishes writes from readback.
+Grab, ragdoll-pad,
+grind and jump-grab inputs have concrete branches where established.
+animations/graph-decoding adds seven decoded dictionaries with 284 entries and
+113 exact runtime registry bindings. Their runtime
+registration keys now connect named ski/snowboard grabs and tweaks to controller
+callbacks and scoring in tricks/events. tricks/grab-input connects the named Grab
+markup to angle/intensity capture, including onset and persistent refresh rules.
+Complete authored state-machine transitions and sport-to-clip selection remain
+incomplete. Dictionary names alone are not a selected runtime state.
+
+animations/playback adds effective duration, phase/marker conversion, strict
+marker boundaries, loop-boundary sampling and transition construction policies.
+The exact topic guide distinguishes runtime rules from missing authored
+rider selections. Preserve its unusual loop time split and duration precedence.
+
+animations/blending retains graph weight normalization, axial selection,
+ordered blending, quaternion polynomial interpolation, additive composition,
+mask weights and phase arithmetic. Pose sampling, additive conversion and graph
+blending are separate operations. Preserve their multiplication order and their
+different near-degenerate quaternion branches.
+
+4. Procedural skeletal IK
+
+animations/ik contains activation/contact weights, knee reach limits, pelvis and
+support rules, height prediction, slope correction and output target blending.
+animations/ik-solve extends that work with the registered graph callback,
+a documented two-segment middle-target solve, weighted skeletal quaternion writes
+and mapped pose scattering. The solver's numerical behavior near straight limbs
+needs care; the guide reports observed runtime/reference error instead of claiming
+bit identity. The complete equipment-specific board/foot selection remains open.
+
+5. Animation and physical ragdolls
+
+animations/physics-pose contains the PoseDrive pose-drive equations and actual
+male/female 21-body, 20-joint resources. animations/ragdoll adds the Classic path:
+physical-parent-relative poses, attachment-frame hinge targets, three-axis motor
+target matrices, strength interpolation and angular-rate conversion.
+
+The two controllers use different parameters. Percentage gains from PoseDrive
+must not be substituted for Classic motor endpoints. Runtime selection, physical
+contact shapes and full downstream constraint dynamics remain incomplete.
+
+6. Mesh deformation and attachments
+
+animations/skinning includes the actual four/eight-influence position shader
+arithmetic and decoded data from a real head mesh. The shader applies each
+joint's three matrix rows to (position,1), multiplies by its weight and accumulates.
+It does not normalize weights, skip zero weights or add a bounds check internally.
+
+The included mesh has 4,222 vertices and 14 mesh bones. Authored weight bytes sum
+to 255 for every vertex. Eight mesh bones match the base player rig and their
+stored matrices invert the matching model bind transforms within float error.
+The runtime mesh lookup uses the first resolved bone as fallback for missing
+bone names; if none resolve, it clears the remap. This behavior matters for
+partial rigs and must not be replaced with arbitrary bone ordering.
+
+The bone-anchored attachment routine composes an optional global root, selected
+model bone and authored local anchor transform. Missing anchor/pose/bone leaves
+the output unchanged. Final palette production is also documented:
+  palette = global_root * model_bone * scale * stored_inverse_bind
+  palette.translation += negative_render_origin
+The scale gate and missing-pose/joint branches are explicit in the skinning guide.
+Packed-position and byte-weight conversion into GPU float buffers remain open.
+
+7. Actual ski, board and pole bindings
+
+animations/equipment supplies actual male/female graphic-plus-addon selection
+pairs, all four addon rigs and ten-joint mesh mappings for each ski/board mesh.
+The selected gear bones descend from LeftFoot/RightFoot. Ski poles use two
+hand-descendant joints. The board has 36 bridge vertices sharing left/right
+anchor weights; ski meshes have no cross-side weighted vertices.
+
+These are authored resource and rendering relationships. Runtime tag matching,
+addon merging and animation-driven equipment deformation remain separate limits.
+The guide preserves observed nonidentity bind-frame differences, and does not
+silently correct ski placement to match a board-specific comparison.
+
+How to integrate
+
+Load the actual rig and bind pose; sample mapped channels; handle the selected
+ordinary/additive mode; apply the graph's blends; run the selected procedural
+corrections; compose hierarchy; build the verified rendering inputs. Physical
+rotation and scoring have their own documented state and history requirements.
+Every unproved runtime selection should stay an explicit input or labeled tuning
+choice. Do not infer gameplay semantics solely from clip names.
+
+Run python3 verify.py at the package root. All portable reference examples use
+only bundled files and Python's standard library. Full-game playback and visual fidelity require integration testing.

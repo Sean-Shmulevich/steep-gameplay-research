@@ -1,0 +1,107 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+snow_game air input selection
+
+Run python3 reference.py. The reference uses Python's standard library.
+
+The initialized preset breakpoints are 0, .5 and 1 for the shared flight
+controller. These are initialization values. Later state overrides remain
+outside this supplement. Preset order is the existing supplied order.
+
+The live selector uses primary turn_y. Define s=(turn_y+1)/2.
+Initialize the result to indices 0,0 and blend 0. Search intervals in order,
+using lower<s<=upper. On a match, return adjacent indices and
+blend=(s-lower)/(upper-lower). Thus -1 returns the initialized first preset,
+-.5 blends presets 0/1 equally, 0 returns 0/1 at blend 1, .5 blends 1/2 equally,
+and 1 returns 1/2 at blend 1. Values outside [-1,1] return preset 0.
+No clamp occurs in this selector.
+
+Each ordinary update sets special mode when a runtime mode query equals 5.
+The mode's physical device label remains unknown. Paraglider primary/secondary
+sources switch to their alternate actions only when BOTH special mode and a
+separate alternate-enabled flag are true. Wingsuit retains its ordinary sources.
+The special roll branch depends on special mode alone. Do not use the two-flag
+alternate action choice as a replacement for the special roll gate.
+
+Paraglider brake chooses the alternate scalar action only when both those flags
+are true. Independently, when special mode is active and a separate action gate
+is false, the scalar is replaced by abs(current secondary_x). This substitution
+runs even with alternate actions disabled. A persistent release latch forces the
+substituted scalar to zero until secondary_x is exactly zero. That zero sample
+clears the latch and returns zero; the next nonzero sample produces brake again.
+An active action gate bypasses substitution and leaves the latch unchanged.
+Brake is not clamped here. NaN inputs are outside this portable reference.
+
+The initialization/reset path clears the latch. A restoration entry seeds it
+from the ordinary secondary action's x, even if alternate actions will be used
+subsequently. With a seeded latch .4 and secondary samples [.4,.2,0,.5], brake
+outputs [0,0,0,.5] when special mode is active and the action gate is false.
+
+Prediction selection has a separate persistent accumulator. Live updates always
+select from current primary y. Non-live updates use the accumulator only when
+configured selection_rate is nonzero. If y!=0, first compute
+  accumulator=clamp(accumulator+selection_rate*y*dt,-1,1).
+Then, if abs(x)>turn_threshold AND accumulator>=return_threshold, subtract
+  dt*return_rate.
+There is no second clamp after subtraction. Apply the same preset interval law
+to the resulting accumulator. A zero rate selects current y and leaves the
+accumulator unchanged. Tuning arguments remain explicit in this reference.
+The special controller's restoration entry seeds this accumulator from a pose
+helper; that helper's complete inverse-flight mapping is outside this supplement.
+
+The common update also filters a separately read auxiliary vector using the
+previous sample, previous duration-weighted value, prior window, dt and a new
+window max(dt,configured_window). That auxiliary value is separate from live
+primary y. This supplement does not use it as the preset selector.
+
+Validation covers the isolated breakpoint initialization, 1,007 isolated selector/blend cases,
+and 144 isolated brake action/substitution/latch cases. Action lookups, scalar
+returns and the action-gate query were supplied at their helper boundaries.
+Maximum selector blend difference from the portable reference was below
+.00000006. Device bindings, complete runtime mode-query implementation and
+collision/zone handling remain external. 
+
+Special-mode roll recovery
+
+After angular integration and damping, special mode applies a persistent
+recovery rule. Its flags affect subsequent moment evaluation.
+Angles are radians. Let roll_degrees=abs(roll)*180/pi. At roll_degrees>=85,
+  roll_rate=5*sign(roll_rate),
+  pitch_rate=-pitch*.30000001192092896,
+  suppress_roll_brake=true and preserve_pitch_yaw=true.
+Sign at zero is zero. Thus this branch retains the existing roll-rate sign;
+it does not choose a sign from roll angle. At roll_degrees<=15 both flags
+clear. At 15<roll_degrees<=50 only preserve_pitch_yaw clears. Between 50 and
+85 degrees neither flag changes. Outside special mode neither rates nor flags
+change. This hysteresis matters across frames. A negative 86-degree roll with
+positive .2 roll rate sets the rate to +5, not -5. Pitch .5 sets pitch rate to
+approximately -.15. The reset path and restoration entry clear both flags.
+
+The supplied tuning has prediction return_threshold=0, return_rate=0 and
+turn_threshold=.699999988079071. These values disable the subtractive return
+for that preset. Selection_rate remains an explicit input; do not invent it.
+
+Air target acceptance and input attenuation
+
+The scalar read by the air aggregator is the current PRIMARY input y from the
+sport-specific action getter. It is separate from filtered brake and from
+angular pitch. Ridge targets clear when ridge_input_suppression is enabled
+and primary_y>.10000000149011612. Equality permits the ridge target. The
+manager initializes this flag true; configuration overrides remain possible.
+Thermal targets bypass this input suppression. These rules run after spatial
+sampling and before duration-weighted channel filtering, so clearing a new
+target need not immediately clear the filtered environmental velocity.
+
+One intermittent target category applies
+  factor=1-max(0,-primary_y)*intermittent_gain
+  target=strength*direction*factor.
+The manager initializes intermittent_gain=.75. At y=-1 this gives .25; at
+y=+.5 it gives 1. There is no final clamp: y=-2 gives -.5 with that gain.
+The input contract must provide any intended bounds. Other intermittent
+categories bypass this factor. Kind names in reference.py describe these
+consumer branches; they do not assign unproven meteorological labels.
+
+Validation also covers 1,000 prediction accumulator/selector cases, 1,000
+complete roll recovery cases, and 1,000 local air input-gate cases. Maximum air target arithmetic difference was .00000208. Runtime
+mode queries, input-device bindings, pose-to-selection initialization, zone
+placement, terrain collision sampling and filtering history remain external.

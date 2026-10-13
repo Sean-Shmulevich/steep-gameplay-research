@@ -1,0 +1,88 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+snow_game mass selection and backend updates
+
+The caller selects the representation before body construction. A disabled
+separate-rider flag chooses a sphere descriptor for the main body. An enabled
+flag chooses hull geometry. That hull path creates a separate rider sphere only
+when configured rider mass is positive. The flag is a host setting. This pass
+does not establish which activity supplies each flag value.
+
+Main sphere representation
+The main sphere descriptor starts with configured rider collision radius and
+subtracts backend collision tolerance before submission. The custom-property
+calculation reuses the selected physical geometry's volume, V. It does not
+replace V with the sphere's mathematical volume.
+    effectiveRadius = collisionRadius - backendTolerance
+    mainMass = V*density
+    geometricDiagonal = V*0.4*effectiveRadius*effectiveRadius
+    submittedDiagonal = geometricDiagonal*density
+All off-diagonal components and the custom center are zero. Arithmetic rounds
+to float32 after each operation. The normal dynamic-body and valid custom-
+property gates still apply. Static construction does not use this override.
+The custom main sphere mass has no explicit configured-rider-mass addition.
+
+Hull representation
+The hull path uses the geometric tensor and configured center provided by
+body-construction. Main mass is V*density. A separate rider uses its own sphere
+volume, configured rider mass and collision radius. Its configured mass is not
+added to the main hull's custom mass. Live combined mass sums the dynamic main
+backend mass and the optional separate rider's dynamic backend mass.
+
+Backend mass updates
+An explicit body-mass setter takes a supplied new mass. Before writing the
+body's mass and reciprocal mass, it rescales each eligible child mass:
+    ratio = newMass/oldMass
+    childMass *= ratio
+A child is eligible when its shape exists and its flag bit 1 is set.
+A different recomputation routine sums child masses only when the child shape
+exists and both low flag bits are set. It writes that sum and its reciprocal.
+For zero sum it writes both values as zero. The reference restricts examples
+to finite masses and ordinary nonzero denominators.
+
+A body-to-body copy path invokes the explicit setter on the destination only
+when source body mass is positive, supplying source mass unchanged. Later child
+replacement in that path can recompute mass from child records. Neither step
+contains a rider-specific addition. A nonpositive source does not invoke this
+particular override; this is not a promise that the entire copy operation leaves
+the destination's previous mass intact.
+
+Jump integration correction
+The earlier hypothetical no-rider example used initial selected hull mass as a
+runtime input. The no-separate-rider construction actually selects a sphere
+main representation. Its custom mass still uses geometry volume and density,
+subject to construction gates and live backend changes. Merely changing the
+shape to a sphere does not establish a mass equal to hull mass plus rider mass.
+The scalar rider spring's configured mass is a separate degree of freedom and
+has no proven automatic contribution to the main backend mass getter.
+
+The documented jump expression remains:
+    mainImpulse = (liveCombinedMass-configuredRiderMass)*jumpFactor
+The separate rider receives configuredRiderMass*jumpFactor when it exists.
+No clamp or automatic addition has been documented. If the supplied live mass
+is below configured rider mass, the main impulse is negative for a positive
+factor. The selected patched volume and density conditionally give about 5.688
+for custom main mass in either representation. This is not proof that a live
+scalar-mode jump actually runs with that state. Activity selection, later body
+state and caller jump eligibility remain open. Implementations must receive
+live backend mass and representation from their host.
+
+Units and integration
+Use the same stored length unit for geometry, collision radius and backend
+tolerance. Density multiplies volume directly. This pass establishes no
+conversion factor, world-axis interpretation or universal SI-unit claim.
+Do not add 20 to compensate for the unresolved runtime question.
+
+Validation
+Isolated checks covered 16 representation/rider-presence branch cases,
+6 source-mass copy branch cases, 120 complete child-mass summations and
+124 complete mass setters. The setters
+used custom-inertia flags, bypassing downstream inertia recomputation. These
+checks validate local arithmetic and branch behavior with supplied inputs.
+They do not establish activity selection or live simulation behavior. The scalar
+sphere formulas above come from static assembly and caller contracts.
+
+Files
+reference.py implements the portable local formulas with the standard library.
+EXAMPLE_OUTPUT.json supplies conditional construction and synthetic backend
+examples. named_data.json records selected source constants and qualifications.

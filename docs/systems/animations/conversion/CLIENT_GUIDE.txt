@@ -1,0 +1,50 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Runtime output conversion rules
+
+The runtime compiler flattens each graph's stored node list and each node's
+stored output list without sorting. For runtime node n and its local output o:
+flat_index = sum(output_count[k] for k < n) + o.
+The resulting entry is an output descriptor, rather than a node identity.
+Multi-output nodes therefore prevent treating a flat index as a node index.
+These rules require runtime counts and runtime order. They do not establish
+that an authored graph's record order is the runtime node order.
+
+Binding classes 8 and 9 both resolve their integer source index through that
+same graph-local descriptor table. The resolver preserves the binding class.
+After resolution, the scalar getter distinguishes their storage contracts:
+class 8: read_float32(output_arena, descriptor.output_offset).
+class 9: handle = read_uint32(output_arena, descriptor.output_offset);
+         timeline_index = (handle >> 16) & 65535;
+         read_float32(timeline, timeline_index * 160 + 144).
+The class 9 field is an animation timeline scalar. Its use elsewhere as a
+normalized playback coordinate does not prove a seconds-based unit here.
+An output descriptor can also retain an owning node that the getter evaluates
+before reading. The supplied function covers owner-free resolved descriptors.
+
+The remap constructor allocates five default output descriptors. Its inherited
+copy operation later resizes the destination output collection to the source
+collection's exact count and assigns their owner. A source with one output
+therefore yields one copied output. This corrects the stronger prior claim
+that the factory's five outputs prove a permanent schema mismatch. It does
+not prove that the authored reader uses that copy route, or how it fills the
+source collection.
+
+For remap types 1 and 2, output allocation consumes 4 bytes. Type 4 consumes
+8 bytes, and type 5 consumes 12. Each allocation starts at the next 4-byte
+boundary. Only the first output descriptor receives this allocated offset.
+The numeric type identifiers are retained because the enum's full schema
+is not needed for this allocation rule.
+
+reference.py implements runtime indexing, inverse indexing, owner-free scalar
+reads, and remap output allocation. examples.json contains synthetic examples.
+Isolated scalar-getter checks passed 400 cases, evenly
+split between binding classes 8 and 9. It used synthetic descriptors and
+buffers. It did not deserialize authored graphs or evaluate animation nodes.
+
+Remaining boundary
+The authored binding class 9 records include boolean and scalar operator
+references. The runtime class 9 scalar branch reads an animation handle.
+No authored-to-runtime binding conversion has been documented. The local
+candidate input-to-pose route consequently remains unproven. Do not connect
+an authored source index to a clip using these runtime rules alone.

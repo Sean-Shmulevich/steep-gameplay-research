@@ -1,0 +1,117 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS FOURTEEN UPDATE: snow/rider-frame-response closes offset_response as projected frame alignment followed by a sampled normalized-arcsine curve. Complete live frame bindings remain open.
+
+PASS THIRTEEN UPDATE: snow/rider-inputs resolves the cooked pair to weightShift.horizontal/vertical and the absorber input to retained/refreshed cooked-coil derivative.
+
+Physical rider target producer and actual-position absorption
+
+This extends leg-constraints with the target producer, cross-axis geometry and
+the two-stage actual-to-desired convergence path. Run python3 reference.py for
+five worked examples, and python3 test_reference.py for portable checks.
+These are physical local target coordinates, not skeletal foot IK targets.
+
+Resolved controls and exact geometry
+
+The producer receives a two-float physical control pair plus a coil scalar and
+a second scalar used to rescale absorber speed. The continuous caller supplies
+these from its cooked control object. The construction caller supplies zeros
+and requests reset. The mapping from raw device input to every cooked slot is
+not complete. reference.py calls the pair control_0 and control_1 deliberately.
+
+Choose sternward settings when control_1 < 0, otherwise bowward settings.
+Let L = lerp(neutralMaxLateralOffset, selectedMaxLateralOffset, abs(control_1)).
+Let R = control_0*L and P = -control_1*selectedMaxLongitudinalOffset.
+The authored extents therefore act as angular amplitudes in this producer.
+Let H = lerp(neutralVerticalOffset, coiledVerticalOffset, coil)
+        + sqrt(abs(control_0))*L*rollInducedAdditionalVerticalOffset.
+Neither interpolation is clamped here.
+
+The quaternion is constructed from the half angles P/2 and R/2 with zero third
+angle. Its components are:
+    x = sin(P/2)*cos(R/2)
+    y = cos(P/2)*sin(R/2)
+    z = -sin(P/2)*sin(R/2)
+    w = cos(P/2)*cos(R/2)
+The producer rotates [0,0,H] with this quaternion. It then REPLACES the rotated
+vertical coordinate with H and adds neutralLongitudinalOffset*offset_response
+to the longitudinal coordinate. This overwrite matters: using an ordinary
+rotated height vector would make the rider target shorter as it leans.
+
+Ignoring float32 rounding, the final target is:
+    lateral = H*sin(R)*cos(P)
+    longitudinal = -H*sin(P) + neutralLongitudinalOffset*offset_response
+    vertical = H
+
+This couples both controls to lateral displacement, control_1 to longitudinal
+displacement, control_0 to vertical height, and coil to both horizontal outputs
+through H. It is not three independent offset interpolations. The portable
+code follows the actual quaternion arithmetic and float32 operation order.
+The alternate main representation generates [0,0,lerped height] and bypasses
+this angular construction.
+
+Actual-position feedback precedes desired-position convergence
+
+For the ordinary path, the previous local target first approaches the current
+actual local physical position on every axis. The resulting position then
+approaches the newly prepared desired target on every axis. The final values
+are clamped to the prior pass's generated travel bounds and stored for reuse.
+A reset path bypasses both convergence passes and the clamp.
+
+Each pass obtains its convergence factor from an authored speed-rescale curve
+at abs(the second scalar), multiplied by baseConvergenceFactor in that pass's
+settings. At the observed call sites, that same resolved product is passed as
+all four helper gains. reference.absorber accepts those resolved products.
+The authored proportionalConvergenceFactor is stored separately, but these
+six call sites do not read it. Both linear and proportional helper gains use
+the rescaled BASE factor here. Substituting the authored proportional factor
+would change the documented behavior. The supplied profile therefore uses
+actualFactor=2*actualSpeedCurve and desiredFactor=6*desiredSpeedCurve.
+
+The shared helper chooses its outward branch when abs(target)>abs(current)
+and current*target>0. Otherwise it chooses its inward branch. It evaluates a
+runtime lookup at -dt*proportionalGain and computes:
+    step = (1-lookupResult)*abs(target-current) + dt*linearGain
+It moves toward the target by that step, prevents overshoot, and snaps when
+remaining distance is strictly less than .0001. The two observed passes use
+the same gains for both branches, so branch selection does not alter their
+parameters, though it matters for other callers of this generic helper.
+
+The lookup table is initialized at runtime and shared with the documented snow
+control cooker. It has 256 linear segments sampled from exp(x) on [-10,0],
+with padding .001 on both ends and padded segment selection. decay_lookup
+reconstructs that table with host math.exp; it is not a direct exp replacement.
+The original SIMD sample generator and host sampling can differ in rounding,
+so the portable convergence result is approximate rather than bit exact.
+A callback override permits a caller to supply original float table samples.
+
+Physical submission and limits
+
+The desired orientation matrix is cached separately from the smoothed local
+target. The hull path transforms its selected target through the cached board
+frame. Reset can reposition the separate rider body while preserving that
+body's current orientation and submitting supplied velocities. Scalar reset
+sets its current height and zeros its current velocity. Separate-body presence
+selects the constraint path; otherwise positive rider mass selects ten scalar
+spring integration substeps. The two paths must not be run together.
+
+The construction caller binds the rider constraint to main and rider body
+handles. The continuous caller later enables that constraint under a physics
+lock. This establishes physical constraint submission, not its Jacobian,
+impulse response, reaction torque or effective weight-transfer magnitude.
+No documented caller establishes a physical target-to-skeleton-foot binding or
+a root-motion feedback path. Those remain open. The scalar spring target and
+actual absorption are physical degrees of freedom, not a solved skeletal IK.
+
+Validation
+
+253 isolated isolated routine target producer blocks matched the portable
+reference exactly, maximum absolute error zero. Native trigonometry and square
+root calls were replaced with host functions rounded to float32; the original
+unbounded interpolation helper ran. Settings and controls were synthetic.
+No game process or physics backend executed. Eight portable tests additionally
+check neutral/alternate representations, symmetry, offset, unbounded coil,
+quaternion normalization, convergence monotonicity and pass ordering. The
+convergence tests use an explicit synthetic lookup to isolate ordering. The
+shared game lookup is reconstructed with host exp samples; original SIMD sample
+bits are not verified by those tests.

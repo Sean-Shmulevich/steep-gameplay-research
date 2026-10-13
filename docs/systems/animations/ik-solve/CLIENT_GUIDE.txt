@@ -1,0 +1,222 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+SKELETAL IK: LIMB TARGET SOLVE AND BONE WRITES
+
+This package describes a complete intermediate-target kernel for a two-segment
+limb, actual weighted skeletal quaternion writes, and mapped chain-pose writes.
+It also closes the animation graph's connection to the generic procedural foot
+IK controller described in the preceding animation package. Run
+`python3 reference.py`. Python's standard library is sufficient. named_data.json
+contains the actual math constants; EXAMPLE_OUTPUT.json contains runnable
+example results. 
+
+The scope is precise. The middle-target kernel is one stage inside a larger
+skeletal IK solver. It does not reproduce the whole full-body solve. Anatomical
+bone bindings, rider-selected graphs, and ski-versus-snowboard selection remain
+unproved. The bone names in the mapping example are illustrative names supplied
+by a caller, not documented equipment bindings.
+
+1. The graph/controller connection is now proved
+
+The named BipedFootIKNode reaches the registered SolveBipedIk engine callback,
+which reaches the documented generic procedural biped controller. The earlier
+uncertainty about that callback bridge is closed. This establishes the path
+from the generic graph node to foot/contact target processing, contact fades,
+hip constraints, and foot-on-slope corrections.
+
+A separate registered SolveIk callback feeds the skeletal solver. Its request
+records carry a target transform, two principal weights, two additional control
+weights, and an effector selector. The callback first clears its request state.
+It accepts a full request when abs(principal_weight_A) > 0.00001 OR
+abs(principal_weight_B) > 0.00001. When both fail that test, an additional-control
+request can still be stored if its absolute weight exceeds 0.00001. Only a full
+request sets the flag that starts this skeletal solve in the observed callback.
+Equality with 0.00001 does not pass. Do not infer gameplay meaning for the
+additional controls from their position in the record.
+
+The solver loads the mapped animation pose, runs multiple limb/body stages,
+and writes pose data back. A control mask selects stage execution. Further
+forward/local pose propagation follows the mathematical kernel. This package
+describes the kernel and writes below, not every stage in that control mask.
+The procedural biped callback and skeletal callback are both proved. Their
+complete equipment-specific graph wiring remains unresolved.
+
+2. Complete two-segment intermediate-target kernel
+
+Use root A, current middle B, current end C, requested middle T, and requested
+end U. All are XYZ points in one consistent coordinate system. The implementation
+stores four components; this portable reconstruction covers a zero fourth
+position component. Position units follow the supplied skeleton. Zero-length normalization or an
+exactly opposite direction can produce undefined runtime values; the portable
+implementation raises ValueError rather than fabricating a fallback pose.
+
+Four scalar inputs have functional names:
+
+    a = middle_weight
+    b = alignment_control
+    e = end_weight
+    h = mix_bias
+
+Their complete configuration producers are unresolved. The function takes
+them explicitly. It does not clamp them. Typical validation used values in
+[0,1]. These values are not advertised as ski or snowboard tuning defaults.
+An end_axis_mask chooses whether each coordinate receives end-driven influence.
+
+Lengths come from the CURRENT pose:
+
+    L1 = length(B-A)
+    L2 = length(C-B)
+
+Compute candidate weights in this order for each coordinate. Preserve the
+sequence when matching float rounding:
+
+    pre = 1 - b*a
+    masked_e = e if this coordinate's mask is enabled else 0
+    first = h*pre*masked_e
+    q = (pre-first)*masked_e + first
+    r = (pre-q) + b*a
+
+q weights the end-driven candidate. r weights the direct middle candidate.
+Mathematically q+r=1. The implementation retains the specified arithmetic
+sequence instead of replacing r with 1-q.
+
+Initialize BOTH candidates to zero. If any r coordinate is strictly positive:
+
+    P = A + L1*normalize(lerp(B,T,a)-A)
+
+This projects the requested middle direction onto the current upper-segment
+length. It does not place the middle directly at T.
+
+If any q coordinate is strictly positive, compute the end-driven candidate:
+
+    E = lerp(C,U,e)
+    initial_rotation = direction_rotation(C-A, E-A)
+    turned_middle = A + rotate(initial_rotation, B-A)
+    intermediate_request = lerp(turned_middle,T,a)
+    backward = E - L2*normalize(E-intermediate_request)
+    M = A + L1*normalize(backward-A)
+    upper = M-A
+    lower = L2*normalize(E-M)
+    axis = cross(lower,upper)
+
+The direction rotation is normalize([cross(source,target),
+sqrt(dot(source,source)*dot(target,target))+dot(source,target)]). It works with
+nonunit directions. The algorithm has no safe fallback for exactly opposite
+nonzero directions, where that quaternion becomes zero.
+
+If dot(axis,axis) is STRICTLY positive, apply a bend correction:
+
+    axis = normalize(axis)
+    current_distance = min(length(upper+lower), length(upper)+L2)
+    target_distance = min(length(E-A), length(upper)+L2)
+    denominator = 2*L2*length(upper)
+    current_cos = clamp((length(upper)^2+L2^2-current_distance^2)/denominator,-1,1)
+    target_cos  = clamp((length(upper)^2+L2^2-target_distance^2)/denominator,-1,1)
+    delta_angle = native_acos(target_cos) - native_acos(current_cos)
+    bend_rotation = native_axis_angle(axis,delta_angle)
+    result_end = M + rotate(bend_rotation,lower)
+    final_alignment = direction_rotation(result_end-A,E-A)
+    M = A + rotate(final_alignment,upper)
+
+A zero cross product skips the bend block. It still keeps the backward/forward
+candidate M. No epsilon replaces this strict zero test. Target distance has an
+upper clamp; there is no explicit lower-distance clamp before the cosine clamp.
+
+Finally, for each coordinate:
+
+    new_middle_target = q*M + r*P
+
+This result replaces the kernel's middle target. The root and end input points
+are not written by this kernel. Later stages derive and propagate bone poses.
+The function is a complete documented middle-target stage, not a conventional
+single-step law-of-cosines solve substituted for the game algorithm.
+
+3. Actual inverse-cosine and angle polynomials
+
+The solver uses approximations. The reference includes their actual constants.
+Replacing them with math.acos and math.sin changes the documented numeric rule.
+For x clamped to [-1,1]:
+
+    u = 1-abs(x)
+    P = 1 + c1*u + c2*u^2 + c3*u^3 + c4*u^4
+    c1 = 0.08323384821414948
+    c2 = 0.02037195861339569
+    c3 = 0.0007906295941211283
+    c4 = 0.006324297748506069
+    native_acos(x) = half_pi - sign(x)*(half_pi-P*sqrt(2*u))
+
+half_pi is 1.5707963705062866. A nonnegative x chooses sign +1.
+
+For quaternion construction, convert the half angle to turns with
+0.15915493667125702. The XYZ lanes subtract 0.25 turns; the W lane does not.
+For each lane t:
+
+    reduced = t-round_to_nearest_even(t)
+    v = 0.25-abs(reduced)
+    S = v*(6.2831854820251465
+           + v^2*(-41.339210510253906
+           + v^2*(81.39083099365234
+           + v^2*(-71.34268188476562))))
+
+XYZ multiply S by the normalized axis; W uses S directly. The result receives
+no extra quaternion normalization before the bend rotation. The reference
+preserves that detail and rounds the polynomial arithmetic to float32.
+
+4. Actual weighted bone quaternion update
+
+The skeletal orientation stage selects a mapped bone and its requested
+rotation. It computes a normalized linear blend with target sign selection:
+
+    sign = sign_bit(dot(current,target)) interpreted as +1 or -1
+    desired = normalize(current + weight*(sign*target-current))
+    delta = desired * conjugate(current)
+    stored = delta * current
+
+Multiplication is Hamilton quaternion multiplication in XYZW order. The runtime
+routine writes stored to the bone's quaternion. The apparently redundant delta
+composition remains in reference.py because it preserves the specified operation
+order and stored float rounding. This stage does not clamp weight and does not
+use the trigonometric IK-output blend from the procedural biped package.
+
+After this write, the update invokes pose propagation and can apply further
+bone constraints. Those callbacks are outside apply_weighted_bone_orientation.
+
+5. Seven-slot mapped pose writes
+
+The limb stage loads seven mapped pose records and eventually scatters seven
+solved records back to the skeleton. Each record contains position, rotation,
+and scale. An unmapped slot is skipped. The portable function represents an
+unmapped slot with None and accepts caller-supplied bone names or identifiers.
+Duplicate mappings are allowed; the later slot overwrites the earlier one.
+The other fields and unmapped bones survive unchanged.
+
+The mapping is runtime rig data. No universal anatomical mapping is supplied.
+A caller must provide the actual skeleton mapping before these records can be
+bound to a rider. This is the concrete write behavior, with the remaining data
+boundary stated explicitly.
+
+6. Worked examples and validation limits
+
+The examples use a bent pose A=[0,0,0], B=[0.5,0.5,0], C=[1,0,0], requested
+middle T=[0.3,0.7,0], end U=[0.8,0.2,0], and illustrative controls
+[a,b,e,h]=[0.8,0.3,1,0.4]. The resulting middle target is approximately
+[0.27582988,0.65041536,0]. With e=0, end-driven weights become zero and the
+result is exactly the direct middle candidate. An identity-to-90-degree rotation
+example exercises the actual bone orientation update. The mapping example
+exercises skipped slots and a repeated bone mapping.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+The portable implementation uses host square root. Reciprocal-square-root estimates and Newton refinement can round differently; near-straight law-of-cosines cases can amplify that difference. Do not require bit-identical skeletal targets across math backends.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+The portable implementation uses host square root. Reciprocal-square-root estimates and Newton refinement can round differently; near-straight law-of-cosines cases can amplify that difference. Do not require bit-identical skeletal targets across math backends.
+
+Remaining scope: full-body stage selection and iteration, final constrained
+bone rotations after propagation, anatomical rig mappings, actual rider graph
+invocation, ski/snowboard foot or board bindings, and complete pose-to-physics
+feedback. The graph/controller callback bridge is proved; those equipment and
+full-solver boundaries remain explicit.

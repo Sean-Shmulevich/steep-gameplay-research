@@ -1,0 +1,69 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Lazy animation producer readiness and deferred evaluation
+
+The previous field-binding guide established once-until-reset producer calls.
+This supplement identifies a reset path and explains why clearing every display
+frame is not equivalent to the inspected scheduling behavior.
+
+The observed scheduler first requires a graph. It selects its cached-callback
+path only when all of these hold:
+    cached entry count != 0
+    graph pending counter == 0
+    (flags & 5) == 1
+    ++byteCounter < byteThreshold
+The byte counter increments only after the first three tests succeed and wraps
+as an unsigned byte. Equality with the threshold selects full evaluation.
+The flag names are descriptive roles; producer meanings remain unclosed.
+
+Cached-callback path:
+    execute existing cached callbacks using this update's dt
+    accumulated_dt += dt
+    keep producer readiness flags
+
+Full-evaluation path:
+    effective_dt = accumulated_dt + this_update_dt
+    accumulated_dt = 0
+    byteCounter = 0
+    release cached entries; set cached count to zero
+    perform graph evaluation with effective_dt
+    clear every producer group's ready flag AFTER evaluation
+
+The clear iterates the same 72-byte group records used by lazy scalar reads.
+Consequently, a producer already ready before full evaluation can remain cached
+through that evaluation and is invalidated afterward. The next eligible read
+recomputes it. This ordering matters; moving reset to the start changes behavior.
+Other callers may also affect readiness. No global once-per-render-frame policy
+is established, and this supplement does not identify when every scheduler runs.
+
+Example
+
+With cached count 1, flags 1, pending 0 and threshold 3:
+- first update: counter 1, cached callbacks, accumulate dt
+- second update: counter 2, cached callbacks, accumulate dt
+- third update: counter reaches 3, full evaluation receives all three dt values
+  and then clears producer readiness
+The full path empties the cached list. Continued deferral requires a producer to
+repopulate that list; do not assume the same three-update cycle repeats forever.
+
+Producer registration and copying
+
+Registration appends a group only for a nonempty dependency list, clones its
+callback, installs its small metadata value and initializes ready=false. Each
+successfully resolved field index maps to the new group; unresolved identifiers
+are skipped on this path. Later overlapping mappings overwrite earlier ones.
+The group map is byte-sized. This pass does not establish the capacity policy
+for more than 255 groups and does not invent wrapping as a safe policy.
+
+The inspected group-copy routine copies readiness along with metadata and a
+cloned callback. Copying a group is not automatically an invalidation operation.
+Frontend graph deserialization, enum conversion and complete clip selection
+remain unresolved. The new scheduling rule extends runtime field production,
+not authored selection of skiing, carving or landing clips.
+
+Verification
+
+Static instruction inspection plus portable scheduling/order tests. Synthetic
+producer reads in reference.py exercise readiness; they do not claim the exact
+set of reads performed by the graph evaluator. No native equivalence test or
+complete animation playback test was run for this module.

@@ -1,0 +1,96 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+GRAB DIRECTION PREDICATES
+
+The main rider graph contains 321 complete scalar comparison records with
+named grab inputs and constant thresholds. These reduce to five predicates:
+
+Parameter          Comparison             Threshold     Record count
+GrabPadAngle       GreaterThanOrEquals       -90             57
+GrabPadAngle       GreaterThanOrEquals         0             59
+GrabPadAngle       GreaterThanOrEquals        90             57
+GrabPadAngle       LessThanOrEquals            0             57
+GrabPadIntensity   Equals                     0             91
+
+Angle values are in degrees. GrabPadIntensity is the captured pad magnitude.
+Supply the graph's current captured inputs, rather than assuming that every
+controller sample updates them. These predicates return booleans; this
+chapter does not supply their outgoing state, clip or mask destinations.
+
+Run: python3 reference.py
+Python's standard library is sufficient. The package includes the authored
+comparison records, their typed input table, five selected encoded records
+and example outputs. No game files or external Python packages are required.
+
+COMPARISON RULES
+
+Convert both scalar operands to float32 before comparing. Define
+  a = float32(left)
+  b = float32(right)
+  epsilon = float32(0.00001) = 0.000009999999747378752
+  difference = float32(a - b)
+
+The six scalar comparator enums are:
+  0 Equals:              abs(difference) <= epsilon
+  1 GreaterThan:         a > b
+  2 GreaterThanOrEquals: a >= b
+  3 LessThan:            a < b
+  4 LessThanOrEquals:    a <= b
+  5 NotEquals:           NOT(abs(difference) <= epsilon)
+An unrecognized operator returns false.
+
+Equals uses a tolerance. For example, GrabPadIntensity=0.000005 satisfies the
+zero-intensity predicate, while GrabPadIntensity=0.00002 does not. Relational
+comparisons use their ordinary inclusive or exclusive boundaries without
+this tolerance: an angle exactly -90 satisfies the -90 lower-bound test.
+
+Unordered comparisons need care. A NaN operand makes Equals and all four
+relational comparisons false, but makes NotEquals true. Likewise, subtracting
+equal infinities produces an unordered difference for Equals/NotEquals.
+NotEquals must use the logical negation shown above rather than replacing
+it with a simple abs(difference) > epsilon expression.
+
+LOCAL DECISION PSEUDOCODE
+
+For the authored -90-degree record:
+  operation = GreaterThanOrEquals
+  left = graph_inputs.GrabPadAngle
+  right = -90.0
+  result = float32(left) >= float32(right)
+  publish result to the comparison node's boolean output
+
+For the authored zero-intensity record:
+  left = float32(graph_inputs.GrabPadIntensity)
+  result = abs(float32(left - float32(0))) <= epsilon
+  publish result to the comparison node's boolean output
+
+STRUCTURED RECORD DECODER
+
+Each supported comparison has three complete input-port records:
+  comparison operation: constant integer
+  left operand: named runtime control parameter
+  right operand: constant float
+
+The binding enums used here are 0=runtime control parameter,
+3=constant float, and 4=constant integer. The parameter index resolves
+through the ordered authored typed-input table: 35 is GrabPadAngle and 36
+is GrabPadIntensity. The portable decoder validates the comparison signature,
+all three input-port signatures, all three binding types, the comparator enum
+and the scalar parameter type before returning a named predicate.
+
+reference.py provides:
+  scalar_compare(operator, left, right)
+  evaluate_predicate(record, inputs)
+  decode_comparison(selected_record, typed_inputs)
+
+The examples exercise both sides and the exact boundary of every distinct
+authored predicate. Equality tests additionally cover the tolerance boundary.
+
+LIMITS
+
+Two further comparison records use a synchronized-port left operand; they
+are excluded because that source connection remains unresolved. Complete
+state-transition edges, composite conditions, interruption rules and mask
+selection are not supplied. The 321 records are authored comparison instances,
+not 321 distinct gameplay states. Repeated predicates are retained in the
+data, with their multiplicities summarized separately.

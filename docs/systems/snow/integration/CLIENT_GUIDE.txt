@@ -1,0 +1,119 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: Use snow/mass-selection for body representation and mass-writer rules, and snow/leg-constraints for physical rider targets.
+
+CHARGE RELEASE AND UPWARD JUMP IMPULSES
+
+This module connects a leg-coil input to a release signal, then to an upward central impulse. It includes ten input tuning profiles and twelve jump tuning profiles. Run python3 reference.py with the adjacent named_data.json. The supplied state examples are illustrative; body masses, speed, immersion depth, gravity and current activity must come from the surrounding simulation.
+
+Input and cooking
+
+The ten input profiles bind legCoilTriggers to TriggerRight and have no legCoilButtons. This is an input-service name; hardware/controller remapping remains outside the module. Each normal/fast profile has a triggerRemap curve, cooker coefficients and releaseJumpThreshold. Blend normal/fast settings using
+  weight=clamp((projectedSpeed*3.6-normalSpeedThreshold)/
+               (fastSpeedThreshold-normalSpeedThreshold),0,1)
+then remap the trigger and cook it toward that remapped target. All supplied release thresholds are .25. Normal cooking coefficients are baseToOne2, proportionalToOne1, baseToZero10, proportionalToZero20; fast values are10,.2,10,20.
+
+Cooking selects ToZero when abs(target)<=abs(current) or current*target<=0; otherwise ToOne. In particular, starting from zero takes the ToZero branch. Let E be the padded exponential lookup, equivalent to a piecewise-linear approximation of exp on[-10,0]:
+  step=(1-E(-dt*proportional))*abs(target-current)+dt*base
+  next=current+sign(target-current)*min(step,abs(target-current))
+Snap to target when the remaining absolute difference is below .0001. charge_step implements this combined remap/blend/cook operation.
+
+Saved charge and release signal
+
+The state stores cooked coil, saved remapped charge, elapsed time, cooked-coil rate and a release signal. First cook the new coil and increment elapsed by elapsed_dt. When input_update_mode equals1:
+  releaseSignal=0
+  releaseCopy=0
+  rate=(newCooked-oldCooked)/derivative_dt
+  if savedCharge!=0 and newCooked==0:
+      if elapsed<releaseJumpThreshold:
+          releaseSignal=savedCharge
+          releaseCopy=savedCharge
+      savedCharge=0
+  elif rawRemappedCharge>=savedCharge or (rate!=0 and rate>-1):
+      savedCharge=rawRemappedCharge
+      elapsed=0
+
+The rate comparison is against minus one, not a small epsilon. Slow nonzero coil reduction can refresh the saved charge from the current remapped input; a quick release can retain the previous charge. Equality at rate=-1 does not satisfy that second rate condition. Release requires cooked coil to reach exactly zero, usually through the cooker's snap; merely setting the raw trigger to zero is insufficient. Equality at elapsed=.25 rejects the release.
+
+savedCharge is not accumulated hold time. Holding a stable remapped input at the saved value refreshes the elapsed clock because the comparison accepts equality. The signal therefore carries saved input strength, not the duration of the hold.
+
+The two time arguments are explicit. elapsed_dt advances the release clock; derivative_dt divides the cooked-coil change. The outer update supplies them separately. Use the same value only when the caller's clocks agree, and keep derivative_dt positive. If input_update_mode differs from1, this release-state branch does not clear the previous signals or rate; elapsed still advances and the cooked value still updates. The policy that chooses this mode is an integration input.
+
+Contact and cooldown gates
+
+The jump consumer first subtracts dt from its cooldown. It then follows these branches:
+  if airTime>0 or baseImpulseFactor<=0:
+      cachedFactor=0
+      cooldown=0
+      submit no impulse
+  elif cooldown>0:
+      retain cachedFactor
+      submit no impulse
+  elif releaseSignal<=0:
+      cachedFactor=0
+      submit no impulse
+  else:
+      compute factor and submit impulses
+      cooldown=.3330000043
+
+The air clock is based on hull submergence: immersedVolume/totalHullVolume greater than .001 resets airTime to zero and advances contact time. At or below .001, the immersed ratio is treated as zero, contact time resets and airTime advances. This gate is distinct from a generic engine collision boolean.
+
+Airborne steps clear the cooldown, so .333 is not a universal delay carried through the entire flight. A release signal while airTime is positive applies no impulse in this consumer; this consumer does not buffer it for a later landing. A successful branch sets the cooldown even if a configured curve makes the resulting impulse zero. Outer activity and pending-state rules remain outside these local gates.
+
+Actual jump tuning
+
+baseImpulseFactor is80 in freestyle_bigair_gameplay, freestyle_cross_gameplay, freestyle_halfpipe_gameplay, freestyle_slopestyle_gameplay and surfboard_gameplay. It is0 in alpine_downhill_gameplay, alpine_giantslalom_gameplay, alpine_slalom_gameplay, alpine_superg_gameplay, parallel_slalom_gameplay, sledge_gameplay and speedriding_gameplay. A zero value disables this particular jump branch; it does not establish that the entire sport has no other jump mechanism.
+
+Each jump profile includes forceCoilInputCurve, forceDepthCurve and forceSpeedCurve. Evaluate them at the release signal, normalized contact depth and projected runtime speed respectively. Retain their sampled, padded-domain piecewise-linear evaluation rather than substituting a nearest sample.
+
+For the enabled branch:
+  factor=baseImpulseFactor/gravityMagnitude
+  factor*=forceCoilInputCurve(releaseSignal)
+  factor*=forceDepthCurve(depth)
+  factor*=forceSpeedCurve(projectedSpeed)
+  cachedFactor=factor
+Use the positive gravity magnitude supplied by the actor state. There is no extra timestep factor in the impulse below. This factor is a per-mass impulse scale, not a guaranteed velocity change for every body representation.
+
+Mass split and central application
+
+The combined mass is the main backend body's resolved mass plus the physical rider body's resolved mass when that separate body exists. A static body resolves to
+float32 maximum, rather than zero; summing static sentinels may overflow.
+See snow/body-construction for construction values and static-body handling. A scalar rider model does not by itself add a second backend body to this sum. Separately, all supplied jump profiles have configured rider mass20. The jump uses this configured mass for its split:
+  mainImpulse=(0,0,(combinedMass-configuredRiderMass)*factor)
+  if physical rider exists:
+      riderImpulse=(0,0,configuredRiderMass*factor)
+
+The main impulse is submitted even when there is no separate physical rider; no separate rider impulse is submitted in that representation. There is no clamp on combinedMass-configuredRiderMass in this formula. Supply the actual live masses; do not replace combinedMass with the configured20.
+
+Both submissions are central impulses along fixed world+Z. They directly change linear velocity by impulse/bodyMass and do not directly add an angular impulse. They do not use the terrain-plane normal. Subsequent body constraints, rider dynamics and contact forces can still change the result.
+
+Worked sequence
+
+The example starts with zero cooked coil, holds remapped trigger1 for30 updates at dt1/60, then releases it. In the normal input profile, the cooked coil reaches zero after three release updates: elapsed approximately.0500000, releaseSignal1. With surfboard_gameplay jump tuning, supplied depth.5, projected speed10, gravity9.81 and combined mass80, factor is approximately4.468064. Main impulse is approximately268.083866 upward; with a separate rider, rider impulse is approximately89.361289 upward. These masses and motion values are synthetic supplied state.
+
+If those bodies have masses60 and20 respectively, each receives a direct velocity increase of approximately4.468064. If instead only a mass80 main body exists, its direct increase from the main submission is approximately3.351048, and there is no separate rider submission. The scalar rider/constraint response is a separate step. Using alpine_downhill_gameplay's base factor0 submits neither impulse.
+
+API
+
+  import reference
+  data=reference.load_data()
+  state=reference.new_charge_state()
+  state=reference.charge_step(state,1.0,0.0,1/60,
+      data['input_profiles']['surfboard_gameplay'])
+  result=reference.jump_step(data['jump_profiles']['surfboard_gameplay'],
+      release_signal=1,depth=.5,projected_speed=10,
+      total_mass=80,gravity_magnitude=9.81,dt=1/60,
+      physical_rider_present=True)
+
+update_release accepts already cooked/remapped state for callers with their own input cooker. jump_step keeps the air clock, cooldown and body representation explicit. contact_clocks updates the immersion-based contact/air clocks. combined_body_mass and central_impulse_velocity_changes expose the mass/application formulas.
+
+Scope and checks
+
+Examples exercise press/hold/release behavior, enabled and disabled jump profiles, the two body representations, air/contact clocks and strict threshold conditions. Portable examples need no game or other files beyond this module's named data. The Python helpers are mathematical references; full instruction-by-instruction float32 equivalence is not promised for all curve/cooking arithmetic.
+
+Body construction is supplied separately in snow/body-construction. Local leg target bounds and physical constraint coefficients are supplied in snow/leg-constraints. The complete constraint solver, activity selection of each tuning profile, hardware action mapping and all surrounding timestep gates remain open. It makes the charge-release and local upward-impulse stages executable without inventing those missing relationships.
+
+Mass helper scope: combined_body_mass is a mathematical sum of supplied finite
+dynamic masses. Use snow/body-construction combined_mass for float32 rounding
+and immovable-body sentinel behavior, then pass that live result to jump_step.
+Impulse-to-velocity examples require finite positive dynamic body masses.

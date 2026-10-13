@@ -1,0 +1,611 @@
+{
+  "description": "Source provenance only. Research-run names identify original local documents; the public layout is organized by system. Source artifacts are not distributed.",
+  "files": [
+    {
+      "source": "analysis/snow_game/ANIMATION_GUIDE.txt",
+      "published": "docs/systems/animations/OVERVIEW.txt",
+      "source_sha256": "c5e665e378ff73eef92bf096a4151c02bb185f02423e6eb3cd887ca5fec28962",
+      "published_sha256": "a32f5e3be6dd4cc79959ebbcde7619a91cd12fc3b03ecd7a66c0e34ebddf7847"
+    },
+    {
+      "source": "analysis/snow_game/TRICKS_GUIDE.txt",
+      "published": "docs/systems/tricks/OVERVIEW.txt",
+      "source_sha256": "453554414fc7e1b393a30a15ebf83e9d55700ebbfa1bba5decaa7b79a9c3ed5b",
+      "published_sha256": "7dd3fa2bdedc724de559e5856f28be8b8f45ad858b0dc97719c3e4b01809150a"
+    },
+    {
+      "source": "analysis/snow_game/air/CLIENT_GUIDE.txt",
+      "published": "docs/systems/air/CLIENT_GUIDE.txt",
+      "source_sha256": "7d638055e1f061e29a6b796e10e294a7befcc2bdaa413aef2e48d1a9d7cfe438",
+      "published_sha256": "854a9dc5537bf40b01d146b14f27440b547657c978dd7698eafb2377b0db2af6"
+    },
+    {
+      "source": "analysis/snow_game/air/collision-coupling/CLIENT_GUIDE.txt",
+      "published": "docs/systems/air/collision-coupling/CLIENT_GUIDE.txt",
+      "source_sha256": "fda32cc56bec6a019c98c08ce121538e8c25ad7295e74fe5afb74e168fd4444f",
+      "published_sha256": "20b6f726bf4e0f3d88241efb0380ab8423e86600c44965916162da22102ce172"
+    },
+    {
+      "source": "analysis/snow_game/air/collision-coupling/OPEN_BOUNDARIES.txt",
+      "published": "docs/systems/air/collision-coupling/OPEN_BOUNDARIES.txt",
+      "source_sha256": "fda32cc56bec6a019c98c08ce121538e8c25ad7295e74fe5afb74e168fd4444f",
+      "published_sha256": "20b6f726bf4e0f3d88241efb0380ab8423e86600c44965916162da22102ce172"
+    },
+    {
+      "source": "analysis/snow_game/air/controls/CLIENT_GUIDE.txt",
+      "published": "docs/systems/air/controls/CLIENT_GUIDE.txt",
+      "source_sha256": "dbdf52ed50d4a71b4f3f53443ad8da8c9f0caf0a78a6c4134f3247093a100952",
+      "published_sha256": "51676f6056f488969b1f890dcdc73b046fd37d0fa1c4c3f11667495ae720065d"
+    },
+    {
+      "source": "analysis/snow_game/air/integration/CLIENT_GUIDE.txt",
+      "published": "docs/systems/air/integration/CLIENT_GUIDE.txt",
+      "source_sha256": "33cc46046d6b283ab82be870024502dc6ab51feebd3c6555628efee8f5bb471c",
+      "published_sha256": "05677cc5257df3b28d55fc185ea069ce907966a07e441d578be2c9994b566a37"
+    },
+    {
+      "source": "analysis/snow_game/air/lift/FINDINGS.txt",
+      "published": "docs/systems/air/lift/FINDINGS.txt",
+      "source_sha256": "858faa8facf71309a93c24eab6a6ca589f1e8c4349b033d9445c419d5565cbea",
+      "published_sha256": "5627bf342aac93e2b0c3d9e9e4e161c757131e325f690511fd9db0875d802341"
+    },
+    {
+      "source": "analysis/snow_game/air/selection/CLIENT_GUIDE.txt",
+      "published": "docs/systems/air/selection/CLIENT_GUIDE.txt",
+      "source_sha256": "d1b3eed8d975127256e3c0265a1c0a69815c0f2f27c5f33f3d3f93f8901de627",
+      "published_sha256": "0068dfd2d7ca6e58834b5b8d056708a8e54a4d17e730876fa14ef2576395074e"
+    },
+    {
+      "source": "analysis/snow_game/animations/angular-routing/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/angular-routing/CLIENT_GUIDE.txt",
+      "source_sha256": "70247f8054a07e42a80a3852202e6f9530d1d5d29b9d31e1209022b54560f4da",
+      "published_sha256": "5cd71c91b4dea559d5944681d0d3c04a620f9d0a33fbf81f1c3f12d70f90ba93"
+    },
+    {
+      "source": "analysis/snow_game/animations/blending/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/blending/CLIENT_GUIDE.txt",
+      "source_sha256": "03c858a6ab49396c34abe8afc1c45b266af8dcd2c752f26696d4295753e51d99",
+      "published_sha256": "6e1695d92692a19b7f5e4813e030fc8b8fcc8620a580b9df787825c9697514b1"
+    },
+    {
+      "source": "analysis/snow_game/animations/clips/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/clips/CLIENT_GUIDE.txt",
+      "source_sha256": "3e6058555e8b27ff5507c550ee1c6aae8937dd94f07c8564d875d43c54115337",
+      "published_sha256": "cefceeba9133380b3c07e651d8c5c5999ef33db41728b2c6bec5e9d7612e58b2"
+    },
+    {
+      "source": "analysis/snow_game/animations/conversion/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/conversion/CLIENT_GUIDE.txt",
+      "source_sha256": "25702f598056a9f5b6c1045a9cac70d41ae295fe5e2da0a063435dbae61c8533",
+      "published_sha256": "3a64bbba8baf140259bee3170bb767fd7350cf05501213d7afe66cffbc0fedb5"
+    },
+    {
+      "source": "analysis/snow_game/animations/corpus/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/corpus/CLIENT_GUIDE.txt",
+      "source_sha256": "aa3eedf6c49588602c77525970f2079f19ac3cf6d99db2e88d2bb6fe948a8c54",
+      "published_sha256": "065e052add36241cda6d11849b610cff6867a8801c0b01e6b8f47221555339c6"
+    },
+    {
+      "source": "analysis/snow_game/animations/decisions/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/decisions/CLIENT_GUIDE.txt",
+      "source_sha256": "9fb7d3e94d96ae1dff3a42da52d21eaa129a1c17e4bae4b938161144739e87aa",
+      "published_sha256": "d9f4a5499d95fe87b9e8b298c551cb770d43e11be0d9eeb57e8b7fecf33e75c6"
+    },
+    {
+      "source": "analysis/snow_game/animations/equipment/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/equipment/CLIENT_GUIDE.txt",
+      "source_sha256": "b61aa3e07f3347d11855280e84cc2ecfb587caa20940806ac90a3bff417bfe29",
+      "published_sha256": "9e12ba31f4e71c8066d6b28740a2f7e599be2d142e466f9b2d83a7276a1d81ca"
+    },
+    {
+      "source": "analysis/snow_game/animations/field-binding/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/field-binding/CLIENT_GUIDE.txt",
+      "source_sha256": "0ef50af2696ca49f7db5fbe312481c979c96a8f00b41ae8a90abe3e1a1289d6f",
+      "published_sha256": "fb63d4659959c9207394b7f7327f81ea6afcd97de2afa95b816d848eecff44d5"
+    },
+    {
+      "source": "analysis/snow_game/animations/graph-decoding/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/graph-decoding/CLIENT_GUIDE.txt",
+      "source_sha256": "9f5adb40cde788673c082a366545079df43b7c1086bc364929c6858debe853a0",
+      "published_sha256": "5d664bb82879ea67b6b32e6100c791c0c42d097861c928e514e21af7e0aad259"
+    },
+    {
+      "source": "analysis/snow_game/animations/ik/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/ik/CLIENT_GUIDE.txt",
+      "source_sha256": "c35ea8ee61d73925baa9afb3b1978d399954a8919ec2661579e581a05e70e3e8",
+      "published_sha256": "43bc3cf38479d77b3e70c4d0c0f60e81ac0256c50c5be998ba089a6cf9b68e94"
+    },
+    {
+      "source": "analysis/snow_game/animations/ik-solve/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/ik-solve/CLIENT_GUIDE.txt",
+      "source_sha256": "ed0ee9b262f503bf7b6c7b7765567fc9ab8a5b337d130733e199a9b8c667421c",
+      "published_sha256": "c70c5e39b6a6253db9f69ec6ae6d54ba04c41252737b362e93d1d0913ec613e0"
+    },
+    {
+      "source": "analysis/snow_game/animations/landing-pose/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/landing-pose/CLIENT_GUIDE.txt",
+      "source_sha256": "2761a75affd32700d2f68f76d236915643f15c9397bff4f8595ef0a56989f1a4",
+      "published_sha256": "c82be26c13b78db01a1d43e65d297aa75f7f30d2adb99b6e8e9011a0c7ce5c30"
+    },
+    {
+      "source": "analysis/snow_game/animations/paths/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/paths/CLIENT_GUIDE.txt",
+      "source_sha256": "7d21c1759cd3cc015fd6018066d71448bb33d3e2be018e7704285410226429b3",
+      "published_sha256": "6aa815024f14ff6f0fe2708f9eeb46ac1a34969dba97ce2d783632dfad173102"
+    },
+    {
+      "source": "analysis/snow_game/animations/physics-pose/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/physics-pose/CLIENT_GUIDE.txt",
+      "source_sha256": "7bf1d4650677ac5d05163be6d02d01dbee1cfed3a8c40ce5f5b7c98f29beb19b",
+      "published_sha256": "1ce205cc3a8f0afa9d7daf020c1788d53fabf451f6ab634ef32d9bf45d3c7ffc"
+    },
+    {
+      "source": "analysis/snow_game/animations/playback/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/playback/CLIENT_GUIDE.txt",
+      "source_sha256": "3196352efef50e780ca64abd38713c22fe8b9d336b60c4be46dcc5af3443291a",
+      "published_sha256": "1c1c2749fb26a902fe36221a33fc1c44052928312e9de82772ee5fb4be926044"
+    },
+    {
+      "source": "analysis/snow_game/animations/pose-assembly/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/pose-assembly/CLIENT_GUIDE.txt",
+      "source_sha256": "e9e3bf46e981dbadbc916e064fb73e026a6104e8c9d53f32caa9c4c856fefcfd",
+      "published_sha256": "572c5a5611851da5ff7e16da8aee1bf4669ca89e647070b6f43333f6c7e4d956"
+    },
+    {
+      "source": "analysis/snow_game/animations/ragdoll/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/ragdoll/CLIENT_GUIDE.txt",
+      "source_sha256": "f6f9971fd384a4474a704a784cc7cc6cd6aa6133c98d71e991f84e123caeb96c",
+      "published_sha256": "e2234679c8927ea1ee2dc51764f0f55da6f36d712958fdb9c79db3f8789e6f4d"
+    },
+    {
+      "source": "analysis/snow_game/animations/rider-graph/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/rider-graph/CLIENT_GUIDE.txt",
+      "source_sha256": "87c7cc859102a206b14ed53fb1537b4b357da6c153b3ce250d89e8c6bdc43e3c",
+      "published_sha256": "e07cc27a17514e7875e6bd368a21d9abe42d0c73e53b726937ff42925e642595"
+    },
+    {
+      "source": "analysis/snow_game/animations/scheduling/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/scheduling/CLIENT_GUIDE.txt",
+      "source_sha256": "06e209143c1456f954a8600033467b9d642ed3c630c8a935219e2075936e3fdb",
+      "published_sha256": "f6367370c0334326ca6c4259ebed540d766a77ad787b5b15e46da7f2fb2e7dd2"
+    },
+    {
+      "source": "analysis/snow_game/animations/selection/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/selection/CLIENT_GUIDE.txt",
+      "source_sha256": "6ffbbbbcb45ec2695d8849805bb47ac0e9640ff99630fcbf69af4993a9b6149a",
+      "published_sha256": "169a6738e25d3adc5207d7eafafa05c0e2fc35c83047e5089066e9da1abca294"
+    },
+    {
+      "source": "analysis/snow_game/animations/skeleton/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/skeleton/CLIENT_GUIDE.txt",
+      "source_sha256": "1bfcfcb9792d82955bdcaec4b4e5e294cfabc0210776af9b752fff9979a462af",
+      "published_sha256": "dc74dd9fb8e90fb1f6b9119eaddba7dc4842e71b7bf1f46579110901c020e6eb"
+    },
+    {
+      "source": "analysis/snow_game/animations/skinning/CLIENT_GUIDE.txt",
+      "published": "docs/systems/animations/skinning/CLIENT_GUIDE.txt",
+      "source_sha256": "581390a9de9f4c94459810c5a86f8335d5c888ab94d31ab6e4e94020f7cc0e94",
+      "published_sha256": "ef7d364fe1240c3d194ae5755f6a3096a645ab9b5fc0b2e2e189359bd0599fd4"
+    },
+    {
+      "source": "analysis/snow_game/body/CLIENT_GUIDE.txt",
+      "published": "docs/systems/body/CLIENT_GUIDE.txt",
+      "source_sha256": "61dbbffa9a4942ef68431771e371b31adc4ac02581529b7eeb37ce59fa730bf4",
+      "published_sha256": "40ab1a7830a57f67a6138730af440091a84e355be260c09adb8937a6f2d6eb91"
+    },
+    {
+      "source": "analysis/snow_game/body/landing-producers/CLIENT_GUIDE.txt",
+      "published": "docs/systems/body/landing-producers/CLIENT_GUIDE.txt",
+      "source_sha256": "e9aca2f1b3c500bed2dc956e5d4d23d3e82f1ea61c1623a9340fad1e3becf51f",
+      "published_sha256": "74a3fd507942e3d06932b5e9d3932dfdfefdf60499d50fe77e2107129d7439ae"
+    },
+    {
+      "source": "analysis/snow_game/body/landing-quality/CLIENT_GUIDE.txt",
+      "published": "docs/systems/body/landing-quality/CLIENT_GUIDE.txt",
+      "source_sha256": "26777f575029169f46aac2febba77e31244ffe31d3521e7a102a94c39d92a1c7",
+      "published_sha256": "033a505e4ba19e1407355c3f9e3ceb2a4d0f5e9fb164b9d385cb8d7713552f92"
+    },
+    {
+      "source": "analysis/snow_game/body/recovery/CLIENT_GUIDE.txt",
+      "published": "docs/systems/body/recovery/CLIENT_GUIDE.txt",
+      "source_sha256": "02ea90fbef5147f890a8122c08e43eaacce4e216cf1b5736b53dabdf85a07413",
+      "published_sha256": "0dad6da41a2182caee75542fd1bd1238b70e08f0d3e46d04bf8960b217522a55"
+    },
+    {
+      "source": "analysis/snow_game/body/recovery-transitions/CLIENT_GUIDE.txt",
+      "published": "docs/systems/body/recovery-transitions/CLIENT_GUIDE.txt",
+      "source_sha256": "11121fb3cb8af0efe93e14b2cec131cb35a5bad07e79a5b401b496b0edce83ea",
+      "published_sha256": "3b4817635a61661c7a1b96942356a3a084146a29b6c75d8494ac51263f788b90"
+    },
+    {
+      "source": "analysis/snow_game/body/request-consumer/CLIENT_GUIDE.txt",
+      "published": "docs/systems/body/request-consumer/CLIENT_GUIDE.txt",
+      "source_sha256": "6abf022f71f6fcd3a9ea96e31fb9438ecde82fc5e9048fd7fbb32021b12737d1",
+      "published_sha256": "c4a3ef240760196515829c755fd536e408e92a6c223743677bb5dbaac5429eec"
+    },
+    {
+      "source": "analysis/snow_game/camera/CLIENT_GUIDE.txt",
+      "published": "docs/systems/camera/CLIENT_GUIDE.txt",
+      "source_sha256": "819705a5b70b9f38d5aba5dae9e8d312533c2af7c03a63e6a2685d9bea831787",
+      "published_sha256": "dbd64e2e23f8def4ea66695e0bf978d5f103a4b3d64a2a1195e2ab13f1f94ca4"
+    },
+    {
+      "source": "analysis/snow_game/camera/final-output/CLIENT_GUIDE.txt",
+      "published": "docs/systems/camera/final-output/CLIENT_GUIDE.txt",
+      "source_sha256": "f5c65263b1ff56eb9b640d066f9ee6c389a89b66dfa306c4468ecd8d99cce099",
+      "published_sha256": "63d29afd0ba0278a9b635161eff6b09f9b88e88fcc33b9a856ea875e7ae19649"
+    },
+    {
+      "source": "analysis/snow_game/camera/projection-setup/CLIENT_GUIDE.txt",
+      "published": "docs/systems/camera/projection-setup/CLIENT_GUIDE.txt",
+      "source_sha256": "cb20d4b7cfd199526e0038d14d7bc353cdafb1bf840eb071835e2cf4be069e58",
+      "published_sha256": "c26c5367492815a7fd689d74f56d6bc3096202b0cd71d23b36b1ca46f7ce4028"
+    },
+    {
+      "source": "analysis/snow_game/camera/routing/CLIENT_GUIDE.txt",
+      "published": "docs/systems/camera/routing/CLIENT_GUIDE.txt",
+      "source_sha256": "de7f443d004220e1dd4cc434d5a3997c58325fc9c20b2904b5509e3d0cfa3256",
+      "published_sha256": "7a6b3bce7df4c75db0de2da67e5e51de8ff403ebed8662173e793ac29cadd99d"
+    },
+    {
+      "source": "analysis/snow_game/camera/settings/CLIENT_GUIDE.txt",
+      "published": "docs/systems/camera/settings/CLIENT_GUIDE.txt",
+      "source_sha256": "1af391687840cad984befa85628460cee28b01af2adac9fe329395e5904d5de1",
+      "published_sha256": "86e883a852689b0557303e9927ae8a463d2d0a7c30168f9a3496b1c91c274606"
+    },
+    {
+      "source": "analysis/snow_game/camera/transitions/CLIENT_GUIDE.txt",
+      "published": "docs/systems/camera/transitions/CLIENT_GUIDE.txt",
+      "source_sha256": "f8bdab7ae81725cf97439f1a67dd185d4c768fd578a7d22b2be31498ba08790d",
+      "published_sha256": "fa0195d3b63ec65e2169b6c82ba143d38c0917e09fb7aebea4851cc6f875ae7e"
+    },
+    {
+      "source": "analysis/snow_game/scoring/CLIENT_GUIDE.txt",
+      "published": "docs/systems/scoring/CLIENT_GUIDE.txt",
+      "source_sha256": "f374d86463861424c9931e4ed2ea81859e3225c806787701688685e9c3cf0670",
+      "published_sha256": "eaafb85102ba58227e4b0e8cb5c786a5b2e6e4e83d28fb9f5d93565e20fc1bed"
+    },
+    {
+      "source": "analysis/snow_game/scoring/detector-inputs/CLIENT_GUIDE.txt",
+      "published": "docs/systems/scoring/detector-inputs/CLIENT_GUIDE.txt",
+      "source_sha256": "2378b56a0ce1aeb70f3c4cdd4c638c5c7113b75c1c8a6f1c4a859e7577b4b3b3",
+      "published_sha256": "23ed465ff10eb4b7385a9b413ee7d2aae4c46c92ebd418858ae7e90985a6c0b0"
+    },
+    {
+      "source": "analysis/snow_game/snow/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/CLIENT_GUIDE.txt",
+      "source_sha256": "183e080fdf6959d0a2f1b3f2ca2c49c414c9ced116ed8bea2814ffba4184d89f",
+      "published_sha256": "4e485a4d9c9f0a743b41722c3bf9ddeb8ed0ace7be77dad2b75384abef01339f"
+    },
+    {
+      "source": "analysis/snow_game/snow/body-construction/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/body-construction/CLIENT_GUIDE.txt",
+      "source_sha256": "7e49d91a230e3349f341bff006a457f2023e33fd26e41510ad44688381e6ad77",
+      "published_sha256": "ea7000cc38a23c47fac97fd359bbee75870dd104971849ee1ef22a05bf37f2bb"
+    },
+    {
+      "source": "analysis/snow_game/snow/environment/WORLD_AND_WEATHER.txt",
+      "published": "docs/systems/snow/environment/WORLD_AND_WEATHER.txt",
+      "source_sha256": "e89efc8b0b85779fdc4be06fbe97272f7f6ba7bbe2c738baccc82da0f2e79c10",
+      "published_sha256": "faba793cc58daa13056510ec3cd0b5f68b734977e96440b4efbc7e3deb3e64b1"
+    },
+    {
+      "source": "analysis/snow_game/snow/impulse-coupling/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/impulse-coupling/CLIENT_GUIDE.txt",
+      "source_sha256": "a830ffac9138fce773a7cb536dddc3989c1c9a98985317a171db8d87cbaddca3",
+      "published_sha256": "ef57b5ffedd1e36828c720c80350b0ba43a950842910b08531aacfb9098888f3"
+    },
+    {
+      "source": "analysis/snow_game/snow/integration/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/integration/CLIENT_GUIDE.txt",
+      "source_sha256": "8004d99944ed8c667d6767b4892c0b2b27c1c71204169497df1db649cbc1adaf",
+      "published_sha256": "0596a361853acdab6ebbeb040302b693cce753587a8238e39dc60a4c3c3f38f3"
+    },
+    {
+      "source": "analysis/snow_game/snow/leg-constraints/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/leg-constraints/CLIENT_GUIDE.txt",
+      "source_sha256": "ecc88686c620c1ec602e5410375550d21b80664e983ab4185263b518407e94d7",
+      "published_sha256": "6c4d0ac65b9753dd4f8d2f76bdda5bd7cd281e67099cea9a98da476001d2f666"
+    },
+    {
+      "source": "analysis/snow_game/snow/mass-selection/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/mass-selection/CLIENT_GUIDE.txt",
+      "source_sha256": "f708d628c90d3d0fa640f4d5d88bd6b704214872f334d922606c81b33462dcec",
+      "published_sha256": "b3f578031d082e5745da77076df551524610b088204d579fccdc39c9584d5b5b"
+    },
+    {
+      "source": "analysis/snow_game/snow/materials/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/materials/CLIENT_GUIDE.txt",
+      "source_sha256": "23fa6cf8e8111b50cfde77e5cf1840b06baa9e4323a212683e65600c275c2eb6",
+      "published_sha256": "56ccc19335bbd77a82fef3032efe3f18dabfc083500177fc1105ade314ee630e"
+    },
+    {
+      "source": "analysis/snow_game/snow/rider-frame-response/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/rider-frame-response/CLIENT_GUIDE.txt",
+      "source_sha256": "aeec111bb3663ad44e0f1634c68db8abbd6d801939d5ca756933fe7e075533cc",
+      "published_sha256": "c0719576080e808373a8f83d613be3b54cff7604cc065977545acc865f828f38"
+    },
+    {
+      "source": "analysis/snow_game/snow/rider-inputs/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/rider-inputs/CLIENT_GUIDE.txt",
+      "source_sha256": "db58932f819348765086bee3fa4b5e4572f8b4d75ef0441f37887472dbddc7e7",
+      "published_sha256": "adee9aa1f1e5f216e194d18f297ac5a6ac49203a9d55f9875749fb1ff2a6eeb4"
+    },
+    {
+      "source": "analysis/snow_game/snow/rider-targets/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/rider-targets/CLIENT_GUIDE.txt",
+      "source_sha256": "16546b4a37b321deb9a0d409d92916532de2a623d769e5914e54c280da4627d6",
+      "published_sha256": "17c7d49dd3db6e9631720edf61ec2a81b10264a6045d4a9c589de8598628004b"
+    },
+    {
+      "source": "analysis/snow_game/snow/terrain-binding/CLIENT_GUIDE.txt",
+      "published": "docs/systems/snow/terrain-binding/CLIENT_GUIDE.txt",
+      "source_sha256": "39b7dfcf8c2eb44046ebcc86e1cb548187ff66b614e4674bef542f85eee883af",
+      "published_sha256": "a330b95668fb8deffe73fce3cbb38bfa162343d9a59a856a9e78ad3c1775e6d9"
+    },
+    {
+      "source": "analysis/snow_game/tricks/assistance-transition/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/assistance-transition/CLIENT_GUIDE.txt",
+      "source_sha256": "d6fd127b5e6fe0f37435243fdbf0bd0455a77a512a420198b0ea65b5c53b2ea8",
+      "published_sha256": "6eb39f98eb929959d6f7e7bc2bc743569e3da68fba618e538b2f728710ec0d4f"
+    },
+    {
+      "source": "analysis/snow_game/tricks/dynamics/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/dynamics/CLIENT_GUIDE.txt",
+      "source_sha256": "465adec5e326903e1ab479f7b359c1d0f4ce9c17f0f1f015c31dfa1a3990f19a",
+      "published_sha256": "96c9fc6df1abc6f5ffbee08f4aa72daef3be295e3b453f40dd8bcd68e36d9406"
+    },
+    {
+      "source": "analysis/snow_game/tricks/events/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/events/CLIENT_GUIDE.txt",
+      "source_sha256": "edf2c8b828344caf3856566c3a0299ea1e8b0d4263ccf5443cb209252ef0a65d",
+      "published_sha256": "65714c87e5f22fd4add95645ec9bbb4520611e0aa3c72b621b84f31ad8977ec9"
+    },
+    {
+      "source": "analysis/snow_game/tricks/grab-input/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/grab-input/CLIENT_GUIDE.txt",
+      "source_sha256": "8e890a92130652e3f5e2365feee2de430eefc2f454723508325c1a75cfd44d54",
+      "published_sha256": "7a6c8d4fbb069ddd8a9ddbf101bbaf83e04c8843d7c4fe674898681e3b03f8bc"
+    },
+    {
+      "source": "analysis/snow_game/tricks/motion-lifecycle/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/motion-lifecycle/CLIENT_GUIDE.txt",
+      "source_sha256": "271a97366660cc728596ad0652e56c12f34167a47df323880970e06481c67dd6",
+      "published_sha256": "eabc9206f407acb1774162f7e12bf9682a2f831da2446f8d0f2a637b6cc28689"
+    },
+    {
+      "source": "analysis/snow_game/tricks/response-delay/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/response-delay/CLIENT_GUIDE.txt",
+      "source_sha256": "ea15cac6d00beba90f17714466d30d1b0a86e81fecbb0321d99dc937664846de",
+      "published_sha256": "8ef99f0b35bc950b54779af8144eb55e2da7303d99613d20c80bcbb2eaad6b6d"
+    },
+    {
+      "source": "analysis/snow_game/tricks/rotation/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/rotation/CLIENT_GUIDE.txt",
+      "source_sha256": "edd5e6d960bfab826afd55bc63cf6e736dcfc210c353a76ff7f0c96eb13004ea",
+      "published_sha256": "dfd88e8ad58a4b762686315b7d54663c9d80f7ae25659e52d9c62cd4bfc31111"
+    },
+    {
+      "source": "analysis/snow_game/tricks/selection/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/selection/CLIENT_GUIDE.txt",
+      "source_sha256": "10a987cb0c5d4c5fd36d759c001039119cfe92a9506fd79fe6081b74777886cc",
+      "published_sha256": "0d90b82602f38eec6bb39cc1fcddb270bbb820d89e83452daec8d6c482167244"
+    },
+    {
+      "source": "analysis/snow_game/tricks/sequence/CLIENT_GUIDE.txt",
+      "published": "docs/systems/tricks/sequence/CLIENT_GUIDE.txt",
+      "source_sha256": "4fde08baf05ea589a0d53b955b5670c68c31754ef6a3202e7c52b6bf73299ea9",
+      "published_sha256": "29b9a50fa4a8f5a1dbc6afb255190930685489371ebdc76fed591d711352668b"
+    },
+    {
+      "source": "analysis/snow_game/validation/observations/CLIENT_GUIDE.txt",
+      "published": "docs/systems/validation/observations/CLIENT_GUIDE.txt",
+      "source_sha256": "f4fc85787b3d8e72ee33601a92257ad1b9ba84ee816adf17cffe054d00273e26",
+      "published_sha256": "5bb991a0744c38d2df09f214ac1cb276e34001e7c7c11a5b67e86b5ce3c0999d"
+    },
+    {
+      "source": "analysis/snow_game/world/environment-catalog/CLIENT_GUIDE.txt",
+      "published": "docs/systems/world/environment-catalog/CLIENT_GUIDE.txt",
+      "source_sha256": "2db7707acf016d66f6a171919132c49437fbf72ed64bd03be0274e8b6b003a74",
+      "published_sha256": "430134d70ec4f4bb18b886aefb2dac175da1c06cb9f6da8d23f9d671c7fb3f36"
+    },
+    {
+      "source": "analysis/snow_game/world/equipment/CLIENT_GUIDE.txt",
+      "published": "docs/systems/world/equipment/CLIENT_GUIDE.txt",
+      "source_sha256": "357400b903918889dd593f5f90bda22d43a18639c56acb9826508f387a2153cf",
+      "published_sha256": "ad761603d8e886b5814b54ae5dfc422ec1721325b77efdd940426302f81390d0"
+    },
+    {
+      "source": "analysis/snow_game/world/locations/CLIENT_GUIDE.txt",
+      "published": "docs/systems/world/locations/CLIENT_GUIDE.txt",
+      "source_sha256": "ad6c31cc42c712738d080e7f11b3c3ac79b10702d76e96cd578277754e2bc4bc",
+      "published_sha256": "d8f6d26b19b86f092bfc73b112f9eb90ed27489c8b12483b9741367ba4278dda"
+    },
+    {
+      "source": "runtime/testbench/run36/CONTACT_MODEL.md",
+      "published": "docs/systems/snow/contact-model.md",
+      "source_sha256": "52e21afadb2711fd9bd0f99f5d9153a4da8c4eef53a086fba2195e4acc9d1851",
+      "published_sha256": "50899e1ac011a721dd64fb2f9d8e4f53d754ad5a3968f33bacc24f0a3a4483fe"
+    },
+    {
+      "source": "runtime/testbench/run37/animation/CLIENT_LOGIC.md",
+      "published": "docs/systems/animations/landing-inputs/pseudocode.md",
+      "source_sha256": "8ad880b9d6ade5bdce6a260f7b432ad212618592ed739ce05deb72e3ac64440d",
+      "published_sha256": "c28f3da5ed077ef9be42e9af7e0f7651110cbf796a0a03b57b42d8f28ca8be4e"
+    },
+    {
+      "source": "runtime/testbench/run37/animation/FINDINGS.md",
+      "published": "docs/systems/animations/landing-inputs/findings.md",
+      "source_sha256": "107a31b99b5fa8c4bbb505cb04555ea469ab91e94cd7facdc23ec5339576e13a",
+      "published_sha256": "eefd08c7be07f94a0a48df326733b0c127c979b4f864ff33b382e24bb8e3ded9"
+    },
+    {
+      "source": "runtime/testbench/run37/animation/NEXT_STEP.md",
+      "published": "docs/systems/animations/landing-inputs/next-investigation.md",
+      "source_sha256": "4a02193cb42ae4a17f8ee3101e28480fffdfd5a2eac1b05b238f865c86e0215a",
+      "published_sha256": "bed031ddcee0709d512bfd8f577a2ab1bed46b82b01cf9fdf7c31a59363a9fcc"
+    },
+    {
+      "source": "runtime/testbench/run37/animation/private/NEXT_TRACE.md",
+      "published": "docs/systems/animations/landing-inputs/trace-recipe.md",
+      "source_sha256": "cbc1210b912ef26717d188114f2fbdb88a5fe9a3c4ae11ad7017cdf3e9d80907",
+      "published_sha256": "271b1f20d0e4b3cdf17c78a31437e293138393bbf376b55a39dd5f200f1bf0b9"
+    },
+    {
+      "source": "runtime/testbench/run37/contact_landing/CLIENT_LOGIC.md",
+      "published": "docs/systems/snow/contact-ownership/pseudocode.md",
+      "source_sha256": "5e8bd2a2eb6f651c309fa80f43b26b53300a7587696d2fc037f82c61dd8e059d",
+      "published_sha256": "1d689d6b3c270b76467e5e46b1bc29bfb9ef24ac6d3a81ba8ca129114fe878bd"
+    },
+    {
+      "source": "runtime/testbench/run37/contact_landing/FINDINGS.md",
+      "published": "docs/systems/snow/contact-ownership/findings.md",
+      "source_sha256": "e4395271cb2bb7be383d5fa33dac97d335d757e12e638944801279f32a4ac15f",
+      "published_sha256": "afb07b49240278b1beba8012aaac2477d00e7540fe1c2da83f02e08dd1975246"
+    },
+    {
+      "source": "runtime/testbench/run37/contact_landing/NEXT_STEP.md",
+      "published": "docs/systems/snow/contact-ownership/next-investigation.md",
+      "source_sha256": "3a6507a5088956c3af00157f19c5cb127f233b7efb7bbe052db1bd84cdf50db7",
+      "published_sha256": "198dcbecaf2859b75341d5324d16035170b75110c61271dedf76a3a059a13017"
+    },
+    {
+      "source": "runtime/testbench/run37/contact_landing/PRIVATE_EVIDENCE.md",
+      "published": "docs/systems/snow/contact-ownership/evidence.md",
+      "source_sha256": "fa986848aa795366b888b1748f728f239686741125d66806c488466644fcf4ea",
+      "published_sha256": "9ed82c33077576fd9d9850aaa9100bef07b08f137d28c5cd5de51f144a787f0e"
+    },
+    {
+      "source": "runtime/testbench/run37/trick_motion/CLIENT_LOGIC.md",
+      "published": "docs/systems/body/pose-follower/pseudocode.md",
+      "source_sha256": "3e9276001ea7b263ca2d2db99f9ca63c79ab642d24dd14d96cdd8a6e86d3561a",
+      "published_sha256": "4d7ad703e57fcf429b820567479e96c1d4a16cba4f6fe853c61b1abc13ae261d"
+    },
+    {
+      "source": "runtime/testbench/run37/trick_motion/FINDINGS.md",
+      "published": "docs/systems/body/pose-follower/findings.md",
+      "source_sha256": "ad57a15c4eb37f75207e5e66c9c58c118aaaa74e7280740f8c65914ca9a9045d",
+      "published_sha256": "2ebc40e775097144de26f8b192e374fa34827c0c3f1c911b3e67351a63679f36"
+    },
+    {
+      "source": "runtime/testbench/run37/trick_motion/NEXT_STEP.md",
+      "published": "docs/systems/body/pose-follower/next-investigation.md",
+      "source_sha256": "4af90f382e841f45c3532912f62490e994fdd94e81465f1096cbe2d209a59f67",
+      "published_sha256": "e0026252f085abbc1b1b1968164c6fd57c0f409ada75dae962c65b027e3ceda2"
+    },
+    {
+      "source": "runtime/testbench/run37/trick_motion/private/EVIDENCE.md",
+      "published": "docs/systems/body/pose-follower/evidence.md",
+      "source_sha256": "aa7aef17abb376342884b8e3cd2fa0cbd8a6fb8aa641372eafe24b177f16d7fb",
+      "published_sha256": "904ac8f4116a25c95a44ebd681d15a41ef7502321167ba69766b784afcc24ba4"
+    },
+    {
+      "source": "runtime/testbench/run38/animation/CLIENT_LOGIC.md",
+      "published": "docs/systems/animations/runtime-binding/pseudocode.md",
+      "source_sha256": "4616a7ed0eb21e1328fb5eed9ccac590e15eca10f5a47266ba6d15e807212698",
+      "published_sha256": "d3021f6bdfc8e2ed32ce7f135cf4d79c56c1c25728fed8530e2df55cda79379c"
+    },
+    {
+      "source": "runtime/testbench/run38/animation/FINDINGS.md",
+      "published": "docs/systems/animations/runtime-binding/findings.md",
+      "source_sha256": "ddd448b96304f1eb778338857983f3081273a1722136380187b426897370f93b",
+      "published_sha256": "48e75d6c85cfb7c2878e007e13d5011fa55da737e79a1a9b3634a439db513612"
+    },
+    {
+      "source": "runtime/testbench/run38/animation/NEXT_STEP.md",
+      "published": "docs/systems/animations/runtime-binding/next-investigation.md",
+      "source_sha256": "346995e54550a1756e2b922c4709a6814b1301ddfc6956cee838f480730f61fb",
+      "published_sha256": "ddff990794b98f82f212d198187d21758e19d18f1999714de75db982241294ec"
+    },
+    {
+      "source": "runtime/testbench/run38/animation/private/NEXT_TRACE.md",
+      "published": "docs/systems/animations/runtime-binding/trace-recipe.md",
+      "source_sha256": "63d1d6ca328c3cd5d6898ddc32ad3bd035ad6d9e3168aecbc63fb6c05e74c921",
+      "published_sha256": "87d83b56f49dcc51ad6340e7bb04d4e0a7c362e7d7cb43a0ff02b9ac998121fa"
+    },
+    {
+      "source": "runtime/testbench/run38/environment/CLIENT_LOGIC.md",
+      "published": "docs/systems/world/environment-runtime/pseudocode.md",
+      "source_sha256": "e2d9a2d229dfe6d670d4c578218c2e358bdb3739203c9780a8a0e7213464816d",
+      "published_sha256": "d89aaf81c982d13e5f5db0000d592fcc69c240b8a2fbeb8a58807641628e15f7"
+    },
+    {
+      "source": "runtime/testbench/run38/environment/FINDINGS.md",
+      "published": "docs/systems/world/environment-runtime/findings.md",
+      "source_sha256": "8e1ec57b926717d224e2f1c41ccef8aae8de64aacdae9935ecc14e68caba2b40",
+      "published_sha256": "07871ea084d46e680fd13ac968cf9187d5d62c2515f9764046aaa5bdcd03560a"
+    },
+    {
+      "source": "runtime/testbench/run38/environment/NEXT_STEP.md",
+      "published": "docs/systems/world/environment-runtime/next-investigation.md",
+      "source_sha256": "c513486c130d90a27412cb6ece960bc4ae15ce7f5b259f2699809d3822789243",
+      "published_sha256": "e953dfff6aa0bc383c53eebacfd9e375d2dc6118b81d786d6e773e5da21d6b28"
+    },
+    {
+      "source": "runtime/testbench/run38/environment/private/EVIDENCE.md",
+      "published": "docs/systems/world/environment-runtime/evidence.md",
+      "source_sha256": "3a9b557d8aad15b8e4ce55d1d45f51893b33b3e5948c0baeab0c86caccc613c4",
+      "published_sha256": "e807794378e6a16b32822137cdb871f409f3c8905881becaec8c651913b490a6"
+    },
+    {
+      "source": "runtime/testbench/run38/input_timing/CLIENT_LOGIC.md",
+      "published": "docs/systems/input/action-ownership/pseudocode.md",
+      "source_sha256": "006490fa478e723a8c63ca58b5f23973df962b3ff2f351fbbfb00760540c107d",
+      "published_sha256": "8a2c9be38ef42ea02cce50a76826c177018df959c626ae2501009e2b7e2baed9"
+    },
+    {
+      "source": "runtime/testbench/run38/input_timing/FINDINGS.md",
+      "published": "docs/systems/input/action-ownership/findings.md",
+      "source_sha256": "742a4fa660643839c7dcef4f4e9c81c426b92fd945bdaf6a43cd3bf0905c22e5",
+      "published_sha256": "35ccfb828c9da6425bb3c64d96d340eb21e1b45c7ef04396f67ca6d9bdbe4106"
+    },
+    {
+      "source": "runtime/testbench/run38/input_timing/NEXT_STEP.md",
+      "published": "docs/systems/input/action-ownership/next-investigation.md",
+      "source_sha256": "6875f9d6ebc01edfaf39183a5a39b3310f3cd9498506fe5284cc61bf5c3836f1",
+      "published_sha256": "cac9d69c198efd57e545825d64fa14d18fd9292cd20676c07f5e0e178dbda22a"
+    },
+    {
+      "source": "runtime/testbench/run38/input_timing/private/EVIDENCE.md",
+      "published": "docs/systems/input/action-ownership/evidence.md",
+      "source_sha256": "2fb4feac71e3c61e2ee3f61d0d22bd78d14f1c91f2be54026fefbc8c2eee80ab",
+      "published_sha256": "01e3d1762cdee4ec38a3ae1490716ab983843afdd0a668ded187c4c4585047bf"
+    },
+    {
+      "source": "runtime/testbench/run38/trick_motion/CLIENT_LOGIC.md",
+      "published": "docs/systems/tricks/target-publication/pseudocode.md",
+      "source_sha256": "59a128b404bb307d9c9eff5eb9831fadb917c6fadac5b8d5be34b86a02d55928",
+      "published_sha256": "1c23d8d1680b0e8f7f02e15cb5092594ef7d59b3d71c3569ee2dbeb84df4ae39"
+    },
+    {
+      "source": "runtime/testbench/run38/trick_motion/FINDINGS.md",
+      "published": "docs/systems/tricks/target-publication/findings.md",
+      "source_sha256": "fcbb64b3370587f140e590f86b5b94198cf70060549aca1a2dd59271c091e46b",
+      "published_sha256": "d55f41fc1cc6e8a6cc00c79911742501af5c339b54b437114ddcd5e1917db449"
+    },
+    {
+      "source": "runtime/testbench/run38/trick_motion/NEXT_STEP.md",
+      "published": "docs/systems/tricks/target-publication/next-investigation.md",
+      "source_sha256": "1b7746d712eeb08b32f768d036dd711504ec3290ce442269b252e872ccedd436",
+      "published_sha256": "582ad804bf2db02165ec2a05608c44c24a0821725f4a84d2018476725d8ef783"
+    },
+    {
+      "source": "runtime/testbench/run38/trick_motion/private/EVIDENCE.md",
+      "published": "docs/systems/tricks/target-publication/evidence.md",
+      "source_sha256": "96ab9ba521c97343a22d4b9f1f49d593cbbc78bcb9ca0db44f9b6f65cdc3faa4",
+      "published_sha256": "5ef2d7a0cef835bea384f7dabac1dabe938d500809e071fb248c34b173bcba32"
+    },
+    {
+      "source": "runtime/testbench/run39/WALKING_PLAN.md",
+      "published": "docs/systems/walking/research-plan.md",
+      "source_sha256": "6faf69cc3ee8935a5c72d1309aee943f95bc6e924c0174d122c3e293088ada1c",
+      "published_sha256": "cfb1efa3ad6432696f74ee51a0a9eefe1bcad405f2ce92315f8e77036daee7bd"
+    },
+    {
+      "source": "runtime/testbench/run39/live-4/FINDINGS.md",
+      "published": "docs/validation/contact-motion.md",
+      "source_sha256": "02f3cbace67614fcdbf6e1fdd0269f1cf8458510e746644e116c9d57bd2ef3c7",
+      "published_sha256": "244bb72af3bc79ce20a1e4b7b210e9c186959ca37317a416e9addcd245e703a4"
+    }
+  ]
+}

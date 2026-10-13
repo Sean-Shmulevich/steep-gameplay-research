@@ -1,0 +1,49 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+DOCUMENTED CLIP-TO-POSE ASSEMBLY
+
+This package works offline with Python's standard library. It contains ten decoded animation clips (1,744 tracks and 15,673 samples), two 72-bone bind skeletons, the complete 3,760-clip name/duration catalog, and 805 literal trick-related clip names with proven resource memberships. Authored ID/set prefixes and graph membership do not prove sport or gameplay trigger. No ski/snowboard prefix assignment is made.
+
+Ordinary playback uses local skeleton channels. On fresh ordinary pose allocation, seed every channel from the local bind pose. For each selected mapped translation or quaternion track, sample and overwrite the corresponding channel. Missing channels retain the seed. Partial/reused buffers retain their previous contents until the relevant dirty groups are refreshed: do not assume every runtime buffer is reseeded every frame. Auxiliary tracks and unmatched hashes do not become skeletal transforms in this reference.
+
+The ordinary writer computes its keyframe query as truncate(float32(float32(timeSeconds)*60)). Track keyframes are absolute frame numbers at 60 Hz. Clamp interpolation to the selected segment; after the final keyframe return its value. Translation interpolation is linear. Quaternion interpolation uses the documented normalized polynomial blend in reference.py. Sampling itself adds no bind transform.
+
+The runtime also supports component remapping and an optional Z half-turn. component_mapping implements all eight documented component codes; half_turn implements the separate half-turn. The actual per-channel runtime remap flags for these real clips remain unparsed. ordinary_local_pose defaults to the direct mapping branch; orientation_code explicitly applies a supplied code to every sampled channel. This is a reproducible branch preview, not proof of the actor's selected stance, rig or graph state.
+
+The additive conversion happens after ordinary channel sampling:
+  deltaTranslation = currentTranslation - referenceTranslation
+  deltaQuaternion = inverse(referenceQuaternion) * currentQuaternion
+  inverse(q) = conjugate(q) / dot(q,q)
+There is no final normalization in this conversion. Non-transform channels remain unchanged in the runtime conversion. The reference cache is sampled at a selected reference time. Its alternate seed and optional reference-orientation branch are not fully identified; provide the reference pose explicitly to subtract_reference_pose rather than assuming that it always equals bind pose.
+
+To compose local transforms into model space, visit parents before children:
+  modelPosition = parentPosition + rotate(parentQuaternion, localPosition)
+  modelQuaternion = normalize(parentQuaternion * localQuaternion)
+Roots retain local position and normalize their quaternion. Quaternion arrays use x,y,z,w. The helper rotate expects unit quaternions. Translation units are authored units; a world-space metre conversion has not been established here. Eight unnamed bones in each rig retain descriptive unresolved_bone_<index> names and their real binding hashes.
+
+Runnable API:
+  import reference
+  data = reference.load_data()
+  clip = next(c for c in data['representative_clips']
+              if c['name'] == 'Group01_Set00_female_AIR_BACKFLIP')
+  rig = data['skeletons']['female']
+  local = reference.ordinary_local_pose(clip, 0.4, rig)
+  model = reference.local_to_model(local, rig)
+Both results contain all 72 bones, with name, translation and quaternion_xyzw. local also preserves binding_hash. Clip selection, time wrapping, graph blending and procedural actor rotations are external to this API.
+
+Conditional root-motion removal in the documented writer uses designated motion channels, which must not be equated with the named Reference bone:
+  newPosition = rotate(conjugate(motionQuaternion), bonePosition-motionPosition)
+  newQuaternion = normalize(conjugate(motionQuaternion)*boneQuaternion)
+An endpoint displacement helper returns rotate(basis,endPosition)-rotate(basis,startPosition). Applying this displacement to the physics body has not been specified. The four newly decoded backflip/frontflip/Indy resources have their four serialized animation flags clear, including the asset flag that enables the observed removal branch. These formulas describe a conditional runtime branch, not an operation automatically applied by this package.
+
+Actual trick samples: AIR_BACKFLIP, AIR_BACKFLIP_SPINLEFT and AIR_FRONTFLIP each last approximately 1.333333 seconds; GRAB_INDY_TWEAK_SPINRIGHT lasts approximately 0.666667 seconds. Across five equally spaced samples, the backflip/frontflip model poses vary only modestly: maximum bone position displacements 0.039991/0.029844 authored units and maximum bone orientation changes 7.393/3.757 degrees. Indy varies by 0.592098 units and 132.394 degrees. Quaternion sign changes are not physical rotations. These measurements demonstrate that the clip names alone do not imply a full world/body flip in the sampled local pose. Procedural spin/flip and graph selection must be supplied separately; their timing cannot be inferred from the clip duration.
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+Portable checks cover ten complete poses and both rigs. Quaternion comparisons must allow equivalent signs. Floating-point output is not guaranteed to be bit-identical across implementations.
+
+Run python3 reference.py for actual worked examples. TRICK_CLIPS.json retains literal matching categories and actual typed resource memberships; matches overlap. named_data.json contains all decoded sample values needed by this API. 
+
+EXAMPLE_OUTPUT.json reproduces reference.py output. MOTION_AUDIT.json also
+records the five-frame motion comparison and authored translation-unit caveat.

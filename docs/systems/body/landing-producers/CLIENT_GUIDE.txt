@@ -1,0 +1,94 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: A bounded contact producer and recovery request delivery are explained in body/recovery-transitions.
+
+Landing duration producer, record capture and recovery latches
+
+Run python3 reference.py. The portable module uses only the standard library.
+The example inputs describe supplied states, rather than recorded play.
+
+Optional landing contribution input
+
+The optional landing curve consumes a saved update-time accumulator. Each
+selected update adds its step using float32 arithmetic:
+
+    state_elapsed = float32(state_elapsed + float32(step))
+
+The ordinary update branch advances it only while tracking_enabled is true
+and alternate_tracking is false. A separate selected update also advances
+this same accumulator from a stored simulation step. That stored step is:
+
+    simulation_step = float32(1 / max(float32(configured_rate), float32(0.01)))
+
+For supplied rate 60, this is approximately 0.0166666675. The configuration's
+rate unit has not been bound to a named field. The module therefore describes
+time in update-step units; interpreting the rate as updates per second gives
+seconds. It does not claim a proven real-time clock or physical G unit.
+The accumulator is initialized and reset to zero on included reset paths.
+
+A completion handler copies the accumulated value into the current result
+record and disables tracking. When the landing evaluation window begins,
+it copies that result record into its own saved record. Its optional curve
+input is the saved record's duration, rather than a fresh instantaneous
+velocity or acceleration measurement. Later changes to the current record
+do not replace that copy until another window entry performs a new capture.
+
+The resulting sequence is:
+
+    advance update time
+    complete result record with current accumulated time
+    begin evaluation window and copy current result
+    evaluate optional curve with saved duration
+    add curve output to the separately calculated landing amount
+
+The curve output and its input are separate values. The supplied example
+curve x*2 is illustrative. It is not an authored curve or a default setting.
+The suppression predicate bypasses the curve and contributes zero.
+
+Evaluation window timing
+
+The ordinary selected window is 0.20000000298023224 seconds. Window entry
+multiplies its selected duration by 30000 using float32 rounding, truncates
+the result and adds it to the current clock ticks. The supplied setting gives
+6000 ticks. Equality at the deadline triggers completion; one tick before
+does not. A blocked entry preserves the existing state and saved input.
+
+A repeated accepted entry while numerical state 2 is active evaluates the
+previous result before capturing a new record. Ordinary expiration changes
+the numerical state to 0 and evaluates only when the previous state was 2.
+These numbers identify the small evaluation controller. They are not names
+for the complete rider or recovery states. The reference reports evaluation
+requests; it does not reproduce external event publication or scoring effects.
+Unsigned clock wraparound and exceptional float inputs are outside its API.
+
+Recovery latch lifetime
+
+Two independent handlers set gate_a and gate_b to true. The included reset
+handler clears both together. A signal does not clear its partner. These are
+retained signals between resets, rather than a requirement that two events
+occur in the same frame. Their triggering event names remain unspecified.
+
+After the penalty, eligibility uses m=motion*scale and threshold t:
+
+    m < t*3.5 AND ((gate_a AND gate_b) OR m < t*0.5)
+
+At m=20 and t=10, no signal or one signal fails. Both retained signals pass.
+After reset the same motion fails again. At m=35 it fails even with both
+signals, since the outer comparison is strict. This module retains the
+previously documented penalty and motion checks. It does not attach a new
+recovery destination, respawn position or ragdoll duration to them.
+
+Validation and boundaries
+
+The record-copy routine matched 1000 randomized byte-level checks including
+its untouched padding. The two latch setters matched 1000 cases.
+Another 1000 cases matched update-time addition and record capture exactly.
+The addition checks execute the update's entry through the arithmetic before
+its first external call. Capture checks execute the exact copy-and-disable
+instructions. These checks cover isolated operations with supplied state.
+Window timing, full update side effects and the complete reset handler are
+specified branch translations and are not covered by those isolated operation checks.
+
+The producer chain now identifies the optional input as accumulated update
+time and fixes its capture ordering. A complete state graph, a named rate
+unit, recovery signal names and automatic respawn placement remain open.

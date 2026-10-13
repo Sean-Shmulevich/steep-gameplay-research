@@ -1,0 +1,11 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+AUTHORED ENVIRONMENT TRACKS
+
+78 time-of-day records and 54 weather/wind records expand the previous environment inventory. All 78 distinct named property paths match their stored CRC32 identifiers locally. This establishes name-to-identifier matches, not units or runtime ownership.
+
+reference.py supports exact property lookup, constant-track extraction and duplicate-key inspection. Preserve all authored key times and values. The timeline includes 2880; do not assume it is elapsed seconds or map it to a clock without an explicit time adapter. Some azimuth tracks contain two endpoint keys at 2880 with different values. Do not silently discard either or invent an interpolation rule.
+
+Weather and wind fields retain producer structure. Convenience aliases with unverified meanings were excluded. Presets provide useful authored values and relationships; runtime weather selection, spatial wind zones, thermal/ridge-lift placement and interpolation remain unresolved. No renderer was changed.
+
+Run python3 reference.py for worked examples and python3 test_reference.py for checks.

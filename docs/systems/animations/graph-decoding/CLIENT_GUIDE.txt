@@ -1,0 +1,47 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: The current node-to-owned-output clip catalog is in animations/paths/CLIENT_GUIDE.txt.
+
+AUTHORED TRICK MARKERS AND THE RUNTIME CALLBACK REGISTRY
+
+Run python3 reference.py. The package contains all required data, including two small actual compressed export examples. Python's standard library is sufficient. 
+
+What this pass closes
+The GraphExportData payload contains an inner LZO1X stream. Decoding it reconstructs complete markup dictionaries rather than fragmented strings from the outer archive. Seven dictionaries now parse to their exact ends, including every name, serialized identifier, namespace and stored flag. The resulting 284 records include actual ski and snowboard grab names, flip markers, gameplay markers and dynamic bone-mask names.
+
+The runtime callback registry supplies a second connection. Its actual registration key joins a named dictionary marker to a source event ID. All 113 registrations, including the inline Grind binding, are included in named-settings.json. These bindings are not inferred from neighboring numbers or clip naming.
+
+Exact key equation
+packed_key=(namespace_id<<22)|marker_id.
+The inverse is namespace_id=packed_key>>22 and marker_id=packed_key&4194303. The portable reference validates the 32-bit range and provides marker_key(dictionary_name,marker_name). The actual namespace numbers are snow_game=2, snow_gameCode=3, Code=4, Anim=5 and DynamicBoneMask=7. Code_ScriptedReaction=1 and Hack=6 are also preserved. The packed key is a logical markup identifier, not a pointer.
+
+Confirmed examples
+snow_game JapanRight_Ski has serialized marker ID 34 and is registered to source event 101. MuteLeft_Ski has marker ID 31 and source event 102. Therefore numeric event ordering is not dictionary ordering. A fixed additive offset between the two IDs is incorrect.
+
+The appended registrations are especially relevant to the trick list:
+  Stiffy_Snow -> source event 142
+  ClassicMethod_Snow -> 143
+  Daffy_Ski -> 144
+  Spread_Ski -> 145
+  DoubleNoseGrab_Snow -> 146
+  Cross_Ski -> 147
+
+These are actual sport-qualified authored labels. The related scoring chapter joins the callback IDs to the runtime scoring subtype/flag dispatcher; use that proved table rather than assuming an alphabetical or fixed-offset relationship. The dictionary lookup itself does not award points or choose an animation clip.
+
+Authored ski and snowboard markers
+snow_game includes paired right/left ski markers for Safety, Mute, Tailgrab, Japan, Nosegrab, Truckdriver, Venom, Octograb, Brebis and BAA. Its snowboard markers include Indy, Tailgrab, Stalefish, Crail, Mute, Melon, Seatbelt, Nosegrab, Popair, Truckdriver, Rocketair, Mutail, Holycrail, Drunkdriver, ClassicMethod, DoubleNoseGrab and Stiffy. Cross_Ski, Daffy_Ski and Spread_Ski are explicit authored ski labels. These names establish their authored sport grouping without assigning a sport to a clip group prefix.
+
+Other snow_game markers include Ollie_toAir, NoGrab, Landing, OlliePrep, OllieCancel, FrontBarrel, BackBarrel, FrontFlip, BackFlip, GrabCyc, Tweak_L, Tweak_R, Tweak_F, Tweak_B, Buttering, Grind_BS, Grind_FS, Grind_Noseslide, Grind_Tailslide, Landing_Panic, Wallride and CanBlend_Grind. The complete dictionary remains in the supplied data. A marker name is an authored semantic label; it is not by itself a documented angle threshold, clip-selection condition or transition duration.
+
+Dynamic bone masks and gameplay markers
+DynamicBoneMask includes DBM_RightHand, DBM_LeftHand, DBM_RightArm, DBM_LeftArm, DBM_Arms, DBM_UpperBody, DBM_FullBody, DBM_None, DBM_Spine_Head, DBM_Hands, DBM_Grab, DBM_Banking, DBM_RotationGlobalSpace and other named entries. The identifiers can now be resolved exactly. Actual per-bone weights and the graph branches selecting these masks remain unresolved. Do not replace DBM_Grab with an invented hand-only mask.
+
+snow_gameCode includes EnableTrajectoryPerturbation, Impulsion, OpeningParachute, Jumping, M_AutoSwitching, M_InNav, AirStart_NoCutToBehavior, AirStart_NoCollisions, StartPhysics, IfCollisionGoRagdoll, ForceRagdoll, EndOfStart and EndOfFinish. Registered bindings are exported where the runtime registry supplies them. Code and Anim preserve broader animation-system markers too. The stored Boolean flag on a dictionary record is preserved as stored_flag; its precise meaning has not been established, so the reference does not treat it as the marker's current active state.
+
+Portable decoder and examples
+The LZO decoder handles literals, overlapping back-references, short/medium/long matches and the end marker, with bounded output and bounds checks. The dictionary parser accepts the included serializer form, validates class and record tags, ASCII names, namespace consistency and Boolean field range, and requires exact end-of-data. It is deliberately scoped to the verified dictionary representation rather than presented as a complete graph-file parser.
+
+encoded-examples.json contains the actual compressed snow_game and DynamicBoneMask exports. Running the reference reconstructs their 94 and 48 records, compares every decoded entry against named-settings.json, round-trips all 284 packed keys and checks all 113 registry lookups. The two extra streams are bootstrap and runtime-data exports, which are not markup dictionaries.
+
+Remaining boundary
+The dictionaries are bootstrap MarkerDictionaryData resources. Their callback bindings are a runtime registry. snow_game_Graph and snow_game_Paragliding_Graph are separate AtomGraph resources. The inner LZO discovery does not prove that their entire serialized node regions use the same encoding. Complete authored state-machine nodes, clip selection predicates, event timing/enter-exit semantics, individual trick transition weights and concrete bone-mask arrays remain unparsed. This package delivers the now-proved named marker-to-runtime event bridge without inventing those missing policies.

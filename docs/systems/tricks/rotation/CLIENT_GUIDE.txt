@@ -1,0 +1,98 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS SIXTEEN UPDATE: tricks/motion-lifecycle adds input latch conditions and distinct landing/frozen/alternate resets. A conditional landing correction zeros physical angular velocity; it does not establish the full airborne target consumer.
+
+SNOW-SPORT SPIN/FLIP: DIRECTION LOCK, MIXED-AXIS BOOST AND OUTPUT
+
+Read body/CLIENT_GUIDE.txt for the initial input proposal, ski axis remapping,
+acceptance gate, secondary rate curve, completion quantization and alignment.
+This chapter closes later stages that were previously left open. The functions
+operate in the documented rotation frame; they do not assign every axis to a
+named trick or claim a universal world-space spin rate. The three-component
+reference assumes zero padding in the four-lane vectors. After a rejected
+proposal, the caller must retain its saved intensity for magnitude feedback.
+
+1. Direction-change lock after proposal acceptance
+
+The postprocessor receives a proposed angular vector and its intensity. When
+both the direction-lock and rotation-state flags are true, and the previous
+angular speed exceeds 0.1, it compares normalized directions:
+  angle = acos(clamp(dot(normalize(old),normalize(proposed)),-1,1))
+  accept only if abs(angle) < 0.3926990926
+This is approximately 22.5 degrees, with strict rejection at the boundary.
+When rejected, previous angular motion, saved intensity and auxiliary boost
+remain unchanged. This gate follows the earlier intensity/sign acceptance gate.
+The producer of each state flag remains an explicit integration input.
+
+2. Mixed-axis boost
+
+When enabled by the selected configuration and proposal is not componentwise
+near zero, let w=(x,y,z) be the proposed vector:
+  theta = acos(abs(z)/length(w))
+  shape = 1 - 16*(theta-pi/4)^2/(pi*pi)
+  raw_boost = shape*shape*z
+  augmented_length = length((x,y,z+raw_boost))
+  scale = (0.7*length(w)+0.3*augmented_length)/augmented_length
+  stored_velocity = w*scale
+  auxiliary_z = raw_boost*scale
+The numeric constants retain float32 approximations in reference.py. Its
+angle-fold branch subtracts pi/2 when theta exceeds pi/2, retained in the code.
+Valid input geometry normally keeps theta in[0,pi/2].
+
+This favors a mixture of Z and transverse rotation: the shape peaks at 45 degrees,
+and reaches zero at either pure-axis endpoint. It preserves the sign of z.
+When boost is disabled, the postprocessor does not overwrite the saved auxiliary
+value. Reset policy belongs to the caller and must not be silently invented.
+
+3. Caller magnitude feedback
+
+After the acceptance/postprocessing attempt, the caller independently executes:
+  if angular_velocity is not componentwise near zero:
+      angular_velocity = normalize(angular_velocity)
+                         * saved_intensity * angular_limit_degrees*pi/180
+This also executes when the proposal was rejected, using the saved intensity.
+For a newly accepted proposal, it cancels the uniform scale applied to the main
+vector in step2. It does not cancel the separately stored auxiliary_z.
+Therefore reporting only the boosted main-vector magnitude would misdescribe
+what the following output receives.
+
+Example: proposed (1,0,1), intensity 1 and a limit matching its original magnitude
+produce scale approximately 0.74271888 and auxiliary_z approximately 0.74271888.
+Caller feedback restores the main vector to (1,0,1). Adding the auxiliary Z term
+later yields (1,0,1.74271888) before further orientation/contact handling.
+A pure Z proposal has effectively zero mixed-axis boost.
+
+4. Connection to procedural pose and angular output
+
+The target-pose path applies an additional rotation around the fixed Z axis:
+  duration = max(first_time,0)+additional_time
+  extra_angle = duration*auxiliary_z + saved_extra_angle
+That rotation follows the main angular-vector rotation and the intervening
+contact/alignment adjustment. A separate optional state adds another Z rotation.
+These are procedural pose rotations, not sampled animation root motion.
+
+Another output path rotates the main angular vector around Z using a stored
+heading in degrees, then adds auxiliary_z to its Z component. If a separate
+extra-rotation flag is active, it adds that separate Z rate too. The output
+function exposes those values as arguments rather than assigning names such
+as cork, rodeo, switch or grab from their numeric state alone.
+
+5. What this establishes for tricks
+
+This extends the ski/snowboard procedural rotation chain beyond the initial
+450-degree-limit example. Actual turn timing depends on the selected angular
+limit, intensity, completion adjustments, the mixed-axis boost, extra rotation
+state, and contact/alignment changes. A single constant seconds per 360 would
+lose those relationships. The same scoring configuration for ski and snowboard
+does not imply the same local-axis mapping or animation selection.
+
+This chapter does not claim the same snow-sport postprocessor drives wingsuit,
+paraglider or every other sport. Consult the authored graph and trick catalog
+for proven sport selection and clip bindings. Unconfirmed numeric states remain
+unconfirmed; score bonuses are not renamed grab bonuses without their producer.
+
+Validation
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.

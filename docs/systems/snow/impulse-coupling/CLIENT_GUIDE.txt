@@ -1,0 +1,122 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+snow_game retained-face and live-body impulse coupling
+
+Run python3 reference.py for worked synthetic examples. This folder is standalone
+and uses only Python's standard library. It supplies local geometry and impulse
+assembly rules, not a complete contact solver or a live mass calibration.
+
+The newly closed connection
+
+A partially submerged triangular contact uses the retained area's centroid as
+its application point. Applying its force at the uncut triangle centroid changes
+torque. Both face-normal records receive the same retained area and centroid,
+while their normals have opposite signs. Each record evaluates the material
+attached to that triangle's selected environmental plane. A single selected
+summary material must not replace these individual profiles.
+
+For original triangle A,B,C, let full area S=length(cross(B-A,C-A))/2,
+full centroid G=(A+B+C)/3, and original normal
+N=cross(B-A,C-A)/length(cross(B-A,C-A)). Classify a vertex as retained when
+phi(P)=dot(planeNormal,P)+planeOffset <= 0.
+
+For one retained vertex W and two excluded vertices D0,D1, intersect W-D0 and
+W-D1 with the plane to obtain Q0,Q1. The retained area is
+s=length(cross(Q0-W,Q1-W))/2 and centroid g=(W+Q0+Q1)/3.
+For two retained vertices and one excluded D, form the excluded triangle from D
+and its two crossing points. With its area s and centroid g, the retained area
+is S-s and retained centroid is (S*G-s*g)/(S-s).
+For three retained vertices use S,G. For zero retained vertices this geometric
+route contributes nothing. Normals retain original winding; clipping does not
+replace them with the environmental plane normal. The reference triangulates
+the clipped polygon, which is mathematically equivalent on nondegenerate input.
+Native one/two/three retained cases independently checked this equivalence.
+
+The geometry code also has independent side-enable bytes and optional second
+face records. Both face evaluations occur only when the relevant side permits
+it and the retained area is positive. These are explicit host inputs. The
+reference does not invent how those side-enable bytes are produced.
+Near-parallel crossing and zero-area endpoint policies require the surrounding
+contact geometry reference. This module's clipping API accepts ordinary
+nondegenerate crossings.
+
+Per-face material evaluation feeds force assembly
+
+The contact evaluator receives retained area as its weight argument and retained
+centroid as its point argument. Its effective mass is
+activation * liveCombinedMass / eligibleFaceWeightSum * retainedArea.
+It computes velocity at that point from the cached linear and angular body
+snapshot and subtracts the selected material velocity. The selected plane's
+profile supplies the normal and drag coefficient records. Normal and tangential
+forces remain separate until submission. Their previously documented frequency
+law and depth/angle/control curves still apply.
+
+At the common tail, pressure entries precede contact entries in stored order.
+For each valid submerged-volume entry, submit
+J=pressureVector*pressureScale at that entry's submerged-volume point.
+pressureScale already contains gravity magnitude, attitude gain, speed gain,
+activation and dt. Do not multiply dt a second time in this assembly step.
+For each valid contact entry with stored kind code 1, submit
+J=(normalForce+tangentForce)*dt at that entry's retained contact point.
+Other stored kind codes do not pass this particular tail's submission gate.
+A surface term, when enabled, has already been added into normalForce.
+The reference receives evaluated vectors explicitly; it does not reconstruct
+all activity and constraint gates or infer the semantic names of every kind.
+
+Concrete backend update
+
+Every submission in these two loops targets the main body and sets force=true.
+The backend uses its live inverse mass and live local inverse inertia. Those
+values may differ from the earlier construction-time submissions. It transforms
+the local center C by the body's rotation R and translation T:
+worldCenter=R*C+T
+worldInverseInertia=R*localInverseInertia*transpose(R)
+r=applicationPoint-worldCenter
+linearVelocity += inverseMass*J
+angularVelocity += worldInverseInertia*cross(r,J)
+
+The torque arm is relative to transformed center of mass, not body translation.
+The backend rotates the full tensor, including off-diagonal entries. Replacing
+it with diagonal world-axis reciprocals changes the response. No timestep or
+extra combined-mass multiplier appears in this backend impulse update.
+
+The wrapper normally skips bodies whose low motion-kind nibble equals 2.
+force=true bypasses that wrapper gate. Descriptor flag bit 8 still suppresses
+both velocity writes in the inner routine. A forced submission requests a
+separate backend dispatch afterward, including when that bit suppressed writes.
+The downstream dispatch's exact wake/island behavior is not established here.
+The reference reports dispatch_requested rather than asserting a wake occurred.
+
+Mass and rider representation boundary
+
+Contact effective mass uses the live combined main/separate-rider mass getter.
+Submission updates the main body's own inverse mass and tensor. These are
+different quantities. When a separate rider body exists, constraints can later
+redistribute momentum. When it does not, a configured positive rider mass can
+select the alternative scalar spring. The scalar spring is not an automatic
+addition to main backend mass. This module does not solve either constraint
+path and does not infer a fixed total mass from equipment density.
+
+Worked example
+
+Triangle [(0,0,-1),(2,0,1),(0,2,1)] clipped by z<=0 retains one quarter of its
+full area, at centroid (1/3,1/3,-1/3). The full triangle centroid is
+(2/3,2/3,1/3), so the application point moves on all three coordinates.
+The rotated-body example includes a local center offset and off-diagonal inverse
+inertia. Its complete inputs and outputs are in reference.py and
+EXAMPLE_OUTPUT.json. Values are synthetic arithmetic fixtures.
+
+Verification boundaries
+
+Original x86-64 blocks were emulated offline, with no game process. 160 backend
+cases executed both original matrix helpers unchanged. 80 clipping cases
+executed the original intersection helper and stopped each force consumer at
+entry. They checked area, centroid and both opposite normals. Maximum centroid
+error against the portable mathematics was about 3.21e-7. Maximum backend
+velocity error was about 1.44e-5 across these synthetic cases. 32 wrapper cases
+checked kind, force and suppression flags; downstream dispatch was replaced
+with a return. These results validate the local arithmetic and caller contract,
+not full contact forces, solver behavior or frame-by-frame gameplay.
+
+Run python3 test_reference.py for portable checks. VALIDATION.json records the
+checks and their scope. Native validation tools and addresses remain private.

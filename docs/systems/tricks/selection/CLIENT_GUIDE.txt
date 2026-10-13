@@ -1,0 +1,122 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS FOURTEEN UPDATE: tricks/assistance-transition closes the slowing callback and successor correction, which can increase angular speed by up to 10% per update. It also closes savedDuration-elapsed horizon and one motion-cache transfer. tricks/response-delay closes the logarithmic delay producer. Older statements below calling these producers open are superseded by those qualified modules.
+
+Scalar trick selection, motion history and rate assistance
+
+This closes the formerly unexplained scalar-rate multiplier and adds its
+history arithmetic. It also corrects the applicability of the previous ramp.
+These are selected code paths, not a complete sport/state selector.
+
+1. The player ramp gate is disabled in the selected settings
+
+Before choosing ramp versus heading update, the scalar controller checks:
+    abs(saved_angle_radians) < radians(config.scalar_angle_gate_degrees)
+The selected male/female player setting is 0. Therefore this condition is false
+for every finite saved angle, including zero. These resources select the
+assistance branch when this controller runs. Their NPC-source counterparts
+contain 75 degrees, permitting ramp/heading branches below that angle.
+
+The previous 110 -> 82.5 -> mathematical endpoint 55 ramp remains real arithmetic,
+but must not be applied as an unconditional player-flight rule. The inner
+ramp duration comparison is still strict: duration < .5. The selected heading
+bound is 90 degrees. Global state binding and later overrides remain external.
+The inspected state dispatcher reaches this scalar controller through numeric
+outer state 4 / inner state 7. Numeric state labels are intentionally retained.
+
+2. The saved gain depends on signed motion history
+
+At the inspected entry:
+    saved_input = current_input
+    radius = harmonic_history(last .5 clock units)
+    gain = 1
+    if radius * current_input > 0:
+        if abs(radius) <= 45: gain = (1.4 + 1) / 2
+        if abs(radius) <= 25: gain = 1.4
+The stored gain is float32 1.399999976158142. The inner threshold takes priority;
+both comparisons include equality. Opposite direction or zero input leaves 1.
+The returned history fallback is 100000, which does not activate these bands.
+
+The history is not an ordinary average of angles. For successive positive
+sample times inside the requested window:
+    durationSum += newerTime - olderTime
+    reciprocalSum += (newerTime - olderTime) / newerSignedSample
+    result = durationSum / reciprocalSum
+Zero reciprocalSum returns 100000. The oldest interval is included only if its
+OLDER timestamp is within the window; no fractional oldest interval is used.
+A sign reversal can cancel the denominator and produce the fallback.
+
+3. How the radius-like sample is produced
+
+The sample producer runs no more frequently than 1/60 in the converted clock,
+using a 50-entry ring. Clock ticks are converted through float32(ticks)*.001.
+It obtains a motion derivative from a separate 36-entry history with window .2:
+    derivative_i = (newerVector_i - olderVector_i) / interval
+    weight = min(1, remainingWindow / interval)
+    average = sum(weight * derivative) / sum(weight)
+This weights complete intervals equally. It is NOT a duration-weighted average;
+only the oldest partial interval gets a fractional weight.
+
+For non-negligible derivative a and current motion vector v:
+    direction = normalize(v)
+    lateral = a - dot(a,direction)*direction - dot(a,normal)*normal
+    radius = dot(v,v)/length(lateral) if length(lateral) > .01 else 999
+    sign = +1 if lateral.x*direction.y - lateral.y*direction.x > 0 else -1
+    sample = sign * radius
+Values of magnitude below float32(.00001) are replaced by positive .00001.
+The source coordinate convention here uses Z up. Do not transplant the XY sign
+expression unchanged into a Y-up engine. The stored normal is used directly;
+this function does not normalize it. If v is velocity in SI units, the quotient
+has radius units. The portable API keeps the incoming motion vectors explicit;
+this pass does not establish every writer of their runtime cache.
+
+4. Scalar rate and heading branches
+
+When the ramp branch is eligible, reset its limit only when input==0 or BOTH
+abs(saved_input-input)>.5 and abs(saved_rate/(-limit*pi/180)-input)>.5.
+The limit formula is the earlier base/retained-fraction ramp. Input above .8 is
+snapped to +1, below -.8 to -1, with the exact float32 thresholds in reference.py.
+The resulting scalar rate is input * limit * saved_gain * (-pi/180).
+
+The later heading branch instead does:
+    heading = clamp(heading - input*limit*saved_gain*dt, -90, 90)
+It retains the previous scalar rate. Both branches finally publish that rate
+along the fixed source Z axis, before the already documented output stages.
+
+5. Assistance can slow rotation without reversing it
+
+reference.assistance_rate supplies the complete scalar correction after the
+signed-angle preparation. It triggers only when the normalized rate differs
+from input by more than .5 and the supplied horizon is greater than .01.
+It starts with oldRate * selectedPercent * gain / 100. SelectedPercent is 30.
+It compares projected angular travel over the horizon with the measured angle,
+tries a bounded correction and, if needed, an alternate 180-degree branch.
+The correction wraps by 180 degrees here, NOT by a full 360-degree turn.
+Finally, any rate increase in magnitude or sign reversal restores oldRate.
+This explains a local slowing rule; it is not a generic exponential damping law.
+
+The supplied measured angle is an explicit boundary. Its preparation projects
+a cached direction off a cached axis and compares it with an incoming direction.
+Their live physical meanings and the horizon producer remain unclosed. The
+portable helper models rate arithmetic only, not every flag/callback side effect.
+Do not use the new gain as a grab-inertia multiplier or apply it globally to the
+separate vector rotation proposal.
+
+6. Separate delayed response
+
+Another scalar written during this controller update is:
+    t = duration - delay
+    response = 0 if t < 0 else -gain * (tau*(exp(-t/tau)-1) + t)
+A reset path selects gain=.01 and tau=.01 - externalScalar*0 in the selected
+player resource. The producer of delay and the final physical interpretation of
+this response remain incomplete. This is not evidence that spin release uses
+tau=.01; it is a separately stored output. reference.delayed_response keeps that
+boundary explicit and requires a positive tau.
+
+Verification
+
+Static instruction inspection and complete selected-resource decoding support
+these connections. Tests cover boundaries, weighting, cancellation, player/NPC
+branch differences, and 1000 assistance non-acceleration/non-reversal cases.
+No native emulation or live-game comparison was run in this pass. Portable
+arithmetic is mathematical, not bit-exact SSE normalization or transcendental math.

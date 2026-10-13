@@ -1,0 +1,100 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+Camera predecessor-to-transition routing
+
+This chapter connects a chosen new camera and the previous camera to the exact
+included transition duration. Active-camera selection itself remains a separate
+step. The data include 131 camera parent records and 473 transition holders in
+127 camera resources. Every included camera parent reference resolves locally.
+
+A holder contains a predecessor-camera reference and transition settings.
+There are 456 camera-blend settings, ten generic time-blend settings, one
+component-blend setting and six null settings. The type-specific override
+arrays are empty in all included holders. Four camera resources have no decoded
+holder array; the reference rejects those as new-camera inputs, but includes
+their parent links so they can be previous cameras.
+
+Local selection
+
+Build the previous-camera chain in this order:
+  previous camera, its parent, its parent's parent, ...
+
+Then, for the already chosen new camera:
+  if its transition lookup is disabled: no selected holder
+  otherwise:
+      best = none
+      bestDepth = infinity
+      for holder in stored order:
+          skip a null predecessor reference
+          find holder.predecessor in the previous-camera chain
+          if found at depth < bestDepth:
+              best = holder
+              bestDepth = depth
+
+The nearest ancestor wins. Equal-depth matches preserve the first stored
+holder. A null predecessor is skipped; it is not a wildcard. Do not walk up
+the NEW camera's parents looking for a holder. The normal caller invokes this
+lookup on the new camera, and that local branch skips child recursion.
+The generic recursive helper's separate traversal rules remain documented in
+camera/transitions.
+
+For the selected holder, the caller requests type slot 0. In general, the first
+matching override group supplies its value, then the holder's default value is
+used unless disabled. All included override groups are empty, so the supplied
+records reduce to the default-or-disabled decision.
+
+The normal camera transition accepts a compatible camera-blend setting.
+With one selected, duration = that setting's duration. With no compatible
+setting, duration = float32(0.6). Generic time-blend and component-blend records
+are preserved in the data but are not treated as compatible camera-blend
+settings on this particular caller path. Other systems may use those types.
+
+Concrete transitions
+
+Previous camera                       New camera               Duration
+Player_Far_FreeCam                    Player_Grind_Cam           0.3
+Player_Far_Jump                       Player_Grind_Cam           1.5
+StareView_Paraglide                   Player_Paraglide           0.9
+ActionCamera_Ski_01                   Player_Paraglide           0
+Player_Far_FreeCam                    Player_Paraglide           0.6 fallback
+
+Names above omit the common snow_game_ prefix. The action-camera case matches
+its parent ActionCamera at ancestor depth 1. The free-camera-to-paraglider pair
+has no matching holder and uses the constructor fallback. These examples now
+select their records from predecessor relationships; they do not assume record0.
+Durations use the camera update clock's units. Ordinary second-based updates
+interpret them as seconds.
+
+Apply the transition clock and condition scaling from camera/transitions after
+this selection. The separate settings chapter documents the ten null channel
+curves in all 456 camera-blend records. Matching a zero-duration record does not
+remove other camera response filters or prove an immediate state-machine exit.
+
+Data and decoding
+
+named-settings.json preserves numeric camera, holder and settings IDs, parent
+links, stored holder order, predecessor links, enable flags and duration data.
+Display names are aliases; numeric IDs identify assets.
+
+reference.py provides previous_chain and select_transition. Reader decodes the
+included holder variants sequentially, including embedded transition settings,
+empty override arrays, behavior records and the final predecessor reference.
+It validates type tags and refuses unsupported variants. The behavior records
+are consumed to establish the exact predecessor field boundary; their omitted
+parameters are not claimed to be implemented by this routing example.
+Five raw holder examples are included for portable decoder checks.
+
+Coverage and limits
+
+Sixteen holder references point to predecessor resources absent from this
+collection. One additional holder has a null predecessor. These references are
+retained, not renamed as matches or wildcards. A caller with an external camera
+can supply its known ancestor chain directly to select_transition. Do not invent
+missing parent relationships. Runtime changes to parent links, enable flags or
+settings require the corresponding current state as input.
+
+The 131 previous-camera chains and 127 supported new cameras yield 16,637 pair
+checks of the local selector. All agree with the isolated selector calculation;
+1,288 matching pairs also pass the selected-holder value check. These checks use
+constructed runtime objects populated from the supplied records. They do not
+validate live active-camera conditions or the resource-loading lifecycle.

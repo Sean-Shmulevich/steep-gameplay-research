@@ -1,0 +1,75 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CONTACT, INPUT LATCHES AND MOTION LIFECYCLE
+
+This module adds connections around the existing rotation equations. The references model qualified local branches, not a complete scheduler or collision solver. Three-component vectors assume the native fourth lane is zero. Host math is not a promise of identical SIMD rounding.
+
+1. Snow contact connects to the landing-entry gate
+
+The snow update computes immersed fraction from clipped hull volume divided by total hull volume. Fraction <= float32(.001) is replaced by zero, contact time resets, and air time advances by the simulation dt. Otherwise air time resets and contact time advances.
+
+A landing-check wrapper first requires active procedural motion and no frozen-pose flag. Its ordinary candidate condition is:
+  recent_contact = air_time < float32(.04)
+  approaching = dot(cached_motion, normalize(contact_direction)) < 0
+  candidate = recent_contact and approaching
+Equality at .04 and a zero dot both reject. If the surrounding time unit is seconds, .04 is 40 ms. This uses the immersion-derived clock, not an unrelated generic collision boolean. It can admit a candidate during a brief loss of immersion; it does not prove a universal takeoff delay or a jump grace mechanic.
+
+The contact direction getter selects either a cached direction or the physical runtime's direction. A subsequent spatial query can replace the candidate direction and update a retained query identifier. Failed replacement does not by itself cancel this candidate in the inspected caller. The query's geometry and full alternate mode predicate remain unresolved. Zero-direction normalization is not guarded in the inspected native block; the portable helper rejects it explicitly.
+
+2. Input activation is latched
+
+A primary input latch, once true, stays true through this local check. While false:
+  enable_primary = (!external_override && !policy_block)
+                || squared_length(saved_primary-current_primary) > threshold
+                || (primary_counter < 4 && !policy_block)
+The selected player threshold is float32(.15), compared to squared distance. A single-axis change of .3 does not cross it; .4 does. It is not a .15 deadzone in ordinary distance.
+
+While the secondary latch is false and neither secondary-suppression flag is set:
+  enable_secondary = (saved_secondary_y-current_secondary_y)^2 > threshold
+                  || secondary_counter < 4
+The local proposal-enabled flag becomes primary OR secondary. Suppression does not clear an already-enabled secondary latch. Counters, special policy predicates and saved-input producers remain explicit integration inputs. Do not rename counters as frames without their producer.
+
+Primary entry also applies a separate one-call input blend with selected coefficient .1, selects the primary angular limit, snapshots input state, and zeros main/proposed angular vectors, intensity and mixed-axis auxiliary values. It does not establish a per-second damping constant.
+
+3. Landing checks and correction ordering
+
+For a candidate, the next routine obtains the target matrix or an alternate saved matrix, normalizes its third basis vector, then runs an ordinary landing evaluator or alternate evaluator. The ordinary evaluator uses the existing upright correction logic. When it selects the frozen/crash path it stores the target matrix, clears active procedural motion and resets rotation fields. Otherwise the caller runs the normal landing postprocess.
+
+A separate event-driven failure branch is now connected to the existing trick-event module. Its exact condition is:
+  sport_predicate AND Grab_event_flag AND tweak_event_flag
+The same controller's Grab callback writes the first flag; Tweak_L and Tweak_R/F/B callbacks write the second. These are last-event boolean writes, including disable events, and are stored even if the scoring callback is disabled. The controller identity is joined through the existing shared-owner chain. Holding a physical grab button is not equivalent to all these gates being true.
+
+When all three gates pass, the branch labelled Landing with grab skips the ordinary upright evaluator, selects numeric category 0 for its event, then freezes the pose and resets procedural motion. The sport predicate's complete enum mapping remains open. The ordinary path also has a saved-flag/short-duration gate before upright evaluation; it is not invoked on every contact unconditionally. The new helper exposes route selection, not the whole evaluator.
+
+A small classification helper uses the angle between target up and contact direction:
+  if angle_degrees < first_threshold: category = 5
+  elif angle_degrees < second_threshold: category = 0
+  else: category = 6
+These are numeric categories, not proven clean/sketchy/crash names. Its thresholds are caller-selected settings. Neither this helper nor the candidate gate replaces the existing upright and impact-load logic.
+
+Normal landing postprocess:
+  save landing displacement, elapsed duration and height-related state
+  active = false
+  query contact correction and publish its returned vector
+  if query succeeds and physical runtime exists:
+      linear_velocity = dot(cached_motion, query_direction) * query_direction
+      angular_velocity = zero
+      refresh runtime, optional leg targets and velocity histories
+  publish the target matrix
+  request the next motion state
+  update stance-related state
+  perform the local rotation reset below
+
+The query direction is used as supplied here. There is no normalization or subtraction in this projection assignment. Do not reinterpret it as removal of the normal component. The full query still determines what the vector means and when success is returned.
+
+The two body setters ASSIGN velocity. They do not add an impulse, integrate torque, divide by mass or multiply by dt. Normally body kind 2 rejects an assignment, but the force flag bypasses this restriction. This landing path passes force=true for both setters. A world-present/force branch requests backend dispatch; it does not by itself prove a wake/island policy. An absent physical runtime returns without those writes.
+
+4. Rotation fields have different lifetimes
+
+Normal reset saves old heading and proposed angular vector, zeros heading, secondary heading, proposal, main rotation, intensity, separate extra-Z rate, its accumulator, heading adjustment, response and one reset flag. It selects the base limit, 110 in the selected player settings. The inspected reset block does NOT itself clear the mixed-axis auxiliary-Z value or published output cache. Other callbacks may write them; preserve that ownership boundary.
+
+An alternate branch performs similar clears but, when it does not freeze the pose, restores both proposal and main rotation from the previous proposal. Its intensity remains zero. A generic clear-everything-on-contact implementation would lose this distinction.
+
+The normal landing event requests outer state 3. Its requested child depends on the previous state: outer 2 requests child 6; outer 4/child 0 requests child 3; other enabled cases request child 7. These IDs are opaque. Requests may be deferred through the existing machine-depth/pending mechanism. They are not immediate proof that an animation or new physics mode has committed.
+
+Run python3 reference.py and python3 test_reference.py. Tests cover strict boundaries, retained latches, assignment versus impulse, distinct reset lifetimes, conditional body reset and state requests. They do not execute original instructions.

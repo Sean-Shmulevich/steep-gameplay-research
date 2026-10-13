@@ -1,0 +1,276 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS TWELVE UPDATE: snow/impulse-coupling supplies retained-face geometry and live main-body impulse application; snow/rider-targets supplies target geometry and absorption.
+
+CURRENT UPDATE: Material profiles are in snow/materials; jump integration is in snow/integration; selected hull geometry and construction mass/inertia are in snow/body-construction.
+
+SNOW, INPUT AND RIDER REFERENCE
+
+This folder is usable offline with ordinary Python 3. Run `python3 reference.py`
+for worked examples. named_settings.json contains all 12 decoded simulation
+profiles and all 10 decoded input profiles, with complete sampled curves. Values
+in worked_examples.json are synthetic unless explicitly identified below.
+
+Documented equations are implemented, rather than references to other files.
+This is not a complete replacement physics engine: some external material
+bindings and activity-specific control producers remain unspecified. See
+snow/materials for the included environmental profiles. Those
+inputs are explicit parameters. 
+
+Conventions and distinct quantities
+
+World up is (0,0,1). n_plane is the environmental material surface normal;
+n_face is a hull/foil contact face normal. They are different: the bottom face
+of a level hull can point downward while the material plane points upward.
+V_total is geometric tetrahedral volume. W_total is the sum of eligible contact
+face weights. These are different denominators. Total mass is main rigid-body
+mass plus physical rider-body mass when that separate body exists.
+
+Runtime speed is obtained from a body velocity with its reference-up component
+removed. Input preset selection converts that magnitude by 3.6. This is
+consistent with metres/second to kilometres/hour, but the documented equations
+should retain the actual conversion rather than silently replacing the units.
+Geometry is in runtime world-distance units; density is mass per cubed distance;
+frequency-strength coefficients behave as rates with a 4*pi*pi conversion.
+Angles used for buttering normalization are radians. Incidence-curve inputs are
+normalized signed angles, with -1 and +1 representing -90 and +90 degrees.
+
+Connected timestep and material binding
+
+1. Snapshot rigid-body pose and velocities; transform the hull tetrahedra and
+   foil geometry into world space. Append the current reference direction to a
+   64-slot timestamped history and advance its timestamp by dt.
+2. Query the environment at contact samples. A hit's collision material resolves
+   a fluid-characteristics resource. That resource has a decoded curve profile,
+   nominal layer range, and nominal layer thickness. The chosen plane retains
+   that profile and thickness. A missing profile is finalized as zero layer data.
+3. Ordinary hit adjustment moves the intersection along the query direction by
+   normal.z*nominalThickness/dot(normal,queryDirection), then constructs the
+   plane from the adjusted point. An alternate branch adds thickness vertically.
+   A special layer-gap path clamps the observed gap to at least 0.001 and uses
+   effectiveThickness=gap*nominalThickness/nominalRange.
+4. Clip tetrahedra against the selected planes. Accumulate submerged volume,
+   volume-weighted depth and surface normals. Update contact/air timers.
+5. Cook input state. Supply material controls: cooked leg coil; clamped absolute
+   buttering angle divided by pi/2; absolute cooked horizontal steering.
+6. Update rider leg/contact targets and constraint state. Evaluate contact and
+   density reactions for hull and foil geometry. Compute ground-stick impulses
+   when its contact and activity gates allow them.
+7. Apply density reactions and contact forces as point impulses to bodies.
+   A scalar rider spring is integrated only when no separate physical rider body
+   exists and configured rider mass is positive. A separate rider body instead
+   receives its constraint/body path. These are alternative representations.
+
+The world/camera forward vector supplied by the outer activity step is a
+separate directional input. It is not the three-element material control array.
+The selected material curves follow the collision material at the hit; they
+are not selected from an equipment texture or visual snow label. Actual numeric
+fluid profiles are now decoded in snow/materials, including groomed snow and
+powder profiles with authored density 1000. Some external material references
+remain unresolved. hullVolumicMass=600 belongs to the equipment hull and is not
+the environmental snow density.
+
+Geometry and depth
+
+Classify a vertex p as wet when phi(p)=dot(n_plane,p)+d <= 0. For a crossing edge
+from a to b, q=a+t*(b-a), t=-phi(a)/dot(n_plane,b-a). The intersection is not
+clamped: the wet/dry classification selects a crossing edge. The near-parallel
+tolerance is 0.00051; a near-plane endpoint may be returned instead.
+
+A tetrahedron has volume abs(dot(b-a,cross(c-a,d-a)))/6 and centroid
+(a+b+c+d)/4. Combine pieces with centroid=sum(V_i*C_i)/sum(V_i).
+One wet vertex retains the tetrahedron formed by it and the three crossing
+points. Three wet vertices retain the full tetrahedron minus the dry corner.
+For two wet A,B and dry C,D, construct E=intersect(C,A), F=intersect(A,D),
+G=intersect(D,B), H=intersect(B,C), then retain tetrahedra (A,B,E,G),
+(F,A,E,G), (H,B,E,G). The reference implements all cases.
+
+Immersion=sum(submerged volumes)/V_total. Values <=0.001 are zeroed. The ground
+contact timer increases by dt when immersion>0.001 and resets otherwise; the
+air timer tracks the complementary condition.
+
+For a submerged application point, vertical depth fraction is:
+  thickness <=0: 1
+  abs(n_plane.z)>0.00051: clamp(-phi(point)/n_plane.z/thickness,0,1)
+  otherwise: 0
+Weighted depth=sum(V_sub*depthFraction)/sum(V_sub). This is not immersion.
+Attitude settings select DepthRatio in the extracted surfboard profile, so do
+not substitute total submerged volume ratio for its depth interpretation.
+
+Density reaction and named simulation curves
+
+P = fluid.volumicMass * V_sub * buoyancyDepthCurve(depthFraction) * n_plane
+J_pressure = P * buoyancyAttitudeCurve(tiltInput)
+               * buoyancySpeedCurve(projectedBodySpeed)
+               * abs(worldGravity.z) * pressureActivation * dt
+
+Gravity comes from the physics world. The algorithm uses absolute Z, not the
+length of an arbitrary gravity vector. Tilt input is the normalized-asin lookup
+of a clamped pose-matrix component. The speed input is cached body linear speed projected off the runtime reference-up
+direction: length(bodyVelocity-referenceUp*dot(bodyVelocity,referenceUp)). It is
+the same runtime speed used for input preset blending, without the 3.6 conversion.
+The reference accepts the evaluated speed gain so callers can select their actual
+profile; the complete curve data are included in named_settings.json.
+J_pressure is applied at the submerged-volume application point.
+
+Material coefficient selection and inputs
+
+Each coefficient record has these eight sampled curves and baseMultiplier:
+  flowAngleCurve, legCoilCurve, butteringCurve, steeringCurve,
+  normalSpeedCurve, tangentialSpeedCurve, surfaceAngleCurve, depthCurve.
+Each curve's output is clamped nonnegative before the gain product. The product
+is clamped nonnegative and multiplied by baseMultiplier. A sign is optionally
+attached to the normal result, but its square is used in force strength.
+
+Relative point velocity is
+  v = bodyLinearVelocity + cross(bodyAngularVelocity,point-centerOfMass)
+                          - materialLinearVelocity
+vn=dot(n_face,v), vt=v-vn*n_face, speed=length(v), tangentSpeed=length(vt).
+Let L(x) denote the normalized signed-asin table. For nonzero speed:
+  flowAngle = L(-clamp(vn/speed,-1,1))
+  normalSpeed = abs(vn)
+  tangentialSpeed = length(vt)
+  normalSurfaceAngle = -L(clamp(dot(n_face,n_plane)*sign(vn),-1,1))
+  tangentSurfaceAngle = L(clamp(dot(-vt/length(vt),n_plane),-1,1))
+Use zero for the last input when tangential speed is zero.
+
+Normal response selects hullPush or hullPull for hull contacts, foilPush or
+foilPull for foil contacts. Negative flow selects Push; nonnegative flow Pull.
+Tangential response selects hullDrag or foilDrag. Each normal/drag record uses
+its corresponding surfaceAngle input; both use depth and the same controls:
+  legCoilCurve input = cooked leg coil
+  butteringCurve input = clamp(abs(butteringAngle)/(pi/2),0,1)
+  steeringCurve input = abs(cooked horizontal steering)
+The sign of steering is removed. These inputs are not world-forward components.
+
+Contact force and integration
+
+m_eff = contactActivation * totalMass/W_total * retainedContactFaceWeight
+K(m,f)=clamp(m*f*f*39.47842025756836,1.0000000116860974e-7,999999995904)
+F_normal = -dt*K(m_eff,normalFrequency)*vn*n_face
+Clamp its magnitude to m_eff*abs(vn)/dt. Tangential force is
+F_tangent = -dt*K(m_eff,tangentFrequency)*vt, with no corresponding stopping cap.
+These velocity terms require effective mass>0, depth>0, and relative speed>
+0.0001; normal/tangent components also require their own magnitude>0.0001.
+
+For a hull contact with positive surface frequency, add
+F_surface=K(m_eff,surfaceFrequency)*n_face. This addition can remain active even
+when the velocity response is zero. The face-normal sign determines its direction.
+The final point impulse is J_contact=dt*(F_normal+F_tangent+F_surface).
+Thus the uncapped velocity terms contain dt twice; surface attraction contains
+dt once. Removing one dt to make it look like standard damping changes behavior.
+
+Apply a point impulse with
+  linearVelocity += J/mass
+  angularVelocity += inverseWorldInertia * cross(point-centerOfMass,J)
+This converts the force pipeline to rigid-body motion without mislabeling force
+as acceleration. The reference implements both force and point-impulse APIs.
+
+Ground stick and the corrected averaging fields
+
+The extracted generic settings have speedDifferenceThreshold=0 and
+speedAveragingDuration=0.75. The field mappings were independently checked.
+The history averaging divisor and ground-stick positive gate use duration,
+not the zero difference threshold. Zero difference threshold does not disable
+this path or cause a division by zero. Its complete downstream semantic use
+has not been established, so no extra behavior is assigned to it.
+
+For each of up to 64 samples younger than duration, let
+w=speedAveragingCurve(age/duration), N=sum(w*direction)/sum(w).
+For tangential velocity relative to the reference-up plane, s=length(v_t),
+t=normalize(v_t), side=normalize(cross(t,worldUp)), D=cross(side,t),
+alignment=dot(t,normalize(N)). Require dot(referenceUp,N)>-0.6, usable direction,
+and forceSpeedCurve(s)>0.1. The speed curve is a gate; its output is not
+multiplied into the resulting impulse.
+
+Ordinary speed envelope E is 2*s below 15, 2*(30-s) between 15 and 30, and 0
+at or above 30. Two activity-controlled override flags keep E=30 above 15.
+One also selects a supplied mode scale and contact timer=1. Otherwise timer
+=min(groundTime*6,1). The semantic activity names of these flags remain unknown;
+reference parameters mode_a/mode_b identify their functional effects only.
+
+When a boost/buttering interval activates the boost branch:
+ B=max(1,sqrt(1-min(elapsed/boostDuration,1))*boostPeak), otherwise B=1.
+A=-legCoilCurve(coil)*alignment*forceDepthCurve(weightedDepth)*E*B*timer*modeScale
+Require A<-0.1 and a material-eligibility predicate or the activity override.
+Then deltaVelocity=D*A*dt*externalScale;
+J_rider=riderMass*deltaVelocity, J_board=(totalMass-riderMass)*deltaVelocity.
+The activity/contact gates include transition and pending-correction suppression;
+the reference assumes those caller gates have already permitted the impulse.
+
+Input shaping, sampled curves and orientation
+
+presetWeight=clamp((runtimeSpeed*3.6-7)/(12-7),0,1). Blend a normal and fast
+parameter as normal*(1-weight)+fast*weight. The documented cooker, curve and
+axis-shaping functions are portable and accompany all sampled presets.
+
+For raw input r, compress magnitude at cutoff c with excess weight e:
+ shaped=sign(r)*(min(abs(r),c)+max(abs(r)-c,0)*e)
+ shaped*=1+boostWeight*(strengthBoost-1); clamp to [-1,1].
+Steering horizontal gain evaluates its attenuation curve at vertical input;
+vertical gain evaluates its curve at horizontal input. Blend normal/fast gains,
+apply to their respective axes, then continue through remap/cooking.
+
+Cooker selects ToZero if abs(target)<=abs(current) or current*target<=0,
+otherwise ToOne. Its movement limit is
+ step=(1-expLookup(-dt*proportional))*abs(target-current)+dt*base
+Move toward target by min(step,abs(target-current)); snap residual<0.0001.
+The exp lookup uses 256 linear segments over [-10,0], with padded endpoints.
+Leg-coil target and cooked leg coil are separate values. The extracted surfboard
+binding names TriggerRight as the leg-coil trigger, with no button entries.
+
+For samples y_0..y_n over [lo,hi], step=(hi-lo)/n. Segment lines use the
+unshifted sample grid. Indexing uses the padded domain with
+ epsilon=min((hi-lo)*0.0001,0.0001), scale=n/(hi-lo+2*epsilon),
+ index=floor((clampedX-(lo-epsilon))*scale), clamped to 0..n-1.
+This padded segment selection differs slightly from ordinary interpolation.
+
+Roll target=runtimeRollAngle*rollAngleSpeedCurve(speed)
+                              *rollAngleImmersionCurve(selectedImmersion).
+Yaw has its corresponding yaw curves. The selected immersion interpretation
+must be respected; upstream activity definitions of every runtime angle are
+not fully documented. The reference accepts the angle explicitly.
+
+The incidence lookup has 256 segments with scalar target function
+L(x)=(2/pi)*asin(x), x in [-1,1]. Construction uses float32 operations, a padded
+lower limit about -1.00100005 and index scale about 127.872139. It is neither
+acos nor a direct radian value. The reference uses standard asin. Vectorized approximations can
+round differently, so bit-identical output is not guaranteed.
+
+Rider spring and actual settings
+
+When no physical rider body exists and rider mass is positive, integrate
+ a=(stiffness*(targetPosition-position)+damping*(targetVelocity-velocity))/mass
+   +externalAcceleration
+ stiffness=K(mass,effectiveFrequency)
+ damping=2*dampingRatio*sqrt(mass*stiffness)
+using 10 RK4 substeps dt/10. Advance targetPosition by targetVelocity*substep
+after each substep. The contact/leg setup precedes this integration and supplies
+effective frequency, damping ratio and targets; its full nonlinear target
+mapping is not yet documented. The supplied code therefore requires them as
+inputs. It does not equate a configured base spring rate with every effective
+contact rate, and it does not run the scalar model alongside a physical rider.
+
+All 12 supplied rider profiles have mass=20. The surfboard gameplay hull has
+hullVolumicMass=600, dynamic friction=0, restitution=0, and configured centre-of-
+mass offsets x=0.045,y=-0.5. Its geometry and all other actual parameters are
+included verbatim in named_settings.json. Only the material fluid profile is
+missing; equipment density and material density must remain distinct.
+
+Worked results and validation limits
+
+At dt=1/60, synthetic density 1000, submerged volume 1/6, depth gain 1 and
+vertical gravity magnitude 9.81, the pressure impulse is (0,0,27.25).
+For synthetic totalMass=80, contactWeightSum=2 and retained weight=.5,
+effectiveMass=20. Normal/tangent frequencies 2/1 and surface frequency .5 with
+v=(2,0,-3), n_face=(0,0,-1) produce the complete force and impulse in
+worked_examples.json. Controls coil .4, buttering pi/4, steering -.6 yield
+(.4,.5,.6). Preset speeds 0,7/3.6,9.5/3.6,12/3.6 yield 0,0,.5,1.
+Ordinary ground stick at speed 5, unit alignment and leg gain, depth gain .5,
+fully active timer and dt=1/60 has A=-5 and deltaVelocity=(0,0,-1/12).
+For riderMass=20,totalMass=80 its impulses are (0,0,-5/3),(0,0,-5).
+
+Run python3 reference.py for the bundled examples. These checks cover local
+calculations and data consistency. Full gameplay, animation and rendering
+behavior require integration testing.
+Curve sampling and arithmetic use mathematical formulas with normal floating-point rounding. One/three-wet tetrahedron decomposition uses equivalent geometry and still needs integration checks.

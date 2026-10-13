@@ -1,0 +1,17 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+CURRENT UPDATE: 321 authored scalar comparison records are now expressed as named grab predicates in animations/decisions/CLIENT_GUIDE.txt. Outgoing state/clip destinations remain open.
+
+Animation graph catalog
+
+Use ../paths/CLIENT_GUIDE.txt and ../paths/named-settings.json for the current
+node-to-owned-output clip catalog, typed input tables and raw signature counts.
+The catalog contains 6,880 rider animation nodes linked to 1,877 clips and
+102 paraglider animation nodes linked to 55 clips.
+
+Use ../decisions/CLIENT_GUIDE.txt for named grab-angle/intensity predicates.
+Complete authored source-index resolution and runtime clip selection remain
+separate from node-to-clip ownership.
+
+The former successor-based output/node and parameter/operator associations are
+invalid and are not supplied as executable references in this delivery.

@@ -1,0 +1,93 @@
+FINDINGS-ONLY PUBLICATION: companion assets, datasets, binaries and raw traces are not distributed. Read docs/STATUS.md for qualifications. Source provenance is retained in SOURCE_MANIFEST.json.
+
+PASS THIRTEEN UPDATE: tricks/selection closes the saved scalar multiplier and qualifies the ramp: selected player angle gate0 makes the ramp/heading branch unreachable for finite angles.
+
+Angular limit writers and unsigned rotation history
+
+This extends tricks/rotation and body. The selected patched player configuration
+contains a base limit of 110 degrees per supplied time unit and a primary-entry
+limit of 360. A separate selected BigAir behavior override is 450. These are
+three actual writers to the same saved angular-limit field. The constructor's
+210 and 340 defaults differ from the patched values and must not replace them.
+Both selected male and female player resources have 110 and 360. The NPC source
+resources have 110 and 340. Resource names identify authoring roles, not a
+verified runtime selection for every player and sport.
+
+The primary-entry path installs 360, smooths the input with coefficient .1,
+clears main angular motion, saved intensity and auxiliary boost, and initializes
+activation latches subject to controller checks. The transition/reset path
+installs 110 and clears the main angular motion and saved intensity. A separate
+contact/orientation path installs the behavior's 450 only when its supplied
+state predicate succeeds. Those writers are state-dependent. There is no
+universal 360 or 450 cap to apply at the end of every frame.
+
+A distinct scalar-axis path can update the base limit while its saved duration
+is below .5. It uses the selected .5 ramp duration and .5 retained fraction:
+  limit = 110 * (.5*(1-duration/.5)+.5), for duration <= .5
+At zero this is 110 and at .25 it is 82.5. Its mathematical endpoint is55.
+At duration equal to .5 the caller chooses the separate heading branch, so it
+does not install55 from this formula at that boundary.
+The update is conditional on direction/input tests. It is not an unconditional
+frame-by-frame decay. Outside the ramp branch this path changes a clamped saved
+heading using input, current limit, a separate saved multiplier and elapsed time.
+The multiplier's producer remains open. Do not replace it with mass or grab gain.
+
+The scalar path constructs a fixed local Z vector using a negative radians-per-
+degree coefficient, then copies it into the main angular-motion state. Its
+selected limit must not be confused with the unrestricted mixed-axis proposal
+path. The vector path still has the earlier dead zones, ski X/Y exchange,
+stance X inversion, intensity/sign gate, direction lock, mixed-axis boost,
+feedback normalization and completion rescaling described in the prior guides.
+
+Output and history order
+
+The output stage constructs the procedural target orientation. It rotates the
+main angular vector around fixed Z by the stored heading in degrees, adds an
+optional extra Z rate, and adds the separately saved mixed-axis Z boost.
+It then updates the angle-history accumulator from that assembled output.
+Heading affects the X/Y attribution. Extra rates and boost affect both total
+length and relative axis attribution. They must be added before history update.
+
+For an assembled angular vector w and elapsed dt, the new history is:
+  if every component abs(w_i)<=stored float32(.00001): direction=(0,0,0)
+  otherwise: direction=w/length(w)
+  history_i += abs(direction_i)*abs(dt*w_i)
+For an ordinary nonzero three-component vector this is abs(dt)*w_i*w_i/length(w).
+The sum of increments is abs(dt)*length(w). This partitions total angular travel
+across axes by squared components. It is not signed Euler integration.
+For (1,1,0) over one unit, each moving axis gains .70710678, not 1.
+For pure -Z at rate 2 over .5, Z gains 1. Reversal adds travel.
+
+The accumulator copies its full history into a saved snapshot only when a
+supplied saved-duration field is strictly greater than its supplied cutoff.
+Equality retains the old snapshot. The local absolute-value arithmetic also
+makes a negative dt contribute positive travel. This is observed local behavior,
+not proof that the runtime admits negative elapsed time.
+
+The output function also submits a matrix through its owner's callback with
+flag mask 31. Neither the vector assembly nor history update applies a torque,
+inertia division, angular acceleration clamp or exponential damping. The
+documented procedural pose path therefore does not justify the prototype's
+12 radians/time-squared acceleration or 2.4 damping. Those remain host choices.
+This pass does not prove the complete rigid-body consumer of the submitted
+matrix or a direct scoring consumer of this particular history snapshot.
+
+Ski, snowboard, posture and grabs
+
+The proven ski difference remains the X/Y exchange in the angular proposal.
+The two player configuration resources are male/female, not separate ski and
+snowboard speed tables. Selected snowboard configuration naming alone cannot
+prove sport-wide equal limits. Authored grab events update animation/controller
+capture and score gates in the existing guides. No direct grab event to mass,
+inertia, angular-limit or angular-damping change was established in this pass.
+Do not infer angular-momentum conservation from the scalar rider spring mass.
+The completion logic can rescale the saved angular motion toward whole turns,
+which already makes a passive momentum-only model insufficient for this path.
+
+Validation
+
+reference.py is standard-library Python. test_reference.py checks boundary,
+axis mixing, reversal, heading, added rates, snapshot and selected configuration
+cases. private/decode_selected.py reproduces the complete patched configuration
+cursor layout and exact resource boundaries. No game or source-image code was
+executed. No binary emulation was attempted.
