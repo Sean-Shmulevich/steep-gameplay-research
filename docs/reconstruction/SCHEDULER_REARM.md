@@ -6,7 +6,7 @@ This is static evidence. No game was launched or attached to, and no original co
 
 ## The concrete dispatch path
 
-A scheduler worker thread selects a job through a two-category selection helper. The selected category's queue routine checks eligibility, including the concrete job's concurrent-execution limit. While holding the category container lock, it increments both the job's outstanding-dispatch count and its execution count. It then invokes the job's reservation callback and returns the selected job to the thread.
+A scheduler worker thread selects a job through three ordered categories, trying a worker-local queue before a shared queue within each category. The [queue eligibility audit](SCHEDULER_QUEUE_ELIGIBILITY.md) corrects the earlier two-category description and distinguishes job-specific eligibility from occupancy scoring. The receiver job has an execution-limit predicate; callback jobs use a different predicate. While holding the category container lock, it increments both the job's outstanding-dispatch count and its execution count. It then invokes the job's reservation callback and returns the selected job to the thread.
 
 The thread invokes the execution wrapper. That wrapper calls the job's concrete range worker, then the completion routine. Thus the execution count already includes the interval between queue selection and entry into the range worker. Counting only callbacks currently inside the visitor would miss that interval.
 
@@ -146,6 +146,6 @@ For an independent reconstruction, a caller-enforced request barrier or immutabl
 
 ## Evidence and verification scope
 
-The reviewed material includes the ordinary worker-thread loop, its two-category selector, the queue reservation sequence, the execution wrapper, completion/finalization methods, ordinary submission and dependency methods, and the action graph's wrapper constructor and setup. Concrete virtual-table bindings connect the receiver job to its range worker and empty predicate, and connect the branch and terminal jobs to their distinct begin methods.
+The reviewed material includes the ordinary worker-thread loop, its category selector, the queue reservation sequence, the execution wrapper, completion/finalization methods, ordinary submission and dependency methods, and the action graph's wrapper constructor and setup. Concrete virtual-table bindings connect the receiver job to its range worker and empty predicate, and connect the branch and terminal jobs to their distinct begin methods.
 
 The analyzed image SHA-256 is `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. The [batch-epoch audit](SCHEDULER_BATCH_EPOCH.md) records the separately verified range-worker hash. This pass establishes static caller and field relationships; it does not provide a live request trace, an exhaustive dispatcher inventory, or a universal storage-lifetime proof.

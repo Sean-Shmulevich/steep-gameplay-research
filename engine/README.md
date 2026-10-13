@@ -65,7 +65,7 @@ A scenario is a schema-version-1 JSON object with sport, world, body, physics_mo
 
 A resource bundle has `category`, `rig` and `clips`; their schema is documented in animation.py. Supply original resources only locally with appropriate access. Missing clip channels remain visible in diagnostics. No heuristic base/addon rig merge is disguised as recovered behavior.
 
-The JSON API accepts POST /api with op: input, step, advance, run, pause, reset, checkpoint, restore, recover, resources, tune, inspect, cell or limb. `run` includes actions and count; `cell` supplies vertices, surface, dt and settings; `limb` supplies a request matching procedural.limb_target. GET /state, /resources, /trace and /replay return JSON. Invalid operations return a structured error. Standalone probes do not mutate the engine.
+The JSON API accepts POST /api with op: input, step, advance, run, pause, reset, checkpoint, restore, recover, resources, tune, inspect, cell or limb. `run` includes actions and count; `cell` supplies vertices, surface, dt and settings; `limb` supplies a request matching procedural.limb_target. GET /state, /resources, /trace, /trace/analysis and /replay return JSON. Invalid operations return a structured error. Standalone probes do not mutate the engine.
 
 ## Validation and next passes
 
@@ -176,3 +176,7 @@ The [mixed scheduler contract](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTA
 Use `python3 -m engine.cli --scenario engine/examples/mixed_gameplay.json --ticks 120` for a headless run, or add `--serve --port 8770` to inspect that scenario locally. Its `execution_mode: mixed` runs actual gameplay phases through the scheduler and emits `gameplay_job` records into `/trace`. The direct path remains the default for other scenarios.
 
 Run `python3 -m engine.examples.gameplay_scheduler_probe` to compare direct and mixed state, event, replay and checkpoint behavior under changing frame intervals. See the [integration contract](../docs/reconstruction/GAMEPLAY_JOB_INTEGRATION.md) for the designed graph and rollback boundary.
+
+## Trace analysis
+
+`GET /trace/analysis` reads the retained trace without advancing simulation. It correlates frame and substep attempts, phase entry/return evidence, commits and rollbacks. Dropped records make the report incomplete; an outer-frame abort invalidates earlier local substep commits. A complete report describes available evidence and can include failed execution attempts. See the [analysis contract](../docs/reconstruction/TRACE_ANALYSIS.md).

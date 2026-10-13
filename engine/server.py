@@ -5,6 +5,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from .runtime import Engine
 from .replay import record
+from .trace_analysis import analyze
 from .inspection import inspect_rig
 
 def make_server(port=8770,scenario=None):
@@ -20,6 +21,7 @@ def make_server(port=8770,scenario=None):
             elif self.path=='/resources':self.send(dict(rig=engine.rig,category=engine.scenario.get('resources',{}).get('category','synthetic'),inspection=inspect_rig(engine.rig,engine.clips),world=engine.world.to_dict()))
             elif self.path=='/replay':self.send(record(engine))
             elif self.path=='/trace':self.send(engine.trace.snapshot())
+            elif self.path=='/trace/analysis':self.send(analyze(engine.trace.snapshot()))
             else:self.send({'error':'Not found'},404)
         def do_POST(self):
             origin=self.headers.get('Origin')

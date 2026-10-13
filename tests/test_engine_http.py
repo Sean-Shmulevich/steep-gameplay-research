@@ -29,3 +29,15 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(kinds.count('substep_committed'),2)
         self.assertEqual(kinds[-1],'frame_committed')
         with urllib.request.urlopen(self.url+'/state') as response:self.assertEqual(json.load(response)['tick'],2)
+
+    def test_mixed_trace_analysis_is_read_only(self):
+        self.request({'op':'reset','scenario':{'execution_mode':'mixed'}})
+        self.request({'op':'step','count':2})
+        with urllib.request.urlopen(self.url+'/state') as response:before=json.load(response)
+        with urllib.request.urlopen(self.url+'/trace') as response:trace_before=json.load(response)
+        with urllib.request.urlopen(self.url+'/trace/analysis') as response:report=json.load(response)
+        self.assertTrue(report['complete'])
+        self.assertEqual(len(report['substeps']),2)
+        self.assertEqual(report['anomalies'],[])
+        with urllib.request.urlopen(self.url+'/state') as response:self.assertEqual(json.load(response),before)
+        with urllib.request.urlopen(self.url+'/trace') as response:self.assertEqual(json.load(response),trace_before)

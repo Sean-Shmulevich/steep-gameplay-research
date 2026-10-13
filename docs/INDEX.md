@@ -20,6 +20,8 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Release gates and current priorities](../engine/SCHEDULER_ROADMAP.md)
 - [Timing arithmetic and smoothing](reconstruction/SCHEDULER_SMOOTHING_AUDIT.md)
 - [Queue reservation, completion and request rearm](reconstruction/SCHEDULER_REARM.md)
+- [Queue eligibility and selection](reconstruction/SCHEDULER_QUEUE_ELIGIBILITY.md)
+- [Trace evidence analysis](reconstruction/TRACE_ANALYSIS.md)
 - [Gameplay phase integration](reconstruction/GAMEPLAY_JOB_INTEGRATION.md)
 - [Outer interface candidate](reconstruction/ENGINE_OUTER_INTERFACE.md)
 - [Engine-owner destruction boundary](reconstruction/ENGINE_OWNER_DESTRUCTION.md)

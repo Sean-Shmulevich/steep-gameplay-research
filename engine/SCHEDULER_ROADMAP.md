@@ -7,7 +7,7 @@ Scheduler reconstruction is the current primary goal. The independent runtime is
 | Area | Established | Remaining boundary |
 | --- | --- | --- |
 | Frame timing | Constructor defaults, smoothing ring, float32 mean, frequency table, accumulator cap and subdivision arithmetic | Matched original execution oracle across policies |
-| Job dispatch | Ordinary queue and explicit helper increment execution accounting before workers | Complete dispatcher/subclass inventory, native priority and thread context |
+| Job dispatch | Queue/helper accounting; three-category local/shared traversal, affinity tests and job-specific occupancy selection | Category/mask/default producers, other subclasses and native thread context |
 | Completion | Claimed receiver count is separate from running callbacks; ordinary finalization requires returned workers | Exceptional paths and whole-engine quiescence |
 | Frame rearm | Action completion feeds downstream dependencies into EndFrame, which prepares and resubmits the root | Mode-specific paths, external callers and safe native control |
 | Root routing | Root-to-Step edges, global mode read, two owner-mode reads and rebuild gate | Caller serialization and live mode values |
@@ -64,3 +64,5 @@ The owned pause controller's separate 200-frame check completed 300 substeps wit
 Full scheduler and engine reconstruction remain incomplete. Green reference tests, static endpoint graphs and local drain observations each support their own scope; none substitutes for these remaining release gates.
 
 The [outer-interface candidate](../docs/reconstruction/ENGINE_OUTER_INTERFACE.md) reaches the stop-request writer but lacks a proved caller argument binding. The [owner-destruction audit](../docs/reconstruction/ENGINE_OWNER_DESTRUCTION.md) retains the exact missing teardown and event-close joins. These narrower leads supersede any assumption that the consumer alone supplies an owner-lifetime guarantee.
+
+The [queue-selection audit](../docs/reconstruction/SCHEDULER_QUEUE_ELIGIBILITY.md) now provides exact traversal, affinity, integer score and tie rules. Implementing those rules is the next scheduler-fidelity task; the mixed model currently retains its explicitly designed queue order. The [trace analyzer](../docs/reconstruction/TRACE_ANALYSIS.md) now separates retained phase evidence, aborted attempts and incomplete recordings through a read-only testbench endpoint.
