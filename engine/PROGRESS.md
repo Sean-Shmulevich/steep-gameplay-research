@@ -261,3 +261,14 @@ counter overlaps this manager's worker-collection storage and its dequeue differ
 Added focused routine hashes and bounded-search limits. Producer remains open;
 no substitute producer was introduced. Documentation-only pass; last full suite
 remains 375 passing tests.
+
+
+## Cooperative idle-task consumer probe
+
+Added an instruction-boundary consumer probe over explicitly synthetic prelinked
+nodes. Tests exercise overlapping head claims, delayed payload copies, stale-head
+retry and tail assistance. The example demonstrates second-task return before
+first-task return without duplicate claims. Producer publication, node reuse and
+native reclamation remain excluded rather than assumed safe.
+
+Validation: all 380 independent tests pass; the runnable delayed-copy probe completes in 24 steps.

@@ -206,3 +206,30 @@ reproduce the binary analysis from this repository alone.
 | Manager factory | 89 | `a4add0f5fb7e94e853af17c9c55a54efb01cb87097de9f9e5a3f8d1154e57023` |
 | Queue constructor | 152 | `3f93ebe48c4ef56c806c524b9e08c55a5b1d6c0bd9a0b0cab4eda77b77256b5b` |
 | Leaf pop through both returns | 212 | `d2033ed4cf108cd98755359607eaadbaa13bc52403dc28257637f3e7fdfd6df6` |
+
+
+## Cooperative consumer experiment
+
+[The consumer probe](../../engine/task_queue_probe.py) advances each worker one
+load, CAS or post-CAS store at a time. It exposes trace events and isolated
+snapshots. Nodes are prelinked synthetic fixtures; constructing this fixture does
+not implement the missing native enqueue. The probe has no concurrent producers,
+node reuse, event waits, callbacks or task destruction.
+
+```sh
+python3 -m engine.examples.task_queue_probe
+```
+
+The example pauses the first consumer after successful head CAS but before copying
+the task payload into its retired dummy. A second consumer advances the new head
+and returns the second task first. Resuming the first returns the first task.
+Both tasks are returned exactly once in this fixture, but return order differs
+from head-claim order. A FIFO queue does not imply ordered task completion across
+workers. Native task execution adds further scheduling after return.
+
+Regression cases cover competing CAS on one observed head, stale-head retry,
+lagging-tail assistance, delayed payload copy, and empty queues. Recycled nodes
+are deliberately not reused in these experiments. Extending the result to reuse
+requires the still-open allocator/reclamation contract; finite tags alone do not
+supply that contract. The probe's successful schedules establish consistency of
+these recovered branches, not whole-queue concurrency correctness.
