@@ -22,6 +22,7 @@ from .assets import canonical
 from .trace import Trace
 from . import request_state as requests
 from . import queue_policy as selection
+from . import queue_producers as producers
 
 
 @dataclass(frozen=True)
@@ -118,23 +119,32 @@ class MixedScheduler:
             visit(name)
         self._queue_policy = None
         self._selection_jobs = {}
+        self._queue_destinations = {}
         if queue_policy is not None:
-            if not isinstance(queue_policy,dict) or set(queue_policy)!={'shared_default','worker_mask','jobs'}:
+            if not isinstance(queue_policy,dict) or set(queue_policy) not in ({'shared_default','worker_mask','jobs'}, {'shared_default','worker_slots','jobs'}):
                 raise ValueError('queue policy needs default, worker mask and explicit job mappings')
             policy=copy.deepcopy(queue_policy)
+            topology = 'worker_slots' in policy
+            if topology:
+                slots = policy['worker_slots']
+                if not isinstance(slots,list) or not 1 <= len(slots) <= 128 or any(type(v) is not bool for v in slots) or not any(slots):
+                    raise ValueError('worker slots require 1..128 explicit presence flags and one worker')
             executable={name for name,spec in self._definitions.items() if spec['kind'] in ('range','callback')}
             if not isinstance(policy['jobs'],dict) or set(policy['jobs'])!=executable:
                 raise ValueError('queue policy must map every executable job')
             for name,mapping in policy['jobs'].items():
                 if not isinstance(mapping,dict) or set(mapping)-{'category','queue','limit','required_mask','excluded_mask','optional_eligible'}:
                     raise ValueError('invalid queue job mapping')
-                if type(mapping.get('category')) is not int or mapping['category'] not in range(3) or mapping.get('queue') not in ('local','shared'):
+                if type(mapping.get('category')) is not int or mapping['category'] not in range(3) or (not topology and mapping.get('queue') not in ('local','shared')):
                     raise ValueError('explicit category and queue required')
+                if topology:
+                    if 'queue' in mapping:raise ValueError('worker topology derives queue destinations')
+                    self._queue_destinations[name] = producers.enqueue_destination(mapping['category'], mapping.get('required_mask',0), slots)
                 self._selection_jobs[name]=dict(kind=self._definitions[name]['kind'],executions=0,
                     limit=mapping['limit'],required_mask=mapping.get('required_mask',0),
                     excluded_mask=mapping.get('excluded_mask',0),optional_eligible=mapping.get('optional_eligible'))
             selection.select_categories(self._selection_jobs,[[],[],[]],[[],[],[]],
-                shared_default=policy['shared_default'],worker_mask=policy['worker_mask'])
+                shared_default=policy['shared_default'],worker_mask=0 if topology else policy['worker_mask'])
             self._queue_policy=policy
         self._identity = uuid.uuid4().hex
         self._queue, self._dispatches = [], {}
@@ -314,42 +324,61 @@ class MixedScheduler:
         job['state'] = requests.UNSCHEDULED
         self._emit('mixed_finalized', job=name, outstanding_dispatches=job['outstanding_dispatches'])
 
-    def _select_queue(self, records, order):
+    def _validate_worker(self, worker_index):
+        topology = self._queue_policy is not None and 'worker_slots' in self._queue_policy
+        if topology:
+            slots = self._queue_policy['worker_slots']
+            if type(worker_index) is not int or not 0 <= worker_index < len(slots) or not slots[worker_index]:
+                raise ValueError('explicit present worker index required')
+        elif worker_index is not None:
+            raise ValueError('worker index requires topology policy')
+
+    def _worker_busy(self, worker_index):
+        return worker_index is not None and any(d['worker_index']==worker_index for d in self._dispatches.values())
+
+    def _select_queue(self, records, order, worker_index=None):
         local=[[],[],[]];shared=[[],[],[]]
         for name in order:
             if self._jobs[name]['state'] != requests.SCHEDULED:continue
-            mapping=self._queue_policy['jobs'][name]
+            mapping=self._queue_destinations[name] if self._queue_destinations else self._queue_policy['jobs'][name]
+            if self._queue_destinations and mapping['queue']=='local' and mapping['worker_index']!=worker_index:continue
             (local if mapping['queue']=='local' else shared)[mapping['category']].append(name)
             records[name]['executions']=self._jobs[name]['executions']
         return selection.select_categories(records,local,shared,
-            shared_default=self._queue_policy['shared_default'],worker_mask=self._queue_policy['worker_mask'])
+            shared_default=self._queue_policy['shared_default'],worker_mask=producers.worker_mask(worker_index) if 'worker_slots' in self._queue_policy else self._queue_policy['worker_mask'])
 
-    def ready(self):
+    def ready(self, *, worker_index=None):
         """Read-only eligible selection order; preview uses copied limit state.
 
         Under optional policy, repeatedly selects/removes candidates without
         reserving them. Only the first entry predicts the immediate next choice.
         """
+        self._validate_worker(worker_index)
+        if self._worker_busy(worker_index):return []
         if self._queue_policy is not None:
             records=copy.deepcopy(self._selection_jobs);order=list(self._queue);result=[]
             while order:
-                chosen=self._select_queue(records,order)['selected']
+                chosen=self._select_queue(records,order,worker_index)['selected']
                 if chosen is None:break
                 result.append(chosen);order.remove(chosen)
             return result
         return [name for name in self._queue if self._jobs[name]['state'] == requests.SCHEDULED
                 and self._jobs[name]['executions'] < self._definitions[name]['max_concurrency']]
 
-    def reserve(self, name=None):
+    def reserve(self, name=None, *, worker_index=None):
         """Ordinary queue route; optional policy disallows a forced nonwinner."""
+        self._validate_worker(worker_index)
+        if self._worker_busy(worker_index):
+            if name is not None:raise ValueError('worker already has an outstanding dispatch')
+            return None
         with self._operation():
             if self._queue_policy is not None:
                 if name is not None:
-                    preview=self._select_queue(copy.deepcopy(self._selection_jobs),self._queue)
+                    preview=self._select_queue(copy.deepcopy(self._selection_jobs),self._queue,worker_index)
                     if preview['selected']!=name:raise ValueError('requested job is not policy winner')
-                result=self._select_queue(self._selection_jobs,self._queue)
+                result=self._select_queue(self._selection_jobs,self._queue,worker_index)
                 name=result['selected']
-                self._emit('mixed_queue_selected',selection=result)
+                self._emit('mixed_queue_selected',selection=result,worker_index=worker_index)
                 if name is None:return None
             else:
                 ready = self.ready()
@@ -362,9 +391,9 @@ class MixedScheduler:
             job['executions'] += 1
             token = DispatchToken(self._identity, self._next_dispatch)
             self._next_dispatch += 1
-            self._dispatches[token.dispatch] = dict(job=name, stage='reserved', range=None, range_sequence=0, callback_ran=False)
+            self._dispatches[token.dispatch] = dict(job=name, stage='reserved', range=None, range_sequence=0, callback_ran=False, worker_index=worker_index)
             self._emit('mixed_dispatch_reserved', job=name, dispatch=token.dispatch,
-                       executions=job['executions'], outstanding_dispatches=job['outstanding_dispatches'])
+                       executions=job['executions'], outstanding_dispatches=job['outstanding_dispatches'], worker_index=worker_index)
             if self._definitions[name]['kind'] == 'callback':
                 job['state'] = requests.DONE
                 self._queue.remove(name)
@@ -474,9 +503,9 @@ class MixedScheduler:
             self._emit('mixed_dispatch_accounting_returned', job=name, dispatch=token.dispatch,
                        outstanding_dispatches=job['outstanding_dispatches'])
 
-    def dispatch_next(self, context=None):
+    def dispatch_next(self, context=None, *, worker_index=None):
         with self._operation():
-            token = self.reserve()
+            token = self.reserve(worker_index=worker_index)
             if token is None:
                 return False
             name = self._dispatch(token)['job']
@@ -491,11 +520,11 @@ class MixedScheduler:
             self.finish_dispatch(token, context=context)
             return True
 
-    def run_ready(self, context=None, max_dispatches=1000):
+    def run_ready(self, context=None, max_dispatches=1000, *, worker_index=None):
         if type(max_dispatches) is not int or not 0 <= max_dispatches <= 100000:
             raise ValueError('invalid dispatch bound')
         count = 0
-        while count < max_dispatches and self.dispatch_next(context):
+        while count < max_dispatches and self.dispatch_next(context, worker_index=worker_index):
             count += 1
         return count
 
@@ -531,5 +560,5 @@ class MixedScheduler:
                                   queue=self._queue, dispatches=dispatches, fault=self._fault,
                                   handler_versions={key: value['version'] for key, value in self._handlers.items()},
                                   trace=self.trace.snapshot(),
-                                  queue_policy=self._queue_policy, selection_jobs=selection_jobs,
+                                  queue_policy=self._queue_policy, selection_jobs=selection_jobs, queue_destinations=self._queue_destinations,
                                   scope='serial selected-job semantics; not native concurrent scheduler'))

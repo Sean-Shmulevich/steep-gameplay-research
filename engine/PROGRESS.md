@@ -141,3 +141,14 @@ Joined the ordinary submission usage flag to the conditional destructor wait fie
 ## Action-graph ownership closure
 
 Matched containing-owner constructor and deleting destructor through the installed table. Construction stores the allocated action graph in the exact member later destroyed and released. The deleting wrapper adds no visible stop call. Factory/virtual lifecycle caller remains open; direct-call searches are explicitly bounded. This is a storage-identity result, not a quiescence guarantee. Documentation-only pass; packaging and links verified.
+
+## Explicit worker interleaving testbench
+
+Connected queue-routing producers to optional worker topology in MixedScheduler.
+Explicit worker-index reservation now separates local ownership from shared
+selection, preserves worker identity in dispatch records and permits controlled
+overlapping claims. Five tests and the 100-receiver probe validate delayed
+completion, shared callback uniqueness and immutable readiness. This remains a
+serial model of chosen interleavings, not native thread execution. Factory search
+for the action owner found no direct pointer/call closure; indirect and protected
+paths remain open. Full suite: 348 passing tests.

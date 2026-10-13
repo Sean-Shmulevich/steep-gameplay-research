@@ -23,7 +23,7 @@ Mask width follows the inspected DWORD affinity operations.
 accepts three arrays each for local and shared queues. It checks local then shared
 within categories zero, one and two, returning on the first successful queue.
 The result adds `category`, `source` and per-queue `scans`. Array order is explicit.
-The model does not derive category assignments or queue insertion targets.
+These standalone selectors do not derive category assignments or queue insertion targets.
 
 Both APIs validate the whole fixture before traversal. Duplicate entries, a job
 in multiple queues and aliased mutable job records are rejected as adapter policy.
@@ -107,7 +107,7 @@ Run `python3 -m engine.examples.queue_policy_probe` for a synthetic mixed-schedu
 example. Its blocked job remains scheduled after the other jobs finish; no ready
 candidate does not imply all queued work completed.
 
-Queue assignment producers, unknown eligibility code, other native job kinds and
+Concrete per-job assignment writers, unknown eligibility code, other native job kinds and
 multi-worker race behavior remain outside this model. Explicit worker/default
 values make the executable policy testable without inventing those inputs.
 
@@ -130,8 +130,8 @@ matching the inspected routing path. Ordinary category validation is adapter
 policy, not a recovered constructor guard.
 
 These pure functions can supply configuration to a caller-owned scheduler setup.
-They do not create a multi-worker runtime or automatically populate the existing
-single-worker MixedScheduler adapter. Queue locks, aggregate-limit updates and
+They do not allocate native worker threads. The optional topology integration
+below uses their routing and mask rules. Queue locks, aggregate-limit updates and
 notification counters remain outside their scope. `base_job_limit(byte_argument, shared_default)` now implements the base-constructor
 signed minimum followed by uint8 conversion. Later concrete overrides remain
 separate from that initial value.
@@ -139,3 +139,42 @@ separate from that initial value.
 Six producer tests cover unsigned clamp boundaries, signed storage, rotating
 masks, lowest-bit routing, null versus absent slots and the interaction between
 local routing and exclusion bypass. See [producer evidence](SCHEDULER_QUEUE_PRODUCERS.md).
+
+## Explicit worker topology and controlled interleaving
+
+The optional policy can now replace `worker_mask` with `worker_slots`, a list of
+booleans identifying present and null worker slots. Job mappings omit `queue` in
+this mode. The recovered lowest-required-bit rule computes destinations, and
+worker masks follow the rotating producer. Categories and limits remain explicit.
+
+```python
+policy = dict(shared_default=2, worker_slots=[True, True], jobs={
+    'motion': dict(category=1, limit=2, required_mask=0),
+})
+scheduler = MixedScheduler(definitions, handlers, queue_policy=policy)
+a = scheduler.reserve(worker_index=0)
+b = scheduler.reserve(worker_index=1)
+```
+
+Submit the relevant root before reserving. `ready`, `reserve`, `dispatch_next`
+and `run_ready` accept the worker index. Topology mode requires an explicit
+present worker. A worker sees its own local queues and the common shared queues;
+other workers' local jobs are excluded before selection. Required-mask references
+to missing array slots fail validation rather than inventing native behavior.
+The setup is immutable, so computing destinations at configuration time is
+equivalent to recomputing this routing when enqueuing under those fixed inputs.
+
+Dispatch records and reservation trace events retain worker identity. One worker
+may hold one outstanding ordinary dispatch. Until it returns, readiness is empty
+and anonymous reservation returns no token; forcing a named reservation fails.
+This is the testbench's ordinary-worker contract. Nested helping, thread-local
+state, atomic races, dynamic worker replacement and real OS threads are not modeled.
+Callbacks and claims run only when explicitly invoked by the caller, allowing
+controlled interleavings without wall-clock timing.
+
+`python3 -m engine.examples.worker_topology_probe` runs 100 synthetic receivers
+using recovered chunk/threshold 32/64. Worker zero holds the first 32 while worker
+one claims and completes the remainder. The terminal cannot begin until the held
+range returns. Five topology tests also cover local ownership, shared affinity,
+callback single reservation, invalid worker identities and inspection immutability.
+The 128-slot model bound is an adapter resource limit, not a native supported count.
