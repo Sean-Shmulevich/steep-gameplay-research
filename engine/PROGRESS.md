@@ -272,3 +272,14 @@ first-task return without duplicate claims. Producer publication, node reuse and
 native reclamation remain excluded rather than assumed safe.
 
 Validation: all 380 independent tests pass; the runnable delayed-copy probe completes in 24 steps.
+
+
+## Idle-task allocator free-stack closure
+
+Joined queue-constructor allocation to the same tagged free-head updated by the
+consumer's node return. Added exact pop/return decision helpers and tests for
+chain preservation, stale full-word identity, empty pointer bits and tag wrap.
+The synthetic wrap experiment establishes finite identity width, not a native ABA
+bug. Node lifetime and safe republishing remain unresolved.
+
+Validation: all 384 independent tests pass.

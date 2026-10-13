@@ -233,3 +233,50 @@ are deliberately not reused in these experiments. Extending the result to reuse
 requires the still-open allocator/reclamation contract; finite tags alone do not
 supply that contract. The probe's successful schedules establish consistency of
 these recovered branches, not whole-queue concurrency correctness.
+
+
+## Shared allocator free-stack pop and return
+
+The queue constructor's free-node request now resolves to a leaf tagged-stack
+pop. Its receiver is the allocator's free-head field, the same field the consumer
+updates when returning a retired queue dummy. A zero low-48-bit pointer means
+empty even when upper tag bits are nonzero.
+
+```text
+allocate_cached_node(free_head):
+    repeat:
+        old = load(free_head)
+        node = low48(old)
+        if node == 0:
+            return null
+        next = load(node.next)
+        proposed = pack(low48(next), uint16(tag(old) + 1))
+        if compare_exchange(free_head, old, proposed):
+            return node
+        # Reload head and node link; failed CAS transfers no ownership.
+
+return_cached_node(free_head, node):
+    repeat:
+        old = load(free_head)
+        node.next = low48(old)
+        proposed = pack(node, uint16(tag(old) + 1))
+    until compare_exchange(free_head, old, proposed)
+```
+
+The return path writes the node link before each CAS attempt. The node must already
+be owned by the returning caller for this to be safe. The free-pop reads the link
+before winning its CAS, so readable node storage across that observation interval
+is another required external contract. No lifetime pin or grace-period mechanism
+is visible in these local routines; outer allocator policy remains unproved.
+
+[Pure free-stack decision helpers](../../engine/tagged_task_queue.py) expose the
+expected and proposed words and the pre-CAS link write. Tests show that a pop and
+return of the same node changes its full tagged identity. They also construct a
+synthetic 32,768-pop/return cycle, which produces 65,536 tag changes and restores
+the original word. This is the exact finite-width arithmetic, not an observed ABA
+failure or proof that such a stale native reader is possible.
+
+These helpers do not enable reuse in the cooperative task-queue probe. A complete
+reuse model still needs the task submission producer, allocator lifetime, and a
+verified rule for when the returned storage can be republished. The tests must not
+turn a finite tag into an indefinite memory-safety or quiescence guarantee.

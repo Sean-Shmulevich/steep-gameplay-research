@@ -48,3 +48,28 @@ def pop_decision(*, queue_identity, head, tail, head_next, rechecked_head,
                 on_success=dict(return_node=old_dummy,
                                 write_payload=next_payload),
                 on_failure='retry')
+
+
+def free_pop_decision(head, *, node_next=None):
+    """Shared allocator stack pop, using a separately observed node link.
+
+    Failed CAS must reload the head and link; only success transfers the node.
+    No hazard-pointer, lifetime pin, or reclamation guarantee is implied.
+    """
+    _word(head)
+    node = head & POINTER_MASK
+    if node == 0:
+        return dict(action='empty')
+    _word(node_next)
+    return dict(action='pop', expected=head, desired=_advance(head, node_next),
+                on_success=dict(return_node=node), on_failure='reload')
+
+
+def free_push_decision(head, node):
+    """Consumer's free-stack return: write link before attempting head CAS."""
+    _word(head)
+    _word(node)
+    if not 0 < node <= POINTER_MASK:
+        raise ValueError('returned node must be a nonzero low-48-bit identity')
+    return dict(action='push', before_cas=dict(node=node, next=head & POINTER_MASK),
+                expected=head, desired=_advance(head, node), on_failure='reload')
