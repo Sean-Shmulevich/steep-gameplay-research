@@ -200,3 +200,14 @@ Traced the global service writer through its factory and concrete table. Enabled
 ## Thread callback stage protocol
 
 Decoded the separate entry wrapper using the same callback table: stage one precedes the supplied thread body, stage three follows normal return, while the scheduler hook uses stage zero. The descriptor started flag is set before initialization callbacks and cannot prove initialization completion. Registration producers and protected thread-creation semantics remain open. Documentation-only pass; packaging verified.
+
+
+## Worker idle and notification protocol
+
+Joined idle fetch-sub to the notifier CAS and recovered counter-based retry versus
+wait decisions. Added pure transition helpers and ordering/overflow tests. The
+wait-region accounting starts before adapter entry; it is not a parked-thread or
+quiescence proof. Protected event semantics and the separate selection gate remain
+open. No game process was accessed.
+
+Validation: full independent suite passes 370 tests.

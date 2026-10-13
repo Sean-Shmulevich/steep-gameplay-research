@@ -232,3 +232,65 @@ The stored count and first inspected table entries are zero in the analyzed imag
 That is not a live registration inventory. The bounded direct writer search did
 not locate a population path, so callback identities remain an explicit missing
 producer. No native callback is supplied or emulated in the independent runtime.
+
+
+## Idle and notification counter protocol
+
+Static inspection joins the ordinary worker's idle decrement to the notification
+CAS in the execution wrapper. The counter is signed 32-bit storage. The following
+names describe local roles, not recovered type names:
+
+```text
+# After selection found no job, or a separate worker gate bypassed selection:
+if worker.run_flag == 1:
+    old = atomic_fetch_add(worker.notification_counter, -1)
+    if int32_wrap(old - 1) < 0:
+        atomic_increment(global_waiting_counter)
+        wait_adapter(worker.event_holder)
+        atomic_decrement(global_waiting_counter)
+# Return to the run-flag check and selection loop.
+
+# After job accounting changed the queue generation, for each worker:
+repeat:
+    old = load(worker.notification_counter)
+    proposed = min_signed(int32_wrap(old + 1), 1)
+until compare_exchange(worker.notification_counter, old, proposed) succeeds
+if old < 0:
+    notify_adapter(worker.event_holder)
+```
+
+The idle instruction sequence uses fetch-add minus one, then CMP against one and
+JNS on the returned old value. Therefore its exact condition is the sign of the
+wrapped subtraction. It must not be rewritten as a signed old-less-than-one test
+at the minimum int32 value. That extreme has no established runtime reachability.
+The notifier's increment also wraps before its signed minimum operation.
+
+For the ordinary values, a notification before the idle decrement changes zero to
+one, allowing the worker to consume a retry without entering the wait adapter.
+Repeated notifications saturate at one. If idle decrements zero to minus one
+first, notification changes minus one to zero and calls the event adapter. The
+latter can happen before the worker actually enters its wait call. Avoiding a lost
+wakeup in that interval requires event behavior that retains or otherwise safely
+coordinates the notification. The counter alone does not prove that property.
+
+The wait adapter dereferences the event holder and supplies an all-ones second
+integer argument before entering protected code. The notify adapter dereferences
+the holder before another protected call. These call shapes are consistent with
+an indefinite wait and signaling, but exact APIs, return handling, reset policy
+and failure behavior remain unresolved. No OS event semantics are emulated here.
+The ordinary worker also calls the wait adapter once before its first run-flag
+check, independently of the idle-counter branch.
+
+The global waiting counter brackets adapter entry and normal return. It does not
+prove a thread has entered an OS wait, that all workers are stopped, or that
+submissions are excluded. A separate worker byte bypasses queue selection; its
+producer and meaning remain open. The loop tests run_flag equal to one inside the
+selection path but nonzero after execution. Noncanonical flag values therefore
+must not be normalized silently.
+
+[The pure transition helpers](../../engine/worker_notification.py) preserve these
+counter operations at a successful atomic-operation boundary. Their tests cover
+both notification/idle orderings, notification coalescing, overflow and input
+validation. They do not implement CAS contention, native events, thread parking
+or a safe scheduler pause. The serial mixed scheduler remains independent of OS
+worker wakeups.

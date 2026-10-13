@@ -70,3 +70,9 @@ The [queue-selection audit](../docs/reconstruction/SCHEDULER_QUEUE_ELIGIBILITY.m
 The [motion job destructor audit](../docs/reconstruction/MOTION_JOB_DESTRUCTION.md) establishes that range storage cleanup precedes a conditional base-job wait. Its outer lifetime contract and wait-flag writers remain open. The local destructor must not be exposed as a native drain operation.
 
 Optional explicit worker topology now connects recovered routing to selection and dispatch identity. The [queue policy guide](../docs/reconstruction/QUEUE_POLICY_MODEL.md) describes controlled interleavings and the runnable 100-receiver probe. Native thread/TLS behavior and dynamic worker lifetime remain outside this model.
+
+The [worker context audit](../docs/reconstruction/WORKER_THREAD_CONTEXT.md#idle-and-notification-counter-protocol)
+now connects idle decrement, coalesced notification and wait-region accounting.
+Pure counter helpers cover both operation orderings; protected event reset and
+signal-retention semantics remain unresolved. Waiting-count observations do not
+establish a native pause boundary.
