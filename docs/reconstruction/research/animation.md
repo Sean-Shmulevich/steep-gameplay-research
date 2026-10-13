@@ -86,7 +86,7 @@ No new landing selector or procedural ordering was established in this pass. The
 ## Highest-value next probes
 
 1. Find writes to the compiled resource-source member in the authored-to-runtime conversion path. Use the known owned idle record UID and its separate output GUID as a paired witness. Success requires both input record interpretation and the member assignment, not a broad generic copy routine.
-2. Follow the caller that supplies a function to the now-identified `AcquireAnimationResourceById` installer, then inspect that function's key-to-provider lookup. The global holds a callback-table pointer, not the function itself. The installed target remains unresolved; static binding callers are the next lead.
+2. Follow the shared resource-entry lookup and conditional release called by the now-identified acquire wrapper. The named binding caller, dispatcher and supplied function are statically connected below. Initialization order and active-session installation remain unverified.
 3. Once the UID join closes, bind a known idle output to a graph instance and follow state/transition selection toward landing. Log chosen node, clip key, skeleton binding, phase, mask and transition reason before trying to infer final pose from screenshots.
 4. Keep backend phase advance and procedural layer scheduling as separate work. Provider binding success does not establish clock units or ordering.
 
@@ -132,8 +132,9 @@ clears the global, but no callback drain or concurrent safety follows from that
 clear alone.
 
 The parent constructor has no direct nonzero assignment to this embedded slot.
-Its other callees were not exhaustively traced. The supplied function's origin,
-registration invocation order, replacement policy and active owner remain open.
+Its other callees were not exhaustively traced. At this stage the supplied function's origin was open; the follow-up below
+identifies a concrete binding caller and supplied target. Registration invocation
+order, replacement policy and active owner remain open.
 The authored UID-to-compiled-key edge and active landing selection remain open
 as well.
 
@@ -143,3 +144,86 @@ against available exception ranges; this search does not cover arbitrary
 computed aliases or all leaf references. See the
 [trace recipe](../../systems/animations/runtime-binding/trace-recipe.md) for
 build-specific evidence anchors and the next bounded search.
+
+## Named binding caller and acquired-entry wrapper
+
+A second bounded static pass follows the only additional instruction-aligned
+reference found to the acquire-by-ID name. A binding routine supplies that name
+and a concrete function to the registry dispatcher. The dispatcher computes a
+32-bit name key through an unexpanded helper, performs an unsigned lower-bound
+search in the registry tree, and invokes the matching entry with the supplied
+function as its argument. A missing key silently skips invocation locally.
+
+This closes the static binding route, subject to matching name-key calculation
+and registry initialization. It does not prove that the binding routine ran in a
+particular game session. The name-key helper itself was not expanded in this
+four-function pass, so its hashing convention remains explicit.
+
+```text
+bind_animation_callbacks(owner):
+    bind_by_name(owner, "AcquireAnimationResourceById", acquire_one)
+    ... bind other callbacks ...
+
+bind_by_name(owner, name, supplied_function):
+    key = opaque_name_key(owner, name)  # returns 32 bits
+    node = registry.root
+    candidate = null
+    while node != null:
+        if unsigned(node.key) >= unsigned(key):
+            candidate = node
+            node = node.left
+        else:
+            node = node.right
+    if candidate != null and candidate.key == key:
+        installer = candidate.function
+        installer(supplied_function)
+```
+
+The supplied acquire function requests an allocation with both size/alignment
+arguments set to eight, using two unexpanded allocation helpers. If the returned
+pointer is null it returns null. Otherwise it initializes the wrapper and returns
+its address. The resource key survives allocation and is forwarded unchanged to
+the shared entry helper; the helper also receives a fixed manager address and
+zero as its third argument.
+
+```text
+acquire_one(resource_key):
+    allocation_context = opaque_allocation_context(8, 8, allocation_global)
+    wrapper = opaque_allocate(8, 8, allocation_context)
+    if wrapper == null:
+        return null
+    return initialize_entry_wrapper(wrapper, resource_key)
+
+initialize_entry_wrapper(wrapper, resource_key):
+    wrapper.entry = fixed_initial_entry
+    entry = opaque_lookup(resource_manager, resource_key, 0)
+    atomic_increment_u32(entry.counter)
+    old_entry = atomic_exchange_pointer(wrapper.entry, entry)
+    old_count = atomic_fetch_add_u32(old_entry.counter, -1)
+    if old_count == 1 and (old_entry.flags & 0x00ffffff) == 0:
+        opaque_release(resource_manager, old_entry)
+    old_count = atomic_fetch_add_u32(entry.counter, -1)
+    if old_count == 1 and (entry.flags & 0x00ffffff) == 0:
+        opaque_release(resource_manager, entry)
+    return wrapper
+```
+
+Preserve both decrements and their order. The first applies to the exchanged-out
+entry, and the second to the lookup result. Do not simplify them by assuming the
+two pointers differ. Arithmetic operates on 32-bit counters; the flags test uses
+only the low 24 bits. The wrapper initializer dereferences the lookup result
+without a local null check. A sentinel or a non-null lookup contract is possible,
+but requires inspecting the helper. The flags' meanings and the release helper's
+actual destruction policy are unknown.
+
+These instructions establish a returned wrapper and resource-entry reference
+handling. They do **not** establish that the wrapper's first pointer directly
+addresses the provider row array previously described. That adapter/dereference
+join remains open, along with the entry lookup algorithm and authored UID
+conversion. Resource readiness, fallback selection and asynchronous loading
+must not be inferred from the acquire name.
+
+Next pass: inspect the shared lookup, conditional release, and name-key helper,
+then follow the acquired wrapper into the row resolver if the remaining function
+budget allows it. Keep allocation helpers opaque unless allocation semantics
+become necessary to distinguish a resource hit from failure.

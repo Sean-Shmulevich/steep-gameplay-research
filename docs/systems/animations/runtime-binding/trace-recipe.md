@@ -40,3 +40,37 @@ four new dependent function bodies, each at most 24,000 pdata-linked bytes;
 leaf functions require a verified entry and bounded return path. Stop if the
 binding is supplied through an unresolved external interface. Do not repeat
 constructor scans as evidence for the authored UID conversion.
+
+## Installed acquire target and entry wrapper
+
+The next four inspected pdata-linked bodies were:
+
+| Function | Bytes | Finding |
+| --- | ---: | --- |
+| `140ddd730` | 1074 | Supplies acquire-by-ID name and function `140dd2b40` to dispatcher |
+| `141297690` | 97 | Unsigned lower-bound name-key search and invocation of installer |
+| `140dd2b40` | 70 | Eight-byte allocation request, forwards unchanged key to wrapper initializer |
+| `140dd07b0` | 145 | Entry lookup, atomic reference handling and wrapper return |
+
+The binding caller loads `140dd2b40` into R8 at `140ddd73b`, loads name
+`141f296a0` into RDX at `140ddd742`, and calls `141297690` at
+`140ddd749`. Dispatcher loads registry global `143310288`, computes a key
+through `141274eb0`, searches node keys at `+20`, and invokes matched
+node function `+28` with saved R8 moved into RCX. The name-key helper remains
+unexpanded; no hash value is invented.
+
+Acquire target calls allocation helpers `14115de60` and `14114a540` with
+RCX/RDX both eight, checks the latter result for null, and tail-calls
+`140dd07b0` with wrapper in RCX and original key in RDX.
+
+Wrapper initializer writes initial entry `143301d40`, calls shared lookup
+`1411925a0` with manager `143301d80`, original key and R8=0, increments
+returned entry counter `+8`, exchanges the wrapper pointer, then decrements old
+entry and returned entry counters in that order. Each decrement conditionally
+calls `141194350` only when pre-decrement count equals one and flags at
+`+c` have no low-24 bits set. No null check follows shared lookup.
+
+Next four-function bound: lookup `1411925a0`, release `141194350`,
+name-key helper `141274eb0`, then one evidence-selected consumer joining the
+wrapper to the provider rows. Preserve unknown lookup/ownership contracts until
+those bodies are inspected. This pass did not access a running game.

@@ -22,3 +22,10 @@ The registered `AcquireAnimationResourceById` entry is a setter accepting a
 function pointer. Follow its registry invocation to identify the supplied lookup
 function. The authored UID-to-compiled-field conversion remains a separate open
 edge. Do not retrace the initializer as though either open edge had been proved.
+
+
+The subsequent static binding pass identifies the supplied acquire function and
+its entry wrapper. The next targets are now the shared entry lookup, conditional
+release and name-key helper, followed by the wrapper-to-row-resolver join. The
+[trace recipe](trace-recipe.md) records the exact four-function scope. Runtime
+installation and authored UID conversion are still separate unverified claims.

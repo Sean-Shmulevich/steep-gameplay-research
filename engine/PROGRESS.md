@@ -419,3 +419,13 @@ and authored UID conversion remain unresolved. Published portable pseudocode,
 constructor/teardown qualifications and a bounded next binding search. No game
 process was accessed and runtime behavior was not changed. Last full executable
 validation remains 413 tests; this pass requires documentation/package checks.
+
+
+## Animation acquire binding and resource-entry ownership
+
+Connected the named binding caller through registry dispatch to its supplied
+acquire function. Decoded wrapper allocation, unchanged key forwarding and both
+ordered atomic decrement/release gates. Added portable pseudocode with lookup,
+name hashing, release semantics and wrapper-to-row adaptation still explicit
+unknowns. Four bounded function bodies inspected; no live game access. Last
+runtime suite remains 413 tests. Documentation/package checks apply to this pass.
