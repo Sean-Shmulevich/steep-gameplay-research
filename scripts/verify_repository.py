@@ -45,6 +45,14 @@ for path in ROOT.rglob('*'):
             candidate = (path.parent / local).resolve()
             if not candidate.is_relative_to(ROOT) or not candidate.exists():
                 errors.append(f'Broken/local external link: {path.relative_to(ROOT)} -> {target}')
+for manifest_name in ('REFERENCE_MANIFEST.json',):
+    for item in json.loads((ROOT / manifest_name).read_text())['files']:
+        path = ROOT / item['published']
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != item['published_sha256']:
+            errors.append(f'Reference provenance mismatch: {item["published"]}')
+for item in json.loads((ROOT / 'contracts/systems.json').read_text())['systems']:
+    if not (ROOT / item['source']).is_file():
+        errors.append(f'Missing contract source: {item["source"]}')
 manifest = json.loads((ROOT / 'SOURCE_MANIFEST.json').read_text())
 for item in manifest['files']:
     path = ROOT / item['published']

@@ -1,0 +1,23 @@
+{
+  "scope": "Selected identifiers and relationships only; labels are historical normalized aliases; no poses or tracks. Runtime selection not established.",
+  "resources": [
+    {
+      "id": "377807682600",
+      "label": "Group00_Set00_male_STAND_IDLE",
+      "skeleton_id": "475599690793",
+      "duration_seconds": 16.666666,
+      "tracked_bones": 62,
+      "catalog_graph_membership": true
+    },
+    {
+      "id": "591183419137",
+      "label": "Group00_Set01_male_LANDING_TO_FWD_MED_SPEED",
+      "skeleton_id": "475599690793",
+      "duration_seconds": 1.0,
+      "tracked_bones": 62,
+      "catalog_graph_membership": false
+    }
+  ],
+  "source": "analysis/snow_game/animations/corpus/catalog.json",
+  "interpretation": "Catalog graph membership is not proof of runtime activation or global absence; rig bone count can differ from tracked count."
+}

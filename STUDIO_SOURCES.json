@@ -1,0 +1,64 @@
+{
+  "observed_checkout_head": "4356046b0ac504006210a289fbd62bf4959fcc3c",
+  "scope": "Read-only documentation review; reported validation not rerun; documents may include uncommitted changes. No remote code or payload copied.",
+  "files": [
+    {
+      "path": "docs/specs/formats/forge.md",
+      "sha256": "65c7eedc0944f4d92114fd1a69cc7e3f4f15d3b27b40d7c1208e76a137c098b6"
+    },
+    {
+      "path": "docs/specs/formats/forge-block.md",
+      "sha256": "ff760a1179f3215e25677424c246cf80c4f4695be61b8eb4c6e546f7a69873bc"
+    },
+    {
+      "path": "docs/specs/formats/animation.md",
+      "sha256": "ada343470bad1ed1ca3cd2d42be0d7a675f60662e4260796ab85084f9d113fae"
+    },
+    {
+      "path": "docs/specs/formats/skeleton.md",
+      "sha256": "86a831957f85ef67a41f539c946ec92e59d954ccdb4ed0ee0351dc5a8f3b58eb"
+    },
+    {
+      "path": "docs/specs/formats/animation-graph.md",
+      "sha256": "d1300ab47104b0aa49ca2017e36019b23ed17b0b98b410a32cbb1164337480c3"
+    },
+    {
+      "path": "docs/specs/formats/world-coords.md",
+      "sha256": "45e917ea781edb205e02d4bbb1ddd5ecab98cc3cfe872104cd3919e2432e0359"
+    },
+    {
+      "path": "docs/specs/world/snow-depth.md",
+      "sha256": "b3e1901e2990f425851b72986f561d231b19de1a3a746c0b5c9970270251f41e"
+    },
+    {
+      "path": "docs/specs/formats/mesh.md",
+      "sha256": "75b40a7cde06c44cf118ee8e9942ef540f067d843e947cf4457ed2e8153c5cad"
+    },
+    {
+      "path": "docs/specs/formats/texture.md",
+      "sha256": "c57f53bcc4100514c08ecc330a3318d2eeaa1f95fab95f6259dfed8ecb10ed98"
+    },
+    {
+      "path": "docs/vfs.md",
+      "sha256": "efc7073c45b7896943c43292ed1a1cc0acc96b68b89aff939dff8de5924159c2"
+    },
+    {
+      "path": "docs/replay.md",
+      "sha256": "63d582d751c56262701d99d761069890f8f8757bf06b2aeef22565084da021ca"
+    },
+    {
+      "path": "docs/debug-api.md",
+      "sha256": "730615436638ea948951caa7965219c7fc3090ce2f3b6af663a90541e4f1ed7b"
+    }
+  ],
+  "evidence_policy": {
+    "categories": [
+      "asset-decoded",
+      "binary-derived",
+      "video-estimated",
+      "Studio-authored substitute"
+    ],
+    "rule": "Preserve category per claim. Studio authored some animation and fitted behavior from videos; neither is original-game recovery.",
+    "included": "Curated decoding documentation and labeled infrastructure design ideas; no authored clips or video-fitted constants."
+  }
+}

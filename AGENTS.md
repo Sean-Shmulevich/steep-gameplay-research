@@ -10,6 +10,10 @@ This is a findings repository for an independent implementation. It is not origi
 4. Read docs/ENGINE_RECONSTRUCTION.md for the proposed implementation layout and validation sequence.
 5. Use SOURCE_MANIFEST.json to identify an original research source. Its paths name external local artifacts; do not assume those files exist in this checkout.
 
+## Studio evidence
+
+Studio contains both original-asset research and its own replacement animations and video-based estimates. Keep asset-decoded, binary-derived, video-estimated and Studio-authored substitute claims separate. A successful test of a substitute does not establish original behavior. Consult STUDIO_SOURCES.json and docs/reconstruction/ASSET_PIPELINE.md before importing further material.
+
 ## Implementing a system
 
 - Extract its inputs, outputs, coordinate frame, units, activation gates, persistent state and update cadence into a short contract first. Explicitly mark unknowns.

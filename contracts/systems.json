@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "status": "Proposed module boundaries; chapter-local evidence must be consulted",
+  "global_rules": {
+    "quaternion": "xyzw in reference hierarchy; adapters must state their conventions",
+    "units": "No implicit unit assumptions; record per field",
+    "time": "simulation tick, host time, clip key and event time are distinct",
+    "ownership": "physics owns body momentum; pose corrections require an explicit consumer to affect it",
+    "unknown_producers": "inject labeled configurable adapter; never silently infer"
+  },
+  "systems": [
+    {
+      "id": "input",
+      "inputs": "raw actions, projected speed, dt",
+      "outputs": "shaped controls",
+      "open_boundary": "ingestion relative to substeps",
+      "source": "docs/systems/input/action-ownership/pseudocode.md",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "snow",
+      "inputs": "cell geometry, material, relative velocity, dt",
+      "outputs": "forces and impulses",
+      "open_boundary": "all material producer joins",
+      "source": "docs/systems/snow/CLIENT_GUIDE.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "animation",
+      "inputs": "clip channels, graph weights, phase, local pose",
+      "outputs": "model pose",
+      "open_boundary": "runtime selection and final palette",
+      "source": "docs/systems/animations/OVERVIEW.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "tricks",
+      "inputs": "shaped input, time, saved response state",
+      "outputs": "entity orientation target",
+      "open_boundary": "complete body consumer",
+      "source": "docs/systems/tricks/OVERVIEW.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "landing",
+      "inputs": "contact history, supplied alignment inputs",
+      "outputs": "visual alignment and tilt",
+      "open_boundary": "selector and complete classification",
+      "source": "docs/systems/animations/landing-pose/CLIENT_GUIDE.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "walking",
+      "inputs": "input, surface queries",
+      "outputs": "movement and foot targets",
+      "open_boundary": "original controller remains unresolved",
+      "source": "docs/systems/walking/research-plan.md",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "environment",
+      "inputs": "delta, pause, presets",
+      "outputs": "time of day, weather overlays",
+      "open_boundary": "track clock and grip coupling",
+      "source": "docs/systems/world/environment-runtime/pseudocode.md",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "air",
+      "inputs": "sport controls, velocity, environment",
+      "outputs": "aerodynamic response",
+      "open_boundary": "remaining parameter meanings and producers",
+      "source": "docs/systems/air/CLIENT_GUIDE.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "camera",
+      "inputs": "body and sport state",
+      "outputs": "camera pose and FOV",
+      "open_boundary": "mode arbitration and FOV convention",
+      "source": "docs/systems/camera/CLIENT_GUIDE.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    },
+    {
+      "id": "scoring",
+      "inputs": "trick and sport events",
+      "outputs": "score state",
+      "open_boundary": "remaining event ownership/formulas",
+      "source": "docs/systems/scoring/CLIENT_GUIDE.txt",
+      "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
+    }
+  ]
+}

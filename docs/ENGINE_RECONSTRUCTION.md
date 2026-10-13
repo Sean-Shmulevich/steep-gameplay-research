@@ -108,3 +108,13 @@ Possible parallel ownership is snow/contact, input/runtime timing, tricks/landin
 ## What would justify calling it complete?
 
 For a scoped module, completeness means its agreed behavior and dependencies are implemented and tested, and unresolved original behavior is explicitly documented. For the whole original engine, this research cannot supply such a claim: rendering, networking, streaming, audio, tooling and many backend systems have not been reconstructed.
+
+## Implementation supplements
+
+- [Work packages and acceptance gates](reconstruction/IMPLEMENTATION_TASKS.md)
+- [Animation pipeline and unresolved joins](reconstruction/ANIMATION_PIPELINE.md)
+- [Asset decoding and Studio findings](reconstruction/ASSET_PIPELINE.md)
+- [Testbench and runtime adapters](reconstruction/TESTBENCH.md)
+- [Machine-readable contracts](../contracts/systems.json)
+- [Executable references and tests](../reference/README.md)
+- [Selected resource relationships](../data/resource-links.json)

@@ -1,0 +1,53 @@
+{
+  "kind": "invented_test_fixture",
+  "bones": [
+    {
+      "parent_index": -1,
+      "local_bind": {
+        "translation": [
+          1,
+          0,
+          0
+        ],
+        "quaternion_xyzw": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "parent_index": 0,
+      "local_bind": {
+        "translation": [
+          0,
+          2,
+          0
+        ],
+        "quaternion_xyzw": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "parent_index": 1,
+      "local_bind": {
+        "translation": [
+          0,
+          0,
+          3
+        ],
+        "quaternion_xyzw": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ]
+}

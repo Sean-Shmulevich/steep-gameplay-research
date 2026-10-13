@@ -1,0 +1,728 @@
+{
+  "schema_version": 1,
+  "kind": "selected_live_observations",
+  "source_sha256": "5fff4453c893aec37868a9d7e9341f22a9ceea0e5e440a9436ccf3a8549ca78f",
+  "source_total_groups": 767,
+  "selection": "Every64th group, final group, and up to3 groups either side of each skip transition. Not a uniform resample.",
+  "transformations": [
+    "Removed pointers, raw bytes, absolute game position and host identity.",
+    "Time offset relative to first accepted group; translation offset relative to first body position."
+  ],
+  "units": {
+    "time": "host monotonic milliseconds",
+    "translation": "runtime length units, not asserted metres",
+    "velocity": "runtime velocity units",
+    "immersion": "dimensionless",
+    "contact_timers": "stored runtime units; not asserted seconds by this sample",
+    "step": "raw update field; not a proven fixed timestep"
+  },
+  "atomic": false,
+  "input_alignment_verified": false,
+  "full_capture_p95_group_interval_ms": 14.766799999999876,
+  "full_capture_max_group_interval_ms": 40.8,
+  "full_capture_cadence_eligible": false,
+  "rows": [
+    {
+      "source_index": 0,
+      "start_ms": 0.0,
+      "end_ms": 8.947099999999999,
+      "contact": {
+        "skip": 1,
+        "absence": 0.8452092409133911,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011920200660824776
+      },
+      "motion": {
+        "translation_from_first": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity": [
+          -13.752768516540527,
+          -0.7346857190132141,
+          -27.188352584838867
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 64,
+      "start_ms": 195.7543,
+      "end_ms": 196.6617,
+      "contact": {
+        "skip": 1,
+        "absence": 1.0473475456237793,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.0065586501732468605
+      },
+      "motion": {
+        "translation_from_first": [
+          -2.65283203125,
+          -0.15087890625,
+          -5.565673828125
+        ],
+        "velocity": [
+          -12.250859260559082,
+          -0.6544526219367981,
+          -28.00086784362793
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 128,
+      "start_ms": 348.59250000000003,
+      "end_ms": 351.8104,
+      "contact": {
+        "skip": 1,
+        "absence": 1.2018476724624634,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.012205900624394417
+      },
+      "motion": {
+        "translation_from_first": [
+          -4.198486328125,
+          -0.28515625,
+          -9.7119140625
+        ],
+        "velocity": [
+          -11.275742530822754,
+          -0.6023821830749512,
+          -28.498567581176758
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 163,
+      "start_ms": 466.62260000000003,
+      "end_ms": 467.8231,
+      "contact": {
+        "skip": 1,
+        "absence": 1.3114914894104004,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.0068060001358389854
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.353271484375,
+          -0.37744140625,
+          -13.40283203125
+        ],
+        "velocity": [
+          -10.575848579406738,
+          -0.564965009689331,
+          -28.96913719177246
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 164,
+      "start_ms": 467.8244,
+      "end_ms": 474.7401,
+      "contact": {
+        "skip": 1,
+        "absence": 1.3114914894104004,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.0068060001358389854
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.353271484375,
+          -0.37744140625,
+          -13.40283203125
+        ],
+        "velocity": [
+          -10.575848579406738,
+          -0.564965009689331,
+          -28.96913719177246
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 165,
+      "start_ms": 474.741,
+      "end_ms": 477.5464,
+      "contact": {
+        "skip": 1,
+        "absence": 1.3195114135742188,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.00801989994943142
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.420166015625,
+          -0.38037109375,
+          -13.654296875
+        ],
+        "velocity": [
+          -10.488692283630371,
+          -0.5603356957435608,
+          -28.952369689941406
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 166,
+      "start_ms": 498.10560000000004,
+      "end_ms": 501.8801,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.13091494143009186,
+        "contact": 0.017786899581551552,
+        "step": 0.008893449790775776
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.7099609375,
+          -0.38134765625,
+          -14.4072265625
+        ],
+        "velocity": [
+          -12.585155487060547,
+          -0.36352264881134033,
+          -28.272111892700195
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 167,
+      "start_ms": 501.8811,
+      "end_ms": 503.34240000000005,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.13091494143009186,
+        "contact": 0.017786899581551552,
+        "step": 0.008893449790775776
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.7099609375,
+          -0.38134765625,
+          -14.4072265625
+        ],
+        "velocity": [
+          -12.585155487060547,
+          -0.36352264881134033,
+          -28.272111892700195
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 168,
+      "start_ms": 503.343,
+      "end_ms": 508.27709999999996,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.13091494143009186,
+        "contact": 0.017786899581551552,
+        "step": 0.008893449790775776
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.7099609375,
+          -0.38134765625,
+          -14.4072265625
+        ],
+        "velocity": [
+          -12.585155487060547,
+          -0.36352264881134033,
+          -28.272111892700195
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 169,
+      "start_ms": 508.2778,
+      "end_ms": 511.162,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.26546984910964966,
+        "contact": 0.026613198220729828,
+        "step": 0.00882629957050085
+      },
+      "motion": {
+        "translation_from_first": [
+          -5.7099609375,
+          -0.38134765625,
+          -14.4072265625
+        ],
+        "velocity": [
+          -12.585155487060547,
+          -0.36352264881134033,
+          -28.272111892700195
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 192,
+      "start_ms": 577.1017999999999,
+      "end_ms": 578.3144,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.8148737549781799,
+        "contact": 0.10153039544820786,
+        "step": 0.012355899438261986
+      },
+      "motion": {
+        "translation_from_first": [
+          -6.8486328125,
+          -0.46484375,
+          -16.75
+        ],
+        "velocity": [
+          -13.68736457824707,
+          -0.3436732292175293,
+          -27.645709991455078
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 256,
+      "start_ms": 705.5284999999999,
+      "end_ms": 706.3435999999999,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.9929607510566711,
+        "contact": 0.22519108653068542,
+        "step": 0.006639149971306324
+      },
+      "motion": {
+        "translation_from_first": [
+          -8.574951171875,
+          -0.42138671875,
+          -20.1298828125
+        ],
+        "velocity": [
+          -14.264908790588379,
+          0.1631033718585968,
+          -27.483449935913086
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 320,
+      "start_ms": 887.4594,
+      "end_ms": 889.8803999999999,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.9216070771217346,
+        "contact": 0.41391080617904663,
+        "step": 0.007704549934715033
+      },
+      "motion": {
+        "translation_from_first": [
+          -11.36474609375,
+          -0.4619140625,
+          -25.439697265625
+        ],
+        "velocity": [
+          -14.892928123474121,
+          -0.21052952110767365,
+          -28.5155029296875
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 384,
+      "start_ms": 1051.5467,
+      "end_ms": 1052.3162,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.940690279006958,
+        "contact": 0.574562132358551,
+        "step": 0.011889399960637093
+      },
+      "motion": {
+        "translation_from_first": [
+          -13.76171875,
+          -0.51953125,
+          -30.10205078125
+        ],
+        "velocity": [
+          -14.892930030822754,
+          -0.3606191873550415,
+          -29.47368621826172
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 448,
+      "start_ms": 1197.8564000000001,
+      "end_ms": 1199.7059000000002,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 1.0,
+        "contact": 0.7222471833229065,
+        "step": 0.01214159931987524
+      },
+      "motion": {
+        "translation_from_first": [
+          -16.027099609375,
+          -0.5908203125,
+          -34.477294921875
+        ],
+        "velocity": [
+          -15.959595680236816,
+          -0.5495702028274536,
+          -29.632970809936523
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 512,
+      "start_ms": 1330.4511,
+      "end_ms": 1333.3131,
+      "contact": {
+        "skip": 0,
+        "absence": 0.0,
+        "immersion": 0.011889182962477207,
+        "contact": 0.852448582649231,
+        "step": 0.009984499774873257
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.08544921875,
+          -0.66796875,
+          -37.8271484375
+        ],
+        "velocity": [
+          -15.81332015991211,
+          -0.579428493976593,
+          -25.53192901611328
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 527,
+      "start_ms": 1362.6705000000002,
+      "end_ms": 1363.4122,
+      "contact": {
+        "skip": 0,
+        "absence": 0.03142920136451721,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.01139109954237938
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.582275390625,
+          -0.6865234375,
+          -38.636962890625
+        ],
+        "velocity": [
+          -15.797340393066406,
+          -0.5806462168693542,
+          -25.86353874206543
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 528,
+      "start_ms": 1363.4127,
+      "end_ms": 1366.5927000000001,
+      "contact": {
+        "skip": 0,
+        "absence": 0.03142920136451721,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.01139109954237938
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.582275390625,
+          -0.6865234375,
+          -38.636962890625
+        ],
+        "velocity": [
+          -15.797340393066406,
+          -0.5806462168693542,
+          -25.86353874206543
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 529,
+      "start_ms": 1366.5934,
+      "end_ms": 1368.1978000000001,
+      "contact": {
+        "skip": 0,
+        "absence": 0.03142920136451721,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011491499841213226
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.582275390625,
+          -0.6865234375,
+          -38.636962890625
+        ],
+        "velocity": [
+          -15.797340393066406,
+          -0.5806462168693542,
+          -25.86353874206543
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 530,
+      "start_ms": 1368.1985,
+      "end_ms": 1369.9025000000001,
+      "contact": {
+        "skip": 1,
+        "absence": 0.04292070120573044,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011491499841213226
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.763671875,
+          -0.69287109375,
+          -38.935302734375
+        ],
+        "velocity": [
+          -15.790294647216797,
+          -0.5699877142906189,
+          -25.960866928100586
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 531,
+      "start_ms": 1369.9031,
+      "end_ms": 1370.7278000000001,
+      "contact": {
+        "skip": 1,
+        "absence": 0.04292070120573044,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011491499841213226
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.763671875,
+          -0.69287109375,
+          -38.935302734375
+        ],
+        "velocity": [
+          -15.790294647216797,
+          -0.5699877142906189,
+          -25.960866928100586
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 532,
+      "start_ms": 1370.7283,
+      "end_ms": 1371.6546,
+      "contact": {
+        "skip": 1,
+        "absence": 0.04292070120573044,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011491499841213226
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.763671875,
+          -0.69287109375,
+          -38.935302734375
+        ],
+        "velocity": [
+          -15.790294647216797,
+          -0.5699877142906189,
+          -25.960866928100586
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 533,
+      "start_ms": 1371.6551000000002,
+      "end_ms": 1372.5515,
+      "contact": {
+        "skip": 1,
+        "absence": 0.04292070120573044,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011491499841213226
+      },
+      "motion": {
+        "translation_from_first": [
+          -18.763671875,
+          -0.69287109375,
+          -38.935302734375
+        ],
+        "velocity": [
+          -15.790294647216797,
+          -0.5699877142906189,
+          -25.960866928100586
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 576,
+      "start_ms": 1482.1660000000002,
+      "end_ms": 1483.4514000000001,
+      "contact": {
+        "skip": 1,
+        "absence": 0.15000900626182556,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.008528650738298893
+      },
+      "motion": {
+        "translation_from_first": [
+          -20.93505859375,
+          -0.70849609375,
+          -41.396728515625
+        ],
+        "velocity": [
+          -19.44891357421875,
+          -0.28155428171157837,
+          -24.007734298706055
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 640,
+      "start_ms": 1636.2354,
+      "end_ms": 1638.0727000000002,
+      "contact": {
+        "skip": 1,
+        "absence": 0.30686211585998535,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.006586750037968159
+      },
+      "motion": {
+        "translation_from_first": [
+          -23.933349609375,
+          -0.68115234375,
+          -45.1044921875
+        ],
+        "velocity": [
+          -17.806367874145508,
+          -0.25842994451522827,
+          -24.926448822021484
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 704,
+      "start_ms": 1822.3436000000002,
+      "end_ms": 1823.0873000000001,
+      "contact": {
+        "skip": 1,
+        "absence": 0.4950765371322632,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.007398500107228756
+      },
+      "motion": {
+        "translation_from_first": [
+          -27.129150390625,
+          -0.72802734375,
+          -49.84130859375
+        ],
+        "velocity": [
+          -16.041046142578125,
+          -0.23279418051242828,
+          -25.939634323120117
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    },
+    {
+      "source_index": 766,
+      "start_ms": 1958.2291,
+      "end_ms": 1959.2624,
+      "contact": {
+        "skip": 1,
+        "absence": 0.6254086494445801,
+        "immersion": 0.0,
+        "contact": 0.0,
+        "step": 0.011208700016140938
+      },
+      "motion": {
+        "translation_from_first": [
+          -29.138427734375,
+          -0.76171875,
+          -53.249267578125
+        ],
+        "velocity": [
+          -14.949719429016113,
+          -0.21693119406700134,
+          -26.599254608154297
+        ],
+        "active_bit26": true,
+        "dispatch_inhibit": 0
+      }
+    }
+  ]
+}

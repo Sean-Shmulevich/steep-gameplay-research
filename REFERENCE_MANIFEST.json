@@ -1,0 +1,71 @@
+{
+  "files": [
+    {
+      "module": "reference.snow",
+      "source": "analysis/snow_game/snow/reference.py",
+      "source_sha256": "6dddc2aeac9b0faf3df6bfec7d9ad65191fafd9bbfb072fab32d81afaabc9d02",
+      "published": "reference/snow.py",
+      "published_sha256": "6dddc2aeac9b0faf3df6bfec7d9ad65191fafd9bbfb072fab32d81afaabc9d02",
+      "adaptations": [],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.response_delay",
+      "source": "analysis/snow_game/tricks/response-delay/reference.py",
+      "source_sha256": "545075a7a814a1ef545508ffaae2c06a3a0690f8946df0c47a153a07a48fbd80",
+      "published": "reference/response_delay.py",
+      "published_sha256": "545075a7a814a1ef545508ffaae2c06a3a0690f8946df0c47a153a07a48fbd80",
+      "adaptations": [],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_blending",
+      "source": "analysis/snow_game/animations/blending/reference.py",
+      "source_sha256": "fd6e337b64378abe512bd6bfc328fc288599903e1769b4ed3ae59973c525c669",
+      "published": "reference/animation_blending.py",
+      "published_sha256": "fd6e337b64378abe512bd6bfc328fc288599903e1769b4ed3ae59973c525c669",
+      "adaptations": [],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_playback",
+      "source": "analysis/snow_game/animations/playback/reference.py",
+      "source_sha256": "7c99eaa46d0d1e54d42f75bfc89462b82ec8842f0bdc0cd40356cd9f12b3bfbf",
+      "published": "reference/animation_playback.py",
+      "published_sha256": "7c99eaa46d0d1e54d42f75bfc89462b82ec8842f0bdc0cd40356cd9f12b3bfbf",
+      "adaptations": [],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.landing_pose",
+      "source": "analysis/snow_game/animations/landing-pose/reference.py",
+      "source_sha256": "00994e3847327bd6a451a32cacd993fd31a21b6fe331665f3679f2c9c3d95bcf",
+      "published": "reference/landing_pose.py",
+      "published_sha256": "00994e3847327bd6a451a32cacd993fd31a21b6fe331665f3679f2c9c3d95bcf",
+      "adaptations": [],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton",
+      "source": "analysis/snow_game/animations/skeleton/reference.py",
+      "source_sha256": "31eeebde654174b1153c2ad1cf605fed5c99bae34a4c88e8480cce156f3a5586",
+      "published": "reference/skeleton.py",
+      "published_sha256": "3eaeb102af3b9b8569ec9b78b831276bb943c6dd6d85cb0f01a7772c1d90bf5e",
+      "adaptations": [
+        "Removed asset-dependent entrypoint and imports; tests use an invented three-bone rig."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_codec",
+      "source": "Studio docs/specs/formats/animation.md; exact document hash in STUDIO_SOURCES.json",
+      "source_kind": "Fresh implementation of document-reported codec primitives; synthetic validation only",
+      "published": "reference/animation_codec.py",
+      "published_sha256": "4c3635206b796f5eb65fee424e3420a2403ce9c3b3d0e33ef892daaf95921d60",
+      "adaptations": [
+        "Only 32-bit quaternion and time-key decoding; bounds checks are defensive design choices."
+      ],
+      "game_payloads_included": false
+    }
+  ]
+}
