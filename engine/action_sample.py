@@ -55,3 +55,32 @@ def publish_vector(vector,*,rsqrt_estimate=None):
             'status':abs(magnitude)>f32(9.999999747378752e-6),
             'squared_length':n,'normalization_policy':policy,
             'sample_generation_established':False}
+
+
+def evaluate_two_axis(queries,*,processor_policy,processor_state=None,
+                      processed_vector=None,rsqrt_estimate=None):
+    """Compose recovered local stages with an EXPLICIT processor selection.
+
+    Policies: default = recovered fallback; bypass = configured bypass branch;
+    supplied = caller already evaluated a configured processor. This does not
+    infer the original player's binding or substitute fallback for unknown code.
+    Only default changes the returned processor state. All output is detached.
+    """
+    import copy
+    from .action_processor import process_default
+    from .assets import canonical
+    if not isinstance(queries,dict) or set(queries)!={'negative_x','positive_x','positive_y','negative_y'}:
+        raise ValueError('Four named directional query pairs required')
+    if processor_policy not in ('default','bypass','supplied'):
+        raise ValueError('Explicit supported processor policy required')
+    if (processed_vector is not None)!=(processor_policy=='supplied'):
+        raise ValueError('Only supplied policy requires a processed vector')
+    canonical(processor_state)
+    raw=combine_directions(**queries)
+    state=copy.deepcopy(processor_state)
+    if processor_policy=='default':
+        result=process_default(raw,state);value=result['output'];state=result['state']
+    elif processor_policy=='bypass':value=raw
+    else:value=processed_vector
+    published=publish_vector(value,rsqrt_estimate=rsqrt_estimate)
+    return dict(raw_vector=raw,processor_policy=processor_policy,processor_state=state,**published)

@@ -47,3 +47,13 @@ The Python `SchedulerController` now implements an explicit submission gate with
 - [Backend completion](../docs/reconstruction/BACKEND_COMPLETION_FOLLOWUP.md): the queued callback branch decrements not-started before the callback and outstanding after normal return. Notification, concrete consumer registration and whole-engine exclusion remain unproved.
 
 The next native work should resolve the active action processor/source producer and the component request/rearm contract. Neither more owned-runtime pause features nor interpreting a zero claim count as completion would close those native gaps.
+
+## Processor and worker-entry follow-up
+
+The [default processor audit](../docs/reconstruction/ACTION_PROCESSOR.md) closes the fallback processing method as a four-lane copy with a first-use marker. The composed action API now requires callers to distinguish fallback, bypass and an externally evaluated configured processor.
+
+The [worker-registration audit](../docs/reconstruction/BACKEND_WORKER_REGISTRATION.md) joins setup's callback address through a descriptor entry bridge and shared-manager wrapper to the queued backend consumer. Protected platform launch/notification and manager lifetime remain unresolved.
+
+The [child-type follow-up](../docs/reconstruction/PHYSICS_WORLD_CHILD_TYPES.md) rules out the component's ordinary fixed-size deserializer as the source of optional child instances. Type resolution now requires out-of-line linkage or a runtime assignment writer. Repeating the ordinary reader would not close that gap.
+
+The [rearm audit](../docs/reconstruction/SCHEDULER_REARM.md) now connects ordinary queue reservation to execution and finalization. Execution accounting begins before the fetched job reaches its worker, and ordinary successor release waits for returned worker bodies. It also identifies the action graph's conditional entry and terminal nodes. The next decisive join is the external caller that rearms that specific graph after prior storage users have returned, including early-exit requests.
