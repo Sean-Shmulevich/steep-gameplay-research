@@ -81,3 +81,7 @@ A separate [idle task worker pool](../docs/reconstruction/IDLE_TASK_WORKERS.md)
 executes and disposes of queued virtual tasks outside the ordinary range-job loop.
 Its submission, stop and lifetime joins remain open and must be considered before
 claiming whole-engine quiescence.
+
+The [loading-thread lifecycle](../docs/reconstruction/LOADING_THREAD_LIFECYCLE.md)
+provides a separate drain/stop/wake/join sequence. Its two drain fields concern
+resource destruction; submission exclusion and other loading phases remain open.

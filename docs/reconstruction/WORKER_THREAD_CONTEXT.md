@@ -544,3 +544,9 @@ and nonzero-result failure. No protected platform operation is simulated. The
 remaining native-control requirement is still an identified owner path that stops
 submissions, finishes relevant work, wakes and joins the correct threads, and only
 then releases their resources.
+
+
+The previously unassigned drain/stop/wake/join receiver is now identified as the
+[loading thread](LOADING_THREAD_LIFECYCLE.md). Its wait fields track a pending
+resource-destruction batch and its busy flag. This supersedes the earlier unknown-
+type boundary, but does not connect them to ordinary scheduler completion.

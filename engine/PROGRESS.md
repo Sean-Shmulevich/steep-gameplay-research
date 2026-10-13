@@ -306,3 +306,13 @@ not assign it to the ordinary scheduler without type evidence. Native owner and
 submission-exclusion joins remain unresolved.
 
 Validation: all 390 independent tests pass.
+
+
+## Loading-thread shutdown receiver identity
+
+Matched the drain/stop/wake/join object's constructor and loop table to the named
+LoadingThread. Its drained fields are an exchanged pending-destruction count and
+batch-busy flag. Recovered ring iteration, virtual destruction and post-stop loop
+ordering, retaining the pending-count/ring-population invariant. This narrows the
+quiescence claim instead of treating loading counters as physics completion.
+Static-only pass; last full suite remains 390 tests.
