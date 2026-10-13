@@ -41,14 +41,14 @@ For the first 32 workers, the mask is a distinct single bit. Rotation wraps afte
 
 The common job constructor stores its category argument and zeroes the adjacent required/excluded mask pair. It initializes execution and outstanding-dispatch counts to zero.
 
-Its initial limit calculation takes a byte-sized caller argument and compares it with the shared default. For ordinary defaults within the byte range, the resulting byte-sized value is the smaller of those inputs. The decoded implementation truncates the selected result to a byte before storing it as the job limit. Later concrete constructors and setup routines may overwrite that limit, so this base initialization is not a universal final limit.
+Its initial limit calculation zero-extends a byte-sized caller argument and compares it with the signed int32 shared default. A follow-up instruction check establishes signed less-or-equal selection, followed by byte truncation. For ordinary defaults within the byte range, the resulting byte-sized value is the smaller of those inputs. The decoded implementation truncates the selected result to a byte before storing it as the job limit. Later concrete constructors and setup routines may overwrite that limit, so this base initialization is not a universal final limit.
 
 ```text
 construct_base_job(category_argument, byte_limit_argument):
     job.category = category_argument
     job.required_mask = 0
     job.excluded_mask = 0
-    job.limit = byte_sized_selection(byte_limit_argument, shared_default)
+    job.limit = uint8(min_signed(zero_extend(byte_limit_argument), int32(shared_default)))
     job.executions = 0
     job.outstanding_dispatches = 0
 ```
@@ -94,3 +94,18 @@ The helper's full shifting contract was not independently decoded here, so the s
 The worker initializer, its configuration caller, common job constructor and enqueue routine were freshly decoded from the analyzed image. SHA-256: `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`.
 
 Still open are the upper-bound producer, configuration field's external name and default, later category/mask setters, valid mask/count constraints, and all other job-type overrides. These findings support a configurable worker-count producer and explicit queue routing in the independent model. They do not justify hard-coding the image's `INT_MAX` value as an operational concurrency count. No game execution, attachment or emulation was used.
+
+## Base-limit comparison follow-up
+
+The constructor loads the argument with byte zero-extension and compares that
+32-bit value against the default. It first prepares the default's low byte, then
+uses signed less-or-equal conditional selection to substitute the argument.
+Finally it zero-extends the selected low byte into the limit field. MOVZX does
+not alter the comparison flags. Equivalent mathematics is signed minimum
+followed by uint8 conversion, not an unsigned minimum or a signed final limit.
+
+For example, argument 255/default 256 produces 255, while argument 0/default -1
+produces 255. Argument 255/default -256 produces zero. These boundary evaluations
+do not establish that negative operational defaults occur in the game.
+`base_job_limit` in `engine.queue_producers` implements this rule with explicit
+uint8/int32 inputs. Later concrete constructors may still override it.

@@ -1,5 +1,5 @@
 import unittest
-from engine.queue_producers import worker_configuration, worker_mask, enqueue_destination
+from engine.queue_producers import worker_configuration, worker_mask, enqueue_destination, base_job_limit
 from engine.queue_policy import select_queue
 
 
@@ -43,3 +43,12 @@ class QueueProducerTests(unittest.TestCase):
             with self.assertRaises(ValueError): worker_mask(value)
         with self.assertRaises(ValueError): enqueue_destination(3, 0, [])
         with self.assertRaises(ValueError): enqueue_destination(0, 1, [1])
+
+    def test_base_limit_signed_comparison_then_byte_conversion(self):
+        for argument, default, expected in ((255, 8, 8), (8, 255, 8),
+                (255, 256, 255), (255, 0, 0), (0, -1, 255),
+                (255, -256, 0), (1, -257, 255), (255, -2147483648, 0)):
+            with self.subTest(argument=argument, default=default):
+                self.assertEqual(base_job_limit(argument, default), expected)
+        for argument in (-1, 256, True):
+            with self.assertRaises(ValueError): base_job_limit(argument, 8)

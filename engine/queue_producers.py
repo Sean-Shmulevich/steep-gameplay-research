@@ -3,7 +3,7 @@
 Evidence: SCHEDULER_QUEUE_PRODUCERS.md, shared default, worker mask and enqueue
 sections. Pure functions do not allocate workers, acquire locks or submit work.
 """
-from .queue_policy import _mask
+from .queue_policy import _mask, _i32
 
 
 def worker_configuration(requested, upper_bound):
@@ -43,3 +43,14 @@ def enqueue_destination(category, required_mask, worker_slots):
         if worker_slots[index]:
             return dict(category=category, queue='local', worker_index=index)
     return dict(category=category, queue='shared', worker_index=None)
+
+
+def base_job_limit(byte_argument, shared_default):
+    """Base constructor signed comparison, followed by uint8 storage conversion.
+
+    Later job constructors may overwrite this initial limit.
+    """
+    if type(byte_argument) is not int or not 0 <= byte_argument <= 255:
+        raise ValueError('byte argument must be uint8')
+    _i32(shared_default)
+    return min(byte_argument, shared_default) & 255

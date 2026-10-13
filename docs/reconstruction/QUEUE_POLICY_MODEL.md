@@ -132,8 +132,9 @@ policy, not a recovered constructor guard.
 These pure functions can supply configuration to a caller-owned scheduler setup.
 They do not create a multi-worker runtime or automatically populate the existing
 single-worker MixedScheduler adapter. Queue locks, aggregate-limit updates and
-notification counters remain outside their scope. Base-constructor byte-limit
-selection remains unimplemented pending its exact comparison semantics.
+notification counters remain outside their scope. `base_job_limit(byte_argument, shared_default)` now implements the base-constructor
+signed minimum followed by uint8 conversion. Later concrete overrides remain
+separate from that initial value.
 
 Six producer tests cover unsigned clamp boundaries, signed storage, rotating
 masks, lowest-bit routing, null versus absent slots and the interaction between
