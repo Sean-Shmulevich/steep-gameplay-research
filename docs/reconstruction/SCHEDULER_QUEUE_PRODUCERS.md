@@ -111,3 +111,14 @@ do not establish that negative operational defaults occur in the game.
 uint8/int32 inputs. Later concrete constructors may still override it.
 
 [Named AI assignments](AI_QUEUE_ASSIGNMENTS.md) now close construction-time category and selected limit overrides for seven stages. They do not establish all later writers.
+
+
+## Upper-bound producer search boundary
+
+A follow-up verified the initializer's exact upper-bound reference and inspected
+that DWORD in the analyzed image's data section: its stored value is zero. A
+bounded search for direct RIP-relative register/immediate stores to that field
+and address-taking near it did not identify its initialization writer. This does
+not establish a live zero limit or absence of initialization. Indirect, aliased,
+protected and other addressing forms remain possible. The independent worker
+configuration therefore continues to require an explicit upper bound.

@@ -160,3 +160,7 @@ Added a symbolic worker-action explorer with fresh-prefix replay, explicit node/
 ## Interleaving oracle and deferred-work correction
 
 Added active-dependency hold conservation and premature-release checks. Deliberately broken release/accounting implementations are detected by fault-injection tests. Conditional selected/bypass fixtures exhaust 48 and two schedules. Corrected quiescence reporting for deferred credit work and active dependency lists. Full suite: 356 passing tests. Exploration remains bounded to symbolic ordinary-worker API boundaries.
+
+## Portable scheduler experiments
+
+Added a JSON-driven explorer CLI with standalone reports and distinct exit statuses for complete, bounded, violated and invalid experiments. End-to-end CLI tests cover report generation, bounded search and source-file preservation. Full suite: 358 passing tests. The native worker upper-bound writer remains unresolved after a bounded direct-store/address-taking search; image data zero is not used as a live default.

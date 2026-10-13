@@ -109,3 +109,35 @@ def explore(definitions, queue_policy, roots, *, max_nodes=2000, max_depth=64):
     result['complete'] = not pending and not result['depth_cutoffs'] and not result['violations']
     result['status'] = 'violation' if result['violations'] else 'complete' if result['complete'] else 'bounded'
     return result
+
+
+def main(argv=None):
+    """Run a caller-supplied symbolic graph and produce a standalone JSON report."""
+    import argparse
+    import json
+    from pathlib import Path
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('scenario', type=Path)
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--max-nodes', type=int, default=2000)
+    parser.add_argument('--max-depth', type=int, default=64)
+    args = parser.parse_args(argv)
+    try:
+        scenario = json.loads(args.scenario.read_text())
+        if not isinstance(scenario, dict) or set(scenario) != {'definitions','queue_policy','roots'}:
+            raise ValueError('scenario requires definitions, queue_policy and roots only')
+        report = explore(**scenario, max_nodes=args.max_nodes, max_depth=args.max_depth)
+        text = json.dumps(report, indent=2) + '\n'
+        if args.output:
+            if args.output.resolve() == args.scenario.resolve():
+                raise ValueError('report output must not overwrite scenario')
+            args.output.write_text(text)
+        else:
+            print(text, end='')
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        parser.exit(1, 'Experiment error: ' + str(error) + '\n')
+    return 3 if report['violations'] else 0 if report['complete'] else 2
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

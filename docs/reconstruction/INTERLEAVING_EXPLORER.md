@@ -77,3 +77,20 @@ leak an outstanding-dispatch count. The explorer reports violations for both.
 A credit-gated fixture exposed and corrected the initial report's classification
 of deferred work as quiescent. This correction affects reporting, not native
 research or the scheduler's credit behavior.
+
+## JSON scenario runner
+
+Run a caller-authored graph without editing Python:
+
+```sh
+python3 -m engine.interleavings engine/examples/interleaving_scenario.json --output report.json
+```
+
+The JSON object requires exactly `definitions`, `queue_policy` and `roots`.
+The sample is synthetic. Override exploration bounds with `--max-nodes` and
+`--max-depth`. Output contains evidence completeness and leaf classifications.
+Exit code zero means complete exploration without a detected violation; blocked
+leaves can still exist. Code two means a bounded/incomplete search, code three
+means an invariant violation, and code one means invalid input or an I/O failure.
+The runner refuses to overwrite its input scenario. Reports contain symbolic job
+identities and worker/action paths, with no native addresses or game data.

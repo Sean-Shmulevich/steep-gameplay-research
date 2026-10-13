@@ -1,0 +1,12 @@
+{
+  "definitions": [
+    {"id": "motion", "kind": "range", "receivers": [0, 1], "successors": ["published"]},
+    {"id": "published", "kind": "terminal"}
+  ],
+  "queue_policy": {
+    "shared_default": 2,
+    "worker_slots": [true, true],
+    "jobs": {"motion": {"category": 1, "limit": 2}}
+  },
+  "roots": ["motion"]
+}
