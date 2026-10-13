@@ -172,3 +172,7 @@ Implemented bounded range-only helper dispatch and read-only helper wait status.
 ## Range-worker yield counter identity
 
 Joined the worker comparison values to the global queue manager supplied to enqueue: ordinary enqueue changes one counter, front insertion increments the other. Added exact post-range yield predicate and boundary tests. This explains stopping further claims after new queue work without interpreting the counters as frames. Front-counter decrements and job flag setters remain open. Full suite: 362 passing tests.
+
+## Front-counter lifecycle and array shifts
+
+Joined queue-manager zero initialization, front enqueue increment and flagged removal decrement. Removal ignores pointer-search success, so balanced counts require valid membership and stable flags. Decoded insertion/removal shift arguments without claiming the runtime copy helper or allocator internals. Front count describes flagged queued work under those invariants, not all executing callbacks. Documentation-only pass; packaging and links verified; last full suite remains 362 passing tests.

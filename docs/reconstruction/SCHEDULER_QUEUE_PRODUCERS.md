@@ -87,7 +87,7 @@ This explains the ordinary selector's local-queue flag: enqueue already routes a
 
 When a job's front-insertion flag is clear, enqueue grows the pointer array if needed, increments its count and writes the job at the old end. When the flag is set, it calls an insertion helper with index zero, then writes the job pointer into the first slot and increments a separate scheduler counter.
 
-The helper's full shifting contract was not independently decoded here, so the strongest local facts are the zero insertion argument and explicit first-slot store. The normal append path is fully visible. Array order matters because selection keeps the earlier candidate on score ties and exits at the first zero score.
+The [yield-counter follow-up](RANGE_WORKER_YIELD.md) now decodes the insertion helper's count and overlap-copy arguments, and the corresponding removal shift. The runtime copy helper and allocator failure semantics remain outside that check. The normal append path is fully visible. Array order matters because selection keeps the earlier candidate on score ties and exits at the first zero score.
 
 ## Remaining scope and verification
 
