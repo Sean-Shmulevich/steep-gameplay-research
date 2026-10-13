@@ -339,3 +339,13 @@ before copy. Allocator failure guarantees remain unproved rather than replaced
 with an invented recoverable fallback.
 
 Validation: all 397 independent tests pass.
+
+
+## Ordinary worker collection cleanup boundary
+
+Joined the initializer-owned worker pointer array to static setup and a registered
+cleanup callback. The complete callback only conditionally frees array storage;
+it never iterates workers or joins them. This rejects that container cleanup as
+the missing shutdown coordinator and preserves separate worker-allocation and
+manager-registration lifetime requirements. Documentation-only pass; last full
+suite remains 397 tests.

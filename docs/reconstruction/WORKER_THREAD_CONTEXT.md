@@ -550,3 +550,42 @@ The previously unassigned drain/stop/wake/join receiver is now identified as the
 [loading thread](LOADING_THREAD_LIFECYCLE.md). Its wait fields track a pending
 resource-destruction batch and its busy flag. This supersedes the earlier unknown-
 type boundary, but does not connect them to ordinary scheduler completion.
+
+
+## Initializer-owned pointer collection cleanup
+
+A focused reference search joined the ordinary worker initializer's separate
+pointer collection to its static setup and registered cleanup callback. Setup
+initializes the container, supplies inline-storage configuration to its array
+helper, and passes the cleanup function to a registration adapter. Exact process-
+exit registration semantics of that adapter were not inspected.
+
+The cleanup callback's complete ordinary instruction body has no worker loop:
+
+```text
+cleanup_initializer_collection():
+    metadata = load(collection.packed_metadata)
+    if bit15(metadata) == 0:
+        buffer = collection.pointer_array
+        if buffer != null:
+            allocation_metadata = inspect_allocation(buffer)
+            release_allocation(buffer, allocation_metadata)
+```
+
+The bit is the actual branch gate; broader ownership-flag naming is not needed to
+state this behavior. There is no per-element virtual destructor, stop request,
+event notification or thread join in this callback. It does not clear or traverse
+the pointed-to workers. Releasing the pointer array is distinct from releasing the
+worker allocations and from draining the queue manager's separately registered
+worker array.
+
+This resolves one potential teardown lead negatively: registering this collection
+cleanup does not establish a worker shutdown coordinator. An independent owner
+must not infer permission to destroy native workers from that callback's existence.
+The separate concrete deleting worker wrapper and common join semantics remain
+valid local findings, but the outer path ordering those operations is still open.
+
+The bounded direct RIP-relative search found the collection initializer, worker
+append path and this buffer cleanup. Computed or indirect references and protected
+code remain outside that search, so this is not a claim that no coordinator exists.
+No live process was accessed.
