@@ -58,3 +58,11 @@ Validation checkpoint: see [validation scope](VALIDATION.md) for the current sui
 Connected world action wrappers through the eligible-world chain to the engine Step callback and preparation/root submission. Resolved unselected-route recursion separately from ordinary completion. Added a standalone request/hold/credit reference and 14 boundary tests; full suite now passes 278 tests. Corrected membership guidance to retain the already recovered indexed insertion and duplicate-pointer check.
 
 Next: trace the outer engine-loop completion/event handshake before repeated graph preparation, including the event-related submission branch. Preparation itself supplies no worker wait. Preserve the distinct player-membership and input-freshness gates. No original game was launched or modified.
+
+## EndFrame and branch propagation checkpoint
+
+The ordinary rearm caller is now identified as EndFrame, downstream of the action-completion chain. Root-to-Step edges and mode predicates are documented separately. The alternate end-frame branch bypasses root submission and reuses the engine-owned event holder touched by restart. Explicit wait-helper accounting is also verified.
+
+Added a serial alternate-dependency model with ordinary/conditional bindings, after-traversal clearing, current-hold rechecks and order-sensitive join tests. Full suite: 288 passing tests. No original game execution, attachment or control.
+
+Next: recover mode-byte writers and exact event waiter, then resolve the two provider entry/terminal interiors. Follow with the mixed normal/alternate scheduler implementation and a native execution oracle once active identities and observation safety are established. The prior ordinary rearm gap is closed under its stated topology; native pause/single-step and full engine reconstruction remain incomplete.

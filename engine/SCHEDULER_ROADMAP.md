@@ -65,3 +65,18 @@ The [caller audit](../docs/reconstruction/ACTION_REARM_CALLER.md) now joins the 
 The [alternate-release audit](../docs/reconstruction/ALTERNATE_DEPENDENCY_RELEASE.md) resolves how unselected routes remove holds recursively without beginning jobs or acknowledging requests. A terminal reached by this route is not an execution-completion receipt.
 
 The [request-state reference](../docs/reconstruction/REQUEST_STATE_MODEL.md) makes local request, hold and credit rules executable with explicit unresolved callback effects. Fourteen boundary tests pass. This reference does not add native control or replace the owned dependency executor. Indexed registry insertion and duplicate-pointer checking are also known; player registration with selector 24 remains open.
+
+## Ordinary frame rearm now joined
+
+The [EndFrame audit](../docs/reconstruction/ENGINE_LOOP_HANDSHAKE.md) closes the ordinary action-receiver completion → downstream dependencies → EndFrame callback → preparation → next-root submission path. This supersedes the wholly unresolved outer caller in the preceding section. It protects the stated ordinary receiver-storage ordering; it does not make EndFrame a universal idle point. Next-root submission can occur before EndFrame's own final bookkeeping.
+
+The [root route](../docs/reconstruction/ENGINE_ROOT_STEP_ROUTE.md) identifies mode gates, the Step rebuild gate and world-stage endpoints. Two provider entry/terminal interiors remain unresolved. The [event branch](../docs/reconstruction/ENGINE_EVENT_SUBMISSION.md) bypasses root submission and uses an engine-owned handle also touched during restart; the platform operations and exact waiter remain open. The [explicit helper audit](../docs/reconstruction/WAIT_HELPER_DISPATCH.md) also closes accounting-before-worker for the second inspected dispatcher.
+
+Next native targets, in order:
+
+1. Mode-byte writers and the exact event-handle consumer: determine who requests the alternate end-frame path and what completion they observe.
+2. Both provider entry-to-terminal interiors: establish the outstanding dependency chains rather than treating endpoints as complete jobs.
+3. Active world/player/request identity and source-input freshness, followed by a bounded original execution trace when its observation contract is ready.
+4. Native control only after owner lifetime, submission exclusion and required thread context are established for that specific operation.
+
+The [alternate-propagation reference](../docs/reconstruction/ALTERNATE_DEPENDENCY_MODEL.md) adds executable branch bypass with ten synthetic tests. It complements local request/credit rules; a complete mixed normal/alternate scheduler interpreter remains to be implemented and checked against native evidence.

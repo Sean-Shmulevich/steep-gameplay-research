@@ -2,7 +2,7 @@
 
 This pass moves the unresolved rearm boundary outside the individual world's action graph. A concrete world adapter connects its conditional entry and terminal to an outer chain of eligible worlds. That chain is rebuilt by a callback labelled `Engine::EngineLoop::Step`. The engine's preparation routine also clears cached terminal dependencies before a root submission path. None of the inspected clearing helpers waits for prior receiver callbacks to finish.
 
-The remaining question is now the engine-loop caller's exclusion policy around preparation and repeated submission. The [previous rearm audit](SCHEDULER_REARM.md) established ordinary worker completion accounting; this document does not turn that local result into a universal engine-loop barrier.
+The subsequent [EndFrame audit](ENGINE_LOOP_HANDSHAKE.md) identifies the repeating caller and closes the ordinary dependency path before preparation and repeated submission. Alternate modes and stronger global-exclusion claims remain separate. The [previous rearm audit](SCHEDULER_REARM.md) established ordinary worker completion accounting; this document does not turn that local result into a universal engine-loop barrier.
 
 ## A world adapter joins the exact conditional wrapper
 
@@ -102,7 +102,7 @@ The event helper's complete behavior is not assigned here. More importantly, no 
 
 ## What remains to close
 
-The missing boundary is now the caller or dispatcher that invokes engine preparation/root submission again, and the rule that makes that invocation safe after the prior engine request. This pass does not prove:
+At this audit's original boundary, the caller or dispatcher invoking preparation again remained unidentified. The [follow-up](ENGINE_LOOP_HANDSHAKE.md) now resolves its ordinary EndFrame binding and dependency chain. The limits below describe what this audit alone did not prove:
 
 - that the inspected root submission reaches the bound Step job under every mode;
 - that completion of the current engine terminal is observed before preparation mutates cached action-terminal dependencies;

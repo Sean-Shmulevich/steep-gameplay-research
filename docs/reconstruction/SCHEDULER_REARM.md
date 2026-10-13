@@ -1,6 +1,6 @@
 # Motion-batch dispatch, completion and rearm
 
-The [batch-epoch audit](SCHEDULER_BATCH_EPOCH.md) established that the receiver count reaches zero when ranges are claimed, before their callbacks finish. This follow-up identifies the ordinary worker-thread caller and the separate execution accounting that covers those callbacks. It also identifies the action graph's conditional entry and terminal nodes. The link from one completed graph request to the next gather remains unresolved.
+The [batch-epoch audit](SCHEDULER_BATCH_EPOCH.md) established that the receiver count reaches zero when ranges are claimed, before their callbacks finish. This follow-up identifies the ordinary worker-thread caller and the separate execution accounting that covers those callbacks. It also identifies the action graph's conditional entry and terminal nodes. The subsequent [EndFrame audit](ENGINE_LOOP_HANDSHAKE.md) connects ordinary action completion to next-request preparation and submission. Mode-specific and live-identity limits remain.
 
 This is static evidence. No game was launched or attached to, and no original code payload is included here. Names below describe field roles established by the inspected operations; they are not recovered source declarations.
 
@@ -30,7 +30,7 @@ worker_thread_iteration():
         finish_dispatch(job)
 ```
 
-This summarizes one concrete ordinary dispatch path. It does not assert that every invocation of the worker must pass through that selector. An explicit wait/helper path also calls the execution wrapper and requires its own reservation accounting audit before extending the claim to all dispatchers.
+This summarizes one concrete ordinary dispatch path. It does not assert that every invocation of the worker must pass through that selector. The subsequent [wait-helper audit](WAIT_HELPER_DISPATCH.md) verifies that the explicit helper also increments both counts before calling the wrapper. These two inspected callers do not establish an exhaustive dispatcher inventory.
 
 ## Completion separates empty work from finished callbacks
 
@@ -123,7 +123,9 @@ The primary route reaches the action gather through the graph's established pred
 
 The conditional begin differs from ordinary queued begin. Applying the ordinary begin's state/count pseudocode to every job table would erase this distinction. Likewise, the terminal node is a dependency-graph node, not evidence that all engine work everywhere has finished.
 
-## The exact remaining join
+## The join investigated by subsequent audits
+
+The [caller audit](ACTION_REARM_CALLER.md) and [EndFrame follow-up](ENGINE_LOOP_HANDSHAKE.md) subsequently resolve the ordinary external chain described below. This section preserves the original question; it is no longer wholly unresolved.
 
 The unclosed edge is the caller that activates or submits this particular conditional wrapper for request `n + 1`, together with the gate that prevents it from reaching gather while receiver ranges from request `n` remain active.
 
