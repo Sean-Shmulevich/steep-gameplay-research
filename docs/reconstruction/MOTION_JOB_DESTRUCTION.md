@@ -131,3 +131,58 @@ They validate already implemented flag behavior, not actual destruction or nativ
 thread safety. The next missing join is the enclosing owner's lifecycle caller
 and its submission-exclusion contract. Other flag writers and aliases remain
 outside the bounded scan.
+
+## Containing-owner construction and deleting destructor
+
+A further pass matches the containing owner's constructor and destructor by their
+installed table. Construction allocates the action graph, calls its known graph
+constructor when allocation succeeds, and stores the result in the same owned
+member that teardown reads. The graph constructor is the one already joined to
+the motion and pre-physics jobs. A null allocation follows a local null-result
+path; no broader allocation failure/recovery contract is inferred.
+
+The containing table's first entry resolves to a deleting-destructor wrapper:
+
+```text
+construct_containing_owner(owner):
+    initialize_owner_base_and_members()
+    graph = allocate_action_graph_storage()
+    if graph != null:
+        construct_action_graph(graph)
+    owner.action_graph = graph
+    initialize_remaining_members()
+
+teardown_containing_owner(owner):
+    install_containing_owner_table(owner)
+    graph = owner.action_graph
+    if graph != null:
+        allocation_info = lookup_allocator_metadata(graph)
+        destroy_action_graph(graph)
+        release_graph_allocation(graph, allocation_info)
+    destroy_other_owner_members()
+
+deleting_destructor(owner, flags):
+    teardown_containing_owner(owner)
+    if flags & 1:
+        release_owner_storage(owner)
+    return owner
+```
+
+The returned pointer is the observed ABI result, not a usable object-lifetime
+handle after release. The wrapper passes the owner allocation size to its release
+helper. No separate stop operation appears in that wrapper before teardown.
+
+This closes the storage identity chain from containing-owner construction through
+action-graph construction to motion-job teardown and allocation release. It does
+not name the containing owner from unsupported RTTI or prove its lifecycle caller.
+The bounded aligned direct-call search found the deleting wrapper as a caller of
+the owner teardown, but found no aligned direct call to its constructor within the
+searched exception-directory ranges. Indirect factories, leaf functions lacking
+those ranges and protected code remain possible. Neither negative search is an
+exhaustive absence proof.
+
+The next productive static target is the factory/registration route supplying this
+owner and the virtual caller invoking its deleting destructor. Repeating searches
+only for direct calls to the inner motion destructor will not answer submission
+exclusion. Live owner/request identity and outer engine-event lifetime remain
+separate unresolved requirements.

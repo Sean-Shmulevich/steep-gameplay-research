@@ -137,3 +137,7 @@ Decoded the concrete range destructor and base-job wait. Remaining-count clear a
 ## Submission-to-destruction flag join
 
 Joined the ordinary submission usage flag to the conditional destructor wait field. Submission sets it even when already scheduled; dependency begin alone does not. Added two lifecycle regression cases and found the immediate containing-owner teardown/free edge without claiming it supplies a barrier. Full suite: 343 passing tests. The outer exclusion/lifetime contract remains unresolved.
+
+## Action-graph ownership closure
+
+Matched containing-owner constructor and deleting destructor through the installed table. Construction stores the allocated action graph in the exact member later destroyed and released. The deleting wrapper adds no visible stop call. Factory/virtual lifecycle caller remains open; direct-call searches are explicitly bounded. This is a storage-identity result, not a quiescence guarantee. Documentation-only pass; packaging and links verified.
