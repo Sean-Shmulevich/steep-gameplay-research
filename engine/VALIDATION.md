@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 302 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 314 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -50,3 +50,5 @@ Fourteen request-state tests now cover activation/release, two-predecessor joins
 Ten alternate-propagation tests preserve branch-specific callbacks, after-traversal clearing, current-hold rechecks and order-sensitive reconvergence. The full 288-test suite passed. EndFrame, root-route and event findings are separately bounded static evidence; these tests do not constitute a native frame trace or pause/resume test.
 
 Fourteen mixed-scheduler tests combine normal and alternate release with four job kinds, delayed claims, callback reservation, credits and repeated root submission. Malformed numeric token fields are rejected before mutation. Full suite: 302 passing tests. The three-cycle probe executes motion in cycles one and three, skips it in cycle two, and records two next-root submissions while EndFrame still has executions=1 and outstanding=1. Two complete reports matched exactly, with 189 trace records and zero drops. This demonstrates the independent serial model, not native concurrency or gameplay parity.
+
+The gameplay integration adds twelve tests covering actual phase dispatch, exact direct/mixed state parity across all five sports, rigid contact with graph animation, checkpoint/replay, controller ownership after restore, trace overflow and late-substep rollback. The full suite passed 314 tests. The runnable gameplay probe completed 12 outer frames and 28 substeps, with 28 reservations for each of the five phases, 28 ready terminals, 2,288 retained trace events, no drops and no incidents. Direct state/events, checkpoint continuation and replay matched. The graph is an owned design, not recovered native phase wiring.

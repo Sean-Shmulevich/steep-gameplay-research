@@ -1,14 +1,14 @@
 """Owned simulation transactions, checkpoints and inspection APIs."""
 import copy
 import math
-from . import animation, domains, physics, scheduler, scoring, camera, rigid, graph
+from . import animation, domains, physics, scheduler, scoring, camera, rigid, graph, gameplay_jobs
 from .assets import canonical, digest
 from .input import validate
 from .math3d import vector
 from .world import World
 from .trace import Trace
 SPORTS=('snowboard','ski','walking','wingsuit','paraglider')
-SCENARIO_KEYS={'schema_version','name','sport','world','body','physics','air','environment','scheduler','scoring','animation','resources','camera','physics_mode','rigid','trace'}
+SCENARIO_KEYS={'schema_version','name','sport','world','body','physics','air','environment','scheduler','scoring','animation','resources','camera','physics_mode','rigid','trace','execution_mode'}
 
 class Engine:
     def __init__(self, scenario=None):
@@ -22,6 +22,7 @@ class Engine:
         if sport not in SPORTS:raise ValueError('Unsupported sport')
         if scenario.get('physics_mode','point') not in ('point','rigid_cells'):raise ValueError('Unsupported physics mode')
         if scenario.get('physics_mode')=='rigid_cells' and sport not in ('snowboard','ski'):raise ValueError('Rigid cells require snowboard or ski')
+        if scenario.get('execution_mode','direct') not in ('direct','mixed'):raise ValueError('Unsupported execution mode')
         trace=Trace(scenario.get('trace',{}).get('capacity',4096))
         world=World(scenario.get('world'))
         raw=scenario.get('body',{})
@@ -109,42 +110,56 @@ class Engine:
         self.state=copy.deepcopy(self.last_good);self.state['paused']=False
         self.replay_base=self.checkpoint();self.commands=[]
         return self.snapshot()
+    def _phase_physics(self,context):
+        dt=context['dt'];before=context['before'];phase_fields=context['phase_fields']
+        b=self.state['body'];start=list(b['position']);controls=self.state['controls'];sport=self.scenario.get('sport','snowboard')
+        if sport in SPORTS[-2:]:
+            # Designed air-sport landing lifecycle: remain landed until scenario reset.
+            was_grounded=b['grounded']
+            if was_grounded:
+                info=dict(sport=sport,events=[],grounded=True,policy='synthetic landed hold until reset')
+                b['velocity']=[0.,0.,0.];b['angular_velocity']=[0.,0.,0.]
+            else:info=domains.step_air(b,controls,dt,dict(self.scenario.get('air',{}),sport=sport))
+            floor=self.world.sample(*b['position'][:2])['height']
+            if not was_grounded and b['position'][2]<=floor:
+                impact=max(0.,-b['velocity'][2]);b['position'][2]=floor;b['velocity'][2]=0;b['grounded']=True;b.pop('air',None)
+                info['events']=[dict(type='landing',quality='crash' if impact>8 else 'clean',impact_speed=impact,policy='synthetic')]
+            elif not was_grounded:b['grounded']=False
+        elif self.scenario.get('physics_mode')=='rigid_cells':info=rigid.step(b,controls,self.world,dt,dict(sport=sport,rigid=self.scenario.get('rigid',{})))
+        else:info=physics.step(b,controls,self.world,dt,dict(sport=sport,physics=self.scenario.get('physics',{})))
+        hit=self.world.sweep(start,b['position'])
+        if hit:
+            b['position']=[hit['point'][i]+hit['normal'][i]*.001 for i in range(3)]
+            inward=sum(x*y for x,y in zip(b['velocity'],hit['normal']))
+            if inward<0:b['velocity']=[v-inward*n for v,n in zip(b['velocity'],hit['normal'])]
+            b.pop('air',None);info.setdefault('events',[]).append(dict(type='obstacle',obstacle=hit['obstacle'],policy='synthetic'))
+        for event in info.get('events',[]):
+            if event.get('type')=='landing':info['landing_clean']=event['quality']=='clean';info['crashed']=event['quality']=='crash'
+        self.trace.emit('physics_complete',tick=before['tick'],body=b,events=info.get('events',[]),**phase_fields)
+        context['info']=info
+    def _phase_environment(self,context):
+        context['env']=domains.step_environment(self.state['environment'],context['dt'],self.scenario.get('environment',{}))
+    def _phase_scoring(self,context):
+        context['score_events']=scoring.update(self.state['scoring'],self.state['body'],context['info'],context['dt'],self.scenario.get('scoring',{}))
+    def _phase_animation(self,context):
+        pose=_evaluate_animation(self.rig,self.clips,self.state['animation'],context['dt'],self.state['body'],self.state['controls'],self.scenario.get('animation',{}))
+        self.state['animation']=pose['state'];self.state['pose']=pose
+        self.trace.emit('animation_complete',tick=context['before']['tick'],animation_state=pose['state'],**context['phase_fields'])
+    def _phase_camera(self,context):
+        camera.update(self.state['camera'],self.state['body'],context['dt'],self.scenario.get('camera',{}))
     def _tick(self,dt,derivative_dt):
         before=copy.deepcopy(self.state);event_count=len(self.events)
         invocation=self.trace.attempted
         phase_fields=dict(invocation=invocation,frame_invocation=getattr(self,'_frame_invocation',None),input_generation=before['input_generation'])
         self.trace.emit('substep_enter',tick=before['tick'],elapsed_dt=dt,derivative_dt=derivative_dt,**phase_fields)
         try:
-            b=self.state['body'];start=list(b['position']);controls=self.state['controls'];sport=self.scenario.get('sport','snowboard')
-            if sport in SPORTS[-2:]:
-                # Designed air-sport landing lifecycle: remain landed until scenario reset.
-                was_grounded=b['grounded']
-                if was_grounded:
-                    info=dict(sport=sport,events=[],grounded=True,policy='synthetic landed hold until reset')
-                    b['velocity']=[0.,0.,0.];b['angular_velocity']=[0.,0.,0.]
-                else:info=domains.step_air(b,controls,dt,dict(self.scenario.get('air',{}),sport=sport))
-                floor=self.world.sample(*b['position'][:2])['height']
-                if not was_grounded and b['position'][2]<=floor:
-                    impact=max(0.,-b['velocity'][2]);b['position'][2]=floor;b['velocity'][2]=0;b['grounded']=True;b.pop('air',None)
-                    info['events']=[dict(type='landing',quality='crash' if impact>8 else 'clean',impact_speed=impact,policy='synthetic')]
-                elif not was_grounded:b['grounded']=False
-            elif self.scenario.get('physics_mode')=='rigid_cells':info=rigid.step(b,controls,self.world,dt,dict(sport=sport,rigid=self.scenario.get('rigid',{})))
-            else:info=physics.step(b,controls,self.world,dt,dict(sport=sport,physics=self.scenario.get('physics',{})))
-            hit=self.world.sweep(start,b['position'])
-            if hit:
-                b['position']=[hit['point'][i]+hit['normal'][i]*.001 for i in range(3)]
-                inward=sum(x*y for x,y in zip(b['velocity'],hit['normal']))
-                if inward<0:b['velocity']=[v-inward*n for v,n in zip(b['velocity'],hit['normal'])]
-                b.pop('air',None);info.setdefault('events',[]).append(dict(type='obstacle',obstacle=hit['obstacle'],policy='synthetic'))
-            for event in info.get('events',[]):
-                if event.get('type')=='landing':info['landing_clean']=event['quality']=='clean';info['crashed']=event['quality']=='crash'
-            self.trace.emit('physics_complete',tick=before['tick'],body=b,events=info.get('events',[]),**phase_fields)
-            env=domains.step_environment(self.state['environment'],dt,self.scenario.get('environment',{}))
-            score_events=scoring.update(self.state['scoring'],b,info,dt,self.scenario.get('scoring',{}))
-            pose=_evaluate_animation(self.rig,self.clips,self.state['animation'],dt,b,controls,self.scenario.get('animation',{}))
-            self.state['animation']=pose['state'];self.state['pose']=pose
-            self.trace.emit('animation_complete',tick=before['tick'],animation_state=pose['state'],**phase_fields)
-            camera.update(self.state['camera'],b,dt,self.scenario.get('camera',{}))
+            context=dict(dt=dt,before=before,phase_fields=phase_fields)
+            phases={name:getattr(self,'_phase_'+name) for name in gameplay_jobs.PHASES}
+            if self.scenario.get('execution_mode','direct')=='mixed':
+                gameplay_jobs.run(phases,context,self.trace,tick=before['tick'],**phase_fields)
+            else:
+                for phase in phases.values():phase(context)
+            b=self.state['body'];info=context['info'];env=context['env'];score_events=context['score_events']
             self.state['tick']+=1;self.state['time']+=dt
             self.state['diagnostics']=dict(physics=info,environment=env,elapsed_dt=dt,derivative_dt=derivative_dt,derivative_dt_consumer='recorded; point controller currently consumes elapsed_dt only')
             self._validate_body(b);canonical(self.state)

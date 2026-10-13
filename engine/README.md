@@ -169,4 +169,10 @@ Use `snapshot()` for copied state and trace, and `export_replay()` for an owned 
 
 Run `python3 -m engine.examples.mixed_scheduler_probe` to print a synthetic three-cycle report from the recovered scheduler rules. It executes motion receivers, bypasses them for one cycle, then executes them again. The EndFrame-like callback submits the next root before its own dispatch accounting finishes. The report includes the observed counters and a bounded event trace.
 
-The [mixed scheduler contract](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) distinguishes range, one-shot callback, immediate terminal and conditional jobs. This is a standalone executable reference; gameplay phases have not been migrated to it. Native threads, queue priorities, platform event operations and original-game stepping remain outside its validation.
+The [mixed scheduler contract](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) distinguishes range, one-shot callback, immediate terminal and conditional jobs. This is a standalone executable reference; optional gameplay integration is described below. Native threads, queue priorities, platform event operations and original-game stepping remain outside its validation.
+
+## Gameplay with job traces
+
+Use `python3 -m engine.cli --scenario engine/examples/mixed_gameplay.json --ticks 120` for a headless run, or add `--serve --port 8770` to inspect that scenario locally. Its `execution_mode: mixed` runs actual gameplay phases through the scheduler and emits `gameplay_job` records into `/trace`. The direct path remains the default for other scenarios.
+
+Run `python3 -m engine.examples.gameplay_scheduler_probe` to compare direct and mixed state, event, replay and checkpoint behavior under changing frame intervals. See the [integration contract](../docs/reconstruction/GAMEPLAY_JOB_INTEGRATION.md) for the designed graph and rollback boundary.

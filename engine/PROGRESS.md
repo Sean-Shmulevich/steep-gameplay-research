@@ -74,3 +74,11 @@ The mixed scheduler now executes range, one-shot callback, immediate terminal an
 Static work connects both AI provider interiors, engine mode stage copies/setters, and the exact event consumer/request byte. Protected platform operations, outer interface implementation and owner destruction remain open. The roadmap is now organized by current evidence and release gates rather than accumulated pass notes.
 
 Next implementation: integrate owned gameplay phase dispatch through the mixed scheduler while preserving timing/replay behavior and labeling the chosen phase topology. Native investigation: protected event semantics and outer interface/owner lifecycle, followed by current player/world/request identity and source freshness. Full reconstruction and native pause/step remain incomplete.
+
+## Gameplay dispatch checkpoint
+
+Optional scenario `execution_mode: mixed` now runs real physics, environment, scoring, animation and camera callbacks through the mixed scheduler. Direct execution remains the default. Shared numerical methods preserve state hashes and events; a fresh graph per substep avoids stale callback ownership in checkpoints and controller rollback. Job events are forwarded into the bounded Engine trace.
+
+Full suite: 314 passing tests. The 12-frame probe ran 28 substeps with exact direct/mixed state parity, checkpoint continuation and replay, 2,288 trace records and no drops or incidents. The phase topology and per-substep graph lifetime are explicitly designed policies.
+
+Native research retained a candidate outer interface whose method reaches the known stop writer, but its actual caller argument binding remains unproved. The engine-owner destructor and exact event-close relationship remain unresolved; an unrelated nearby teardown was excluded. Next work: make phase inspection and safe owned mutation contracts useful through the testbench, while closing native identity/lifetime edges independently. Full native scheduler control remains unproved.

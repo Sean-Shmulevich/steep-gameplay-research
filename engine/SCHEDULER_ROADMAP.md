@@ -36,7 +36,7 @@ The [mixed scheduler](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) 
 python3 -m engine.examples.mixed_scheduler_probe
 ```
 
-The synthetic probe runs three cycles, bypassing motion on the second. It records the next root as scheduled while the EndFrame-like callback still has one execution and one outstanding dispatch. This is executable consistency with recovered local rules, not an original-game trace. Gameplay runtime phases have not yet been migrated to this scheduler.
+The synthetic probe runs three cycles, bypassing motion on the second. It records the next root as scheduled while the EndFrame-like callback still has one execution and one outstanding dispatch. This is executable consistency with recovered local rules, not an original-game trace. The [gameplay integration](../docs/reconstruction/GAMEPLAY_JOB_INTEGRATION.md) now offers optional mixed dispatch of actual phase work. Its five-phase graph and fresh instance per substep are explicit owned policies.
 
 The existing `JobExecutor` remains a designed dependency executor with retained callback identity, quiescent replacement and version-qualified restore. Its states are not native job states. `SchedulerController` owns serialized submissions, pause tokens, fixed-tick or planned-frame stepping and rollback for our runtime. Its guarantees require exclusive ownership and do not establish native pause safety.
 
@@ -54,7 +54,7 @@ The owned pause controller's separate 200-frame check completed 300 substeps wit
 
 ## Next implementation and release gates
 
-1. **Combined scheduler integration.** Exercise repeated requests, delayed claims, branch changes and credit gates before routing owned gameplay phases through the mixed model. Preserve the original distinctions rather than translating every job into a generic task.
+1. **Owned inspection and mutation contracts.** Optional mixed gameplay dispatch now passes parity, replay and rollback tests. Expose useful phase inspection and bounded owned mutations without inventing native topology or persistent graph ownership.
 2. **Native event contract.** Resolve protected handle operations, the outer interface callback and owner destruction. The request byte and wait-shaped helper are concrete leads, not sufficient pause guarantees.
 3. **Active membership and input freshness.** Join the selected player to registry entry 24, eligible world, scheduler instance and submitted request. Match action production to consumption; equal vector values or wall-clock input delivery are insufficient.
 4. **Original execution oracle.** At a justified observation boundary, record matched entry/exit events, job identities, branch reads and drop accounting. Keep independent thread timelines separate until causality is proved.
@@ -62,3 +62,5 @@ The owned pause controller's separate 200-frame check completed 300 substeps wit
 6. **Modding release.** Publish stable owned handles, phase-specific mutation contracts, callback version identity, failure containment and reproducible mod state. A working independent engine API does not imply safe modification of the original process.
 
 Full scheduler and engine reconstruction remain incomplete. Green reference tests, static endpoint graphs and local drain observations each support their own scope; none substitutes for these remaining release gates.
+
+The [outer-interface candidate](../docs/reconstruction/ENGINE_OUTER_INTERFACE.md) reaches the stop-request writer but lacks a proved caller argument binding. The [owner-destruction audit](../docs/reconstruction/ENGINE_OWNER_DESTRUCTION.md) retains the exact missing teardown and event-close joins. These narrower leads supersede any assumption that the consumer alone supplies an owner-lifetime guarantee.
