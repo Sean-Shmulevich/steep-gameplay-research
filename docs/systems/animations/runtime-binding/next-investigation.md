@@ -13,3 +13,12 @@ Exact addresses and byte locations are in [private/NEXT_TRACE.md](trace-recipe.m
 Expected discriminating results are an identity copy, a transformed lookup key, or an opaque indirection. An identity copy closes only the compiled-field-to-key edge. A transformed key needs its exact transform and source interpretation. Opaque indirection leaves the key unresolved. Full success requires a receipt connecting the known idle UID to the compiled field and the resulting handle key.
 
 No live experiment is proposed here. The pointer ownership required for safe actor/controller discovery remains open. Landing selection may follow only after both resource-binding assignments are proved.
+
+## Updated starting point
+
+The compiled-field-to-handle-key copy and callback-slot installer are now closed;
+see [animation research](../../../reconstruction/research/animation.md).
+The registered `AcquireAnimationResourceById` entry is a setter accepting a
+function pointer. Follow its registry invocation to identify the supplied lookup
+function. The authored UID-to-compiled-field conversion remains a separate open
+edge. Do not retrace the initializer as though either open edge had been proved.

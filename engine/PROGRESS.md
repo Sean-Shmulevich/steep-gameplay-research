@@ -408,3 +408,14 @@ Tests verify retained animation evidence, restored primary trace/state, checkpoi
 persistence and rollback even when diagnostic capture fails.
 
 Validation: all 413 independent tests pass.
+
+
+## Animation provider callback installer
+
+Static tracing identifies the callback table as an embedded owner subobject and
+connects its named `AcquireAnimationResourceById` registry entry to the exact
+setter of the slot called by handle initialization. The installed lookup function
+and authored UID conversion remain unresolved. Published portable pseudocode,
+constructor/teardown qualifications and a bounded next binding search. No game
+process was accessed and runtime behavior was not changed. Last full executable
+validation remains 413 tests; this pass requires documentation/package checks.

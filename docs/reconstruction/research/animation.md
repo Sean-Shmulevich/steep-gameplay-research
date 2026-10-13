@@ -8,7 +8,7 @@ The compiled animation node's resource-source member is copied **unchanged** int
 
 The initializer writes the key before selecting or comparing its provider object. If the handle already has a backing block whose provider pointer equals the requested provider, it returns without rebuilding that block. A key change therefore does not by itself require backing-block reconstruction in this function. Conversely, sharing a provider pointer does not mean two handles select the same resource: their comparison keys remain separate.
 
-The optional third initializer argument is an explicit provider-object override at this local boundary. When it is null, an indirect global callback is invoked with the resource key to obtain the provider. The provider's full class and callback implementation remain unresolved; do not give that callback a more specific resource-manager name yet.
+The optional third initializer argument is an explicit provider-object override at this local boundary. When it is null, the acquire-by-ID slot of a globally referenced callback table is invoked with the resource key to obtain the provider. The provider's full class and callback implementation remain unresolved; do not give that callback a more specific resource-manager name yet.
 
 ### Portable pseudocode
 
@@ -19,7 +19,7 @@ initialize_resource_handle(handle, source_key, provider_override):
     handle.comparison_key = source_key
     provider = provider_override
     if provider == null:
-        provider = global_provider_callback(source_key)
+        provider = provider_callbacks.acquire_by_id(source_key)
 
     if handle.backing != null and handle.backing.provider == provider:
         return
@@ -86,7 +86,60 @@ No new landing selector or procedural ordering was established in this pass. The
 ## Highest-value next probes
 
 1. Find writes to the compiled resource-source member in the authored-to-runtime conversion path. Use the known owned idle record UID and its separate output GUID as a paired witness. Success requires both input record interpretation and the member assignment, not a broad generic copy routine.
-2. Resolve the installer of the global provider callback and inspect its key-to-provider lookup. The callback global is zero in this local image, so this snapshot alone does not supply a callable concrete target. Static installer cross-references or a separately authorized guarded runtime read are appropriate alternatives.
+2. Follow the caller that supplies a function to the now-identified `AcquireAnimationResourceById` installer, then inspect that function's key-to-provider lookup. The global holds a callback-table pointer, not the function itself. The installed target remains unresolved; static binding callers are the next lead.
 3. Once the UID join closes, bind a known idle output to a graph instance and follow state/transition selection toward landing. Log chosen node, clip key, skeleton binding, phase, mask and transition reason before trying to infer final pose from screenshots.
 4. Keep backend phase advance and procedural layer scheduling as separate work. Provider binding success does not establish clock units or ordering.
 
+
+## Provider callback installation and ownership
+
+A bounded static follow-up closes the callback-slot installation edge. The parent
+constructor passes an embedded subobject to the callback-table constructor. That
+constructor publishes the subobject globally and clears its acquire-by-ID slot.
+It also registers a small setter under the exact name
+`AcquireAnimationResourceById` in a separate name-keyed registry. The setter
+loads the globally published table and stores its incoming function pointer into
+the same slot later called by resource-handle initialization.
+
+The registered function is therefore an **installer**, not the resource lookup
+implementation. The name identifies the binding; it does not establish the
+meaning of authored IDs or the implementation of the supplied function.
+
+```text
+construct_callback_table(table):
+    global_provider_callbacks = table
+    table.acquire_by_id = null
+    ... initialize other slots ...
+    separate_registry.register(name_key("AcquireAnimationResourceById"),
+                               install_acquire_by_id)
+    ... register other bindings ...
+
+install_acquire_by_id(supplied_function):
+    global_provider_callbacks.acquire_by_id = supplied_function
+
+select_provider(source_key, override):
+    if override != null:
+        return override
+    return global_provider_callbacks.acquire_by_id(source_key)
+```
+
+This pseudocode preserves local assignment/call order. Registry hashing and
+insertion remain opaque here. Neither the setter nor the inspected lookup path
+checks that the global table and callback are non-null. That requires an external
+initialization/lifetime contract; it does not prove a game defect. The constructor
+publishes the table before finishing its initialization. An inspected teardown
+clears the global, but no callback drain or concurrent safety follows from that
+clear alone.
+
+The parent constructor has no direct nonzero assignment to this embedded slot.
+Its other callees were not exhaustively traced. The supplied function's origin,
+registration invocation order, replacement policy and active owner remain open.
+The authored UID-to-compiled-key edge and active landing selection remain open
+as well.
+
+The follow-up inspected three pdata-linked constructor/teardown bodies and one
+12-byte leaf setter. Direct RIP-relative references were instruction-aligned
+against available exception ranges; this search does not cover arbitrary
+computed aliases or all leaf references. See the
+[trace recipe](../../systems/animations/runtime-binding/trace-recipe.md) for
+build-specific evidence anchors and the next bounded search.
