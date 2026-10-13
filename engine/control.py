@@ -145,6 +145,11 @@ class SchedulerController:
             else:
                 self._engine.advance(frame_dt)
         except BaseException as exc:
+            try:
+                failure_trace = self._engine.trace.excerpt_since(before['trace'].attempted)
+            except Exception as capture_error:
+                # Diagnostic collection must not prevent the owned rollback.
+                failure_trace = dict(complete=False, capture_error=type(capture_error).__name__)
             self._engine.__dict__.clear()
             self._engine.__dict__.update(before)
             self._engine.pause(True)
@@ -152,7 +157,9 @@ class SchedulerController:
             self._generation += 1
             self._pause_serial += 1
             self._incidents.append(dict(operation=operation, tick=self._engine.state['tick'],
-                                        error=type(exc).__name__, message=str(exc)[:2048]))
+                                        error=type(exc).__name__, message=str(exc)[:2048],
+                                        generation_before_failure=self._generation-1,
+                                        failure_trace=failure_trace))
             self._incidents = self._incidents[-100:]
             raise
         finally:

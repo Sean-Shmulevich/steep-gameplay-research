@@ -90,8 +90,8 @@ outcomes before treating an observation as retained simulation history. Failure
 before a normal return emits no return observation for that phase. A later abort
 can invalidate earlier phase observations while retaining them as Engine-level
 diagnostics. SchedulerController's wider rollback restores its prior trace on
-execution failure; use its incident record in that case rather than expecting the
-failed attempt to survive.
+execution failure; its incident record now retains a separate bounded failure
+excerpt rather than merging the failed attempt into the restored trace.
 The analyzer treats these as supplementary observations; it does not yet audit
 phase-state schema or compare their payloads.
 
@@ -101,3 +101,31 @@ large pose payloads. The existing record capacity and explicit drop accounting
 still apply; capacity bounds record count, not payload bytes. Read captures through
 the controller's `/trace` endpoint. No original-game animation or native thread
 causality is inferred from these owned execution records.
+
+
+## Controller failure excerpts
+
+Execution failures now preserve `failure_trace` inside the controller incident
+before restoring the engine. The main trace, numerical state and command history
+still roll back. The incident identifies `generation_before_failure`, since trace
+sequence numbers can be reused after rollback. Its error names the failed operation.
+
+An excerpt retains at most the last 64 captured records from that attempted
+operation, including optional phase-state observations. `first_sequence` and
+`next_sequence` describe the attempted interval. `dropped_at_capture` counts events
+never retained by the original trace capacity; `omitted_by_excerpt` counts retained
+records excluded by the 64-record limit. `complete` means neither loss occurred.
+It does not mean the operation succeeded or all relevant internal behavior was
+instrumented. An operation rejected before any trace event may have a complete,
+empty excerpt.
+
+These excerpts retain original sequence values and are not standalone restorable
+Trace envelopes. Do not pass them directly to the ordinary trace analyzer or merge
+them with a later successful retry. The incident list and excerpts survive owned
+controller checkpoints and are returned through the controller HTTP snapshots.
+The existing 100-incident limit remains. Both limits bound record counts, not the
+byte size of optional pose payloads.
+
+If collecting an excerpt raises an exception, the incident instead contains
+`complete: false` and `capture_error`. Rollback and the original execution exception
+remain authoritative. No native game crash dump or payload is collected.

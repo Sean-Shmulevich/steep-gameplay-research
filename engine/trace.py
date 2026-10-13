@@ -23,6 +23,25 @@ class Trace:
         return copy.deepcopy(dict(schema_version=1,capacity=self.capacity,records=self.records,
                                   attempted=self.attempted,dropped=self.dropped,complete=self.dropped==0,
                                   scope='serial reconstructed execution; not original game events'))
+    def excerpt_since(self, first_sequence, *, limit=64):
+        """Copy a bounded tail from one attempted interval, with explicit loss.
+
+        This excerpt is not a restorable Trace envelope. Original sequence values
+        are preserved; callers must label the execution/generation it came from.
+        """
+        if type(first_sequence) is not int or not 0<=first_sequence<=self.attempted:
+            raise ValueError('Invalid excerpt start sequence')
+        if type(limit) is not int or not 1<=limit<=4096:
+            raise ValueError('Excerpt record limit must be 1..4096')
+        retained=[r for r in self.records if r['sequence']>=first_sequence]
+        attempted=self.attempted-first_sequence
+        dropped=attempted-len(retained)
+        omitted=max(0,len(retained)-limit)
+        return copy.deepcopy(dict(schema_version=1,first_sequence=first_sequence,
+            next_sequence=self.attempted,attempted=attempted,records=retained[-limit:],
+            dropped_at_capture=dropped,omitted_by_excerpt=omitted,
+            complete=dropped==0 and omitted==0,
+            scope='attempted owned trace interval; not committed state or native events'))
     @classmethod
     def restore(cls,snapshot):
         canonical(snapshot)

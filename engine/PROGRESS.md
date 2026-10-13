@@ -397,3 +397,14 @@ parity, immutable observations, missing return on failure and explicit capacity
 loss. Captures remain attempted-phase evidence until frame outcome is known.
 
 Validation: all 410 independent tests pass.
+
+
+## Failure evidence outside rolled-back simulation state
+
+Controller execution incidents now preserve a separate 64-record attempted-trace
+excerpt before rollback. Generation and explicit capture/trim loss prevent stale
+sequence numbers or partial records from masquerading as committed history.
+Tests verify retained animation evidence, restored primary trace/state, checkpoint
+persistence and rollback even when diagnostic capture fails.
+
+Validation: all 413 independent tests pass.
