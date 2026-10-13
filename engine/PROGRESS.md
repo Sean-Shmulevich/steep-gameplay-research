@@ -152,3 +152,7 @@ completion, shared callback uniqueness and immutable readiness. This remains a
 serial model of chosen interleavings, not native thread execution. Factory search
 for the action owner found no direct pointer/call closure; indirect and protected
 paths remain open. Full suite: 348 passing tests.
+
+## Bounded interleaving exploration
+
+Added a symbolic worker-action explorer with fresh-prefix replay, explicit node/depth cutoffs and accounting/claim invariants. The two-worker, two-receiver fixture exhausts 315 nodes and 96 completed schedules. Blocked leaves remain distinct from quiescent completion. No native concurrency, receiver-body interleaving or external callback replay is claimed. Full suite: 352 passing tests.

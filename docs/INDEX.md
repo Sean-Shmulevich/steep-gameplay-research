@@ -195,3 +195,5 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Motion and pre-physics queue assignments](reconstruction/MOTION_QUEUE_ASSIGNMENTS.md)
 
 - [Motion job destruction and lifetime requirements](reconstruction/MOTION_JOB_DESTRUCTION.md)
+
+- [Bounded worker-interleaving explorer](reconstruction/INTERLEAVING_EXPLORER.md)
