@@ -25,7 +25,7 @@ is not established.
 ## Consumer control flow
 
 The following pseudocode preserves inspected ordering. Helper names describe local
-roles; the queue-pop algorithm and callback producers are not decoded here.
+roles; the queue-pop algorithm is detailed below and callback producers remain open.
 
 ```text
 idle_task_loop(thread):
@@ -68,7 +68,7 @@ The node goes back to the free list before the task's virtual execution. Node
 lifetime and task lifetime therefore differ. The free-list update packs a pointer
 in the lower 48 bits with an incremented 16-bit tag in the upper bits and retries
 an atomic compare/exchange. This is observed tagging arithmetic, not a proof that
-all ABA or reclamation hazards are excluded. The pop helper needs separate study.
+all ABA or reclamation hazards are excluded. The pop helper is decoded below.
 A non-null node with a null payload ends this local drain attempt after returning
 the node; it does not fall through to another pop.
 
@@ -100,6 +100,65 @@ The constructor, consumer and table were inspected from image SHA-256
 Protected event and thread-launch targets were not treated as recovered OS APIs.
 No payloads, image bytes or live addresses are included.
 
-Next joins are the manager's task submission path, task-node pop, stop-byte writer,
+Next joins are the manager's task submission path, stop-byte writer,
 event notification and concrete task subclasses. This pool is not yet integrated
 into the independent runtime; manufacturing its task graph would hide those gaps.
+
+
+## Tagged dummy-node pop
+
+A follow-up decoded the bounded leaf pop helper and the queue constructor. The
+constructor obtains a node, stores it as both tagged head and tagged tail with
+zero tags, and writes the queue's own identity into that node's next field. This
+identity is the empty-link sentinel. It is not a null-next convention. Allocation
+failure handling is not closed by this normal construction path.
+
+```text
+pop(queue):
+    repeat:
+        head = load(queue.tagged_head)
+        tail = load(queue.tagged_tail)
+        old_dummy = low48(head)
+        next = load(old_dummy.next)
+        if head != load(queue.tagged_head):
+            continue
+        if next == queue.identity:
+            return null
+        if old_dummy == low48(tail):
+            later_next = load(low48(tail).next)
+            proposed_tail = pack(low48(later_next), uint16(tag(tail) + 1))
+            if low48(proposed_tail) != queue.identity:
+                compare_exchange(queue.tagged_tail, tail, proposed_tail)
+            continue
+        payload = load(next.payload)
+        proposed_head = pack(low48(next), uint16(tag(head) + 1))
+        if compare_exchange(queue.tagged_head, head, proposed_head):
+            old_dummy.payload = payload
+            return old_dummy
+```
+
+The second head read validates only that tagged-head observation. The tail and
+next loads are separate observations. In the tail-help branch the link is read
+again; substituting the earlier `next` would erase a possible interleaving. Both
+success and failure of tail assistance return to the start. Only successful head
+advancement permits copying the payload and returning the old dummy. The next
+node becomes the new dummy; its identity is not the node returned to the consumer.
+
+[The executable decision helper](../../engine/tagged_task_queue.py) preserves these
+branches with caller-supplied load observations and deferred CAS outcomes. It does
+not read process memory, perform atomic operations or claim a complete queue.
+Synthetic tests distinguish changed-head retry, empty sentinel, a changed link
+between reads, lagging-tail assistance, old-dummy retirement, null payload and
+16-bit tag wrap. Pointer words in tests are synthetic identities.
+
+The shared manager factory now joins to this pool constructor and publishes its
+returned pointer to the exact global read by the consumer. Publication happens
+after the constructor has launched threads and waited for their startup
+notifications. The consumer's first event wait precedes its first manager load;
+this ordering is relevant to startup safety, but does not prove that an early
+notification or another caller cannot race publication. The factory and consumer
+alone do not establish the notification producer or exclusion contract.
+
+The task submission/push path, reclamation contract and stop writers remain open.
+Finite tag width and successful CAS do not by themselves prove memory lifetime
+safety or determinism across native executions.

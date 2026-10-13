@@ -240,3 +240,14 @@ installed table to a separate IdleThread consumer. Recovered normal task executi
 node recycling before task invocation, task destruction, optional callback gates
 and stop-check placement. This exposes an additional whole-engine quiescence
 boundary. Static-only pass; full suite remains last verified at 370 tests.
+
+
+## Idle-task dummy-node dequeue
+
+Decoded queue initialization and pop retry/help/head-advance branches, including
+payload transfer into the retired dummy and 16-bit tag wrap. Added an executable
+observation-to-decision helper without fabricating CAS success or concurrent
+memory safety. Joined manager factory publication to the consumer's global.
+Submission and reclamation remain unresolved.
+
+Validation: all 375 independent tests pass.
