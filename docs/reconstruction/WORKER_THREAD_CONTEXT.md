@@ -16,7 +16,7 @@ The helper retains the slot address and reloads its pointer for each invocation.
 ```text
 ordinary_worker_loop(worker):
     tls.scheduler_context = worker
-    initialize_worker_wait_state()
+    wait_adapter(worker.event_holder)
     while worker.run_flag:
         job = select_and_reserve_work_or_wait(worker)
         if job != null:
@@ -31,7 +31,7 @@ help_specific_job(job):
     inspect_state_and_outstanding_until_wait_condition()
 ```
 
-Names of the wait-state and exit helpers describe their role in the control flow;
+Names of the wait and exit helpers describe their role in the control flow;
 exact platform operations remain separately unverified. The decoded worker-loop
 return path does not clear this TLS slot locally. It does not follow that stale
 TLS escapes thread destruction: thread lifetime and external cleanup remain open.
@@ -294,3 +294,95 @@ both notification/idle orderings, notification coalescing, overflow and input
 validation. They do not implement CAS contention, native events, thread parking
 or a safe scheduler pause. The serial mixed scheduler remains independent of OS
 worker wakeups.
+
+
+## Construction and worker entry ordering
+
+The worker base constructor sets the selection-bypass byte to zero, run flag to
+one, notification counter to zero and configured mode to 255. The zero counter
+comes from the exhausted three-iteration category construction loop. Event-holder
+construction receives two boolean arguments, false and true. Its visible adapter
+maps these to four platform-call arguments:
+
+```text
+platform_create(0, not second_boolean, first_boolean, 0)
+# For this worker: platform_create(0, 0, 0, 0).
+worker.event_holder = returned_handle
+```
+
+The argument shape is compatible with an initially unsignaled auto-reset event,
+but the protected target has not been identified. That interpretation remains a
+lead, not a recovered event contract. The visible adapter stores the result
+without a local null check. Failure handling may exist elsewhere.
+
+The concrete worker table uses the same outer entry and loop as the base table,
+but overrides startup and exit hooks. Startup adds diagnostic scope around the
+base hook. Ignoring those optional diagnostic calls, ordinary entry is:
+
+```text
+worker_entry(worker):
+    tls.execution_mode = worker.configured_mode
+    thread_context_adapter(worker)
+    worker.startup_hook():
+        tls.worker_index = worker.configured_index
+        tls.secondary_mode = 6
+        tls.execution_mode = 6
+        register_worker(queue_manager, worker)
+    startup_notification_adapter(shared_startup_holder)
+    worker.loop():
+        tls.scheduler_context = worker
+        wait_adapter(worker.event_holder)
+        run_selection_and_execution_loop()
+        notify_adapter(shared_exit_holder)
+    worker.exit_hook()
+    count = signed_global_exit_callback_count
+    if count > 0:
+        visit_that_many_exit_callbacks_without_explicit_arguments(count)
+```
+
+The mode write of six is concrete; the meaning of that mode and the secondary TLS
+field remains unresolved. A default-mode job leaves this current execution mode
+unchanged. An explicitly tagged job temporarily replaces it through the previously
+decoded wrapper, subject to its normal-return and mode-stability conditions.
+Registration appends the worker pointer to the manager's worker array and increments
+a separate manager count. This joins initialization to the array used by the
+notification walk. It does not prove concurrent registration is supported.
+
+The startup notification adapter receives the dereferenced holder, integer one
+and zero before entering protected code. The setup caller waits on the same
+shared holder after its thread-start call. This establishes a concrete shared
+handshake path. The notification occurs after registration but before the loop's
+scheduler-context TLS assignment and initial wait. Its receipt therefore cannot
+prove that the worker has selected work or reached its first job hook. Exact
+platform operation and wait failure handling remain open.
+
+## Concrete worker exit hook
+
+The concrete exit override tests the worker's service latch. If it is set, it
+calls a separate global indirect target with these explicit arguments:
+
+```text
+if worker.service_latch:
+    cleanup_callback(address_of_global_cleanup_context,
+                     global_cleanup_value & ~3,
+                     0)
+worker.run_flag = 0
+```
+
+The callback target and context values are zero in the analyzed stored image;
+that does not describe a live initialized worker. Their writers and callback
+semantics remain open. There is no visible latch reset or null-target guard on
+this branch. The callback is distinct from the earlier service callback-table
+walk; no pairing of individual callback identities is established.
+
+Crucially, this hook runs after the ordinary worker loop returns. Its run-flag
+clear is not by itself a stop request that wakes a parked worker. Some preceding
+cause must let the loop return. The final exit-callback list is also distinct from
+the thread-entry stage table: its signed positive count is captured once, while
+the stage-table loops reread their unsigned count. No explicit argument registers
+are prepared for these exit callbacks.
+
+The base destructor releases the event holder and local queue storage before
+entering the base thread destructor. Whether outer ownership already stopped and
+joined the thread remains open. No safe destruction or pause operation follows
+from this local cleanup sequence alone.

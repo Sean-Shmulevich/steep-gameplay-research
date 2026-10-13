@@ -211,3 +211,13 @@ quiescence proof. Protected event semantics and the separate selection gate rema
 open. No game process was accessed.
 
 Validation: full independent suite passes 370 tests.
+
+
+## Worker startup and exit ordering
+
+Recovered constructor counter/flag defaults, event-creation argument mapping,
+concrete startup overrides and the registration-to-shared-startup handshake.
+Startup writes execution mode six before the loop. The concrete exit hook uses a
+separate latch-gated indirect cleanup target, then clears the run flag after loop
+return. Event API identity, cleanup producer and the preceding stop cause remain
+open. Static-only pass; last full suite remains 370 tests.
