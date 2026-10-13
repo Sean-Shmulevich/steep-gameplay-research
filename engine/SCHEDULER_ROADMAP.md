@@ -76,3 +76,8 @@ now connects idle decrement, coalesced notification and wait-region accounting.
 Pure counter helpers cover both operation orderings; protected event reset and
 signal-retention semantics remain unresolved. Waiting-count observations do not
 establish a native pause boundary.
+
+A separate [idle task worker pool](../docs/reconstruction/IDLE_TASK_WORKERS.md)
+executes and disposes of queued virtual tasks outside the ordinary range-job loop.
+Its submission, stop and lifetime joins remain open and must be considered before
+claiming whole-engine quiescence.

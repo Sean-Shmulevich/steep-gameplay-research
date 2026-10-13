@@ -231,3 +231,12 @@ per-worker startup handshakes. The initializer marker follows signal calls, with
 no worker-resume acknowledgment. Distinguished the initializer-owned collection
 from runtime registration storage. Bounded stop-writer searches did not close the
 external stop path. Documentation-only pass; last full suite remains 370 tests.
+
+
+## Separate idle task pool identity
+
+Rejected a same-offset worker-flag candidate by joining its actual constructor and
+installed table to a separate IdleThread consumer. Recovered normal task execution,
+node recycling before task invocation, task destruction, optional callback gates
+and stop-check placement. This exposes an additional whole-engine quiescence
+boundary. Static-only pass; full suite remains last verified at 370 tests.
