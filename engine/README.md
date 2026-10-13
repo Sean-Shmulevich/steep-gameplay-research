@@ -32,7 +32,7 @@ assert replay(record(engine)).state_hash() == engine.state_hash()
 engine.restore(checkpoint)
 ```
 
-`step(n)` advances n fixed development ticks, default 1/120 second. `advance(frame_dt)` uses the configured scheduler, either fixed accumulation or the unsmoothed recovered subdivision policy. They are distinct APIs; step does not simulate an outer-frame scheduler invocation. Both are recorded for replay. The subdivision derivative interval is recorded separately; the point controller currently consumes elapsed time only.
+`step(n)` advances n fixed development ticks, default 1/120 second. `advance(frame_dt)` uses the configured scheduler, either fixed accumulation or the recovered subdivision policy with optional smoothing. They are distinct APIs; step does not simulate an outer-frame scheduler invocation. Both are recorded for replay. The subdivision derivative interval is recorded separately; the point controller currently consumes elapsed time only.
 
 `snapshot()` returns a detached published-state copy. Checkpoints include body/controller histories, input state, scheduler, scoring, environment, animation, camera and scenario identity. Restoring a checkpoint starts a new replay base. Runtime failures roll back the tick and log a bounded incident record; `recover()` resumes the last good state after the caller repairs the fault. Frame advance is transactional across its selected substeps. This is a designed fault-containment policy, not recovered original crash recovery.
 
@@ -41,7 +41,7 @@ engine.restore(checkpoint)
 | Module | Working scope | Important limitation |
 | --- | --- | --- |
 | runtime/replay | Stepping, checkpoints, journals, hashes, recovery | Same-runtime determinism only; not original-game replay |
-| scheduler | Fixed mode; recovered unsmoothed subdivision | Full smoothing history/table policy absent |
+| scheduler | Fixed mode; recovered subdivision, smoothing ring and frequency table; per-frame plans | Native execution ownership and submission exclusion remain unresolved |
 | input | Validated per-command input snapshots | Generations are our design; original writer freshness open |
 | world | Analytic slope/bumps, material patches, swept cylindrical obstacles | Synthetic collision world |
 | physics | Snow/ski point contact, steering, brake, jump, independent air rotation, walking | Designed integration/controller; not the original full hull/constraint solver |
@@ -65,7 +65,7 @@ A scenario is a schema-version-1 JSON object with sport, world, body, physics_mo
 
 A resource bundle has `category`, `rig` and `clips`; their schema is documented in animation.py. Supply original resources only locally with appropriate access. Missing clip channels remain visible in diagnostics. No heuristic base/addon rig merge is disguised as recovered behavior.
 
-The JSON API accepts POST /api with op: input, step, run, pause, reset, checkpoint, restore, recover, resources, tune, inspect, cell or limb. `run` includes actions and count; `cell` supplies vertices, surface, dt and settings; `limb` supplies a request matching procedural.limb_target. GET /state, /resources and /replay return JSON. Invalid operations return a structured error. Standalone probes do not mutate the engine.
+The JSON API accepts POST /api with op: input, step, advance, run, pause, reset, checkpoint, restore, recover, resources, tune, inspect, cell or limb. `run` includes actions and count; `cell` supplies vertices, surface, dt and settings; `limb` supplies a request matching procedural.limb_target. GET /state, /resources, /trace and /replay return JSON. Invalid operations return a structured error. Standalone probes do not mutate the engine.
 
 ## Validation and next passes
 
@@ -91,3 +91,47 @@ python3 -m engine.cli --scenario /tmp/private-scene.json --serve --port 8771
 The scale and loop policy are explicit caller choices. The importer rejects output inside this public source repository. It does not infer active gameplay bindings, merge addon rigs, or extract root motion. The inspector displays the supplied resource category.
 
 `engine.archive.Archive` reads the observed version-27 archive index. `decode_blocks` validates observed compression framing, Adler checksums and output bounds; `NativeCodecs` optionally calls locally installed Zstandard/LZO libraries. Explicit library paths may be needed when system discovery fails. The simulation itself has no native codec dependency. These APIs read local files without modifying archives. See [validation scope](VALIDATION.md) before extending format support.
+
+## Scheduler experiments and phase traces
+
+[The scheduler roadmap](SCHEDULER_ROADMAP.md) is the current primary work plan. Run the supplied headless experiment with:
+
+```sh
+python3 -m engine.experiments engine/examples/scheduler_probe.json --output /tmp/scheduler-report.json
+```
+
+Commands commit input, advance explicit outer-frame intervals, step development ticks, checkpoint/restore, pause, or assert a state value. Reports include exact replay comparison, scheduler decisions, incidents and bounded phase traces. `advance` is also available over HTTP with `dt` in seconds. `step` intentionally bypasses frame planning.
+
+Set `scheduler.mode` to `subdivision` and `smoothing_enabled` to true to use the recovered ring/table arithmetic. Both elapsed and derivative intervals remain exposed. `scheduler.last_plan` records planned work; committed execution is identified separately in the trace. `trace.capacity` controls a nonwrapping buffer, and overflow sets `complete=false` with an explicit drop count. Read operations do not advance the simulation. These are owned-runtime guarantees.
+
+## Additional animation building blocks
+
+The following standalone modules are available for explicit callers. Their policies do not automatically become the default rider graph:
+
+- `rig_assembly.assemble`: base/addon index maps, collision diagnostics and caller-selected duplicate/attachment policies.
+- `root_motion.extract_motion`: explicit channel trajectory and conditional model-space removal. Loop accumulation is designed; physics coupling is absent.
+- `pose_pipeline.apply`: ordered named-bone orientation, landing alignment and intermediate limb targets. It does not claim a full-body IK solve.
+- `motion_state.update`: checkpointed observation of takeoff, flight, landing and crash phases. Selection and recovery durations are configurable substitutes.
+- `providers.initialize` and `resolve`: recovered local key/backing and lookup behavior, including output writes on an unavailable match. Original provider lifetime and authored UID conversion remain open.
+
+Tests use synthetic clips and rigs. No new original asset payloads are distributed.
+
+## Owned dependency executor
+
+`engine.jobs.JobExecutor` provides an experimental serial job API. Jobs declare dependencies and versioned handlers. Claiming retains a callback without executing it; only completed prerequisites release dependents. Handler replacement, removal and reset require no claimed/running callbacks. Failure blocks dependents and preserves an inspectable error.
+
+```python
+from engine.jobs import JobExecutor
+
+handlers = {
+    'advance': {'version': 'demo-1', 'callback': lambda engine: engine.advance(1/60)['tick']},
+    'snapshot': {'version': 'demo-1', 'callback': lambda engine: engine.snapshot()},
+}
+jobs = JobExecutor([
+    {'id': 'frame', 'handler': 'advance'},
+    {'id': 'inspect', 'handler': 'snapshot', 'depends_on': ['frame']},
+], handlers)
+results = jobs.run_ready(engine)
+```
+
+This executor is standalone; the gameplay runtime has not been refactored into its jobs. It is a testable boundary for future mods, not a native scheduler hook. Quiescent snapshots can be restored with matching handler version tokens. Python callables, closure state and callback side effects require caller ownership; version tokens alone cannot prove code identity, and side effects are not rolled back. This API is not a sandbox for untrusted mods.

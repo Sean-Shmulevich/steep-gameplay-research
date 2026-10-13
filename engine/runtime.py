@@ -6,8 +6,9 @@ from .assets import canonical, digest
 from .input import validate
 from .math3d import vector
 from .world import World
+from .trace import Trace
 SPORTS=('snowboard','ski','walking','wingsuit','paraglider')
-SCENARIO_KEYS={'schema_version','name','sport','world','body','physics','air','environment','scheduler','scoring','animation','resources','camera','physics_mode','rigid'}
+SCENARIO_KEYS={'schema_version','name','sport','world','body','physics','air','environment','scheduler','scoring','animation','resources','camera','physics_mode','rigid','trace'}
 
 class Engine:
     def __init__(self, scenario=None):
@@ -21,6 +22,7 @@ class Engine:
         if sport not in SPORTS:raise ValueError('Unsupported sport')
         if scenario.get('physics_mode','point') not in ('point','rigid_cells'):raise ValueError('Unsupported physics mode')
         if scenario.get('physics_mode')=='rigid_cells' and sport not in ('snowboard','ski'):raise ValueError('Rigid cells require snowboard or ski')
+        trace=Trace(scenario.get('trace',{}).get('capacity',4096))
         world=World(scenario.get('world'))
         raw=scenario.get('body',{})
         if set(raw)-{'position','velocity','orientation','angular_velocity','mass','grounded'}:raise ValueError('Unknown body field')
@@ -42,7 +44,7 @@ class Engine:
         pose=_evaluate_animation(rig,clips,{},0,body,validate({}),scenario.get('animation',{}))
         state=dict(tick=0,time=0.,body=body,environment={'time_of_day':12.,'weather_scalar':0.},scheduler={},scoring={},animation=pose['state'],pose=pose,controls=validate({}),input_generation=0,paused=False,diagnostics={},camera={})
         # Only publish a new scenario after validation succeeds.
-        self.scenario=scenario;self.world=world;self.rig=rig;self.clips=clips;self.state=state
+        self.trace=trace;self.scenario=scenario;self.world=world;self.rig=rig;self.clips=clips;self.state=state
         self.journal=[];self.events=[];self.incidents=[];self.last_good=copy.deepcopy(state);self.commands=[];self.replay_base=None
         return self.snapshot()
     @staticmethod
@@ -55,7 +57,7 @@ class Engine:
     def snapshot(self):return copy.deepcopy(self.state)
     def state_hash(self):return digest(self.state)
     def checkpoint(self):
-        return copy.deepcopy(dict(schema_version=1,scenario=self.scenario,scenario_hash=digest(self.scenario),state=self.state,journal=self.journal,events=self.events))
+        return copy.deepcopy(dict(schema_version=1,scenario=self.scenario,scenario_hash=digest(self.scenario),state=self.state,journal=self.journal,events=self.events,trace=self.trace.snapshot()))
     def restore(self,checkpoint):
         checkpoint=copy.deepcopy(checkpoint)
         if checkpoint.get('schema_version')!=1 or checkpoint.get('scenario_hash')!=digest(checkpoint['scenario']):raise ValueError('Invalid checkpoint scenario hash')
@@ -63,6 +65,7 @@ class Engine:
         if set(state)!=set(candidate.state) or type(state['tick']) is not int or state['tick']<0 or state['time']<0:raise ValueError('Invalid checkpoint state')
         state['controls']=validate(state['controls'])
         _evaluate_animation(candidate.rig,candidate.clips,state['animation'],0,state['body'],state['controls'],candidate.scenario.get('animation',{}))
+        if 'trace' in checkpoint:candidate.trace=Trace.restore(checkpoint['trace'])
         candidate.replay_base=copy.deepcopy(checkpoint);candidate.commands=[]
         candidate.state=state;candidate.journal=checkpoint['journal'];candidate.events=checkpoint['events'];candidate.last_good=copy.deepcopy(state)
         self.__dict__.update(candidate.__dict__)
@@ -99,6 +102,7 @@ class Engine:
         self.state['controls']=actions;self.state['input_generation']+=1
         self.journal.append(dict(tick=self.state['tick'],generation=self.state['input_generation'],actions=copy.deepcopy(actions)))
         self.commands.append(dict(op='input',actions=copy.deepcopy(actions)))
+        self.trace.emit('input_committed',tick=self.state['tick'],generation=self.state['input_generation'],actions=actions)
     def pause(self,value=True):
         self.state['paused']=bool(value);self.commands.append(dict(op='pause',value=bool(value)))
     def recover(self):
@@ -107,6 +111,9 @@ class Engine:
         return self.snapshot()
     def _tick(self,dt,derivative_dt):
         before=copy.deepcopy(self.state);event_count=len(self.events)
+        invocation=self.trace.attempted
+        phase_fields=dict(invocation=invocation,frame_invocation=getattr(self,'_frame_invocation',None),input_generation=before['input_generation'])
+        self.trace.emit('substep_enter',tick=before['tick'],elapsed_dt=dt,derivative_dt=derivative_dt,**phase_fields)
         try:
             b=self.state['body'];start=list(b['position']);controls=self.state['controls'];sport=self.scenario.get('sport','snowboard')
             if sport in SPORTS[-2:]:
@@ -131,20 +138,24 @@ class Engine:
                 b.pop('air',None);info.setdefault('events',[]).append(dict(type='obstacle',obstacle=hit['obstacle'],policy='synthetic'))
             for event in info.get('events',[]):
                 if event.get('type')=='landing':info['landing_clean']=event['quality']=='clean';info['crashed']=event['quality']=='crash'
+            self.trace.emit('physics_complete',tick=before['tick'],body=b,events=info.get('events',[]),**phase_fields)
             env=domains.step_environment(self.state['environment'],dt,self.scenario.get('environment',{}))
             score_events=scoring.update(self.state['scoring'],b,info,dt,self.scenario.get('scoring',{}))
             pose=_evaluate_animation(self.rig,self.clips,self.state['animation'],dt,b,controls,self.scenario.get('animation',{}))
             self.state['animation']=pose['state'];self.state['pose']=pose
+            self.trace.emit('animation_complete',tick=before['tick'],animation_state=pose['state'],**phase_fields)
             camera.update(self.state['camera'],b,dt,self.scenario.get('camera',{}))
             self.state['tick']+=1;self.state['time']+=dt
             self.state['diagnostics']=dict(physics=info,environment=env,elapsed_dt=dt,derivative_dt=derivative_dt,derivative_dt_consumer='recorded; point controller currently consumes elapsed_dt only')
             self._validate_body(b);canonical(self.state)
             for event in info.get('events',[])+score_events:self.events.append(dict(event,tick=self.state['tick']))
             self.events=self.events[-4096:];self.last_good=copy.deepcopy(self.state)
+            self.trace.emit('substep_committed',tick=self.state['tick'],state_hash=self.state_hash(),**phase_fields)
         except Exception as exc:
             self.state=before;self.state['paused']=True;self.events=self.events[:event_count]
             self.incidents.append(dict(tick=before['tick'],error=type(exc).__name__,message=str(exc)))
             self.incidents=self.incidents[-100:]
+            self.trace.emit('substep_aborted',tick=before['tick'],error=type(exc).__name__,**phase_fields)
             raise
     def step(self,count=1):
         if type(count) is not int or not 0<=count<=100000:raise ValueError('Invalid step count')
@@ -161,14 +172,21 @@ class Engine:
     def advance(self,frame_dt):
         if self.state['paused']:return self.snapshot()
         before=copy.deepcopy(self.state);events=copy.deepcopy(self.events);last_good=copy.deepcopy(self.last_good)
+        self._frame_invocation=self.trace.attempted
+        self.trace.emit('frame_enter',tick=before['tick'],frame_invocation=self._frame_invocation)
         try:
             steps=scheduler.schedule(self.state['scheduler'],frame_dt,self.scenario.get('scheduler',{}))
+            self.trace.emit('frame_planned',tick=self.state['tick'],frame_dt=frame_dt,steps=steps,scheduler=self.state['scheduler'],frame_invocation=self._frame_invocation)
             if any(s['elapsed_dt']>.05 for s in steps):raise ValueError('Substep exceeds controller domain')
             for step in steps:self._tick(step['elapsed_dt'],step['derivative_dt'])
             self.commands.append(dict(op='advance',frame_dt=frame_dt))
+            self.trace.emit('frame_committed',tick=self.state['tick'],frame_dt=frame_dt,state_hash=self.state_hash(),frame_invocation=self._frame_invocation)
         except Exception:
             self.state=before;self.events=events;self.last_good=last_good
+            self.trace.emit('frame_aborted',tick=before['tick'],frame_dt=frame_dt if isinstance(frame_dt,(int,float)) and math.isfinite(frame_dt) else None,frame_invocation=self._frame_invocation)
             raise
+        finally:
+            self._frame_invocation=None
         return self.snapshot()
 
 

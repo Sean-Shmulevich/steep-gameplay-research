@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 147 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 228 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -26,3 +26,11 @@ An imported private base rig and navigation clip also completed a 120-tick engin
 Checkpoint/replay tests include graph clocks and configuration changes. Resource replacement and tuning establish a fresh replay base. Exact hash equality is a same-runtime property; it is not a claim of cross-platform numerical determinism or deterministic replay inside the original game.
 
 Original clip payloads, decoded skeleton arrays, private scenes and raw observation receipts are deliberately absent from this repository. Public tests use invented transforms and clips. Active rig merging, authored graph identity, root-motion ownership and actor-to-pose timing remain open reconstruction tasks.
+
+## Scheduler pass
+
+Recovered smoothing and constructor initialization have boundary tests for history wrap/reset, raw-versus-capped intervals, policy overrides, float32 thresholds and checkpoint continuation. The dependency executor tests delayed claims, retained callback identity, failure-blocked dependencies, safe replacement and quiescent restoration. Those executor lifecycle rules are designed behavior.
+
+The scripted scheduler experiment completed 171 frames and 280 substeps with exact replay agreement and all 1,636 trace records retained. A separate five-sport run completed 3,600 ticks per sport with matching replay hashes and zero recorded incidents. Its default bounded traces may overflow; those stress results validate state replay, not complete trace retention.
+
+Static verification and newly closed conditional ordering are documented in the linked scheduler audits. No original game was launched or controlled in this pass. The original action writer, current membership/request join and submission-exclusion protocol remain open.

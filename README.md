@@ -8,6 +8,8 @@ This repository contains findings, selected executable reference math, synthetic
 
 `python3 -m engine.cli --serve --port 8770` starts the local inspection lab. See [engine setup and API](engine/README.md) and [active reconstruction progress](engine/PROGRESS.md). The engine combines recovered local kernels with explicitly labeled substitute policies and synthetic content.
 
+Current priority: [scheduler reconstruction and modding release gates](engine/SCHEDULER_ROADMAP.md). The reconstructed scheduler now exposes smoothing decisions, frame plans and bounded execution traces. Original-game pause/step safety remains unresolved.
+
 ## Start here
 
 - [Current findings and open questions](docs/STATUS.md)

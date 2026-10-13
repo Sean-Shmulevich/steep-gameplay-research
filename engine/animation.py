@@ -30,7 +30,7 @@ def _vector(value, n, label):
 
 def _quat(q):
     q = _vector(q, 4, 'quaternion')
-    norm = math.sqrt(sum(x*x for x in q))
+    norm = math.hypot(*q)
     if norm < 1e-12:
         raise ValueError('zero quaternion')
     return [x/norm for x in q]
@@ -139,7 +139,7 @@ def _sample(clip, time, name, fallback):
         return result
     if recovered:
         # The integer tick chooses a segment; interpolation still uses continuous time.
-        frame=math.trunc(animation_playback.mul(animation_playback.f32(time),60.))
+        frame=_query_tick(time)
         frames=[round(key['time']*60) for key in keys]
         i=max(0,min(bisect.bisect_right(frames,frame)-1,len(keys)-1))
         if i==len(keys)-1:return _pose(keys[i])
@@ -261,8 +261,10 @@ def default_resources():
 
 
 def _sample_separate(keys,time,kind,recovered):
-    query=math.trunc(animation_playback.mul(animation_playback.f32(time),60.)) if recovered else time
+    query=_query_tick(time) if recovered else time
     coordinates=[round(key['time']*60) if recovered else key['time'] for key in keys]
+    if query < coordinates[0]:
+        return list(keys[0]['value']) if kind=='translation' else _quat(keys[0]['value'])
     i=max(0,min(bisect.bisect_right(coordinates,query)-1,len(keys)-1))
     a=keys[i]['value']
     if i==len(keys)-1:return list(a) if kind=='translation' else _quat(a)
@@ -270,3 +272,10 @@ def _sample_separate(keys,time,kind,recovered):
     weight=max(0.,min(1.,(time-left['time'])/(right['time']-left['time'])))
     if kind=='translation':return animation_blending.linear_blend(a,right['value'],weight)
     return animation_blending.bone_rotation_blend(a,right['value'],weight) if recovered else _slerp(a,right['value'],weight)
+
+
+def _query_tick(time):
+    try:
+        return math.trunc(animation_playback.mul(animation_playback.f32(time),60.))
+    except (OverflowError,ValueError) as exc:
+        raise ValueError('Playback time exceeds finite float32 tick range') from exc

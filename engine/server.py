@@ -1,5 +1,6 @@
 """Loopback JSON testbench and browser inspector; one shared simulation."""
 import json
+import math
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from .runtime import Engine
@@ -18,6 +19,7 @@ def make_server(port=8770,scenario=None):
             elif self.path=='/state':self.send(engine.snapshot())
             elif self.path=='/resources':self.send(dict(rig=engine.rig,category=engine.scenario.get('resources',{}).get('category','synthetic'),inspection=inspect_rig(engine.rig,engine.clips),world=engine.world.to_dict()))
             elif self.path=='/replay':self.send(record(engine))
+            elif self.path=='/trace':self.send(engine.trace.snapshot())
             else:self.send({'error':'Not found'},404)
         def do_POST(self):
             origin=self.headers.get('Origin')
@@ -28,6 +30,11 @@ def make_server(port=8770,scenario=None):
                 if not 0<length<=2_000_000:raise ValueError('Invalid request size')
                 req=json.loads(self.rfile.read(length));op=req.get('op')
                 if op=='input':engine.set_input(req['actions'])
+                elif op=='advance':
+                    dt=req['dt']
+                    if isinstance(dt,bool) or not isinstance(dt,(int,float)) or not math.isfinite(dt) or not 0<=dt<=1:
+                        raise ValueError('Request frame interval must be in [0,1] seconds')
+                    engine.advance(dt)
                 elif op=='step':
                     count=req.get('count',1)
                     if type(count) is not int or not 0<=count<=2400:raise ValueError('Request step limit is 2400')

@@ -46,3 +46,11 @@ These are research priorities, not claims that the relevant implementation is al
 ## Reconstruction-focused review
 
 Five focused investigations checked skeletal joins, animation providers, asset interfaces, scheduler contracts and the snow input callback. See [reconstruction and probes](reconstruction/MODDING_AND_PROBES.md) and the research links in the [implementation guide](ENGINE_RECONSTRUCTION.md). The overview previously overstated the final-palette gap; the existing skinning chapter already closes its local arithmetic. These checks did not launch the game or prove complete engine parity.
+
+## Scheduler reconstruction update
+
+The [smoothing audit](reconstruction/SCHEDULER_SMOOTHING_AUDIT.md) supplies the complete local ring/table arithmetic, now implemented in the independent engine. The [constructor audit](reconstruction/SCHEDULER_LIFETIME_AUDIT.md) establishes the inspected timing object's startup values and ten-entry allocation.
+
+The [input audit](reconstruction/SCHEDULER_INPUT_AUDIT.md) closes a conditional static chain from the registered pre-simulation motion batch through `BeforeSimulation` to `PhysicsWorldStep`, including a callback route to player action ingestion. This narrows the earlier statement that ingestion placement was wholly unresolved. It still requires current selected-player membership, matching request identity and a proved sample writer before claiming exact input age or ordering for a captured player update.
+
+The manager constructor's final setup helper was checked and does not establish a sample commit. Context/binding population remains the concrete writer lead. Native pause/step remains gated on owner lifetime and exclusion of new submissions. See the [current scheduler roadmap](../engine/SCHEDULER_ROADMAP.md).

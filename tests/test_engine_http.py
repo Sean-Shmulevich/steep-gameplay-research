@@ -19,3 +19,13 @@ class HTTPTests(unittest.TestCase):
     def test_view_and_resources(self):
         with urllib.request.urlopen(self.url) as response:self.assertIn(b'<canvas',response.read())
         with urllib.request.urlopen(self.url+'/resources') as response:self.assertEqual(len(json.load(response)['rig']['bones']),3)
+    def test_frame_plan_trace_and_reads(self):
+        self.request({'op':'reset','scenario':{'scheduler':{'mode':'subdivision','smoothing_enabled':True}}})
+        result=self.request({'op':'advance','dt':.016666667})
+        self.assertEqual(result['state']['scheduler']['last_count'],2)
+        with urllib.request.urlopen(self.url+'/trace') as response:trace=json.load(response)
+        self.assertTrue(trace['complete'])
+        kinds=[r['kind'] for r in trace['records']]
+        self.assertEqual(kinds.count('substep_committed'),2)
+        self.assertEqual(kinds[-1],'frame_committed')
+        with urllib.request.urlopen(self.url+'/state') as response:self.assertEqual(json.load(response)['tick'],2)
