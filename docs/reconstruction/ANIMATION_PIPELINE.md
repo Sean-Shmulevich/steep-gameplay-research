@@ -48,4 +48,12 @@ Walking controller behavior remains a research gap. For an independent implement
 
 Use invented assets first: an idle three-joint rig; a two-clip crossfade; an additive lean; a loop endpoint; a skipped LOD subtree; a landing on tilted ground; an airborne full rotation followed by contact. Check zero-input drift, quaternion norm, parent composition, event duplication, blend order, foot penetration and independence of body momentum from pose evaluation. Use supplied original clips only in a private integration suite.
 
-Open joins remain resource UID to runtime handle, active landing selection, complete procedural layer order, original foot/board constraints, final skinning palette and the full walking state machine. A visually convincing substitute does not close those questions.
+Open joins remain authored resource UID to compiled source key, active landing selection, complete procedural layer order, original foot/board constraints, active rig selection, packed vertex/resource-view conversion and the full walking state machine. A visually convincing substitute does not close those questions.
+
+## Skeletal findings that supersede broader uncertainty
+
+The [skinning chapter](../systems/animations/skinning/CLIENT_GUIDE.txt) already establishes final palette production, joint-remap fallback, origin rebasing and four/eight-influence GPU position kernels. The remaining questions concern active rigs and packed input conversion, not the existence of a palette formula. The [IK solve chapter](../systems/animations/ik-solve/CLIENT_GUIDE.txt) establishes the graph callback bridge, a two-segment intermediate-target kernel and weighted bone writes. Complete equipment-specific scheduling and all full-body stages remain open.
+
+The [pose assembly chapter](../systems/animations/pose-assembly/CLIENT_GUIDE.txt) also documents conditional root-motion removal. Absence of a separate root-motion section in an asset record does not mean the runtime has no root-motion handling. The body-displacement consumer remains unresolved.
+
+The [latest binding check](research/animation.md) establishes that the compiled source key is copied unchanged into the provider lookup key. The authored-to-compiled conversion still needs a producer trace. See the [skeletal review](research/skeleton.md) for sorted hash lookup, duplicate handling and active addon rig questions.

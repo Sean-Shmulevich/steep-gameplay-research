@@ -9,6 +9,7 @@ Standard-library Python implementations of selected local rules. Provenance and 
 | animation_blending | Ordered weights, quaternion paths, masks and phase helpers |
 | animation_playback | Phase, markers, sampling and transition precedence |
 | landing_pose | Alignment, delayed tilt and translation shift |
+| skinning | Palette branches, remapping, bone anchors and four/eight-influence position math |
 | skeleton | Hierarchy math; asset-dependent entrypoint removed |
 | animation_codec | New minimal decoder primitives from Studio documentation; synthetic tests only |
 

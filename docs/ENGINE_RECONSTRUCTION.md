@@ -118,3 +118,10 @@ For a scoped module, completeness means its agreed behavior and dependencies are
 - [Machine-readable contracts](../contracts/systems.json)
 - [Executable references and tests](../reference/README.md)
 - [Selected resource relationships](../data/resource-links.json)
+
+- [Reconstruction, mods and probes](reconstruction/MODDING_AND_PROBES.md)
+- [Skeletal and active-rig review](reconstruction/research/skeleton.md)
+- [Animation provider binding](reconstruction/research/animation.md)
+- [Asset interface review](reconstruction/research/assets.md)
+- [Scheduler and publication contracts](reconstruction/research/scheduler.md)
+- [Shared motion and snow action storage](reconstruction/research/input-probes.md)

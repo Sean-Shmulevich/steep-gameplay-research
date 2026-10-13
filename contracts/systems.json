@@ -29,7 +29,7 @@
       "id": "animation",
       "inputs": "clip channels, graph weights, phase, local pose",
       "outputs": "model pose",
-      "open_boundary": "runtime selection and final palette",
+      "open_boundary": "authored UID to compiled key, active rig merge and selection, packed buffer conversion, full procedural scheduling",
       "source": "docs/systems/animations/OVERVIEW.txt",
       "acceptance": "Boundary tests, evidence map, explicit frame/unit/cadence, and separate substitute policy"
     },

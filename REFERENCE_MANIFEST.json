@@ -66,6 +66,17 @@
         "Only 32-bit quaternion and time-key decoding; bounds checks are defensive design choices."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.skinning",
+      "source": "analysis/snow_game/animations/skinning/reference.py",
+      "source_sha256": "87071102a837f2c8510c44aacd60c2e25026abdc664f04d2057681b8db519dda",
+      "published": "reference/skinning.py",
+      "published_sha256": "f526b50ddf19be5e938513cacb4f8ca86d106afbb16ba95d26d8811e34a70c31",
+      "adaptations": [
+        "Removed asset-dependent main and file-reading imports; synthetic tests only."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

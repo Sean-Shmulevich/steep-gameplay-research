@@ -4,10 +4,10 @@ Snapshot: 2026-10-13. This page qualifies older reports. No audited percentage o
 
 | System | Established locally | Still open |
 | --- | --- | --- |
-| Snow and input shaping | Immersion/contact arithmetic, adhesion, density response, cookers, spring paths, multiple material/profile joins | Full active-branch coverage, exact device-to-substep timing, terrain-wide selection |
+| Snow and input shaping | Immersion/contact arithmetic, adhesion, density response, cookers, spring paths, multiple material/profile joins | Full active-branch coverage, action-vector writer/freshness, exact device-to-substep timing, terrain-wide selection |
 | Body mass | One live main-body inverse mass agrees exactly with the decoded hull-volume/density calculation | All body representations, combined rider mass, later state-dependent changes |
 | Tricks | Proposal arithmetic, ski axis remapping, assistance and reset paths, entity target publication | Final player-body actuation through other components/children; universal spin/flip behavior |
-| Animation | Representative decoded-clip research, playback/blending kernels, graph scalar production, runtime handle initialization leads | Complete authored clip-to-runtime key join, active landing selection, full masks and procedural scheduling |
+| Animation | Representative decoded-clip research, playback/blending kernels, graph scalar production, compiled-key to provider-key assignment, palette production and joint-remap fallback | Authored UID to compiled key, active rig addon merge, active landing selection, packed buffer conversion and full procedural scheduling |
 | Contact and landing | Selected profile-to-force path, timer and cached-flag writers, observed moving-player contact transitions | Complete landing/crash classifier and exact update order |
 | Walking | Configuration and animation metadata leads | Movement-speed consumers, snow-depth effects, active controller ownership, root-motion/IK coupling |
 | Time and weather | Controller ownership, clock progression and gates, weather interpolation, ordered preset blending | Concrete track evaluator/time encoding, remaining selection, visual/physical wind joins, weather-to-grip effects |
@@ -37,8 +37,12 @@ The subsequent automated Space attempt never reached gameplay: startup/control h
 1. Arm the recorder before an ordinary input command; preserve before/after history and reduce measured sampling gaps.
 2. Finish the authored animation identity-to-runtime handle join, then trace landing selection.
 3. Follow child/component trick target consumers to the actual physical body or classify their other role.
-4. Trace the concrete input-manager vector callback into storage and sample freshness.
+4. Trace the shared action-vector writer and publication generation; the concrete snow callback now joins the motion action store.
 5. Recover the environment track evaluator's clock conversion.
 6. Establish a separate on-foot controller path before applying the testbench to walking.
 
 These are research priorities, not claims that the relevant implementation is already recovered.
+
+## Reconstruction-focused review
+
+Five focused investigations checked skeletal joins, animation providers, asset interfaces, scheduler contracts and the snow input callback. See [reconstruction and probes](reconstruction/MODDING_AND_PROBES.md) and the research links in the [implementation guide](ENGINE_RECONSTRUCTION.md). The overview previously overstated the final-palette gap; the existing skinning chapter already closes its local arithmetic. These checks did not launch the game or prove complete engine parity.

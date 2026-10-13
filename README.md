@@ -45,6 +45,8 @@ Except for the reviewed modules listed in [Executable references](reference/READ
 
 See the [animation pipeline](docs/reconstruction/ANIMATION_PIPELINE.md), [asset decoding strategy](docs/reconstruction/ASSET_PIPELINE.md), [implementation tasks](docs/reconstruction/IMPLEMENTATION_TASKS.md) and [testbench design](docs/reconstruction/TESTBENCH.md). Studio documentation was reviewed read-only; its provenance and unverified boundaries are preserved.
 
+For the latest focused results, see [modding and probes](docs/reconstruction/MODDING_AND_PROBES.md), [skeletal joins](docs/reconstruction/research/skeleton.md), [animation binding](docs/reconstruction/research/animation.md), and [shared action storage](docs/reconstruction/research/input-probes.md). These are offline findings, not new live-game validation.
+
 ## Repository checks
 
 Run `python3 -m unittest discover -s tests -v` for reference and synthetic fixture tests. Run `python3 scripts/verify_repository.py` to check this publication's text-only inventory, provenance hashes, and internal Markdown links. This checks packaging, not gameplay correctness.

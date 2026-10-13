@@ -1,0 +1,44 @@
+{
+  "scope": "Five focused offline investigations; no live execution, source payload or raw disassembly included. Reports distinguish new edges from rechecked existing findings.",
+  "files": [
+    {
+      "source": "publication-review/reconstruction-pass/animation.md",
+      "source_sha256": "9bf0369852ba10c9155f0e103bcdeda68379bd25291c26049a0042cf981ddfd7",
+      "published": "docs/reconstruction/research/animation.md",
+      "published_sha256": "9fb9ac7c59fb9c80f10b3deb2692f7d9829a74f834a9bd15670de97b2021fda1",
+      "adaptations": [
+        "Private disassembly anchors omitted; full local report retained."
+      ]
+    },
+    {
+      "source": "publication-review/reconstruction-pass/skeleton.md",
+      "source_sha256": "d6ebf8e604c2af383ef4d421fdba39bcf973659f1a7737bed60ee8ea9b8a05b1",
+      "published": "docs/reconstruction/research/skeleton.md",
+      "published_sha256": "d6ebf8e604c2af383ef4d421fdba39bcf973659f1a7737bed60ee8ea9b8a05b1",
+      "adaptations": []
+    },
+    {
+      "source": "publication-review/reconstruction-pass/assets.md",
+      "source_sha256": "60f01a34c5e7c7e4f798a5fa098b76d19fb39be8851cd49e33555bbb942d8143",
+      "published": "docs/reconstruction/research/assets.md",
+      "published_sha256": "60f01a34c5e7c7e4f798a5fa098b76d19fb39be8851cd49e33555bbb942d8143",
+      "adaptations": []
+    },
+    {
+      "source": "publication-review/reconstruction-pass/scheduler.md",
+      "source_sha256": "2fde75e87ccd74156995e2044681c963cece61e6ed5e7470afa7b395f4d58c80",
+      "published": "docs/reconstruction/research/scheduler.md",
+      "published_sha256": "2fde75e87ccd74156995e2044681c963cece61e6ed5e7470afa7b395f4d58c80",
+      "adaptations": []
+    },
+    {
+      "source": "publication-review/reconstruction-pass/input-probes.md",
+      "source_sha256": "dbbf1fe5768f4db163dc4820023289d134e10162955de7cd293e23d603579734",
+      "published": "docs/reconstruction/research/input-probes.md",
+      "published_sha256": "2f39b41cda2236fee007b9f0400430f4cad5ba1bca0903ca0b178e2a92d62d61",
+      "adaptations": [
+        "Private disassembly anchors omitted; full local report retained."
+      ]
+    }
+  ]
+}

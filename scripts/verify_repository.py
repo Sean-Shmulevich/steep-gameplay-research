@@ -45,7 +45,7 @@ for path in ROOT.rglob('*'):
             candidate = (path.parent / local).resolve()
             if not candidate.is_relative_to(ROOT) or not candidate.exists():
                 errors.append(f'Broken/local external link: {path.relative_to(ROOT)} -> {target}')
-for manifest_name in ('REFERENCE_MANIFEST.json',):
+for manifest_name in ('REFERENCE_MANIFEST.json', 'RECONSTRUCTION_SOURCES.json'):
     for item in json.loads((ROOT / manifest_name).read_text())['files']:
         path = ROOT / item['published']
         if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != item['published_sha256']:
