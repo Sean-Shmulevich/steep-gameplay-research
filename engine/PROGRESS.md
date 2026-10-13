@@ -96,3 +96,15 @@ Implemented optional ordinary queue selection in the mixed scheduler: three cate
 Static producer work identifies the initialized worker count as the score default, rotating worker masks and lowest-required-bit enqueue routing. Configuration bounds, per-job assignments and concurrent behavior remain unresolved. Full suite: 332 passing tests. The runnable queue probe preserves an incompatible scheduled job after eligible work finishes.
 
 Next: reconstruct the worker initialization and enqueue routing as explicit executable contracts, retaining unknown configuration and job assignments as inputs. Native event semantics, owner lifetime, active player identity and input freshness still gate original-process control.
+
+## Executable queue producers
+
+Added pure worker-configuration, rotating-mask and enqueue-destination functions.
+They preserve unsigned clamp and signed consumer interpretation without creating
+threads. Missing worker slots remain errors rather than invented null fallbacks.
+Six boundary tests include routing-to-local followed by exclusion bypass. Full
+suite: 338 passing tests. No original-game execution or control.
+
+Next: establish exact base-constructor limit comparison and concrete category/mask
+assignments, then connect producer-driven queue ownership to an explicit
+multi-worker execution model. Native concurrency must remain separately verified.

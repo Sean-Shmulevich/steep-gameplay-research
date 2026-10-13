@@ -110,3 +110,31 @@ candidate does not imply all queued work completed.
 Queue assignment producers, unknown eligibility code, other native job kinds and
 multi-worker race behavior remain outside this model. Explicit worker/default
 values make the executable policy testable without inventing those inputs.
+
+## Worker and enqueue producers
+
+`engine.queue_producers.worker_configuration(requested, upper_bound)` exposes
+worker-count initialization without allocating threads or arrays. Both inputs
+are uint32. Its result contains the unsigned selected count, signed int32
+interpretation of the same bits for the selector's `shared_default`, and the
+signed auxiliary-count calculation. The signed interpretation connects producer
+storage to the recovered signed scoring consumer; it is not a claim that large
+worker counts are operationally valid.
+
+`worker_mask(index)` returns the rotating single-bit uint32 mask.
+`enqueue_destination(category, required_mask, worker_slots)` returns a category,
+local/shared queue designation and optional worker index. Slots are explicit
+booleans for pointer presence. A missing slot raises an adapter error; a present
+null slot selects shared storage. The function does not consider excluded masks,
+matching the inspected routing path. Ordinary category validation is adapter
+policy, not a recovered constructor guard.
+
+These pure functions can supply configuration to a caller-owned scheduler setup.
+They do not create a multi-worker runtime or automatically populate the existing
+single-worker MixedScheduler adapter. Queue locks, aggregate-limit updates and
+notification counters remain outside their scope. Base-constructor byte-limit
+selection remains unimplemented pending its exact comparison semantics.
+
+Six producer tests cover unsigned clamp boundaries, signed storage, rotating
+masks, lowest-bit routing, null versus absent slots and the interaction between
+local routing and exclusion bypass. See [producer evidence](SCHEDULER_QUEUE_PRODUCERS.md).

@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 332 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 338 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -56,3 +56,5 @@ The gameplay integration adds twelve tests covering actual phase dispatch, exact
 Nine trace-analysis tests and one HTTP test bring the suite to 323 passing tests. They cover direct/mixed evidence, outer-frame rollback, missing endings, overflow, malformed identifiers and contradictory phase order. The HTTP endpoint preserves both state and raw trace. A complete analysis can describe an aborted execution; completeness is not success.
 
 Eight queue-policy tests cover signed overflow and division, ordering, affinity, job-specific eligibility, enqueue sentinel resolution and read-only inspection. The synthetic queue probe selects local category zero, shared category zero, then local category one, while incompatible shared work remains scheduled. Full suite: 332 passing tests. These checks validate the independent serial model; they do not establish native concurrent scheduling or safe process control.
+
+Six queue-producer tests bring the suite to 338. They validate pure arithmetic and routing boundaries, including absent versus null worker slots. No threads are allocated and no original scheduler execution is claimed.
