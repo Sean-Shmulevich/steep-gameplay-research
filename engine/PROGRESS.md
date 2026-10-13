@@ -349,3 +349,14 @@ it never iterates workers or joins them. This rejects that container cleanup as
 the missing shutdown coordinator and preserves separate worker-allocation and
 manager-registration lifetime requirements. Documentation-only pass; last full
 suite remains 397 tests.
+
+
+## Owned paused mutation APIs
+
+Added controller-gated tuning and rig/clip replacement. Successful mutations
+publish an isolated validated candidate and issue a fresh pause generation;
+validation failures preserve the engine and token. Tests cover stale/running/
+foreign tokens, unchanged body/tick, independent input copies, rollback and replay
+through mixed dispatch. These are explicit owned policies, not native hot reload.
+
+Validation: all 401 independent tests pass.

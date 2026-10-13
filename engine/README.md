@@ -180,3 +180,37 @@ Run `python3 -m engine.examples.gameplay_scheduler_probe` to compare direct and 
 ## Trace analysis
 
 `GET /trace/analysis` reads the retained trace without advancing simulation. It correlates frame and substep attempts, phase entry/return evidence, commits and rollbacks. Dropped records make the report incomplete; an outer-frame abort invalidates earlier local substep commits. A complete report describes available evidence and can include failed execution attempts. See the [analysis contract](../docs/reconstruction/TRACE_ANALYSIS.md).
+
+
+### Paused tuning and animation resource replacement
+
+`SchedulerController` now exposes mutations through the same exclusive gate as
+stepping. These are designed APIs for the independent engine. They do not call the
+original game's loading thread or establish a native hot-reload contract.
+
+```python
+from engine.control import SchedulerController
+from engine.animation import default_resources
+
+controller = SchedulerController({'execution_mode': 'mixed'})
+token = controller.pause()
+token = controller.tune(token, {'physics': {'brake_deceleration': 4}})
+rig, clips = default_resources()  # synthetic fixtures
+token = controller.replace_resources(token, {
+    'category': 'synthetic', 'rig': rig, 'clips': clips,
+})
+result = controller.step_once(token, {'steer': 0.2})
+controller.resume(token)
+```
+
+Each successful mutation returns a fresh pause token and invalidates the old one.
+Validation runs against an isolated candidate. Failure preserves the published
+engine, replay segment, controller generation and current token. Mutation does not
+advance the published tick or body. Tuning performs the engine's isolated next-tick
+validation; resource replacement resets visual clocks according to the existing
+resource contract. Both start checkpoint-based replay segments that retain the
+new scenario/resource content.
+
+The controller must exclusively own its engine. Direct engine calls and the
+legacy HTTP inspector's direct-engine API do not acquire these pause-token
+contracts. Callback side effects outside the owned engine remain outside rollback.

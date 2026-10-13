@@ -32,7 +32,7 @@ class PauseToken:
 
 class SchedulerController:
     """Public API: submit_frame, pause, step_once, step_frame_once, resume,
-    reset, restore, snapshot, checkpoint and export_replay. All calls serialize;
+    tune, replace_resources, reset, restore, snapshot, checkpoint and export_replay. All calls serialize;
     callbacks must not reenter.
 
     submit_frame(frame_dt, actions=None) and step_once(token, actions=None)
@@ -199,6 +199,37 @@ class SchedulerController:
             self._pause_serial += 1
             self._incidents = []
             return self._token()
+
+    def _mutate_paused(self, token, operation, value):
+        """Validate on an isolated Engine and publish only a complete mutation."""
+        self._require_token(token)
+        candidate = copy.deepcopy(self._engine)
+        getattr(candidate, operation)(copy.deepcopy(value))
+        if not candidate.state['paused']:
+            raise RuntimeError('controlled mutation must preserve pause')
+        self._engine = candidate
+        self._generation += 1
+        self._pause_serial += 1
+        return self._token()
+
+    def tune(self, token, changes):
+        """Apply Engine tuning while paused; return a fresh token on success.
+
+        Failed validation preserves the current engine and token. Successful
+        tuning starts Engine's checkpoint-based replay segment. Its isolated
+        validation tick does not advance the published simulation.
+        """
+        with self._serial():
+            return self._mutate_paused(token, 'tune', changes)
+
+    def replace_resources(self, token, bundle):
+        """Replace validated rig/clips while paused; return a fresh token.
+
+        Engine resets visual clocks and preserves body state. This is an owned
+        resource API, not the original game's asynchronous loading protocol.
+        """
+        with self._serial():
+            return self._mutate_paused(token, 'replace_resources', bundle)
 
     def restore(self, checkpoint):
         """Restore owned state transactionally and issue a fresh paused token.

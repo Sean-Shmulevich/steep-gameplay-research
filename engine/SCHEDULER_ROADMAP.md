@@ -85,3 +85,8 @@ claiming whole-engine quiescence.
 The [loading-thread lifecycle](../docs/reconstruction/LOADING_THREAD_LIFECYCLE.md)
 provides a separate drain/stop/wake/join sequence. Its two drain fields concern
 resource destruction; submission exclusion and other loading phases remain open.
+
+Owned tuning and rig/clip replacement now use the controller's pause-token gate,
+transactional validation and fresh generations. Replay and stale-token tests cover
+these mutations. HTTP exposure of this controller contract and native loading
+integration remain separate work.
