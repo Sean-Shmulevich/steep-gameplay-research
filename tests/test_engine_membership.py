@@ -44,4 +44,33 @@ class MembershipTests(unittest.TestCase):
         with self.assertRaises(ValueError):copy_registered_receivers([],())
 
 
+
+
+class RangeClaimTests(unittest.TestCase):
+    def test_tail_consumption_and_reverse_visit(self):
+        from engine.membership import claim_range
+        remaining=10;visits=[];counts=[]
+        while (claim:=claim_range(remaining,2,4)) is not None:
+            remaining=claim['remaining'];counts.append(claim['count'])
+            visits.extend(range(claim['end_exclusive']-1,claim['start']-1,-1))
+            self.assertFalse(claim['completion_established'])
+        self.assertEqual(counts,[2,2,2,1,1,1,1])
+        self.assertEqual(visits,list(reversed(range(10))))
+    def test_short_gap_above_tail(self):
+        from engine.membership import claim_range
+        self.assertEqual(claim_range(5,2,4)['remaining'],4)
+        self.assertEqual(claim_range(5,2,4)['count'],1)
+    def test_empty_does_not_claim_or_prove_completion(self):
+        from engine.membership import claim_range
+        self.assertIsNone(claim_range(0))
+        last=claim_range(1)
+        self.assertEqual(last['remaining'],0)
+        self.assertFalse(last['completion_established'])
+    def test_setter_differs_from_initial_constructor(self):
+        from engine.membership import configured_chunk,claim_range
+        self.assertEqual(configured_chunk(0),{'chunk_size':1,'tail_threshold':2})
+        self.assertEqual(claim_range(6,**configured_chunk(2))['count'],2)
+        for args in ((1,0,0),(-1,1,0),(3,0x7fffffff,1),(True,1,0)):
+            with self.assertRaises(ValueError):claim_range(*args)
+
 if __name__=='__main__':unittest.main()

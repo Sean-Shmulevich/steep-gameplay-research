@@ -38,3 +38,12 @@ The current trace is serial and belongs to our implementation. It does not estab
 ## Owned pause/step checkpoint
 
 The Python `SchedulerController` now implements an explicit submission gate with generation-qualified pause tokens. It distinguishes one fixed developer tick from one scheduled outer frame. Threaded tests cover a competing submitter, and a 200-frame paused-stepping check completed 300 substeps with exact replay agreement, a rejected stale token after restore and no trace drops. This proves the owned controller's tested contract, not native exclusion.
+
+## Further static closures
+
+- [Action callbacks](../docs/reconstruction/ACTION_RESET_CALLBACK.md): three constructed-and-inserted action types repopulate cleared samples. One exposes the full two-axis combination/publication formula. Its magnitude is not a generation counter. Player subtype, optional processor and source timing remain open.
+- [Batch epochs](../docs/reconstruction/SCHEDULER_BATCH_EPOCH.md): the gathered count is consumed before callbacks. A fully claimed prior batch makes retained empty-source storage inactive; early exits and in-flight callbacks still require a cross-request protocol.
+- [Child lifetime](../docs/reconstruction/SCHEDULER_CHILD_LIFETIME.md): the earlier child slots start null and are cloned polymorphically. Their concrete source types remain unresolved, and optional children cannot be assumed to provide a universal scheduler barrier.
+- [Backend completion](../docs/reconstruction/BACKEND_COMPLETION_FOLLOWUP.md): the queued callback branch decrements not-started before the callback and outstanding after normal return. Notification, concrete consumer registration and whole-engine exclusion remain unproved.
+
+The next native work should resolve the active action processor/source producer and the component request/rearm contract. Neither more owned-runtime pause features nor interpreting a zero claim count as completion would close those native gaps.

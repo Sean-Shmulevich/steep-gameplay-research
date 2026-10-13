@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 245 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 255 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -38,3 +38,5 @@ Static verification and newly closed conditional ordering are documented in the 
 A further history-continuation stress check ran 2,000 synthetic frames for each of policies 0, 1 and 2. It checked step accounting, elapsed/derivative separation, ring bounds and exact continuation from the midpoint checkpoint. All 6,000 frames passed, including epsilon, single-step, floor, round-up and retained-remainder branches. This is invariant checking, not comparison to native execution.
 
 The owned pause controller passed 11 tests covering token validity, serialized competing submissions, failure rollback, fixed-tick versus planned-frame stepping, checkpoint continuation and replay. A separate 200-frame check advanced 300 substeps while remaining paused between requests, rejected an old token after restore and recorded no trace drops. The membership helper has six tests preserving the recovered empty-source retention behavior. Native submission exclusion and player membership remain unverified.
+
+The next static pass added six action-publication kernel tests and four range-claim tests. They cover cancellation, nonunit diagonal samples, four-lane magnitude, strict activation/small-vector thresholds, explicit reciprocal seeds, reverse tail visitation and claim-versus-completion distinction. Source-backed audit documents close selected construction, map, batch-consumption and normal queued-callback edges. No native stepping, global barrier or device-to-substep freshness was established.
