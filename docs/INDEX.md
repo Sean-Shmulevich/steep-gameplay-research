@@ -199,3 +199,5 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Bounded worker-interleaving explorer](reconstruction/INTERLEAVING_EXPLORER.md)
 
 - [Range worker yield counters](reconstruction/RANGE_WORKER_YIELD.md)
+
+- [Worker TLS context and execution mode](reconstruction/WORKER_THREAD_CONTEXT.md)

@@ -184,3 +184,7 @@ Connected enqueue generation, front membership and post-range yield gates to mix
 ## Blocked experiment diagnostics
 
 Reports now retain blocked paths independently of ordinary leaf examples, with waiting-job state, holds, deferred credits, active outgoing lists and worker eligibility. Existing credit and affinity regressions validate the details. A bounded native flag-writer scan found offset collisions, including a stack-local candidate, but no newly verified scheduler assignment; native flag settings remain caller inputs. Full suite remains 366 tests.
+
+## Worker TLS producer and execution mode
+
+Joined the ordinary worker-loop context writer to explicit helper lookup. Decoded conditional context hooks and normal-return execution-mode save/restore; connected the formerly neutral job mode setter to that TLS field. Null context skips hooks but does not prove arbitrary worker-body thread safety. Mode readers, hook implementations and exception cleanup remain open. Documentation-only pass, packaging verified; last full suite 366 passing tests.

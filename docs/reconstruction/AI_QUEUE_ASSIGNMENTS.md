@@ -53,7 +53,7 @@ set_auxiliary_mode(job, mode):
 ```
 
 The mode field is separate from category. Zero leaves the excluded mask unchanged;
-one and two clear it. The purpose of the mode remains unknown. Do not translate
+one and two clear it. The [worker-context follow-up](WORKER_THREAD_CONTEXT.md) now joins this field to temporary TLS execution-mode save/restore. The mode values themselves remain semantically unnamed. Do not translate
 these zero-valued calls into category-zero assignments or unconditional mask
 resets. The function name above is descriptive pseudocode, not an original name.
 

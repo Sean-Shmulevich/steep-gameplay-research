@@ -78,3 +78,5 @@ without mutation. No native callback-job helping protocol is invented.
 The symbolic interleaving explorer currently covers ordinary workers only. Helper
 API tests add coverage for this separate path; they do not expand its exploration
 alphabet silently.
+
+The [worker-context follow-up](WORKER_THREAD_CONTEXT.md) joins the helper TLS slot to the ordinary worker-loop writer and documents normal-return mode save/restore. Concrete hook implementations and external-thread safety remain open.
