@@ -191,3 +191,5 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Worker-count and queue-routing producers](reconstruction/SCHEDULER_QUEUE_PRODUCERS.md)
 
 - [Named AI job queue assignments](reconstruction/AI_QUEUE_ASSIGNMENTS.md)
+
+- [Motion and pre-physics queue assignments](reconstruction/MOTION_QUEUE_ASSIGNMENTS.md)

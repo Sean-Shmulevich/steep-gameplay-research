@@ -121,3 +121,7 @@ nearby auxiliary-mode setter from queue category and decodes its conditional
 excluded-mask clear. See the AI queue assignment supplement. Later writes and
 live receiver identities remain open. No runtime code changed; packaging and
 links were rechecked. The last full executable suite remains 339 passing tests.
+
+## Motion queue construction follow-up
+
+Connected motion and pre-physics named batches to category-one construction, zero initial masks and byte-limit 255. Resolved the pre-physics setup value 32 to a virtual range-parameter setter, which writes 32 and 64 separately from execution limits. Published full setter pseudocode, including signed clamp and overflow boundaries. Next is joining those range fields to their consumers and checking later overrides. Runtime code unchanged; last full suite remains 339 passing tests.
