@@ -88,3 +88,11 @@ Native research retained a candidate outer interface whose method reaches the kn
 Added read-only trace analysis, exposed at `/trace/analysis`, with frame/substep correlation, phase evidence, rollback propagation and explicit incomplete-record status. Full suite: 323 passing tests. Nine analyzer cases plus an HTTP immutability check cover the new behavior.
 
 Static queue decoding corrected the older two-category description: the selector scans three categories, local then shared queues per category. Eligibility is job-specific; occupancy score uses signed integer arithmetic, and callback jobs do not apply the receiver execution-cap predicate. The mixed model still labels its simpler queue policy as designed. Next: implement and test the recovered selection policy separately before connecting it to the mixed scheduler. Native category/mask producers and safe process control remain open.
+
+## Recovered queue selection checkpoint
+
+Implemented optional ordinary queue selection in the mixed scheduler: three categories, local/shared ordering, supplied eligibility, affinity filtering and signed int32 occupancy arithmetic. Enqueue resolves sentinel limits before eligibility checks. Inspection copies reflect current execution counts and do not mutate scheduler state. Default gameplay dispatch retains its explicitly designed queue assignments.
+
+Static producer work identifies the initialized worker count as the score default, rotating worker masks and lowest-required-bit enqueue routing. Configuration bounds, per-job assignments and concurrent behavior remain unresolved. Full suite: 332 passing tests. The runnable queue probe preserves an incompatible scheduled job after eligible work finishes.
+
+Next: reconstruct the worker initialization and enqueue routing as explicit executable contracts, retaining unknown configuration and job assignments as inputs. Native event semantics, owner lifetime, active player identity and input freshness still gate original-process control.

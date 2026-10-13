@@ -21,6 +21,7 @@ import uuid
 from .assets import canonical
 from .trace import Trace
 from . import request_state as requests
+from . import queue_policy as selection
 
 
 @dataclass(frozen=True)
@@ -39,7 +40,7 @@ class RangeToken:
 
 
 class MixedScheduler:
-    def __init__(self, definitions, handlers=None, trace_capacity=4096, max_transitions=10000):
+    def __init__(self, definitions, handlers=None, trace_capacity=4096, max_transitions=10000, queue_policy=None):
         if type(max_transitions) is not int or not 1 <= max_transitions <= 100000:
             raise ValueError('max_transitions must be in 1..100000')
         if not isinstance(definitions, list) or len(definitions) > 128:
@@ -115,6 +116,26 @@ class MixedScheduler:
             visited.add(name)
         for name in self._jobs:
             visit(name)
+        self._queue_policy = None
+        self._selection_jobs = {}
+        if queue_policy is not None:
+            if not isinstance(queue_policy,dict) or set(queue_policy)!={'shared_default','worker_mask','jobs'}:
+                raise ValueError('queue policy needs default, worker mask and explicit job mappings')
+            policy=copy.deepcopy(queue_policy)
+            executable={name for name,spec in self._definitions.items() if spec['kind'] in ('range','callback')}
+            if not isinstance(policy['jobs'],dict) or set(policy['jobs'])!=executable:
+                raise ValueError('queue policy must map every executable job')
+            for name,mapping in policy['jobs'].items():
+                if not isinstance(mapping,dict) or set(mapping)-{'category','queue','limit','required_mask','excluded_mask','optional_eligible'}:
+                    raise ValueError('invalid queue job mapping')
+                if type(mapping.get('category')) is not int or mapping['category'] not in range(3) or mapping.get('queue') not in ('local','shared'):
+                    raise ValueError('explicit category and queue required')
+                self._selection_jobs[name]=dict(kind=self._definitions[name]['kind'],executions=0,
+                    limit=mapping['limit'],required_mask=mapping.get('required_mask',0),
+                    excluded_mask=mapping.get('excluded_mask',0),optional_eligible=mapping.get('optional_eligible'))
+            selection.select_categories(self._selection_jobs,[[],[],[]],[[],[],[]],
+                shared_default=policy['shared_default'],worker_mask=policy['worker_mask'])
+            self._queue_policy=policy
         self._identity = uuid.uuid4().hex
         self._queue, self._dispatches = [], {}
         self._next_dispatch = 0
@@ -265,6 +286,8 @@ class MixedScheduler:
             job['state'] = requests.SCHEDULED
             if name not in self._queue:
                 self._queue.append(name)
+            if self._queue_policy is not None and self._selection_jobs[name]['limit']==selection.INT_MAX:
+                self._selection_jobs[name]['limit']=self._queue_policy['shared_default']
             self._emit('mixed_job_queued', job=name, started=job['started'])
 
     def submit(self, name, context=None):
@@ -291,21 +314,49 @@ class MixedScheduler:
         job['state'] = requests.UNSCHEDULED
         self._emit('mixed_finalized', job=name, outstanding_dispatches=job['outstanding_dispatches'])
 
+    def _select_queue(self, records, order):
+        local=[[],[],[]];shared=[[],[],[]]
+        for name in order:
+            if self._jobs[name]['state'] != requests.SCHEDULED:continue
+            mapping=self._queue_policy['jobs'][name]
+            (local if mapping['queue']=='local' else shared)[mapping['category']].append(name)
+            records[name]['executions']=self._jobs[name]['executions']
+        return selection.select_categories(records,local,shared,
+            shared_default=self._queue_policy['shared_default'],worker_mask=self._queue_policy['worker_mask'])
+
     def ready(self):
-        """Adapter queue order; original category/priority policy is not modeled."""
+        """Read-only eligible selection order; preview uses copied limit state.
+
+        Under optional policy, repeatedly selects/removes candidates without
+        reserving them. Only the first entry predicts the immediate next choice.
+        """
+        if self._queue_policy is not None:
+            records=copy.deepcopy(self._selection_jobs);order=list(self._queue);result=[]
+            while order:
+                chosen=self._select_queue(records,order)['selected']
+                if chosen is None:break
+                result.append(chosen);order.remove(chosen)
+            return result
         return [name for name in self._queue if self._jobs[name]['state'] == requests.SCHEDULED
                 and self._jobs[name]['executions'] < self._definitions[name]['max_concurrency']]
 
     def reserve(self, name=None):
-        """Ordinary queue route, not the reservation-bypassing wait helper."""
+        """Ordinary queue route; optional policy disallows a forced nonwinner."""
         with self._operation():
-            ready = self.ready()
-            if name is None:
-                if not ready:
-                    return None
-                name = ready[0]
-            if name not in ready:
-                raise ValueError('job is not queue-reservable')
+            if self._queue_policy is not None:
+                if name is not None:
+                    preview=self._select_queue(copy.deepcopy(self._selection_jobs),self._queue)
+                    if preview['selected']!=name:raise ValueError('requested job is not policy winner')
+                result=self._select_queue(self._selection_jobs,self._queue)
+                name=result['selected']
+                self._emit('mixed_queue_selected',selection=result)
+                if name is None:return None
+            else:
+                ready = self.ready()
+                if name is None:
+                    if not ready:return None
+                    name = ready[0]
+                if name not in ready:raise ValueError('job is not queue-reservable')
             job = self._jobs[name]
             job['outstanding_dispatches'] += 1
             job['executions'] += 1
@@ -474,8 +525,11 @@ class MixedScheduler:
                 r = item['range']
                 item['range'] = dict(sequence=r.sequence, start=r.start, count=r.count)
             dispatches[str(key)] = item
+        selection_jobs=copy.deepcopy(self._selection_jobs)
+        for name,record in selection_jobs.items():record['executions']=self._jobs[name]['executions']
         return copy.deepcopy(dict(schema_version=1, jobs=self._jobs, lists=self._lists,
                                   queue=self._queue, dispatches=dispatches, fault=self._fault,
                                   handler_versions={key: value['version'] for key, value in self._handlers.items()},
                                   trace=self.trace.snapshot(),
+                                  queue_policy=self._queue_policy, selection_jobs=selection_jobs,
                                   scope='serial selected-job semantics; not native concurrent scheduler'))

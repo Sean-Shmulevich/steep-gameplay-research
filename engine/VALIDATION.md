@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 324 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 332 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -54,3 +54,5 @@ Fourteen mixed-scheduler tests combine normal and alternate release with four jo
 The gameplay integration adds twelve tests covering actual phase dispatch, exact direct/mixed state parity across all five sports, rigid contact with graph animation, checkpoint/replay, controller ownership after restore, trace overflow and late-substep rollback. The full suite passed 314 tests. The runnable gameplay probe completed 12 outer frames and 28 substeps, with 28 reservations for each of the five phases, 28 ready terminals, 2,288 retained trace events, no drops and no incidents. Direct state/events, checkpoint continuation and replay matched. The graph is an owned design, not recovered native phase wiring.
 
 Nine trace-analysis tests and one HTTP test bring the suite to 323 passing tests. They cover direct/mixed evidence, outer-frame rollback, missing endings, overflow, malformed identifiers and contradictory phase order. The HTTP endpoint preserves both state and raw trace. A complete analysis can describe an aborted execution; completeness is not success.
+
+Eight queue-policy tests cover signed overflow and division, ordering, affinity, job-specific eligibility, enqueue sentinel resolution and read-only inspection. The synthetic queue probe selects local category zero, shared category zero, then local category one, while incompatible shared work remains scheduled. Full suite: 332 passing tests. These checks validate the independent serial model; they do not establish native concurrent scheduling or safe process control.

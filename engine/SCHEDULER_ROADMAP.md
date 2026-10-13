@@ -7,7 +7,7 @@ Scheduler reconstruction is the current primary goal. The independent runtime is
 | Area | Established | Remaining boundary |
 | --- | --- | --- |
 | Frame timing | Constructor defaults, smoothing ring, float32 mean, frequency table, accumulator cap and subdivision arithmetic | Matched original execution oracle across policies |
-| Job dispatch | Queue/helper accounting; three-category local/shared traversal, affinity tests and job-specific occupancy selection | Category/mask/default producers, other subclasses and native thread context |
+| Job dispatch | Queue/helper accounting; three-category local/shared traversal, affinity tests and job-specific occupancy selection | Concrete per-job assignments, configuration upper bound, other subclasses and native thread context |
 | Completion | Claimed receiver count is separate from running callbacks; ordinary finalization requires returned workers | Exceptional paths and whole-engine quiescence |
 | Frame rearm | Action completion feeds downstream dependencies into EndFrame, which prepares and resubmits the root | Mode-specific paths, external callers and safe native control |
 | Root routing | Root-to-Step edges, global mode read, two owner-mode reads and rebuild gate | Caller serialization and live mode values |
@@ -30,7 +30,7 @@ The EndFrame result is a specific storage-ordering proof for the inspected ordin
 
 ## Executable reconstruction
 
-The [mixed scheduler](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) combines selected range, one-shot callback, terminal and conditional semantics, with immediate normal/alternate dependency effects and explicit dispatch accounting. It complements the smaller [request/credit](../docs/reconstruction/REQUEST_STATE_MODEL.md) and [alternate propagation](../docs/reconstruction/ALTERNATE_DEPENDENCY_MODEL.md) references. Queue ordering, handler version labels and adapter fault policies are explicit implementation choices.
+The [mixed scheduler](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) combines selected range, one-shot callback, terminal and conditional semantics, with immediate normal/alternate dependency effects and explicit dispatch accounting. It complements the smaller [request/credit](../docs/reconstruction/REQUEST_STATE_MODEL.md) and [alternate propagation](../docs/reconstruction/ALTERNATE_DEPENDENCY_MODEL.md) references. Default queue ordering, handler version labels and adapter fault policies are explicit implementation choices. An optional recovered queue policy now implements category traversal, eligibility and signed occupancy scoring with explicit caller-supplied assignments.
 
 ```sh
 python3 -m engine.examples.mixed_scheduler_probe
@@ -65,4 +65,4 @@ Full scheduler and engine reconstruction remain incomplete. Green reference test
 
 The [outer-interface candidate](../docs/reconstruction/ENGINE_OUTER_INTERFACE.md) reaches the stop-request writer but lacks a proved caller argument binding. The [owner-destruction audit](../docs/reconstruction/ENGINE_OWNER_DESTRUCTION.md) retains the exact missing teardown and event-close joins. These narrower leads supersede any assumption that the consumer alone supplies an owner-lifetime guarantee.
 
-The [queue-selection audit](../docs/reconstruction/SCHEDULER_QUEUE_ELIGIBILITY.md) now provides exact traversal, affinity, integer score and tie rules. Implementing those rules is the next scheduler-fidelity task; the mixed model currently retains its explicitly designed queue order. The [trace analyzer](../docs/reconstruction/TRACE_ANALYSIS.md) now separates retained phase evidence, aborted attempts and incomplete recordings through a read-only testbench endpoint.
+The [queue-selection audit](../docs/reconstruction/SCHEDULER_QUEUE_ELIGIBILITY.md) now provides exact traversal, affinity, integer score and tie rules. The [executable queue policy](../docs/reconstruction/QUEUE_POLICY_MODEL.md) implements those rules as an optional mixed-scheduler policy. [Queue producers](../docs/reconstruction/SCHEDULER_QUEUE_PRODUCERS.md) identify worker-count initialization and required-mask routing. Concrete job assignments and configuration bounds remain open. The [trace analyzer](../docs/reconstruction/TRACE_ANALYSIS.md) now separates retained phase evidence, aborted attempts and incomplete recordings through a read-only testbench endpoint.

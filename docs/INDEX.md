@@ -186,3 +186,6 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Machine-readable contracts](../contracts/systems.json)
 - [Executable references and tests](../reference/README.md)
 - [Selected resource relationships](../data/resource-links.json)
+
+- [Executable ordinary queue policy](reconstruction/QUEUE_POLICY_MODEL.md)
+- [Worker-count and queue-routing producers](reconstruction/SCHEDULER_QUEUE_PRODUCERS.md)
