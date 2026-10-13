@@ -24,6 +24,8 @@ class Engine:
         if scenario.get('physics_mode')=='rigid_cells' and sport not in ('snowboard','ski'):raise ValueError('Rigid cells require snowboard or ski')
         if scenario.get('execution_mode','direct') not in ('direct','mixed'):raise ValueError('Unsupported execution mode')
         trace=Trace(scenario.get('trace',{}).get('capacity',4096))
+        if type(scenario.get('trace',{}).get('capture_phase_state',False)) is not bool:
+            raise ValueError('capture_phase_state must be boolean')
         world=World(scenario.get('world'))
         raw=scenario.get('body',{})
         if set(raw)-{'position','velocity','orientation','angular_velocity','mass','grounded'}:raise ValueError('Unknown body field')
@@ -155,6 +157,8 @@ class Engine:
         try:
             context=dict(dt=dt,before=before,phase_fields=phase_fields)
             phases={name:getattr(self,'_phase_'+name) for name in gameplay_jobs.PHASES}
+            if self.scenario.get('trace',{}).get('capture_phase_state',False):
+                phases={name:self._observed_phase(name,phase) for name,phase in phases.items()}
             if self.scenario.get('execution_mode','direct')=='mixed':
                 gameplay_jobs.run(phases,context,self.trace,tick=before['tick'],**phase_fields)
             else:
@@ -172,6 +176,25 @@ class Engine:
             self.incidents=self.incidents[-100:]
             self.trace.emit('substep_aborted',tick=before['tick'],error=type(exc).__name__,**phase_fields)
             raise
+    def _observed_phase(self,name,phase):
+        """Optional owned phase observations; copied by Trace, never state inputs."""
+        fields={
+            'physics':('body','controls'),
+            'environment':('environment',),
+            'scoring':('body','scoring'),
+            'animation':('body','controls','animation','pose'),
+            'camera':('body','camera'),
+        }[name]
+        def observed(context):
+            def capture(boundary):
+                self.trace.emit('phase_state',phase=name,boundary=boundary,
+                                tick=context['before']['tick'],
+                                state={key:self.state[key] for key in fields},
+                                **context['phase_fields'])
+            capture('enter')
+            phase(context)
+            capture('return')
+        return observed
     def step(self,count=1):
         if type(count) is not int or not 0<=count<=100000:raise ValueError('Invalid step count')
         dt=self.scenario.get('scheduler',{}).get('fixed_dt',1/120)

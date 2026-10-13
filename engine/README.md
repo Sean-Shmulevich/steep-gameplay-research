@@ -278,3 +278,10 @@ The CLI exits with status two when replay equality or trace completeness fails,
 after writing the report. Request/connection errors propagate; a partially executed
 remote command must not be blindly retried after a network timeout. The example
 uses synthetic world and resources and tests only the independent engine.
+
+
+For detailed physics-to-animation inspection, configure
+`"trace": {"capacity": 16000, "capture_phase_state": true}` in the scenario.
+The trace then includes copied phase entry/return state, input generation and full
+owned animation pose. See [phase capture](../docs/reconstruction/TRACE_ANALYSIS.md#optional-phase-state-capture)
+for abort and capacity interpretation.

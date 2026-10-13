@@ -69,3 +69,35 @@ zero-substep frames, invalid envelopes and IDs, malformed ordering, and terminal
 begin without worker completion. Analysis does not inspect gameplay correctness,
 recompute state hashes, validate native job identity, or infer absent callbacks.
 Unknown event kinds are left outside this narrow correlation model.
+
+
+## Optional phase-state capture
+
+Set scenario `trace.capture_phase_state` to true to retain entry and normal-return
+observations for each owned gameplay phase. The option is false by default and
+requires a JSON boolean. It applies equally to direct and mixed dispatch.
+
+Each `phase_state` row carries phase, boundary, tick, substep invocation, outer
+frame invocation and input generation. State is copied when emitted. Physics
+captures body and controls; environment captures its state; scoring captures body
+and scoring; animation captures body, controls, animation clocks/state and the
+full evaluated pose; camera captures body and camera state. This makes the
+physics-to-animation input relationship inspectable without using wall timers.
+
+These records describe observations inside an attempted substep. A phase return
+does not imply the outer frame committed. Use the analyzer's invocation/frame
+outcomes before treating an observation as retained simulation history. Failure
+before a normal return emits no return observation for that phase. A later abort
+can invalidate earlier phase observations while retaining them as Engine-level
+diagnostics. SchedulerController's wider rollback restores its prior trace on
+execution failure; use its incident record in that case rather than expecting the
+failed attempt to survive.
+The analyzer treats these as supplementary observations; it does not yet audit
+phase-state schema or compare their payloads.
+
+Capture does not affect numerical state or replay hashes in tested direct/mixed
+paths. It adds ten records per successful five-phase substep, with potentially
+large pose payloads. The existing record capacity and explicit drop accounting
+still apply; capacity bounds record count, not payload bytes. Read captures through
+the controller's `/trace` endpoint. No original-game animation or native thread
+causality is inferred from these owned execution records.

@@ -386,3 +386,14 @@ Validation: all 407 independent tests pass. The default 30-frame approach plus t
 traces. Gentle/strong final synthetic speeds were approximately 3.8433 and 0.00813
 in the owned engine's units. These are implementation results, not game footage
 fits or native measurements.
+
+
+## Optional gameplay phase-state capture
+
+Added bounded-record entry/return capture for physics, environment, scoring,
+animation and camera, keyed to substep/frame invocation and input generation.
+Animation capture includes evaluated pose. Tests establish direct/mixed numerical
+parity, immutable observations, missing return on failure and explicit capacity
+loss. Captures remain attempted-phase evidence until frame outcome is known.
+
+Validation: all 410 independent tests pass.
