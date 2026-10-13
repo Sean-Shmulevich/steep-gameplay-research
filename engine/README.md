@@ -164,3 +164,9 @@ Use `snapshot()` for copied state and trace, and `export_replay()` for an owned 
 `membership.claim_range` computes the recovered ordinary tail-claim proposal. `configured_chunk` exposes the ordinary chunk setter. Both leave native compare/exchange, receiver lifetime and request ownership to the caller. No remaining entries means no new claims, not completed callbacks.
 
 `action_sample.evaluate_two_axis` composes direction queries, an explicit processor policy and publication. Choose `default` for the recovered pass-through processor, `bypass` for a bypassed callback, or `supplied` with an already processed vector. Missing configured behavior is rejected instead of silently using fallback. The default processor retains its first-use marker across calls but does not alter diagonal magnitude. This pipeline remains a local action-type API, not a claim that the active rider selects it.
+
+## Mixed scheduler probe
+
+Run `python3 -m engine.examples.mixed_scheduler_probe` to print a synthetic three-cycle report from the recovered scheduler rules. It executes motion receivers, bypasses them for one cycle, then executes them again. The EndFrame-like callback submits the next root before its own dispatch accounting finishes. The report includes the observed counters and a bounded event trace.
+
+The [mixed scheduler contract](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) distinguishes range, one-shot callback, immediate terminal and conditional jobs. This is a standalone executable reference; gameplay phases have not been migrated to it. Native threads, queue priorities, platform event operations and original-game stepping remain outside its validation.

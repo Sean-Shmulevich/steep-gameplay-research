@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 288 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 302 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -48,3 +48,5 @@ Static follow-ups connect the backend consumer's descriptor/wrapper registration
 Fourteen request-state tests now cover activation/release, two-predecessor joins, credit deferral and wakeup, alias rejection, rollback and JSON continuation. The full suite passed 278 tests. Static audits resolve alternate-route propagation and the action graph's outer Step integration; no live engine-loop exclusion test was performed.
 
 Ten alternate-propagation tests preserve branch-specific callbacks, after-traversal clearing, current-hold rechecks and order-sensitive reconvergence. The full 288-test suite passed. EndFrame, root-route and event findings are separately bounded static evidence; these tests do not constitute a native frame trace or pause/resume test.
+
+Fourteen mixed-scheduler tests combine normal and alternate release with four job kinds, delayed claims, callback reservation, credits and repeated root submission. Malformed numeric token fields are rejected before mutation. Full suite: 302 passing tests. The three-cycle probe executes motion in cycles one and three, skips it in cycle two, and records two next-root submissions while EndFrame still has executions=1 and outstanding=1. Two complete reports matched exactly, with 189 trace records and zero drops. This demonstrates the independent serial model, not native concurrency or gameplay parity.

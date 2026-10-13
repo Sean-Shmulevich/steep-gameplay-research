@@ -1,82 +1,64 @@
 # Scheduler reconstruction and modding release gates
 
-Scheduler reconstruction is the current primary goal. The independent runtime remains the testbed; extending rendering and general gameplay takes second priority. This is a sequence of evidence gates, not a percentage estimate.
+Scheduler reconstruction is the current primary goal. The independent runtime is the testbed; rendering and broader gameplay expansion take second priority. Progress is tracked by evidence gates rather than a coverage percentage.
 
-## Closed in this pass
+## Current evidence
 
-- Recovered smoothing history, chronological float32 mean, frequency table, accumulator cap, policy override and subdivision decisions are executable. Each frame exposes its plan and retained time.
-- Static registration joins one motion-processing batch through `PreBeforeSimulation` and `BeforeSimulation` to the world step. Current selected-player membership and request identity are still required before applying that edge to a live player.
-- The timing constructor's ten-entry allocation and initial timing values were traced. Startup values do not imply that a substep has executed.
-- The owned runtime records input publication, frame plans, substep entry, physics completion, animation completion and state publication. Traces identify invocation and frame, retain records without wrapping, and report dropped events.
-- Headless experiments control inputs and frame intervals and check complete owned-state replay. They do not send OS input or attach to the original executable.
+| Area | Established | Remaining boundary |
+| --- | --- | --- |
+| Frame timing | Constructor defaults, smoothing ring, float32 mean, frequency table, accumulator cap and subdivision arithmetic | Matched original execution oracle across policies |
+| Job dispatch | Ordinary queue and explicit helper increment execution accounting before workers | Complete dispatcher/subclass inventory, native priority and thread context |
+| Completion | Claimed receiver count is separate from running callbacks; ordinary finalization requires returned workers | Exceptional paths and whole-engine quiescence |
+| Frame rearm | Action completion feeds downstream dependencies into EndFrame, which prepares and resubmits the root | Mode-specific paths, external callers and safe native control |
+| Root routing | Root-to-Step edges, global mode read, two owner-mode reads and rebuild gate | Caller serialization and live mode values |
+| Mode writes | Named stages copy global flags; guarded clear preserves the ordinary owner predicate value | Exhaustive writers and cross-thread visibility |
+| Provider chains | Both AI provider entry-to-terminal graphs and concrete owner/getters | Callback workloads, receiver populations and later perception rewiring |
+| Event control | Request byte, end-frame branch, restart operation, exact handle consumer and outer caller order | Protected platform targets/status, outer interface implementation and owner destruction |
+| Input | Three repopulation callbacks, two-axis publication and fallback pass-through processor | Active player binding, configured alternatives and device-to-substep freshness |
+| Membership | Indexed registry insertion/deduplication, entry 24, gather and range-claim behavior | Selected player/world/request identity and receiver lifetime |
 
-See [smoothing audit](../docs/reconstruction/SCHEDULER_SMOOTHING_AUDIT.md), [input-order audit](../docs/reconstruction/SCHEDULER_INPUT_AUDIT.md), and [constructor/lifetime audit](../docs/reconstruction/SCHEDULER_LIFETIME_AUDIT.md).
+The EndFrame result is a specific storage-ordering proof for the inspected ordinary action route. The next root may be submitted while EndFrame itself still has positive execution/outstanding accounting. It is not a universal idle point or permission to replace arbitrary engine state.
 
-The standalone owned dependency executor also distinguishes claimed from completed work, retains claimed callbacks, blocks unsafe replacement while work is outstanding, and requires matching callback version tokens for quiescent restoration. It is a designed reference API; gameplay phases are not yet dispatched through it.
+## Evidence guide
 
-## Next gates
+- Timing: [smoothing](../docs/reconstruction/SCHEDULER_SMOOTHING_AUDIT.md), [constructor and lifetime](../docs/reconstruction/SCHEDULER_LIFETIME_AUDIT.md).
+- Dispatch and release: [rearm rules](../docs/reconstruction/SCHEDULER_REARM.md), [wait helper](../docs/reconstruction/WAIT_HELPER_DISPATCH.md), [alternate release](../docs/reconstruction/ALTERNATE_DEPENDENCY_RELEASE.md), [backend worker registration](../docs/reconstruction/BACKEND_WORKER_REGISTRATION.md).
+- Frame graph: [action caller](../docs/reconstruction/ACTION_REARM_CALLER.md), [EndFrame handshake](../docs/reconstruction/ENGINE_LOOP_HANDSHAKE.md), [root route](../docs/reconstruction/ENGINE_ROOT_STEP_ROUTE.md), [mode writers](../docs/reconstruction/ENGINE_MODE_WRITERS.md), [provider chains](../docs/reconstruction/ENGINE_PROVIDER_CHAINS.md).
+- Control event: [submission branch](../docs/reconstruction/ENGINE_EVENT_SUBMISSION.md), [consumer and request](../docs/reconstruction/ENGINE_EVENT_CONSUMER.md).
+- Player path: [input placement](../docs/reconstruction/SCHEDULER_INPUT_AUDIT.md), [action callbacks](../docs/reconstruction/ACTION_RESET_CALLBACK.md), [processor](../docs/reconstruction/ACTION_PROCESSOR.md), [membership](../docs/reconstruction/SCHEDULER_MEMBERSHIP_FOLLOWUP.md), [batch epochs](../docs/reconstruction/SCHEDULER_BATCH_EPOCH.md).
+- Teardown: [submission/lifetime](../docs/reconstruction/SCHEDULER_SUBMISSION_FOLLOWUP.md), [optional children](../docs/reconstruction/SCHEDULER_CHILD_LIFETIME.md), [child type boundary](../docs/reconstruction/PHYSICS_WORLD_CHILD_TYPES.md).
 
-1. **Active membership and request identity.** Join the selected player's motion object to the specific pre-simulation batch, scheduler/world instance and submitted request. A constructor dependency alone does not prove membership. The [membership follow-up](../docs/reconstruction/SCHEDULER_MEMBERSHIP_FOLLOWUP.md) shows that an empty registration source preserves old gathered contents, so destination reset/request history is also required. Reacquire process-specific identities for any separately authorized live check.
-2. **Input freshness.** The [action follow-up](../docs/reconstruction/ACTION_PUBLICATION_FOLLOWUP.md) now joins a binding-refresh reset to the sampled action vector. Three repopulation callbacks and the fallback processor are now resolved. Establish the active binding, configured processor if present, and source publication protocol. Match a produced sample to the consuming invocation. Equal values, input delivery time and consecutive-nonzero counters are insufficient.
-3. **Owner lifetime and submission exclusion.** The [submission follow-up](../docs/reconstruction/SCHEDULER_SUBMISSION_FOLLOWUP.md) closes the cleanup chain and shows the later backend lock cannot cover earlier scheduler destruction. Resolve the two virtual children destroyed before manager cleanup, then join their behavior to submission callers. Existing drain observations cannot establish this alone.
-4. **Original execution oracle.** Once safe observation boundaries are established, record matched entry/exit events and dependency identities with drop accounting. Compare the original selected substeps and publication order to reconstructed plans. Keep independent thread timelines distinct until causality is established.
-5. **Native pause/single-step proof.** Require exclusion of new submissions, completion of claimed work, valid owner lifetime and required thread/TLS context before attempting scheduler control. First success must survive repeated pause/step/resume and world changes without a stale callback or deadlock.
-6. **Modding release.** Publish stable owned handles, phase-specific mutation rules, callback version identity, failure containment and reproducible mod state. Original-process mod support requires the native gates above; an independent engine API does not imply it.
+## Executable reconstruction
 
-## Reproduce a scheduler experiment
+The [mixed scheduler](../docs/reconstruction/MIXED_SCHEDULER_IMPLEMENTATION.md) combines selected range, one-shot callback, terminal and conditional semantics, with immediate normal/alternate dependency effects and explicit dispatch accounting. It complements the smaller [request/credit](../docs/reconstruction/REQUEST_STATE_MODEL.md) and [alternate propagation](../docs/reconstruction/ALTERNATE_DEPENDENCY_MODEL.md) references. Queue ordering, handler version labels and adapter fault policies are explicit implementation choices.
+
+```sh
+python3 -m engine.examples.mixed_scheduler_probe
+```
+
+The synthetic probe runs three cycles, bypassing motion on the second. It records the next root as scheduled while the EndFrame-like callback still has one execution and one outstanding dispatch. This is executable consistency with recovered local rules, not an original-game trace. Gameplay runtime phases have not yet been migrated to this scheduler.
+
+The existing `JobExecutor` remains a designed dependency executor with retained callback identity, quiescent replacement and version-qualified restore. Its states are not native job states. `SchedulerController` owns serialized submissions, pause tokens, fixed-tick or planned-frame stepping and rollback for our runtime. Its guarantees require exclusive ownership and do not establish native pause safety.
+
+## Runtime timing experiment
 
 ```sh
 python3 -m engine.experiments engine/examples/scheduler_probe.json --output /tmp/scheduler-report.json
 ```
 
-The example varies outer frame intervals, commits steering/jump/flip inputs and includes an 80 ms stall. It uses synthetic terrain. The recorded validation ran 171 frames and 280 substeps, matched the replay state hash, and retained all 1,636 trace records with zero drops. Frequencies selected during that run included 90, 100, 105, 110 and 120. The stall retained its raw interval in smoothing history while capping consumed accumulation to approximately 66.67 ms.
+The recorded synthetic experiment ran 171 frames and 280 substeps, retained all 1,636 trace records and matched replay state hashes. Its 80 ms stall remains raw in smoothing history while consumed accumulation is capped near 66.67 ms. A separate 6,000-frame timing stress check covered all policy branches and midpoint continuation. These are independent-model checks.
 
-`GET /trace` exposes the local inspector's trace. `frame_planned` is a decision, not an execution receipt. `substep_committed` commits that local substep, but an enclosing `frame_aborted` invalidates the entire frame's state changes. The trace preserves these failed attempts for diagnosis. Restoring a checkpoint restores its trace branch. Trace contents do not enter the simulation state hash, and losing trace capacity does not alter physics.
+`GET /trace` exposes the local inspector's serial trace. A planned frame is not an execution receipt. A failed outer frame invalidates its earlier local substep commits; attempted trace events remain for diagnosis. Trace overflow reports dropped events, and restoring a checkpoint restores that trace branch. No cross-thread native causality follows from the serial sequence numbers.
 
-The current trace is serial and belongs to our implementation. It does not establish original thread order, native cache-swap cardinality or input age. Release claims must name which implementation and which gate passed.
+The owned pause controller's separate 200-frame check completed 300 substeps with replay agreement, stale-token rejection and no drops. See [validation scope](VALIDATION.md) for current tests and limitations.
 
-## Owned pause/step checkpoint
+## Next implementation and release gates
 
-The Python `SchedulerController` now implements an explicit submission gate with generation-qualified pause tokens. It distinguishes one fixed developer tick from one scheduled outer frame. Threaded tests cover a competing submitter, and a 200-frame paused-stepping check completed 300 substeps with exact replay agreement, a rejected stale token after restore and no trace drops. This proves the owned controller's tested contract, not native exclusion.
+1. **Combined scheduler integration.** Exercise repeated requests, delayed claims, branch changes and credit gates before routing owned gameplay phases through the mixed model. Preserve the original distinctions rather than translating every job into a generic task.
+2. **Native event contract.** Resolve protected handle operations, the outer interface callback and owner destruction. The request byte and wait-shaped helper are concrete leads, not sufficient pause guarantees.
+3. **Active membership and input freshness.** Join the selected player to registry entry 24, eligible world, scheduler instance and submitted request. Match action production to consumption; equal vector values or wall-clock input delivery are insufficient.
+4. **Original execution oracle.** At a justified observation boundary, record matched entry/exit events, job identities, branch reads and drop accounting. Keep independent thread timelines separate until causality is proved.
+5. **Native pause/single-step.** Require exclusion of new submissions, completion of relevant claimed work, valid owner lifetime and required thread/TLS context. Validate repeated pause/step/resume and world changes before publishing process-control support.
+6. **Modding release.** Publish stable owned handles, phase-specific mutation contracts, callback version identity, failure containment and reproducible mod state. A working independent engine API does not imply safe modification of the original process.
 
-## Further static closures
-
-- [Action callbacks](../docs/reconstruction/ACTION_RESET_CALLBACK.md): three constructed-and-inserted action types repopulate cleared samples. One exposes the full two-axis combination/publication formula. Its magnitude is not a generation counter. Player subtype, optional processor and source timing remain open.
-- [Batch epochs](../docs/reconstruction/SCHEDULER_BATCH_EPOCH.md): the gathered count is consumed before callbacks. A fully claimed prior batch makes retained empty-source storage inactive; early exits and in-flight callbacks still require a cross-request protocol.
-- [Child lifetime](../docs/reconstruction/SCHEDULER_CHILD_LIFETIME.md): the earlier child slots start null and are cloned polymorphically. Their concrete source types remain unresolved, and optional children cannot be assumed to provide a universal scheduler barrier.
-- [Backend completion](../docs/reconstruction/BACKEND_COMPLETION_FOLLOWUP.md): the queued callback branch decrements not-started before the callback and outstanding after normal return. Concrete consumer registration was subsequently joined through the descriptor bridge below. Notification and whole-engine exclusion remain unproved.
-
-The next native work should resolve the active action processor/source producer and the component request/rearm contract. Neither more owned-runtime pause features nor interpreting a zero claim count as completion would close those native gaps.
-
-## Processor and worker-entry follow-up
-
-The [default processor audit](../docs/reconstruction/ACTION_PROCESSOR.md) closes the fallback processing method as a four-lane copy with a first-use marker. The composed action API now requires callers to distinguish fallback, bypass and an externally evaluated configured processor.
-
-The [worker-registration audit](../docs/reconstruction/BACKEND_WORKER_REGISTRATION.md) joins setup's callback address through a descriptor entry bridge and shared-manager wrapper to the queued backend consumer. Protected platform launch/notification and manager lifetime remain unresolved.
-
-The [child-type follow-up](../docs/reconstruction/PHYSICS_WORLD_CHILD_TYPES.md) rules out the component's ordinary fixed-size deserializer as the source of optional child instances. Type resolution now requires out-of-line linkage or a runtime assignment writer. Repeating the ordinary reader would not close that gap.
-
-The [rearm audit](../docs/reconstruction/SCHEDULER_REARM.md) now connects ordinary queue reservation to execution and finalization. Execution accounting begins before the fetched job reaches its worker, and ordinary successor release waits for returned worker bodies. It also identifies the action graph's conditional entry and terminal nodes. The next decisive join is the external caller that rearms that specific graph after prior storage users have returned, including early-exit requests.
-
-## Outer action-chain and request rules
-
-The [caller audit](../docs/reconstruction/ACTION_REARM_CALLER.md) now joins the world action wrapper to an eligible-world chain, the bound `Engine::EngineLoop::Step` callback, cached stage terminals, preparation and root submission. Preparation clears topology without a local worker wait. The next gate is the outer engine-loop completion/event handshake before repeated preparation and submission.
-
-The [alternate-release audit](../docs/reconstruction/ALTERNATE_DEPENDENCY_RELEASE.md) resolves how unselected routes remove holds recursively without beginning jobs or acknowledging requests. A terminal reached by this route is not an execution-completion receipt.
-
-The [request-state reference](../docs/reconstruction/REQUEST_STATE_MODEL.md) makes local request, hold and credit rules executable with explicit unresolved callback effects. Fourteen boundary tests pass. This reference does not add native control or replace the owned dependency executor. Indexed registry insertion and duplicate-pointer checking are also known; player registration with selector 24 remains open.
-
-## Ordinary frame rearm now joined
-
-The [EndFrame audit](../docs/reconstruction/ENGINE_LOOP_HANDSHAKE.md) closes the ordinary action-receiver completion → downstream dependencies → EndFrame callback → preparation → next-root submission path. This supersedes the wholly unresolved outer caller in the preceding section. It protects the stated ordinary receiver-storage ordering; it does not make EndFrame a universal idle point. Next-root submission can occur before EndFrame's own final bookkeeping.
-
-The [root route](../docs/reconstruction/ENGINE_ROOT_STEP_ROUTE.md) identifies mode gates, the Step rebuild gate and world-stage endpoints. Two provider entry/terminal interiors remain unresolved. The [event branch](../docs/reconstruction/ENGINE_EVENT_SUBMISSION.md) bypasses root submission and uses an engine-owned handle also touched during restart; the platform operations and exact waiter remain open. The [explicit helper audit](../docs/reconstruction/WAIT_HELPER_DISPATCH.md) also closes accounting-before-worker for the second inspected dispatcher.
-
-Next native targets, in order:
-
-1. Mode-byte writers and the exact event-handle consumer: determine who requests the alternate end-frame path and what completion they observe.
-2. Both provider entry-to-terminal interiors: establish the outstanding dependency chains rather than treating endpoints as complete jobs.
-3. Active world/player/request identity and source-input freshness, followed by a bounded original execution trace when its observation contract is ready.
-4. Native control only after owner lifetime, submission exclusion and required thread context are established for that specific operation.
-
-The [alternate-propagation reference](../docs/reconstruction/ALTERNATE_DEPENDENCY_MODEL.md) adds executable branch bypass with ten synthetic tests. It complements local request/credit rules; a complete mixed normal/alternate scheduler interpreter remains to be implemented and checked against native evidence.
+Full scheduler and engine reconstruction remain incomplete. Green reference tests, static endpoint graphs and local drain observations each support their own scope; none substitutes for these remaining release gates.

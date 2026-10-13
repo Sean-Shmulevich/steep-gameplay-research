@@ -56,7 +56,7 @@ In particular, none of the findings proves:
 - that observing this event means every job in every world is idle;
 - that clearing alternate mode is itself a safe graph-rebuild barrier.
 
-The useful next edge is the setter of alternate mode and the caller that consumes this exact owner-held handle. Resolving the protected signal/reset targets is a separate, concrete prerequisite for importing operating-system event semantics into the reconstruction. A matching function signature is insufficient to establish synchronization guarantees.
+The subsequent [consumer audit](ENGINE_EVENT_CONSUMER.md) identifies the alternate-mode setter, exact handle consumer and outer start/callback/consume sequence. Resolving the protected signal/reset targets is a separate, concrete prerequisite for importing operating-system event semantics into the reconstruction. A matching function signature is insufficient to establish synchronization guarantees.
 
 ## Evidence and reconstruction boundary
 

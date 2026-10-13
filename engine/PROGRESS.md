@@ -66,3 +66,11 @@ The ordinary rearm caller is now identified as EndFrame, downstream of the actio
 Added a serial alternate-dependency model with ordinary/conditional bindings, after-traversal clearing, current-hold rechecks and order-sensitive join tests. Full suite: 288 passing tests. No original game execution, attachment or control.
 
 Next: recover mode-byte writers and exact event waiter, then resolve the two provider entry/terminal interiors. Follow with the mixed normal/alternate scheduler implementation and a native execution oracle once active identities and observation safety are established. The prior ordinary rearm gap is closed under its stated topology; native pause/single-step and full engine reconstruction remain incomplete.
+
+## Connected scheduler checkpoint
+
+The mixed scheduler now executes range, one-shot callback, immediate terminal and conditional jobs together. Normal successor effects run immediately, alternate effects preserve bypass order, and dispatch tokens distinguish claimed work from returned callbacks. Low-level root submission remains available inside EndFrame before its own accounting finishes. The runnable three-cycle probe verifies an active/skipped/active route sequence. Full suite: 302 passing tests; malformed token regression fixed and covered.
+
+Static work connects both AI provider interiors, engine mode stage copies/setters, and the exact event consumer/request byte. Protected platform operations, outer interface implementation and owner destruction remain open. The roadmap is now organized by current evidence and release gates rather than accumulated pass notes.
+
+Next implementation: integrate owned gameplay phase dispatch through the mixed scheduler while preserving timing/replay behavior and labeling the chosen phase topology. Native investigation: protected event semantics and outer interface/owner lifecycle, followed by current player/world/request identity and source freshness. Full reconstruction and native pause/step remain incomplete.

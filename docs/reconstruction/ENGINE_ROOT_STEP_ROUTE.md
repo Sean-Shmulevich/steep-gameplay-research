@@ -100,7 +100,7 @@ Step.callback(engine):
     Step.activate_outgoing(force=true)
 ```
 
-`ProviderPair1` and `ProviderPair2` are obtained through four virtual getters on a separate global provider. The inspected callback connects their entry and terminal endpoints; this pass has not decoded their interior jobs. The route above is therefore an exact endpoint graph with two unresolved internal provider paths, not a proof that those paths always release their terminals.
+`ProviderPair1` and `ProviderPair2` are obtained through four virtual getters on a separate global provider. The inspected callback connects their entry and terminal endpoints; this pass has not decoded their interior jobs. The subsequent [provider-chain audit](ENGINE_PROVIDER_CHAINS.md) resolves both internal graphs and their concrete receiver. Callback termination and active list contents remain outside this structural proof.
 
 Each world-stage builder initially sets its tail to its seed, clears the seed's outgoing links, then folds the eligible world handles in array order. For the action stage, the adapter selects the previously identified action wrapper from each world's graph. Its wrapper terminal becomes the next predecessor. An empty world list has seed equal to tail.
 
@@ -112,8 +112,8 @@ The recovered graph supports an explicit model with separate global-mode selecti
 
 For original-game stepping, the remaining checks are concrete:
 
-- Resolve both provider entry-to-terminal interiors before treating the displayed world route as a complete release chain.
-- Identify writers and lifetime rules for the global mode byte and engine mode byte; do not assume they remain stable during a request.
+- The [provider interiors](ENGINE_PROVIDER_CHAINS.md) are now structurally resolved; retain their callback-return and list-membership conditions when interpreting release.
+- The [mode-writer audit](ENGINE_MODE_WRITERS.md) identifies stage copies and set/clear operations. Their external caller serialization remains unresolved; do not assume one mode value covers the whole request.
 - Retain the outer completion handshake and all incoming holds. A route to Step does not authorize editing links while another request is active.
 - Join an eligible world handle to the player world before treating that world's action batch as the player simulation.
 
