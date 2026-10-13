@@ -495,3 +495,52 @@ exercise both entry/destruction orders and retain noncanonical state values.
 They do not launch threads, wait on handles or turn these local transitions into
 native quiescence. Numeric state values are retained without inventing a complete
 native enum or state machine.
+
+
+## Explicit thread join wrapper
+
+The common wait adapter also has a separate caller that preserves the thread's
+resources while attempting a join. Its visible behavior is:
+
+```text
+join(thread, caller_timeout):
+    if load(thread.lifecycle) == 0:
+        return true
+    result = join_shaped_adapter(thread.handle_holder, caller_timeout)
+    success = (result == 0)
+    if success:
+        atomic_exchange(thread.lifecycle, 0)
+    return success
+```
+
+This wrapper does not write the ordinary worker run flag, signal its event, or
+request that it stop. A true result from the zero-state shortcut also contains no
+new platform wait observation. The caller must establish why zero means the
+required lifecycle condition. A nonzero adapter result returns false and does not
+clear the lifecycle word through this wrapper.
+
+The caller timeout is forwarded unchanged at this boundary. Inspected callers
+supply either all ones or the literal 1000; exact platform units and guarantees
+remain qualified by the protected wait target. No additional timeout conversion
+is visible in the wrapper.
+
+A bounded direct-call search found several users, including a thread-shaped object
+with a different layout. One of those users polls two counters until both read
+zero, sets its stop byte, performs counter-aware event notification, and tail-calls
+this join wrapper with an all-ones timeout. Its notification uses a compare-before-
+increment cap and must not be silently replaced with the ordinary worker's
+increment-before-signed-min formula at overflow. The object's type and producers
+are not yet joined to the ordinary scheduler or idle-task pool.
+
+Another inspected caller invokes the wrapper with 1000 and proceeds to virtual
+destruction without a visible boolean-result test. This is a local caller fact,
+not evidence that timeout is harmless or that the earlier destructor wait can be
+omitted. The object has separate state and ownership fields and is not classified
+as an ordinary worker from address proximity alone.
+
+[The lifecycle helpers](../../engine/thread_lifecycle.py) now distinguish explicit
+join entry and result handling. Regression cases preserve the zero-state shortcut
+and nonzero-result failure. No protected platform operation is simulated. The
+remaining native-control requirement is still an identified owner path that stops
+submissions, finishes relevant work, wakes and joins the correct threads, and only
+then releases their resources.

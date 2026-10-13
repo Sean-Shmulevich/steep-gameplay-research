@@ -32,3 +32,16 @@ def destructor_after_wait(state, adapter_result):
     _i32(adapter_result)
     return dict(state=0 if adapter_result == 0 else state,
                 exchange_to_zero=adapter_result == 0)
+
+
+def join_entry(observed_state):
+    """The explicit wrapper returns true for zero without checking a handle."""
+    _i32(observed_state)
+    return dict(call_wait_adapter=observed_state != 0,
+                immediate_result=True if observed_state == 0 else None)
+
+
+def join_after_wait(state, adapter_result):
+    """Caller-visible boolean and state update after the wait adapter returns."""
+    transition = destructor_after_wait(state, adapter_result)
+    return dict(**transition, result=adapter_result == 0)

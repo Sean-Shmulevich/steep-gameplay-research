@@ -295,3 +295,14 @@ branch. Derived worker resources are released before the common wait attempt, so
 outer shutdown/lifetime guarantees remain necessary.
 
 Validation: all 388 independent tests pass.
+
+
+## Explicit join wrapper contract
+
+Recovered the separate timeout-forwarding join wrapper, including zero-state
+shortcut and zero-adapter-result state clear. Added entry/result decision helpers
+and tests. Found drain/stop/wake/join behavior in a different-layout caller but did
+not assign it to the ordinary scheduler without type evidence. Native owner and
+submission-exclusion joins remain unresolved.
+
+Validation: all 390 independent tests pass.
