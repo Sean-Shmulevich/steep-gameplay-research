@@ -112,3 +112,12 @@ multi-worker execution model. Native concurrency must remain separately verified
 ## Base job limit closure
 
 A fresh instruction-level check closes the base-constructor limit formula: signed minimum of a zero-extended byte argument and signed default, then uint8 conversion. Added the executable function and boundary tests, including negative defaults and byte rollover. These values are arithmetic fixtures, not observed live configuration. Full suite: 339 passing tests. Concrete constructor overrides and job assignments remain the next static targets.
+
+## Named AI queue assignments
+
+A fresh static pass connects seven named AI stages to category-one construction,
+base byte limits and selected explicit limit-one overrides. It distinguishes a
+nearby auxiliary-mode setter from queue category and decodes its conditional
+excluded-mask clear. See the AI queue assignment supplement. Later writes and
+live receiver identities remain open. No runtime code changed; packaging and
+links were rechecked. The last full executable suite remains 339 passing tests.

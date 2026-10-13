@@ -189,3 +189,5 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 
 - [Executable ordinary queue policy](reconstruction/QUEUE_POLICY_MODEL.md)
 - [Worker-count and queue-routing producers](reconstruction/SCHEDULER_QUEUE_PRODUCERS.md)
+
+- [Named AI job queue assignments](reconstruction/AI_QUEUE_ASSIGNMENTS.md)

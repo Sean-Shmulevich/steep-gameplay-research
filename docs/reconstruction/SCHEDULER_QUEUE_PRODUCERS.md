@@ -109,3 +109,5 @@ produces 255. Argument 255/default -256 produces zero. These boundary evaluation
 do not establish that negative operational defaults occur in the game.
 `base_job_limit` in `engine.queue_producers` implements this rule with explicit
 uint8/int32 inputs. Later concrete constructors may still override it.
+
+[Named AI assignments](AI_QUEUE_ASSIGNMENTS.md) now close construction-time category and selected limit overrides for seven stages. They do not establish all later writers.
