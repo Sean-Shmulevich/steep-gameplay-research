@@ -58,7 +58,7 @@ class MixedScheduler:
             self._handlers[name] = dict(binding)
         allowed = {'id', 'kind', 'successors', 'credit_recipients', 'secondary', 'secondary_credits',
                    'handler', 'predicate', 'condition', 'receivers', 'chunk_size', 'tail_threshold',
-                   'max_concurrency', 'credit_gate', 'credits'}
+                   'max_concurrency', 'credit_gate', 'credits', 'front_insert', 'early_exit_enabled'}
         self._definitions, self._jobs, self._lists = {}, {}, {}
         for original in definitions:
             if not isinstance(original, dict) or set(original) - allowed:
@@ -89,6 +89,9 @@ class MixedScheduler:
             if not isinstance(receivers, list) or len(receivers) > 100000 or (receivers and kind != 'range'):
                 raise ValueError('invalid receiver array')
             job = requests.new_job(credit_gate=spec.get('credit_gate', False), credits=spec.get('credits', 0))
+            for flag in ('front_insert', 'early_exit_enabled'):
+                if type(spec.get(flag,False)) is not bool:raise ValueError('queue flags must be boolean')
+                spec.setdefault(flag,False)
             self._definitions[name] = spec
             self._jobs[name] = dict(job, executions=0, outstanding_dispatches=0, remaining=len(receivers),
                                     receivers=receivers, terminal_begins=0, usage=False)
@@ -148,6 +151,7 @@ class MixedScheduler:
             self._queue_policy=policy
         self._identity = uuid.uuid4().hex
         self._queue, self._dispatches = [], {}
+        self._queue_change, self._front_count = 0, 0
         self._next_dispatch = 0
         self._depth, self._worker_depth = 0, 0
         self._max_transitions, self._budget = max_transitions, max_transitions
@@ -295,10 +299,15 @@ class MixedScheduler:
         else:
             job['state'] = requests.SCHEDULED
             if name not in self._queue:
-                self._queue.append(name)
+                if spec['front_insert']:
+                    self._queue.insert(0,name)
+                    self._front_count += 1
+                else:
+                    self._queue.append(name)
+                self._queue_change = (self._queue_change + 1) & 0xffffffff
             if self._queue_policy is not None and self._selection_jobs[name]['limit']==selection.INT_MAX:
                 self._selection_jobs[name]['limit']=self._queue_policy['shared_default']
-            self._emit('mixed_job_queued', job=name, started=job['started'])
+            self._emit('mixed_job_queued', job=name, started=job['started'], queue_change=self._queue_change, front_count=self._front_count)
 
     def submit(self, name, context=None):
         """Native local gate; allowed inside another job's callback.
@@ -323,6 +332,11 @@ class MixedScheduler:
         self._normal_release(name, 'primary', context)
         job['state'] = requests.UNSCHEDULED
         self._emit('mixed_finalized', job=name, outstanding_dispatches=job['outstanding_dispatches'])
+
+    def _remove_queued(self, name):
+        self._queue.remove(name)
+        if self._definitions[name]['front_insert']:
+            self._front_count -= 1
 
     def _validate_worker(self, worker_index):
         topology = self._queue_policy is not None and 'worker_slots' in self._queue_policy
@@ -396,7 +410,7 @@ class MixedScheduler:
                        executions=job['executions'], outstanding_dispatches=job['outstanding_dispatches'], worker_index=worker_index)
             if self._definitions[name]['kind'] == 'callback':
                 job['state'] = requests.DONE
-                self._queue.remove(name)
+                self._remove_queued(name)
                 self._emit('mixed_callback_done_on_reservation', job=name, dispatch=token.dispatch)
             return token
 
@@ -455,6 +469,7 @@ class MixedScheduler:
             job, spec = self._jobs[name], self._definitions[name]
             if spec['kind'] != 'range' or dispatch['range'] is not None:
                 raise ValueError('range claim requires a range worker without an open range')
+            if dispatch.get('yield_requested',False):return None
             old, chunk, tail = job['remaining'], spec['chunk_size'], spec['tail_threshold']
             if old <= 0:
                 return None
@@ -466,6 +481,8 @@ class MixedScheduler:
             dispatch['range_sequence'] += 1
             result = RangeToken(self._identity, token.dispatch, dispatch['range_sequence'], proposed, old-proposed)
             dispatch['range'] = result
+            if 'captured_queue_change' not in dispatch:
+                dispatch['captured_queue_change'] = self._queue_change
             self._emit('mixed_range_claimed', job=name, dispatch=token.dispatch, start=proposed,
                        count=old-proposed, remaining=proposed, executions=job['executions'])
             return result
@@ -494,6 +511,13 @@ class MixedScheduler:
                     self._emit('mixed_receiver_return', job=name, dispatch=token.dispatch, receiver_index=index)
                 dispatch['range'] = None
                 dispatch['stage'] = 'reserved'
+                dispatch['yield_requested'] = producers.range_should_yield(
+                    dispatch['captured_queue_change'], self._queue_change,
+                    spec['early_exit_enabled'], self._front_count)
+                if dispatch['yield_requested']:
+                    self._emit('mixed_range_yield_requested', job=name, dispatch=token.dispatch,
+                        captured_change=dispatch['captured_queue_change'], current_change=self._queue_change,
+                        front_count=self._front_count, remaining=self._jobs[name]['remaining'])
             finally:
                 self._worker_depth -= 1
 
@@ -528,14 +552,14 @@ class MixedScheduler:
                 raise ValueError('cannot finish a callback/range that has not returned')
             if spec['kind'] == 'callback' and not dispatch['callback_ran']:
                 raise ValueError('callback body has not returned')
-            if spec['kind'] == 'range' and job['remaining'] > 0 and not early_exit:
+            if spec['kind'] == 'range' and job['remaining'] > 0 and not early_exit and not dispatch.get('yield_requested',False):
                 raise ValueError('positive unclaimed range needs explicit early_exit observation')
             job['executions'] -= 1
             self._emit('mixed_execution_returned', job=name, dispatch=token.dispatch, executions=job['executions'], remaining=job['remaining'])
             if job['state'] == requests.SCHEDULED and spec['kind'] == 'range' and job['remaining'] <= 0:
                 job['state'] = requests.DONE
                 if name in self._queue:
-                    self._queue.remove(name)
+                    self._remove_queued(name)
                 self._emit('mixed_range_done', job=name, executions=job['executions'])
             if job['state'] == requests.DONE and job['executions'] == 0:
                 self._finalize(name, context)
@@ -599,6 +623,7 @@ class MixedScheduler:
         for name,record in selection_jobs.items():record['executions']=self._jobs[name]['executions']
         return copy.deepcopy(dict(schema_version=1, jobs=self._jobs, lists=self._lists,
                                   queue=self._queue, dispatches=dispatches, fault=self._fault,
+                                  queue_change=self._queue_change, front_count=self._front_count,
                                   handler_versions={key: value['version'] for key, value in self._handlers.items()},
                                   trace=self.trace.snapshot(),
                                   queue_policy=self._queue_policy, selection_jobs=selection_jobs, queue_destinations=self._queue_destinations,

@@ -60,7 +60,7 @@ between observations; no unbounded generation guarantee follows.
 with explicit uint32 change values, a Boolean job flag and signed-int32 front
 counter. Its tests include disabled gating, nonzero negative values and wraparound
 inequality. The helper does not synthesize native counter updates or terminate
-callbacks. Connecting counter lifecycle into the runtime remains separate work.
+callbacks. The mixed-scheduler integration below now supplies the reconstructed counter lifecycle.
 
 The instruction check joined the range worker, ordinary begin and all chained
 segments of enqueue in image SHA-256
@@ -122,3 +122,30 @@ These arguments support ordered shifts rather than swap-with-last removal. This
 pass does not independently reconstruct the runtime copy helper's implementation
 or allocator failure semantics. It closes the array-helper index/length arithmetic
 that the earlier enqueue note left open.
+
+## Executable queue-change yielding
+
+The mixed scheduler now maintains `queue_change` and `front_count` in snapshots.
+Executable job definitions accept Boolean `front_insert` and `early_exit_enabled`,
+both false by default. Front insertion uses an ordered prepend in the independent
+Python queue; the inspected copy arguments support that ordering, while native
+copy/allocator internals remain outside the reconstruction.
+
+Enqueue increments the 32-bit change counter. Flagged insertion increments front
+count; queue removal decrements it without changing enqueue generation. Flags and
+routing are immutable within this adapter, and duplicate queue entries are not
+permitted, preserving the accounting invariants described above.
+
+A dispatch captures queue generation at its first successful claim. After each
+claimed range's visitor returns, it applies `range_should_yield`. A true result
+sets `yield_requested`, emits the observed counter values and prevents further
+claims by that dispatch. `finish_dispatch` then permits the unclaimed remainder
+to stay scheduled. A new dispatch captures a new generation and can resume it.
+Helper dispatches use the same range execution rule. No current receiver callback
+is cancelled or rolled back by yielding.
+
+Four integration cases cover enqueue during a multi-receiver claim, later resume
+without early successor release, the optional front gate, removal before callback
+execution, and counter wrap. The symbolic explorer treats a yielded dispatch's
+next action as finish rather than an endless attempt to claim again. Job-specific
+native flag setters and platform concurrency remain unverified.

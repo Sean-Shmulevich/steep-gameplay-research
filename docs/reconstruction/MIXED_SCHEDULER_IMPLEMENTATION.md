@@ -103,3 +103,5 @@ These limits do not prevent using the connected model to test graph logic, depen
 Run `python3 -m unittest discover -s tests -p 'test_engine_mixed_scheduler.py'`. These are synthetic execution tests against inspected local contracts, not native gameplay traces or whole-engine determinism proof.
 
 The [explicit helper API](WAIT_HELPER_DISPATCH.md) adds bounded range helping separately from ordinary queue reservation. It preserves empty-versus-drained predicates and explicitly leaves native TLS and owner protection unresolved.
+
+[Queue-change yielding](RANGE_WORKER_YIELD.md) now runs after completed receiver ranges. Definitions can explicitly request front insertion and the optional front-counter exit gate. A yielded dispatch leaves unclaimed receivers scheduled for later work.

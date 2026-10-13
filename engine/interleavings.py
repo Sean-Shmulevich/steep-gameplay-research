@@ -93,7 +93,7 @@ def explore(definitions, queue_policy, roots, *, max_nodes=2000, max_depth=64):
             elif dispatch['range'] is not None:
                 enabled.append((worker,'range'))
             else:
-                enabled.append((worker,'claim' if snapshot['jobs'][dispatch['job']]['remaining'] > 0 else 'finish'))
+                enabled.append((worker,'claim' if snapshot['jobs'][dispatch['job']]['remaining'] > 0 and not dispatch.get('yield_requested',False) else 'finish'))
         if not enabled:
             quiet = (not dispatches
                 and all(j['state']=='UNSCHEDULED' and j['holds']==0 and not j['deferred'] for j in snapshot['jobs'].values())
