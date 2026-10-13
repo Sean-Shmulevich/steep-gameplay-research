@@ -135,3 +135,26 @@ results = jobs.run_ready(engine)
 ```
 
 This executor is standalone; the gameplay runtime has not been refactored into its jobs. It is a testable boundary for future mods, not a native scheduler hook. Quiescent snapshots can be restored with matching handler version tokens. Python callables, closure state and callback side effects require caller ownership; version tokens alone cannot prove code identity, and side effects are not rolled back. This API is not a sandbox for untrusted mods.
+
+## Exclusive owned-runtime stepping
+
+`SchedulerController` owns one Engine and serializes every submission. Pause waits for the current operation and returns a generation-qualified token. A paused token permits one developer tick or one planned outer frame; both return to the paused state before releasing the lock. Resume/reset/restore invalidate stale tokens. This implements an explicit submission gate in our runtime, not an original-process pause mechanism.
+
+```python
+from engine.control import SchedulerController
+
+controller = SchedulerController({'scheduler': {
+    'mode': 'subdivision', 'smoothing_enabled': True}})
+token = controller.pause()
+result = controller.step_frame_once(token, 1/60, {'steer': .3})
+assert result['control']['paused']
+checkpoint = controller.checkpoint()
+controller.step_once(token)  # One configured fixed developer tick.
+token = controller.restore(checkpoint)
+controller.resume(token)
+controller.submit_frame(1/60)
+```
+
+Use `snapshot()` for copied state and trace, and `export_replay()` for an owned replay record. Neither advances time. Frame failure rolls back owned input/state/replay changes, invalidates the old token, and leaves submissions excluded. Call `pause()` to obtain the new token. Native callbacks and external side effects are outside this rollback. An Engine handed to a controller must not be called directly elsewhere. The existing browser server still uses the basic Engine API; this controller is currently a Python API.
+
+`membership.copy_registered_receivers(source, destination)` preserves the recovered conditional copy rule: a nonempty stable source replaces the destination, while an empty source retains it. The caller owns locking, lifetime and request/reset boundaries. It is a local semantic helper, not proof that a retained receiver belongs to a current native request.
