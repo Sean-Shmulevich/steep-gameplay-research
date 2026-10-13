@@ -52,3 +52,9 @@ Scheduler work takes precedence over the broader backlog below: prove active mem
 Add evidence and tests for the changed behavior. Run the full suite when shared state or interfaces change. Preserve source manifests, no game payloads, no absolute machine paths, and valid links. Keep synthetic, asset-decoded, binary-derived, video-estimated and Studio-authored categories explicit. Update this file with completed work, actual test results and the next concrete task.
 
 Validation checkpoint: see [validation scope](VALIDATION.md) for the current suite and private adapter checks. The earlier 121-test checkpoint included the gentle-curvature regression. Five synthetic 3,600-tick sport scenarios plus their replays matched hashes with zero recorded faults. Browser step control and canvas rendering were checked; an extension resource failure and missing favicon were observed, with the favicon reference then corrected. Full game parity and production rendering remain unverified.
+
+## Current scheduler continuation
+
+Connected world action wrappers through the eligible-world chain to the engine Step callback and preparation/root submission. Resolved unselected-route recursion separately from ordinary completion. Added a standalone request/hold/credit reference and 14 boundary tests; full suite now passes 278 tests. Corrected membership guidance to retain the already recovered indexed insertion and duplicate-pointer check.
+
+Next: trace the outer engine-loop completion/event handshake before repeated graph preparation, including the event-related submission branch. Preparation itself supplies no worker wait. Preserve the distinct player-membership and input-freshness gates. No original game was launched or modified.

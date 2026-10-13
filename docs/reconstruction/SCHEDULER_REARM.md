@@ -104,7 +104,7 @@ Graph construction creates a wrapper containing a separately allocated condition
 
 Setup binds the branch callable to the graph's world receiver. Its inspected predicate is a signed world-field comparison against zero, returning true when the field is nonpositive. The label suggests its purpose, but this pass does not assign that field units or a complete pause-state interpretation.
 
-The branch activation method pre-holds both dependency lists. Its begin method evaluates the callable, normally releases the selected list and routes the alternate list through a different dependency-release method. That alternate method calls a successor virtual method when the last hold is removed. Its full recursive effect is outside this audit, so it must not be silently equated with ordinary execution or ordinary completion.
+The branch activation method pre-holds both dependency lists. Its begin method evaluates the callable, normally releases the selected list and routes the alternate list through a different dependency-release method. That alternate method calls a successor virtual method when the last hold is removed. The subsequent [alternate-release audit](ALTERNATE_DEPENDENCY_RELEASE.md) resolves that recursion for the inspected job types: it bypasses descendants without beginning work or acknowledging requests as started. It must not be equated with ordinary execution or ordinary completion.
 
 ```text
 conditional_begin(branch):

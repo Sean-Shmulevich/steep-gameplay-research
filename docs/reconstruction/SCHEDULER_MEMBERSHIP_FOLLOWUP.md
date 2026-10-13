@@ -68,10 +68,10 @@ Do not replace this behavior with unconditional `destination = list(source)` and
 
 ## What synchronization does and does not close
 
-The source synchronization encloses the count read, destination preparation and byte copy. That supports a stable copy only relative to writers that participate in the same synchronization protocol. This pass did not recover those writers. The critical section does not, by itself, prove:
+The source synchronization encloses the count read, destination preparation and byte copy. The indexed registration writer and removal wrapper also acquire the entry's lock, as qualified below. The critical section does not, by itself, prove:
 
 - where the selected player's pointer is inserted or removed;
-- whether registrations are unique, ordered or refcounted;
+- whether another registration path can bypass uniqueness, or whether copied receivers retain lifetime references;
 - the lifetime of a copied receiver after source synchronization ends;
 - exclusion between destination rebuilding and workers consuming that destination;
 - that an empty source produces an empty batch in the current request.
@@ -79,6 +79,31 @@ The source synchronization encloses the count read, destination preparation and 
 The callable cached by the range executor and the pointed-to receiver lifetimes remain distinct objects with distinct release requirements. The general drain/teardown question is covered by the scheduler audit and is not answered by this list-copy lock.
 
 ## Registration remains an exact unresolved gate
+
+### Correction from the indexed registry evidence
+
+The earlier registry investigation already identified a generic insertion path. A fresh inspection confirms that it computes an entry from a signed selector, enables exact-pointer duplicate checking, and appends the original pointer only when absent. The corresponding removal wrapper computes the same entry and acquires the same entry lock. This qualifies the original bounded search below: the generic writer is known; the selected player's call to it with this selector remains unresolved.
+
+The world registry begins at world offset `0x110`; entries begin at registry offset `0x20`, with stride `0x40`. Therefore the gather source at world offset `0x730` is entry 24:
+
+```text
+0x110 + 0x20 + 24 * 0x40 = 0x730
+
+register(registry, receiver, selector):
+    entry = registry.entries[selector]
+    lock(entry)
+    if exact_pointer_present(entry, receiver):
+        unlock(entry)
+        return
+    ensure_capacity(entry, entry.count + 1)
+    entry.pointers[entry.count] = receiver
+    entry.count += 1
+    unlock(entry)
+```
+
+This pseudocode assumes a valid selector and successful allocation, and abbreviates the native helper's nested locking. Native count publication precedes the pointer store inside the critical section; the presentation above describes the resulting list, not a replacement concurrent implementation. Insertion preserves existing order. Removal ordering, receiver ownership and the actual player registration with selector 24 remain open. Exact-pointer uniqueness applies to this duplicate-checking path, not every possible writer.
+
+The next useful static join is the player's registration call with selector 24 and the matching removal/lifetime path. Searching again for an entirely unknown generic insertion function would repeat completed work.
 
 A bounded search of unwind-described code for direct formation of the candidate list field and adjacent count field found the known builder and several unrelated owners. Inspected false leads included repeated property-object initialization/copy routines, object-size constants in deletion paths, and a controller update with a different owner layout. Matching a field displacement does not identify a world registration method. The search did not prove that the chosen player is ever inserted in this list.
 

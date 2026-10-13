@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 264 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 278 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -44,3 +44,5 @@ The next static pass added six action-publication kernel tests and four range-cl
 Five default-processor tests verify four-lane pass-through, signed zero, marker handling, copied state and rejected nonfinite inputs. Four composed-pipeline tests distinguish fallback, bypass and supplied configured output, retaining nonunit diagonal samples. These tests establish the inspected local paths only; they do not select the player's runtime binding or prove device update timing.
 
 Static follow-ups connect the backend consumer's descriptor/wrapper registration and the ordinary scheduler's reservation-to-finalization path. They identify the action graph's conditional entry and terminal nodes but do not prove next-request exclusion. The engine test count is not evidence for those native execution relationships; consult their separate source-backed audit scope.
+
+Fourteen request-state tests now cover activation/release, two-predecessor joins, credit deferral and wakeup, alias rejection, rollback and JSON continuation. The full suite passed 278 tests. Static audits resolve alternate-route propagation and the action graph's outer Step integration; no live engine-loop exclusion test was performed.

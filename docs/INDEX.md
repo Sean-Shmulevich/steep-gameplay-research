@@ -15,6 +15,17 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 | Scoring | Formulas, detectors and attribution |
 | Walking | Leads only; controller and snow effects remain open |
 
+## Scheduler reconstruction
+
+- [Release gates and current priorities](../engine/SCHEDULER_ROADMAP.md)
+- [Timing arithmetic and smoothing](reconstruction/SCHEDULER_SMOOTHING_AUDIT.md)
+- [Queue reservation, completion and request rearm](reconstruction/SCHEDULER_REARM.md)
+- [Engine-step action-chain caller](reconstruction/ACTION_REARM_CALLER.md)
+- [Executable request, hold and credit rules](reconstruction/REQUEST_STATE_MODEL.md)
+- [Unselected-branch dependency propagation](reconstruction/ALTERNATE_DEPENDENCY_RELEASE.md)
+- [Registered receivers and gathered batches](reconstruction/SCHEDULER_MEMBERSHIP_FOLLOWUP.md)
+- [Backend worker registration](reconstruction/BACKEND_WORKER_REGISTRATION.md)
+
 ## Air
 
 - [CLIENT_GUIDE.txt](systems/air/CLIENT_GUIDE.txt)
