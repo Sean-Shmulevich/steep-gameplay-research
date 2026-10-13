@@ -101,3 +101,5 @@ These limits do not prevent using the connected model to test graph logic, depen
 [Fourteen focused tests](../../tests/test_engine_mixed_scheduler.py) cover delayed multiple claims, done-on-reservation callbacks, mixed reconvergence, immediate normal recursion, conditional activation order, credit wakeup, positive-count early exit, tail-claim arithmetic, stale/forged tokens, fail-stop errors, bounded traces, repeated requests and EndFrame overlap. The three-cycle probe is also exercised by the suite.
 
 Run `python3 -m unittest discover -s tests -p 'test_engine_mixed_scheduler.py'`. These are synthetic execution tests against inspected local contracts, not native gameplay traces or whole-engine determinism proof.
+
+The [explicit helper API](WAIT_HELPER_DISPATCH.md) adds bounded range helping separately from ordinary queue reservation. It preserves empty-versus-drained predicates and explicitly leaves native TLS and owner protection unresolved.

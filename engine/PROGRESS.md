@@ -164,3 +164,7 @@ Added active-dependency hold conservation and premature-release checks. Delibera
 ## Portable scheduler experiments
 
 Added a JSON-driven explorer CLI with standalone reports and distinct exit statuses for complete, bounded, violated and invalid experiments. End-to-end CLI tests cover report generation, bounded search and source-file preservation. Full suite: 358 passing tests. The native worker upper-bound writer remains unresolved after a bounded direct-store/address-taking search; image data zero is not used as a live default.
+
+## Explicit helper execution model
+
+Implemented bounded range-only helper dispatch and read-only helper wait status. Helping bypasses queue selection/caps while preserving execution and outstanding accounting. Three tests cover cap/affinity bypass, empty-versus-drained state and rejected lifecycle/type misuse. Full suite: 361 passing tests. Native TLS, owner protection and nested helping remain unresolved; no blocking native wait is exposed.

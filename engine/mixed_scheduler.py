@@ -400,6 +400,47 @@ class MixedScheduler:
                 self._emit('mixed_callback_done_on_reservation', job=name, dispatch=token.dispatch)
             return token
 
+    def reserve_helper(self, name, *, helper_id):
+        """One explicit helper invocation for an active range job.
+
+        Bypasses queue selection and its concurrency cap. The caller retains
+        lifecycle ownership; no native TLS or blocking wait is represented.
+        """
+        if type(helper_id) is not str or not helper_id or len(helper_id) > 128:
+            raise ValueError('bounded nonempty helper identity required')
+        job = self._job(name)
+        if self._definitions[name]['kind'] != 'range':
+            raise ValueError('helper requires a compatible range job')
+        if any(d.get('helper_id') == helper_id for d in self._dispatches.values()):
+            raise ValueError('helper context already has an outstanding dispatch')
+        with self._operation():
+            if job['remaining'] <= 0:
+                return None
+            if job['state'] != requests.SCHEDULED:
+                raise ValueError('helper requires an active scheduled request')
+            job['outstanding_dispatches'] += 1
+            job['executions'] += 1
+            token = DispatchToken(self._identity, self._next_dispatch)
+            self._next_dispatch += 1
+            self._dispatches[token.dispatch] = dict(job=name, stage='reserved',
+                range=None, range_sequence=0, callback_ran=False,
+                worker_index=None, helper_id=helper_id)
+            self._emit('mixed_dispatch_reserved', job=name, dispatch=token.dispatch,
+                executions=job['executions'], outstanding_dispatches=job['outstanding_dispatches'],
+                worker_index=None, helper_id=helper_id, route='helper')
+            return token
+
+    def helper_wait_status(self, name):
+        """Owned serial observation of the helper's two distinct predicates."""
+        job = self._job(name)
+        if self._definitions[name]['kind'] != 'range':
+            raise ValueError('helper status requires a compatible range job')
+        return dict(empty=job['remaining'] <= 0,
+            wait_complete=job['state'] == requests.UNSCHEDULED and job['outstanding_dispatches'] <= 0,
+            state=job['state'], executions=job['executions'],
+            outstanding_dispatches=job['outstanding_dispatches'],
+            scope='owned serial observation; not native atomic snapshot or submission exclusion')
+
     def _dispatch(self, token):
         if (type(token) is not DispatchToken or type(token.scheduler_id) is not str
                 or token.scheduler_id != self._identity or type(token.dispatch) is not int
