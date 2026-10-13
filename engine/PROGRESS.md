@@ -133,3 +133,7 @@ Checked the concrete motion range worker and joined the two setup fields to chun
 ## Motion job teardown boundary
 
 Decoded the concrete range destructor and base-job wait. Remaining-count clear and owned-storage cleanup precede the optional state/outstanding spin loop; the base constructor initializes its wait flag false. This narrows the needed proof to outer lifecycle callers and later flag writers. It establishes no original-game defect or native pause guarantee. Runtime unchanged; packaging and links checked; last full suite remains 341 passing tests.
+
+## Submission-to-destruction flag join
+
+Joined the ordinary submission usage flag to the conditional destructor wait field. Submission sets it even when already scheduled; dependency begin alone does not. Added two lifecycle regression cases and found the immediate containing-owner teardown/free edge without claiming it supplies a barrier. Full suite: 343 passing tests. The outer exclusion/lifetime contract remains unresolved.

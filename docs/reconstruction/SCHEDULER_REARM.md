@@ -73,7 +73,7 @@ This closes a local lifetime distinction: the scheduler does not use receiver-co
 
 ## Request counts and dependency holds
 
-The ordinary submit routine locks the job. If its state is unscheduled, it increments a requested count and invokes the begin method when no dependency holds remain. It also sets a usage flag. Submitting in a different lifecycle state does not take that same request-increment branch.
+The ordinary submit routine locks the job. If its state is unscheduled, it increments a requested count and invokes the begin method when no dependency holds remain. It also sets a usage flag. The [destructor follow-up](MOTION_JOB_DESTRUCTION.md) joins that field to the optional base-destructor wait gate. Submitting in a different lifecycle state does not take that same request-increment branch.
 
 Ordinary begin snapshots `requested` into `started`, activates outgoing dependencies, and either queues nonempty work or completes an empty job through its finalizer. The begin method itself is not a universal wait for outstanding dispatches; its caller and lifecycle gates matter.
 

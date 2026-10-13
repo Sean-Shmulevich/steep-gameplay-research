@@ -55,7 +55,7 @@ destroy_base_job(job):
 
 Cleanup helper names describe their local role and do not imply their complete
 failure or platform semantics. The common base constructor initializes the wait
-flag to zero together with its neighboring byte. Later flag writers remain open.
+flag to zero together with its neighboring byte. The ordinary submission writer is now joined below; other possible writers remain open.
 The wait tests outstanding dispatches rather than directly testing the separate
 execution count. Normal accounting relates those counters, but that does not make
 their storage interchangeable.
@@ -89,3 +89,45 @@ No live game was used.
 Next targets are writers of the wait-on-destroy flag and callers of action-owner
 teardown. Neither this action owner nor these job destructors close the separate
 [engine event-owner destruction gap](ENGINE_OWNER_DESTRUCTION.md).
+
+## Submission writer and enclosing owner follow-up
+
+A fresh aligned instruction scan located the ordinary submission routine's store
+to the exact wait-flag field. It unconditionally sets the flag to one after its
+state-dependent request/begin branch and before releasing the job lock. This is
+the previously described usage flag in [rearm](SCHEDULER_REARM.md) and `usage` in
+the independent mixed scheduler. Submitting an already scheduled job still sets
+it, without taking the unscheduled request-increment branch.
+
+```text
+ordinary_submit(job):
+    lock(job)
+    if job.state == UNSCHEDULED:
+        job.requested += 1
+        if job.holds == 0:
+            job.begin()
+    job.wait_on_destroy = true
+    result = (job.state == SCHEDULED)
+    unlock(job)
+    return result
+```
+
+This excerpt omits the submission routine's surrounding diagnostic and helper
+calls; it expresses the local state/flag sequence only. Ordinary finalization in
+the inspected path does not clear this flag. Dependency-triggered begin is a
+separate entry and does not acquire the submission flag merely by running work.
+Do not infer that every active downstream job has the flag set.
+
+The bounded direct-call search also identifies an enclosing destructor that reads
+an owned action-graph pointer, checks it for null, calls the graph teardown, then
+releases its allocation through the allocator interface. The immediate pre-call
+path contains allocator bookkeeping, not an established stop/drain operation.
+This adds a containing-owner edge; it does not identify all virtual callers or
+prove absence of an earlier outer barrier.
+
+Two independent-model tests cover repeated submission without a second request,
+flag retention after completion and dependency begin without direct submission.
+They validate already implemented flag behavior, not actual destruction or native
+thread safety. The next missing join is the enclosing owner's lifecycle caller
+and its submission-exclusion contract. Other flag writers and aliases remain
+outside the bounded scan.
