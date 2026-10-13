@@ -44,7 +44,7 @@ process_destruction_batch(thread):
 
 The retained pointer is initialized before the loop, not cleared at the start of
 every iteration. Correctness therefore depends on the pending count and ring
-population staying consistent. We have not traced their producers and do not
+population staying consistent. The producer below narrows their relationship; we do not
 claim this inconsistency occurs in the game. A substitute implementation that
 silently returns null from an empty ring would hide this native invariant.
 
@@ -96,6 +96,52 @@ quiescence, safe asset replacement, exclusion of new loading requests, callback
 exception cleanup or valid ring population. The independent engine does not yet
 implement a substitute loading pipeline under this recovered name.
 
-Next evidence should join the pending-count and ring writers, then identify the
-outer shutdown caller. That is more useful than treating these two zero fields as
+The producer follow-up below joins the pending-count and ring writers. The next
+missing relationship is the outer shutdown caller. That is more useful than treating these two zero fields as
 an engine-wide pause signal.
+
+
+## Staging and publication producer
+
+The ring insertion helper uses the same lock as the consumer. It tries to grow a
+full ring by 1024 entries, then writes an object pointer if capacity exceeds count,
+advances the write index with signed remainder, and increments the ring count.
+It atomically increments a separate staged count before releasing the lock.
+The increment is outside the successful-insertion branch, so allocation/growth
+behavior must be known before assuming count conservation on every failure path.
+
+A higher-level caller holds the loading-thread ring lock across a wider operation
+and can call this insertion helper. Nested locking behavior is therefore another
+platform contract; it must not be replaced with an arbitrary nonrecursive mutex.
+The caller either queues an eligible object for deferred destruction or appends
+it to a caller-provided collection, depending on its mode. Exact resource-reference
+and release eligibility conditions remain outside this focused publication result.
+
+At the end of that operation, while still holding the outer lock, it publishes:
+
+```text
+captured = atomic_exchange(thread.staged_destructions, 0)
+if captured != 0:
+    atomic_fetch_add(thread.pending_destructions, captured)
+    notify_loading_thread_with_counter_protocol(thread)
+# Other local cleanup follows before releasing the outer ring lock.
+```
+
+This is a two-stage handoff. Ring insertion does not immediately increase pending;
+the caller later transfers the staged count. The consumer sets busy then captures
+pending with an exchange, so publication after that exchange remains pending for
+a later batch. The shared ring lock serializes the visible ring accesses, while
+count exchanges are separate operations.
+
+The stop polling routine checks pending and busy only. It ignores staged and does
+not acquire this ring lock. There can be queued-but-unpublished objects, or a
+captured publication count not yet added to pending, while both polled fields are
+zero. Thus submission exclusion is a specific missing requirement, not merely a
+general concurrency caution. This does not prove a native shutdown race: an outer
+caller may already enforce that exclusion, and its identity remains unresolved.
+
+[Counter helpers](../../engine/loading_destruction.py) preserve the separate
+staging, publication and batch-capture boundaries with int32 arithmetic. Tests
+show the stop-poll blind spot, later publication surviving an earlier capture,
+zero-count notification suppression and signed overflow. They model neither ring
+growth nor resource destruction and must not be exposed as a native pause API.

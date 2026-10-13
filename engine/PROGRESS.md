@@ -316,3 +316,14 @@ batch-busy flag. Recovered ring iteration, virtual destruction and post-stop loo
 ordering, retaining the pending-count/ring-population invariant. This narrows the
 quiescence claim instead of treating loading counters as physics completion.
 Static-only pass; last full suite remains 390 tests.
+
+
+## Destruction staging and publication join
+
+Joined the ring insertion helper to staged-count accumulation and the later
+staged-to-pending transfer. The stop poll ignores staged work and the publication
+interval, making outer submission exclusion a concrete requirement. Added exact
+counter helpers and tests for the handoff, batch separation and signed boundaries.
+Ring-growth failure behavior and nested locking remain qualified dependencies.
+
+Validation: all 394 independent tests pass.
