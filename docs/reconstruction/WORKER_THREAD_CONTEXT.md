@@ -143,3 +143,45 @@ The next useful native target is the global service producer and its two virtual
 implementations, followed by readers of the separate TLS execution mode. The
 one-time hook can be represented independently without inventing those service
 semantics, but calling a placeholder service is not original-runtime equivalence.
+
+## Service factory and callback dispatch
+
+A follow-up finds a global-service writer that calls a factory and stores its
+returned pointer. The factory allocates an eight-byte object, installs a concrete
+table, performs an additional registration call and returns the object. A local
+null-allocation branch returns null. The registration operation's wider role and
+service destruction are not established here.
+
+Through the installed table, the enabled predicate reads one global byte and
+returns it. The worker operation follows two unconditional jump adapters into a
+callback-array visitor:
+
+```text
+service.enabled_predicate():
+    return global_enabled_byte
+
+service.worker_operation():
+    index = uint32(0)
+    while index < unsigned(global_callback_count):
+        global_callback_table[index](0)
+        index = uint32(index + 1)
+```
+
+The count is read before entry and again after each call, rather than captured as
+an immutable bound. Each callback receives zero in its first integer argument.
+No job or worker pointer is passed explicitly through that argument. Individual
+callbacks may consult TLS or globals; their identities and semantics still require
+producer/registration tracing.
+
+Combining this with the worker latch means absent or disabled service retries on
+later jobs. When enabled, an empty callback table still returns normally and sets
+the worker latch. Callbacks registered only afterward therefore are not guaranteed
+to run through that same worker hook, absent a later latch reset or another entry.
+The loop's count reread also prevents claiming a fixed callback snapshot during a
+concurrent registration or callback-induced change. No mutation safety contract is
+inferred from that reread.
+
+Another function references the same table during a separate callback-entry path;
+its full protocol remains open. The current evidence closes the concrete service
+and its loop, but not the registration writers, table lifetime, callback meanings
+or exception behavior. The image hash and no-live-execution boundary above apply.

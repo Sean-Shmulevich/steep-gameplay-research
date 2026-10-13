@@ -192,3 +192,7 @@ Joined the ordinary worker-loop context writer to explicit helper lookup. Decode
 ## Concrete worker hook closure
 
 Resolved the wrapper before/after slots through the table installed by worker initialization. Before conditionally invokes an enabled global service once per worker, latching only after normal return; absent/disabled service retries later. After is a no-op. The service implementation, producer and possible latch resets remain open. Documentation-only pass, packaging checked; last full suite remains 366 passing tests.
+
+## Worker service implementation closure
+
+Traced the global service writer through its factory and concrete table. Enabled reads a global byte; worker operation follows jump adapters into a callback-table loop passing zero and rereading count. Combined with the worker latch, an enabled empty table still consumes the one-time hook. Registration producers, callback semantics and lifetime remain open. Documentation-only pass; packaging verified; last full suite remains 366 tests.
