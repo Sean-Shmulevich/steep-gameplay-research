@@ -197,3 +197,5 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Motion job destruction and lifetime requirements](reconstruction/MOTION_JOB_DESTRUCTION.md)
 
 - [Bounded worker-interleaving explorer](reconstruction/INTERLEAVING_EXPLORER.md)
+
+- [Range worker yield counters](reconstruction/RANGE_WORKER_YIELD.md)

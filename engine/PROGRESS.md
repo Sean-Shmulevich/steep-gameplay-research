@@ -168,3 +168,7 @@ Added a JSON-driven explorer CLI with standalone reports and distinct exit statu
 ## Explicit helper execution model
 
 Implemented bounded range-only helper dispatch and read-only helper wait status. Helping bypasses queue selection/caps while preserving execution and outstanding accounting. Three tests cover cap/affinity bypass, empty-versus-drained state and rejected lifecycle/type misuse. Full suite: 361 passing tests. Native TLS, owner protection and nested helping remain unresolved; no blocking native wait is exposed.
+
+## Range-worker yield counter identity
+
+Joined the worker comparison values to the global queue manager supplied to enqueue: ordinary enqueue changes one counter, front insertion increments the other. Added exact post-range yield predicate and boundary tests. This explains stopping further claims after new queue work without interpreting the counters as frames. Front-counter decrements and job flag setters remain open. Full suite: 362 passing tests.

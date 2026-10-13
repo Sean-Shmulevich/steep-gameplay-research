@@ -1,5 +1,5 @@
 import unittest
-from engine.queue_producers import worker_configuration, worker_mask, enqueue_destination, base_job_limit, range_configuration
+from engine.queue_producers import worker_configuration, worker_mask, enqueue_destination, base_job_limit, range_configuration, range_should_yield
 from engine.queue_policy import select_queue
 
 
@@ -75,3 +75,12 @@ class QueueProducerTests(unittest.TestCase):
         self.assertEqual(scheduler.snapshot()['jobs']['before']['executions'], 1)
         scheduler.finish_dispatch(token)
         self.assertEqual(scheduler.snapshot()['jobs']['before']['executions'], 0)
+
+    def test_post_range_yield_signals_are_distinct(self):
+        self.assertFalse(range_should_yield(7,7,False,1))
+        self.assertFalse(range_should_yield(7,7,True,0))
+        self.assertTrue(range_should_yield(7,8,False,0))
+        self.assertTrue(range_should_yield(7,7,True,1))
+        self.assertTrue(range_should_yield(7,7,True,-1))
+        self.assertTrue(range_should_yield(0xffffffff,0,False,0))
+        with self.assertRaises(ValueError):range_should_yield(0,0,1,0)

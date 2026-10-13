@@ -66,3 +66,16 @@ def range_configuration(requested):
     chunk = max(requested, 1)
     tail = ((2 * chunk + 2**31) % 2**32) - 2**31 if chunk < 2**31 - 1 else 0
     return dict(chunk_size=chunk, tail_threshold=tail)
+
+
+def range_should_yield(captured_change, current_change, early_exit_enabled, front_counter):
+    """Post-range queue-change/front-counter gate; does not cancel claimed work.
+
+    Counter meanings and mutation ordering: RANGE_WORKER_YIELD.md.
+    """
+    _mask(captured_change)
+    _mask(current_change)
+    _i32(front_counter)
+    if type(early_exit_enabled) is not bool:
+        raise ValueError('early-exit gate must be boolean')
+    return captured_change != current_change or (early_exit_enabled and front_counter != 0)

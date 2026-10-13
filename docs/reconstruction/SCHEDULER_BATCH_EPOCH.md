@@ -75,7 +75,7 @@ After its first successful claim, the worker captures a shared comparison value,
 - that shared comparison value has changed; or
 - the job's early-exit flag is set and another shared value is nonzero.
 
-The meanings of those shared values are not assigned as frame number, cancellation generation or pause state by this pass. Their tested comparisons are sufficient to show an exit path before the next claim.
+The [yield-counter follow-up](RANGE_WORKER_YIELD.md) now joins those shared values to ordinary enqueue change and front-insertion accounting. Neither is established as a frame number, cancellation generation or pause state. Their tested comparisons are sufficient to show an exit path before the next claim.
 
 If neither exit condition applies, the worker reloads chunk settings/count and tries another claim. Once there is no positive range, it reaches the context-exit path. The job's local empty predicate is simply `remaining <= 0`; it does not inspect in-flight ranges or callbacks.
 
