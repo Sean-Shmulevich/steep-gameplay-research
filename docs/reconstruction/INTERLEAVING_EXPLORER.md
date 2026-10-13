@@ -94,3 +94,17 @@ leaves can still exist. Code two means a bounded/incomplete search, code three
 means an invariant violation, and code one means invalid input or an I/O failure.
 The runner refuses to overwrite its input scenario. Reports contain symbolic job
 identities and worker/action paths, with no native addresses or game data.
+
+## Diagnosing blocked leaves
+
+Reports retain up to four `blocked_examples` separately from the first four
+ordinary leaf examples. Each includes its replay path, queue counters and waiting
+jobs with state, hold count, deferred-credit flag, remaining receivers, active
+outgoing lists and eligible worker previews. These are observations of the
+reconstructed scenario, not an inferred native deadlock cause.
+
+A credit-deferred job can have zero holds and no worker eligibility. An affinity
+blocked callback can remain SCHEDULED without any eligible worker. The report
+preserves those distinct states so an agent can investigate the supplied graph,
+credit configuration or worker masks instead of treating every blocked leaf as a
+missing callback. Blocked examples do not authorize bypassing recovered gates.

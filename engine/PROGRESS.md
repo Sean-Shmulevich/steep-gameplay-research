@@ -180,3 +180,7 @@ Joined queue-manager zero initialization, front enqueue increment and flagged re
 ## Queue-change yield integration
 
 Connected enqueue generation, front membership and post-range yield gates to mixed execution and helper dispatch. Current claims finish before yielding; unclaimed receivers remain scheduled and successor release still waits for actual completion. Four integration tests cover resumption, front gating, callback removal timing and uint32 counter wrap. Full suite: 366 passing tests. Symbolic exploration handles yielded dispatches; native flag setters and thread behavior remain open.
+
+## Blocked experiment diagnostics
+
+Reports now retain blocked paths independently of ordinary leaf examples, with waiting-job state, holds, deferred credits, active outgoing lists and worker eligibility. Existing credit and affinity regressions validate the details. A bounded native flag-writer scan found offset collisions, including a stack-local candidate, but no newly verified scheduler assignment; native flag settings remain caller inputs. Full suite remains 366 tests.

@@ -32,6 +32,10 @@ class InterleavingTests(unittest.TestCase):
         self.assertTrue(report['complete'])
         self.assertEqual(report['blocked_leaves'],1)
         self.assertEqual(report['quiescent_leaves'],0)
+        waiting=report['blocked_examples'][0]['waiting_jobs']
+        self.assertEqual(waiting[0]['job'],'job')
+        self.assertEqual(waiting[0]['state'],'SCHEDULED')
+        self.assertEqual(waiting[0]['eligible_workers'],[])
 
     def test_external_handlers_rejected(self):
         definitions, policy = self.fixture()
@@ -47,6 +51,11 @@ class InterleavingTests(unittest.TestCase):
         self.assertTrue(report['complete'])
         self.assertEqual(report['blocked_leaves'],1)
         self.assertEqual(report['quiescent_leaves'],0)
+        waiting=report['blocked_examples'][0]['waiting_jobs']
+        self.assertEqual([j['job'] for j in waiting],['child'])
+        self.assertTrue(waiting[0]['deferred'])
+        self.assertEqual(waiting[0]['holds'],0)
+        self.assertEqual(waiting[0]['eligible_workers'],[])
 
     def test_conditional_routes_and_join(self):
         for selected in (False,True):

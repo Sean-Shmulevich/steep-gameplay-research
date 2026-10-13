@@ -37,7 +37,7 @@ def explore(definitions, queue_policy, roots, *, max_nodes=2000, max_depth=64):
     pending = [[]]
     result = dict(scope='symbolic ordinary-worker API boundaries; no native concurrency proof',
                   complete=False, nodes=0, quiescent_leaves=0, blocked_leaves=0,
-                  depth_cutoffs=0, pending_paths=0, violations=[], examples=[])
+                  depth_cutoffs=0, pending_paths=0, violations=[], examples=[], blocked_examples=[])
     while pending and result['nodes'] < max_nodes:
         path = pending.pop()
         model = replay(path)
@@ -99,6 +99,17 @@ def explore(definitions, queue_policy, roots, *, max_nodes=2000, max_depth=64):
                 and all(j['state']=='UNSCHEDULED' and j['holds']==0 and not j['deferred'] for j in snapshot['jobs'].values())
                 and not any(d['active'] for branches in snapshot['lists'].values() for d in branches.values()))
             result['quiescent_leaves' if quiet else 'blocked_leaves'] += 1
+            if not quiet and len(result['blocked_examples']) < 4:
+                waiting = []
+                for name, job in snapshot['jobs'].items():
+                    active_lists = [branch for branch,deps in snapshot['lists'][name].items() if deps['active']]
+                    if job['state'] != 'UNSCHEDULED' or job['holds'] or job['deferred'] or active_lists:
+                        waiting.append(dict(job=name, state=job['state'], holds=job['holds'],
+                            deferred=job['deferred'], remaining=job['remaining'],
+                            active_outgoing_lists=active_lists,
+                            eligible_workers=[w for w in workers if name in model.ready(worker_index=w)]))
+                result['blocked_examples'].append(dict(path=path, waiting_jobs=waiting,
+                    queue_change=snapshot['queue_change'], front_count=snapshot['front_count']))
             if len(result['examples']) < 4:
                 result['examples'].append(dict(path=path, quiescent=quiet))
         elif len(path) >= max_depth:
