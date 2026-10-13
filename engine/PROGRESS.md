@@ -251,3 +251,13 @@ memory safety. Joined manager factory publication to the consumer's global.
 Submission and reclamation remain unresolved.
 
 Validation: all 375 independent tests pass.
+
+
+## Idle-pool startup count and queue identity check
+
+Joined the subsystem startup caller to the manager factory with a literal worker
+count of two. Rejected a superficially matching enqueue candidate because its
+counter overlaps this manager's worker-collection storage and its dequeue differs.
+Added focused routine hashes and bounded-search limits. Producer remains open;
+no substitute producer was introduced. Documentation-only pass; last full suite
+remains 375 passing tests.

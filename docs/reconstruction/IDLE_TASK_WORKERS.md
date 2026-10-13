@@ -162,3 +162,47 @@ alone do not establish the notification producer or exclusion contract.
 The task submission/push path, reclamation contract and stop writers remain open.
 Finite tag width and successful CAS do not by themselves prove memory lifetime
 safety or determinism across native executions.
+
+
+## Startup caller and rejected submission candidate
+
+The inspected subsystem startup routine passes the literal value two to the
+manager factory. That factory forwards the count into the pool constructor,
+whose loop starts that many workers on its normal path. This is an identified
+configuration path, not proof of the live thread count in every engine mode or
+of successful OS launches. It does not use the ordinary worker-count clamp.
+
+The task manager's first three machine words are the node allocator, tagged head
+and tagged tail. Immediately afterward comes the worker collection. A broader
+atomic-operation search found another queue with very similar sentinel and tag
+arithmetic, including an apparent enqueue operation. Its dequeue decrements a
+64-bit count at that same next-word position, and its enqueue increments that
+count. It also clears a returned node's link and has an extra null-next retry.
+Those are real differences from this pool's decoded pop.
+
+Calling that candidate directly on this manager would treat worker-collection
+storage as a counter. No receiver adjustment or separately embedded queue joining
+those layouts has been established. Therefore the candidate is not assigned as
+this pool's producer, and its push/count rules are not imported into the idle-task
+model. Similar instruction patterns identify a possible implementation family,
+not object identity or interchangeable contracts.
+
+A bounded direct RIP-relative reference search, including leaf candidates, found
+manager publication and the consumer reads but no getter or submission function.
+Indirect access, computed addressing and protected code remain possible. The
+search cannot establish that the pool is unused or that it has no submission API.
+
+## Focused byte receipts
+
+Hashes identify the inspected routines in the frozen image. Exception-table
+fragments are concatenated in address order; the leaf pop is bounded through its
+two return paths and excludes following padding. These receipts support the
+reported local inspection and do not ship executable bytes or independently
+reproduce the binary analysis from this repository alone.
+
+| Role | Bytes | SHA-256 |
+| --- | ---: | --- |
+| Pool constructor | 625 | `e3f229b94d63ca278e66430774c66cdf9a65a0a9b22254ed9d97f8f01263b6d7` |
+| Manager factory | 89 | `a4add0f5fb7e94e853af17c9c55a54efb01cb87097de9f9e5a3f8d1154e57023` |
+| Queue constructor | 152 | `3f93ebe48c4ef56c806c524b9e08c55a5b1d6c0bd9a0b0cab4eda77b77256b5b` |
+| Leaf pop through both returns | 212 | `d2033ed4cf108cd98755359607eaadbaa13bc52403dc28257637f3e7fdfd6df6` |
