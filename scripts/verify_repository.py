@@ -21,7 +21,7 @@ for path in ROOT.rglob('*'):
     if not path.is_file():
         continue
     files.append(path)
-    if path.name != '.gitignore' and path.suffix not in allowed:
+    if path.name != '.gitignore' and path.suffix not in allowed and path.relative_to(ROOT).as_posix() != 'engine/view.html':
         errors.append(f'Unapproved file type: {path.relative_to(ROOT)}')
     if path.stat().st_size > 1_000_000:
         errors.append(f'Unexpected large file: {path.relative_to(ROOT)}')

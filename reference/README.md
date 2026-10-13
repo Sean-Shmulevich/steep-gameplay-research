@@ -4,6 +4,8 @@ Standard-library Python implementations of selected local rules. Provenance and 
 
 | Module | Scope |
 | --- | --- |
+| ik | Limb intermediate target and weighted orientation kernels |
+| camera | Local camera springs, projection and selection helpers |
 | snow | Contact forces, clipping, pressure, stick, shaping, springs and point impulses |
 | response_delay | Delayed trick response and its domain guards |
 | animation_blending | Ordered weights, quaternion paths, masks and phase helpers |

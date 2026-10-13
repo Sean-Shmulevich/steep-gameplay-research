@@ -2,7 +2,11 @@
 
 Research notes, equations, pseudocode, and bounded runtime observations about **Steep** movement, snow contact, tricks, animation, camera, scoring, and environment systems.
 
-This repository contains findings, selected executable reference math, synthetic tests and reconstruction guidance. It is not an engine source tree, a playable port, or a complete decompilation. It contains no game executable, asset archive, extracted animation tracks, textures, meshes, audio, save data, memory dump, or video. Names, resource identifiers, offsets, and hashes appear where they help identify what was studied.
+This repository contains findings, selected executable reference math, synthetic tests and reconstruction guidance. It now also contains an independent experimental engine source tree. It is not original engine source, a complete playable port, or a complete decompilation. It contains no game executable, asset archive, extracted animation tracks, textures, meshes, audio, save data, memory dump, or video. Names, resource identifiers, offsets, and hashes appear where they help identify what was studied.
+
+## Run the independent engine
+
+`python3 -m engine.cli --serve --port 8770` starts the local inspection lab. See [engine setup and API](engine/README.md) and [active reconstruction progress](engine/PROGRESS.md). The engine combines recovered local kernels with explicitly labeled substitute policies and synthetic content.
 
 ## Start here
 

@@ -77,6 +77,24 @@
         "Removed asset-dependent main and file-reading imports; synthetic tests only."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.ik",
+      "source": "analysis/snow_game/animations/ik-solve/reference.py",
+      "source_sha256": "398ed43c85668e099ebda101daaf2c68cdfc583ef64da1f9d08d6e36a7d782b5",
+      "published": "reference/ik.py",
+      "published_sha256": "398ed43c85668e099ebda101daaf2c68cdfc583ef64da1f9d08d6e36a7d782b5",
+      "adaptations": [],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.camera",
+      "source": "analysis/snow_game/camera/reference.py",
+      "source_sha256": "a542a5716ede06d50cb7a4f1a986726f7b2fa67d404f61c47e48f76025098582",
+      "published": "reference/camera.py",
+      "published_sha256": "a542a5716ede06d50cb7a4f1a986726f7b2fa67d404f61c47e48f76025098582",
+      "adaptations": [],
+      "game_payloads_included": false
     }
   ]
 }

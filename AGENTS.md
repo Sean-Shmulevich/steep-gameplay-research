@@ -1,6 +1,6 @@
 # Instructions for agents using this research
 
-This is a findings repository for an independent implementation. It is not original engine source, a ready-to-build port or a complete extracted dataset. Do not tell a user that it contains any of those.
+This repository contains findings and an independent experimental engine under engine/. It is not original engine source, a complete port or a complete extracted dataset. Do not tell a user that it contains any of those.
 
 ## Reading order
 
@@ -13,6 +13,8 @@ This is a findings repository for an independent implementation. It is not origi
 ## Studio evidence
 
 Studio contains both original-asset research and its own replacement animations and video-based estimates. Keep asset-decoded, binary-derived, video-estimated and Studio-authored substitute claims separate. A successful test of a substitute does not establish original behavior. Consult STUDIO_SOURCES.json and docs/reconstruction/ASSET_PIPELINE.md before importing further material.
+
+Read engine/PROGRESS.md and engine/CONTRACT.md before extending the runtime. Run the tests appropriate to your changes; the full suite includes loopback HTTP tests.
 
 ## Implementing a system
 
