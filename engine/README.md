@@ -214,3 +214,41 @@ new scenario/resource content.
 The controller must exclusively own its engine. Direct engine calls and the
 legacy HTTP inspector's direct-engine API do not acquire these pause-token
 contracts. Callback side effects outside the owned engine remain outside rollback.
+
+
+### Controller JSON API
+
+Run `python3 -m engine.control_server --port 8771` for a separate loopback-only
+controller service. It owns its engine exclusively and does not expose the legacy
+inspector's direct-engine mutation routes. No browser or original game is needed.
+
+Read-only routes are `GET /state`, `/checkpoint`, `/replay`, `/trace` and
+`/trace/analysis`. Submit JSON to `POST /command`. Successful commands return
+`{snapshot, token}`; retain the returned token after pause, reset, restore, tuning
+or resource replacement. Resume and ordinary frame submission return a null token.
+A step returns the same still-valid token.
+
+| Operation | Additional JSON fields |
+| --- | --- |
+| `pause` | none |
+| `resume` | `token` |
+| `step_once` | `token`, optional `actions` |
+| `step_frame_once` | `token`, `dt`, optional `actions` |
+| `submit_frame` | `dt`, optional `actions`; requires open submission gate |
+| `tune` | `token`, `changes` |
+| `replace_resources` | `token`, `bundle` |
+| `reset` | optional `scenario`; returns a fresh paused token |
+| `restore` | `checkpoint` previously read from this controller API |
+
+`dt` is bounded to zero through one second per HTTP request. Request bodies are
+bounded to two million bytes. Mutation requests with a foreign browser Origin are
+rejected. Tokens enforce controller identity/generation, not authentication.
+The service is for trusted local scripts. A single request dispatcher preserves
+command/response ordering.
+
+Invalid commands return HTTP 400 with an error and current controller snapshot.
+An execution failure can close the gate and invalidate a token according to the
+controller contract; call `pause` to obtain the current token after inspecting the
+incident. Invalid mutation validation preserves the old token. HTTP 403 denotes
+a rejected Origin, and 404 an unknown route. Snapshot control scope explicitly
+states that this is the owned engine, not native game control.

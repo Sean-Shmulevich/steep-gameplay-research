@@ -360,3 +360,14 @@ foreign tokens, unchanged body/tick, independent input copies, rollback and repl
 through mixed dispatch. These are explicit owned policies, not native hot reload.
 
 Validation: all 401 independent tests pass.
+
+
+## Controller HTTP testbench
+
+Added a separate loopback JSON service that exclusively owns SchedulerController.
+Pause, fixed/planned stepping, frame submission, tuning, resource replacement,
+checkpoint restore and replay are scriptable without a direct-engine bypass.
+End-to-end tests cover token generations/schema, rollback, replay, resource
+replacement and request boundaries. Legacy browser inspector remains separate.
+
+Validation: all 405 independent tests pass, including controller HTTP flows.
