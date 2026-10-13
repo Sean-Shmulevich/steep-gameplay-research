@@ -188,3 +188,7 @@ Reports now retain blocked paths independently of ordinary leaf examples, with w
 ## Worker TLS producer and execution mode
 
 Joined the ordinary worker-loop context writer to explicit helper lookup. Decoded conditional context hooks and normal-return execution-mode save/restore; connected the formerly neutral job mode setter to that TLS field. Null context skips hooks but does not prove arbitrary worker-body thread safety. Mode readers, hook implementations and exception cleanup remain open. Documentation-only pass, packaging verified; last full suite 366 passing tests.
+
+## Concrete worker hook closure
+
+Resolved the wrapper before/after slots through the table installed by worker initialization. Before conditionally invokes an enabled global service once per worker, latching only after normal return; absent/disabled service retries later. After is a no-op. The service implementation, producer and possible latch resets remain open. Documentation-only pass, packaging checked; last full suite remains 366 passing tests.

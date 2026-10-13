@@ -66,8 +66,8 @@ execute_wrapper(context_argument, job):
         notify_workers()
 ```
 
-The two context hooks are distinct virtual slots. Their implementations and
-semantic purpose are not established here. The condition checks TLS, while the
+The two context hooks are distinct virtual slots. Their concrete implementations for the inspected worker initializer are now
+resolved below; the called service operation remains semantically unnamed. The condition checks TLS, while the
 call receiver is the separately supplied context argument. Correct agreement of
 those values is a caller/context invariant. The ordinary loop and helper provide
 concrete matching routes at their call boundaries; changes inside callbacks are
@@ -97,3 +97,49 @@ execution, thread injection or TLS write was performed.
 Next: resolve the worker table's before/after hooks and the execution-mode readers.
 The independent helper ID remains an explicit context label, not a native worker
 pointer or proof that native context initialization has been reproduced.
+
+## Concrete worker hooks
+
+The worker initializer allocates a worker, runs its base constructor, then installs
+a concrete table and clears a byte-sized per-worker latch. The before/after slots
+used by the execution wrapper resolve through that exact table, establishing this
+behavior for those initialized workers:
+
+```text
+before_job(worker):
+    if worker.service_latch:
+        return
+    service = global_service
+    if service == null:
+        return
+    if not service.enabled_predicate():
+        return
+    service.worker_operation()
+    worker.service_latch = true
+
+after_job(worker):
+    return
+```
+
+The service receiver is loaded from a global pointer. The operation receives that
+service receiver, not the worker pointer, in its ordinary argument register. Its
+implementation may consult TLS, but this pass does not establish that. The two
+service calls use different virtual slots. The latch is set only after the second
+call returns normally.
+
+This is a retryable one-time hook: absent or disabled service leaves the latch
+false and a later job retries. Once the operation returns and sets the latch,
+subsequent before hooks skip the service. The concrete after hook returns without
+undoing that state or calling the service. This sequence does not support calling
+the hooks a per-job lock/unlock pair.
+
+The initializer's latch-zero store and concrete table assignment were checked
+against the same image. Later latch-reset writers, replacement worker tables and
+the global service's assignment/implementation remain open. These hooks do not
+close the requirements of arbitrary job bodies or prove a new thread is safe for
+native helping.
+
+The next useful native target is the global service producer and its two virtual
+implementations, followed by readers of the separate TLS execution mode. The
+one-time hook can be represented independently without inventing those service
+semantics, but calling a placeholder service is not original-runtime equivalence.
