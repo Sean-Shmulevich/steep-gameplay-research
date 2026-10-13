@@ -371,3 +371,18 @@ End-to-end tests cover token generations/schema, rollback, replay, resource
 replacement and request boundaries. Legacy browser inspector remains separate.
 
 Validation: all 405 independent tests pass, including controller HTTP flows.
+
+
+## Repeatable HTTP brake comparison
+
+Added a runnable approach/checkpoint/two-tuning experiment through the exclusive
+controller API. Reports retain both branches before restore, with per-frame body
+and input-generation samples, trace analysis and replay evidence. End-to-end tests
+repeat the experiment and compare trajectories while checking that tuning actually
+changes velocity. Simulation frames determine timing; network latency does not.
+
+Validation: all 407 independent tests pass. The default 30-frame approach plus two
+30-frame branches completed with exact replay agreement and complete retained
+traces. Gentle/strong final synthetic speeds were approximately 3.8433 and 0.00813
+in the owned engine's units. These are implementation results, not game footage
+fits or native measurements.

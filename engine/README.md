@@ -252,3 +252,29 @@ controller contract; call `pause` to obtain the current token after inspecting t
 incident. Invalid mutation validation preserves the old token. HTTP 403 denotes
 a rejected Origin, and 404 an unknown route. Snapshot control scope explicitly
 states that this is the owned engine, not native game control.
+
+
+### Repeatable HTTP tuning comparison
+
+With the controller service running, execute:
+
+```sh
+python3 -m engine.examples.controller_experiment --url http://127.0.0.1:8771 --output /tmp/brake-comparison.json
+```
+
+This example **resets the addressed independent runtime**. It runs a scripted turn,
+saves a checkpoint, then restores that same checkpoint for gentle and strong brake
+tunings. Inputs precede explicitly requested simulation frames, so network delays
+do not define input duration. The default is 30 frames per segment at 1/60 second;
+`--frames` accepts 1 through 240.
+
+The report retains the approach and both branches, including body samples, input
+generations, the starting checkpoint, replay recordings, replay equality, traces
+and trace-analysis reports. Each branch is saved before restoring another one.
+Compare results by their recorded simulation time/tick, not HTTP response timing.
+The service stays paused when the example completes normally.
+
+The CLI exits with status two when replay equality or trace completeness fails,
+after writing the report. Request/connection errors propagate; a partially executed
+remote command must not be blindly retried after a network timeout. The example
+uses synthetic world and resources and tests only the independent engine.

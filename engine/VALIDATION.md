@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 405 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 407 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -14,7 +14,7 @@ The parser supports the observed version-27 index and observed compression-layou
 
 The typed adapter was compared against the existing local pose-assembly reference for 100 poses: ten clips, two base rigs and five sample times. Both rigs were deliberately evaluated; this does not prove which rig or clip the game selects in a particular state. Translation scale was explicitly 1 in authored units.
 
-- Maximum translation difference: `7.027405480595403e-08` authored units.
+- Maximum translation difference: `7.027407480595403e-08` authored units.
 - Maximum sign-invariant quaternion component distance: `0.0006016519442461972`.
 
 The largest quaternion difference occurs at a near-identical-rotation branch. The newer recovered float32 dot product reaches the copy-source threshold while the older host-double reference interpolates. These references are therefore not bit-identical; the discrepancy is retained rather than hidden by a broad tolerance. Live pose agreement remains unverified.
