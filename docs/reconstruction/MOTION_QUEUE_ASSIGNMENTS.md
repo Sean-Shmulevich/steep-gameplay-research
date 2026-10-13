@@ -42,17 +42,18 @@ setter:
 ```text
 set_range_parameters(job, requested):
     size = max_signed(int32(requested), 1)
-    job.range_parameter_a = size
+    job.chunk_size = size
     if size < INT_MAX:
-        job.range_parameter_b = int32_wrap(size * 2)
+        job.tail_threshold = int32_wrap(size * 2)
     else:
-        job.range_parameter_b = 0
+        job.tail_threshold = 0
 ```
 
 Thus this call writes 32 and 64. It does not write the execution-limit field.
-The parameter names above deliberately retain neutral meanings until the exact
-consumer relationship is joined to the range-claim model. Calling 32 a worker
-count, concurrency cap or input frequency would exceed this evidence.
+A follow-up checked the concrete virtual worker and joined the fields to the
+[range-claim model](SCHEDULER_BATCH_EPOCH.md): the first is chunk size and the
+second is the tail threshold. Calling 32 a worker count, concurrency cap or input
+frequency would exceed this evidence.
 
 The signed doubling wraps to low 32 bits. `INT_MAX` takes a separate branch that
 writes zero to the second field. Negative and zero requests clamp to one. These
@@ -69,6 +70,13 @@ through the final installed table. The analyzed image SHA-256 is
 `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`.
 No process was launched, attached to or changed.
 
-Next, join both range fields to their read sites and the existing claim arithmetic.
-Then check later execution-limit/mask writers for these particular members.
+Both range fields are now joined to their read sites and existing claim arithmetic.
+Next check later execution-limit/mask writers for these particular members.
 Selected-player membership and input generation remain separate live proof gates.
+
+
+`range_configuration(32)` in `engine.queue_producers` now supplies the recovered
+32/64 settings to the independent mixed scheduler. A 100-receiver test claims
+32 entries, then four, then 64 individual entries. Claim exhaustion still leaves
+one outstanding worker execution until explicit dispatch completion. The test
+uses synthetic receivers and does not claim native inter-thread execution order.

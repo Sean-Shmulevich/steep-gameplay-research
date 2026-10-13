@@ -125,3 +125,7 @@ links were rechecked. The last full executable suite remains 339 passing tests.
 ## Motion queue construction follow-up
 
 Connected motion and pre-physics named batches to category-one construction, zero initial masks and byte-limit 255. Resolved the pre-physics setup value 32 to a virtual range-parameter setter, which writes 32 and 64 separately from execution limits. Published full setter pseudocode, including signed clamp and overflow boundaries. Next is joining those range fields to their consumers and checking later overrides. Runtime code unchanged; last full suite remains 339 passing tests.
+
+## Range producer-to-consumer closure
+
+Checked the concrete motion range worker and joined the two setup fields to chunk size and tail threshold, reconciling the latest construction note with the earlier batch-epoch research. Added exact setter arithmetic and a synthetic 100-receiver mixed-scheduler test using the recovered 32/64 settings. The test preserves claim exhaustion versus returned-worker accounting. Full suite: 341 passing tests. Native inter-thread order remains unverified.

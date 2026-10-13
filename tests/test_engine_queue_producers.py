@@ -1,5 +1,5 @@
 import unittest
-from engine.queue_producers import worker_configuration, worker_mask, enqueue_destination, base_job_limit
+from engine.queue_producers import worker_configuration, worker_mask, enqueue_destination, base_job_limit, range_configuration
 from engine.queue_policy import select_queue
 
 
@@ -52,3 +52,26 @@ class QueueProducerTests(unittest.TestCase):
                 self.assertEqual(base_job_limit(argument, default), expected)
         for argument in (-1, 256, True):
             with self.assertRaises(ValueError): base_job_limit(argument, 8)
+
+    def test_range_configuration_signed_boundaries(self):
+        self.assertEqual(range_configuration(-1), dict(chunk_size=1, tail_threshold=2))
+        self.assertEqual(range_configuration(32), dict(chunk_size=32, tail_threshold=64))
+        self.assertEqual(range_configuration(2**30)['tail_threshold'], -2**31)
+        self.assertEqual(range_configuration(2**31-1)['tail_threshold'], 0)
+        with self.assertRaises(ValueError): range_configuration(True)
+
+    def test_configured_before_physics_claims_preserve_tail_and_completion(self):
+        from engine.mixed_scheduler import MixedScheduler
+        scheduler = MixedScheduler([dict(id='before', kind='range',
+            receivers=list(range(100)), **range_configuration(32))])
+        scheduler.submit('before')
+        token = scheduler.reserve()
+        claims = []
+        while (claim := scheduler.claim_range(token)) is not None:
+            claims.append((claim.start, claim.count))
+            scheduler.execute_range(token, claim)
+        self.assertEqual(claims[:2], [(68, 32), (64, 4)])
+        self.assertEqual(claims[2:], [(i, 1) for i in range(63, -1, -1)])
+        self.assertEqual(scheduler.snapshot()['jobs']['before']['executions'], 1)
+        scheduler.finish_dispatch(token)
+        self.assertEqual(scheduler.snapshot()['jobs']['before']['executions'], 0)

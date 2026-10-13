@@ -54,3 +54,15 @@ def base_job_limit(byte_argument, shared_default):
         raise ValueError('byte argument must be uint8')
     _i32(shared_default)
     return min(byte_argument, shared_default) & 255
+
+
+def range_configuration(requested):
+    """Recovered chunk setter; constructor defaults are a separate path.
+
+    See SCHEDULER_BATCH_EPOCH.md and MOTION_QUEUE_ASSIGNMENTS.md. Extreme
+    signed results need not satisfy the bounded MixedScheduler adapter schema.
+    """
+    _i32(requested)
+    chunk = max(requested, 1)
+    tail = ((2 * chunk + 2**31) % 2**32) - 2**31 if chunk < 2**31 - 1 else 0
+    return dict(chunk_size=chunk, tail_threshold=tail)
