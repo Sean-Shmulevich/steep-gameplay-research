@@ -283,3 +283,15 @@ The synthetic wrap experiment establishes finite identity width, not a native AB
 bug. Node lifetime and safe republishing remain unresolved.
 
 Validation: all 384 independent tests pass.
+
+
+## Base thread entry versus destruction
+
+Decoded competing lifecycle CAS operations: entry changes one to two, destruction
+changes one to three. Destruction winning prevents the virtual body from entering;
+it does not cancel a body whose entry won first. Added local transition helpers
+and ordering tests, preserving the separate destructor state load and wait-result
+branch. Derived worker resources are released before the common wait attempt, so
+outer shutdown/lifetime guarantees remain necessary.
+
+Validation: all 388 independent tests pass.

@@ -437,3 +437,61 @@ run-flag-clear routine is outside those ranges; a separate direct-call search
 found its concrete exit-hook caller. These bounded results leave external virtual
 stop calls, adjusted-pointer stores and protected writers unresolved. They do not
 prove that the only way to stop the engine is forced thread termination.
+
+
+## Base thread entry and destruction race
+
+The concrete deleting worker wrapper reaches the already inspected worker base
+destructor, then optionally releases the worker allocation. The worker base
+releases its event and category storage before tail-calling the common thread
+destructor. That common destructor has a separate lifecycle word, distinct from
+the worker's run flag and its idle notification counter.
+
+The common thread-start routine sets the lifecycle word to one on its visible
+start path. The entry bridge and destructor compete to change this value:
+
+```text
+thread_entry_bridge(thread):
+    if compare_exchange(thread.lifecycle, expected=1, desired=2):
+        entry_platform_adapter(thread.entry_holder)
+        thread.entry_virtual()
+    exit_platform_adapter(thread.exit_holder)
+
+base_thread_destructor(thread):
+    install_base_table(thread)
+    compare_exchange(thread.lifecycle, expected=1, desired=3)
+    observed = load(thread.lifecycle)
+    if observed != 0:
+        result = join_shaped_adapter(thread.handle_holder, all_ones_timeout)
+        if result == 0:
+            atomic_exchange(thread.lifecycle, 0)
+    conditional_handle_cleanup(thread.handle_holder)
+    cleanup_other_thread_holders(thread)
+```
+
+These are local branch and state relationships. Protected platform calls occur in
+both paths, so their API identities and full execution/error contracts remain
+unresolved. The join-shaped adapter's visible dispatch maps a platform result of
+zero into its cleanup branch, `0x102` to return value four, and other results to
+return value one. Its zero branch crosses additional protected code; the
+caller-side zero-result test is established without claiming complete cleanup.
+
+If destruction changes one to three first, the entry bridge's CAS fails and its
+virtual body is skipped. If entry changes one to two first, the destructor's CAS
+does not change it: there is no visible cancellation of that running body here.
+The destructor then performs a separate state load. Treating CAS and this load as
+one atomic decision would erase a possible intervening state change.
+
+This narrows the earlier teardown uncertainty but does not make the derived
+worker destructor a safe stop API. Its event and queue cleanup precedes the
+common wait attempt. The common destructor proceeds to later cleanup even when
+the join-shaped result is nonzero. Outer code must supply any required exclusion,
+worker termination and lifetime guarantees. No worker-event wakeup or ordinary
+worker run-flag write is visible in this common destructor.
+
+[The lifecycle helpers](../../engine/thread_lifecycle.py) preserve the competing
+CAS outcomes, separate wait observation and caller-side result handling. Tests
+exercise both entry/destruction orders and retain noncanonical state values.
+They do not launch threads, wait on handles or turn these local transitions into
+native quiescence. Numeric state values are retained without inventing a complete
+native enum or state machine.
