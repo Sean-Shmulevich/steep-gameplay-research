@@ -41,6 +41,29 @@ This confirms at runtime:
 - One six-second hold in one session. Long holds, repeated toggles, saving, loading, sport changes and online play were not tested.
 - Off-graph work (loading thread, idle task workers, async services) is not suspended by this mode.
 
-## Toward pause and single-step
+## Single-step
 
-A native pause can now be expressed as "set mode, keep frames running, clear mode". A single step is "clear mode for exactly one request, then set it again". Because the routing samples the copied mode at fixed frame stages, a toggle made between `EndFrame` and the next `BeginEngineFrame` should affect exactly one request. That is the next experiment. Reproducing or deliberately invoking the native notification and clear side effects is required before calling this a release-quality mod hook.
+A later session held stop mode and released single world steps from inside one helper process:
+
+```text
+single_step(engine):
+    assert mode group is held
+    before = Step.last_run
+    clear mode group
+    spin until Step.last_run != before     # this request has already passed every routing branch
+    restore held mode group                 # the next request sees the held mode at every branch
+    confirm Step.last_run is unchanged after >= 120 ms
+```
+
+Setting the mode again as soon as `Step` starts is safe for routing. By then the current request has already read the global mode at `CheckEngineStop` and the copied mode at both owner branches, and the next request has not yet started.
+
+[The live record](live_native_single_step_validation.json) covers 35 steps: 5 spaced about 0.4 s apart, then 30 in quick succession. **Every one released exactly one `Step` execution.** Re-arming took 2.7–11.9 ms after the clear. `Step` then stayed frozen for the following 11–45 requests, while `UpdateWhileEngineIsPaused` executed on each of them. Clearing the mode afterwards resumed `Step` on every request.
+
+This is a working native pause and single-step at **engine-request granularity**, with rendering alive throughout. It does not control simulation substeps inside a request, input delivered during the hold, or the native transition side effects noted above.
+
+## Remaining release work
+
+- Reproduce or invoke the native setter notification and clear-side transitions, and determine whether the camera change comes from their absence.
+- Measure what a released request simulates: elapsed time after a long hold (see the [clock cap](CLOCK_TREE.md)), substep count and input freshness.
+- Repeat under movement, airtime, sport changes, saves and long holds.
+- Move the toggle in-process (an `EndFrame`-ordered hook) so stepping does not rely on cross-process polling.

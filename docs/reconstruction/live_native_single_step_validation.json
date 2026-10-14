@@ -1,0 +1,65 @@
+{
+  "status": "native_single_step_demonstrated",
+  "observations": 1,
+  "steps": {
+    "five": {
+      "requested": 5,
+      "exactly_one_step": 5,
+      "release_latency_ms": {
+        "min": 2.8,
+        "max": 11.9
+      },
+      "requests_from_clear_to_step": {
+        "min": 5,
+        "max": 6
+      },
+      "held_requests_after_each_step": {
+        "min": 42,
+        "max": 45
+      },
+      "paused_job_ran_while_held": true
+    },
+    "thirty": {
+      "requested": 30,
+      "exactly_one_step": 30,
+      "release_latency_ms": {
+        "min": 2.7,
+        "max": 11.7
+      },
+      "requests_from_clear_to_step": {
+        "min": 4,
+        "max": 6
+      },
+      "held_requests_after_each_step": {
+        "min": 11,
+        "max": 14
+      },
+      "paused_job_ran_while_held": true
+    }
+  },
+  "method": "Within one helper process: verify held mode; clear mode group; poll Step last-run counter; on first change immediately restore held mode; confirm Step last-run unchanged after at least 120 ms.",
+  "enter_and_clear": [
+    {
+      "tag": "enter",
+      "before": "00000001",
+      "after": "00010101"
+    },
+    {
+      "tag": "clear",
+      "before": "00010101",
+      "after": "00000001"
+    }
+  ],
+  "resumed_step_every_request": true,
+  "process_survived": true,
+  "debugger_attached": false,
+  "configuration_restored": true,
+  "skipped_engine_side_effects": [
+    "mode-transition notification",
+    "native clear world/service transitions"
+  ],
+  "scope": "35 single world steps released from native stop mode in one session; each released exactly one Step execution. Step granularity is one engine request; simulation substeps within a request are not controlled.",
+  "private_result_sha256": [
+    "184fd79e022eebe9404255d78cf58641f67b74c584339bb7b1137adaf2280e58"
+  ]
+}
