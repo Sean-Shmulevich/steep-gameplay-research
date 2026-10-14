@@ -1,0 +1,38 @@
+{
+  "status": "live_targets_resolved",
+  "observations": 1,
+  "adapters": {
+    "end_frame_signal": {
+      "module": "kernel32.dll",
+      "exact_export": "SetEvent",
+      "live_instruction_spans_verified": 75,
+      "target_in_executable_section": true
+    },
+    "reset_candidate": {
+      "module": "kernel32.dll",
+      "exact_export": "ResetEvent",
+      "live_instruction_spans_verified": 47,
+      "target_in_executable_section": true
+    },
+    "wait_candidate": {
+      "module": "kernel32.dll",
+      "exact_export": "WaitForSingleObject",
+      "live_instruction_spans_verified": 48,
+      "target_in_executable_section": true
+    }
+  },
+  "encoded_slots_stable": true,
+  "module_headers_rechecked": true,
+  "debugger_attached": false,
+  "memory_writes": false,
+  "target_invoked_by_test": false,
+  "event_status_observed": false,
+  "wait_return_observed": false,
+  "safe_scheduler_step_established": false,
+  "game_stop": "deliberate research bottle stop",
+  "configuration_restored": true,
+  "scope": "Passive target/export identity for the restart-side reset, EndFrame signal and consumer wait adapters in one Highball Wine session, each joined to its emulated adapter by matching live instruction spans. The EndFrame result repeats the earlier SetEvent capture in a fresh session. Does not establish call success, wait return status, event lifetime or scheduler quiescence.",
+  "private_result_sha256": [
+    "8674855925f877574824fcd6e6e5584712e51dc73b45e46f53d8331470b8d9c6"
+  ]
+}

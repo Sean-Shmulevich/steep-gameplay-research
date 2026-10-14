@@ -98,3 +98,5 @@ Native loading integration remains separate work.
 The [EndFrame adapter target lookup](../docs/reconstruction/ENGINE_EVENT_ADAPTER.md) is now instruction-emulated with synthetic targets. Its runtime slot value and target module/export are the next concrete read-only check. Reset/wait adapters and whole-frame drain coverage remain separate gates.
 
 The [live EndFrame target lookup](../docs/reconstruction/ENGINE_EVENT_ADAPTER.md#live-target-resolution) now resolves exactly to `kernel32.dll!SetEvent`, with 75 matching live adapter spans. Signal API identity is established for that Wine session; signal execution/status, reset/wait identity, lifetime and complete drain coverage remain open.
+
+The [reset and wait adapters](../docs/reconstruction/ENGINE_EVENT_ADAPTER.md#live-handshake-resolution) now resolve to `ResetEvent` and `WaitForSingleObject` (infinite timeout) in a fresh session that also reproduced `SetEvent`. The handshake's API identities are closed; creation target/failure, close/lifetime, observed return status and drain coverage remain the open event gates.

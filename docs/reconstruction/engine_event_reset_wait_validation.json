@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "source_sha256": "b0bc5d7843b90aa4d4701aec75c44ed2baebad46d1213e51177b50de7bdb9269",
+  "helpers": {
+    "reset_candidate": {
+      "synthetic_cases": 40,
+      "image_data_reads_per_case": 1,
+      "decoded_target_addend": 437610808,
+      "second_argument": "RDX passed through unchanged",
+      "original_image_target_is_noncanonical": true
+    },
+    "wait_candidate": {
+      "synthetic_cases": 40,
+      "image_data_reads_per_case": 1,
+      "decoded_target_addend": 2059932197,
+      "second_argument": "EDX forced to 0xffffffff",
+      "original_image_target_is_noncanonical": true
+    }
+  },
+  "scope": "Original protected restart-side and consumer-side engine event adapters with synthetic encoded target slots, holder, stack and integer registers. Each reaches the supplied target with the handle in RCX, original caller stack/return address and tested other integer registers preserved. No target API executed; runtime targets resolved separately."
+}

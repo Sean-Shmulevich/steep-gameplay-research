@@ -1,6 +1,6 @@
 # EndFrame event adapter: decoded target lookup
 
-The event branch in [EndFrame](ENGINE_EVENT_SUBMISSION.md) reaches a protected adapter after loading the handle from the engine's inline holder. Bounded emulation now resolves this adapter's local behavior to a single encoded target lookup. A subsequent passive capture resolves the live target to `kernel32.dll!SetEvent`; see the live result below.
+The event branch in [EndFrame](ENGINE_EVENT_SUBMISSION.md) reaches a protected adapter after loading the handle from the engine's inline holder. Bounded emulation now resolves this adapter's local behavior to a single encoded target lookup. A subsequent passive capture resolves the live target to `kernel32.dll!SetEvent`; see the live result below. The restart-side and consumer-side adapters were later resolved the same way to `ResetEvent` and `WaitForSingleObject`; see [live handshake resolution](#live-handshake-resolution).
 
 ## Recovered transfer
 
@@ -48,3 +48,34 @@ This joins the recovered adapter formula to an identified runtime API. The inval
 The test only read memory and exports. It did not call `SetEvent`, observe EndFrame executing this branch, check a return status, attach LLDB, or modify scheduler state. Reset/wait targets, event creation/destruction, request visibility and outstanding-work coverage remain unresolved. Identifying the signal API is not a safe stepping proof.
 
 The research bottle was deliberately closed after the observations, and the bounded launcher restored its configuration. Raw module addresses, memory reads and screenshots remain private.
+
+## Reset and wait adapters
+
+The restart routine and the event consumer each pass the same inline holder to a separate one-handle helper. Bounded emulation reduced both to the EndFrame pattern: load the handle into RCX, read one encoded image slot, add a fixed constant and tail-transfer to the result.
+
+```text
+reset_candidate(holder):
+    tail_transfer(decode(reset_slot), first_argument=load_u64(holder))
+
+wait_candidate(holder):
+    tail_transfer(decode(wait_slot), first_argument=load_u64(holder),
+                  second_argument=0xffffffff)
+```
+
+[Forty synthetic states per helper](engine_event_reset_wait_validation.json) reached a supplied destination with the handle in RCX, the original caller stack and return address, the other tested integer registers preserved and exactly one image data read. The wait helper forces the low 32 bits of RDX to `0xffffffff`; the reset helper leaves RDX unchanged. As with EndFrame, both slots in the inspected image decode to noncanonical addresses and are kept as evidence rather than replaced.
+
+## Live handshake resolution
+
+[One passive observation](live_engine_event_handshake_validation.json) in a fresh initialized Highball Wine session resolved all three adapters to exact `kernel32.dll` exports:
+
+| Adapter | Caller | Export | Live spans matched |
+| --- | --- | --- | --- |
+| Reset | start/restart routine | `ResetEvent` | 47 |
+| Signal | alternate EndFrame branch | `SetEvent` | 75 |
+| Wait | event consumer, `0xffffffff` timeout | `WaitForSingleObject` | 48 |
+
+The EndFrame result repeats the earlier capture in a new process. Each target was in an executable section; every slot and the module header were reread and unchanged at the end.
+
+Combined with the recovered `(null, 1, 0, null)` construction arguments, the handshake is now a manual-reset, initially unsignaled event: restart resets it, an EndFrame that observes alternate mode signals it instead of resubmitting the root, and the outer routine waits on it with an infinite timeout before clearing the start flag. The creation call's own adapter target remains unresolved, so `CreateEvent` itself is inferred from argument shape, not observed.
+
+This is API identity only. The test did not invoke any target, observe a return status or a wait completing, attach a debugger or modify state. Event creation failure, handle close/lifetime, request-byte visibility and whether the signaling EndFrame covers all outstanding work remain open gates. A known signal/wait pair is not by itself a safe stepping boundary.

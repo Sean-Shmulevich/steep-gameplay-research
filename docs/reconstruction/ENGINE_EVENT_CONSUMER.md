@@ -58,7 +58,7 @@ Combining this with the previous evidence gives the following conditional interp
 4. An end-of-frame callback that observes the set byte still performs preparation, then selects the event operation instead of root resubmission.
 5. After its outer callback returns, the outer routine consumes that same event and clears the start flag.
 
-Steps 1–5 describe verified caller/state relationships. Calling the platform operations *reset*, *signal* and *wait* remains an interpretation until the protected adapters are resolved. The request-to-observation delay is not quantified. A request arriving after one end-of-frame test could leave another ordinary submission already selected.
+Steps 1–5 describe verified caller/state relationships. A later [passive capture](ENGINE_EVENT_ADAPTER.md#live-handshake-resolution) resolved the three protected adapters to `ResetEvent`, `SetEvent` and `WaitForSingleObject` (infinite timeout); their return status and failure behavior remain unobserved. The request-to-observation delay is not quantified. A request arriving after one end-of-frame test could leave another ordinary submission already selected.
 
 ## What this closes and what it does not
 
