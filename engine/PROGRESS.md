@@ -910,3 +910,13 @@ Two synthetic tests cover cursor independence, shifted timing and malformed coun
 Independent numerical/native validation remains open for this encoding.
 
 Validation: 508 tests pass; packaging, hashes and local links pass.
+
+## Encoding-23 mask-time restricted rotations
+
+Joined the verified mask selector and two-byte Z/W value format through static
+callback inspection. Reused the mask sampler with format-specific value stride.
+All 17 original tracks pass, yielding 985/1,052 corpus tracks and 6,895 consistency
+checks. Two synthetic tests compare equivalent byte/mask timelines and exercise
+dispatch/truncation. No new native or independent-reference comparison claimed.
+
+Validation: 510 tests pass; packaging, hashes and local links pass.

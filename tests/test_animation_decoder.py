@@ -199,3 +199,24 @@ class Encoding14Tests(unittest.TestCase):
             with self.assertRaises(ValueError):unpack_serialized_channel(data)
         with self.assertRaises(ValueError):
             unpack_serialized_channel(bytes([14])+struct.pack('<II',12,2)+bytes([1,9]))
+
+
+class Encoding23Tests(unittest.TestCase):
+    def test_mask_and_byte_tracks_agree_at_matching_times(self):
+        from engine.animation_decoder import unpack_serialized_channel,sample_encoding_23,sample_encoding_21
+        words=struct.pack('<2H',16384,32767)
+        packed=unpack_serialized_channel(bytes([23])+struct.pack('<II',4,2)+bytes([0x41,9])+words)['payload']
+        byte=unpack_serialized_channel(bytes([21])+struct.pack('<II',4,2)+bytes([6])+words)['payload']
+        for hint in (0,1,3,6,60):
+            a=sample_encoding_23(packed,hint/60,hint,999)
+            b=sample_encoding_21(byte,hint/60,hint)
+            self.assertEqual(a['value'],b['value'])
+            self.assertEqual(a['cursor'],b['cursor'])
+
+    def test_dispatch_and_truncated_sample(self):
+        from engine.animation_decoder import unpack_serialized_channel,registered_channel_decoder
+        raw=bytes([23])+struct.pack('<II',2,1)+bytes([1,1])+struct.pack('<H',16384)
+        payload=unpack_serialized_channel(raw)['payload'];out=[]
+        sample_channel(Resource([Channel(23,payload,16)]),0,0,out,SampleState(0),registered_channel_decoder)
+        self.assertEqual(out[:2],[0,0])
+        with self.assertRaises(ValueError):unpack_serialized_channel(raw[:-1])

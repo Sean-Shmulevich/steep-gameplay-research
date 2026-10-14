@@ -41,3 +41,21 @@ not a native playback comparison, fresh archive extraction check or proof that
 the complete rig selects these tracks. Other rotation formats and shared-track
 references remain unsupported by this decoder. Synthetic tests separately cover
 both high-bit states, word extremes, serialized dispatch, rewind and truncation.
+
+## Encoding 23: mask-time variant
+
+Callback `0x140d40cb0` uses mask selector `0x140d580f0`, sample alignment
+`(mask_length+3) & 0xfffffffe`, two-byte stride, and paired value decoder
+`0x140d71f30`. Its single-value path at `0x140d40fe1` repeats the encoding-21
+Z/W reconstruction, including high-bit component swap and zero X/Y lanes.
+
+`sample_encoding_23` composes the recovered mask selector with that value decoder
+and quaternion blending. The serialized adapter copies count two-byte values
+after mode and mask bytes, validates mask population count, and creates runtime
+alignment. It does not read the incoming cursor, as with encoding 14.
+
+Two synthetic tests cover mask/byte representations with equivalent timestamps,
+dispatch, shifted timing and truncation. All 17 original encoding-23 tracks in the
+six-body corpus now pass decoding and fresh/cached consistency. Total supported
+tracks are 985/1,052 with 6,895 sample checks and no failures. This pass does not
+claim a new independent-reference or native-execution comparison for encoding 23.

@@ -63,3 +63,6 @@ pass cached/reset consistency checks.
 [Encoding 14](ANIMATION_MASK_KEY_SELECTION.md) uses mode-plus-mask timestamp storage,
 with declared count validated against mask population count. Its six-byte samples
 are now supported by the adapter and resource dispatcher.
+
+[Encoding 23](ANIMATION_PACKED_SAMPLER.md) shares the mode/mask serialized header
+with encoding 14 but stores two-byte Z/W quaternion samples. It is now supported.
