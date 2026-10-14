@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 400,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original runtime identity lookup, including original signed-division helper, with synthetic map snapshots. Direct matches, collisions, tombstones, missing keys, all-zero identities and equal-counter early exits. No authored graph conversion, map population, game process or live timing validation."
+}

@@ -1108,3 +1108,16 @@ The resource-handle initializer and three related functions were reread; their
 key-copy and provider lookup behavior agree with the existing research.
 
 Validation: 551 tests pass; packaging, hashes and local links pass.
+
+## Runtime class-0 identity lookup
+
+Traced the separate 128-bit identity-to-uint32 compile branch and implemented
+its word-wise hash, triangular probing and failure-output distinction. The
+compile adapter preserves class 0 and successful unique dependency insertion.
+Original lookup execution matched 400 synthetic cases, including the original
+division helper. Four tests cover lookup and compiler boundaries. The consumer
+prepares a flagged parameter group before a guarded scalar read; map population,
+group callbacks and flag reset remain open. No authored-to-runtime identity
+join or input freshness claim is made.
+
+Validation: 555 tests pass; packaging, hashes and local links pass.
