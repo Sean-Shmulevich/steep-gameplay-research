@@ -1,6 +1,8 @@
 # Observing the animation scheduler before attempting native stepping
 
-The [observation adapter](../../engine/scheduler_observation.py) turns a caller-supplied exact-read transport into two guarded sweeps of seven named jobs. It does not attach to a process, write memory, stop threads or launch the game. This is collection infrastructure, not a successful live experiment.
+The [first live experiment](NATIVE_SCHEDULER_OBSERVATION.md) validates this collection path in one selected-player world. It observed changing request and hold counters, but no nonzero execution counter. Native stepping remains unproved.
+
+The [observation adapter](../../engine/scheduler_observation.py) turns a caller-supplied exact-read transport into two guarded sweeps of seven named jobs. It does not attach to a process, write memory, stop threads or launch the game. This is collection infrastructure; live results are recorded separately.
 
 ## Layout and evidence
 
@@ -45,7 +47,7 @@ Construction calls `1408aff20` at `1408aef28` and stores its result at world+`0x
 
 This action graph is distinct from the physics scheduling state reached through world+`0xff0`, then component+`0x18`. Earlier player captures used that physics state to inspect motion jobs. Passing it as the animation graph owner would address different memory. The new wrapper checks the graph backlink and all seven job tables instead of assuming the owners are interchangeable.
 
-A private capture command now connects fresh player acquisition, the selected managed-world handle, component/world backlinks and process-identity-checked bounded reads to this wrapper. It takes a current process identity and a new private output directory, sends no input and performs no game writes or debugger attachment. It has not yet been exercised against a live game in this pass. Matching these links still does not prove that the selected player's Kino component is present in the animation receiver array.
+A private capture command now connects fresh player acquisition, the selected managed-world handle, component/world backlinks and process-identity-checked bounded reads to this wrapper. It takes a current process identity and a new private output directory, sends no input and performs no game writes or debugger attachment. It succeeded in three fresh acquisitions in the documented live session. Matching these links still does not prove that the selected player's Kino component is present in the animation receiver array.
 
 ## Transport contract
 
@@ -71,6 +73,6 @@ Equal guards can miss an object disappearing and being replaced at the same addr
 4. Use the observed identities to design entry/exit instrumentation at the ordinary frame boundary. Sampling alone cannot prove ordering, exclude new submissions or establish a safe pause.
 5. Only after submission exclusion and completion of relevant work are demonstrated, attempt one-update release and verify return to the same controlled boundary. Rendering, loading and platform-service requirements remain separate checks.
 
-No native scheduler observation was made in these implementation passes. Nine synthetic transport tests cover counter interpretation, empty claims with active executions, changes, guard failures, table/short-read rejection, bounded plan validation, world graph resolution, changed backlinks and missing graphs. They validate the collector contract, not concurrent game behavior.
+Implementation validation is separate from the live report. Nine synthetic transport tests cover counter interpretation, empty claims with active executions, changes, guard failures, table/short-read rejection, bounded plan validation, world graph resolution, changed backlinks and missing graphs. They validate the collector contract, not concurrent game behavior.
 
 The private dependency evidence verifier was also rerun against the inspected image: 778 instruction-byte checks, 19 specific checks and 20 table bindings passed. This rechecks the underlying static evidence separately from the synthetic transport tests.

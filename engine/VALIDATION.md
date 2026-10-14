@@ -6,6 +6,8 @@ Current checkpoint: 605 tests passed. Repository packaging, source hashes and lo
 
 Nine tests exercise the [scheduler observation collector](../docs/reconstruction/SCHEDULER_OBSERVATION.md) with synthetic exact-read transports. They cover active execution after claims reach zero, changed counters, stale guards, malformed reads and the world-to-action-graph link. A separate private synthetic integration check exercised the fresh-acquisition adapter, seven reader requests, receipt creation and reader cleanup. No original-game capture or native stepping is implied.
 
+The separate [live observation](../docs/reconstruction/NATIVE_SCHEDULER_OBSERVATION.md) subsequently validated three fresh world/graph acquisitions, 44 ordinary sweeps and 283 complete burst groups in one Highball session. Request/hold values changed; sampled execution counters remained zero. The private burst reader's nine offline receipt tests also passed. This is live collection evidence, not pause safety, animation receiver membership or deterministic replay evidence.
+
 ## Private archive checks
 
 The read-only adapter parsed 27 locally available archives containing 165,021 index entries. A selection of 54 resources was decoded in memory with checksum and output-length checks, exercising both Zstandard and LZO paths. No decoded payload is included here. This establishes compatibility with those indexes and samples, not comprehensive decoding of every resource or every archive version.

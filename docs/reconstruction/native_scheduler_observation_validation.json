@@ -1,0 +1,194 @@
+{
+  "schema": "native-scheduler-observation-receipt-v1",
+  "scope": "Passive original-game observations; no safe pause, input timing or deterministic stepping proof",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_result_sha256": [
+    "40d20fb3f4603bd4083b0e961493c2eee89f36012c571294c286918f4d14313f",
+    "18f055de309698b2572ec6d63598448cb30573c53d35f11d919ea5e7776d51ed",
+    "549aae1e11d3f5827ed6aceeb2acc68fea67decd6e8227e8249b1c7ecbc354b4"
+  ],
+  "captures_succeeded": [
+    true,
+    true,
+    true
+  ],
+  "fresh_membership_acquisitions": 3,
+  "ordinary_sweeps": 44,
+  "burst_requests": 10,
+  "accepted_burst_groups": 283,
+  "partial_read_records_excluded": 102,
+  "burst_stop_reasons": [
+    "deadline",
+    "deadline",
+    "group_limit",
+    "group_limit",
+    "deadline",
+    "deadline",
+    "group_limit",
+    "deadline",
+    "deadline",
+    "deadline"
+  ],
+  "burst_span_ms": 398.5068,
+  "group_duration_ms": {
+    "min": 0.31040000000001555,
+    "median": 0.615600000000029,
+    "max": 5.947500000000005
+  },
+  "group_start_gap_ms": {
+    "min": 0.310799999999972,
+    "median": 0.6236999999999995,
+    "max": 42.761599999999994
+  },
+  "jobs": {
+    "UpdatePreActionGather": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ]
+    },
+    "UpdateCharacterActionSet": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ]
+    },
+    "SkelUpdateBeginAnimate": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ]
+    },
+    "UpdateKino": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ]
+    },
+    "AnimationUpdateTime": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ],
+      "remaining_to_claim_values": [
+        0
+      ]
+    },
+    "UpdateActionKinoStatesInteraction": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ]
+    },
+    "ActionGatherComponents": {
+      "executions": [
+        0
+      ],
+      "outstanding_dispatches": [
+        0
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0,
+        1,
+        2
+      ],
+      "burst_requested_first_last": [
+        12751,
+        12782
+      ]
+    }
+  },
+  "gameplay_inputs_sent": false,
+  "startup_navigation_inputs_sent": true,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "atomic_snapshot": false,
+  "safe_to_step_established": false,
+  "animation_player_receiver_membership_established": false,
+  "watchdog": {
+    "reason": "time_limit",
+    "configuration_restored": true,
+    "game_process_absent_after_cleanup": true
+  }
+}
