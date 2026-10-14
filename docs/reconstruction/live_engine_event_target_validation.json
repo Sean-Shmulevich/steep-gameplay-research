@@ -1,0 +1,23 @@
+{
+  "status": "live_target_resolved",
+  "module": "kernel32.dll",
+  "exact_export": "SetEvent",
+  "observations": 2,
+  "live_instruction_spans_verified": 75,
+  "encoded_slot_stable": true,
+  "module_headers_rechecked": true,
+  "target_in_executable_section": true,
+  "debugger_attached": false,
+  "memory_writes": false,
+  "target_invoked_by_test": false,
+  "signal_execution_observed": false,
+  "event_status_observed": false,
+  "safe_scheduler_step_established": false,
+  "game_stop": "deliberate research bottle stop",
+  "configuration_restored": true,
+  "scope": "Passive target/export identity in one Highball Wine session, joined to the previously emulated adapter by 75 matching live instruction spans. Does not establish event success, reset/wait targets, owner lifetime or scheduler quiescence.",
+  "private_result_sha256": [
+    "67106c5dd07f56da76b21c1a7b47629c7c295d6416c1ae2014a11812948d20b8",
+    "cf19013579234d99c585b593837feb7d7a3ab66b6107c069513b6c2b46db8aa0"
+  ]
+}

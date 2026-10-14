@@ -1,6 +1,6 @@
 # Engine end-of-frame event branch
 
-The alternate branch in the [engine rearm caller](ACTION_REARM_CALLER.md) uses a handle stored in the engine owner. It does not submit the ordinary root job. Its platform operation remains behind a protected call adapter, so identifying it as a particular operating-system event API would currently overstate the evidence.
+The alternate branch in the [engine rearm caller](ACTION_REARM_CALLER.md) uses a handle stored in the engine owner. It does not submit the ordinary root job. The protected adapter was subsequently decoded and its live target resolved to `kernel32.dll!SetEvent`; see [the later capture](ENGINE_EVENT_ADAPTER.md#live-target-resolution). Reset/wait identity, returned status and scheduler-drain guarantees remain separate questions.
 
 ## Recovered receiver and operation order
 
@@ -67,3 +67,5 @@ A reconstruction may expose explicit `signal`, `reset` and `wait` interfaces as 
 ## Later adapter decoding
 
 The [bounded adapter experiment](ENGINE_EVENT_ADAPTER.md) reduced the EndFrame handle operation to a single encoded target-slot read plus a fixed addition, with a verified synthetic tail-transfer convention. The analyzed slot itself decodes to an invalid address; the running process's target must still be read and identified. This narrows the protected-call blocker without promoting the signal interpretation to a confirmed API.
+
+The subsequent [live target capture](ENGINE_EVENT_ADAPTER.md#live-target-resolution) closes the EndFrame operation's API identity as `SetEvent` for the observed Wine session. Earlier provisional signal wording records the prior evidence boundary. It does not apply to the now-resolved target identity, but failure behavior and the reset/wait operations remain unproved.

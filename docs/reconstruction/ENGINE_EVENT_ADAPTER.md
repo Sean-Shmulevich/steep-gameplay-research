@@ -1,6 +1,6 @@
 # EndFrame event adapter: decoded target lookup
 
-The event branch in [EndFrame](ENGINE_EVENT_SUBMISSION.md) reaches a protected adapter after loading the handle from the engine's inline holder. Bounded emulation now resolves this adapter's local behavior to a single encoded target lookup. The target API remains unidentified.
+The event branch in [EndFrame](ENGINE_EVENT_SUBMISSION.md) reaches a protected adapter after loading the handle from the engine's inline holder. Bounded emulation now resolves this adapter's local behavior to a single encoded target lookup. A subsequent passive capture resolves the live target to `kernel32.dll!SetEvent`; see the live result below.
 
 ## Recovered transfer
 
@@ -38,3 +38,13 @@ Only the emulator's copy of the data slot was changed. No game process was launc
 5. Repeat for the restart/reset and consuming/wait adapters. Resolving only the EndFrame operation would not establish the whole stop/restart handshake.
 
 This check can use passive reads. It does not require calling the decoded target, changing alternate mode, or holding workers in a debugger. Even a confirmed event API would leave event lifetime, creation failure, plain-byte request visibility and outstanding-work coverage as separate scheduler release gates.
+
+## Live target resolution
+
+[Two passive observations](live_engine_event_target_validation.json) in one initialized Highball Wine session decoded the target to the exact `SetEvent` export in `kernel32.dll`. The target lay in an executable PE section. Both observations rechecked the encoded slot and module headers. The second also compared all 75 instruction spans from the emulated path against live process bytes; every span matched.
+
+This joins the recovered adapter formula to an identified runtime API. The invalid target in the earlier analysis image remains a separate observation: that image's slot value was not usable as the running process's target. The capture did not determine when or how the runtime slot was initialized.
+
+The test only read memory and exports. It did not call `SetEvent`, observe EndFrame executing this branch, check a return status, attach LLDB, or modify scheduler state. Reset/wait targets, event creation/destruction, request visibility and outstanding-work coverage remain unresolved. Identifying the signal API is not a safe stepping proof.
+
+The research bottle was deliberately closed after the observations, and the bounded launcher restored its configuration. Raw module addresses, memory reads and screenshots remain private.
