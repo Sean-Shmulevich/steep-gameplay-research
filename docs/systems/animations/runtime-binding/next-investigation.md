@@ -40,3 +40,8 @@ clip readiness.
 Binding/release follow-up now identifies a deferred key/record/entry queue and
 its exact insertion and recycling gates. Follow that queue's consumer next;
 see the latest trace-recipe section. Do not label entry flag bit 31 as readiness.
+
+
+The manager mode setter now joins the known loading-thread pending/busy waits
+and guarded processing wrapper. The next exact entry is the opaque processing
+phase listed in the latest trace recipe; stale-triple handling remains open.

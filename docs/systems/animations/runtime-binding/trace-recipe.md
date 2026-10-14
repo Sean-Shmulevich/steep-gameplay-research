@@ -133,3 +133,32 @@ notification+54. Triple is key/record/entry, each eight bytes. Growth helper
 at `1411afba5` even if growth failed the room test. Consumer and synchronization
 remain open. Next bounded pass: queue consumer, `1411931f0`, `14119d3c0`,
 and one dependent reader; four bodies, each <=24,000 pdata-linked bytes.
+
+## Manager processing route
+
+Four new pdata-linked bodies: `1411931f0` (139 bytes), `14119d3c0`
+(129), `1411b89a0` (146), `141198820` (369).
+
+`1411931f0` preserves R8 as record, tests record+8 bit 28, and conditionally
+calls `141099e40` with owner+8/record then owner/key under its global guard.
+The earlier abbreviated key-only pseudocode is corrected; operation semantics
+remain opaque. `14119d3c0` scans manager+e8 block descriptors using count+f2,
+signed divide-by-24 followed by unsigned low32 comparison with block+8 count;
+returns block<<14 plus quotient, or ffffffff.
+
+`1411b89a0` writes manager+58 before testing old=0/new=1. It polls loading
+thread+288 and +290, calls `141198820`, and polls both again. It returns the
+old mode. The manager is selected by direct global-address use `143301d80`
+in caller `1400d2940`; this call-site lead selected the setter for inspection.
+
+`141198820` enters manager+60, loading-thread+1d8, manager+b8 guards; calls
+`141198740` then `141198a40` with a temporary output collection. Leaves
+loading-thread+1d8, manager+60, manager+b8 in that order. Re-reads manager+58;
+mode 1 destroys/free each non-null temporary object through the observed virtual
+and allocator calls. `141198a40` is the existing staged-destruction publication
+caller from the loading-thread research.
+
+Next bounded candidates: `141198740`, its evidence-selected triple consumer,
+and at most two directly dependent helpers. Do not treat broad references to
+`143301d80` as animation-specific: this shared manager has many resource clients.
+Four new function bodies maximum, each <=24,000 pdata-linked bytes.

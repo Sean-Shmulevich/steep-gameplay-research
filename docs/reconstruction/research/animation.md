@@ -340,7 +340,7 @@ For a non-null requested record:
 
 ```text
 bind_nonnull_record(manager, entry, record):
-    opaque_prepare_key(entry.key)
+    opaque_prepare_record(entry.key, record)
     index = opaque_entry_index(manager, entry)
     atomic_replace_low19(record.index_word, (index + 1) & 0x7ffff)
     if opaque_context_mode() == 3 and global_mode != 1:
@@ -408,3 +408,65 @@ cover index wrap/truncation without treating overflow indices as valid.
 Next: find the deferred triple consumer and the producer of its context/mode
 gates, then connect its processed record to the provider row reader. The authored
 UID conversion and runtime clip/landing selection remain unresolved.
+
+## Manager mode transition and loading-thread join
+
+The next bounded pass establishes the manager mode setter and its processing
+wrapper. This narrows the route into deferred processing; it does not yet decode
+the triple consumer or prove rejection of stale queued records.
+
+```text
+set_manager_mode(manager, new_mode):
+    old_mode = manager.mode
+    manager.mode = new_mode
+    if new_mode == 1 and old_mode == 0:
+        wait_while_loading_pending_or_busy()
+        process_manager(manager)
+        wait_while_loading_pending_or_busy()
+    return old_mode
+
+process_manager(manager):
+    temporary_destructions = local_collection()
+    enter(manager.processing_guard)
+    enter(loading_thread.destruction_ring_guard)
+    enter(manager.entry_guard)
+    opaque_process_phase(manager)
+    process_resource_release_phase(manager, temporary_destructions)
+    leave(loading_thread.destruction_ring_guard)
+    leave(manager.processing_guard)
+    leave(manager.entry_guard)
+    if manager.mode == 1:  # re-read after leaving the guards
+        for object in temporary_destructions:
+            if object != null:
+                allocation_context = opaque_allocation_context(object)
+                object.virtual_destructor(0)
+                opaque_free(object, allocation_context)
+    release_temporary_collection_storage_if_owned()
+```
+
+The release phase is the same previously studied caller that publishes staged
+loading-thread destructions. See [loading-thread lifecycle](../LOADING_THREAD_LIFECYCLE.md).
+The mode is written **before** the first wait. Only the 0-to-1 transition performs
+these waits and processing; other transitions simply store and return the old
+value. The two waits poll pending destruction and busy fields, with a helper call
+between retries. They neither inspect staged destruction nor exclude producers.
+The processing wrapper releases its guards in the shown order, not reverse
+acquisition order. Neither sequence is permission to replace native state.
+
+Two additional local joins were inspected:
+
+- Record preparation receives both key and record. Under a global guard it tests
+  record flag bit 28 and conditionally calls the same opaque map operation twice,
+  once with the record pointer and once with the key. The map operation and
+  publication-context helpers remain unresolved; no erase/insert identity is
+  assigned from this caller alone.
+- Entry-index calculation scans block descriptors in order. It divides the signed
+  pointer difference by 24 with truncation toward zero, then compares the low
+  32-bit quotient unsigned against the block's count. The first accepted block
+  returns `(block_index << 14) + quotient` in 32-bit arithmetic. No match returns
+  `0xffffffff`, which the binder's index-plus-one/mask turns into zero. There is
+  no explicit alignment test here; valid entry pointers remain a caller contract.
+
+Next: inspect the opaque processing phase and its called triple consumer. Match
+its key/record/entry accesses to queue storage and distinguish removal, binding,
+and destruction work before introducing a reconstructed queue executor.

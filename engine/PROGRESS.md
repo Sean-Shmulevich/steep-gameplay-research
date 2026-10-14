@@ -451,3 +451,12 @@ writer kernels with tests for flag distinctions and truncation. Queue consumer
 and ready-resource interpretation remain open. No live process accessed.
 
 Validation: all 420 independent tests pass; packaging and links verified.
+
+
+## Resource manager processing joins loading lifecycle
+
+Connected the 0-to-1 manager mode transition to loading pending/busy waits and
+the guarded processing wrapper, including its existing staged-destruction phase.
+Decoded entry-index calculation and corrected record preparation's record
+argument. Deferred triple consumer remains untraced; no native pause guarantee.
+Documentation-only pass; last full runtime validation remains 420 tests.
