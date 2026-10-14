@@ -1,4 +1,4 @@
-"""Verified encoding-zero float4 quaternion channel adapter.
+"""Recovered animation channel adapters with explicit numerical substitutes.
 
 Evidence: docs/reconstruction/ANIMATION_QUATERNION_SAMPLER.md. No clip container,
 rig identity, graph selection or physics coupling is implied by this decoder.
@@ -95,11 +95,11 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
-    """Sampling callback for verified encoding IDs 0, 9, 11, 12, 14, 21, 23 and 27 only."""
-    if type(descriptor) is not int or descriptor not in (0,9,11,12,14,21,23,27) or width != 16:
-        raise ValueError('supported descriptors are 0, 9, 11, 12, 14, 21, 23 and 27 with width 16')
+    """Sampling callback for verified encoding IDs 0, 9, 11, 12, 14, 21, 23, 24 and 27 only."""
+    if type(descriptor) is not int or descriptor not in (0,9,11,12,14,21,23,24,27) or width != 16:
+        raise ValueError('supported descriptors are 0, 9, 11, 12, 14, 21, 23, 24 and 27 with width 16')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,27:sample_encoding_27}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,24:sample_encoding_24,27:sample_encoding_27}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
@@ -119,7 +119,7 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,11,12,14,21,23,27):
+    if encoding not in (0,9,11,12,14,21,23,24,27):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
     if encoding in (11,14,23):
@@ -139,7 +139,7 @@ def unpack_serialized_channel(data, offset=0):
                 'opaque_allocation':allocation}
     if not 1 <= count <= 255:
         raise ValueError('serialized count outside supported runtime range')
-    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),27:(12,4)}[encoding]
+    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),24:(12,4),27:(12,4)}[encoding]
     end = offset+9+(count-1)+count*stride
     if end > len(data):
         raise ValueError('truncated serialized channel data')
@@ -223,7 +223,7 @@ def _sample_general_packed(payload,time,hint,cursor,encoding,rsqrt_estimate):
         raise ValueError('unexpected packed quaternion channel header')
     count=data[1]
     if count==0:raise ValueError('zero-key channel has no sample payload')
-    stride,alignment=(4,4) if encoding==9 else (6,2)
+    stride,alignment={9:(4,4),12:(6,2),24:(12,4)}[encoding]
     offset=(count+alignment)&~(alignment-1)
     if len(data)<offset+stride*count:raise ValueError('truncated quaternion channel')
     selected=select_byte_key(count,data[2:count+1],hint,cursor)
@@ -233,6 +233,8 @@ def _sample_general_packed(payload,time,hint,cursor,encoding,rsqrt_estimate):
     def decode(index):
         if encoding==9:
             return quaternion_smallest_three32(struct.unpack_from('<I',data,offset+stride*index)[0])
+        if encoding==24:
+            return quaternion_three_floats(struct.unpack_from('<3I',data,offset+stride*index))
         return quaternion_smallest_three48(struct.unpack_from('<3H',data,offset+stride*index))
     value=decode(index)
     packed,weight=selected['packed_ticks'],None
@@ -309,3 +311,31 @@ def sample_encoding_23(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None
 
 def sample_encoding_11(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
     return _sample_mask_quaternion(payload,time,hint,cursor,11,rsqrt_estimate)
+
+
+def quaternion_three_floats(words, *, rsqrt_estimate=None):
+    """Encoding 24: float bits retain the two embedded selector bits.
+
+    Evidence: ANIMATION_THREE_FLOAT_SAMPLER.md. Scalar reciprocal seed and
+    malformed-input rejection are reconstruction policies, not native parity.
+    """
+    words=tuple(words)
+    if len(words)!=3 or any(type(w) is not int or not 0<=w<=0xffffffff for w in words):
+        raise ValueError('expected three uint32 quaternion words')
+    values=list(struct.unpack('<3f',struct.pack('<3I',*words)))
+    if not all(math.isfinite(v) for v in values):
+        raise ValueError('expected finite quaternion components')
+    squares=[f32(v*v) for v in values]
+    n=f32(1-f32(squares[0]+f32(squares[1]+squares[2])))
+    if not math.isfinite(n) or n<=0:
+        raise ValueError('expected positive omitted-component radicand')
+    r=f32(1/math.sqrt(n) if rsqrt_estimate is None else rsqrt_estimate)
+    if not math.isfinite(r) or r<=0:
+        raise ValueError('expected positive finite reciprocal seed')
+    missing=f32(n*f32(f32(3-f32(f32(n*r)*r))*f32(.5*r)))
+    values.insert((words[0]&1)|((words[1]&1)<<1),missing)
+    return values
+
+
+def sample_encoding_24(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_general_packed(payload,time,hint,cursor,24,rsqrt_estimate)

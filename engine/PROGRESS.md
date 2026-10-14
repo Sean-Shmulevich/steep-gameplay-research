@@ -930,3 +930,14 @@ Two synthetic tests cover byte/mask equivalence, padding and dispatch. Independe
 numerical/native validation remains separate.
 
 Validation: 512 tests pass; packaging, hashes and local links pass.
+
+## Encoding-24 three-float quaternion sampling
+
+Verified paired and single value decoding, selector masks, retained low bits and
+twelve-byte sample stride. Integrated serialized adaptation and dispatch. All
+fifteen new tracks pass, bringing the six-body corpus to 1,015/1,052 tracks and
+7,105 consistency checks. Three synthetic tests cover selector preservation,
+rewind, dispatch and malformed inputs. Scalar reciprocal seeds remain substitutes;
+no native parity is claimed. See the three-float sampler guide for pseudocode.
+
+Validation: 515 tests pass; packaging, hashes and local links pass.
