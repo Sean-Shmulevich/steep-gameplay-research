@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "cases": 2,
+  "registrations_per_case": 7,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original dependency-registration instruction span with synthetic owner objects, constructor-matched tables, seeded entry registers and a recording stub for the verified registration method. Exact source/successor pairs match the executable partial graph. Volatile registers are clobbered after each stub call. Not full setup execution, dependency mutation, live graph selection or gameplay validation."
+}

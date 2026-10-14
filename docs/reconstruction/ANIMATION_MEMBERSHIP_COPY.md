@@ -63,4 +63,4 @@ Static anchors:
 - Destination storage/count/capacity are scheduler owner+`0x3c88`/`0x3c90`/`0x3c94`. These equal animation-time job+`0x198`/`0x1a0`/`0x1a4` for the job at owner+`0x3af0`.
 - Nonempty-source copying calls `141c6afb0` at `140914755`; empty source branches directly to the closing helper call. The larger gather routine continues with other lists outside this validation scope.
 
-Next evidence needed: source registration/removal, callable execution and dependency edges for the gather task, cross-request exclusion, and live receiver identity. The source-array copy and ordinary consumption path to zero are established; membership policy and completion remain open.
+The [stage-dependency follow-up](ANIMATION_STAGE_DEPENDENCIES.md) now connects this gather to the animation job and its ordinary downstream completion/rearm route. Next evidence needed: source registration/removal, live receiver identity, and exceptional-mode storage exclusion. Source-array copying, ordinary consumption to zero, and the ordinary static completion route are established; live membership and safe process control remain open.

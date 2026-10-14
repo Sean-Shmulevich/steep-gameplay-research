@@ -1210,3 +1210,17 @@ the first receiver call. Four additional tests cover claim/copy/visit compositio
 Native contention, completion and cross-request storage exclusion remain open.
 
 Validation: 583 tests pass; packaging, hashes and local links pass.
+
+## Animation stage dependencies and ordinary reuse route
+
+Recovered seven setup registrations from pre-action gather through character and
+skeleton preparation to Kino pre-graph, then separate animation-time/interaction
+branches reconverging at action gather. The animation job now joins the previously
+verified downstream action/physics and ordinary EndFrame rearm route. This closes
+the ordinary static reuse argument for this branch; live identity and exceptional
+modes remain open. Original registration instructions matched the partial graph at
+two synthetic owner bases with volatile-register clobbering. The runnable probe
+uses synthetic bodies to demonstrate that zero remaining work does not release the
+gather while animation dispatches remain unfinished.
+
+Validation: 585 tests pass; packaging, hashes and local links pass.

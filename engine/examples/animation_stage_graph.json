@@ -1,0 +1,9 @@
+[
+  {"id":"UpdatePreActionGather","kind":"callback","successors":["UpdateCharacterActionSet"]},
+  {"id":"UpdateCharacterActionSet","kind":"range","successors":["SkelUpdateBeginAnimate"]},
+  {"id":"SkelUpdateBeginAnimate","kind":"range","successors":["UpdateKino"]},
+  {"id":"UpdateKino","kind":"callback","successors":["AnimationUpdateTime","UpdateActionKinoStatesInteraction"]},
+  {"id":"AnimationUpdateTime","kind":"range","successors":["ActionGatherComponents"]},
+  {"id":"UpdateActionKinoStatesInteraction","kind":"range","successors":["ActionGatherComponents"]},
+  {"id":"ActionGatherComponents","kind":"callback"}
+]

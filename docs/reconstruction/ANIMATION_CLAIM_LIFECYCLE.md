@@ -71,4 +71,4 @@ Four additional repository tests cover zero-before-callback behavior, late reads
 
 Evidence anchors: animation table `141ec7f38`, worker `1408c7800`, visitor `1408f2b60`, dispatcher `1409d44c0`; pointer array job+`0x198`, remaining job+`0x1a0`, chunk/tail job+`0x1b0`/`0x1b4`, early-exit byte job+`0x1b8`. Claim updates at `1408c7854` and `1408c7922` target the same field written by the animation gather at owner+`0x3c90`, where job=owner+`0x3af0`.
 
-The next required join for original-game stepping is the gather task's dependency and completion protocol. Remaining count zero alone must not be used as a safe pause, buffer-reuse or next-request signal.
+The [stage-dependency follow-up](ANIMATION_STAGE_DEPENDENCIES.md) now joins this animation job to the downstream action gather and the previously inspected ordinary completion/rearm route. Remaining count zero alone must not be used as a safe pause, buffer-reuse or next-request signal. Live identity and exceptional-mode coverage remain separate requirements.
