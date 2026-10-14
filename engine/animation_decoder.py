@@ -96,13 +96,13 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
     """Sampling callback for supported quaternion, vector and scalar encoding IDs."""
-    supported=(0,9,10,11,12,13,14,21,22,23,24,25,26,27,28,29,39,54)
+    supported=(0,9,10,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,39,54)
     if type(descriptor) is not int or descriptor not in supported:
         raise ValueError('unsupported descriptor')
     if width != (4 if descriptor in (39,54) else 16):
         raise ValueError('descriptor output width mismatch')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,10:sample_encoding_10,13:sample_encoding_13,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,22:sample_encoding_22,25:sample_encoding_25,23:sample_encoding_23,24:sample_encoding_24,26:sample_encoding_26,29:sample_encoding_29,27:sample_encoding_27,28:sample_encoding_28,39:sample_encoding_39,54:sample_encoding_54}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,10:sample_encoding_10,13:sample_encoding_13,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,15:sample_encoding_15,16:sample_encoding_16,17:sample_encoding_17,21:sample_encoding_21,22:sample_encoding_22,25:sample_encoding_25,23:sample_encoding_23,24:sample_encoding_24,26:sample_encoding_26,29:sample_encoding_29,27:sample_encoding_27,28:sample_encoding_28,39:sample_encoding_39,54:sample_encoding_54}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
@@ -122,10 +122,10 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,10,11,12,13,14,21,22,23,24,25,26,27,28,29,39,54):
+    if encoding not in (0,9,10,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,39,54):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
-    if encoding in (10,13,22,25,28):
+    if encoding in (10,13,16,22,25,28):
         from .animation_channel_framing import frame_serialized_channel
         framed=frame_serialized_channel(data,offset)
         if count>65535:raise ValueError('wide count exceeds uint16 runtime range')
@@ -141,14 +141,14 @@ def unpack_serialized_channel(data, offset=0):
         return {'encoding':encoding,'payload':bytes(result),'consumed':framed['consumed'],
                 'opaque_allocation':allocation}
 
-    if encoding in (11,14,23,26,29):
+    if encoding in (11,14,17,23,26,29):
         if offset+10>len(data):raise ValueError('missing mask mode')
         mode=data[offset+9];size=mode&63
         mask=data[offset+10:offset+10+size]
         select_mask_key(mode,mask,0)
         if int.from_bytes(mask,'little').bit_count()!=count:
             raise ValueError('mask key count mismatch')
-        stride,alignment={11:(4,4),14:(6,2),23:(2,2),26:(12,4),29:(12,4)}[encoding]
+        stride,alignment={11:(4,4),14:(6,2),17:(8,4),23:(2,2),26:(12,4),29:(12,4)}[encoding]
         end=offset+10+size+stride*count
         if end>len(data):raise ValueError('truncated masked quaternion samples')
         result=bytearray((size+1+alignment)&~(alignment-1))
@@ -158,7 +158,7 @@ def unpack_serialized_channel(data, offset=0):
                 'opaque_allocation':allocation}
     if not 1 <= count <= 255:
         raise ValueError('serialized count outside supported runtime range')
-    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),24:(12,4),27:(12,4),39:(1,1),54:(4,4)}[encoding]
+    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),15:(8,4),21:(2,2),24:(12,4),27:(12,4),39:(1,1),54:(4,4)}[encoding]
     end = offset+9+(count-1)+count*stride
     if end > len(data):
         raise ValueError('truncated serialized channel data')
@@ -242,7 +242,7 @@ def _sample_general_packed(payload,time,hint,cursor,encoding,rsqrt_estimate):
         raise ValueError('unexpected packed quaternion channel header')
     count=data[1]
     if count==0:raise ValueError('zero-key channel has no sample payload')
-    stride,alignment={9:(4,4),12:(6,2),24:(12,4)}[encoding]
+    stride,alignment={9:(4,4),12:(6,2),15:(8,4),24:(12,4)}[encoding]
     offset=(count+alignment)&~(alignment-1)
     if len(data)<offset+stride*count:raise ValueError('truncated quaternion channel')
     selected=select_byte_key(count,data[2:count+1],hint,cursor)
@@ -250,6 +250,8 @@ def _sample_general_packed(payload,time,hint,cursor,encoding,rsqrt_estimate):
     if not math.isfinite(time):raise ValueError('expected finite sample time')
     index=selected['cursor']
     def decode(index):
+        if encoding==15:
+            return quaternion_smallest_three64(struct.unpack_from('<2I',data,offset+stride*index))
         if encoding==9:
             return quaternion_smallest_three32(struct.unpack_from('<I',data,offset+stride*index)[0])
         if encoding==24:
@@ -297,13 +299,15 @@ def _sample_mask_channel(payload,time,hint,cursor,encoding,rsqrt_estimate):
     mode=data[1];size=mode&63;mask=data[2:2+size]
     selected=select_mask_key(mode,mask,hint)
     count=int.from_bytes(mask,'little').bit_count()
-    stride,alignment={11:(4,4),14:(6,2),23:(2,2),26:(12,4),29:(12,4)}[encoding]
+    stride,alignment={11:(4,4),14:(6,2),17:(8,4),23:(2,2),26:(12,4),29:(12,4)}[encoding]
     offset=(size+1+alignment)&~(alignment-1)
     if len(data)<offset+stride*count:raise ValueError('truncated masked quaternion samples')
     time=f32(time)
     if not math.isfinite(time):raise ValueError('expected finite sample time')
     index=selected['cursor']
     def decode(index):
+        if encoding==17:
+            return quaternion_smallest_three64(struct.unpack_from('<2I',data,offset+stride*index))
         if encoding==11:
             return quaternion_smallest_three32(struct.unpack_from('<I',data,offset+stride*index)[0])
         if encoding==14:
@@ -436,13 +440,15 @@ def _sample_wide_channel(payload,time,hint,cursor,encoding,rsqrt_estimate=None):
     data=memoryview(payload)
     if not data or data[0]!=encoding:raise ValueError('unexpected wide channel')
     count,ticks,end=wide_channel_layout(data)
-    stride,alignment={10:(4,4),13:(6,2),22:(2,2),25:(12,4),28:(12,4)}[encoding]
+    stride,alignment={10:(4,4),13:(6,2),16:(8,4),22:(2,2),25:(12,4),28:(12,4)}[encoding]
     offset=(end+alignment-1)&~(alignment-1)
     if len(data)<offset+stride*count:raise ValueError('truncated wide vector samples')
     selected=select_wide_key(count,ticks,hint,cursor)
     time=f32(time)
     if not math.isfinite(time):raise ValueError('expected finite sample time')
     def decode(index):
+        if encoding==16:
+            return quaternion_smallest_three64(struct.unpack_from('<2I',data,offset+stride*index))
         if encoding==10:
             return quaternion_smallest_three32(struct.unpack_from('<I',data,offset+stride*index)[0])
         if encoding==13:
@@ -485,3 +491,32 @@ def sample_encoding_22(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None
 
 def sample_encoding_25(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
     return _sample_wide_channel(payload,time,hint,cursor,25,rsqrt_estimate)
+
+
+def quaternion_smallest_three64(words,*,rsqrt_estimate=None):
+    """Two stored uint32 words, logical high word first; ANIMATION_64BIT_SAMPLER.md."""
+    words=tuple(words)
+    if len(words)!=2 or any(type(w) is not int or not 0<=w<=0xffffffff for w in words):
+        raise ValueError('expected two uint32 quaternion words')
+    packed=(words[0]<<32)|words[1]
+    values=[f32(f32(((packed>>shift)&0xfffff)*f32(1.3487017440638738e-06))+f32(-.7071067690849304)) for shift in (40,20,0)]
+    squares=[f32(v*v) for v in values]
+    n=f32(1-f32(squares[0]+f32(squares[1]+squares[2])))
+    if not math.isfinite(n) or n<=0:raise ValueError('expected positive omitted-component radicand')
+    r=f32(1/math.sqrt(n) if rsqrt_estimate is None else rsqrt_estimate)
+    if not math.isfinite(r) or r<=0:raise ValueError('expected positive finite reciprocal seed')
+    missing=f32(n*f32(f32(3-f32(f32(r*n)*r))*f32(.5*r)))
+    values.insert(words[0]>>30,missing)
+    return values
+
+
+def sample_encoding_15(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_general_packed(payload,time,hint,cursor,15,rsqrt_estimate)
+
+
+def sample_encoding_16(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_wide_channel(payload,time,hint,cursor,16,rsqrt_estimate)
+
+
+def sample_encoding_17(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_mask_channel(payload,time,hint,cursor,17,rsqrt_estimate)

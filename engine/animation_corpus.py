@@ -8,7 +8,7 @@ from pathlib import Path
 from .animation_decoder import unpack_serialized_channel, registered_channel_decoder
 from .animation_sampling import Channel, Resource, SampleState, sample_channel
 
-SUPPORTED = frozenset((0,9,10,11,12,13,14,21,22,23,24,25,26,27,28,29,39,54))
+SUPPORTED = frozenset((0,9,10,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,39,54))
 
 
 def inspect_clip(body, records):
@@ -39,11 +39,11 @@ def inspect_clip(body, records):
             if parsed['consumed']!=end-start or parsed['encoding']!=codec:
                 raise ValueError('record mismatch')
             payload=parsed['payload'];count=payload[1]
-            if codec in (10,13,22,25,28):
+            if codec in (10,13,16,22,25,28):
                 from .animation_decoder import wide_channel_layout
                 count,ticks,_=wide_channel_layout(payload)
                 final_tick=ticks[-1] if ticks else 0
-            elif codec in (11,14,23,26,29):
+            elif codec in (11,14,17,23,26,29):
                 mode=payload[1];mask=int.from_bytes(payload[2:2+(mode&63)],'little')
                 final_tick=(mask.bit_length()-1)<<(mode>>6)
             else:

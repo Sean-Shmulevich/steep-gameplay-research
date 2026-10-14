@@ -1030,3 +1030,16 @@ All 6,292 encoding-22 and 862 encoding-25 original tracks pass 50,078 consistenc
 checks. Scalar reciprocal seeds and native-output validation remain open.
 
 Validation: 532 tests pass with expanded cases; packaging, hashes and local links pass.
+
+## Packed 64-bit quaternion family
+
+Recovered logical high-word-first ordering, three twenty-bit fields, unused bits,
+omitted-component selection and float32 reconstruction from paired/single helpers.
+Verified matching interpolation sections in all three callbacks. Integrated byte,
+wide and mask variants 15/16/17. All 1,266 original tracks pass 8,862 consistency
+checks; two synthetic tests cover selectors, word order, ignored bits and timeline
+equivalence. Scalar reciprocal seeds remain substitutes; no native parity claim.
+Only formats 40, 41 and 66 remain unsupported in the indexed inventory, totaling
+110 tracks. Inventory format eligibility is distinct from full sampling validation.
+
+Validation: 534 tests pass; packaging, hashes and local links pass.

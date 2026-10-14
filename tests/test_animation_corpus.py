@@ -13,9 +13,9 @@ class CorpusInspectionTests(unittest.TestCase):
         self.assertNotIn('value',result)
 
     def test_unsupported_and_shared_are_not_success(self):
-        result=inspect_clip(b'',[{'codec':16},{'shared_track_reference':0}])
+        result=inspect_clip(b'',[{'codec':40},{'shared_track_reference':0}])
         self.assertFalse(result['all_tracks_supported_and_validated'])
-        self.assertEqual(result['unsupported_codec_counts'],{16:1})
+        self.assertEqual(result['unsupported_codec_counts'],{40:1})
         self.assertEqual(result['unresolved_shared_records'],1)
         self.assertEqual(result['validated_tracks'],0)
 
