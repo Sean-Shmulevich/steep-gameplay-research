@@ -650,3 +650,12 @@ retained recipient entry and retained owner entry. Documented sequential append,
 reference transfer and capacity invariants. Metadata lookup is a descriptor
 interval type check returning the original object. Actual batch consumption and
 payload effects remain open. Documentation-only; last full suite remains446.
+
+
+## Timestamp batch destruction contract
+
+Decoded reverse-array teardown, independent element/storage ownership bits, and
+captured-range shared-entry release. A constructor/destructor pair supplies a
+compatible owner layout, but producer context identity and normal delivery remain
+unproved. No idempotent drain or payload destruction is inferred. Documentation
+pass; last full suite remains 446 tests.

@@ -715,3 +715,26 @@ metadata allocation or pointer adjustment. Target semantic typename not recovere
 Next: context parallel-array +0/+90/+120 consumer and clear/destruction paths;
 object virtual+60 preparation effects; target descriptor name. Keep queued output
 separate from actual delivery and do not infer an atomic three-array snapshot.
+
+
+## Three-array destructor and compatible owner layout
+
+Candidate constructor `140d28e10` (299): headers at owner+110/+1a0/+230,
+inline buffers +120/+1b0/+240, header dwords +118/+1a8/+238 =8010.
+Vtable `141f1fad8` slot0 `140d2c9f0` (52) calls destructor `140d2b5c0`
+(360), which passes owner+110 to `140d2bcc0`. Producer context identity not
+joined yet; do not promote the compatible layout to live owner proof.
+
+`140d2bcc0` (102) destroys context+120 then+90 via `1408533b0`, then frees
+context+0 storage only when header bit15 clear and pointer nonnull. No raw payload
+cleanup walk. `1408533b0` (106): bit14 clear -> `1411d31d0` over captured
+[data,data+u16count*8); bit15 clear -> deallocate nonnull storage. `1411d31d0`
+(89) XADD entry+8 -1; prior1 and low24flags0 -> `141194350`. No null-entry,
+slot clear or count reset. Destructor is not an idempotent drain.
+
+Negative leads: nearby `140d28130`/`140d7f0f0`/`140d7f1e0` initialize different
+layouts. Broad offset coincidence is insufficient. `140d230c0` contains patched/
+unresolved instruction stretches in this image and is not usable as an ordinary
+linear-disassembly proof; no claims derived from its suspicious sequence.
+Next: confirm producer context=owner+110 and identify its normal consumer/clear
+path, using caller arguments and same array count/pointer accesses together.

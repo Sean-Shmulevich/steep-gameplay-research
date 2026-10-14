@@ -1852,3 +1852,48 @@ byte supplies the previously decoded event-boundary permissions.
 The next evidence needed is the parallel-array consumer. Until that is traced,
 queued payloads are not evidence that a footstep, sound, animation notification,
 or gameplay effect was delivered.
+
+
+## Three-array destruction contract and an owner candidate
+
+A constructor initializes three adjacent array headers with stride 144 bytes,
+each with inline storage for 16 eight-byte entries. Its destructor passes the
+first header to a helper that matches the timestamp batch layout. This is an
+owner candidate supported by constructor/destructor structure; the producer's
+context pointer has not yet been proved to refer to this particular object.
+
+The batch destructor processes the owner-reference array first, then the
+recipient-reference array. It finally frees the payload-pointer array's storage
+when that storage is externally allocated. It does not walk the payload pointers
+or invoke payload destructors locally.
+
+```text
+destroy_batch(batch):
+    destroy_entry_array(batch.owners)
+    destroy_entry_array(batch.recipients)
+    if not batch.payloads.header.bit15 and batch.payloads.data != null:
+        free_storage(batch.payloads.data)
+
+destroy_entry_array(array):
+    if not array.header.bit14:
+        for slot in captured_range(array.data, array.count):
+            entry = slot.pointer
+            if atomic_fetch_add(entry.separate_count, -1) == 1:
+                if low24(entry.flags) == 0:
+                    release_entry_if_eligible(entry)
+    if not array.header.bit15 and array.data != null:
+        free_storage(array.data)
+```
+
+Bit 14 suppresses element cleanup; bit 15 suppresses storage deallocation. They
+are independent gates. Constructor header value `8010` therefore starts with
+inline-storage protection, capacity 16, zero count and element cleanup enabled.
+The reference-release walker captures the end pointer, advances eight bytes per
+entry, and does not null slots or clear the array count. There is no per-entry
+null guard. This is a destruction path, not an idempotent drain API.
+
+The owner candidate's outer destructor performs other cleanup before and after
+this batch destruction. Nothing in these helpers proves delivery before teardown,
+scheduler synchronization, reentrancy safety or a complete producer/owner join.
+The delivery consumer remains the highest-value next target; the exact cleanup
+contract can now constrain that investigation.
