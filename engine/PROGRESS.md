@@ -1019,3 +1019,14 @@ with no failures. No native numerical parity is claimed; scalar reciprocal seeds
 remain substitutes and existing reference discrepancies remain documented.
 
 Validation: 532 tests pass; packaging, hashes and local links pass.
+
+## Wide-time rotation formats 22 and 25
+
+Verified full callbacks for restricted z/w rotations and three-float quaternions,
+including final-key decoding and shared interpolation branches. Added both to
+wide sampling, serialized adaptation, dispatch and corpus inspection. Expanded
+existing synthetic cases cover byte/wide equivalence, rewinds and extended count.
+All 6,292 encoding-22 and 862 encoding-25 original tracks pass 50,078 consistency
+checks. Scalar reciprocal seeds and native-output validation remain open.
+
+Validation: 532 tests pass with expanded cases; packaging, hashes and local links pass.

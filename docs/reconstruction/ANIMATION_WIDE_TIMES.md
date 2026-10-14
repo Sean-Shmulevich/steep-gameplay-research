@@ -97,3 +97,28 @@ The [private-track receipt](animation_wide_quaternion_validation.json) records
 seven-position sampling consistency across the original indexed inventory.
 It is not native numerical agreement; the previously documented scalar seed and
 float32-versus-host-double reference differences still apply.
+
+## Restricted and three-float rotations: 22 and 25
+
+Encoding 22 callback `0x140d43c30` uses the same wide selector and two-byte
+alignment/stride. Its paired decoder is `0x140d71f30`. Its final-key branch
+explicitly masks fifteen bits, scales by 4.316100603318773e-05, subtracts
+0.7071067690849304 and reconstructs the other component with sqrt(1-v*v).
+The word's high bit selects z versus w; x and y remain zero. These are the
+[restricted quaternion equations](ANIMATION_PACKED_SAMPLER.md) used by encoding 21.
+
+Encoding 25 callback `0x140d43550` uses four-byte alignment and twelve-byte stride.
+It calls paired decoder `0x140d71da0` and final decoder `0x140d727b0`, the same
+[three-float quaternion reconstruction](ANIMATION_THREE_FLOAT_SAMPLER.md) used by
+encoding 24. The first two raw float words retain their low selector bits.
+
+Both full callbacks were inspected through final-key return and preserve the
+same quaternion interpolation branches and constants described above. The
+implementation selects the appropriate value decoder within `_sample_wide_channel`;
+`sample_encoding_22` and `sample_encoding_25` expose it through registered dispatch.
+
+Expanded synthetic cases compare byte/wide sampling, rewinds and extended-count
+payloads for both formats. The [original-track receipt](animation_wide_remaining_validation.json)
+records cached/reset consistency checks separately from native numerical proof.
+The three-float decoder still uses a scalar reciprocal seed substitute. No new
+bone identity, graph-selection or animation-to-physics ownership is inferred.

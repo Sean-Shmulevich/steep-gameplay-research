@@ -1,0 +1,19 @@
+{
+  "scope": "encoding 22 and 25; seven-position cached/reset consistency across indexed bodies; not native agreement",
+  "encodings": [
+    {
+      "encoding": 22,
+      "bodies": 603,
+      "validated_tracks": 6292,
+      "sample_checks": 44044,
+      "failures": 0
+    },
+    {
+      "encoding": 25,
+      "bodies": 694,
+      "validated_tracks": 862,
+      "sample_checks": 6034,
+      "failures": 0
+    }
+  ]
+}
