@@ -50,7 +50,7 @@ Treating every recovered setup edge as a dependency, and both branch alternative
 
 - 30 embedded jobs are reachable from `BeginFrame` through static edges. **Every one has a path to `EndFrame`.** No statically reachable job bypasses it.
 - The four statically wired jobs that are not reachable from the root without per-frame wiring all feed `EndEngineFrame`.
-- Seven embedded jobs have only per-frame edges. Their recovered Step-callback registrations route through world stages that reconverge on nodes upstream of `EndEngineFrame`. This was traced by register flow through the callback; it is not yet an exhaustive per-register proof of every world-stage successor.
+- Seven embedded jobs have only per-frame edges. A later full extraction (46 constructed objects: 40 jobs, 3 branches, 2 groups and a list; 50 setup edges, 6 preparation edges and 29 Step-callback edges) found that domino, cinematic, pad and camera have outgoing edges only to world-stage jobs or to jobs returned by a singleton getter. Their path to `EndEngineFrame` therefore depends on world-stage internals and is **not proved**. One embedded job is constructed but never labelled or wired, and one group has no members.
 
 Under ordinary dependency semantics, therefore, the `EndFrame` callback that performs `SetEvent` runs after every job in the engine's own frame graph for that request has released its dependencies. Combined with the [ordinary finalizer rule](ENGINE_LOOP_HANDSHAKE.md#why-this-protects-the-ordinary-receiver-batch), the receiver bodies of those jobs have returned.
 

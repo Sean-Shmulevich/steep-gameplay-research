@@ -70,6 +70,28 @@ A person watching the game window during the single-step session reported a brie
 
 Telling these apart needs frame-accurate capture around a release, and reproducing the native mode-transition notification, which may also control the camera mode.
 
+## What stop mode suspends
+
+[A survey of every embedded engine job](live_stop_mode_job_survey_validation.json) sampled each job's last-run and current-request counters in baseline, held and resumed phases. While held, `CheckEngineStop` takes its bypass, so the whole simulation half of the frame stops, not just `Step`.
+
+- **Still running every request:** `BeginFrame`, the graphics chain (`BeginGraphicFrame`, `GraphicFrame`, `EndGraphicFrame`), `BeginEngineFrame`, `UpdateWhileEngineIsPaused`, `EndEngineFrame`, the finish fanout and `EndFrame`.
+- **Frozen:** universe component updates, domino, pre-action/pre-step, `Step` and the world chain, `UpdateCamera`, `UpdatePadManager`, cinematics, every sound job, network pre/post update, action and accomplishment managers, loading advisor and the menus-and-sounds group.
+
+Because `UpdateCamera` is frozen, the camera change seen while held must come from `UpdateWhileEngineIsPaused` or the graphics side, not from the gameplay camera job. Input polling and sound updates are suspended for the duration of a hold.
+
+## What a released step simulates
+
+This section is static analysis plus instruction emulation of the original timing routines; it has not yet been measured live.
+
+- `BeginFrame` runs the frame-clock driver every request, held or not. The driver measures the timer delta since its previous call and caps it at one second. The clock updater overwrites the interval rather than accumulating it.
+- `BeginEngineFrame` runs the physics timing producer every request. It caps the world interval at 1/15 s and computes a substep count (`n = floor(f * dt)`, rounded up at a half, at most 7) and substep length. Only the physics world step inside `Step` consumes them.
+- So a released step simulates **about one frame, typically 1–2 substeps**, not the whole hold. Emulation of a 5 s hold at 60 Hz followed by one release produced two 8.3 ms substeps.
+- **Exception:** the world's accumulated millisecond timestamp keeps advancing through the hold. Logic that measures "time since" an event sees the whole hold as one jump on release.
+- **Input:** the pad manager is wired only inside the Step chain. On release it swaps snapshots and polls once. A button held across the release probably reads as a new press, and a press and release entirely inside a hold is lost (inferred).
+- No world-clock hold was found on the paused or clear paths within a bounded search. Protected callees, including the setter notification, keep this at medium-high confidence.
+
+A live check should sample the physics scheduler's substep count and length, its step counter, the world clock's interval and total, and the frame driver, across about 20 held requests, one release and 20 more held requests.
+
 ## Remaining release work
 
 - Reproduce or invoke the native setter notification and clear-side transitions, and determine whether the camera change comes from their absence.

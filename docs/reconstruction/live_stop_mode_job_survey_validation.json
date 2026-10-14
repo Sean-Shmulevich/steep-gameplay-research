@@ -1,0 +1,87 @@
+{
+  "status": "observed",
+  "observations": 1,
+  "jobs_sampled": 44,
+  "method": "All embedded engine job last-run/current counters sampled 10x per phase at 0.25 s: baseline, held native stop mode (guarded four-byte write), resumed.",
+  "running_while_held": [
+    "BeginEngineFrame",
+    "BeginFrame",
+    "BeginGraphicFrame",
+    "EndEngineFrame",
+    "EndFrame",
+    "EndGraphicFrame",
+    "FinishFanout",
+    "Finish[0]",
+    "Finish[1]",
+    "Finish[2]",
+    "GraphicFrame",
+    "UpdateWhileEngineIsPaused"
+  ],
+  "frozen_while_held": [
+    "AccomplishmentManagerUpdate",
+    "ActionManagerUpdate",
+    "AfterAIAndSkel",
+    "DominoStep",
+    "LoadingAdvisorUpdate",
+    "MenusAndSoundsEnd",
+    "NetEngine_PostUpdate",
+    "NetEngine_PreUpdate",
+    "PreActionStep",
+    "PreActionWorldStep",
+    "PreStep",
+    "SoundComputeOcclusion",
+    "SoundDynEchoResolve",
+    "SoundEmittersUpdate",
+    "SoundManagerUpdate",
+    "SoundUpdateOcclusion",
+    "Step",
+    "StepDispatchEvents",
+    "StepPreWorlds",
+    "UniverseLinkStart",
+    "UpdateCamera",
+    "UpdateCinematicManager",
+    "UpdateMultiThreadedUniverse",
+    "UpdatePadManager",
+    "UpdateSingleThreadedUniverse",
+    "WorldLinkStart"
+  ],
+  "other_classifications": {
+    "CheckEngineStop": {
+      "baseline": "constant",
+      "held": "constant",
+      "resumed": "constant"
+    },
+    "EngineStoppedPreStepBranch": {
+      "baseline": "constant",
+      "held": "constant",
+      "resumed": "constant"
+    },
+    "EngineStoppedPreStepActionBranch": {
+      "baseline": "constant",
+      "held": "constant",
+      "resumed": "constant"
+    },
+    "Finish[3]": {
+      "baseline": "advances_intermittent",
+      "held": "advances_intermittent",
+      "resumed": "advances_intermittent"
+    },
+    "Finish[4]": {
+      "baseline": "advances_intermittent",
+      "held": "advances_intermittent",
+      "resumed": "advances_intermittent"
+    },
+    "Group2End": {
+      "baseline": "equal_but_request_static",
+      "held": "equal_but_request_static",
+      "resumed": "equal_but_request_static"
+    }
+  },
+  "classification_labels": "tracks_current: last-run equals current request each sample; tracks_lag_1: one behind; constant: never ran in phase; advances_intermittent: ran on some sampled requests",
+  "debugger_attached": false,
+  "process_survived": true,
+  "scope": "Which engine jobs execute while native stop mode is held. Intermittent jobs are not proved to run every request.",
+  "private_result_sha256": [
+    "eb547a65b4f740188b31027076605c7248b3c39ba7f2ef873139c96b2d613b6e"
+  ]
+}
