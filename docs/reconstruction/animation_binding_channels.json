@@ -1,0 +1,40 @@
+{
+  "evidence": "CRC-matched spelling; hash collisions and runtime identity remain unresolved",
+  "source_description": "Previously decoded named-rig research, private payload excluded",
+  "source_sha256": "21b3a4b3022626a5c0289ef1a729150bdcfe3c7aad760dee3c6f88e634dae955",
+  "candidate_name_count": 98,
+  "hash_algorithm": "standard CRC32 of exact UTF-8 spelling, without NUL",
+  "channels": [
+    {
+      "name": "LeftFoot",
+      "hash_hex": "58988870",
+      "observed_role": "class1_group"
+    },
+    {
+      "name": "RightFoot",
+      "hash_hex": "9b14362c",
+      "observed_role": "class1_group"
+    },
+    {
+      "name": "RightHand",
+      "hash_hex": "75f94d30",
+      "observed_role": "class2_group"
+    },
+    {
+      "name": "LeftHand",
+      "hash_hex": "b675f36c",
+      "observed_role": "class3_group"
+    },
+    {
+      "name": "Reference",
+      "hash_hex": "2c52cbb0",
+      "observed_role": "second_variant_flag"
+    }
+  ],
+  "not_established": [
+    "descriptor group equals bone index",
+    "variant flag means mirroring",
+    "eight special swap hashes have named joint identities",
+    "live player rig selection"
+  ]
+}

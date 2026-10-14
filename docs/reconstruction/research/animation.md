@@ -2211,3 +2211,37 @@ This closes the hash-level selection for those local operations. Joint names,
 source-resource channel schemas, target ordering producers and live sport/rig
 selection remain open. A reconstruction can consume those inputs explicitly;
 it must not substitute a guessed named-joint table.
+
+
+## CRC-matched channel names for mask producers
+
+Cross-checking the existing named-rig research supplies five exact CRC32 spelling
+matches. The search covered 98 distinct bone names and their lower/upper-case
+variants; these hits use the original mixed-case spellings. The mapping and
+private source fingerprint are recorded in
+[the channel catalog](../animation_binding_channels.json). No pose, track or rig
+payload is included in that catalog.
+
+| Channel spelling | CRC32 | Previously decoded role |
+| --- | --- | --- |
+| LeftFoot | 58988870 | Class1 mask group source |
+| RightFoot | 9b14362c | Class1 mask group source |
+| RightHand | 75f94d30 | Class2 mask group source |
+| LeftHand | b675f36c | Class3 mask group source |
+| Reference | 2c52cbb0 | Channel receiving the second-variant special flag |
+
+Evidence strength is CRC-matched spelling, consistent with the existing skeleton
+catalog; a hash match alone cannot eliminate collisions or prove the active
+player rig. The binary branch and exact hash equality are established separately.
+The three supplied mask indices come from the matched target descriptor's group
+nibble. Therefore these are foot/hand channel-selected groups, not necessarily
+foot/hand bone indices. Both foot spellings write the same class1 slot; the
+existing traversal-order overwrite behavior still applies.
+
+The second variant flag is consumed on the Reference hash path before the packed
+mapping is inserted. It affects that mapping's high bit. Its physical or visual
+meaning remains unresolved. No matched spelling was found for the eight special
+swap hashes in this named-rig candidate set. A separate bounded ASCII identifier
+scan of the frozen image also found no exact CRC32 matches for those eight.
+Neither search excludes another spelling, namespace, hash convention or data
+source, so the four special hash pairs remain unnamed.

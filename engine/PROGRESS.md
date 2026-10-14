@@ -705,3 +705,12 @@ index producers, target remap fields and insertion-prefix updates. The executabl
 swap/mask kernels now have documented hash-level upstream contracts. Human joint
 names, data producers and live rig selection remain open. Static documentation
 pass; last full suite remains 452 tests.
+
+
+## Named channel cross-check for binding masks
+
+Matched five branch hashes to existing CRC-verified rig spellings: feet, hands
+and Reference. Added a payload-free machine-readable catalog with source hash
+and evidence limits. This supplies names for mask-group producers but does not
+establish group=bone or variant=mirror. Eight special swap hashes remain unnamed.
+Documentation/data pass; last full suite remains452 tests.

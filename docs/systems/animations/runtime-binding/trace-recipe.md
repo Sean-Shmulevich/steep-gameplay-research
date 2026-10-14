@@ -846,3 +846,17 @@ Postmatch assignments occur even after group/category skip.
 Next: resolve channel hash names from authored skeleton/name metadata, establish
 producer sorting/duplicate contracts, and trace binding mapping consumers before
 integrating full rig binding. Do not equate descriptor group with a joint index.
+
+
+## Existing named-rig CRC cross-check
+
+Private named-rig catalog:98 unique nonempty bone names; exact, lower and upper
+variants tested with standard CRC32/noNUL. Exact-case matches LeftFoot58988870,
+RightFoot9b14362c,RightHand75f94d30,LeftHandb675f36c,Reference2c52cbb0.
+Public animation_binding_channels.json includes source SHA256 and evidence label,
+without rig payload. Same hashes are decoded branch inputs in builder.
+Eight special swap hashes had no match in this set or a bounded frozen-image
+ASCII identifier scan (letters/underscore first,2..79 allowed following chars,
+NUL terminated). Negative search is not a proof of absent names.
+Next: trace target group construction and Reference special-bit consumption;
+retain CRC collision caveat and group-versus-bone distinction.
