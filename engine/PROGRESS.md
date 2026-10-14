@@ -471,3 +471,12 @@ lookup and TLS-gated per-item preparation/processing; helper semantics and
 producer-to-published count transfer remain open. No native process accessed.
 
 Validation: all 423 independent tests pass.
+
+
+## Resource item dispatch protocol
+
+Decoded optional-handle prerequisite checks, first-row preparation versus all-row
+processing, normal temporary cleanup and shared reentrant guard behavior.
+Published pseudocode preserves dispatch-success versus result-success distinction.
+Resolver/operation identities and counter publication remain open. No runtime
+change or live process access; last full suite remains 423 tests.

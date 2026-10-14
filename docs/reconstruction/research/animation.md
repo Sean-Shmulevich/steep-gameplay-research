@@ -546,3 +546,85 @@ Next: locate the producer-to-published-count transfer and inspect the two item
 helpers to identify which work is performed. Then follow their result toward the
 provider row reader. These remain static findings without a live readiness or
 safe-modification claim.
+
+## Item prerequisites and first-row versus all-row dispatch
+
+Four more bounded bodies establish the item helpers' control flow and two guarded
+branches. Both helpers repeat the entry record/TLS-derived pointer-mask gate,
+then construct a temporary resolution object from the selected 24-byte item
+descriptor. The resolver implementation and descriptor grammar remain opaque.
+Its output contains 64-byte rows and a 16-bit count.
+
+```text
+prerequisites_pass(rows):
+    if rows.count == 0:
+        return false
+    for row in rows:
+        handle = row.optional_handle
+        if handle != null and handle.target == null:
+            return false
+    return true
+
+prepare_item(receiver, item_index, context):
+    record = gated_current_record(receiver.entry)
+    if record == null:
+        return false
+    temporary = opaque_resolve(record, receiver.items[item_index], 0, 0, 0, 0)
+    success = false
+    if prerequisites_pass(temporary.rows):
+        output = opaque_context_slot(context, uint32(item_index + 1))
+        row = temporary.rows[0]
+        if opaque_handle_predicate(row.optional_handle):
+            guarded_prepare(row.optional_handle.target, output)
+        else:
+            opaque_prepare_row(row, output, row.word32, true)
+        success = true
+    destroy_temporary(temporary)
+    return success
+
+process_item(receiver, item_index, context):
+    record = gated_current_record(receiver.entry)
+    if record == null:
+        return false
+    temporary = opaque_resolve(record, receiver.items[item_index], 0, 0, 0, 0)
+    success = false
+    if prerequisites_pass(temporary.rows):
+        output = opaque_context_slot(context, uint32(item_index + 1))
+        for row in temporary.rows:  # count re-read during iteration
+            if opaque_handle_predicate(row.optional_handle):
+                guarded_process(row.optional_handle.target, output)
+            else:
+                opaque_process_row(row, output, row.word32, true)
+        success = true
+    destroy_temporary(temporary)
+    return success
+```
+
+A missing optional handle passes the prerequisite check. A present handle with a
+null target fails. Do not collapse those two cases into a generic null-resource
+failure. Preparation validates **all** rows before dispatching only the first;
+processing validates all rows before iterating all rows. They obtain their output
+slot using item index plus one, from distinct caller-provided contexts.
+
+The return value becomes true after dispatch, without testing a dispatched
+helper's return value. Thus the caller's item-state byte becoming one proves only
+that this local preparation path passed its checks and dispatched work. It does
+not by itself establish decoded data or successful animation playback. The
+processing result is ignored by the previously inspected item loop. Temporary
+resolution storage is cleaned up on normal paths after construction, including
+prerequisite failure; exception behavior remains unverified.
+
+Both guarded branches use the same global guard. Each fetches an opaque current
+owner identifier, compares it to the stored owner, spins on a compare-exchange
+lock word if different, and increments nesting depth. It calls a distinct opaque
+prepare/process operation with the target and output pointer. On return it
+decrements depth; at zero it resets owner to `0xffffffff`, executes a locked
+operation as a barrier, and clears the lock word. The same-owner bypass and
+depth counter establish local reentrancy; identifying the owner helper as a
+specific platform thread-ID API is unnecessary and remains unproved here.
+
+This is a resource-resolution dispatch protocol used on the traced animation
+acquisition path. It is not yet an animation sampling algorithm. Highest-value
+next targets are the temporary resolver and handle predicate, or the guarded
+operations if those reveal a concrete resource type. The staged-to-published
+count transfer remains a separate open synchronization edge.

@@ -50,3 +50,9 @@ phase listed in the latest trace recipe; stale-triple handling remains open.
 The triple consumer is now decoded: key check, bit31 set, current-record dispatch.
 Producer counter +54 and consumed counter +50 remain unjoined. Next targets are
 the publication writer and per-item prepare/process helpers in the trace recipe.
+
+
+Item helpers now expose all-row prerequisite checks, first-row preparation and
+all-row processing with a shared reentrant guard on one branch. Next inspect the
+resolver and handle predicate; dispatched work is not yet identified as clip
+decoding. Counter publication remains open.

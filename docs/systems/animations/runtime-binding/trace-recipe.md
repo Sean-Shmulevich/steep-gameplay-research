@@ -195,3 +195,34 @@ callback phase, not the triple ring.
 Next: find manager+54 to +50 publication, inspect `14066b790` and `14068f610`,
 then one directly dependent result reader. Bound four new bodies, each <=24,000
 pdata-linked bytes. Native queue lifetime and original clip selection remain open.
+
+## Item helper and guarded-branch pass
+
+Four pdata-linked bodies: prepare `14066b790` (272 bytes), process
+`14068f610` (316), guarded prepare `14066f1e0` (139), guarded process
+`140695890` (139).
+
+Both item helpers call mask helper `14119f8d0`, combine its result with
+entry+c bit31 sign extension and entry+0, then call temporary resolver
+`1411c6410` with current masked record and selected descriptor
+`receiver+10 + item_index*24`. Temporary row pointer is local+18, 16-bit
+count local+22, stride 40 hex. Optional handle row+30 is tested; when non-null,
+its first pointer must be non-null. Zero row count fails. Output slot helper
+`14118c510` takes caller context and item_index+1.
+
+Preparation dispatches first row only, using predicate `1411cc130`, then
+`1411d7b60` for false or `14066f1e0` for true. Processing loops all rows,
+using `1411ec030` for false or `140695890` for true. False branches receive
+row+20 dword and true byte. Both return true without inspecting operation result;
+normal cleanup uses `1411c9de0`.
+
+The two guarded helpers use the same global guard at `143073040`, owner+4,
+depth+8. Owner helper is `141dc3340`; operations are `1411db0f0` and
+`1411ed7a0` respectively. They pass dereferenced input handle and output context,
+with same-owner nesting bypass and depth-zero release. No exception cleanup or
+platform owner identity is established.
+
+Next bounded pass: resolver `1411c6410`, predicate `1411cc130`, then at most
+two evidence-selected helpers. Alternatively inspect the guarded operations if
+the resolver remains generic. Keep producer+54 to consumer+50 publication open;
+do not infer it from this dispatch path. Four new bodies <=24,000 bytes each.
