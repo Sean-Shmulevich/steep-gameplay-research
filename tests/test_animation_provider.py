@@ -90,3 +90,28 @@ class TaggedEndpointTests(unittest.TestCase):
         found, value = tagged_endpoint([(1, 0)], 1, -0.0)
         self.assertTrue(found)
         self.assertEqual(math.copysign(1, value), 1)
+
+
+class PlaybackRangeTests(unittest.TestCase):
+    def test_equal_backoff_and_invalid_range_reset(self):
+        from engine.animation_provider import resolve_playback_range as resolve
+        result = resolve(10, 2, 2, True, 0.25)
+        self.assertEqual(result, {'start': 1.75, 'end': 2.0,
+                                 'start_tick': 210, 'end_tick': 240})
+        self.assertEqual(resolve(10, 3, 2, True), resolve(10, 0, 0, False))
+        self.assertEqual(resolve(10, 2, 2, True, 0)['end'], 10)
+
+    def test_near_zero_end_and_equal_branch_precedence(self):
+        from engine.animation_provider import resolve_playback_range as resolve
+        self.assertEqual(resolve(10, 1, 0.000001, True)['end'], 10)
+        # Equal-range branch wins over near-zero-end substitution.
+        result = resolve(10, 0.000001, 0.000001, True, 0.000001)
+        self.assertLess(result['end'], 0.00001)
+        self.assertEqual(result['start'], 0.0)
+
+    def test_tick_rounding_wrapping_and_finite_contract(self):
+        from engine.animation_provider import resolve_playback_range as resolve
+        self.assertEqual(resolve(1000, 0, 1000, True)['end_tick'], 120000 & 65535)
+        self.assertEqual(resolve(10, 0.006, 1, True)['start_tick'], 1)
+        with self.assertRaises(ValueError):
+            resolve(float('nan'), 0, 0, False)

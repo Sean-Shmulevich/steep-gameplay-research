@@ -608,3 +608,14 @@ resource scalar is GetAnimationResourceLength. Decoded mutating error-entry
 fallback, evaluator pool acquisition/release order and two settings-to-flag bit
 assignments. Length units, bit meanings, pool lifetime and activation cadence
 remain open. Static documentation pass; last full suite remains 437 tests.
+
+
+## Effective animation range and inverse tick conversion
+
+Decoded range enable/store, effective endpoint repairs, float32 x120+0.5 tick
+conversion, low16 storage and optional cache reset. Added a finite-input standalone
+range kernel with tests for branch precedence, equal/invalid ranges and tick
+wrapping. Resource assignment uses the known packed-reference release path.
+Context backoff, progress clock semantics and units remain explicit unknowns.
+
+Validation: 440 tests pass; packaging, source hashes and local links pass.

@@ -610,3 +610,31 @@ byteA lowbit -> bit1. Byte9 not read locally. Opaque owner context `140db3070`.
 
 Next: `140dbd9a0`, `140dbe8f0`, evaluator flag-bit consumers and length producer.
 Also inspect pool release contract and activation-byte reset for lifetime/cadence.
+
+
+## Effective range consumer and packed assignment
+
+`140dbe8f0` is a 24-byte leaf through RET `140dbe907`: OR evaluator+376 bit5,
+store XMM1/+35c and XMM2/+360. `140dbd9a0` (175) stores record+20; lookup
+`141192fe0` manager,key0,record; entry+c packed increment/XCHG evaluator+28,
+old and temporary packed drops -> `1411a8a10` on low24 zero. Reset R8b sets
++378=0,+37c=1.0,+380=0,+384=0,+388=0.
+
+Focused pdata scan in db0000..de2000 RVA found range reads in `140dcb7c0`
+(484) and `140dbf560` (593). Consumer +364/+368 effective endpoints from custom
++35c/+360 if bit5, else0/record+58. Epsilon `141df3300` float32~1e-5.
+Near equality subtracts context scalar: evaluator+40 -> owner+60, select
+context+10a0 or+1048 by owner+98 bit58, then float+18. Missing owner/context0.
+Near-zero end repair only in else branch. Final COMISS/JB permits unordered;
+otherwise start>=end restores0/length. Multiply `141e4a8e8`=120, add
+`141df31d4`=0.5, CVTTSS2SI RAX, store AX +36c/+36e.
+Reset DL nonzero zeros qword+380, MINSS duration,current+378 to +378/+388;
+fill indexed arrays +b0/count+ba and +2bc/count+2c6 with ff; tail `140db85f0`
+EDX=ffff. No native concurrent-snapshot guarantee.
+
+`140dbf560`: bit4/selector+354/float+358 near equality early skip. Active path
+saves custom endpoints, sets temporary +378/+388, opaque `140d8fb90`, restores
+capped previous scalar, selector-specific `140db4e80`, optionally restores custom
+endpoints and calls `140dcb7c0` resettrue. Semantics deliberately unresolved.
+Next: `140db85f0`, +378 clock writers, bit0/1 consumers, and resource length
+producer. Prove units and update cadence before integrating playback controls.

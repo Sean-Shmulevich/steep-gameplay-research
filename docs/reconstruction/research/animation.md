@@ -1582,3 +1582,58 @@ bit 1, preserving other bits. In the upstream six-byte activation settings these
 are bytes 3 and 5 respectively. Packed byte 9 is not read in this initializer.
 The two bits' semantic names remain unresolved; the remaining context setup
 helper may perform additional work.
+
+
+## Effective range and tick quantization
+
+The range setter stores two float32 requested endpoints and sets evaluator flag
+bit 5. It performs no local validation or cache rebuild. A later consumer chooses
+those endpoints when bit 5 is set, otherwise zero and resource length. It uses
+float32 epsilon `9.999999747378752e-06` and the following finite-input rules:
+
+```text
+start, end = requested_range if custom_range else (0, resource_length)
+if abs(f32(start - end)) <= epsilon:
+    start = MAXSS(f32(start - context_backoff), +0.0)
+else if abs(end) <= epsilon:
+    end = resource_length
+if start >= end:
+    start, end = 0, resource_length
+start_tick = low16(CVTTSS2SI64(f32(f32(start * 120.0) + 0.5)))
+end_tick = low16(CVTTSS2SI64(f32(f32(end * 120.0) + 0.5)))
+```
+
+The nearly-equal branch precedes the near-zero-end branch. Its backoff comes from
+one of two owner-context fields selected by another object's flag bit 58. Missing
+owner/context supplies zero. The field is not yet established as frame delta,
+so the independent kernel requires it as an explicit input. Negative backoff or
+other invalid inputs are not repaired by an invented clamp.
+
+The final native comparison uses COMISS/JB: strictly less or unordered skips the
+full-range reset. The near-equality and near-zero tests likewise skip their
+repair when unordered. The standalone range kernel currently accepts finite
+float32 inputs only; it does not claim native NaN behavior. It preserves the
+32-bit arithmetic stages and low16 tick storage. There is no local saturation to
+65535; values beyond that range wrap in the stored word after conversion. This
+complements the earlier unsigned16 / 120 decoding without proving seconds.
+
+When the consumer's reset argument is nonzero, it also sets two adjacent float
+state words to zero, updates a progress-like scalar and its copy with
+`MINSS(f32(end-start), old_scalar)`, fills two index-cache arrays with all-one
+bytes, and invokes another reset helper with sentinel 65535. This does not apply
+a zero lower bound to the old scalar. The field's producer and remaining reset
+helper still need decoding before it can be called a complete playback clock.
+
+The separate resource-assignment helper stores the resource pointer, looks up its
+shared entry, and transfers a packed low24 reference into the evaluator's entry
+field. Drops reaching low24 zero use the previously decoded deferred-release
+helper. Its optional reset clears the progress-like scalar and four following
+words except the first following word, which receives float32 1.0. These fields
+are distinct from the requested/effective endpoints and tick words.
+
+A further state-change helper was inspected as a lead. It uses evaluator bit 4,
+an integer selector and a float comparison to skip unchanged work. Its active
+path temporarily changes the progress-like scalar, invokes an opaque operation,
+restores a capped previous value, and can restore requested endpoints followed by
+the range/cache reset. It is not yet identified as seek, synchronization, or an
+animation mode, so none of those semantics enter the executable model.

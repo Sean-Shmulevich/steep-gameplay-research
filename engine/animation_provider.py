@@ -104,3 +104,37 @@ def tagged_endpoint(records, requested_tag, limit):
         bound = f32(limit)
         return True, bound if bound < value else value
     return False, 0.0
+
+
+def resolve_playback_range(resource_length, requested_start, requested_end,
+                           custom_range, equal_range_backoff=0.0):
+    """Finite-input range kernel; does not update an evaluator or its caches.
+
+    Evidence: animation research, Effective range and tick quantization. Backoff
+    is supplied by an unresolved owner-context producer, not assumed frame dt.
+    No units or valid clip-duration limits are invented here.
+    """
+    import math
+    import struct
+    def f32(value):
+        result = struct.unpack('<f', struct.pack('<f', value))[0]
+        if not math.isfinite(result):
+            raise ValueError('range adapter requires finite float32 values')
+        return result
+    length = f32(resource_length)
+    start = f32(requested_start) if custom_range else 0.0
+    end = f32(requested_end) if custom_range else length
+    epsilon = f32(1e-5)
+    if abs(f32(start - end)) <= epsilon:
+        start = max(f32(start - f32(equal_range_backoff)), 0.0)
+    elif abs(end) <= epsilon:
+        end = length
+    if start >= end:
+        start, end = 0.0, length
+    def ticks(value):
+        rounded = f32(f32(value * 120.0) + 0.5)
+        # CVTTSS2SI r64 returns the integer-indefinite value on overflow.
+        integer = math.trunc(rounded) if -(1 << 63) <= rounded < (1 << 63) else -(1 << 63)
+        return integer & 0xffff
+    return {'start': start, 'end': end,
+            'start_tick': ticks(start), 'end_tick': ticks(end)}
