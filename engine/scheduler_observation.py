@@ -103,3 +103,25 @@ def capture_pair(readv, owner, image_base, guards, *, clock=time.monotonic):
                         'Request counters are not global frame identifiers.',
                         'Headers and claim count are read at different instants.',
                         'No submission exclusion or native thread context is established.'])
+
+
+def capture_world_pair(readv, world, image_base, guards, *, clock=time.monotonic):
+    """Resolve world+0x1038 and bracket both directions with the supplied guards.
+
+    The caller must establish that world belongs to the selected player. The
+    physics scheduling state at world+0xff0 -> +0x18 is a different object.
+    """
+    _address(world, 0x1040)
+    guards = list(guards)
+    if not 1 <= len(guards) <= 30:
+        raise ValueError('provide 1..30 external identity guards')
+    blocks = list(readv([(world + 0x1038, 8)]))
+    if len(blocks) != 1 or type(blocks[0]) is not bytes or len(blocks[0]) != 8:
+        raise ValueError('incomplete world graph pointer read')
+    graph = struct.unpack('<Q', blocks[0])[0]
+    _address(graph, 0x6000)
+    report = capture_pair(readv, graph, image_base,
+                          guards + [(world + 0x1038, blocks[0]),
+                                    (graph, struct.pack('<Q', world))], clock=clock)
+    report['world_graph_links_matched'] = True
+    return report

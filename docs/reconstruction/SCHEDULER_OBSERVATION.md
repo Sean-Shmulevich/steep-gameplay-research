@@ -21,6 +21,32 @@ Only `AnimationUpdateTime` gets a separate remaining-to-claim read at `0x1a0`, a
 
 The layout targets the inspected image SHA-256 recorded in the module. Callers must validate their image separately. Matching virtual tables alone does not identify the player's world or establish ownership.
 
+## Resolving the action graph from a world
+
+`capture_world_pair(readv, world, image_base, guards)` resolves the graph through `world + 0x1038`. It adds two identity guards to every sweep: the world must still point to that graph, and the graph's first pointer must still point back to the world. The first pointer is data, not a virtual table. The seven embedded jobs have their own table pointers.
+
+The static chain is explicit:
+
+```text
+world construction:
+    graph = construct_action_graph(allocate(0xd728))
+    world.action_graph = graph
+
+world setup:
+    setup_action_graph(world.action_graph, world)
+
+setup_action_graph(graph, world):
+    graph.world = world
+    configure_action_and_animation_jobs(graph)
+    ...
+```
+
+Construction calls `1408aff20` at `1408aef28` and stores its result at world+`0x1038` at `1408aef37`. World setup loads that field at `1408e5402`, passes the world as the second argument, and calls `140903b80` at `1408e540c`. Its entry stores the world into graph+0 at `140903b92` before invoking job setup. Four instruction spans were checked against the hash-matched image; the existing constructor verifier also passed 32 instruction slices and five table bindings.
+
+This action graph is distinct from the physics scheduling state reached through world+`0xff0`, then component+`0x18`. Earlier player captures used that physics state to inspect motion jobs. Passing it as the animation graph owner would address different memory. The new wrapper checks the graph backlink and all seven job tables instead of assuming the owners are interchangeable.
+
+A private capture command now connects fresh player acquisition, the selected managed-world handle, component/world backlinks and process-identity-checked bounded reads to this wrapper. It takes a current process identity and a new private output directory, sends no input and performs no game writes or debugger attachment. It has not yet been exercised against a live game in this pass. Matching these links still does not prove that the selected player's Kino component is present in the animation receiver array.
+
 ## Transport contract
 
 ```python
@@ -45,6 +71,6 @@ Equal guards can miss an object disappearing and being replaced at the same addr
 4. Use the observed identities to design entry/exit instrumentation at the ordinary frame boundary. Sampling alone cannot prove ordering, exclude new submissions or establish a safe pause.
 5. Only after submission exclusion and completion of relevant work are demonstrated, attempt one-update release and verify return to the same controlled boundary. Rendering, loading and platform-service requirements remain separate checks.
 
-No native scheduler observation was made in this implementation pass. Six synthetic transport tests cover counter interpretation, empty claims with active executions, changes, guard failures, table/short-read rejection and bounded plan validation. They validate the collector contract, not concurrent game behavior.
+No native scheduler observation was made in these implementation passes. Nine synthetic transport tests cover counter interpretation, empty claims with active executions, changes, guard failures, table/short-read rejection, bounded plan validation, world graph resolution, changed backlinks and missing graphs. They validate the collector contract, not concurrent game behavior.
 
 The private dependency evidence verifier was also rerun against the inspected image: 778 instruction-byte checks, 19 specific checks and 20 table bindings passed. This rechecks the underlying static evidence separately from the synthetic transport tests.

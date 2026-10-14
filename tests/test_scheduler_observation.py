@@ -2,7 +2,7 @@ import struct
 import unittest
 
 from engine.scheduler_observation import (
-    JOBS, TABLE_RVAS, capture_pair, decode_sweep, observation_ranges,
+    JOBS, TABLE_RVAS, capture_pair, capture_world_pair, decode_sweep, observation_ranges,
 )
 
 
@@ -78,6 +78,37 @@ class SchedulerObservationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 capture_pair(self.reader, owner, self.base, guards)
         self.assertEqual(self.calls, 0)
+
+    def world_reader(self, plan):
+        if plan == [(0x200000 + 0x1038, 8)]:
+            return [struct.pack('<Q', self.owner)]
+        if plan == observation_ranges(self.owner):
+            return self.blocks.copy()
+        self.assertEqual(plan, [(self.guard, 8), (0x201038, 8), (self.owner, 8)])
+        return [b'identity', struct.pack('<Q', self.owner), struct.pack('<Q', 0x200000)]
+
+    def test_world_graph_is_separate_from_physics_state(self):
+        result = capture_world_pair(self.world_reader, 0x200000, self.base,
+                                    [(self.guard, b'identity')])
+        self.assertTrue(result['world_graph_links_matched'])
+        self.assertFalse(result['live_player_membership_established'])
+
+    def test_wrong_backlink_and_replaced_graph_rejected(self):
+        for index in (1, 2):
+            def reader(plan):
+                result = self.world_reader(plan)
+                if len(result) == 3:
+                    result[index] = struct.pack('<Q', 0x300000)
+                return result
+            with self.assertRaisesRegex(ValueError, 'identity guard changed'):
+                capture_world_pair(reader, 0x200000, self.base,
+                                   [(self.guard, b'identity')])
+
+    def test_missing_graph_rejected(self):
+        for blocks in ([], [bytes(4)], [bytes(8)]):
+            with self.assertRaises(ValueError):
+                capture_world_pair(lambda plan: blocks, 0x200000, self.base,
+                                   [(self.guard, b'identity')])
 
 
 if __name__ == '__main__':
