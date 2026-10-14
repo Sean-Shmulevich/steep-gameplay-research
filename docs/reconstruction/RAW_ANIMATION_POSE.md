@@ -63,7 +63,7 @@ Diagnostics identify unbound transform track indices, auxiliary indices and the
 number of bound components. The adapter does not execute event bodies, infer
 root motion, merge rigs, apply orientation variants, additive layers, IK or
 procedural landing adjustments. Integration with the simulation's animation graph
-and its checkpoint/replay state is still pending. The older decoded-key adapter
+and checkpoint/replay state is now available through the explicit bundle export below. The older decoded-key adapter
 remains available and is not silently switched to a different sampling policy.
 
 ## Validation
@@ -88,3 +88,53 @@ Against the prior independent pose-assembly reference:
 These selected comparisons are close, but they are not native pose observations
 or bit equality. Hardware reciprocal-square-root seeds remain substituted, and
 previously documented threshold disagreements at other samples remain valid.
+
+## Engine graph and checkpoint integration
+
+```python
+from engine.runtime import Engine
+
+bundle = adapter.engine_bundle(name="chosen_clip", loop=True)
+engine = Engine({
+    "resources": bundle,
+    "animation": {"graph": {
+        "schema_version": 1,
+        "root": "clip",
+        "nodes": {"clip": {"type": "clip", "clip": "chosen_clip"}}
+    }}
+})
+engine.step(30)
+checkpoint = engine.checkpoint()
+```
+
+The caller must choose the clip name and looping policy. The export is an
+independent resource schema with `sampling_policy: raw_channels`, explicit unit
+scale and per-bone translation/rotation components. Each component stores its
+encoding and runtime payload as hex in the caller's JSON resource bundle. No
+file is written by export. Original payloads consequently remain in private
+resource/checkpoint data and are excluded from the public repository.
+
+The animation sampler derives the integer hint using the existing float32 tick
+conversion, then invokes the registered decoder with a fresh cursor. The earlier
+full inventory check establishes fresh/retained cursor consistency for its sampled
+positions. Stateless sampling avoids a new cursor lifecycle across graph sharing,
+loop wraps, crossfades, checkpoint restore and resource replacement. This is our
+cache policy, not a recovered original engine scheduling decision.
+
+Existing graph clocks, wrapping, selection, blend and additive rules remain in
+force and retain their documented evidence categories. Bound raw channels now
+flow through those nodes, while root-motion application and original authored
+graph selection remain unresolved. Bundle export includes only bound pose
+components; auxiliary and unmatched payloads remain available on the standalone
+adapter. Their diagnostic indices are retained in clip metadata. The simulation
+does not silently use auxiliary channels as controls or dispatch event bodies.
+
+Four synthetic integration tests cover JSON round trip, direct/raw pose agreement,
+graph blends, crossfade completion, exact checkpoint continuation, replay from
+both initial and restored states, and atomic invalid-resource rejection.
+The [private runtime receipt](raw_animation_runtime_validation.json) records six
+original raw clips, each explicitly paired with the male base rig and a single
+clip graph, run for 30 ticks. All checkpoint continuations and replays match,
+with no recorded incidents. This proves the independent runtime integration for
+those resources, not original graph or rig selection, rendering fidelity, native
+concurrency or original-game replay determinism.

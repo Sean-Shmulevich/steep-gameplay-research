@@ -65,5 +65,6 @@ every key/interval, independent numerical agreement, all archive records, versio
 1 containers, shared references or native gameplay. Previously documented
 reciprocal-seed substitutes and float32 reference disagreements remain relevant.
 The [raw pose adapter](RAW_ANIMATION_POSE.md) now joins these channels to an explicit
-rig. Simulation graph integration remains pending; the existing decoded-key asset
-adapter remains a separate path.
+rig and exports private raw-channel resources for simulation graphs and replay.
+Original authored graph selection remains open; the decoded-key asset adapter
+remains a separate path.

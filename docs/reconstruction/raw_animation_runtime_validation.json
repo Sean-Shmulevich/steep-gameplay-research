@@ -1,0 +1,47 @@
+{
+  "scope": "six raw clips on explicitly selected male base rig; independent engine single-clip graph; not original graph selection or native parity",
+  "runs": [
+    {
+      "ticks": 30,
+      "checkpoint_equal": true,
+      "replay_equal": true,
+      "incidents": 0,
+      "bound_components": 124
+    },
+    {
+      "ticks": 30,
+      "checkpoint_equal": true,
+      "replay_equal": true,
+      "incidents": 0,
+      "bound_components": 124
+    },
+    {
+      "ticks": 30,
+      "checkpoint_equal": true,
+      "replay_equal": true,
+      "incidents": 0,
+      "bound_components": 124
+    },
+    {
+      "ticks": 30,
+      "checkpoint_equal": true,
+      "replay_equal": true,
+      "incidents": 0,
+      "bound_components": 124
+    },
+    {
+      "ticks": 30,
+      "checkpoint_equal": true,
+      "replay_equal": true,
+      "incidents": 0,
+      "bound_components": 124
+    },
+    {
+      "ticks": 30,
+      "checkpoint_equal": true,
+      "replay_equal": true,
+      "incidents": 0,
+      "bound_components": 144
+    }
+  ]
+}

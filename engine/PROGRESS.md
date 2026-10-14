@@ -1069,3 +1069,17 @@ and 1.155e-7; model errors are 2.488e-7 and 1.419e-7. This is not live pose proo
 Simulation animation graph/checkpoint integration remains pending.
 
 Validation: 540 tests pass; packaging, hashes and local links pass.
+
+## Raw channels in the simulation graph and replay
+
+Added caller-private JSON bundle export and an explicit raw_channels sampling
+policy. Existing graph/clip clocks, blends and crossfades now invoke registered
+raw decoders; fresh cursors avoid hidden mutable cache state. Checkpoints include
+resource content and clocks. Auxiliary/unmatched values remain standalone adapter
+outputs rather than inferred gameplay inputs. Four tests cover JSON pose parity,
+graph blending, crossfades, checkpoint continuation/replay and atomic rejection.
+Six original clips each completed 30 ticks on an explicitly selected male rig,
+with exact continuation/replay agreement and no incidents. This does not recover
+original authored graph selection, procedural layers or root-motion ownership.
+
+Validation: 544 tests pass; packaging, hashes and local links pass.

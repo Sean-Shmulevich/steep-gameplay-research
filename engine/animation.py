@@ -69,12 +69,22 @@ def validate_resources(rig, clips):
     missing = {}
     for name, clip in clips.items():
         policy=clip.get('sampling_policy','seconds_slerp')
-        if policy not in ('seconds_slerp','recovered_60hz'):raise ValueError('Unsupported sampling policy')
+        if policy not in ('seconds_slerp','recovered_60hz','raw_channels'):raise ValueError('Unsupported sampling policy')
         if clip.get('wrap_policy','modulo') not in ('modulo','inclusive'):raise ValueError('Unsupported wrap policy')
         duration = _finite(clip['duration'], 'clip duration')
         if duration <= 0 or type(clip['loop']) is not bool:
             raise ValueError('clip needs positive duration and explicit boolean loop')
         missing[name] = sorted(set(clip['channels']) - set(names))
+        if policy=='raw_channels':
+            from .raw_animation_pose import sample_component
+            scale=_finite(clip.get('unit_scale'),'raw unit scale')
+            if scale<=0:raise ValueError('raw unit scale must be positive')
+            for channel in clip['channels'].values():
+                if not isinstance(channel,dict) or not channel or set(channel)-{'translation','rotation'}:
+                    raise ValueError('invalid raw pose components')
+                for kind,spec in channel.items():sample_component(spec,0.,0,kind,scale)
+            continue
+
         for channel in clip['channels'].values():
             if isinstance(channel,dict):
                 if not channel or set(channel)-{'translation','rotation'}:raise ValueError('Unknown separate track kind')
@@ -132,6 +142,12 @@ def _sample(clip, time, name, fallback):
     keys = clip['channels'].get(name)
     if keys is None:
         return copy.deepcopy(fallback)
+    if clip.get('sampling_policy')=='raw_channels':
+        from .raw_animation_pose import sample_component
+        result=copy.deepcopy(fallback);hint=_query_tick(time)
+        for kind,spec in keys.items():
+            result['translation' if kind=='translation' else 'quaternion_xyzw']=sample_component(spec,time,hint,kind,clip['unit_scale'])
+        return result
     if isinstance(keys,dict):
         result=copy.deepcopy(fallback)
         for kind,track in keys.items():
@@ -220,7 +236,7 @@ def evaluate(rig, clips, state, dt, inputs):
             delta = _sample(clip, layer['time'], bone['name'], _identity())
             pose['translation'] = [a+weight*b for a, b in zip(pose['translation'], delta['translation'])]
             pose['quaternion_xyzw'] = _quat(skeleton.qmul(pose['quaternion_xyzw'], _slerp([0,0,0,1], delta['quaternion_xyzw'], weight)))
-    diagnostics.update({'policy': 'synthetic selector and interpolation; recovered normalized hierarchy',
+    diagnostics.update({'policy': 'independent selection/crossfade; per-clip sampling; recovered normalized hierarchy',
                         'sampling_policy':active.get('sampling_policy','seconds_slerp'),'wrap_policy':active.get('wrap_policy','modulo'),
                         'crossfade_weight': alpha, 'body_mutated': False, 'lod': 'all bones evaluated'})
     return {'state': s, 'local_pose': local, 'model_pose': _models(rig['bones'], local), 'diagnostics': diagnostics}

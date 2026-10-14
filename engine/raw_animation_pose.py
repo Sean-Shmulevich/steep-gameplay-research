@@ -64,3 +64,35 @@ class RawClipPose:
                 auxiliary.append({'track':i,'encoding':codec,'value':value})
         return {'local_pose':local,'model_pose':_models(self.rig['bones'],local),
                 'cursors':next_cursors,'auxiliary':auxiliary,'diagnostics':copy.deepcopy(self.diagnostics)}
+
+    def engine_bundle(self,*,name,loop):
+        """Create caller-private JSON resources for graph clocks/checkpoints.
+
+        Auxiliary/unbound payloads stay in this adapter; the engine bundle carries
+        only bound pose components and diagnostics. No file is written here.
+        """
+        if not isinstance(name,str) or not name or type(loop) is not bool:
+            raise ValueError('explicit clip name and boolean loop required')
+        channels={}
+        for (codec,payload,width),target in zip(self.channels,self.targets):
+            if target is None:continue
+            bone,field=target;field='rotation' if field=='quaternion_xyzw' else field
+            channels.setdefault(self.rig['bones'][bone]['name'],{})[field]={
+                'encoding':codec,'payload_hex':payload.hex()}
+        clip={'duration':self.duration,'loop':loop,'wrap_policy':'inclusive',
+              'sampling_policy':'raw_channels','unit_scale':self.unit_scale,
+              'channels':channels,'raw_diagnostics':copy.deepcopy(self.diagnostics)}
+        return {'category':'asset-decoded','rig':copy.deepcopy(self.rig),'clips':{name:clip}}
+
+
+def sample_component(spec,time,hint,kind,unit_scale):
+    """Stateless sampling for serialized engine resources; fresh cursor each call."""
+    if not isinstance(spec,dict) or set(spec)!={'encoding','payload_hex'}:
+        raise ValueError('raw component needs encoding and payload_hex')
+    codec=spec['encoding']
+    allowed=TRANSLATIONS if kind=='translation' else ROTATIONS if kind=='rotation' else ()
+    if type(codec) is not int or codec not in allowed:raise ValueError('raw component encoding/type mismatch')
+    if not isinstance(spec['payload_hex'],str):raise ValueError('raw component payload must be hex')
+    payload=bytes.fromhex(spec['payload_hex']);out=[]
+    registered_channel_decoder(codec,payload,16,time,out,SampleState(hint))
+    return [v*unit_scale for v in out[:3]] if kind=='translation' else out
