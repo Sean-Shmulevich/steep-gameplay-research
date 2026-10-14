@@ -174,3 +174,33 @@ def timestamp_cursor(encoded_times, absolute_position, previous=None):
         result = index
         index += 1
     return result
+
+
+def event_dispatch_allowed(raw_timestamp, start_tick, end_tick, mode,
+                           metadata_flags=None, *, payload_present=True,
+                           payload_resource_present=True, blocked=False,
+                           recipient_present=True):
+    """Local post-cursor dispatch gates, not timestamp eligibility or delivery.
+
+    Evidence: animation research, Timestamp payload dispatch. Metadata absence
+    bypasses its flag tests. Native due-time traversal advances before these
+    checks; callers must not retain/retry a cursor on a false result.
+    """
+    for value in (raw_timestamp, start_tick, end_tick):
+        if type(value) is not int or not 0 <= value <= 65535:
+            raise ValueError('expected uint16 timestamp/range word')
+    if type(mode) is not int or not 0 <= mode <= 0xffffffff:
+        raise ValueError('expected uint32 mode')
+    if mode == 0 or not payload_present or not payload_resource_present:
+        return False
+    if metadata_flags is not None:
+        if type(metadata_flags) is not int or not 0 <= metadata_flags <= 255:
+            raise ValueError('expected metadata byte')
+        boundary = raw_timestamp >> 1
+        if not metadata_flags & 4 and boundary == start_tick:
+            return False
+        if not metadata_flags & 2 and boundary == end_tick:
+            return False
+        if mode == 1 and not metadata_flags & 1:
+            return False
+    return not blocked and recipient_present

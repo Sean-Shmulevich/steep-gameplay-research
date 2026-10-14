@@ -136,3 +136,27 @@ class TimestampCursorTests(unittest.TestCase):
         from engine.animation_provider import timestamp_cursor as cursor
         self.assertEqual(cursor([0, 120, 240], 0.0, previous=1), 1)
         self.assertEqual(cursor([0, 120], 1.0, previous=0xffffffff), 1)
+
+
+class TimestampDispatchGateTests(unittest.TestCase):
+    def test_boundary_shift_and_independent_permission_bits(self):
+        from engine.animation_provider import event_dispatch_allowed as gate
+        self.assertFalse(gate(241, 120, 200, 2, 0))
+        self.assertTrue(gate(241, 120, 200, 2, 4))
+        self.assertFalse(gate(241, 120, 120, 2, 4))
+        self.assertTrue(gate(241, 120, 120, 2, 6))
+
+    def test_metadata_absence_and_exact_mode_one(self):
+        from engine.animation_provider import event_dispatch_allowed as gate
+        self.assertTrue(gate(240, 120, 120, 1, None))
+        self.assertFalse(gate(100, 0, 120, 1, 0))
+        self.assertTrue(gate(100, 0, 120, 1, 1))
+        self.assertTrue(gate(100, 0, 120, 2, 0))
+
+    def test_payload_and_recipient_gates(self):
+        from engine.animation_provider import event_dispatch_allowed as gate
+        self.assertFalse(gate(100, 0, 120, 0))
+        for option in ({'payload_present': False},
+                       {'payload_resource_present': False},
+                       {'recipient_present': False}, {'blocked': True}):
+            self.assertFalse(gate(100, 0, 120, 2, 7, **option))

@@ -630,3 +630,14 @@ skipped while cursors advance. Automatic clock update, payload delivery and the
 two native count fields remain unresolved; no event system integration claimed.
 
 Validation: 443 tests pass; packaging, source hashes and local links pass.
+
+
+## Timestamp payload dispatch gates
+
+Decoded cursor-before-filter behavior, independent boundary bits, exact mode-one
+flag gate, absent-metadata bypass and payload/recipient checks. Added an isolated
+gate helper and tests. Classification only marks an output byte; preparation and
+dispatch follow regardless of classification result. Payload semantics and the
+raw-timestamp right shift remain open. No event delivery wired into the runtime.
+
+Validation: 446 tests pass; packaging, source hashes and local links pass.

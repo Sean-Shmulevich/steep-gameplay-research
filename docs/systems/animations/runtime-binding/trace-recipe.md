@@ -667,3 +667,26 @@ Unordered native comparisons are not modeled by finite-input helper.
 Next: `140ddf090` wrapper/name, clock update via interior pointers, dispatch
 `140db5370`, and relationship between track count+10 and+22. Do not mistake
 explicit position setters for the automatic clock writer.
+
+
+## Timestamp payload dispatch and position wrapper
+
+Inspected `140db5370` (407) and `140ddf090` (88). Dispatcher mode stack argument
+nonzero gates entire routine. Cursor pointer at entry stack+28; native function
+uses current frame+90. Timestamp track+8, count+22, payload-pointer array+18.
+DIVSS 120, COMISS/JA stops only strictly greater. Cursor store `140db540c`
+precedes payload checks. Payload+8 resource required; `140d8aa80` returns optional
+metadata, flags+20. Raw timestamp SHR DX,1; metadata bit2 permits equality with
+start stack word, bit1 end equality; mode1 requiresbit0. No metadata bypasses
+these gates. Payload+10 optional blocker first dword nonzero rejects; recipient
+R15 null rejects. `1409c3670` true sets optional output byte1, false still sends.
+Payload virtual+60 mask, then `140d2df10` with context/payload/recipient/owner.
+Remaining payload callback semantics open.
+
+Position wrapper `140ddf090`: original RDX evaluator,XMM2 fraction,R9b flag.
+Calls `140dbff80` with history reset false. Nonzero flag invokes `140db85f0`
+maskffff. Final fill helper `141c6ad80` on evaluator+44c,count+456*4, value
+from RIP global. This pass does not name that third cache or registered wrapper.
+Next: automatic clock producer through interior pointer, dispatch `140d2df10`,
+metadata `140d8aa80`, and timestamp/count representation source. Keep boundary
+SHR1 distinct from DIV120 until producer evidence explains it.

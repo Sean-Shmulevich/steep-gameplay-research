@@ -1713,3 +1713,63 @@ cursor, resource, start/end tick words and other context to an unresolved helper
 A failed gate still takes the cursor-only branch, so skipping delivery does not
 necessarily preserve the cursor. The original temporal clock producer, flag
 bit 0/1 consumers, and dispatched payload semantics remain open.
+
+
+## Timestamp payload dispatch
+
+The previously unresolved track dispatcher returns immediately when its caller
+mode is zero. Otherwise it visits timestamps after the current cursor until a
+decoded timestamp exceeds current absolute position. It writes the cursor before
+loading and filtering the corresponding payload. Missing payloads, missing payload
+resource pointers, boundary exclusions, blocked entries and missing recipients
+all leave that cursor advanced.
+
+For a payload whose metadata lookup succeeds, three byte flags apply. Raw
+unsigned16 timestamp is shifted right by one for the boundary comparisons, even
+though the due-time comparison divides the unshifted timestamp by 120.0. Bit 2
+permits the start-boundary entry; bit 1 permits the end-boundary entry. Mode exactly
+one additionally requires bit 0. Other nonzero modes bypass only the bit-0 test.
+If metadata lookup returns null, all three metadata tests are bypassed.
+
+```text
+for each due index after cursor:
+    cursor = index
+    payload = track.payloads[index]
+    if payload == null or payload.resource == null:
+        continue
+    metadata = lookup_payload_metadata(payload.resource)
+    if metadata != null:
+        boundary_word = raw_timestamp[index] >> 1
+        if not metadata.bit2 and boundary_word == start_tick:
+            continue
+        if not metadata.bit1 and boundary_word == end_tick:
+            continue
+        if mode == 1 and not metadata.bit0:
+            continue
+    if payload.blocker != null and payload.blocker.word0 != 0:
+        continue
+    if recipient == null:
+        continue
+    if classify(payload, classification_argument) and output_flag != null:
+        output_flag = 1
+    payload.virtual_prepare(mask)
+    dispatch(context, payload, recipient, owner)
+```
+
+The classification result does not gate delivery: it only sets an optional output
+byte, which is not cleared locally. Virtual preparation precedes the dispatch
+helper. The payload behavior and dispatch helper's side effects remain unresolved.
+No rewind, retry queue, exactly-once guarantee or event-name interpretation is
+established by this local routine. The right shift is preserved without assuming
+an undocumented doubled timestamp unit.
+
+The independent dispatch-gate helper covers only these post-cursor conditions.
+It does not send events. Tests distinguish missing metadata from zero flags,
+mode one from other nonzero modes, and the independent start/end boundary bits.
+A full reconstruction must advance the cursor before applying these gates.
+
+A concrete wrapper around the fraction setter forces history reset, optionally
+runs the masked cursor reset with an all-one mask, and invalidates a third cache
+array afterward. Thus setting position can reset the cursor explicitly, while
+ordinary failed delivery does not. That wrapper's registered name and the third
+cache's element meaning remain leads.
