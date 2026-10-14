@@ -147,3 +147,7 @@ and out-of-range results are not evidence of a safe or valid channel access.
 do not access resources, execute the alternate callback or validate channel
 payloads. Tests cover every isolated identifier, wrapping-range boundaries,
 missing metadata, invalid indices and the hash-zero dispatch consequence.
+
+The alternate callback is now decoded as a
+[recursive sampling dispatcher](ANIMATION_SAMPLING_DISPATCH.md). It can follow
+more than one resource and uses descriptor width at the terminal callback.

@@ -762,3 +762,13 @@ The predicate's true result for missing metadata or out-of-range indices is
 preserved and explicitly distinguished from channel validity.
 
 Validation: 466 tests pass; packaging, hashes and links pass. No live sampling.
+
+## Recursive animation sampling dispatch
+
+Decoded the alternate wrapper's recursive routing, unchanged channel/time,
+shared output/hint/cursor pointers, forwarded extra byte and terminal descriptor
+width. Added a callback-based adapter with explicit cycle/bounds safeguards and
+four synthetic tests. Actual descriptor decoding remains caller supplied; the
+direct endpoint branch still uses explicit width 16.
+
+Validation: 470 tests pass; packaging, hashes and local links pass.
