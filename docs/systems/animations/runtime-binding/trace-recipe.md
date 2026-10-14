@@ -356,3 +356,35 @@ are re-read after processing. Active pointer is cleared under guard+1d8 before
 Next: refill `1411aff80`, request producer and request-release `1411ade10`
 if pursuing ownership; consumer callers of `141198740` if pursuing publication
 latency. Preserve request cadence versus simulation-frame cadence.
+
+## Consumer wait and staging refill pass
+
+Four pdata-linked bodies: `14118d4d0` (127), `1411be1a0` (267),
+`1411a0b50` (301), `1411aff80` (479).
+
+Consumer E8/E9 scan yielded call-site roots `140662c80`, `14067e030`
+(eight sites), `14069a190`, `140ec40b0`, `14118d4d0`, `141198820`,
+`1411be1a0`. Only the wait wrappers plus existing manager wrapper are classified
+here; other roots are leads, not proven frame loops.
+
+`14118d4d0` forwards inputs to `14118d550`, then polls `1411a0b50`
+with saved second argument and lane=1, calling `141c3d410(thread+218)` while
+true, then tail-calls global consumer. Predicate checks active+1c8 key without
+kind filter, ready ring+188, and selected staging ring+108+lane*20. Queued
+matches require request+38=0; null slots ignored. Predicate holds guard+1d8.
+
+`1411be1a0` checks non-null active, any non-null ready-ring slot, and all four
+staging rings under guard+1d8. Leaves guard before waiting or consuming. It does
+not establish producer exclusion.
+
+Refill `1411aff80`: staging rings at +108,128,148,168, stride20 hex;
+ready ring +188. Scans lanes ascending. Empty lane1 releases guard and calls
+`1411ab740`, then reacquires. Non-null popped request decrements thread+228;
+ready append is conditional on spare capacity with no local growth. Kind0 and
+(reprocess+49 or null result target through +8) allocate 70 hex byte context,
+store request+20 and call `1411764a0`; otherwise scanning continues. Context
+retains request+40, initializes subobjects+10/+20/+30 and copies byte to+6c.
+
+Next bounded targets: `14118d550`, `1411ab740`, `1411764a0`, and one
+associated producer. Preserve wait scope, capacity requirements and unclassified
+consumer callers. Four bodies <=24,000 linked bytes each.

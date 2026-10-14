@@ -78,3 +78,8 @@ open.
 The wrapper is now joined to the loading thread's request phase. Producer and
 refill ownership remain open, as does triple-consumer cadence; do not treat
 request completion as a simulation-frame boundary.
+
+
+Consumer waits and four-lane staging refill are now decoded. Follow request
+submission, special lane-1 refill and context submission for ownership. Wait
+predicates remain observations without producer exclusion.

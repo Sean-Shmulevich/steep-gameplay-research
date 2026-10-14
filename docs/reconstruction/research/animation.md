@@ -910,3 +910,76 @@ of loading-request execution on this recovered route. Consumer cadence for the
 published animation triples is still a separate question. A loading-thread
 request completion must not be used as a physics substep or pose-evaluation
 boundary.
+
+## Consumer callers and loading-request waits
+
+The consumer has multiple direct call sites, including explicit request waits and
+the already decoded manager-processing wrapper. The scan therefore does not
+support a single universal consumer cadence. Two wait callers and their request
+predicate/refill helper were inspected in this bounded pass.
+
+One wrapper first calls an unexpanded submission helper, then repeatedly checks
+for a matching request using staging lane 1. While the predicate is true it calls
+an opaque wait helper on the loading thread's phase object. When the predicate
+becomes false, it tail-calls the global triple consumer.
+
+```text
+matching_request_present(thread, key, lane):
+    enter(thread.ring_guard)
+    if thread.active != null and thread.active.key == key:
+        result = true
+    else:
+        result = any(nonnull request with matching key and kind == 0
+                     in thread.ready_ring)
+        if not result:
+            result = any(nonnull request with matching key and kind == 0
+                         in thread.staging[lane])
+    leave(thread.ring_guard)
+    return result
+```
+
+The active-request check does not require kind zero; queued checks do. Null slots
+are ignored. It inspects only the selected staging lane, not all lanes. The
+literal lane passed by this wait wrapper is one. Valid signed ring geometry and
+lane bounds remain caller contracts.
+
+The other wait wrapper scans active request, ready-ring non-null entries, and
+all four staging rings under the guard. If any is present it leaves the guard,
+waits, and retries. If none is present it leaves the guard and tail-calls the
+triple consumer. This is stronger than a single-key absence check but still does
+not exclude producers or include all loading destruction/publication state.
+Neither predicate can be exposed as global engine quiescence.
+
+## Four staging queues and refill boundary
+
+The refill helper makes an unexpanded virtual call before entering the ring
+guard, then scans staging lanes 0 through 3 in order. It repeatedly pops from the
+current lane, skipping null entries. When lane 1 is empty it temporarily releases
+the guard, calls a special refill helper, reacquires the guard and uses that
+helper's boolean to decide whether to retry the lane.
+
+For each non-null request it decrements a separate queued count and appends to
+the ready ring only if capacity exceeds count. No growth is attempted in this
+local append path. It then either continues scanning or prepares a new context:
+
+```text
+if request.kind == 0 and
+   (request.reprocess_byte != 0 or request.result_handle.target == null):
+    request.context = allocate_and_initialize_context(request)
+    opaque_submit_context(request.context)
+    return_from_refill()
+# Otherwise continue draining/scanning staging lanes.
+```
+
+The context is 112 bytes, retains an optional request-owned reference, initializes
+three embedded objects, installs inline storage and copies the reprocess byte.
+Allocation failure can pass a null context to the unexpanded submit helper; its
+contract remains unknown. Ready-ring capacity exhaustion does not locally stop
+subsequent context preparation or restore the popped request. That establishes a
+required capacity/ownership invariant, not an observed game failure.
+
+This narrows request ordering but does not name the lanes' semantic priorities,
+prove fairness or establish where producers acquire exclusion. The next useful
+ownership targets are the submission helper, special lane-1 refill and context
+submit operation. Other consumer caller families remain unclassified until their
+bodies are inspected.

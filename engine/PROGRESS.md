@@ -525,3 +525,11 @@ conditions, including callback status values, re-read result and active-pointer
 clear-before-release ordering. Cadence is request-driven on this route; no
 per-frame or global-drain claim. Documentation checks apply; last full suite
 remains 426 tests.
+
+
+## Consumer wait scope and request staging
+
+Decoded single-key/lane request wait, all-request-queue wait and ascending
+four-lane refill with lane1 special handling. Consumer has multiple caller
+families; no universal frame cadence assigned. Capacity, allocation and producer
+exclusion contracts remain open. Documentation-only; last full suite 426 tests.
