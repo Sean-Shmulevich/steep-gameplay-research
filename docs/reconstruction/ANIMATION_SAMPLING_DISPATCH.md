@@ -65,3 +65,35 @@ Connect terminal descriptor identities to existing asset decoders before using
 this adapter for private clip sampling. The ordinary endpoint path must preserve
 its explicit width of 16. Proving the decoder, resource producer and downstream
 consumer is still required before claiming native pose or root-motion parity.
+
+## Descriptor registration map
+
+The saved image's descriptor table is zero, so reading its pointer slots cannot
+identify decoder implementations. Static initialization at `0x140d51560` instead
+provides 72 explicit registrations for encoding indices 0 through 71. The
+[payload-free descriptor catalog](animation_descriptor_catalog.json) records the
+registration instruction, descriptor object, output width and sample callback.
+These addresses are evidence anchors for this image, not portable runtime IDs.
+
+The initializer first zeroes 253 pointer slots, then performs guarded descriptor
+initialization and stores each descriptor into its encoding slot. Catalog
+extraction follows RIP-relative address construction and immediate/pointer writes
+in this routine; it does not infer callbacks from nearby function names. Only
+entries with both explicit output-width and callback assignments are included.
+The static map does not prove initialization occurred in a live session or rule
+out later replacement of a table entry.
+
+Encoding zero is assigned descriptor `0x1432dca00`, width 16 and callback
+`0x140d3dac0`. The callback reads its sampling hint and calls `0x140d57ff0` to
+select keys. It finds float4 samples at the channel base plus
+`(channel.byte1 + 16) & 0xfffffff0`, then indexes them by sixteen-byte stride.
+A single-key branch copies a float4 directly. The two-key path computes a
+clamped interpolation fraction and performs quaternion interpolation with
+normalization in selected branches. Full key-selection and interpolation
+formulas need a dedicated comparison against existing decoder research before
+this callback is exposed as a decoded track implementation.
+
+This establishes a concrete descriptor-to-quaternion-sampler connection. It does
+not establish that encoding zero is used by a particular player clip. The 72
+callbacks should be joined to asset-format evidence individually; output width
+alone does not identify translation, rotation, scale or auxiliary semantics.

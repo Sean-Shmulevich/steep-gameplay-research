@@ -772,3 +772,12 @@ four synthetic tests. Actual descriptor decoding remains caller supplied; the
 direct endpoint branch still uses explicit width 16.
 
 Validation: 470 tests pass; packaging, hashes and local links pass.
+
+## Animation descriptor registration catalog
+
+The frozen descriptor table is empty, so inspected its initializer instead.
+Recovered 72 explicit encoding-to-descriptor registrations with output widths
+and sampling callbacks. Published a payload-free catalog and inspected encoding
+zero's quaternion sampling path. This creates direct decoder entry points;
+full interpolation/key-selection fidelity and live registration remain open.
+No runtime code changed; last full suite remains 470 passing tests.

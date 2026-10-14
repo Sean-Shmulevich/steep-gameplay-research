@@ -1,0 +1,510 @@
+{
+  "evidence": "Static assignments in descriptor initializer 0x140d51560; not live registration proof",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "entries": [
+    {
+      "encoding": 0,
+      "descriptor": "0x1432dca00",
+      "registration": "0x140d5160a",
+      "output_width": 16,
+      "sample_callback": "0x140d3dac0"
+    },
+    {
+      "encoding": 1,
+      "descriptor": "0x1432dca30",
+      "registration": "0x140d51634",
+      "output_width": 16,
+      "sample_callback": "0x140d438e0"
+    },
+    {
+      "encoding": 2,
+      "descriptor": "0x1432dca60",
+      "registration": "0x140d5165e",
+      "output_width": 16,
+      "sample_callback": "0x140d40970"
+    },
+    {
+      "encoding": 3,
+      "descriptor": "0x1432dca90",
+      "registration": "0x140d51688",
+      "output_width": 16,
+      "sample_callback": "0x140d3c810"
+    },
+    {
+      "encoding": 4,
+      "descriptor": "0x1432dcac0",
+      "registration": "0x140d516b2",
+      "output_width": 16,
+      "sample_callback": "0x140d425b0"
+    },
+    {
+      "encoding": 5,
+      "descriptor": "0x1432dcaf0",
+      "registration": "0x140d516dc",
+      "output_width": 16,
+      "sample_callback": "0x140d3f6a0"
+    },
+    {
+      "encoding": 6,
+      "descriptor": "0x1432dcb20",
+      "registration": "0x140d51706",
+      "output_width": 16,
+      "sample_callback": "0x140d3c990"
+    },
+    {
+      "encoding": 7,
+      "descriptor": "0x1432dcb50",
+      "registration": "0x140d51730",
+      "output_width": 16,
+      "sample_callback": "0x140d42740"
+    },
+    {
+      "encoding": 8,
+      "descriptor": "0x1432dcb80",
+      "registration": "0x140d5175a",
+      "output_width": 16,
+      "sample_callback": "0x140d3f820"
+    },
+    {
+      "encoding": 9,
+      "descriptor": "0x1432dcbb0",
+      "registration": "0x140d51784",
+      "output_width": 16,
+      "sample_callback": "0x140d3cd00"
+    },
+    {
+      "encoding": 10,
+      "descriptor": "0x1432dcbe0",
+      "registration": "0x140d517ae",
+      "output_width": 16,
+      "sample_callback": "0x140d42ac0"
+    },
+    {
+      "encoding": 11,
+      "descriptor": "0x1432dcc10",
+      "registration": "0x140d517d8",
+      "output_width": 16,
+      "sample_callback": "0x140d3fb90"
+    },
+    {
+      "encoding": 12,
+      "descriptor": "0x1432dcc40",
+      "registration": "0x140d51802",
+      "output_width": 16,
+      "sample_callback": "0x140d3d070"
+    },
+    {
+      "encoding": 13,
+      "descriptor": "0x1432dcc70",
+      "registration": "0x140d5182c",
+      "output_width": 16,
+      "sample_callback": "0x140d42e40"
+    },
+    {
+      "encoding": 14,
+      "descriptor": "0x1432dcca0",
+      "registration": "0x140d51856",
+      "output_width": 16,
+      "sample_callback": "0x140d3ff00"
+    },
+    {
+      "encoding": 15,
+      "descriptor": "0x1432dccd0",
+      "registration": "0x140d51880",
+      "output_width": 16,
+      "sample_callback": "0x140d3d3e0"
+    },
+    {
+      "encoding": 16,
+      "descriptor": "0x1432dcd00",
+      "registration": "0x140d518aa",
+      "output_width": 16,
+      "sample_callback": "0x140d431d0"
+    },
+    {
+      "encoding": 17,
+      "descriptor": "0x1432dcd30",
+      "registration": "0x140d518d4",
+      "output_width": 16,
+      "sample_callback": "0x140d40280"
+    },
+    {
+      "encoding": 18,
+      "descriptor": "0x1432dcd60",
+      "registration": "0x140d518fe",
+      "output_width": 16,
+      "sample_callback": "0x140d3e1c0"
+    },
+    {
+      "encoding": 19,
+      "descriptor": "0x1432dcd90",
+      "registration": "0x140d51928",
+      "output_width": 16,
+      "sample_callback": "0x140d44010"
+    },
+    {
+      "encoding": 20,
+      "descriptor": "0x1432dcdc0",
+      "registration": "0x140d51952",
+      "output_width": 16,
+      "sample_callback": "0x140d41070"
+    },
+    {
+      "encoding": 21,
+      "descriptor": "0x1432dcdf0",
+      "registration": "0x140d5197c",
+      "output_width": 16,
+      "sample_callback": "0x140d3de00"
+    },
+    {
+      "encoding": 22,
+      "descriptor": "0x1432dce20",
+      "registration": "0x140d519a6",
+      "output_width": 16,
+      "sample_callback": "0x140d43c30"
+    },
+    {
+      "encoding": 23,
+      "descriptor": "0x1432dce50",
+      "registration": "0x140d519d0",
+      "output_width": 16,
+      "sample_callback": "0x140d40cb0"
+    },
+    {
+      "encoding": 24,
+      "descriptor": "0x1432dce80",
+      "registration": "0x140d519fa",
+      "output_width": 16,
+      "sample_callback": "0x140d3d750"
+    },
+    {
+      "encoding": 25,
+      "descriptor": "0x1432dceb0",
+      "registration": "0x140d51a24",
+      "output_width": 16,
+      "sample_callback": "0x140d43550"
+    },
+    {
+      "encoding": 26,
+      "descriptor": "0x1432dcee0",
+      "registration": "0x140d51a4e",
+      "output_width": 16,
+      "sample_callback": "0x140d405f0"
+    },
+    {
+      "encoding": 27,
+      "descriptor": "0x1432dcf10",
+      "registration": "0x140d51a78",
+      "output_width": 16,
+      "sample_callback": "0x140d3ef30"
+    },
+    {
+      "encoding": 28,
+      "descriptor": "0x1432dcf40",
+      "registration": "0x140d51aa2",
+      "output_width": 16,
+      "sample_callback": "0x140d44e30"
+    },
+    {
+      "encoding": 29,
+      "descriptor": "0x1432dcf70",
+      "registration": "0x140d51acc",
+      "output_width": 16,
+      "sample_callback": "0x140d41de0"
+    },
+    {
+      "encoding": 30,
+      "descriptor": "0x1432dcfa0",
+      "registration": "0x140d51af6",
+      "output_width": 16,
+      "sample_callback": "0x140d3ea60"
+    },
+    {
+      "encoding": 31,
+      "descriptor": "0x1432dcfd0",
+      "registration": "0x140d51b20",
+      "output_width": 16,
+      "sample_callback": "0x140d44940"
+    },
+    {
+      "encoding": 32,
+      "descriptor": "0x1432dd000",
+      "registration": "0x140d51b4a",
+      "output_width": 16,
+      "sample_callback": "0x140d41910"
+    },
+    {
+      "encoding": 33,
+      "descriptor": "0x1432dd030",
+      "registration": "0x140d51b74",
+      "output_width": 16,
+      "sample_callback": "0x140d3ecd0"
+    },
+    {
+      "encoding": 34,
+      "descriptor": "0x1432dd060",
+      "registration": "0x140d51b9e",
+      "output_width": 16,
+      "sample_callback": "0x140d44bc0"
+    },
+    {
+      "encoding": 35,
+      "descriptor": "0x1432dd090",
+      "registration": "0x140d51bc8",
+      "output_width": 16,
+      "sample_callback": "0x140d41b80"
+    },
+    {
+      "encoding": 36,
+      "descriptor": "0x1432dd0c0",
+      "registration": "0x140d51bf2",
+      "output_width": 4,
+      "sample_callback": "0x140d3c710"
+    },
+    {
+      "encoding": 37,
+      "descriptor": "0x1432dd0f0",
+      "registration": "0x140d51c1c",
+      "output_width": 4,
+      "sample_callback": "0x140d424a0"
+    },
+    {
+      "encoding": 38,
+      "descriptor": "0x1432dd120",
+      "registration": "0x140d51c46",
+      "output_width": 4,
+      "sample_callback": "0x140d3f5a0"
+    },
+    {
+      "encoding": 39,
+      "descriptor": "0x1432dd150",
+      "registration": "0x140d51c70",
+      "output_width": 4,
+      "sample_callback": "0x140d3c5f0"
+    },
+    {
+      "encoding": 40,
+      "descriptor": "0x1432dd180",
+      "registration": "0x140d51c9a",
+      "output_width": 4,
+      "sample_callback": "0x140d42360"
+    },
+    {
+      "encoding": 41,
+      "descriptor": "0x1432dd1b0",
+      "registration": "0x140d51cc4",
+      "output_width": 4,
+      "sample_callback": "0x140d3f480"
+    },
+    {
+      "encoding": 42,
+      "descriptor": "0x1432dd1e0",
+      "registration": "0x140d51cee",
+      "output_width": 4,
+      "sample_callback": "0x140d3c4c0"
+    },
+    {
+      "encoding": 43,
+      "descriptor": "0x1432dd210",
+      "registration": "0x140d51d18",
+      "output_width": 4,
+      "sample_callback": "0x140d42220"
+    },
+    {
+      "encoding": 44,
+      "descriptor": "0x1432dd240",
+      "registration": "0x140d51d42",
+      "output_width": 4,
+      "sample_callback": "0x140d3f350"
+    },
+    {
+      "encoding": 45,
+      "descriptor": "0x1432dd270",
+      "registration": "0x140d51d6c",
+      "output_width": 1,
+      "sample_callback": "0x140d3c280"
+    },
+    {
+      "encoding": 46,
+      "descriptor": "0x1432dd2a0",
+      "registration": "0x140d51d96",
+      "output_width": 1,
+      "sample_callback": "0x140d41fb0"
+    },
+    {
+      "encoding": 47,
+      "descriptor": "0x1432dd2d0",
+      "registration": "0x140d51dc0",
+      "output_width": 1,
+      "sample_callback": "0x140d3f100"
+    },
+    {
+      "encoding": 48,
+      "descriptor": "0x1432dd300",
+      "registration": "0x140d51dea",
+      "output_width": 1,
+      "sample_callback": "0x140d3c380"
+    },
+    {
+      "encoding": 49,
+      "descriptor": "0x1432dd330",
+      "registration": "0x140d51e14",
+      "output_width": 1,
+      "sample_callback": "0x140d420c0"
+    },
+    {
+      "encoding": 50,
+      "descriptor": "0x1432dd360",
+      "registration": "0x140d51e3e",
+      "output_width": 1,
+      "sample_callback": "0x140d3f210"
+    },
+    {
+      "encoding": 51,
+      "descriptor": "0x1432dd390",
+      "registration": "0x140d51e68",
+      "output_width": 1,
+      "sample_callback": "0x140d3c3e0"
+    },
+    {
+      "encoding": 52,
+      "descriptor": "0x1432dd3c0",
+      "registration": "0x140d51e92",
+      "output_width": 1,
+      "sample_callback": "0x140d42130"
+    },
+    {
+      "encoding": 53,
+      "descriptor": "0x1432dd3f0",
+      "registration": "0x140d51ebc",
+      "output_width": 1,
+      "sample_callback": "0x140d3f270"
+    },
+    {
+      "encoding": 54,
+      "descriptor": "0x1432dd420",
+      "registration": "0x140d51ee6",
+      "output_width": 4,
+      "sample_callback": "0x140d3e570"
+    },
+    {
+      "encoding": 55,
+      "descriptor": "0x1432dd450",
+      "registration": "0x140d51f10",
+      "output_width": 4,
+      "sample_callback": "0x140d443d0"
+    },
+    {
+      "encoding": 56,
+      "descriptor": "0x1432dd480",
+      "registration": "0x140d51f3a",
+      "output_width": 4,
+      "sample_callback": "0x140d41420"
+    },
+    {
+      "encoding": 57,
+      "descriptor": "0x1432dd4b0",
+      "registration": "0x140d51f64",
+      "output_width": 4,
+      "sample_callback": "0x140d3e680"
+    },
+    {
+      "encoding": 58,
+      "descriptor": "0x1432dd4e0",
+      "registration": "0x140d51f8e",
+      "output_width": 4,
+      "sample_callback": "0x140d444f0"
+    },
+    {
+      "encoding": 59,
+      "descriptor": "0x1432dd510",
+      "registration": "0x140d51fb8",
+      "output_width": 4,
+      "sample_callback": "0x140d41530"
+    },
+    {
+      "encoding": 60,
+      "descriptor": "0x1432dd540",
+      "registration": "0x140d51fe2",
+      "output_width": 4,
+      "sample_callback": "0x140d3e6e0"
+    },
+    {
+      "encoding": 61,
+      "descriptor": "0x1432dd570",
+      "registration": "0x140d5200c",
+      "output_width": 4,
+      "sample_callback": "0x140d44560"
+    },
+    {
+      "encoding": 62,
+      "descriptor": "0x1432dd5a0",
+      "registration": "0x140d52036",
+      "output_width": 4,
+      "sample_callback": "0x140d41590"
+    },
+    {
+      "encoding": 63,
+      "descriptor": "0x1432dd5d0",
+      "registration": "0x140d52060",
+      "output_width": 8,
+      "sample_callback": "0x140d3e7d0"
+    },
+    {
+      "encoding": 64,
+      "descriptor": "0x1432dd600",
+      "registration": "0x140d5208a",
+      "output_width": 8,
+      "sample_callback": "0x140d44660"
+    },
+    {
+      "encoding": 65,
+      "descriptor": "0x1432dd630",
+      "registration": "0x140d520b4",
+      "output_width": 8,
+      "sample_callback": "0x140d41680"
+    },
+    {
+      "encoding": 66,
+      "descriptor": "0x1432dd660",
+      "registration": "0x140d520de",
+      "output_width": 8,
+      "sample_callback": "0x140d3e910"
+    },
+    {
+      "encoding": 67,
+      "descriptor": "0x1432dd690",
+      "registration": "0x140d52108",
+      "output_width": 8,
+      "sample_callback": "0x140d447c0"
+    },
+    {
+      "encoding": 68,
+      "descriptor": "0x1432dd6c0",
+      "registration": "0x140d52132",
+      "output_width": 8,
+      "sample_callback": "0x140d417c0"
+    },
+    {
+      "encoding": 69,
+      "descriptor": "0x1432dd6f0",
+      "registration": "0x140d5215c",
+      "output_width": 8,
+      "sample_callback": "0x140d3e970"
+    },
+    {
+      "encoding": 70,
+      "descriptor": "0x1432dd720",
+      "registration": "0x140d52186",
+      "output_width": 8,
+      "sample_callback": "0x140d44840"
+    },
+    {
+      "encoding": 71,
+      "descriptor": "0x1432dd750",
+      "registration": "0x140d521b0",
+      "output_width": 8,
+      "sample_callback": "0x140d41820"
+    }
+  ]
+}
