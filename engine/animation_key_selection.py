@@ -12,8 +12,17 @@ def select_byte_key(count, stored_ticks, hint, cursor=0xffffffff):
     next tick high16, or zero high16 after the last key. Validation and path
     labels are reconstruction API behavior; selection follows the native helper.
     """
-    if type(count) is not int or not 0 <= count <= 255:
-        raise ValueError('expected uint8 key count')
+    return _select_list_key(count,stored_ticks,hint,cursor,255)
+
+
+def select_wide_key(count,stored_ticks,hint,cursor=0xffffffff):
+    """Recovered uint16 count/time variant at 0x140d581f0; same search policy."""
+    return _select_list_key(count,stored_ticks,hint,cursor,65535)
+
+
+def _select_list_key(count,stored_ticks,hint,cursor,limit):
+    if type(count) is not int or not 0 <= count <= limit:
+        raise ValueError('key count outside supported range')
     if type(hint) is not int or not 0 <= hint <= 0xffffffff:
         raise ValueError('expected uint32 time hint')
     if type(cursor) is not int or not 0 <= cursor <= 0xffffffff:
@@ -21,8 +30,8 @@ def select_byte_key(count, stored_ticks, hint, cursor=0xffffffff):
     ticks = tuple(stored_ticks)
     if len(ticks) != max(0, count-1):
         raise ValueError('stored times must exclude the implicit first key')
-    if any(type(t) is not int or not 0 <= t <= 255 for t in ticks):
-        raise ValueError('expected uint8 stored times')
+    if any(type(t) is not int or not 0 <= t <= limit for t in ticks):
+        raise ValueError('stored time outside supported range')
     if any(a > b for a, b in zip(ticks, ticks[1:])):
         raise ValueError('expected nondecreasing stored times')
     if count < 2:

@@ -994,3 +994,15 @@ mask counts, malformed times and truncation. Outer index completeness remains
 unverified; six-body sampling coverage is unchanged.
 
 Validation: 527 tests pass; packaging, hashes and local links pass.
+
+## Wide-time key selection and vector channels
+
+Recovered selector 0x140d581f0 and encoding-28 runtime header, alignment and vector
+sampling. Added short/extended counts, uint16 timestamps, cursor-aware upper-bound
+selection and serialized adaptation. Three synthetic tests cover count 255/256,
+300-key payloads, duplicate/maximum timestamps, rewinds and invalid inputs. All
+12,515 original encoding-28 tracks across 706 indexed bodies pass 87,605 sampling
+consistency checks. These are not native numerical comparisons. Wide quaternion
+formats remain next; the prior inventory receipt is a historical framing snapshot.
+
+Validation: 530 tests pass; packaging, hashes and local links pass.

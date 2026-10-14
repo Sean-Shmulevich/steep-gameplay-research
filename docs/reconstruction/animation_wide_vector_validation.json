@@ -1,0 +1,7 @@
+{
+  "scope": "encoding 28 only; seven-position cached/reset consistency across indexed bodies; not native agreement",
+  "bodies": 706,
+  "validated_tracks": 12515,
+  "sample_checks": 87605,
+  "failures": 0
+}

@@ -12,7 +12,7 @@ Records with `shared_track_reference` are counted as unresolved. When supplied, 
 [structural clip reader](ANIMATION_CONTAINER.md) derives them from supported bodies.
 The CLI reads files and prints aggregate JSON. It does not save samples or assets.
 
-Supported IDs are 0, 9, 11, 12, 14, 21, 23, 24, 26, 27, 29, 39 and 54. Each supported record must match its stated
+Supported IDs are 0, 9, 11, 12, 14, 21, 23, 24, 26, 27, 28, 29, 39 and 54. Each supported record must match its stated
 encoding and exact serialized boundary. Seven sample positions include forward
 and rewind transitions. Every output and cursor is compared with a fresh-cursor
 execution through the same decoder. This checks internal repeatability and

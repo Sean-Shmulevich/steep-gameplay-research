@@ -6,7 +6,7 @@ rig identity, graph selection or physics coupling is implied by this decoder.
 import math
 import struct
 from .animation_endpoints import f32
-from .animation_key_selection import select_byte_key, select_mask_key
+from .animation_key_selection import select_byte_key, select_mask_key, select_wide_key
 from .animation_interpolation import quaternion_sample_blend
 
 
@@ -96,13 +96,13 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
     """Sampling callback for supported quaternion, vector and scalar encoding IDs."""
-    supported=(0,9,11,12,14,21,23,24,26,27,29,39,54)
+    supported=(0,9,11,12,14,21,23,24,26,27,28,29,39,54)
     if type(descriptor) is not int or descriptor not in supported:
         raise ValueError('unsupported descriptor')
     if width != (4 if descriptor in (39,54) else 16):
         raise ValueError('descriptor output width mismatch')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,24:sample_encoding_24,26:sample_encoding_26,29:sample_encoding_29,27:sample_encoding_27,39:sample_encoding_39,54:sample_encoding_54}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,24:sample_encoding_24,26:sample_encoding_26,29:sample_encoding_29,27:sample_encoding_27,28:sample_encoding_28,39:sample_encoding_39,54:sample_encoding_54}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
@@ -122,9 +122,24 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,11,12,14,21,23,24,26,27,29,39,54):
+    if encoding not in (0,9,11,12,14,21,23,24,26,27,28,29,39,54):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
+    if encoding==28:
+        from .animation_channel_framing import frame_serialized_channel
+        framed=frame_serialized_channel(data,offset)
+        if count>65535:raise ValueError('wide count exceeds uint16 runtime range')
+        header=2 if count<256 else 4
+        sample_offset=(header+2*(count-1)+3)&~3
+        result=bytearray(sample_offset)
+        result[0]=encoding
+        if header==2:result[1]=count
+        else:struct.pack_into('<H',result,2,count)
+        result[header:header+2*(count-1)]=data[offset+9:framed['sample_offset']]
+        result.extend(data[framed['sample_offset']:offset+framed['consumed']])
+        return {'encoding':encoding,'payload':bytes(result),'consumed':framed['consumed'],
+                'opaque_allocation':allocation}
+
     if encoding in (11,14,23,26,29):
         if offset+10>len(data):raise ValueError('missing mask mode')
         mode=data[offset+9];size=mode&63
@@ -398,3 +413,42 @@ def sample_encoding_26(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None
 
 def sample_encoding_29(payload,time,hint,cursor=0xffffffff):
     return _sample_mask_channel(payload,time,hint,cursor,29,None)
+
+
+def wide_channel_layout(payload):
+    """Read native short/extended count header and stored uint16 timestamps."""
+    data=memoryview(payload)
+    if len(data)<2:raise ValueError('truncated wide header')
+    count=data[1];header=2
+    if count==0:
+        if len(data)<4:raise ValueError('truncated extended wide count')
+        count=struct.unpack_from('<H',data,2)[0];header=4
+    if count==0:raise ValueError('zero-key wide channel')
+    end=header+2*(count-1)
+    if len(data)<end:raise ValueError('truncated wide times')
+    ticks=struct.unpack_from('<'+'H'*(count-1),data,header)
+    return count,ticks,end
+
+
+def sample_encoding_28(payload,time,hint,cursor=0xffffffff):
+    """Recovered wide-time float3 vector sampling; see ANIMATION_WIDE_TIMES.md."""
+    data=memoryview(payload)
+    if not data or data[0]!=28:raise ValueError('expected encoding-28 channel')
+    count,ticks,end=wide_channel_layout(data)
+    offset=(end+3)&~3
+    if len(data)<offset+12*count:raise ValueError('truncated wide vector samples')
+    selected=select_wide_key(count,ticks,hint,cursor)
+    time=f32(time)
+    if not math.isfinite(time):raise ValueError('expected finite sample time')
+    def decode(index):
+        value=list(struct.unpack_from('<3f',data,offset+12*index))
+        if not all(math.isfinite(v) for v in value):raise ValueError('nonfinite vector sample')
+        return value
+    value=decode(selected['cursor']);packed=selected['packed_ticks'];weight=None
+    if packed>65535:
+        other=decode(selected['cursor']+1)
+        scale=f32(1/60)
+        start,end=f32((packed&65535)*scale),f32((packed>>16)*scale)
+        weight=f32(f32(max(start,min(end,time))-start)/f32(end-start))
+        value=[f32(a+f32(weight*f32(b-a))) for a,b in zip(value,other)]
+    return {**selected,'value':value+[0.0],'weight':weight}

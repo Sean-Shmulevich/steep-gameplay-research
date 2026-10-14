@@ -100,7 +100,7 @@ the next acceptance gates before general asset import.
 The [inventory receipt](animation_inventory_validation.json) records a new walk of
 3,760 existing indexed bootstrap bodies. All parsed with exact consumption, all
 were version 2, and no shared-track references appeared. Of these, 2,991 have only
-currently supported value codec IDs. That last count is eligibility by format,
+value codec IDs supported at that scan checkpoint. That last count is eligibility by format,
 not successful sampling or playback. This scan did not sample their channels.
 
 Framing now uses `engine.animation_channel_framing.frame_serialized_channel`.
@@ -116,8 +116,10 @@ its index hash identifies the private boundary source. It does not independently
 verify how that outer inventory found every body. Public receipts contain counts
 and hashes, with no clip names, identifiers or payloads.
 
-The next high-yield decoder work is wide-time variants 13, 28 and 10: these occur
+The scan identified wide-time variants 13, 28 and 10 as high-yield decoder work: these occur
 in 16,605, 12,515 and 12,038 tracks respectively. They reuse known value formats,
 but require recovered wide-count headers and key-selection behavior. Encodings
 22 and 25 are additional wide-time priorities. Packed 64-bit quaternion values,
 scalar variants and a small special-channel family remain afterward.
+
+Encoding 28 is now implemented and checked separately in the [wide-time guide](ANIMATION_WIDE_TIMES.md). The inventory receipt above remains the earlier framing snapshot.
