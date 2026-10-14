@@ -840,3 +840,73 @@ caller inputs into it, calls a preparation helper, executes the resource routine
 and calls context cleanup. This proves ordering within that wrapper. It does not
 establish invocation frequency, main-loop identity or an animation-frame boundary.
 The next caller layer is needed before describing this as per-frame work.
+
+## Loading-request cadence connected
+
+The outer caller is now joined to the established loading-thread loop. That loop
+runs its incremental callback phase, destruction batch, then this request phase.
+The request phase drains destruction work again before selecting each request.
+This proves a request-driven route to publication; it does not establish a
+once-per-gameplay-frame call.
+
+Request selection removes pointer entries from a ring under the loading-thread
+ring guard, skipping null entries. The first non-null pointer becomes the active
+request. When the ring empties, selection releases the guard and calls an
+unexpanded refill helper; it retries if count becomes nonzero. Queue priorities,
+producer identity and refill ordering remain open.
+
+```text
+process_loading_requests(thread):
+    opaque_phase_begin(thread.phase_object)
+    while not thread.stop:
+        process_destruction_batch(thread)
+        select_next_request(thread)
+        request = thread.active_request
+        if request == null:
+            opaque_phase_end(thread.phase_object)
+            break
+        if request.kind_word != 0:
+            request.alternate_callback(request.user_pointer)
+        elif request.guard_target != null and not request.guard_target.check():
+            opaque_rejected_request(request)
+        else:
+            if request.result_handle.target == null:
+                process_resource_wrapper(request.inputs, reprocess=false)
+                status = 1
+            elif request.reprocess_byte != 0:
+                process_resource_wrapper(request.inputs, reprocess=true)
+                status = 2
+            else:
+                if request.context != null:
+                    opaque_existing_context_operation(request.context)
+                status = 0
+            # Re-read active request/result after the operation.
+            if thread.active_request.result_handle.target != null:
+                if thread.active_request.completion_callback != null:
+                    invoke_completion(status, thread.active_request)
+        enter(thread.ring_guard)
+        finished = thread.active_request
+        thread.active_request = null
+        opaque_release_request(thread, finished)
+        leave(thread.ring_guard)
+        opaque_phase_end(thread.phase_object)
+```
+
+This pseudocode abstracts pointer wrappers and callback argument assembly, which
+are recorded in the trace recipe. The numeric callback statuses 0/1/2 correspond
+to the three local branches; they are not named success/failure enums. Result
+presence is rechecked after processing, and no completion callback is made on
+these branches if the result remains null. The alternate kind branch has its own
+callback and does not pass through the wrapper or that result test.
+
+Stop is checked before entering request work and again after finishing a request;
+it is not checked inside the resource wrapper. The active pointer is cleared
+before the request-release helper under the ring guard. This establishes local
+ordering, not safe cancellation, producer exclusion or a global drain condition.
+Phase begin/end helpers remain opaque and are not labeled OS locks/events.
+
+The processing wrapper and its callback/publication passes are therefore part
+of loading-request execution on this recovered route. Consumer cadence for the
+published animation triples is still a separate question. A loading-thread
+request completion must not be used as a physics substep or pose-evaluation
+boundary.

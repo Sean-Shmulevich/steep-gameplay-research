@@ -73,3 +73,8 @@ Publication is bracketed by reverse-order callback passes using exclusion masks
 2 and 1. The direct caller builds a temporary processing context. Follow its
 callers before assigning a frame cadence; callback registration/lifetime remains
 open.
+
+
+The wrapper is now joined to the loading thread's request phase. Producer and
+refill ownership remain open, as does triple-consumer cadence; do not treat
+request completion as a simulation-frame boundary.

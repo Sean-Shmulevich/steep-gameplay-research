@@ -323,3 +323,36 @@ Next bounded pass: callers of `1411d5fd0`, group descriptor producer, and
 callback registrations associated with these groups. Four dependent bodies at
 most, each <=24,000 pdata-linked bytes. Preserve unknown callback mutation and
 outer cadence contracts.
+
+## Loading request caller join
+
+Inspected request phase `141199a20` (521 pdata bytes), request selector
+`1411afeb0` (197), and reread the call sequence in existing loading loop
+`1411ba990` (364). Direct E8/E9 scan finds wrapper `1411d5fd0` calls only
+at `141199ac9` and `141199b28` among instruction-aligned pdata entries;
+indirect/tail aliases outside that scan are not excluded.
+
+Loading loop calls request phase at `1411baa2f` after `1411989a0` and
+`141193b80`. Request phase calls destruction `141193b80` and selector
+`1411afeb0` each iteration, active request at thread+1c8, stop at +2a0.
+Selector ring is storage+188/count+190/read+198/capacity+19c; guard+1d8.
+It skips null slots, sets active on first non-null, and calls refill `1411aff80`
+outside guard when empty before checking for another iteration.
+
+Request kind+38 nonzero invokes callback+30 with user+18. Otherwise request+10
+wrapper target virtual+88 gates processing when present; false goes to
+`14118fd20`. Result handle is request+8, dereferenced for null check. Null
+result calls wrapper with false fifth argument; existing result with byte+49
+nonzero calls it with true. Wrapper args are request+20, request+0, dword+3c,
+request+40 and that boolean. Existing result with byte+49 zero instead calls
+`141156510` for non-null request+20.
+
+Completion callback+28 receives ECX status 1/2/0 by branch, RDX=request+40,
+R8=&request+8, R9=&request+10, stack argument=request+18. Result and callback
+are re-read after processing. Active pointer is cleared under guard+1d8 before
+`1411ade10` releases the request. Phase helpers are `141221410` and
+`141c3b570` at thread+218, still opaque.
+
+Next: refill `1411aff80`, request producer and request-release `1411ade10`
+if pursuing ownership; consumer callers of `141198740` if pursuing publication
+latency. Preserve request cadence versus simulation-frame cadence.

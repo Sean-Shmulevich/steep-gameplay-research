@@ -190,3 +190,14 @@ and explicitly excludes signed overflow and allocation-size overflow. Tests chec
 wrapped growth, oldest-entry retention on shrink, the full write index and equal-
 capacity/nonpreserving branches. This permits future owned implementations to use
 the known FIFO geometry while choosing and labeling their own allocation policy.
+
+
+## Request processing follow-up
+
+The loading-loop request phase now connects through a temporary processing
+wrapper to resource publication and its surrounding callback passes. Queue
+selection skips null entries; request kind/result/reprocess fields choose
+processing or an alternate callback. Active request clearing precedes release
+under the ring guard. See [animation resource research](research/animation.md)
+under Loading-request cadence connected for pseudocode and unresolved contracts.
+This is request-driven work, not a proved physics or animation frame boundary.

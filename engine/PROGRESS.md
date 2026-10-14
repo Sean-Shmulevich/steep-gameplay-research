@@ -516,3 +516,12 @@ Decoded exclusion-mask callback passes around resource publication, reverse reco
 order, optional secondary calls and live group-count reads. Direct caller creates
 a stack processing context; cadence remains unproved. Documentation-only; last
 full suite remains 426 tests. No original process accessed.
+
+
+## Resource publication tied to loading requests
+
+Joined the publication wrapper to loading-thread request selection and branch
+conditions, including callback status values, re-read result and active-pointer
+clear-before-release ordering. Cadence is request-driven on this route; no
+per-frame or global-drain claim. Documentation checks apply; last full suite
+remains 426 tests.
