@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "synthetic_cases": 40,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "source_sha256": "11bca02b30442e2d49e4f300261f15861adfd159eb7bc2752b9377570b5fdd00",
+  "scope": "Original protected end-frame event adapter with synthetic encoded target slot, holder, stack and integer registers. Reaches supplied target with handle in RCX, original caller stack/return address and tested other integer registers preserved. No target API or event semantics executed; actual runtime target remains unknown.",
+  "image_data_reads_per_case": 1,
+  "decoded_target_addend": 2129807662,
+  "original_image_target_is_noncanonical": true
+}

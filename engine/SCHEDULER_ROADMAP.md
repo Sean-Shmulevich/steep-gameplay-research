@@ -94,3 +94,5 @@ these mutations. The separate controller HTTP service now exposes this contract 
 Native loading integration remains separate work.
 
 [Recovered clock holds](../docs/reconstruction/CLOCK_TREE.md) affect elapsed time rather than job quiescence. Serial tree behavior is instruction-validated, including child propagation while held. They must not replace the native submission-exclusion and returned-worker release gates.
+
+The [EndFrame adapter target lookup](../docs/reconstruction/ENGINE_EVENT_ADAPTER.md) is now instruction-emulated with synthetic targets. Its runtime slot value and target module/export are the next concrete read-only check. Reset/wait adapters and whole-frame drain coverage remain separate gates.

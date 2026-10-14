@@ -63,3 +63,7 @@ The subsequent [consumer audit](ENGINE_EVENT_CONSUMER.md) identifies the alterna
 The engine constructor, end-of-frame branch, restart path, handle constructors and exposed platform adapters were inspected in the same analyzed image, SHA-256 `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. Cross-callers corroborate the notification interpretation, not the exact operating-system target. Protected adapters contain transformed control flow; linear disassembly after such a call is not assumed to represent the actual continuation.
 
 A reconstruction may expose explicit `signal`, `reset` and `wait` interfaces as its own synchronization design. Those interfaces must remain labeled a design choice until the original handle consumers and adapter targets are closed. No original game was launched, attached to or modified for this pass.
+
+## Later adapter decoding
+
+The [bounded adapter experiment](ENGINE_EVENT_ADAPTER.md) reduced the EndFrame handle operation to a single encoded target-slot read plus a fixed addition, with a verified synthetic tail-transfer convention. The analyzed slot itself decodes to an invalid address; the running process's target must still be read and identified. This narrows the protected-call blocker without promoting the signal interpretation to a confirmed API.
