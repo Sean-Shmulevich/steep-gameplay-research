@@ -333,3 +333,5 @@ The selected animation-time visitor is available as [`animation_batch`](../docs/
 Its [`claim` API](../docs/reconstruction/ANIMATION_CLAIM_LIFECYCLE.md) consumes the remaining count before returning a span for visitation. Zero means no unclaimed entries, not that callbacks have returned. Original worker/visitor composition has been checked with synthetic receivers; live and exceptional-mode storage exclusion remain unverified.
 
 The [animation-stage probe](../docs/reconstruction/ANIMATION_STAGE_DEPENDENCIES.md) runs a recovered seven-job dependency slice through the mixed scheduler. It demonstrates the action gather retaining its hold until animation dispatches finish, using explicit synthetic receiver lists and no-op bodies.
+
+[`event_registry`](../docs/reconstruction/ANIMATION_EVENT_REGISTRY.md) provides 53 serial token lists with exact-identity duplicate suppression and last-entry replacement on removal. Slot 16 supplies the animation-time source. Component-specific activation and live player membership are not established by this API.

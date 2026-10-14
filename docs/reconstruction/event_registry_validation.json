@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 2016,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original indexed insertion/removal wrappers, duplicate search, removal search and last-entry erase helper. Synthetic registries in slots 0/16/52, lengths 0..20, unique/duplicate initial arrays, present/absent/null tokens and full/spare capacity. Lock/unlock, allocation growth and eight-byte copy helpers stubbed. Compared active arrays, removal tail preservation, capacity retention and helper calls. No native synchronization, allocation failure, component activation or live membership validation."
+}

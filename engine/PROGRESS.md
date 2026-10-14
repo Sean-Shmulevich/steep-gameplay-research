@@ -1224,3 +1224,16 @@ uses synthetic bodies to demonstrate that zero remaining work does not release t
 gather while animation dispatches remain unfinished.
 
 Validation: 585 tests pass; packaging, hashes and local links pass.
+
+## Animation event slot and registry removal
+
+Joined the animation source to world event slot 16. Recovered removal's first-match
+search and last-entry replacement, which can change the next batch's order while
+leaving earlier gathered arrays untouched. Added the serial event-registry token
+API with unique insertion and explicit slot bounds. Original indexed wrappers,
+searches and erase helper matched 2,016 synthetic cases with external helpers
+stubbed. Four tests cover slot isolation, uniqueness, removal/copy/visit composition
+and adapter bounds. KinoComponent-specific activation and live player membership
+remain unresolved; generic slot geometry is not a membership proof.
+
+Validation: 589 tests pass; packaging, hashes and local links pass.
