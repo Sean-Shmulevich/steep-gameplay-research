@@ -2128,3 +2128,86 @@ allocation or callback and does not inspect the three indices' semantic names.
 The independent `resolve_binding_masks` kernel operates on supplied synthetic
 words and preserves this conversion. Caller-owned rig data and the preceding
 channel classification remain unresolved dependencies.
+
+
+## Channel classification, mask-index sources and swap identities
+
+The builder maps the source channel descriptor's type byte through this recovered
+switch before matching it against the target descriptor's low type nibble:
+
+| Raw type byte | Matching type |
+| --- | --- |
+| 0 | 6 |
+| 1, 2, 3 | 5 |
+| 4 | 0 |
+| 5 | 2 |
+| 6 | 3 |
+| 7 | 1 |
+| greater than 7 | 8 |
+
+It matches a 32-bit channel hash and this converted type against a target index
+list. The list cursor advances monotonically through the resource-channel scan;
+it is not restarted for every source channel. The code relies on compatible
+ordering. On a hash match with a target type already greater than the source type,
+it leaves the cursor in place for a later source. After an accepted match it
+advances once. Sorting and duplicate-input contracts remain external.
+
+When the first variant flag is set, a target remap word provides a replacement
+index in its high13 bits and three additional bits in its low3. Otherwise the
+matched target index remains and those three bits are zero. A target descriptor
+word then supplies group=(word>>4)&15 and category=(word>>8)&15. Group15 or
+category6 skips the main insertion. The other categories' valid range is an
+external invariant; the code does not universally reject values above6.
+
+For an inserted mapping, the source-index word is:
+
+```text
+packed = (source_index & 0x0fff)
+       | ((remap_word_low3 & 7) << 12)
+       | ((special_channel_flag & 1) << 15)
+```
+
+The companion word is the selected target index. Insertion position is a group
+base plus its category prefix count. The builder increments that category and
+later category prefix counts, then increments later groups' bases before the
+insertion helper. These are index-maintenance operations, not pose arithmetic.
+The second variant flag supplies the special bit only on channel hash2c52cbb0;
+other channels start with that local flag zero.
+
+After matching, these hashes record the target group index used by class-to-mask
+preparation, even if the main insertion was skipped by group/category gates:
+
+| Class label | Channel hashes supplying its index |
+| --- | --- |
+| 1 | 58988870 or 9b14362c |
+| 2 | 75f94d30 |
+| 3 | b675f36c |
+
+Assignments occur in traversal order, so a later matching channel can overwrite
+an earlier index. The descriptor group is not automatically a joint number.
+
+The eight low12 swaps are two type-group versions of four hash pairs, in this
+exact order:
+
+| Pair order | First hash | Second hash | Converted type group |
+| --- | --- | --- | --- |
+| 1 | 410f426a | 5aff7c9d | equals5 |
+| 2 | 410f426a | 5aff7c9d | differs from5 |
+| 3 | af066f22 | 2216bc12 | equals5 |
+| 4 | af066f22 | 2216bc12 | differs from5 |
+| 5 | b76fd4c6 | fb9c58e9 | equals5 |
+| 6 | b76fd4c6 | fb9c58e9 | differs from5 |
+| 7 | 9010ea1b | 03d989be | equals5 |
+| 8 | 9010ea1b | 03d989be | differs from5 |
+
+These refer to the last recorded appended special-mapping index for each hash and
+type group, not directly to an index into a skeleton. Class labels on these
+special mappings are1 for hashes410f426a/5aff7c9d/b76fd4c6/fb9c58e9,
+2 for03d989be/2216bc12, and3 for9010ea1b/af066f22. Their packed word stores
+source_index low12, converted type low3 in bits12..14, and preserved bit15.
+Their class word is later converted to a mask by the previously decoded helper.
+
+This closes the hash-level selection for those local operations. Joint names,
+source-resource channel schemas, target ordering producers and live sport/rig
+selection remain open. A reconstruction can consume those inputs explicitly;
+it must not substitute a guessed named-joint table.

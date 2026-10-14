@@ -820,3 +820,29 @@ RCX incoming context not used by this body. Builder call `140dcabf3` passes
 R8w from stack-5f,R9w from SI,fifth from stack-61. Their producers remain open.
 Next: map those three producer indices and the eight pair identities through the
 channel/hash scan; keep classword+6 distinct from swapped indexword+4.
+
+
+## Hash-level mapping producers
+
+Decoded switch table at RVA dcaf30: targets a522,a529,a529,a529,a530,a534,
+a53d,a546 in function region, yielding types6,5,5,5,0,2,3,1; default8.
+Bounded builder windows `140dca6af..140dcab52` establish special hash classes,
+pair-index locals, target scan, packed word construction and group prefix updates.
+Special classes: 03d989be/2216bc12->2;410f426a/5aff7c9d/b76fd4c6/fb9c58e9->1;
+9010ea1b/af066f22->3. Recorded appended-index locals selected by ESI==5.
+Swap pairs in execution order:410f/5aff type5,thenother;af06/2216 type5,other;
+b76f/fb9c type5,other;9010/03d9 type5,other. Full hashes in research table.
+
+Target scan at a970 compares hash then descriptor+6 low4 type; first-flag path
+uses context object's +98 remap u16 indexed by matched target, low3 extra bits,
+>>3 replacement target. Targetdescriptor+6 bits4..7 group,bits8..11 category.
+Groupf/category6 skip insertion; otherwise group14-byte record base+category
+prefix defines position. Increment category..5 prefixes and later group bases.
+Inserted four-byte record selectedtargetu16 + packed source/type flags.
+Postmatch group producers:58988870/9b14362c -> stack-5f(class1);
+75f94d30 -> stack-25 thenESI(class2);b675f36c -> stack-61(class3).
+Postmatch assignments occur even after group/category skip.
+
+Next: resolve channel hash names from authored skeleton/name metadata, establish
+producer sorting/duplicate contracts, and trace binding mapping consumers before
+integrating full rig binding. Do not equate descriptor group with a joint index.

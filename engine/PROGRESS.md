@@ -696,3 +696,12 @@ boundaries and non-idempotent repeated conversion. Class meanings and indices
 remain caller-supplied; no inferred rig data added.
 
 Validation: 452 tests pass; packaging, source hashes and local links pass.
+
+
+## Hash-level animation binding map
+
+Decoded type conversion, four paired hashes across two type groups, three mask
+index producers, target remap fields and insertion-prefix updates. The executable
+swap/mask kernels now have documented hash-level upstream contracts. Human joint
+names, data producers and live rig selection remain open. Static documentation
+pass; last full suite remains 452 tests.
