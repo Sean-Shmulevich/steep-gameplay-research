@@ -113,3 +113,25 @@ A complete reconvergence claim must combine this writer behavior with the [alter
 The pair-copy callbacks, zero-word writer, their callable bindings and labels, and the setup edges around PreActionStep were decoded directly from the analyzed image. The global setter, clear transition and additional set sites were located through references to the global owner and inspected at instruction boundaries. Leaf functions were inspected even when absent from unwind metadata.
 
 The analyzed image SHA-256 is `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. The search was bounded to the established owner references and relevant engine callbacks. Indirect aliases, packed writes elsewhere, and externally serialized caller rules remain outside its completeness claim. No executable bytes or machine-local paths are included here.
+
+## Recovered stop-mode callers
+
+A later pass located concrete callers of the compact setter and the clear routine. Field aliases are unchanged; offsets remain private.
+
+**Confirmed window close.** The game's window procedure handles `WM_CLOSE`. Ordinarily it routes to a quit-confirmation path and returns zero. When `wParam` equals the internal constant `0xC0FFEE`, it instead sets a global shutdown flag, performs a service call, calls the compact setter with request argument 1, and continues into shutdown. Application exit therefore enters the stop-routing mode before teardown.
+
+```text
+window_procedure(WM_CLOSE, wParam):
+    if close_already_pending or wParam != 0xC0FFEE:
+        show_quit_confirmation(); return 0
+    set_shutdown_flag()
+    service_call()
+    request_mode(1)          # compact setter
+    continue_shutdown()
+```
+
+**Keyboard command dispatcher.** A dispatcher that consumes a queue of virtual-key codes contains two cases for code `0x08` (Backspace), one per state of a second gate byte. Each toggles stop mode: if the engine reports stopped, it clears the mode, otherwise it calls the setter (argument 0 or 1). These cases sit on the path taken when the dispatcher's first gate byte is zero. [A live test](live_engine_mode_backspace_validation.json) sent Backspace twice during gameplay: the mode bytes did not change and consecutive frames differed. The dispatcher's input source in the retail build is unresolved, so this is a recovered but not demonstrated trigger.
+
+**World-processing flow.** A routine with two direct callers inside the larger engine/world flow either calls the mode transition routine or, when stop mode is set and a separate global byte allows it, calls the clear routine. It precedes further world-service work. Its user-facing meaning is not assigned.
+
+These callers, plus the [menu observation](ENGINE_FRAME_GRAPH_COVERAGE.md#live-check-the-in-game-menu-is-not-the-stop-mode), support describing stop mode as an engine-level world-suspension state used around shutdown and engine-driven transitions, not the in-game menu.

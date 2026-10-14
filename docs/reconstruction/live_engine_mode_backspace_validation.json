@@ -1,0 +1,44 @@
+{
+  "status": "observed_no_change",
+  "observations": 1,
+  "input": "Backspace twice via window-targeted SendInput (scan code 0x0E) during gameplay",
+  "phases": {
+    "gameplay": {
+      "samples": 8,
+      "mode_group_bytes": [
+        "00000001"
+      ],
+      "owner_copy_bytes": [
+        "00000000"
+      ]
+    },
+    "after_backspace_1": {
+      "samples": 8,
+      "mode_group_bytes": [
+        "00000001"
+      ],
+      "owner_copy_bytes": [
+        "00000000"
+      ]
+    },
+    "after_backspace_2": {
+      "samples": 8,
+      "mode_group_bytes": [
+        "00000001"
+      ],
+      "owner_copy_bytes": [
+        "00000000"
+      ]
+    }
+  },
+  "engine_mode_changed": false,
+  "screen_text_unchanged": true,
+  "consecutive_frames_identical": false,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "configuration_restored": true,
+  "scope": "Tests whether the statically recovered Backspace stop-mode toggle in the keyboard command dispatcher is reachable from ordinary window input in this build. It was not; whether that dispatcher is fed in retail is unresolved.",
+  "private_result_sha256": [
+    "dcd2caaffd1f5ac841943e5f781ffbf75531b5d430c826e147f170c2c78e921b"
+  ]
+}
