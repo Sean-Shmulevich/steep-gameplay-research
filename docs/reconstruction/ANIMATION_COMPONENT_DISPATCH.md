@@ -1,6 +1,6 @@
 # Component-to-animation update connection
 
-The update interface is now connected to a concrete `KinoComponent` method and its factory. A named animation-time task configuration provides a receiver-dispatch lead. The component call is established statically; active player membership and execution relative to physics substeps remain unproved.
+The update interface is now connected to a concrete `KinoComponent` method and its factory. A named animation-time task configuration provides a receiver-dispatch lead. The component call is established statically. A later [live membership check](ANIMATION_MEMBERSHIP_OBSERVATION.md) observed the selected player's Kino component in the source registry and gathered storage; callback execution and timing relative to physics substeps remain unproved.
 
 ## Component identity and factory
 
@@ -44,7 +44,7 @@ The selected value is copied as float32. The ordinary and alternate sources are 
 
 The scheduler-owner setup associates `AnimationUpdateTime` and `IAnimationComponent::UpdateTime` labels with a job record. Its callback field receives a generic receiver dispatcher that calls receiver virtual slot `0x270`. The KinoComponent table supplies the thunk above at that slot.
 
-A generic batch consumer reads the same callback-field layout and walks a supplied pointer array in reverse order, applying a signed receiver adjustment before invoking the callback. The subsequent [batch binding audit](ANIMATION_BATCH_BINDING.md) establishes the concrete worker table and selects a different visitor without receiver adjustment. The actual receiver population remains unproved; static configuration does not establish player membership.
+A generic batch consumer reads the same callback-field layout and walks a supplied pointer array in reverse order, applying a signed receiver adjustment before invoking the callback. The subsequent [batch binding audit](ANIMATION_BATCH_BINDING.md) establishes the concrete worker table and selects a different visitor without receiver adjustment. Static configuration alone does not establish player membership. The later passive capture identifies one selected-player receiver in the source and gathered storage; full population behavior across modes remains unproved.
 
 Nearby setup callbacks merely set and clear a thread-local context pointer. They must not be mistaken for the animation workload. Likewise, the separately named `UpdateKino` callback leads through the manager to a queued-record processing routine. Its name alone does not make it the component-time update.
 
@@ -54,7 +54,7 @@ The original interval-selection block matched 256 synthetic cases spanning all c
 
 ## Remaining work
 
-1. Trace the configured animation-time job's gather writer and live receiver membership; its worker table and unadjusted visitor are now established.
+1. Observe the matched player's component callback entry/exit. The gather writer, worker table and unadjusted visitor are established, and passive source/storage membership was observed in one live session.
 2. Trace the two world-clock producers and job dependencies to relate this update to physics substeps and input ingestion.
 3. Find writes to KinoComponent's threshold byte and identify the first threshold component and source table.
 4. Follow concrete parameter-group callback types. The interface is now identified, but those producers remain separate.

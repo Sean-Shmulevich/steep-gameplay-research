@@ -7,7 +7,7 @@ world_source_offset(slot) = 0x130 + 0x40 * slot
 world_source_offset(16) = 0x530
 ```
 
-This joins the [animation membership copy](ANIMATION_MEMBERSHIP_COPY.md) to the indexed registration mechanism previously inspected for motion and preloop jobs. It identifies the source container, not its current listeners. A concrete KinoComponent activation call or live membership observation is still needed to associate a particular component with this slot.
+This joins the [animation membership copy](ANIMATION_MEMBERSHIP_COPY.md) to the indexed registration mechanism previously inspected for motion and preloop jobs. It identifies the source container, not its current listeners. The subsequent [Kino activation audit](KINO_ACTIVATION.md) connects concrete component activation to this slot, and a [live membership observation](ANIMATION_MEMBERSHIP_OBSERVATION.md) associates one selected-player component with its source list.
 
 ## Insertion and removal
 

@@ -1,6 +1,6 @@
 # Animation membership copy
 
-The configured `UpdatePreActionGather` task contains a copy block that fills the exact animation-time job described in [batch binding](ANIMATION_BATCH_BINDING.md). This closes the source-array-to-job-array join. It does not yet identify registry insertion/removal rules or prove that a live player belongs to the array.
+The configured `UpdatePreActionGather` task contains a copy block that fills the exact animation-time job described in [batch binding](ANIMATION_BATCH_BINDING.md). This closes the source-array-to-job-array join. Subsequent work established [registry mutation](ANIMATION_EVENT_REGISTRY.md) and observed [selected-player source/storage membership](ANIMATION_MEMBERSHIP_OBSERVATION.md) in one live session. Actual callback execution remains unproved.
 
 ## Recovered behavior
 
@@ -63,4 +63,4 @@ Static anchors:
 - Destination storage/count/capacity are scheduler owner+`0x3c88`/`0x3c90`/`0x3c94`. These equal animation-time job+`0x198`/`0x1a0`/`0x1a4` for the job at owner+`0x3af0`.
 - Nonempty-source copying calls `141c6afb0` at `140914755`; empty source branches directly to the closing helper call. The larger gather routine continues with other lists outside this validation scope.
 
-The [stage-dependency follow-up](ANIMATION_STAGE_DEPENDENCIES.md) connects this gather to the animation job and its ordinary downstream completion/rearm route. The [registry follow-up](ANIMATION_EVENT_REGISTRY.md) identifies source slot 16 and its generic insertion/removal behavior. Component-specific registration, live receiver identity, and exceptional-mode storage exclusion remain open. Source-array copying, ordinary consumption to zero, and the ordinary static completion route are established; live membership and safe process control remain open.
+The [stage-dependency follow-up](ANIMATION_STAGE_DEPENDENCIES.md) connects this gather to the animation job and its ordinary downstream completion/rearm route. The [registry follow-up](ANIMATION_EVENT_REGISTRY.md) identifies source slot 16 and its generic insertion/removal behavior. [Kino activation](KINO_ACTIVATION.md) establishes component-specific registration, and the [passive observation](ANIMATION_MEMBERSHIP_OBSERVATION.md) joins one live player's source and storage identity. Exceptional-mode storage exclusion, callback execution and safe process control remain open.

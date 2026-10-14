@@ -2,7 +2,11 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 607 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 613 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+
+Six [animation membership reader tests](../docs/reconstruction/ANIMATION_MEMBERSHIP_OBSERVATION.md) distinguish current source membership, retained destination storage and the unclaimed prefix. They reject inconsistent reads and do not dereference stale destination pointers. Synthetic membership checks do not prove callback execution.
+
+A separate live capture found one selected-player Kino match at source/storage index 3, with source count and destination capacity both four and zero remaining claims. All guard rechecks passed. The [receipt](../docs/reconstruction/live_animation_membership_validation.json) supports passive membership in that session, not callback execution, atomicity or safe stepping.
 
 The [begin-path probe](../docs/reconstruction/SCHEDULER_BEGIN_PATHS.md) adds two tests distinguishing immediate empty-range completion from accounted callback execution. A separate private 90-case instruction check used original begin/predicate code with synthetic objects and stubbed services. It validates local decisions, not the live session's branch selection.
 

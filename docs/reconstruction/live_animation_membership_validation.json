@@ -1,0 +1,39 @@
+{
+  "schema": "live-animation-membership-validation-v1",
+  "status": "observed",
+  "scope": "One passive selected-player source-membership observation; not callback execution or safe stepping",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_result_sha256": "dfcb0a0cdb9098d51866c50a093e1d2be5364a6093e44db5f31c76c0acc7cadf",
+  "private_acquisition_sha256": "22965375bcb58e83705fccc9998b26b8779c4fa0d5981c76b1cd33130ee2a353",
+  "fresh_player_acquisition_passed": true,
+  "observation": {
+    "schema": "animation-membership-observation-v1",
+    "source_count": 4,
+    "storage_capacity": 4,
+    "remaining_to_claim": 0,
+    "player_kino_source_matches": [
+      {
+        "source_index": 3,
+        "storage_indices": [
+          3
+        ],
+        "unclaimed_prefix_indices": []
+      }
+    ],
+    "guards_matched": true,
+    "source_membership_observed": true,
+    "atomic_snapshot": false,
+    "callback_execution_established": false,
+    "safe_to_step_established": false,
+    "limits": [
+      "Storage capacity includes stale or inactive slots.",
+      "Zero remaining claims does not mean callbacks finished.",
+      "No source match does not identify an unregistered player component.",
+      "Repeated matching reads do not exclude intervening changes or object reuse."
+    ]
+  },
+  "memory_writes": false,
+  "debugger_attached": false,
+  "gameplay_inputs_sent": false,
+  "startup_navigation_inputs_sent": true
+}
