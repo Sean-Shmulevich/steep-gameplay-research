@@ -24,6 +24,8 @@ Median burst group duration was 0.6156 ms; maximum duration was 5.9475 ms. Media
 
 The consistently zero execution counters do not prove the game was idle. Short worker activity could fit between the relevant reads. An immediate-completion or different dispatch path could also produce observations that the current model does not yet explain. The capture does not distinguish these possibilities. In particular, a changing request counter does not prove that animation callbacks ran, and zero remaining claims does not prove their completion.
 
+The subsequent [begin-path audit](SCHEDULER_BEGIN_PATHS.md) narrows this: empty ranges can complete without dispatch, but the three matched callback jobs have an always-false empty predicate and queue on their ordinary begin path. Empty populations therefore cannot explain all seven jobs' zero samples through a common immediate-completion shortcut.
+
 The action gather's observed hold range is consistent with the recovered converging dependency topology. It is not proof that its two holds came from the two named branches in any particular read; other dependencies and changing fields remain possible.
 
 ## Next discriminating checks

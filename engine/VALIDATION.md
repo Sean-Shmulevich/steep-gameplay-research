@@ -2,7 +2,9 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 605 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 607 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+
+The [begin-path probe](../docs/reconstruction/SCHEDULER_BEGIN_PATHS.md) adds two tests distinguishing immediate empty-range completion from accounted callback execution. A separate private 90-case instruction check used original begin/predicate code with synthetic objects and stubbed services. It validates local decisions, not the live session's branch selection.
 
 Nine tests exercise the [scheduler observation collector](../docs/reconstruction/SCHEDULER_OBSERVATION.md) with synthetic exact-read transports. They cover active execution after claims reach zero, changed counters, stale guards, malformed reads and the world-to-action-graph link. A separate private synthetic integration check exercised the fresh-acquisition adapter, seven reader requests, receipt creation and reader cleanup. No original-game capture or native stepping is implied.
 

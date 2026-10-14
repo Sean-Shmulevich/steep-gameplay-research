@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 90,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original common begin and concrete callback/range empty predicates; synthetic jobs and recording lock, activation, enqueue and finalizer stubs. Enqueue/finalizer state effects are stubbed. Not full dispatch, native concurrency or live path proof.",
+  "callback_empty_always_false": true,
+  "range_empty_signed_remaining_le_zero": true,
+  "scheduled_entry_acknowledges_new_request": false,
+  "negative_remaining_cases_are_boundary_probes_not_valid_workloads": true
+}
