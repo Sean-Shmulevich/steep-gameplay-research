@@ -28,7 +28,7 @@ This pseudocode assumes valid nonnegative counts and successful allocation. The 
 
 The pointer copy preserves source order and receiver identity. It copies references, not component state. Later edits to a source array slot do not replace the corresponding copied job slot; changes to the referenced component can still be observed when it runs. The selected batch visitor reads job entries at invocation time and visits a claimed span in reverse. Multiple spans do not imply a global reverse order.
 
-An empty source skips both copying and destination count reset. Existing destination storage, capacity and active count survive this block. This is a local fact, not evidence that stale entries execute in a complete frame. Another lifecycle operation may clear the count. A step controller must find that operation before interpreting an empty registry as an empty job.
+An empty source skips both copying and destination count reset. Existing destination storage, capacity and active count survive this block. The [claim-lifecycle follow-up](ANIMATION_CLAIM_LIFECYCLE.md) now proves an ordinary path to zero: the selected worker reduces this same count as it claims ranges. Fully claimed work can therefore leave zero for an empty gather, even while callbacks are still running. Cross-request exclusion and partial-claim handling remain open.
 
 Calls around the source read/copy pass the source owner's adjacent guard object. The copy and allocation paths lie between those calls. Their synchronization implementation and interactions with registry writers have not been validated here. The portable API requires the caller to supply a stable source sequence.
 
@@ -63,4 +63,4 @@ Static anchors:
 - Destination storage/count/capacity are scheduler owner+`0x3c88`/`0x3c90`/`0x3c94`. These equal animation-time job+`0x198`/`0x1a0`/`0x1a4` for the job at owner+`0x3af0`.
 - Nonempty-source copying calls `141c6afb0` at `140914755`; empty source branches directly to the closing helper call. The larger gather routine continues with other lists outside this validation scope.
 
-Next evidence needed: source registration/removal, destination count reset, callable execution and dependency edges for the gather task, and live receiver identity. The source-array copy is established; the membership policy is still open.
+Next evidence needed: source registration/removal, callable execution and dependency edges for the gather task, cross-request exclusion, and live receiver identity. The source-array copy and ordinary consumption path to zero are established; membership policy and completion remain open.

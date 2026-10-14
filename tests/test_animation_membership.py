@@ -39,3 +39,44 @@ class AnimationMembershipTests(unittest.TestCase):
         for count in (-1, True, 2):
             with self.assertRaises(ValueError):
                 AnimationMembership([None], count).copy_registry([])
+
+    def test_claim_reaches_zero_before_any_callback(self):
+        state = AnimationMembership(['first', 'second'], 2)
+        span = state.claim(2, 0)
+        self.assertEqual(state.count, 0)
+        self.assertEqual(list(span), ['first', 'second'])
+        self.assertIsNone(state.claim())
+        seen = []
+        visit_animation_batch({'callback': seen.append}, span)
+        self.assertEqual(seen, ['second', 'first'])
+
+    def test_claimed_span_reads_entries_late(self):
+        state = AnimationMembership(['first', 'second', 'third'], 3)
+        span = state.claim(2, 0)
+        self.assertEqual((span.start, span.count, state.count), (1, 2, 1))
+        state.storage[1] = 'changed'
+        self.assertEqual(list(span), ['changed', 'third'])
+        self.assertEqual(span[-1], 'third')
+        self.assertEqual(span[:1], ['changed'])
+        with self.assertRaises(IndexError):
+            _ = span[2]
+
+    def test_complete_and_partial_claim_then_empty_gather(self):
+        state = AnimationMembership(list(range(5)), 5)
+        first = state.claim(2, 0)
+        state.copy_registry([])
+        self.assertEqual(state.count, 3)
+        ranges = [first]
+        while (span := state.claim(2, 0)) is not None:
+            ranges.append(span)
+        state.copy_registry([])
+        self.assertEqual(state.count, 0)
+        self.assertEqual(state.storage, list(range(5)))
+        self.assertEqual([(s.start, s.count) for s in ranges], [(3, 2), (1, 2), (0, 1)])
+
+    def test_invalid_claim_does_not_change_count(self):
+        state = AnimationMembership([1, 2], 2)
+        for chunk, tail in [(0, 0), (1, -1), (True, 0)]:
+            with self.assertRaises(ValueError):
+                state.claim(chunk, tail)
+            self.assertEqual(state.count, 2)

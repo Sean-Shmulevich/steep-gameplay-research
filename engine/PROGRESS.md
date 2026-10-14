@@ -1197,3 +1197,16 @@ Registry insertion/removal, surrounding destination reset and task dependency
 edges remain open. No original-game pause/step control was attempted.
 
 Validation: 579 tests pass; packaging, hashes and local links pass.
+
+## Animation claims consume the gathered count
+
+Joined the animation gather count to the selected range worker's atomic claim
+field. Ordinary complete claiming supplies a path to zero without a separate
+unconditional reset. Zero can precede context entry and receiver callbacks, while
+queue-change yielding can preserve a positive remainder. The explicit claim API
+returns a captured storage span with late entry reads. Original worker, selected
+visitor and dispatcher matched 576 synthetic cases, including yield signals during
+the first receiver call. Four additional tests cover claim/copy/visit composition.
+Native contention, completion and cross-request storage exclusion remain open.
+
+Validation: 583 tests pass; packaging, hashes and local links pass.

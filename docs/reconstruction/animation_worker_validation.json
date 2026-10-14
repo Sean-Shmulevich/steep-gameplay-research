@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 576,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original animation range worker, original constructor-selected visitor table, selected visitor and receiver dispatcher, with synthetic receivers and returning context/component stubs. Counts zero through eight, chunks one through four, tail thresholds zero/one/three/five, and queue-change/front-counter yield cases. Exact event order and remaining count at each callback match portable composition. CAS executes without contention. No live membership, native context behavior, concurrent claims, scheduler completion or cross-request exclusion validation."
+}
