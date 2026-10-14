@@ -641,3 +641,12 @@ dispatch follow regardless of classification result. Payload semantics and the
 raw-timestamp right shift remain open. No event delivery wired into the runtime.
 
 Validation: 446 tests pass; packaging, source hashes and local links pass.
+
+
+## Animation timestamp batch ownership
+
+Resolved the former dispatch helper as a three-array enqueue: raw payload pointer,
+retained recipient entry and retained owner entry. Documented sequential append,
+reference transfer and capacity invariants. Metadata lookup is a descriptor
+interval type check returning the original object. Actual batch consumption and
+payload effects remain open. Documentation-only; last full suite remains446.

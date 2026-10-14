@@ -690,3 +690,28 @@ from RIP global. This pass does not name that third cache or registered wrapper.
 Next: automatic clock producer through interior pointer, dispatch `140d2df10`,
 metadata `140d8aa80`, and timestamp/count representation source. Keep boundary
 SHR1 distinct from DIV120 until producer evidence explains it.
+
+
+## Timestamp batch append and metadata interval check
+
+Inspected `140d2df10` (239), `140d8aa80` (119), `1404e9800` (156),
+`1402f1b50` (174). The earlier dispatch label is superseded: `140d2df10`
+appends payload raw pointer at context+0 via `1404e9800`; recipient lookup
+`1411925a0` key0/recordR8 then retained append at context+90; owner lookup
+recordR9 then retained append at context+120. Separate count+8 temporary drops,
+old1&&low24flags0 -> `141194350`. No invocation/transaction/drain here.
+
+Append headers pointer0,low14capacity+8,countu16+a. Growth4 below24 else
+floor(capacity/3) from multiply aaaaaaab highword then shift1; clamp3fff.
+If proposedgreater call `14116a040` size8 align8, then count increment/store and
+slot write without local success/capacity recheck. Retained variant increments
+copied entry+8; raw pointer variant does not retain payload.
+
+Metadata `140d8aa80`: null check; object virtual+30 descriptor; target descriptor
+from RIP global. Actual/target unsigned16 +4c/+4e bounds. Returns same object if
+target.low<=actual.low and actual.high<=target.high, otherwise0. No distinct
+metadata allocation or pointer adjustment. Target semantic typename not recovered.
+
+Next: context parallel-array +0/+90/+120 consumer and clear/destruction paths;
+object virtual+60 preparation effects; target descriptor name. Keep queued output
+separate from actual delivery and do not infer an atomic three-array snapshot.

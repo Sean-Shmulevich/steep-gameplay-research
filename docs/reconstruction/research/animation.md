@@ -1773,3 +1773,82 @@ runs the masked cursor reset with an all-one mask, and invalidates a third cache
 array afterward. Thus setting position can reset the cursor explicitly, while
 ordinary failed delivery does not. That wrapper's registered name and the third
 cache's element meaning remain leads.
+
+
+## Timestamp output is a retained batch, not immediate delivery
+
+Further inspection resolves the helper previously called `dispatch` in the
+payload pseudocode. It appends to three parallel arrays in the supplied context:
+a raw payload pointer, a retained shared recipient entry, and a retained shared
+owner entry. No payload invocation occurs in that helper. The virtual preparation
+call before it remains a separate possible source of side effects.
+
+```text
+enqueue_timestamp_payload(context, payload, recipient_record, owner_record):
+    append_raw_pointer(context.payloads, payload)
+    recipient = lookup_shared_entry(key=0, record=recipient_record)
+    append_retained_entry(context.recipients, recipient)
+    release_temporary_separate_reference(recipient)
+    owner = lookup_shared_entry(key=0, record=owner_record)
+    append_retained_entry(context.owners, owner)
+    release_temporary_separate_reference(owner)
+```
+
+The retained-entry append copies the entry pointer into its new slot and
+increments the entry's separate reference count. Temporary release uses the
+previously decoded count-one and packed-low24-zero gate. Thus the appended
+recipient and owner references survive the temporary lookup references locally.
+The payload append performs no reference increment here. Its lifetime may be
+owned elsewhere and cannot be inferred from the other two arrays.
+
+All three appends are sequential. There is no local transaction, shared count
+commit or rollback across them. Each array has its own storage and count. A batch
+consumer must not assume a concurrently observed triple is complete without an
+additional synchronization contract. The consumer, clear/drain ownership and
+thread scheduling remain open.
+
+Both append variants use the same capacity arithmetic. Capacity is the low 14
+bits of the header; count is an unsigned16 word. When count+1 exceeds capacity,
+proposed capacity is:
+
+```text
+growth = 4 if capacity < 24 else floor(capacity / 3)
+proposed = min(16383, capacity + growth)
+if proposed > capacity:
+    resize_storage(proposed, element_size=8, alignment=8)
+count = u16(count + 1)
+write_slot_using_incremented_index()
+```
+
+The native append proceeds without a post-resize success or remaining-room check.
+This is an allocation/capacity invariant, not a safe overflow policy to imitate in
+the reconstruction. The public model does not allocate native arrays or claim
+failure recovery for this path.
+
+## Payload metadata lookup is an interval type check
+
+The metadata helper calls the supplied object's descriptor virtual method and
+compares two unsigned16 descriptor bounds with a global target descriptor. It
+returns the original object pointer when the object's interval is contained in
+the target interval, otherwise null. A null input returns null.
+
+```text
+payload_metadata(object):
+    if object == null:
+        return null
+    actual = object.virtual_descriptor()
+    if target.low <= actual.low and actual.high <= target.high:
+        return object
+    return null
+```
+
+These comparisons derive from signed32 differences between zero-extended16-bit
+values; the differences cannot overflow. The helper does not allocate, decode,
+load, or return a separately stored metadata object. This supersedes the earlier
+opaque lookup description. The target type's semantic name remains unproven, and
+inverted intervals are not separately rejected here. The returned object's flag
+byte supplies the previously decoded event-boundary permissions.
+
+The next evidence needed is the parallel-array consumer. Until that is traced,
+queued payloads are not evidence that a footstep, sound, animation notification,
+or gameplay effect was delivered.
