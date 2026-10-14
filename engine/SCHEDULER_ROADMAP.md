@@ -92,3 +92,5 @@ Owned tuning and rig/clip replacement now use the controller's pause-token gate,
 transactional validation and fresh generations. Replay and stale-token tests cover
 these mutations. The separate controller HTTP service now exposes this contract to local scripts.
 Native loading integration remains separate work.
+
+[Recovered clock holds](../docs/reconstruction/CLOCK_TREE.md) affect elapsed time rather than job quiescence. Serial tree behavior is instruction-validated, including child propagation while held. They must not replace the native submission-exclusion and returned-worker release gates.

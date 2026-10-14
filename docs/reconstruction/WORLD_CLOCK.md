@@ -44,7 +44,7 @@ The adapter validates finite float32 arithmetic and integer conversion bounds. T
 
 ## Operations outside this adapter
 
-After the implemented block, the routine toggles a field when the hold count is nonpositive. An accumulation argument gates an invocation counter and accumulated ticks. It also updates child clocks under a lock. A child flag selects either the parent's previous interval multiplied by 1000 or its newly processed input. These inspected operations are not implemented here and have not received the same instruction-emulation validation. Child ownership, lock behavior, full accumulated-time interpretation and source-clock scheduling remain open.
+After the implemented block, the routine toggles a field when the hold count is nonpositive. An accumulation argument gates an invocation counter and accumulated ticks. It also updates child clocks under a lock. A child flag selects either the parent's previous interval multiplied by 1000 or its newly processed input. These operations are outside this local adapter. The later [clock-tree adapter](CLOCK_TREE.md) implements and instruction-validates serial accumulation and child propagation with lock helpers stubbed. Child ownership, lock behavior, full accumulated-time interpretation and source-clock scheduling remain open.
 
 ## Validation and live interpretation
 

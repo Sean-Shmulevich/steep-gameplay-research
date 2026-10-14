@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "trees": 160,
+  "nodes_per_tree": 3,
+  "pending_request_cases": 10,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original full clock updater with three-node synthetic trees. Lock/unlock helpers replaced with return stubs; no concurrent writers, native ownership, timer or scheduler control tested.",
+  "comparison": "exact float32 bits and integer fields",
+  "source_sha256": "dc3ec0f43e8d4a1c29aee43d7188ad096687cc83d19c5a9fee0a77ca8f5d2c35"
+}
