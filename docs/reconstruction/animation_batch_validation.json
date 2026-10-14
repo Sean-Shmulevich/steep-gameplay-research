@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 36,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original selected batch visitor and original receiver virtual-slot dispatcher, using synthetic receiver objects and returning method stubs. Reverse order, zero count, callback replacement during execution and receiver-entry replacement match the portable model. No range claiming, real component update, concurrency or live membership validation."
+}

@@ -325,3 +325,5 @@ The recovered local animation deferral gate and float32 interval accumulation ar
 The named threshold callback's packet arithmetic is exposed by [`animation_thresholds`](../docs/reconstruction/ANIMATION_THRESHOLD_PRODUCER.md), including its direct deferral-policy join. Native component resolution remains external.
 
 [`animation_component_clock`](../docs/reconstruction/ANIMATION_COMPONENT_DISPATCH.md) selects the recovered component interval source and exposes local interface-call gates. The component/factory join is static; live scheduler membership remains open.
+
+The selected animation-time visitor is available as [`animation_batch`](../docs/reconstruction/ANIMATION_BATCH_BINDING.md), preserving per-batch callback capture and reverse local receiver order. Native membership and cross-job ordering remain open.

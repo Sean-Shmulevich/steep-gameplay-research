@@ -1171,3 +1171,15 @@ Rejected a same-offset serializer belonging to ProgressionCameraTransition.
 Clock domains, threshold-field writer and physics-relative timing remain open.
 
 Validation: 571 tests pass; packaging, hashes and local links pass.
+
+## Concrete animation-time batch visitor
+
+Closed the constructor/setup/table join for the animation-time job. The final
+table selects the reverse visitor without pointer adjustment; it captures its
+callback once and reads receivers at invocation time. The earlier adjusted
+visitor was a different candidate and is explicitly superseded. Original visitor
+and receiver dispatcher matched 36 synthetic cases, including mid-batch callback
+and entry replacement. Four tests cover the portable boundary. Actual membership,
+clock producers and cross-job dependencies remain open.
+
+Validation: 575 tests pass; packaging, hashes and local links pass.
