@@ -965,3 +965,18 @@ Documented why the existing marker-search extraction is not a general container
 parser and the structural, shared-reference and binding work still needed.
 
 Validation: 520 tests pass; packaging, hashes and local links pass.
+
+## Structural clip-body framing
+
+Added a bounded reader based on Studio's documented version-1/version-2 container
+layout. It walks events and typed bindings without marker search, preserves
+opaque metadata and unresolved shared references, and delegates supported channel
+records to the existing decoder. Corpus CLI now accepts a body without a record
+sidecar. All six original version-2 bodies match the previous extractor's 1,052
+track boundaries and binding identifiers, with exact end consumption. Two contain
+event tracks. Four synthetic tests exercise versions, events, every truncation,
+wrong counts/types, trailing bytes and shared-reference preservation. Version 1
+and shared references have no original-body validation yet; unknown channel
+formats and event classes fail explicitly. No native playback proof claimed.
+
+Validation: 524 tests pass; packaging, hashes and local links pass.

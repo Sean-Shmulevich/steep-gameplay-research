@@ -72,11 +72,16 @@ def inspect_clip(body, records):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--body',required=True,type=Path)
-    parser.add_argument('--records',required=True,type=Path)
+    parser.add_argument('--records',type=Path,help='optional explicit boundaries; otherwise parse clip body')
     args=parser.parse_args()
-    records=json.loads(args.records.read_text())
-    if isinstance(records,dict):records=records['tracks']
-    result=inspect_clip(args.body.read_bytes(),records)
+    body=args.body.read_bytes()
+    if args.records:
+        records=json.loads(args.records.read_text())
+        if isinstance(records,dict):records=records['tracks']
+    else:
+        from .animation_container import parse_clip_body
+        records=parse_clip_body(body)['tracks']
+    result=inspect_clip(body,records)
     print(json.dumps(result,indent=2))
     return 1 if result['failures'] else 0
 

@@ -8,8 +8,8 @@ python3 -m engine.animation_corpus --body /path/to/clip-body.bin --records /path
 
 The record file is a list, or an object containing a `tracks` list. Each ordinary
 record supplies integer `codec`, `serialized_start` and `serialized_end` fields.
-Records with `shared_track_reference` are counted as unresolved. These offsets
-must come from separate container research; the tool does not discover them.
+Records with `shared_track_reference` are counted as unresolved. When supplied, these offsets are external evidence. Without `--records`, the
+[structural clip reader](ANIMATION_CONTAINER.md) derives them from supported bodies.
 The CLI reads files and prints aggregate JSON. It does not save samples or assets.
 
 Supported IDs are 0, 9, 11, 12, 14, 21, 23, 24, 26, 27, 29, 39 and 54. Each supported record must match its stated
@@ -36,7 +36,7 @@ covered by the [mask-time float samplers](ANIMATION_MASK_FLOAT_SAMPLERS.md).
 
 Full format coverage here does not establish active graph selection, rig binding,
 procedural layers, arbitrary clip support or native playback equivalence. The
-inspector still requires externally supplied track boundaries. The mask-time
-float guide records the next container-parser work and its unresolved fields.
+inspector can now derive boundaries through the structural reader; its supported
+versions, unresolved shared references and other limits are documented separately.
 Bodies and metadata remain private; this report publishes hashes and counts only.
 Earlier independent-reference comparisons remain separate from these checks.

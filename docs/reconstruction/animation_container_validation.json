@@ -1,0 +1,53 @@
+{
+  "scope": "six private bodies; structural parser versus prior marker-based extraction; not native execution",
+  "clips": [
+    {
+      "version": 2,
+      "tracks": 182,
+      "event_tracks": 1,
+      "exact_consumption": true,
+      "boundary_comparison": "all match existing independent extraction",
+      "body_sha256": "17575abd0a96871560994f54641ba26e0c28907faef61d84edabeb928dc13ee8"
+    },
+    {
+      "version": 2,
+      "tracks": 174,
+      "event_tracks": 0,
+      "exact_consumption": true,
+      "boundary_comparison": "all match existing independent extraction",
+      "body_sha256": "571473a8764aebffbf76a22e8454509053ef2a838b2576b344802fa124a51e28"
+    },
+    {
+      "version": 2,
+      "tracks": 174,
+      "event_tracks": 0,
+      "exact_consumption": true,
+      "boundary_comparison": "all match existing independent extraction",
+      "body_sha256": "10807a14991b9dc8221bbe4530bfc8ee2211a8f65e5f32d2162d3afe0fc4d4ec"
+    },
+    {
+      "version": 2,
+      "tracks": 174,
+      "event_tracks": 0,
+      "exact_consumption": true,
+      "boundary_comparison": "all match existing independent extraction",
+      "body_sha256": "621f50ac641e9c93606bf841bb8cb58dde2f999243f989a69809fb221d3550a6"
+    },
+    {
+      "version": 2,
+      "tracks": 170,
+      "event_tracks": 1,
+      "exact_consumption": true,
+      "boundary_comparison": "all match existing independent extraction",
+      "body_sha256": "6b490859c97683aaf9f9d8573bc236cd74a16af29c931f8d8eb34026a226bc72"
+    },
+    {
+      "version": 2,
+      "tracks": 178,
+      "event_tracks": 0,
+      "exact_consumption": true,
+      "boundary_comparison": "all match existing independent extraction",
+      "body_sha256": "e2346f7591997710a19215db4d1d86d6fa938ca1db215aef0fbb5eb1599944d4"
+    }
+  ]
+}
