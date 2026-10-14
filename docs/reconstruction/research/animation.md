@@ -700,3 +700,56 @@ processing operations, plus their normalization/traversal inputs if needed.
 Do not keep following the guarded branch solely because it was present in the
 generic helper. Producer-to-published counter transfer and authored UID conversion
 remain independent open edges.
+
+## Direct row operations dispatch on descriptor metadata
+
+Four further bodies show that the direct operations are descriptor-driven
+dispatchers. This is not yet clip-specific arithmetic. Both distinguish indexed
+work using row flag bit 1 and an index unequal to `0xffffffff`; row flag bit 0
+selects a variant that bypasses several descriptor-pointer paths.
+
+The shared packed-type rule is exact:
+
+```text
+effective_type(packed_word):
+    primary = (packed_word >> 48) & 0x3f
+    if primary in {0x17, 0x18, 0x1d}:
+        return (packed_word >> 55) & 0x3f
+    return primary
+```
+
+No names are assigned to these type codes. Preparation consults descriptor+18
+for a specialized operation, while processing consults descriptor+28. The indexed
+paths additionally exclude primary types 0x18 and 0x1d from some specialized
+branches; preserve those explicit exclusions rather than generalizing the type
+rule into a universal dispatch policy.
+
+A descriptor notification branch is locally decoded:
+
+```text
+notify_descriptor(row, stage):
+    if row.variant_bit0:
+        return
+    descriptor = row.descriptor
+    metadata = descriptor.word_at_16
+    if (metadata & (1 << 17)) == 0:
+        return
+    attachment = row.object_base + (metadata >> 18)
+    callback = attachment.callback_at_16
+    if callback != null:
+        receiver = attachment - (attachment.word_at_24 & 0x3fffffff)
+        callback(receiver, descriptor.word_at_4, stage)
+```
+
+This pseudocode states the observed Windows register arguments, not a recovered
+source signature. Preparation's non-indexed route uses stage zero before its
+remaining operation. Processing uses stage one after its operation, including
+the inspected non-indexed helper. These are operation stages, not animation
+keyframe times. The code also leaves attachment word bit31 in EAX before the
+indirect call; its ABI significance remains unresolved and is not silently
+modeled as a fourth argument.
+
+The specialized and fallback operations themselves remain unexpanded. The new
+result narrows the next work to concrete descriptor operations and the origin of
+the descriptor/type metadata; no clip decoding, pose update, or authored UID
+conversion is claimed.

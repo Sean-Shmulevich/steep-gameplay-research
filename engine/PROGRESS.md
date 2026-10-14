@@ -489,3 +489,11 @@ Traced zero mode from item callers to handle-creation bypass, selecting direct
 row operations on this route. Guarded operations remain generic findings, not
 proved active work here. Documented row mapping and traversal boundary. Runtime
 unchanged; last full suite remains 423 tests.
+
+
+## Direct resource descriptor dispatch
+
+Decoded packed effective-type selection and descriptor notification receiver
+adjustment/stage ordering. Direct operations remain generic dispatchers with
+unexpanded specialized/fallback work. No clip or pose semantics assigned.
+Documentation-only pass; last full runtime suite remains 423 tests.

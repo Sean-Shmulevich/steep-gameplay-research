@@ -258,3 +258,23 @@ Next bounded candidates: direct prepare `1411d7b60`, direct process
 `1411ec030`, and up to two dependent functions. Traversal `1411e8960`
 and normalization `1411dd420` remain leads for descriptor grammar. Do not
 promote guarded optional-handle dispatch to active mode-zero behavior.
+
+## Direct descriptor dispatch pass
+
+Inspected `1411d7b60` (372 pdata bytes), `1411ec030` (249),
+`1411d82b0` (42-byte leaf, both returns), `1411ec130` (182).
+Type helper extracts bits48..53; primary 17/18/1d hex selects bits55..60.
+Preparation specialized descriptor pointer is +18; processing is +28.
+Indexed route requires row+10 bit1 and index != ffffffff. Row+10 bit0
+suppresses descriptor-pointer branches. Exact type exclusions vary by caller.
+
+Descriptor notification uses descriptor+10 dword bit17 and offset>>18 added to
+row+8. Attachment+10 callback receives RCX=attachment-(attachment+18 dword &
+3fffffff), EDX=descriptor+4, R8D=stage. EAX also holds attachment word bit31;
+its role is unresolved. Prepare non-indexed stage=0 precedes operation;
+process stage=1 follows operation.
+
+Next bounded bodies: preparation fallback `1411d8a90`, processing fallback
+`1411ec690`, and up to two dependent descriptor operations. Specialized
+indexed leads are `1411d8400` and `1411ec1f0`; non-indexed processing uses
+`1411ec450`. Preserve generic descriptor dispatch versus animation semantics.
