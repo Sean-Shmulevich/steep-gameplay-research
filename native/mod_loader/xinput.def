@@ -1,0 +1,14 @@
+LIBRARY XINPUT1_3
+EXPORTS
+DllMain=snow_xinput_original.DllMain @1
+XInputGetState=snow_xinput_original.XInputGetState @2
+XInputSetState=snow_xinput_original.XInputSetState @3
+XInputGetCapabilities=snow_xinput_original.XInputGetCapabilities @4
+XInputEnable=snow_xinput_original.XInputEnable @5
+XInputGetDSoundAudioDeviceGuids=snow_xinput_original.XInputGetDSoundAudioDeviceGuids @6
+XInputGetBatteryInformation=snow_xinput_original.XInputGetBatteryInformation @7
+XInputGetKeystroke=snow_xinput_original.XInputGetKeystroke @8
+Ordinal100="snow_xinput_original.#100" @100 NONAME
+Ordinal101="snow_xinput_original.#101" @101 NONAME
+Ordinal102="snow_xinput_original.#102" @102 NONAME
+Ordinal103="snow_xinput_original.#103" @103 NONAME

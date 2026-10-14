@@ -1,0 +1,3 @@
+LIBRARY snow_xinput_original.dll
+EXPORTS
+XInputSetState @3

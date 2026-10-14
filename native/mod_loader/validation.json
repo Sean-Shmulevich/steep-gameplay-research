@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-14",
+  "kind": "live_observation",
+  "environment": {
+    "wine_engine": "x64-sikarugir10.0_6-r21",
+    "renderer": "D3DMetal"
+  },
+  "experiment": {
+    "ok": true,
+    "original_dll_replaced": false,
+    "original_dll_verified": true,
+    "settings_restored": true,
+    "bottle_stopped": true
+  },
+  "probe": {
+    "ok": true,
+    "marker_matches": true,
+    "resumed": true,
+    "stable_20_seconds": true
+  },
+  "scheduler_observations": [
+    {
+      "tag": "baseline_a",
+      "mode": "00000001",
+      "step": 9560,
+      "end_frame": 9559
+    },
+    {
+      "tag": "baseline_b",
+      "mode": "00000001",
+      "step": 9595,
+      "end_frame": 9594
+    },
+    {
+      "tag": "held_a",
+      "mode": "00010101",
+      "step": 9685,
+      "end_frame": 9719
+    },
+    {
+      "tag": "held_b",
+      "mode": "00010101",
+      "step": 9685,
+      "end_frame": 9761
+    },
+    {
+      "tag": "loaded_held",
+      "mode": "00010101",
+      "step": 9685,
+      "end_frame": 9780
+    },
+    {
+      "tag": "before_resume",
+      "mode": "00010101",
+      "step": 9685,
+      "end_frame": 9780
+    },
+    {
+      "tag": "resumed_a",
+      "mode": "00000001",
+      "step": 9944,
+      "end_frame": 9943
+    },
+    {
+      "tag": "resumed_b",
+      "mode": "00000001",
+      "step": 10003,
+      "end_frame": 10002
+    },
+    {
+      "tag": "stability_0",
+      "mode": "00000001",
+      "step": 10003,
+      "end_frame": 10002
+    },
+    {
+      "tag": "stability_1",
+      "mode": "00000001",
+      "step": 10463,
+      "end_frame": 10462
+    },
+    {
+      "tag": "stability_2",
+      "mode": "00000001",
+      "step": 10931,
+      "end_frame": 10930
+    },
+    {
+      "tag": "stability_3",
+      "mode": "00000001",
+      "step": 11374,
+      "end_frame": 11373
+    },
+    {
+      "tag": "stability_4",
+      "mode": "00000001",
+      "step": 11830,
+      "end_frame": 11829
+    }
+  ],
+  "tests": {
+    "runner_guard_tests": 7,
+    "full_suite_tests": 646,
+    "full_suite_passed": true,
+    "packaging_check_passed": true
+  },
+  "limitations": [
+    "One end-to-end runner session plus the earlier manually orchestrated success; not a long-term stability study.",
+    "Pause and resume still use external build-specific tools.",
+    "The new DLL only records attachment; no hotkeys or internal mod API.",
+    "Raw captures, game files, generated binaries, and private environment dependencies are not published."
+  ]
+}

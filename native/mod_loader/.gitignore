@@ -1,0 +1,15 @@
+*.dll
+*.exe
+*.o
+*.a
+*.log
+# Explicitly publish these independently authored sources; the repository
+# otherwise ignores C exports from binary-analysis tools.
+!proxy.c
+!empty.c
+!smoke.c
+!call-smoke.c
+!trace.c
+!late_probe.c
+!load_probe.c
+!late_fixture.c

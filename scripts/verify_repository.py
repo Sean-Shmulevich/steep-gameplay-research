@@ -11,6 +11,19 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 allowed = {'.md', '.txt', '.json', '.py'}
+native_sources = {
+    'native/mod_loader/proxy.c',
+    'native/mod_loader/smoke.c',
+    'native/mod_loader/xinput.def',
+    'native/mod_loader/late_probe.c',
+    'native/mod_loader/load_probe.c',
+    'native/mod_loader/late_fixture.c',
+    'native/mod_loader/empty.c',
+    'native/mod_loader/trace.c',
+    'native/mod_loader/original-import.def',
+    'native/mod_loader/trace.def',
+    'native/mod_loader/call-smoke.c',
+}
 errors = []
 files = []
 for path in ROOT.rglob('*'):
@@ -21,7 +34,7 @@ for path in ROOT.rglob('*'):
     if not path.is_file():
         continue
     files.append(path)
-    if path.name != '.gitignore' and path.suffix not in allowed and path.relative_to(ROOT).as_posix() != 'engine/view.html':
+    if path.name != '.gitignore' and path.suffix not in allowed and path.relative_to(ROOT).as_posix() != 'engine/view.html' and path.relative_to(ROOT).as_posix() not in native_sources:
         errors.append(f'Unapproved file type: {path.relative_to(ROOT)}')
     if path.stat().st_size > 1_000_000:
         errors.append(f'Unexpected large file: {path.relative_to(ROOT)}')

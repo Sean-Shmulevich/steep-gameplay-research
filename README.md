@@ -12,6 +12,12 @@ Current priority: [scheduler reconstruction and modding release gates](engine/SC
 
 ## Start here
 
+The [native module loader experiment](native/mod_loader/README.md) now has a
+single command for the configured local research workspace: launch the original
+game, pause, load an attachment-only DLL, resume, verify, and clean up. It needs
+the existing private runtime tools and game installation; the public repository
+contains source and findings only.
+
 - [Current findings and open questions](docs/STATUS.md)
 - [Full research index](docs/INDEX.md)
 - [Evidence conventions and limitations](docs/EVIDENCE.md)
