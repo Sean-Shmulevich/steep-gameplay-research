@@ -2,7 +2,9 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 613 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 620 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+
+Seven [animation call-trace tests](../docs/reconstruction/ANIMATION_CALL_TRACE.md) cover exact packet decoding and conservative event pairing. A separate Wine/LLDB packet fixture recorded three selected-component pairs with expected interval/status values and filtered unrelated component stops. The updated observer also passed repeated hit, no-hit and signature-rejection fixtures. No original-game callback was observed in this pass, and debugger timings are not performance measurements.
 
 The separate [bounded debugger preflight](../docs/reconstruction/ANIMATION_DEBUGGER_BOUNDARY.md) passed three isolated Wine fixture cases: hardware entry/return stops, an independent no-hit deadline and rejection of a wrong signature with cleanup. These are additional private integration checks, not added to the 613 Python tests. They do not establish original-game packet capture, timing fidelity or safe scheduler control.
 

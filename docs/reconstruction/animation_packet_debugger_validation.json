@@ -1,0 +1,92 @@
+{
+  "schema": "animation-packet-debugger-validation-v1",
+  "scope": "Isolated synthetic Wine fixture; not original-game callback execution or scheduler control.",
+  "passed": true,
+  "checks": {
+    "clean_fixture_exit": true,
+    "debugger_exit": true,
+    "no_outer_timeout": true,
+    "detached": true,
+    "removed": true,
+    "no_cleanup_error": true,
+    "three_pairs": true,
+    "no_unmatched": true,
+    "selected_component": true,
+    "packet_values": true,
+    "other_component_filtered": true
+  },
+  "selected_pairs": 3,
+  "unmatched": 0,
+  "filtered_stops": 6,
+  "interval_bits": 1040187392,
+  "interval": 0.125,
+  "before_status": [
+    0,
+    0,
+    1
+  ],
+  "after_status": [
+    3,
+    7,
+    0
+  ],
+  "private_result_sha256": "f5983870b2c204fe382cc67b8013286a84283104a57c3a431a40d9d3ecfabbc5",
+  "source_hashes": {
+    "bounded_lldb.py": "e34c6bc4b9790a2f46752234628e34a57c078a95e4dc4f5c623591b3513e69b9",
+    "test_fixture.py": "f9a39ff9e157541ec5a7cb07ccea8c6143d0269df21d3124672cd8c10ab302d9",
+    "packet.s": "e7379308e1dc67ab2ec87b7898f80be228de6f30095145ce8ea5e09eb9486a02",
+    "PacketFixture.cs": "67bf1599dda527e3236f3223f848675d99f660cb6a43277c165ac55106782d47",
+    "build_packet.py": "31db9360937b6e4601fcb070cf2ffebf75dea3434cfad153540a7b84f5c3fa5b"
+  },
+  "regression_cases": [
+    {
+      "mode": "hits",
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "six_hits": true,
+        "correct_events": true,
+        "preserved_rcx": true,
+        "paired_stack": true,
+        "code_unchanged": true
+      },
+      "private_result_sha256": "2a64bf053c3e46fde3ab350968f10c2d44d5e216e9676b90a22db65cdd9ff768"
+    },
+    {
+      "mode": "no_hits",
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "no_hits": true,
+        "deadline": true
+      },
+      "private_result_sha256": "5be8c0ee2fbc43ab79eedb22fce64fdd5edfc59494bcc472f810198eccb08b8f"
+    },
+    {
+      "mode": "signature_failure",
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "no_hits": true,
+        "rejected": true
+      },
+      "private_result_sha256": "002fec80347292b0d0e19ac83fc351cd9fb7fdad57e40e7d9916ccf2e3ae717a"
+    }
+  ],
+  "game_accessed": false
+}
