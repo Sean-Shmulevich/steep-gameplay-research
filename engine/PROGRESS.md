@@ -659,3 +659,12 @@ captured-range shared-entry release. A constructor/destructor pair supplies a
 compatible owner layout, but producer context identity and normal delivery remain
 unproved. No idempotent drain or payload destruction is inferred. Documentation
 pass; last full suite remains 446 tests.
+
+
+## Static animation batch owner join
+
+Connected owner+batch through setup descriptor, evaluator storage and timestamp
+consumer to enqueue. Decoded cursor allocation/reset ordering and descriptor bit2
+as the source of the payload-processing gate. Auxiliary binding and automatic
+clock semantics remain open. This supersedes the prior offset-only owner lead,
+but does not establish live player identity. Documentation-only; last suite446.

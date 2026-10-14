@@ -738,3 +738,30 @@ unresolved instruction stretches in this image and is not usable as an ordinary
 linear-disassembly proof; no claims derived from its suspicious sequence.
 Next: confirm producer context=owner+110 and identify its normal consumer/clear
 path, using caller arguments and same array count/pointer accesses together.
+
+
+## Static owner-to-producer route closed
+
+Inspected setup `140d56080` (497) and context initializer `140db3070` (536).
+Setup RCX owner -> RDI; embedded evaluator owner+2c0. Descriptor at stack+20:
++0=owner+10 contents, +10=optional owner+108 object+278, +18=&owner+110,
++20=ffffffff masks, +24 constructed flags. Calls initializer with evaluator and
+&descriptor at `140d5619b`. Initializer descriptor+18 -> evaluator+58.
+Previously decoded `140db51b0` forwards evaluator+58 via stack+30; dispatcher
+`140db5370` forwards it as RCX to enqueue `140d2df10`. This closes the static
+producer context=owner+110 connection for this setup path. No live identity claim.
+
+Initializer copies descriptor0/+10/+18 to evaluator40/48/58, masks20/22 to
+372/374, descriptor24 bit2 to evaluator376 bit3; clears60,short7a/9a. Cursor
+array+b0 count+ba from resource+7a; array+2bc count+2c6 from resource+3a.
+Both resize `14116a040` element4/alignment4 and memset ff. Optional auxiliary
+context48: releases prior38 via `140db6be0`, acquires via `140d84b60` with
+resource and flagbits0/1; `140d8a2c0`. Then range `140dcb7c0` resetfalse,
+cursor `140db85f0` maskffff, `140d91df0`, conditional component registration.
+Finally active bit4 toggled off before `140dbf560` with preserve stackbyte1.
+Setup subsequently `140dc0540` offset0,historyreset,false/R9true invalidation,
+then `140db85f0` maskffff again.
+
+Next: normal owner batch consume/clear, auxiliary binder `140d84b60` for bits0/1,
+clock update through interior pointers. Constructor-compatible owner status is
+superseded by the static producer route above; live ownership remains unverified.

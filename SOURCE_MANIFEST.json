@@ -521,7 +521,7 @@
       "source": "runtime/testbench/run38/animation/private/NEXT_TRACE.md",
       "published": "docs/systems/animations/runtime-binding/trace-recipe.md",
       "source_sha256": "63d1d6ca328c3cd5d6898ddc32ad3bd035ad6d9e3168aecbc63fb6c05e74c921",
-      "published_sha256": "584a1d8619a824e838bf611ffcec896ccbce0c1ea25cf1e60854247910869861"
+      "published_sha256": "26fff8d32932533da90139318a6db23fc36a3378eb2ee4d51351026d34270dea"
     },
     {
       "source": "runtime/testbench/run38/environment/CLIENT_LOGIC.md",

@@ -1897,3 +1897,77 @@ this batch destruction. Nothing in these helpers proves delivery before teardown
 scheduler synchronization, reentrancy safety or a complete producer/owner join.
 The delivery consumer remains the highest-value next target; the exact cleanup
 contract can now constrain that investigation.
+
+
+## Producer-to-owner batch connection
+
+A setup routine now joins the previously compatible owner layout to the actual
+producer path. It configures the embedded evaluator and supplies the address of
+the owner's first batch array in a context descriptor. Evaluator initialization
+copies that descriptor pointer into the field later read by the timestamp track
+consumer. The consumer forwards it through the payload filters to the three-array
+enqueue helper. The constructor/destructor layout is therefore connected to a
+static producer path, rather than supported only by offset coincidence.
+
+```text
+owner setup:
+    evaluator = owner.embedded_evaluator
+    descriptor.batch = address_of(owner.timestamp_batch)
+    initialize_evaluator_context(evaluator, descriptor)
+
+evaluator initialization:
+    evaluator.batch = descriptor.batch
+
+later timestamp processing:
+    enqueue_timestamp_payload(evaluator.batch, payload, recipient, owner_record)
+```
+
+This establishes the pointer route for this setup path, not live identity in a
+captured player session or a universal route for all evaluators. Another earlier
+acquisition path supplies its own context descriptor.
+
+## Evaluator context initialization order
+
+The initializer copies the owner, auxiliary context and batch pointers, along
+with two 16-bit track masks. Descriptor flag bit 2 controls evaluator flag bit 3,
+which was previously observed gating timestamp payload processing. This joins
+that delivery gate to an explicit setup input without inventing its semantic name.
+
+It allocates two four-byte cursor arrays from resource counts and initializes
+every element to all-one bits. One count comes from a separate resource field;
+the timestamp array count matches the timestamp track-pointer array count. It
+then optionally releases and reacquires an auxiliary binding through the supplied
+context, forwarding evaluator flag bits 0 and 1 separately.
+
+```text
+initialize_evaluator_context(evaluator, descriptor):
+    copy_owner_auxiliary_batch_and_masks(evaluator, descriptor)
+    evaluator.flags.bit3 = descriptor.flags.bit2
+    evaluator.optional_pointer = null
+    clear_two_short_fields()
+    resize_and_fill_first_cursor_array(resource.first_count, 0xffffffff)
+    resize_and_fill_timestamp_cursors(resource.timestamp_track_count, 0xffffffff)
+    if evaluator.auxiliary_context != null:
+        release_previous_auxiliary_binding_if_present()
+        evaluator.auxiliary_binding = acquire_auxiliary_binding(
+            resource, evaluator.flags.bit0, evaluator.flags.bit1)
+        opaque_post_binding_setup(evaluator)
+    resolve_effective_range(reset_history=false)
+    reset_timestamp_cursors(mask=0xffff)
+    opaque_followup(evaluator)
+    conditionally_register_evaluator_with_owner_component()
+    if evaluator.flags.bit4:
+        temporarily_clear_bit4()
+        reapply_state_change_with_preserve_argument()
+```
+
+The two allocations and subsequent operations have no local transactional rollback
+in the inspected routine. Auxiliary binding semantics, component registration and
+the final bit-4 operation remain opaque. The ordering establishes that initial
+cursor state is derived after range resolution; it does not establish the
+per-frame update order or native deterministic replay.
+
+The owner setup path subsequently sets evaluator offset to zero with history reset
+and cache invalidation, then resets masked timestamp cursors again. Repeated cursor
+reset in that path is observed behavior, not a reason to remove one call from a
+reconstruction before its other effects and callers are understood.
