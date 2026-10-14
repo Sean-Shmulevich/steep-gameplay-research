@@ -95,11 +95,11 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
-    """Sampling callback for verified encoding IDs 0, 9, 12, 14, 21, 23 and 27 only."""
-    if type(descriptor) is not int or descriptor not in (0,9,12,14,21,23,27) or width != 16:
-        raise ValueError('supported descriptors are 0, 9, 12, 14, 21, 23 and 27 with width 16')
+    """Sampling callback for verified encoding IDs 0, 9, 11, 12, 14, 21, 23 and 27 only."""
+    if type(descriptor) is not int or descriptor not in (0,9,11,12,14,21,23,27) or width != 16:
+        raise ValueError('supported descriptors are 0, 9, 11, 12, 14, 21, 23 and 27 with width 16')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,27:sample_encoding_27}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,27:sample_encoding_27}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
@@ -119,20 +119,20 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,12,14,21,23,27):
+    if encoding not in (0,9,11,12,14,21,23,27):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
-    if encoding in (14,23):
+    if encoding in (11,14,23):
         if offset+10>len(data):raise ValueError('missing mask mode')
         mode=data[offset+9];size=mode&63
         mask=data[offset+10:offset+10+size]
         select_mask_key(mode,mask,0)
         if int.from_bytes(mask,'little').bit_count()!=count:
             raise ValueError('mask key count mismatch')
-        stride=6 if encoding==14 else 2
+        stride,alignment={11:(4,4),14:(6,2),23:(2,2)}[encoding]
         end=offset+10+size+stride*count
         if end>len(data):raise ValueError('truncated masked quaternion samples')
-        result=bytearray((size+3)&~1)
+        result=bytearray((size+1+alignment)&~(alignment-1))
         result[:2]=bytes((encoding,mode));result[2:2+size]=mask
         result.extend(data[offset+10+size:end])
         return {'encoding':encoding,'payload':bytes(result),'consumed':end-offset,
@@ -275,13 +275,16 @@ def _sample_mask_quaternion(payload,time,hint,cursor,encoding,rsqrt_estimate):
     if len(data)<2 or data[0]!=encoding:raise ValueError('unexpected mask quaternion header')
     mode=data[1];size=mode&63;mask=data[2:2+size]
     selected=select_mask_key(mode,mask,hint)
-    count=int.from_bytes(mask,'little').bit_count();offset=(size+3)&~1
-    stride=6 if encoding==14 else 2
+    count=int.from_bytes(mask,'little').bit_count()
+    stride,alignment={11:(4,4),14:(6,2),23:(2,2)}[encoding]
+    offset=(size+1+alignment)&~(alignment-1)
     if len(data)<offset+stride*count:raise ValueError('truncated masked quaternion samples')
     time=f32(time)
     if not math.isfinite(time):raise ValueError('expected finite sample time')
     index=selected['cursor']
     def decode(index):
+        if encoding==11:
+            return quaternion_smallest_three32(struct.unpack_from('<I',data,offset+stride*index)[0])
         if encoding==14:
             return quaternion_smallest_three48(struct.unpack_from('<3H',data,offset+stride*index))
         return quaternion_z16(struct.unpack_from('<H',data,offset+stride*index)[0])
@@ -302,3 +305,7 @@ def sample_encoding_14(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None
 
 def sample_encoding_23(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
     return _sample_mask_quaternion(payload,time,hint,cursor,23,rsqrt_estimate)
+
+
+def sample_encoding_11(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_mask_quaternion(payload,time,hint,cursor,11,rsqrt_estimate)

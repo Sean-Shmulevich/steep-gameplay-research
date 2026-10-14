@@ -920,3 +920,13 @@ checks. Two synthetic tests compare equivalent byte/mask timelines and exercise
 dispatch/truncation. No new native or independent-reference comparison claimed.
 
 Validation: 510 tests pass; packaging, hashes and local links pass.
+
+## Encoding-11 mask-time general rotations
+
+Verified calls to the encoding-9 value decoders and four-byte mask-track alignment.
+Added serialized adaptation, shared sampling and corpus support. All 15 original
+tracks pass; corpus now supports 1,000/1,052 tracks with 7,000 consistency checks.
+Two synthetic tests cover byte/mask equivalence, padding and dispatch. Independent
+numerical/native validation remains separate.
+
+Validation: 512 tests pass; packaging, hashes and local links pass.

@@ -50,3 +50,22 @@ serialized records. It does not establish native hardware bit equality, fresh
 archive extraction correctness or active player rig selection. Synthetic tests
 cover all four omitted positions, field order, invalid radicands, explicit seeds
 and serialized dispatch with nonzero X/Y rotation components.
+
+## Encoding 11: mask-time variant
+
+Callback `0x140d3fb90` selects timestamps through `0x140d580f0`. Sample storage
+starts at `(mask_length+5) & 0xfffffffc`, with four-byte stride. Its paired-value
+call at `0x140d3fc2c` targets `0x140d71660`; its single-value call at
+`0x140d3fee7` targets `0x140d723f0`. These are the encoding-9 value decoders.
+
+`sample_encoding_11` now composes that value decoding with mask timestamp selection.
+The serialized adapter and resource dispatcher accept encoding 11. Mask population
+count must match the serialized key count. Runtime sample alignment is four, which
+differs from the two-byte alignment of mask encodings 14 and 23.
+
+All 15 encoding-11 tracks in the original six-body corpus pass parsing and
+fresh/cached consistency. The corpus total is 1,000 supported tracks out of 1,052,
+with 7,000 sample checks. Two synthetic tests cover dispatch and equivalence with
+byte-time encoding 9, including a three-byte mask that requires padding to an
+eight-byte sample offset. No new independent-reference or native comparison is
+claimed for this variant. Scalar reciprocal estimates remain substitutes.

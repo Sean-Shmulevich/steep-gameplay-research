@@ -220,3 +220,25 @@ class Encoding23Tests(unittest.TestCase):
         sample_channel(Resource([Channel(23,payload,16)]),0,0,out,SampleState(0),registered_channel_decoder)
         self.assertEqual(out[:2],[0,0])
         with self.assertRaises(ValueError):unpack_serialized_channel(raw[:-1])
+
+
+class Encoding11Tests(unittest.TestCase):
+    def test_mask_byte_equivalence_and_four_byte_alignment(self):
+        from engine.animation_decoder import unpack_serialized_channel,sample_encoding_11,sample_encoding_9
+        words=struct.pack('<2I',(500<<20)|(600<<10)|400|(3<<30),(510<<20)|(580<<10)|430|(3<<30))
+        # Three mask bytes forces an eight-byte runtime sample offset.
+        mask=unpack_serialized_channel(bytes([11])+struct.pack('<II',8,2)+bytes([3,1,0,1])+words)['payload']
+        byte=unpack_serialized_channel(bytes([9])+struct.pack('<II',8,2)+bytes([16])+words)['payload']
+        self.assertEqual(mask[8:],words)
+        for hint in (0,8,16,100):
+            a=sample_encoding_11(mask,hint/60,hint,999)
+            b=sample_encoding_9(byte,hint/60,hint)
+            self.assertEqual(a['value'],b['value'])
+            self.assertEqual(a['cursor'],b['cursor'])
+
+    def test_dispatch(self):
+        from engine.animation_decoder import unpack_serialized_channel,registered_channel_decoder
+        raw=bytes([11])+struct.pack('<II',4,1)+bytes([1,1])+struct.pack('<I',(511<<20)|(511<<10)|511)
+        payload=unpack_serialized_channel(raw)['payload'];out=[]
+        sample_channel(Resource([Channel(11,payload,16)]),0,0,out,SampleState(0),registered_channel_decoder)
+        self.assertEqual(len(out),4)

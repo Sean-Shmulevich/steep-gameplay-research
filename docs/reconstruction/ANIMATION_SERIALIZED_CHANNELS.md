@@ -66,3 +66,6 @@ are now supported by the adapter and resource dispatcher.
 
 [Encoding 23](ANIMATION_PACKED_SAMPLER.md) shares the mode/mask serialized header
 with encoding 14 but stores two-byte Z/W quaternion samples. It is now supported.
+
+[Encoding 11](ANIMATION_SMALLEST_THREE_SAMPLER.md) uses mask timestamps and four-byte
+quaternion samples, aligned to four bytes in the runtime layout.
