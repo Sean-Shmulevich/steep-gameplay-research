@@ -1,0 +1,81 @@
+{
+  "status": "native_stop_mode_entered_and_cleared",
+  "observations": 1,
+  "writes": [
+    {
+      "tag": "enter",
+      "before": "00000001",
+      "written": "00010101",
+      "after": "00010101"
+    },
+    {
+      "tag": "clear",
+      "before": "00010101",
+      "written": "00000001",
+      "after": "00000001"
+    }
+  ],
+  "byte_order": "mode group bytes = neighbor_flag, mode, companion, request_argument; owner copy = per-frame copy of mode, companion",
+  "owner_copy_during_hold": [
+    "01010000"
+  ],
+  "frames_advanced_during_hold": 165,
+  "jobs": {
+    "step": {
+      "baseline": {
+        "ran_every_sampled_frame": true,
+        "last_run_constant": false
+      },
+      "held": {
+        "ran_every_sampled_frame": false,
+        "last_run_constant": true
+      },
+      "resumed": {
+        "ran_every_sampled_frame": true,
+        "last_run_constant": false
+      }
+    },
+    "paused": {
+      "baseline": {
+        "ran_every_sampled_frame": false,
+        "last_run_constant": true
+      },
+      "held": {
+        "ran_every_sampled_frame": true,
+        "last_run_constant": false
+      },
+      "resumed": {
+        "ran_every_sampled_frame": false,
+        "last_run_constant": true
+      }
+    },
+    "end_frame": {
+      "baseline": {
+        "ran_every_sampled_frame": true,
+        "last_run_constant": false
+      },
+      "held": {
+        "ran_every_sampled_frame": true,
+        "last_run_constant": false
+      },
+      "resumed": {
+        "ran_every_sampled_frame": true,
+        "last_run_constant": false
+      }
+    }
+  },
+  "counter_fields": "per job: current request number and last request in which the job executed",
+  "rendering_continued": true,
+  "camera_changed_during_hold": true,
+  "process_survived": true,
+  "skipped_engine_side_effects": [
+    "mode-transition notification helper called by the native setter",
+    "world/service transition work performed by the native clear routine"
+  ],
+  "debugger_attached": false,
+  "configuration_restored": true,
+  "scope": "One guarded compare-and-write of the four-byte global mode group, then a matching clear. The engine adopted the mode at its per-frame copy; Step stopped executing while UpdateWhileEngineIsPaused executed every frame; ordinary routing resumed after clear. Native setter/clear side effects were not reproduced. One observation, about 6 seconds held.",
+  "private_result_sha256": [
+    "210e6dc4a1ef7e660ff19549333d8858da19ed359868ba419ae52fea6239f827"
+  ]
+}

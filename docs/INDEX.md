@@ -34,6 +34,7 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [EndFrame completion and rearm](reconstruction/ENGINE_LOOP_HANDSHAKE.md)
 - [Engine event adapters: create, reset, signal, wait, close](reconstruction/ENGINE_EVENT_ADAPTER.md)
 - [Engine frame graph coverage of the EndFrame signal](reconstruction/ENGINE_FRAME_GRAPH_COVERAGE.md)
+- [Native stop mode: live world suspension](reconstruction/NATIVE_STOP_MODE.md)
 - [Explicit wait-helper accounting](reconstruction/WAIT_HELPER_DISPATCH.md)
 - [Executable alternate propagation](reconstruction/ALTERNATE_DEPENDENCY_MODEL.md)
 - [Engine-step action-chain caller](reconstruction/ACTION_REARM_CALLER.md)
