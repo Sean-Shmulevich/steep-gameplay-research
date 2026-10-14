@@ -83,3 +83,9 @@ request completion as a simulation-frame boundary.
 Consumer waits and four-lane staging refill are now decoded. Follow request
 submission, special lane-1 refill and context submission for ownership. Wait
 predicates remain observations without producer exclusion.
+
+
+Request free-ring acquisition, lane insertion and loading-worker notification are
+now joined. Lane1 refill saves/restores TLS and queries/revalidates provider
+registrations. Next inspect initializer/release and provider ordering, retaining
+capacity and lifetime contracts.

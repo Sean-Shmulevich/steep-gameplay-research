@@ -388,3 +388,36 @@ retains request+40, initializes subobjects+10/+20/+30 and copies byte to+6c.
 Next bounded targets: `14118d550`, `1411ab740`, `1411764a0`, and one
 associated producer. Preserve wait scope, capacity requirements and unclassified
 consumer callers. Four bodies <=24,000 linked bytes each.
+
+## Request submission and lane-1 provider pass
+
+Four pdata-linked bodies: `14118d550` (249), `1411ab740` (1355),
+`1411764a0` (175), `14118eae0` (221).
+
+Producer free ring storage+1a8/count+1b0/read+1b8/capacity+1bc is guarded
+by thread+1d8. It waits via `141c3d410(thread+218)` when count<=0, pops
+and decrements thread+224, then calls initializer `1411b8730` with literal
+EDX=1 and forwarded inputs, followed by submit `14118eae0`.
+Submit reads request+3c signed lane and +38 kind; under guard it increments
+thread+228, conditionally inserts at staging+108+lane*20, then increments
+thread+220 for kind0. No growth or lane bound check. After unlock, CAS on
+thread+208 uses old>=1 ? 1 : old+1; negative replaced old calls
+`141c3b570(thread+210)`. Capacity failure does not suppress those increments.
+
+Lane1 helper saves TLS+48, writes zero, saves mode via `1411dbfc0`, sets zero
+via `1411eda50`. Provider guard+ c8; list+f8/count word+102. Temporary
+records stride18 hex, provider+0, result byte+8, metadata+ c initialized to
+f423f as a qword. Provider virtual0 fills metadata and returns eligibility.
+Guard is released for `141185730`, then reacquired; an ineligible record ends
+the scan, eligible records require pointer membership before virtual+8. Nonzero
+thread+130 after invocation yields true. Cleanup restores TLS/mode on normal exit.
+Ordering/metadata helper remains opaque.
+
+Context submit `1411764a0` guards owner+28; calls `1411bacd0`,
+`141172690(context)`, stores owner+c0=context; conditional ring insertion at
++d8/count+e0/write+e4/capacity+ec; clears+d0; calls `141173f40` before
+unlock and `14115abb0`, `1411a8370` afterward. No direct wake identity asserted.
+
+Next: request initializer `1411b8730`, release `1411ade10`, provider ordering
+`141185730`, and one dependent lifetime helper. Keep capacity and registration
+lifetime requirements explicit. Four bounded bodies <=24,000 linked bytes each.

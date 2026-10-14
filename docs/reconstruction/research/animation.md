@@ -983,3 +983,73 @@ prove fairness or establish where producers acquire exclusion. The next useful
 ownership targets are the submission helper, special lane-1 refill and context
 submit operation. Other consumer caller families remain unclassified until their
 bodies are inspected.
+
+## Request allocation, lane submission and worker notification
+
+The request producer obtains a request pointer from a free-object ring under the
+loading-thread ring guard. If its signed count is not positive, it leaves the
+guard, calls the phase wait helper and retries. On success it pops a pointer,
+decrements a separate free-object count and leaves the guard before calling the
+request initializer. No stop check occurs in this local wait loop. Initializer
+semantics remain open; a non-null free-ring entry is a required invariant.
+
+Submission reads the signed lane and kind from the initialized request before
+entering the guard:
+
+```text
+submit_request(thread, request):
+    lane = signed32(request.lane)
+    kind = request.kind
+    enter(thread.ring_guard)
+    thread.queued_count = uint32(thread.queued_count + 1)
+    ring = thread.staging[lane]
+    if ring.capacity > ring.count:  # signed comparison
+        ring[ring.write] = request
+        ring.count += 1
+        ring.write = signed_remainder(ring.write + 1, ring.capacity)
+    if kind == 0:
+        thread.kind_zero_count = uint32(thread.kind_zero_count + 1)
+    leave(thread.ring_guard)
+    repeat:
+        old = thread.notification
+        desired = 1 if signed32(old) >= 1 else uint32(old + 1)
+    until compare_exchange(thread.notification, old, desired)
+    if signed32(old) < 0:
+        opaque_notify(thread.event)
+```
+
+The notification uses the successfully replaced old value. Counter increments
+and notification can occur even if the staging ring lacks room; there is no local
+growth, bounds check for lane, rollback or insertion-success return. Preserve
+those capacity/valid-lane requirements rather than claiming a lossless native
+submission API. This closes the producer-to-worker notification relationship for
+this path, not the opaque event's platform behavior.
+
+## Lane-1 refill is a provider callback pass
+
+The special refill helper saves the current TLS mask word and context mode,
+clears the mask and sets mode zero. Under a distinct provider-list guard it
+builds temporary records containing provider pointer, callback result byte and
+callback-written metadata. A virtual provider query initializes each record's
+metadata from a fixed default. It then leaves the guard and passes the temporary
+records through an unexpanded ordering/selection helper.
+
+After reacquiring the guard, it processes the selected records until an
+ineligible record or exhaustion. Before invoking a provider's second virtual
+method, it searches the current registered-provider list for the same pointer.
+Absent providers are skipped. After each invocation, nonzero lane-1 queue count
+causes an early true return. Normal exit releases owned temporary storage,
+restores the saved TLS word and mode, and returns whether that early success
+condition occurred. Exception restoration is not established.
+
+The pointer-membership recheck is real but does not independently pin lifetime or
+prevent equal-address reuse. Query and execution callbacks run under the provider
+guard; ordering/selection runs outside it. The ordering helper and metadata
+meaning remain unknown, so no provider priority formula is claimed yet.
+
+The context-submission helper is a separate stage: under its own guard it calls
+two preparation helpers, stores the context as current, conditionally appends it
+to a fixed-capacity ring, clears another pointer and calls an internal update.
+After leaving the guard it calls two further helpers. Those final helpers and
+context ownership remain unexpanded; none is named as a scheduler wake merely
+from its position in the call sequence.

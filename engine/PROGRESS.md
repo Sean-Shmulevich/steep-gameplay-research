@@ -533,3 +533,11 @@ Decoded single-key/lane request wait, all-request-queue wait and ascending
 four-lane refill with lane1 special handling. Consumer has multiple caller
 families; no universal frame cadence assigned. Capacity, allocation and producer
 exclusion contracts remain open. Documentation-only; last full suite 426 tests.
+
+
+## Request producer and provider refill context
+
+Joined free-ring acquisition, request initializer call, signed lane submission and
+loading notification protocol. Decoded lane1 provider query/membership recheck
+and normal TLS/mode restoration. Context-submission operations remain opaque.
+No process access; documentation-only, last full suite remains 426 tests.
