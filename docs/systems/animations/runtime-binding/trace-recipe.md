@@ -808,3 +808,15 @@ Eight sequential pair blocks confirmed before final restore/RET. Trailing jump
 table remains data. Added synthetic operation only, not inferred joint mappings.
 Next: `140dbdb30`, complete channel/hash-to-pair selection, and consumers of
 mapping packed high4 bits. Continue normal batch consumer investigation separately.
+
+
+## Class-word to mask conversion
+
+Inspected `140dbdb30` (123 pdata bytes). Mapping header RDX, pointer+0/countu16+a;
+entry stride8, classword+6. Label1 selects R8w,2 R9w,3 stack fifth argumentu16.
+Other words unchanged. MOV EAX,1; SHL AX,CL; storeword+6. Exact expression
+(1 << (index &31)) &ffff, not 1<<(index&15). Count re-read and u16 loop index.
+RCX incoming context not used by this body. Builder call `140dcabf3` passes
+R8w from stack-5f,R9w from SI,fifth from stack-61. Their producers remain open.
+Next: map those three producer indices and the eight pair identities through the
+channel/hash scan; keep classword+6 distinct from swapped indexword+4.

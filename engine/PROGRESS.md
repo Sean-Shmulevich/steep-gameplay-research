@@ -686,3 +686,13 @@ kernel with tests for preservation, overlap order, sentinel and alias behavior.
 Pair identities and flag semantics remain unresolved; no rig table synthesized.
 
 Validation: 449 tests pass; packaging, source hashes and local links pass.
+
+
+## Binding class-to-mask conversion
+
+Added recovered class1/2/3 to mask conversion with native five-bit shift counts
+and sixteen-bit result truncation. Tests cover preserved nonclass words, shift
+boundaries and non-idempotent repeated conversion. Class meanings and indices
+remain caller-supplied; no inferred rig data added.
+
+Validation: 452 tests pass; packaging, source hashes and local links pass.

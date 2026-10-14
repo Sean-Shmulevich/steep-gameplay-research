@@ -2094,3 +2094,37 @@ caller-supplied words and pairs, preserves operation order, and returns a copy.
 Its bounds and type checks are API safeguards added by the reconstruction. Tests
 cover retained flag bits, missing and self pairs, overlapping-pair order and
 invalid adapter inputs. It does not supply the missing rig mapping table.
+
+
+## Binding class-to-mask preparation
+
+The helper before the paired-index swaps converts a separate word in each
+eight-byte mapping entry. Labels 1, 2 and 3 select one of three caller-supplied
+unsigned16 indices. Other labels remain unchanged. The selected index becomes a
+16-bit mask using the native shift-count convention:
+
+```text
+for entry in mapping_entries:
+    label = entry.class_word
+    if label in {1, 2, 3}:
+        index = supplied_indices[label - 1]
+        entry.class_word = (1 << (index & 31)) & 65535
+```
+
+The x86 shift is `SHL AX,CL`. It masks the count to five bits, not four, before
+truncating the result to sixteen bits. Indices16 through31 therefore produce zero;
+32 produces one;65535 produces zero. The helper does not special-case a missing
+index sentinel. These are decoded edge cases, not recommended valid rig inputs.
+
+This field is distinct from the packed low12 index/high4 flags exchanged by the
+following pair swaps. Class conversion occurs whenever the builder's
+mapping-present gate succeeds; only the later swaps require the first variant
+flag. The class word cannot be treated as an already-normalized mask on entry.
+Repeated execution is not generally idempotent: with class indices1,3,5, label1
+becomes2, and a second call turns2 into8.
+
+The helper re-reads the unsigned16 entry count each iteration. It performs no
+allocation or callback and does not inspect the three indices' semantic names.
+The independent `resolve_binding_masks` kernel operates on supplied synthetic
+words and preserves this conversion. Caller-owned rig data and the preceding
+channel classification remain unresolved dependencies.

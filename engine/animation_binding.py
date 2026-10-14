@@ -28,3 +28,25 @@ def swap_binding_indices(words, pairs):
         result[first] = (left & 0xf000) | (right & 0x0fff)
         result[second] = (right & 0xf000) | (left & 0x0fff)
     return result
+
+
+def resolve_binding_masks(class_words, class_indices):
+    """Convert class labels 1/2/3 to 16-bit masks; preserve every other word.
+
+    Evidence: animation research, Binding class-to-mask preparation. The native
+    SHL AX,CL masks the shift count to five bits, then retains sixteen result
+    bits. Consequently indices16..31 yield0 and index32 wraps to bit0. Caller
+    supplies the three unresolved class indices; no class names are invented.
+    """
+    indices = tuple(class_indices)
+    if len(indices) != 3:
+        raise ValueError('expected three class indices')
+    if any(type(index) is not int or not 0 <= index <= 65535 for index in indices):
+        raise ValueError('expected uint16 class indices')
+    result = []
+    for word in class_words:
+        if type(word) is not int or not 0 <= word <= 65535:
+            raise ValueError('expected uint16 class word')
+        result.append(((1 << (indices[word - 1] & 31)) & 65535)
+                      if 1 <= word <= 3 else word)
+    return result

@@ -23,3 +23,23 @@ class BindingIndexSwapTests(unittest.TestCase):
                              ([0], [(-1, 0)]), ([True], [])]:
             with self.assertRaises(ValueError):
                 swap_binding_indices(words, pairs)
+
+
+class BindingMaskTests(unittest.TestCase):
+    def test_only_class_labels_change(self):
+        from engine.animation_binding import resolve_binding_masks as masks
+        self.assertEqual(masks([0, 1, 2, 3, 4, 65535], [0, 3, 15]),
+                         [0, 1, 8, 32768, 4, 65535])
+
+    def test_native_shift_count_and_word_truncation(self):
+        from engine.animation_binding import resolve_binding_masks as masks
+        self.assertEqual(masks([1, 2, 3], [16, 31, 32]), [0, 0, 1])
+        self.assertEqual(masks([1, 2, 3], [65535, 33, 47]), [0, 2, 32768])
+
+    def test_not_an_idempotent_general_mask_normalizer(self):
+        from engine.animation_binding import resolve_binding_masks as masks
+        first = masks([1], [1, 3, 5])
+        self.assertEqual(first, [2])
+        self.assertEqual(masks(first, [1, 3, 5]), [8])
+        with self.assertRaises(ValueError):
+            masks([1], [0, 1])
