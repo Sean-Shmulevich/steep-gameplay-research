@@ -8,7 +8,7 @@ The inspected caller saves its prior timer reading, obtains a new reading and su
 
 There is also a wait loop that obtains further timer readings until a stored target is reached. The difference used for this policy is computed before that loop and retained through it. Do not silently recompute elapsed time from the last read in a replacement.
 
-The global clock passed to the updater is also referenced by a world lifecycle path that searches its child list for the three embedded world clocks. The matching helper calls a vector helper on a found entry. That provides a static ownership lead; it does not prove current live child membership, registration order or which timing mode was active during the animation capture.
+The global clock passed to the updater is also referenced by a world lifecycle path that searches its child list for the three embedded world clocks. The matching helper calls a vector helper on a found entry. The subsequent [constructor audit](CLOCK_OBSERVATION.md) confirms that all three world clocks are appended uniquely to this root collection. Current live child membership and the timing mode active during the animation capture remain unproved.
 
 ## Recovered policies
 

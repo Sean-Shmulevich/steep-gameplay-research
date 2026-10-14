@@ -1,0 +1,14 @@
+{
+  "status": "statically_inspected",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "instruction_span_sha256": [
+    "ece635137c8d6c2e1f16a05de1382ebafc4363cdf411a61b635895397d653661",
+    "ce5c95add567cd049b870bd40ef0a967f6e928a6c0b1f14af2d0e862647a5111",
+    "8e4eb72c09feb2fb79430e00c648a4aa4f08685b532d338adfba15a4325683f8",
+    "a633afc434117231a09087d962b699b71795e257b8c4b8d361d11ea246215414",
+    "961aee780460bb5421bf40d8c5db0aaecf4f8c309a90358bae7d1cd80ae3f0bb",
+    "65d8a4924ac943a02b641e26e5eab3121a9a516ae686010b2402b7d885dc5aaf"
+  ],
+  "divisor_arithmetic_cases": 1007,
+  "scope": "World embedded-clock bases and unique root child registration helper inspected; frequency divisor strength reduction checked against unsigned integer division. Not live membership or imported timer API verification."
+}
