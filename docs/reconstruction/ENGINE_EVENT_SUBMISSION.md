@@ -1,6 +1,6 @@
 # Engine end-of-frame event branch
 
-The alternate branch in the [engine rearm caller](ACTION_REARM_CALLER.md) uses a handle stored in the engine owner. It does not submit the ordinary root job. The protected adapter was subsequently decoded and its live target resolved to `kernel32.dll!SetEvent`; see [the later capture](ENGINE_EVENT_ADAPTER.md#live-target-resolution). The restart-side `reset_candidate` and consumer adapters were later resolved to `ResetEvent` and `WaitForSingleObject` ([handshake capture](ENGINE_EVENT_ADAPTER.md#live-handshake-resolution)). Returned status, lifetime and scheduler-drain guarantees remain separate questions.
+The alternate branch in the [engine rearm caller](ACTION_REARM_CALLER.md) uses a handle stored in the engine owner. It does not submit the ordinary root job. The protected adapter was subsequently decoded and its live target resolved to `kernel32.dll!SetEvent`; see [the later capture](ENGINE_EVENT_ADAPTER.md#live-target-resolution). The restart-side `reset_candidate` and consumer adapters were later resolved to `ResetEvent` and `WaitForSingleObject` ([handshake capture](ENGINE_EVENT_ADAPTER.md#live-handshake-resolution)). Creation was later resolved to `CreateEventA` with an unchecked result. Returned status, close/lifetime and scheduler-drain guarantees remain separate questions.
 
 ## Recovered receiver and operation order
 

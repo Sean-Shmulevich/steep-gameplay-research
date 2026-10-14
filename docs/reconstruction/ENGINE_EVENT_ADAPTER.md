@@ -79,3 +79,19 @@ The EndFrame result repeats the earlier capture in a new process. Each target wa
 Combined with the recovered `(null, 1, 0, null)` construction arguments, the handshake is now a manual-reset, initially unsignaled event: restart resets it, an EndFrame that observes alternate mode signals it instead of resubmitting the root, and the outer routine waits on it with an infinite timeout before clearing the start flag. The creation call's own adapter target remains unresolved, so `CreateEvent` itself is inferred from argument shape, not observed.
 
 This is API identity only. The test did not invoke any target, observe a return status or a wait completing, attach a debugger or modify state. Event creation failure, handle close/lifetime, request-byte visibility and whether the signaling EndFrame covers all outstanding work remain open gates. A known signal/wait pair is not by itself a safe stepping boundary.
+
+## Creation, close candidate and live owner state
+
+The holder constructor wrapper and two adjacent one-handle helpers use the same protected encoded-slot transfer. [Synthetic validation](engine_event_lifecycle_validation.json) covered 64 creation states and 40 states for each adjacent helper. Creation is an ordinary call rather than a tail transfer. It passes `(0, !second_bool, first_bool, 0)` to the target, so the engine constructor's two false arguments produce `(null, TRUE, FALSE, null)`. The wrapper stores whatever value is returned, including null, in the holder without a check, and returns the holder address.
+
+[A second fresh passive session](live_engine_event_lifecycle_validation.json) resolved these targets and reproduced the three handshake targets:
+
+| Helper | Export |
+| --- | --- |
+| Holder constructor wrapper | `kernel32.dll!CreateEventA` |
+| Close candidate (31 direct callers) | `kernel32.dll!CloseHandle` |
+| Adjacent generic helper | `ntdll.dll!RtlLeaveCriticalSection` (not an event operation) |
+
+The engine event is therefore an unnamed, manual-reset, initially unsignaled `CreateEventA` event. Construction has no failure branch: a null handle would be stored and later passed to `ResetEvent`, `SetEvent` and `WaitForSingleObject`. The close candidate is confirmed as `CloseHandle`, but no call with the engine's holder as receiver has been found, so the engine event's close remains unbound (see [owner destruction](ENGINE_OWNER_DESTRUCTION.md)).
+
+The same session sampled the engine owner 24 times over about five seconds during gameplay. The owner pointer was stable and non-null. The holder contained one stable non-null handle. The start flag was 1, alternate mode 0 and the setup gate 1 in every sample. This is the state expected while the outer routine sits in its infinite wait: start set by the restart routine and not yet cleared by the consumer. The consumer thread's blocked state itself was not observed.

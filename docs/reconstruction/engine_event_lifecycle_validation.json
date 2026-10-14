@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "source_sha256": "924bbd25cbdcae00ef45bf5ca395648de14495f68ce83b691ff589774ef67cb1",
+  "helpers": {
+    "create_candidate": {
+      "synthetic_cases": 64,
+      "image_data_reads_per_case": 1,
+      "decoded_target_addend": 274556934,
+      "original_image_target_is_noncanonical": true,
+      "contract": "Ordinary call (returns to the holder store). API receives (0, manual_reset = !second_bool, initial_state = first_bool, 0). Returned value, including null, is stored in the holder without a check; helper returns the holder address."
+    },
+    "handle_op_1400": {
+      "synthetic_cases": 40,
+      "image_data_reads_per_case": 1,
+      "decoded_target_addend": 1754353936,
+      "original_image_target_is_noncanonical": true
+    },
+    "handle_op_13c0": {
+      "synthetic_cases": 40,
+      "image_data_reads_per_case": 1,
+      "decoded_target_addend": 2073066768,
+      "original_image_target_is_noncanonical": true
+    }
+  },
+  "scope": "Original protected create and two adjacent one-handle helpers with synthetic encoded slots. No target API executed."
+}

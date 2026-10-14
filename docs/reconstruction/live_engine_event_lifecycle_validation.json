@@ -1,0 +1,73 @@
+{
+  "status": "live_targets_resolved",
+  "observations": 1,
+  "adapters": {
+    "end_frame_signal": {
+      "module": "kernel32.dll",
+      "exact_export": "SetEvent",
+      "live_instruction_spans_verified": 75,
+      "target_in_executable_section": true
+    },
+    "reset_candidate": {
+      "module": "kernel32.dll",
+      "exact_export": "ResetEvent",
+      "live_instruction_spans_verified": 47,
+      "target_in_executable_section": true
+    },
+    "wait_candidate": {
+      "module": "kernel32.dll",
+      "exact_export": "WaitForSingleObject",
+      "live_instruction_spans_verified": 48,
+      "target_in_executable_section": true
+    },
+    "create_candidate": {
+      "module": "kernel32.dll",
+      "exact_export": "CreateEventA",
+      "live_instruction_spans_verified": 91,
+      "target_in_executable_section": true
+    },
+    "handle_op_1400": {
+      "module": "kernel32.dll",
+      "exact_export": "CloseHandle",
+      "live_instruction_spans_verified": 51,
+      "target_in_executable_section": true
+    },
+    "handle_op_13c0": {
+      "module": "ntdll.dll",
+      "exact_export": "RtlLeaveCriticalSection",
+      "live_instruction_spans_verified": 64,
+      "target_in_executable_section": true
+    }
+  },
+  "engine_owner": {
+    "owner_pointer_nonnull": true,
+    "samples": 24,
+    "distinct_handles": 1,
+    "handle_nonnull": true,
+    "handle_stable": true,
+    "start_flag_values": [
+      1
+    ],
+    "alternate_mode_values": [
+      0
+    ],
+    "setup_gate_values": [
+      1
+    ],
+    "sampling": "24 reads at about 200 ms intervals during gameplay; owner pointer rechecked"
+  },
+  "encoded_slots_stable": true,
+  "module_headers_rechecked": true,
+  "debugger_attached": false,
+  "memory_writes": false,
+  "target_invoked_by_test": false,
+  "consumer_thread_state_observed": false,
+  "close_of_engine_holder_observed": false,
+  "safe_scheduler_step_established": false,
+  "game_stop": "deliberate research bottle stop",
+  "configuration_restored": true,
+  "scope": "Passive export identity for the engine event create, reset, signal and wait adapters and two adjacent holder helpers in one Highball Wine session, plus sampled engine-owner holder and mode bytes. Does not bind CloseHandle to the engine holder, observe a blocked consumer thread, or establish quiescence.",
+  "private_result_sha256": [
+    "76b457e7354c43563083a07d7f0bcd07dfd73761bc9f610b2f3e331deae2f300"
+  ]
+}

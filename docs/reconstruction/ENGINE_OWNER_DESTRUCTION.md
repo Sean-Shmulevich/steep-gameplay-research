@@ -17,7 +17,7 @@ construct_engine_owner(engine):
     initialize_other_engine_fields()
 ```
 
-The protected creation operation's exact API remains the boundary recorded in [the event submission audit](ENGINE_EVENT_SUBMISSION.md). The recovered storage is one handle field in an inline holder; no reference count or ownership token is added by the inspected wrapper.
+The protected creation operation was later resolved to `kernel32.dll!CreateEventA`, with its result stored unchecked ([live capture](ENGINE_EVENT_ADAPTER.md#creation-close-candidate-and-live-owner-state)). The recovered storage is one handle field in an inline holder; no reference count or ownership token is added by the inspected wrapper.
 
 Start, end-of-frame and consume operate on that same holder. Start sets the start flag and clears alternate mode before its reset-candidate operation and root submission. Consume loads the global engine owner, performs the protected handle operation, then clears start. Neither inspected path clears the stored handle or nulls the global owner pointer.
 
@@ -33,7 +33,7 @@ The start flag therefore cannot be substituted for a reference count or handle-v
 
 ## Candidate holder destruction is not yet bound to this owner
 
-A small holder helper loads the handle through its receiver and calls a protected target. Ordinary object teardown routines invoke this helper on their inline event holders, making it a close/destruction candidate. The protected operation is not resolved as a particular platform API.
+A small holder helper loads the handle through its receiver and calls a protected target. Ordinary object teardown routines invoke this helper on their inline event holders, making it a close/destruction candidate. The protected operation was later resolved to `kernel32.dll!CloseHandle` ([live capture](ENGINE_EVENT_ADAPTER.md#creation-close-candidate-and-live-owner-state)); the identity join to the engine holder below is still missing.
 
 ```text
 candidate_destroy_holder(holder):
@@ -76,3 +76,7 @@ These are unresolved proof conditions, not assertions that the original engine m
 The concrete owner constructor, holder constructor wrapper, candidate holder teardown wrapper, exact consumer and immediate outer post-consume path were decoded from the analyzed image. Its SHA-256 is `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`.
 
 The direct-call scan and established global-owner reference searches do not cover every indirect dispatch, protected caller, alias or inlined teardown. No raw executable material, machine-local path or unsupported destructor binding is included in this document.
+
+## Later static and live narrowing
+
+The engine constructor has no direct call or pointer reference in the ordinary code section, and the global owner slot has no plain store there. Both its invocation and owner publication are therefore reached from protected code. A full direct-call scan of the `CloseHandle` wrapper still finds no engine-holder receiver. A live sample during gameplay showed a stable owner and handle. A process-lifetime owner remains consistent with every observation but is not proved.
