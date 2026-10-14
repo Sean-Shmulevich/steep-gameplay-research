@@ -1146,3 +1146,15 @@ four tests cover branch and arithmetic boundaries. Registration also consumes
 an incoming callable container; concrete callback classes remain unresolved.
 
 Validation: 563 tests pass; packaging, hashes and local links pass.
+
+## Named animation threshold producer
+
+Connected GetUpdateThresholds registration, installer, concrete callback and
+outer-update consumption. The callback's seventh byte directly supplies the
+deferral threshold. Recovered defaults, two-component gate, three-bit table
+selector and kind-40 override are executable without naming unknown fields.
+Original callback arithmetic matched 400 synthetic cases with component/type
+lookups stubbed. Four tests cover packet behavior and policy composition.
+Component writers, source table population and scheduler caller remain open.
+
+Validation: 567 tests pass; packaging, hashes and local links pass.

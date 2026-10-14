@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 400,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original GetUpdateThresholds callback with synthetic components/table. Component lookup and type getter are stubbed; callback stores, branches and selector arithmetic execute original instructions. Seven output bytes match and nine trailing bytes remain unchanged. No live component resolution, table population or scheduler validation."
+}
