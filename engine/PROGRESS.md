@@ -460,3 +460,14 @@ the guarded processing wrapper, including its existing staged-destruction phase.
 Decoded entry-index calculation and corrected record preparation's record
 argument. Deferred triple consumer remains untraced; no native pause guarantee.
 Documentation-only pass; last full runtime validation remains 420 tests.
+
+
+## Deferred animation triple consumer
+
+Decoded captured-count consumption, key-only stale check, bit31 marking and
+dispatch through the entry's current record. Added a decision helper and tests
+that preserve the absence of generation/recycled-bit checks. Traced registry
+lookup and TLS-gated per-item preparation/processing; helper semantics and
+producer-to-published count transfer remain open. No native process accessed.
+
+Validation: all 423 independent tests pass.

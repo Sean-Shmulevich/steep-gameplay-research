@@ -470,3 +470,79 @@ Two additional local joins were inspected:
 Next: inspect the opaque processing phase and its called triple consumer. Match
 its key/record/entry accesses to queue storage and distinguish removal, binding,
 and destruction work before introducing a reconstructed queue executor.
+
+## Deferred triple consumer and current-record dispatch
+
+The consumer holds the manager entry guard and atomically exchanges a separate
+published count with zero. It executes that captured count's decrement-to-zero
+loop, removing one 24-byte triple per iteration. The producer previously traced
+increments a different counter. Their publication join remains open.
+
+```text
+consume_published_triples(manager):
+    enter(manager.entry_guard)
+    remaining = atomic_exchange_u32(manager.published_count, 0)
+    while remaining != 0:
+        # Native path requires a populated ring for each captured iteration.
+        key, queued_record, entry = pop_ring_triple(manager)
+        if entry.key == key:
+            atomic_set_bit(entry.flags, 31)
+            current_record = entry.record
+            if current_record != null:
+                dispatch_record(dispatch_registry, current_record)
+        remaining = uint32(remaining - 1)
+    leave(manager.entry_guard)
+```
+
+The queued record is copied out of the ring but is not consumed by this function.
+The match compares the full key against the pointed-to entry's current key. It
+does not compare record identity, allocation generation, entry counter, or the
+recycled bit. Reuse with a different key is skipped; equal-key reuse is not
+rejected locally. A broader lifetime/queue contract may prevent it, but remains
+unproved. The flag CAS reloads flags on retry and preserves other bits.
+
+If the captured count exceeds ring population, the inspected code reaches an
+entry dereference with a null local pointer. This is a required count/population
+invariant, not a claim that a live execution violates it. Producer growth failure
+and the missing publication join must be understood before modeling this as a
+safe general-purpose queue. The independent decision helper implements only the
+key check, flag update and current-record dispatch choice; it does not execute
+the native ring or invent a lifetime guard.
+
+Dispatch takes a guard on its registry, obtains an entry from the current record
+using the shared lookup with key zero and explicit record, and temporarily
+increments that entry's counter. It uses the resulting entry key to find a
+registry value, then drops the temporary reference and runs the known inner
+release when required. A found registry value is processed before leaving the
+registry guard. This establishes a route to registered per-resource work, not yet
+the provider row resolver or clip readiness.
+
+The registry-value processor's local gate is:
+
+```text
+entry = registry_value.entry
+mask = thread_local_word | (all_64_bits_set if entry.flags.bit31 else 0)
+if (raw_pointer_bits(entry.record) & mask) == 0:
+    return
+for index in current_item_range:
+    if item_state[index] == 0:
+        if opaque_prepare_item(registry_value, index, prepare_context):
+            item_state[index] = 1
+    if item_state[index] != 0:
+        opaque_process_item(registry_value, index, process_context)
+```
+
+The raw pointer-bit test is preserved without assigning undocumented semantics to
+the TLS word. With bit 31 set it reduces to a non-null record check. The item
+count is a 16-bit field re-read as the loop proceeds. The two item helpers remain
+unexpanded; state value one must not be labeled loaded, decoded or rendered yet.
+
+A nearby loading-thread phase inspected as a candidate was a different mechanism:
+it visits newly appended 16-byte callback records since a saved index, calls each
+function, then updates that saved index under a guard. It does not consume this
+triple ring. Keeping the two mechanisms separate avoids a false scheduler join.
+
+Next: locate the producer-to-published-count transfer and inspect the two item
+helpers to identify which work is performed. Then follow their result toward the
+provider row reader. These remain static findings without a live readiness or
+safe-modification claim.

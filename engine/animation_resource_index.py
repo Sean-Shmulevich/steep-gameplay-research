@@ -60,3 +60,21 @@ def encode_record_index(record_word, entry_index):
     word = _uint(record_word, 32)
     index = _uint(entry_index, 32)
     return (word & 0xfff80000) | ((index + 1) & 0x7ffff)
+
+
+def deferred_entry_decision(queued_key, current_key, flags, *, has_current_record):
+    """Local consumer decision after a triple is removed from the ring.
+
+    The queued record is deliberately absent: this consumer does not use it.
+    Caller supplies observations, not a pinned/atomic native snapshot. Setting
+    flags describes the successful CAS outcome, not a CAS implementation.
+    """
+    queued = _uint(queued_key, 64)
+    current = _uint(current_key, 64)
+    flags = _uint(flags, 32)
+    if type(has_current_record) is not bool:
+        raise ValueError('has_current_record must be bool')
+    if queued != current:
+        return {'action': 'skip', 'flags': flags}
+    return {'action': 'dispatch_current_record' if has_current_record else 'mark_only',
+            'flags': flags | 0x80000000}

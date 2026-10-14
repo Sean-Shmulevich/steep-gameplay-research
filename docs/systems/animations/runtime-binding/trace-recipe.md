@@ -162,3 +162,36 @@ Next bounded candidates: `141198740`, its evidence-selected triple consumer,
 and at most two directly dependent helpers. Do not treat broad references to
 `143301d80` as animation-specific: this shared manager has many resource clients.
 Four new function bodies maximum, each <=24,000 pdata-linked bytes.
+
+## Triple consumption and dispatch
+
+Four pdata-linked bodies: `141198740` (220 bytes), `1411989a0` (160),
+`1411a8bd0` (240), `1411b9270` (166).
+
+`141198740` guards manager+b8 and exchanges manager+50 into EDI. Each
+iteration pops from ring storage+0, count+8, read+10, capacity+14. Key and entry
+are taken from triple+0/+10; triple+8 is not used after copy. Entry+10 key match
+precedes bit31 CAS on entry+c, current record reload and `1411a8bd0` call.
+Producer `1411afb10` increments manager+54, not +50. Publication still open.
+No generation or recycled-bit check is present at this consumer boundary.
+
+`1411a8bd0` guards registry+8, obtains a temporary entry via `141192640`
+with key zero/record override under the resource global guard, looks up its key
+in registry+0, decrements/releases the temporary entry, then calls `1411b9270`
+when a registry value exists.
+
+`1411b9270` reads entry from receiver+8 and TLS word at TLS+48. It ORs
+that word with sign-extension of entry+c bit31 and tests against raw entry+0
+record pointer bits. Item count is receiver+1a; state-byte array pointer is
+receiver+1c. Zero state calls `14066b790` with receiver+48 context; nonzero
+return writes state=1. Nonzero state calls `14068f610` with receiver+28 context.
+Count is re-read each iteration. The unaligned state-array pointer field is
+reported as observed, not normalized into a guessed class layout.
+
+Rejected consumer candidate `1411989a0` uses receiver+318 callback array,
++322 16-bit count, +324 saved index and +2e8 guard. It is a separate incremental
+callback phase, not the triple ring.
+
+Next: find manager+54 to +50 publication, inspect `14066b790` and `14068f610`,
+then one directly dependent result reader. Bound four new bodies, each <=24,000
+pdata-linked bytes. Native queue lifetime and original clip selection remain open.

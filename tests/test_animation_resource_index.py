@@ -64,3 +64,20 @@ class AnimationResourceLifetimeTests(unittest.TestCase):
         self.assertEqual(decode_record_index(encode_record_index(0, 0x80000))['index'], 0)
         with self.assertRaises(ValueError):
             encode_record_index(0, -1)
+
+
+class DeferredAnimationDecisionTests(unittest.TestCase):
+    def test_stale_key_does_not_mark_or_dispatch(self):
+        from engine.animation_resource_index import deferred_entry_decision
+        self.assertEqual(deferred_entry_decision(8, 9, 0x10, has_current_record=True),
+                         {'action': 'skip', 'flags': 0x10})
+
+    def test_matching_key_marks_even_without_current_record(self):
+        from engine.animation_resource_index import deferred_entry_decision
+        self.assertEqual(deferred_entry_decision(8, 8, 0x10, has_current_record=False),
+                         {'action': 'mark_only', 'flags': 0x80000010})
+
+    def test_matching_key_dispatches_current_record_without_generation_guard(self):
+        from engine.animation_resource_index import deferred_entry_decision
+        self.assertEqual(deferred_entry_decision(8, 8, 0x04000000, has_current_record=True),
+                         {'action': 'dispatch_current_record', 'flags': 0x84000000})

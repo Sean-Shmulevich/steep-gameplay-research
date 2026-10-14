@@ -45,3 +45,8 @@ see the latest trace-recipe section. Do not label entry flag bit 31 as readiness
 The manager mode setter now joins the known loading-thread pending/busy waits
 and guarded processing wrapper. The next exact entry is the opaque processing
 phase listed in the latest trace recipe; stale-triple handling remains open.
+
+
+The triple consumer is now decoded: key check, bit31 set, current-record dispatch.
+Producer counter +54 and consumed counter +50 remain unjoined. Next targets are
+the publication writer and per-item prepare/process helpers in the trace recipe.
