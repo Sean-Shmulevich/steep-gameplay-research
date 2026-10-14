@@ -127,3 +127,32 @@ class Encoding21Tests(unittest.TestCase):
     def test_truncated_sample(self):
         from engine.animation_decoder import sample_encoding_21
         with self.assertRaises(ValueError):sample_encoding_21(bytes([21,1]),0,0)
+
+
+class Encoding9Tests(unittest.TestCase):
+    def test_all_omitted_positions_and_field_order(self):
+        from engine.animation_decoder import quaternion_smallest_three32 as decode
+        field=(500<<20)|(600<<10)|400
+        reference=decode(field|3<<30)
+        for missing in range(4):
+            result=decode(field|missing<<30)
+            self.assertEqual(result[:missing]+result[missing+1:],reference[:3])
+            self.assertGreater(result[missing],0)
+            self.assertAlmostEqual(sum(x*x for x in result),1,places=6)
+
+    def test_invalid_word_and_injected_seed(self):
+        from engine.animation_decoder import quaternion_smallest_three32 as decode
+        with self.assertRaises(ValueError):decode(0)
+        word=(511<<20)|(511<<10)|511
+        self.assertNotEqual(decode(word),decode(word,rsqrt_estimate=.9))
+
+    def test_serialized_dispatch_preserves_xy_rotation(self):
+        from engine.animation_decoder import unpack_serialized_channel, registered_channel_decoder
+        w=(500<<20)|(600<<10)|400|(3<<30)
+        raw=bytes([9])+struct.pack('<II',4,1)+struct.pack('<I',w)
+        parsed=unpack_serialized_channel(raw)
+        out=[];state=SampleState(0)
+        sample_channel(Resource([Channel(9,parsed['payload'],16)]),0,0,out,state,registered_channel_decoder)
+        self.assertNotEqual(out[0],0)
+        self.assertNotEqual(out[1],0)
+        self.assertEqual(state.cursor,0)

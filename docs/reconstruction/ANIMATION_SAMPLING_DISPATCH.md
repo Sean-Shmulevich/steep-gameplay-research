@@ -112,3 +112,6 @@ reserialized keys, not original channel slices.
 
 [Encoding 21](ANIMATION_PACKED_SAMPLER.md) adds a two-byte restricted quaternion
 path with serialized-byte validation on 170 private tracks.
+
+[Encoding 9](ANIMATION_SMALLEST_THREE_SAMPLER.md) provides general three-axis
+quaternion decoding through the same dispatcher and serialized adapter.

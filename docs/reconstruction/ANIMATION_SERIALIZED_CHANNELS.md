@@ -51,3 +51,7 @@ shared-track resolution, other encodings and active graph selection remain open.
 
 [Encoding-21 packed quaternion validation](ANIMATION_PACKED_SAMPLER.md) adds
 170 original serialized rotation tracks to this adapter's checked corpus.
+
+[Encoding 9](ANIMATION_SMALLEST_THREE_SAMPLER.md) is also supported, with four-byte
+packed general quaternion samples and runtime alignment four. Its original-byte
+comparison covers 127 tracks.

@@ -846,3 +846,14 @@ receipt only. Three synthetic tests cover packed bits, dispatch, rewind and boun
 Other rotation encodings and full rig selection remain open.
 
 Validation: 493 tests pass; packaging, hashes and local links pass.
+
+## Encoding-9 general quaternion decoding
+
+Recovered ten-bit components, omitted xyzw insertion and reciprocal-refined
+square-root arithmetic from single and paired helpers. Connected byte-time
+sampling, serialized adaptation and dispatch. Original slices supplied 127 tracks
+and 889 comparisons, maximum sign-invariant component difference
+1.25930273264796e-07. Three synthetic tests cover omitted positions, field order,
+seed policy and general rotations. Native parity and full rig selection remain open.
+
+Validation: 496 tests pass; packaging, hashes and local links pass.
