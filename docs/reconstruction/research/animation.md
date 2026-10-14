@@ -2044,3 +2044,53 @@ resource and context counts. Its remaining large switch and index transformation
 have not been decoded here. These are useful leads for how variants affect rig
 mapping, but do not yet justify naming the flags mirroring, looping or reversing.
 The existing independent provider adapter does not manufacture these mappings.
+
+
+## Paired binding index swaps
+
+A bounded inspection of the builder's final mapping block resolves one concrete
+effect of its first flag. The block runs only when an earlier channel scan set a
+mapping-present byte. It calls an opaque mapping-preparation helper, then tests
+the stored first flag. If enabled, it visits eight fixed pairs of indices in a
+fixed order. An index equal to unsigned16 65535 marks a missing member and skips
+that pair.
+
+For present members, the mapping array has eight-byte entries containing a packed
+16-bit word. Only the low 12 bits are exchanged; the high four bits remain with
+their original slots:
+
+```text
+swap_pair(first_word, second_word):
+    old_first = first_word
+    first_word = (old_first & 0xf000) | (second_word & 0x0fff)
+    second_word = (second_word & 0xf000) | (old_first & 0x0fff)
+```
+
+Equivalently, the first assignment uses XOR-and-XOR to replace its masked bits.
+The second uses the saved first index. The formula also leaves a self-pair
+unchanged. Pairs execute sequentially, so overlapping pairs must not be evaluated
+from one common snapshot. The native block checks the missing sentinel but does
+not check array bounds locally.
+
+```text
+if mapping_present:
+    prepare_mapping(...)
+    if first_flag:
+        for first, second in eight_ordered_pairs:
+            if first != 65535 and second != 65535:
+                swap_low12(mapping[first].packed_word,
+                           mapping[second].packed_word)
+```
+
+The pair indices come from the preceding channel/hash scan. Their semantic joint
+names, complete selection rules and high-bit meanings remain unresolved. The
+operation is consistent with a paired remap, but does not prove left/right
+mirroring, ski stance switching or any particular sport behavior. A branch in the
+preceding scan also reads the second flag for one channel key; its downstream
+effect is not decoded yet.
+
+The independent `engine.animation_binding.swap_binding_indices` kernel accepts
+caller-supplied words and pairs, preserves operation order, and returns a copy.
+Its bounds and type checks are API safeguards added by the reconstruction. Tests
+cover retained flag bits, missing and self pairs, overlapping-pair order and
+invalid adapter inputs. It does not supply the missing rig mapping table.

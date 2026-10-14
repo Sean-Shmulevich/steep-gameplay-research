@@ -788,3 +788,23 @@ Pdata span3348 includes trailing jump-table bytes after RET `140dcaf2c`;
 those are not executable instructions. Large switch body not semantically
 resolved this pass. Next: bounded CFG of builder, its flag-dependent remap swaps,
 and native binding consumers. Avoid calling flagbits mirror/loop without proof.
+
+
+## Builder paired-index block
+
+Bounded instruction windows in `140dca260`: prefix/channel branch
+`140dca4f0..140dca61a`, mapping gate/swaps `140dcabce..140dcaf0c`.
+Builder+5a starts0, recognized channel path at `140dca6b4` sets1. Gate +5a
+nonzero calls `140dbdb30`; stored first flag+5b nonzero enables eight swap blocks.
+Each pair compares both u16 indices with global `141f1de00`, verified ffff.
+Mapping entries base binding+20,stride8,packed word+4. Mask0fff exchange,
+f000 preserve; saved first low12 written second. No local index bounds checks.
+
+First pair uses stack -5d and R13w; subsequent pairs use earlier scan's recorded
+indices. Do not name those pairs without completing the channel/hash map.
+Channel key2c52cbb0 path `140dca610` reads second-flag byte at RBP+77 into
+R13b before generic channel processing; downstream role remains unresolved.
+Eight sequential pair blocks confirmed before final restore/RET. Trailing jump
+table remains data. Added synthetic operation only, not inferred joint mappings.
+Next: `140dbdb30`, complete channel/hash-to-pair selection, and consumers of
+mapping packed high4 bits. Continue normal batch consumer investigation separately.

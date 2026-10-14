@@ -676,3 +676,13 @@ Decoded four flag-pair salts, key-only unsigned lookup, unused-list reuse and th
 65535 individually-destroyed allocation path. Builder prefix confirms key and flag
 storage; remaining mapping logic and flag meanings remain open. No fabricated
 rig mappings added. Static documentation pass; last suite remains 446 tests.
+
+
+## Executable paired binding-index operation
+
+Recovered first-flag-gated sequential low12 swaps across eight mapping pairs,
+preserving high4 bits and skipping absent members. Added a standalone validated
+kernel with tests for preservation, overlap order, sentinel and alias behavior.
+Pair identities and flag semantics remain unresolved; no rig table synthesized.
+
+Validation: 449 tests pass; packaging, source hashes and local links pass.
