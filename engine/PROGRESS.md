@@ -791,3 +791,13 @@ across 2,313 hint/cursor combinations. Other timestamp selectors and interpolati
 remain open; no game payloads used.
 
 Validation: 475 tests pass; packaging, hashes and local links pass.
+
+## Encoding-zero quaternion interpolation
+
+Recovered and implemented source-copy, polynomial and near-aligned quaternion
+sampling branches with explicit float32 operation order. Kept general blend
+behavior unchanged. Documented injected versus scalar reciprocal seeds and the
+unresolved runtime tick-scale producer. Four synthetic tests cover branch behavior
+and safeguards; full channel decoding remains incomplete.
+
+Validation: 479 tests pass; packaging, hashes and local links pass.

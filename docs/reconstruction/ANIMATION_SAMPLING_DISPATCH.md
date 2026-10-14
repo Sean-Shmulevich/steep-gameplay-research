@@ -101,3 +101,7 @@ alone does not identify translation, rotation, scale or auxiliary semantics.
 Encoding zero's [byte-time key selection](ANIMATION_KEY_SELECTION.md) is now
 implemented, including cursor reuse, rewind search and packed tick outputs.
 Interpolation and other timestamp-format selectors remain separate work.
+
+The [encoding-zero interpolation branches](ANIMATION_QUATERNION_SAMPLER.md)
+now have a sampler-specific executable helper. Runtime time-scale initialization
+and full payload decoding remain unconnected.
