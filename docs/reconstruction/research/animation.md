@@ -1971,3 +1971,76 @@ The owner setup path subsequently sets evaluator offset to zero with history res
 and cache invalidation, then resets masked timestamp cursors again. Repeated cursor
 reset in that path is observed behavior, not a reason to remove one call from a
 reconstruction before its other effects and callers are understood.
+
+
+## Auxiliary binding cache variants and lifetime
+
+The two evaluator flag bits forwarded to auxiliary binding acquisition select
+four variants of a 32-bit cache key. The same formula appears in acquisition,
+miss handling and the binding builder's prefix:
+
+| First flag | Second flag | Salt XORed with resource binding key |
+| --- | --- | --- |
+| false | false | 00000000 |
+| true | false | f43b125c |
+| false | true | f4ce7b28 |
+| true | true | f58c3d26 |
+
+The base key is a resource dword distinct from the 64-bit animation ID. The
+combined-flags salt is independently selected; it is not derived by XORing the
+two single-flag salts. A sorted array of 16-byte key/pointer pairs is searched by
+unsigned lower bound. A key hit does not locally compare the original resource
+pointer, so collision handling cannot be presumed from this routine.
+
+```text
+acquire_auxiliary_binding(cache, resource, flag0, flag1):
+    lock(cache.guard)
+    key = u32(resource.binding_key XOR salt[flag0, flag1])
+    item = unsigned_lower_bound(cache.entries, key)
+    if item matches key:
+        binding = item.pointer
+        if binding.count == 0:
+            unlink_from_unused_list(binding)
+            binding.previous = null
+            binding.next = null
+        binding.count = u16(binding.count + 1)
+    else:
+        binding = create_or_reuse_binding(cache, resource, flag0, flag1)
+    unlock(cache.guard)
+    return binding
+```
+
+The miss path reuses the unused-list tail when available. It unlinks that item,
+removes its old key association, inserts the new key association, rebuilds it for
+the resource and flag pair, then sets its count to one. If no unused binding is
+available, it allocates 96 bytes aligned to eight, constructs and builds it, then
+sets its count to 65535. No cache insertion appears on that fresh-allocation
+branch. Allocation failure is not handled gracefully before the builder call.
+
+Release distinguishes the 65535 sentinel from counted cached entries:
+
+```text
+release_auxiliary_binding(cache, binding):
+    lock(cache.guard)
+    if binding.count == 65535:
+        destroy_binding(binding)
+        free_storage(binding)
+    else:
+        binding.count = u16(binding.count - 1)
+        if binding.count == 0:
+            link_at_unused_list_head(binding)
+    unlock(cache.guard)
+```
+
+This establishes separate cached/reusable and fresh/individually-destroyed paths.
+No local underflow or overflow protection appears on the 16-bit count. The cache
+lock is held across the miss builder and release destructor calls; their blocking
+and reentrant behavior remains unresolved. This binding count is separate from
+both shared-resource counters previously studied.
+
+The builder prefix stores the derived key and both input bytes, initializes
+several remap/index fields to sentinels, and allocates mapping arrays based on
+resource and context counts. Its remaining large switch and index transformations
+have not been decoded here. These are useful leads for how variants affect rig
+mapping, but do not yet justify naming the flags mirroring, looping or reversing.
+The existing independent provider adapter does not manufacture these mappings.

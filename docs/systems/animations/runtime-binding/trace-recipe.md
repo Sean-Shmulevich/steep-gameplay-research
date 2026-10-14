@@ -765,3 +765,26 @@ then `140db85f0` maskffff again.
 Next: normal owner batch consume/clear, auxiliary binder `140d84b60` for bits0/1,
 clock update through interior pointers. Constructor-compatible owner status is
 superseded by the static producer route above; live ownership remains unverified.
+
+
+## Auxiliary binding variant cache
+
+Inspected `140d84b60` (359), `140d96d20` (313), `140db6be0` (173).
+Cache guard+20, sorted pairs pointer+8/countu16+12, stride10 hex; key resource+5c
+XOR salts flags00=0,10=f43b125c,01=f4ce7b28,11=f58c3d26. Unsigned lower
+bound; key-only equality. Hit binding+58 count0 unlinks prev+40/next+48 from
+cache head+50/tail+58, clears links, increments countu16. Otherwise increments.
+Miss reuses tail, erases old binding+38 key via `140d621d0`, inserts new via
+`141015d60`, builds `140dca260`,count1. No tail: alloc60 hex/alignment8,
+ctor `140d7d260`, builder, countffff; no insertion shown on this branch.
+
+Release under same guard: countffff -> `140d7fe80` then allocator free;
+otherwise decrementword, zero links at cache head+50, initializes tail+58 if
+empty. No local counter bounds checks. Separate from shared entry references.
+
+Builder `140dca260` prefix confirms same salt/key, stores key+38, flags+5b/+5c,
+initializes remap fields and resizes arrays from resource+7a and context counts.
+Pdata span3348 includes trailing jump-table bytes after RET `140dcaf2c`;
+those are not executable instructions. Large switch body not semantically
+resolved this pass. Next: bounded CFG of builder, its flag-dependent remap swaps,
+and native binding consumers. Avoid calling flagbits mirror/loop without proof.

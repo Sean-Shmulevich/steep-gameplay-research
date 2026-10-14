@@ -668,3 +668,11 @@ consumer to enqueue. Decoded cursor allocation/reset ordering and descriptor bit
 as the source of the payload-processing gate. Auxiliary binding and automatic
 clock semantics remain open. This supersedes the prior offset-only owner lead,
 but does not establish live player identity. Documentation-only; last suite446.
+
+
+## Auxiliary animation binding variants and cache lifetime
+
+Decoded four flag-pair salts, key-only unsigned lookup, unused-list reuse and the
+65535 individually-destroyed allocation path. Builder prefix confirms key and flag
+storage; remaining mapping logic and flag meanings remain open. No fabricated
+rig mappings added. Static documentation pass; last suite remains 446 tests.
