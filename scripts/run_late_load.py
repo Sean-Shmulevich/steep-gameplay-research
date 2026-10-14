@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Run the bounded late-load experiment in an already configured research workspace.
 
+--experiment probe (default) loads the attachment-only diagnostic DLL.
+--experiment host loads the Snow mod host and drives pause/step/resume through
+its command channel. The host build needs the private game adapter in the workspace.
+
 Only source is published. Highball, the owned game, and earlier private research
 helpers must already exist in --workspace. No game DLL is replaced.
 """
@@ -30,10 +34,13 @@ REQUIRED = [
     'analysis/engine-event-reset-wait/private/modewrite/NativeCall.exe',
     'analysis/engine-event-reset-wait/private/modewrite/ModeWrite.exe',
 ]
+HOST_ADAPTER = 'analysis/mod-host/private/steep_adapter.c'
+HOST_RESTORE = 'analysis/mod-host/private/restore_mode.py'
 
 
-def preflight(root):
-    missing = [str(p) for p in REQUIRED if not (root / p).is_file()]
+def preflight(root, experiment='probe'):
+    required = REQUIRED + ([HOST_ADAPTER, HOST_RESTORE] if experiment == 'host' else [])
+    missing = [str(p) for p in required if not (root / p).is_file()]
     cc = shutil.which('x86_64-w64-mingw32-gcc')
     if not cc:
         missing.append('x86_64-w64-mingw32-gcc on PATH')
@@ -73,9 +80,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, default=REPO.parent)
     parser.add_argument('--check', action='store_true', help='Check local prerequisites without launching Wine or the game')
+    parser.add_argument('--experiment', choices=['probe', 'host'], default='probe')
+    parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
     args = parser.parse_args()
+    if not 1 <= args.steps <= 60:
+        raise RuntimeError('--steps must be 1..60')
     root = args.workspace.expanduser().resolve()
-    cc = preflight(root)
+    cc = preflight(root, args.experiment)
     if args.check:
         print(f'Prerequisites OK: {root}\nOriginal DLL verified. No game launched.')
         return 0
@@ -95,7 +106,7 @@ def main():
     out.mkdir()
     build = out / 'build'
     build.mkdir()
-    result = {'ok': False, 'session': str(out), 'original_dll_replaced': False}
+    result = {'ok': False, 'session': str(out), 'experiment': args.experiment, 'original_dll_replaced': False}
     children = []; handles = []; watchdog = None
 
     def start(argv, name):
@@ -107,13 +118,22 @@ def main():
 
     try:
         print(f'Session: {out}', flush=True)
-        print('Building the attachment-only DLL and guarded loader...', flush=True)
         src = REPO / 'native/mod_loader'
-        with (out / 'build.log').open('w') as log:
-            for command in [
+        host = REPO / 'native/snow_host'
+        if args.experiment == 'host':
+            print('Building the mod host and its loader...', flush=True)
+            commands = [
+                [cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host), '-o', str(build/'snow_host.dll'), str(host/'snow_host.c'), str(root/HOST_ADAPTER), '-lws2_32'],
+                [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'host_loader.exe'), str(host/'host_loader.c')],
+            ]
+        else:
+            print('Building the attachment-only DLL and guarded loader...', flush=True)
+            commands = [
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-nostdlib', '-Wl,--entry,LoaderEntry', '-o', str(build/'late_probe.dll'), str(src/'late_probe.c'), '-lkernel32'],
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'load_probe.exe'), str(src/'load_probe.c')],
-            ]:
+            ]
+        with (out / 'build.log').open('w') as log:
+            for command in commands:
                 subprocess.run(command, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=60)
         print('Launching original game (five-minute maximum, memory watchdog active)...', flush=True)
         watchdog = start([sys.executable, str(root/'runtime/bounded-test.py'), '--renderer', 'd3dmetal', '--seconds', '300', '--direct', '--disable-d3d10', '--native-xinput', '--result-dir', str(out/'watchdog')], 'launch')
@@ -123,12 +143,16 @@ def main():
         nav_result = json.loads((out/'navigation/navigation-result.json').read_text())
         if not nav_result.get('gameplay_hud_observed'):
             raise RuntimeError('Gameplay HUD was not verified; no pause or load attempted.')
-        print('Gameplay verified. Pausing, loading, resuming, and observing for 20 seconds...', flush=True)
-        probe = start([sys.executable, str(REPO/'scripts/late_load_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe')], 'probe')
-        wait_stage(probe, watchdog, 90)
+        if args.experiment == 'host':
+            print(f'Gameplay verified. Loading the host, then pause, {args.steps} world steps, resume, and 20 seconds of observation...', flush=True)
+            probe = start([sys.executable, str(REPO/'scripts/host_session_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe'), '--steps', str(args.steps)], 'probe')
+        else:
+            print('Gameplay verified. Pausing, loading, resuming, and observing for 20 seconds...', flush=True)
+            probe = start([sys.executable, str(REPO/'scripts/late_load_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe')], 'probe')
+        wait_stage(probe, watchdog, 90 + (3 * args.steps if args.experiment == 'host' else 0))
         result['probe'] = json.loads((out/'probe/result.json').read_text())
         if not result['probe'].get('ok'):
-            raise RuntimeError('Probe did not pass all pause/load/resume checks.')
+            raise RuntimeError('Probe did not pass all checks; see probe/result.json.')
         result['ok'] = True
     except KeyboardInterrupt:
         result['error'] = 'Interrupted by user; closing the owned experiment.'

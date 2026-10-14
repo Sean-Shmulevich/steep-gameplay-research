@@ -33,6 +33,17 @@ class LateLoadRunnerTests(unittest.TestCase):
                     runner.preflight(root)
             self.assertEqual(dll.read_bytes(), b'synthetic fixture')
 
+    def test_host_experiment_requires_private_adapter(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name in runner.REQUIRED:
+                p = root/name
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes(b'synthetic fixture')
+            with patch.object(runner.shutil, 'which', return_value='/compiler'):
+                with self.assertRaisesRegex(RuntimeError, 'steep_adapter.c'):
+                    runner.preflight(root, 'host')
+
     def test_watchdog_exit_aborts_pending_stage(self):
         child = Mock(); child.poll.return_value = None
         watchdog = Mock(); watchdog.poll.return_value = 0

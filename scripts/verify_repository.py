@@ -23,6 +23,10 @@ native_sources = {
     'native/mod_loader/original-import.def',
     'native/mod_loader/trace.def',
     'native/mod_loader/call-smoke.c',
+    'native/snow_host/snow_host.c',
+    'native/snow_host/snow_adapter.h',
+    'native/snow_host/fixture_adapter.c',
+    'native/snow_host/host_loader.c',
 }
 errors = []
 files = []

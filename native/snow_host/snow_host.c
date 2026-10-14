@@ -1,0 +1,480 @@
+/* Snow mod host v0: persistent late-loaded host with a loopback command channel.
+ *
+ * DllMain does nothing. SnowHost_Start (run once on a new thread after
+ * LoadLibraryW returns) starts two threads:
+ *   io thread       - accepts one 127.0.0.1 client at a time and parses requests.
+ *                     It never touches game memory.
+ *   executor thread - the only thread that calls the adapter. Commands run
+ *                     serially. It also owns the recovery lease: a host-held
+ *                     pause is released when the lease expires or the client
+ *                     disconnects.
+ * Protocol: one JSON object per line. See README.md.
+ */
+#define WIN32_LEAN_AND_MEAN
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include "snow_adapter.h"
+
+#define HOST_VERSION "0.1.0"
+#define API_VERSION 1
+#define DEFAULT_PORT 47017
+#define MAX_LINE 4096
+#define MAX_REPLY 16384
+#define MAX_STEPS 60
+#define DEFAULT_LEASE_MS 30000
+#define MAX_LEASE_MS 300000
+#define STEP_TIMEOUT_MS 2000
+
+typedef struct Request {
+    long long id;
+    char method[48];
+    long long count, lease_ms;
+    int has_id, has_count, has_lease;
+} Request;
+
+static HMODULE self;
+static LONG started;
+static unsigned short port;
+static WCHAR dir[MAX_PATH];
+static CRITICAL_SECTION log_lock;
+static HANDLE work_ev, done_ev;
+static Request pending;
+static char reply[MAX_REPLY];
+static int reply_ok;
+static char bind_why[160];
+static int bound;
+
+/* Executor-owned state. */
+static int host_paused, faulted;
+static uint32_t pause_baseline;
+static uint64_t pause_owner;
+static DWORD lease_ms;
+static ULONGLONG lease_deadline;
+static char last_recovery[96];
+static long long commands_completed, commands_failed;
+static ULONGLONG start_tick;
+static LARGE_INTEGER qpf;
+
+/* ---------- logging and output ---------- */
+
+static void host_log(const char *tag, const char *fmt, ...) {
+    WCHAR path[MAX_PATH];
+    if (_snwprintf(path, MAX_PATH, L"%ls\\snow_host.log", dir) < 0) return;
+    char line[512];
+    SYSTEMTIME t; GetSystemTime(&t);
+    int n = snprintf(line, sizeof line, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ [%s] ",
+                     t.wYear, t.wMonth, t.wDay, t.wHour, t.wMinute, t.wSecond, t.wMilliseconds, tag);
+    va_list ap; va_start(ap, fmt);
+    n += vsnprintf(line + n, sizeof line - n - 2, fmt, ap);
+    va_end(ap);
+    if (n > (int)sizeof line - 2) n = sizeof line - 2;
+    line[n++] = '\n';
+    EnterCriticalSection(&log_lock);
+    HANDLE f = CreateFileW(path, FILE_APPEND_DATA, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (f != INVALID_HANDLE_VALUE) { DWORD w; WriteFile(f, line, n, &w, NULL); CloseHandle(f); }
+    LeaveCriticalSection(&log_lock);
+}
+
+typedef struct Out { char *p; size_t n, len; } Out;
+static void put(Out *o, const char *fmt, ...) {
+    if (o->len >= o->n) return;
+    va_list ap; va_start(ap, fmt);
+    int k = vsnprintf(o->p + o->len, o->n - o->len, fmt, ap);
+    va_end(ap);
+    if (k > 0) o->len = (o->len + k < o->n) ? o->len + k : o->n;
+}
+static void put_group(Out *o, uint32_t g) {
+    put(o, "\"%02x%02x%02x%02x\"", SNOW_GROUP_BYTE(g, 0), SNOW_GROUP_BYTE(g, 1), SNOW_GROUP_BYTE(g, 2), SNOW_GROUP_BYTE(g, 3));
+}
+static void put_str(Out *o, const char *s) {
+    put(o, "\"");
+    for (; *s; s++) put(o, (*s == '"' || *s == '\\') ? "\\%c" : ((unsigned char)*s < 0x20 ? " " : "%c"), *s);
+    put(o, "\"");
+}
+
+static void write_marker(const char *state) {
+    WCHAR path[MAX_PATH];
+    if (_snwprintf(path, MAX_PATH, L"%ls\\snow_host.json", dir) < 0) return;
+    FILETIME c, e, k, u; GetProcessTimes(GetCurrentProcess(), &c, &e, &k, &u);
+    char buf[512]; Out o = {buf, sizeof buf, 0};
+    put(&o, "{\"host_version\":\"%s\",\"api_version\":%d,\"state\":\"%s\",\"pid\":%lu,\"created\":\"%llx\",\"port\":%u,\"adapter\":",
+        HOST_VERSION, API_VERSION, state, GetCurrentProcessId(),
+        ((unsigned long long)c.dwHighDateTime << 32) | c.dwLowDateTime, port);
+    put_str(&o, snow_adapter.name);
+    put(&o, ",\"bound\":%s,\"bind_error\":", bound ? "true" : "false");
+    put_str(&o, bound ? "" : bind_why);
+    put(&o, "}\n");
+    HANDLE f = CreateFileW(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (f != INVALID_HANDLE_VALUE) { DWORD w; WriteFile(f, buf, (DWORD)o.len, &w, NULL); CloseHandle(f); }
+}
+
+/* ---------- request parsing (strict, small subset of JSON) ---------- */
+
+static const char *ws(const char *s) { while (*s == ' ' || *s == '\t' || *s == '\r') s++; return s; }
+static const char *parse_str(const char *s, char *dst, size_t n) {
+    if (*s != '"') return NULL;
+    size_t k = 0;
+    for (s++; *s != '"'; s++) {
+        if (!*s || *s == '\\' || (unsigned char)*s < 0x20 || k + 1 >= n) return NULL;
+        dst[k++] = *s;
+    }
+    dst[k] = 0;
+    return s + 1;
+}
+static const char *parse_int(const char *s, long long *v) {
+    char *end; long long x = strtoll(s, &end, 10);
+    if (end == s || *end == '.' || *end == 'e' || *end == 'E') return NULL;
+    *v = x; return end;
+}
+static const char *parse_params(const char *s, Request *r) {
+    s = ws(s); if (*s++ != '{') return NULL;
+    s = ws(s); if (*s == '}') return s + 1;
+    for (;;) {
+        char key[24];
+        if (!(s = parse_str(ws(s), key, sizeof key))) return NULL;
+        s = ws(s); if (*s++ != ':') return NULL;
+        s = ws(s);
+        if (!strcmp(key, "count")) { if (!(s = parse_int(s, &r->count))) return NULL; r->has_count = 1; }
+        else if (!strcmp(key, "lease_ms")) { if (!(s = parse_int(s, &r->lease_ms))) return NULL; r->has_lease = 1; }
+        else return NULL;
+        s = ws(s);
+        if (*s == ',') { s++; continue; }
+        if (*s == '}') return s + 1;
+        return NULL;
+    }
+}
+static int parse_request(const char *s, Request *r) {
+    memset(r, 0, sizeof *r);
+    s = ws(s); if (*s++ != '{') return 0;
+    for (;;) {
+        char key[16];
+        if (!(s = parse_str(ws(s), key, sizeof key))) return 0;
+        s = ws(s); if (*s++ != ':') return 0;
+        s = ws(s);
+        if (!strcmp(key, "id")) { if (!(s = parse_int(s, &r->id))) return 0; r->has_id = 1; }
+        else if (!strcmp(key, "method")) { if (!(s = parse_str(s, r->method, sizeof r->method))) return 0; }
+        else if (!strcmp(key, "params")) { if (!(s = parse_params(s, r))) return 0; }
+        else return 0;
+        s = ws(s);
+        if (*s == ',') { s++; continue; }
+        if (*s == '}') break;
+        return 0;
+    }
+    return *ws(s + 1) == 0 && r->has_id && r->method[0];
+}
+
+/* ---------- executor: the only code that calls the adapter ---------- */
+
+static double ms_since(LARGE_INTEGER t0) {
+    LARGE_INTEGER t; QueryPerformanceCounter(&t);
+    return (double)(t.QuadPart - t0.QuadPart) * 1000.0 / (double)qpf.QuadPart;
+}
+
+static int read_now(SnowCounters *c, Out *err) {
+    char why[160];
+    if (snow_adapter.read(c, why, sizeof why) == 0) return 1;
+    put(err, "\"error\":\"read_failed\",\"detail\":"); put_str(err, why);
+    return 0;
+}
+
+/* Wait until EndFrame has run at least `frames` further requests. */
+static int wait_frames(SnowCounters *c, uint32_t from, uint32_t frames, DWORD ms) {
+    ULONGLONG end = GetTickCount64() + ms;
+    char why[160];
+    while (GetTickCount64() < end) {
+        if (snow_adapter.read(c, why, sizeof why)) return 0;
+        if (c->end_frame - from >= frames) return 1;
+        Sleep(1);
+    }
+    return 0;
+}
+
+static void put_counters(Out *o, const char *name, const SnowCounters *c) {
+    put(o, "\"%s\":{\"group\":", name); put_group(o, c->group);
+    put(o, ",\"held\":%s,\"step\":%u,\"paused_job\":%u,\"end_frame\":%u}",
+        SNOW_GROUP_HELD(c->group) ? "true" : "false", c->step, c->paused, c->end_frame);
+}
+
+static int do_status(Out *o) {
+    SnowCounters c;
+    put(o, "\"host_version\":\"%s\",\"api_version\":%d,\"adapter\":", HOST_VERSION, API_VERSION);
+    put_str(o, snow_adapter.name);
+    put(o, ",\"bound\":%s,\"uptime_ms\":%llu,\"host_paused\":%s,\"faulted\":%s,\"commands_completed\":%lld,\"commands_failed\":%lld",
+        bound ? "true" : "false", GetTickCount64() - start_tick, host_paused ? "true" : "false",
+        faulted ? "true" : "false", commands_completed, commands_failed);
+    if (host_paused) put(o, ",\"lease_ms\":%lu,\"lease_remaining_ms\":%lld", lease_ms, (long long)(lease_deadline - GetTickCount64()));
+    if (last_recovery[0]) { put(o, ",\"last_recovery\":"); put_str(o, last_recovery); }
+    if (!bound) { put(o, ",\"bind_error\":"); put_str(o, bind_why); return 1; }
+    char why[160];
+    if (snow_adapter.read(&c, why, sizeof why)) { put(o, ",\"read_error\":"); put_str(o, why); return 1; }
+    put(o, ","); put_counters(o, "engine", &c);
+    put(o, ",\"ordinary\":%s", SNOW_GROUP_ORDINARY(c.group) ? "true" : "false");
+    return 1;
+}
+
+static int do_pause(const Request *r, Out *o) {
+    SnowCounters a, b;
+    long long lease = r->has_lease ? r->lease_ms : DEFAULT_LEASE_MS;
+    if (lease < 1000 || lease > MAX_LEASE_MS) { put(o, "\"error\":\"bad_params\",\"detail\":\"lease_ms must be 1000..%d\"", MAX_LEASE_MS); return 0; }
+    if (!read_now(&a, o)) return 0;
+    if (host_paused && SNOW_GROUP_HELD(a.group) && a.owner == pause_owner) {
+        lease_ms = (DWORD)lease;
+        put(o, "\"already_held_by_host\":true,"); put_counters(o, "engine", &a);
+        return 1;
+    }
+    if (!SNOW_GROUP_ORDINARY(a.group)) { put(o, "\"error\":\"not_ordinary\",\"group\":"); put_group(o, a.group); return 0; }
+    /* Step must be advancing before we claim to have paused it. */
+    if (!wait_frames(&b, a.end_frame, 3, 1000) || b.step == a.step) { put(o, "\"error\":\"step_not_advancing\""); return 0; }
+    pause_baseline = b.group; pause_owner = b.owner;
+    snow_adapter.enter();
+    host_paused = 1; lease_ms = (DWORD)lease; /* claim first so the lease can recover a partial enter */
+    SnowCounters h1, h2;
+    if (!wait_frames(&h1, b.end_frame, 2, 1000) || !SNOW_GROUP_HELD(h1.group) ||
+        !wait_frames(&h2, h1.end_frame, 3, 1000) || h2.step != h1.step) {
+        put(o, "\"error\":\"hold_not_verified\"");
+        return 0; /* host_paused stays set; the client should resume, or the lease will */
+    }
+    put(o, "\"baseline_group\":"); put_group(o, pause_baseline);
+    put(o, ",\"lease_ms\":%lu,", lease_ms); put_counters(o, "engine", &h2);
+    return 1;
+}
+
+/* Leave stop mode through the engine's clear routine; restore the recorded
+ * baseline group by compare-and-swap only if the routine did not. */
+static int release_hold(Out *o, const char *reason) {
+    SnowCounters a, b, c;
+    if (!read_now(&a, o)) return 0;
+    if (a.owner != pause_owner) { put(o, "\"error\":\"owner_changed\""); host_paused = 0; return 0; }
+    /* Never run the clear routine outside stop mode (for example after a partial enter). */
+    if (!SNOW_GROUP_ORDINARY(a.group)) snow_adapter.leave();
+    int fallback = 0;
+    if (!wait_frames(&b, a.end_frame, 2, 1000) || !SNOW_GROUP_ORDINARY(b.group)) {
+        uint32_t seen;
+        if (!read_now(&b, o)) return 0;
+        if (snow_adapter.cas_group(b.owner, b.group, pause_baseline, &seen)) {
+            put(o, "\"error\":\"restore_failed\",\"group\":"); put_group(o, seen); return 0;
+        }
+        fallback = 1;
+    }
+    if (!wait_frames(&c, b.end_frame, 3, 1000) || c.step == b.step) {
+        put(o, "\"error\":\"step_not_resumed\",\"fallback\":%s", fallback ? "true" : "false"); return 0;
+    }
+    host_paused = 0;
+    if (reason) snprintf(last_recovery, sizeof last_recovery, "%s", reason);
+    put(o, "\"fallback_restore\":%s,", fallback ? "true" : "false"); put_counters(o, "engine", &c);
+    return 1;
+}
+
+static int do_resume(Out *o) {
+    if (!host_paused) { put(o, "\"error\":\"not_paused_by_host\""); return 0; }
+    return release_hold(o, NULL);
+}
+
+/* One world step = one execution of the world Step job (one engine request).
+ * It is neither a rendered frame nor a physics substep. Method validated
+ * cross-process: clear the group, wait for Step to start, re-arm immediately. */
+static int do_step(const Request *r, Out *o) {
+    long long count = r->has_count ? r->count : 1;
+    if (count < 1 || count > MAX_STEPS) { put(o, "\"error\":\"bad_params\",\"detail\":\"count must be 1..%d\"", MAX_STEPS); return 0; }
+    if (!host_paused) { put(o, "\"error\":\"not_paused_by_host\""); return 0; }
+    SnowCounters first;
+    if (!read_now(&first, o)) return 0;
+    if (!SNOW_GROUP_HELD(first.group) || first.owner != pause_owner) { put(o, "\"error\":\"not_held\""); return 0; }
+    uint32_t held = first.group, cleared = held & 0xff000000u;
+    int exact = 0; double max_release = 0;
+    put(o, "\"unit\":\"world_step_job\",\"steps\":[");
+    long long n;
+    for (n = 0; n < count; n++) {
+        SnowCounters a, b, after; uint32_t seen;
+        if (!read_now(&a, o)) break;
+        if (!wait_frames(&b, a.end_frame, 2, 1000) || b.step != a.step) { put(o, "],\"error\":\"step_not_frozen\""); goto partial; }
+        LARGE_INTEGER t0; QueryPerformanceCounter(&t0);
+        if (snow_adapter.cas_group(b.owner, held, cleared, &seen)) { put(o, "],\"error\":\"group_changed\",\"group\":"); put_group(o, seen); goto partial; }
+        uint32_t released = b.step; char why[160]; int ok = 0;
+        while (ms_since(t0) < STEP_TIMEOUT_MS) {
+            SnowCounters s;
+            if (snow_adapter.read(&s, why, sizeof why)) break;
+            if (s.step != b.step) { released = s.step; ok = 1; break; }
+            YieldProcessor();
+        }
+        double release_ms = ms_since(t0);
+        if (snow_adapter.cas_group(b.owner, cleared, held, &seen)) { put(o, "],\"error\":\"rearm_failed\",\"group\":"); put_group(o, seen); goto partial; }
+        if (!ok) { put(o, "],\"error\":\"step_timeout\""); goto partial; }
+        if (!wait_frames(&after, b.end_frame, 4, 1000)) { put(o, "],\"error\":\"frames_stalled\""); goto partial; }
+        int one = after.step == released && SNOW_GROUP_HELD(after.group);
+        exact += one; if (release_ms > max_release) max_release = release_ms;
+        put(o, "%s{\"step_before\":%u,\"step_released\":%u,\"step_after\":%u,\"end_frame_after\":%u,\"release_ms\":%.3f,\"exactly_one\":%s}",
+            n ? "," : "", b.step, released, after.step, after.end_frame, release_ms, one ? "true" : "false");
+        if (!one) { n++; put(o, "],\"error\":\"not_exactly_one\""); goto partial; }
+    }
+    put(o, "],\"requested\":%lld,\"completed\":%lld,\"exactly_one\":%d,\"max_release_ms\":%.3f", count, n, exact, max_release);
+    return 1;
+partial:
+    put(o, ",\"requested\":%lld,\"completed\":%lld,\"exactly_one\":%d", count, n, exact);
+    return 0;
+}
+
+static void execute(const Request *r, Out *o) {
+    int ok = 0;
+    put(o, "{\"id\":%lld,\"result\":{", r->id);
+    if (!strcmp(r->method, "host.hello") || !strcmp(r->method, "simulation.status") || !strcmp(r->method, "host.heartbeat"))
+        ok = do_status(o);
+    else if (!strcmp(r->method, "_disconnect")) {
+        ok = 1;
+        if (host_paused) { ok = release_hold(o, "client_disconnected"); host_log("recovery", "client disconnected while paused: %s", ok ? "resumed" : "FAILED"); }
+    } else if (!bound) put(o, "\"error\":\"adapter_unavailable\",\"detail\":"), put_str(o, bind_why);
+    else if (faulted) put(o, "\"error\":\"host_faulted\"");
+    else if (!strcmp(r->method, "simulation.pause")) ok = do_pause(r, o);
+    else if (!strcmp(r->method, "simulation.resume")) ok = do_resume(o);
+    else if (!strcmp(r->method, "simulation.step_world")) ok = do_step(r, o);
+    put(o, "},\"status\":\"%s\"}\n", ok ? "completed" : "failed");
+    if (ok) commands_completed++; else commands_failed++;
+    if (host_paused) lease_deadline = GetTickCount64() + lease_ms;
+    reply_ok = ok;
+}
+
+static DWORD WINAPI executor(LPVOID unused) {
+    (void)unused;
+    for (;;) {
+        DWORD wait = INFINITE;
+        if (host_paused) {
+            ULONGLONG now = GetTickCount64();
+            wait = lease_deadline > now ? (DWORD)(lease_deadline - now) : 0;
+        }
+        if (WaitForSingleObject(work_ev, wait) == WAIT_TIMEOUT) {
+            char buf[1024]; Out o = {buf, sizeof buf, 0};
+            int ok = release_hold(&o, "lease_expired");
+            host_log("recovery", "lease expired; resume %s: %s", ok ? "ok" : "FAILED", buf);
+            if (!ok) { faulted = 1; host_paused = 0; } /* stop retrying; status reports the fault */
+            continue;
+        }
+        Out o = {reply, sizeof reply, 0};
+        execute(&pending, &o);
+        host_log("exec", "%.*s", (int)(o.len > 300 ? 300 : o.len - 1), reply);
+        SetEvent(done_ev);
+    }
+    return 0;
+}
+
+/* ---------- io thread: parsing and transport only ---------- */
+
+static int send_all(SOCKET s, const char *p, size_t n) {
+    while (n) { int k = send(s, p, (int)n, 0); if (k <= 0) return 0; p += k; n -= k; }
+    return 1;
+}
+static void send_line(SOCKET s, long long id, const char *status, const char *error) {
+    char b[256];
+    int n = snprintf(b, sizeof b, "{\"id\":%lld,\"status\":\"%s\"%s%s%s}\n", id, status,
+                     error ? ",\"error\":\"" : "", error ? error : "", error ? "\"" : "");
+    send_all(s, b, n);
+}
+static int known(const char *m) {
+    static const char *methods[] = {"host.hello", "host.heartbeat", "simulation.status", "simulation.pause",
+                                    "simulation.resume", "simulation.step_world"};
+    for (size_t i = 0; i < sizeof methods / sizeof *methods; i++) if (!strcmp(m, methods[i])) return 1;
+    return 0;
+}
+static int run_command(const Request *r, DWORD timeout) {
+    pending = *r;
+    SetEvent(work_ev);
+    return WaitForSingleObject(done_ev, timeout) == WAIT_OBJECT_0;
+}
+
+static void serve(SOCKET c) {
+    char buf[MAX_LINE + 1]; size_t len = 0;
+    for (;;) {
+        int k = recv(c, buf + len, (int)(MAX_LINE - len), 0);
+        if (k <= 0) break;
+        len += k;
+        char *nl;
+        while ((nl = memchr(buf, '\n', len))) {
+            *nl = 0;
+            Request r;
+            if (!parse_request(buf, &r)) send_line(c, r.has_id ? r.id : -1, "rejected", "malformed_request");
+            else if (!known(r.method)) send_line(c, r.id, "rejected", "unknown_method");
+            else {
+                send_line(c, r.id, "accepted", NULL);
+                DWORD timeout = 15000 + (r.has_count && r.count > 0 && r.count <= MAX_STEPS ? (DWORD)r.count * 3000 : 3000);
+                if (!run_command(&r, timeout)) {
+                    /* The executor is wedged. Report it and stop serving commands. */
+                    host_log("io", "executor timeout on %s", r.method);
+                    send_line(c, r.id, "failed", "executor_timeout");
+                    faulted = 1;
+                    return;
+                }
+                if (!send_all(c, reply, strlen(reply))) return;
+            }
+            len -= (nl + 1 - buf);
+            memmove(buf, nl + 1, len);
+        }
+        if (len == MAX_LINE) { send_line(c, -1, "rejected", "line_too_long"); break; }
+    }
+}
+
+static DWORD WINAPI io_thread(LPVOID unused) {
+    (void)unused;
+    WSADATA w;
+    if (WSAStartup(MAKEWORD(2, 2), &w)) { host_log("io", "WSAStartup failed"); write_marker("socket_failed"); return 1; }
+    SOCKET l = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    struct sockaddr_in a = {0};
+    a.sin_family = AF_INET; a.sin_port = htons(port); a.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    BOOL excl = TRUE;
+    setsockopt(l, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (const char *)&excl, sizeof excl);
+    if (l == INVALID_SOCKET || bind(l, (struct sockaddr *)&a, sizeof a) || listen(l, 2)) {
+        host_log("io", "listen on 127.0.0.1:%u failed: %d", port, WSAGetLastError());
+        write_marker("listen_failed");
+        return 1;
+    }
+    host_log("io", "listening on 127.0.0.1:%u", port);
+    write_marker("listening");
+    for (;;) {
+        SOCKET c = accept(l, NULL, NULL);
+        if (c == INVALID_SOCKET) { Sleep(100); continue; }
+        host_log("io", "client connected");
+        serve(c);
+        closesocket(c);
+        host_log("io", "client disconnected");
+        if (!faulted) { Request d = {0}; d.id = -1; strcpy(d.method, "_disconnect"); run_command(&d, 15000); }
+    }
+}
+
+/* ---------- entry points ---------- */
+
+BOOL WINAPI DllMain(HINSTANCE h, DWORD reason, LPVOID unused) {
+    (void)unused;
+    if (reason == DLL_PROCESS_ATTACH) { self = h; DisableThreadLibraryCalls(h); }
+    return TRUE;
+}
+
+/* Run once on its own thread after loading. Low 16 bits of param: TCP port
+ * (0 = default). Returns 0 when both threads started, 1 if already started. */
+__declspec(dllexport) DWORD WINAPI SnowHost_Start(LPVOID param) {
+    if (InterlockedCompareExchange(&started, 1, 0)) return 1;
+    port = (unsigned short)((uintptr_t)param & 0xffff);
+    if (!port) port = DEFAULT_PORT;
+    DWORD n = GetModuleFileNameW(self, dir, MAX_PATH);
+    if (!n || n >= MAX_PATH) return 2;
+    while (n && dir[n - 1] != L'\\') n--;
+    dir[n ? n - 1 : 0] = 0;
+    InitializeCriticalSection(&log_lock);
+    QueryPerformanceFrequency(&qpf);
+    start_tick = GetTickCount64();
+    bound = snow_adapter.bind(bind_why, sizeof bind_why) == 0;
+    host_log("host", "v%s api %d adapter %s: %s %s", HOST_VERSION, API_VERSION, snow_adapter.name,
+             bound ? "bound" : "unavailable", bound ? "" : bind_why);
+    work_ev = CreateEventW(NULL, FALSE, FALSE, NULL);
+    done_ev = CreateEventW(NULL, FALSE, FALSE, NULL);
+    if (!work_ev || !done_ev) return 3;
+    HANDLE e = CreateThread(NULL, 0, executor, NULL, 0, NULL);
+    if (!e) return 4;
+    CloseHandle(e);
+    HANDLE t = CreateThread(NULL, 0, io_thread, NULL, 0, NULL);
+    if (!t) return 5;
+    CloseHandle(t);
+    write_marker("starting");
+    return 0;
+}

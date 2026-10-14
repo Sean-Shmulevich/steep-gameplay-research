@@ -16,7 +16,9 @@ The [native module loader experiment](native/mod_loader/README.md) now has a
 single command for the configured local research workspace: launch the original
 game, pause, load an attachment-only DLL, resume, verify, and clean up. It needs
 the existing private runtime tools and game installation; the public repository
-contains source and findings only.
+contains source and findings only. The [Snow mod host](native/snow_host/README.md)
+builds on it: a late-loaded host with a local command channel for pause,
+single world steps and resume, passed one live session.
 
 - [Current findings and open questions](docs/STATUS.md)
 - [Full research index](docs/INDEX.md)

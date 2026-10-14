@@ -1,0 +1,182 @@
+{
+  "date": "2026-10-14",
+  "kind": "live_observation",
+  "environment": {
+    "wine_engine": "x64-sikarugir10.0_6-r21",
+    "renderer": "D3DMetal"
+  },
+  "command": "python3 steep-gameplay-research/scripts/run_late_load.py --experiment host --steps 10",
+  "host": {
+    "host_version": "0.1.0",
+    "api_version": 1,
+    "adapter_bound": true
+  },
+  "experiment": {
+    "ok": true,
+    "original_dll_replaced": false,
+    "original_dll_verified": true,
+    "settings_restored": true,
+    "bottle_stopped": true
+  },
+  "note": "Counters are engine request indices sampled by the host; owner identities and addresses are omitted. Step counters advance by several requests per release because paused requests continue between releases.",
+  "status_before": {
+    "group": "00000001",
+    "held": false,
+    "step": 9802,
+    "paused_job": 0,
+    "end_frame": 9801
+  },
+  "pause": {
+    "baseline_group": "00000001",
+    "engine": {
+      "group": "00010101",
+      "held": true,
+      "step": 9806,
+      "paused_job": 9811,
+      "end_frame": 9810
+    }
+  },
+  "steps": [
+    {
+      "step_before": 9806,
+      "step_released": 9814,
+      "step_after": 9814,
+      "end_frame_after": 9816,
+      "release_ms": 14.299,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9814,
+      "step_released": 9820,
+      "step_after": 9820,
+      "end_frame_after": 9822,
+      "release_ms": 12.398,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9820,
+      "step_released": 9826,
+      "step_after": 9826,
+      "end_frame_after": 9828,
+      "release_ms": 14.556,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9826,
+      "step_released": 9832,
+      "step_after": 9832,
+      "end_frame_after": 9834,
+      "release_ms": 15.174,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9832,
+      "step_released": 9837,
+      "step_after": 9837,
+      "end_frame_after": 9840,
+      "release_ms": 2.119,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9837,
+      "step_released": 9844,
+      "step_after": 9844,
+      "end_frame_after": 9846,
+      "release_ms": 13.343,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9844,
+      "step_released": 9850,
+      "step_after": 9850,
+      "end_frame_after": 9852,
+      "release_ms": 17.105,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9850,
+      "step_released": 9856,
+      "step_after": 9856,
+      "end_frame_after": 9858,
+      "release_ms": 12.258,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9856,
+      "step_released": 9862,
+      "step_after": 9862,
+      "end_frame_after": 9864,
+      "release_ms": 14.214,
+      "exactly_one": true
+    },
+    {
+      "step_before": 9862,
+      "step_released": 9867,
+      "step_after": 9867,
+      "end_frame_after": 9870,
+      "release_ms": 1.849,
+      "exactly_one": true
+    }
+  ],
+  "steps_exactly_one": 10,
+  "resume": {
+    "fallback_restore": false,
+    "engine": {
+      "group": "00000001",
+      "held": false,
+      "step": 9924,
+      "paused_job": 9871,
+      "end_frame": 9924
+    }
+  },
+  "stability_20_seconds": [
+    {
+      "group": "00000001",
+      "held": false,
+      "step": 9925,
+      "paused_job": 9871,
+      "end_frame": 9924
+    },
+    {
+      "group": "00000001",
+      "held": false,
+      "step": 10289,
+      "paused_job": 9871,
+      "end_frame": 10288
+    },
+    {
+      "group": "00000001",
+      "held": false,
+      "step": 10645,
+      "paused_job": 9871,
+      "end_frame": 10644
+    },
+    {
+      "group": "00000001",
+      "held": false,
+      "step": 10986,
+      "paused_job": 9871,
+      "end_frame": 10985
+    },
+    {
+      "group": "00000001",
+      "held": false,
+      "step": 11325,
+      "paused_job": 9871,
+      "end_frame": 11324
+    }
+  ],
+  "stable_20_seconds": true,
+  "external_restore_used": false,
+  "fixture": {
+    "checks_passed": 20,
+    "checks_total": 20,
+    "adapter": "fixture-simulated (synthetic)",
+    "note": "Wine fixture process; also confirmed the game adapter refuses to bind outside steep.exe."
+  },
+  "prior_attempt": {
+    "ok": false,
+    "bound": false,
+    "cause": "Adapter page-protection check rejected the owner slot; copy-on-write protections were then accepted. No pause, step or write occurred in that attempt and cleanup completed."
+  }
+}

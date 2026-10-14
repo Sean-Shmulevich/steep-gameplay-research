@@ -283,7 +283,9 @@ the existing unattached relay traces as controls. Do not treat the host
 debugger's startup stop as the original exit decision.
 
 For the startup-proxy route, identifying the termination predicate remains
-open. The successful late-load route can proceed independently: next port the
+open. The successful late-load route can proceed independently. The guarded
+pause/step/resume operations now run in-process in the [Snow mod host](../snow_host/README.md);
+the original note follows. Next port the
 guarded pause/step/resume operations into the module, with a bounded command
 interface and recovery timer. Preserve fresh engine identity checks and the
 working original DLL. Neither native stepping nor module loading establishes

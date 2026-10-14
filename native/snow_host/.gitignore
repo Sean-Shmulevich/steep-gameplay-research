@@ -1,0 +1,12 @@
+*.dll
+*.exe
+*.o
+*.a
+*.log
+snow_host.json
+# Explicitly publish these independently authored sources. The game adapter
+# with build-specific addresses stays in the private research workspace.
+!snow_host.c
+!snow_adapter.h
+!fixture_adapter.c
+!host_loader.c
