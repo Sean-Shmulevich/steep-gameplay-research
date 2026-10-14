@@ -1053,3 +1053,82 @@ to a fixed-capacity ring, clears another pointer and calls an internal update.
 After leaving the guard it calls two further helpers. Those final helpers and
 context ownership remain unexpanded; none is named as a scheduler wake merely
 from its position in the call sequence.
+
+## Request-held references and reset lifecycle
+
+Request initialization proves that the earlier producer's literal one is the
+staging lane: the initializer stores that argument into request.lane and sets
+request.kind to zero. It stores the key, completion callback, user pointer,
+reprocess byte and an independently assigned context reference. It does not
+initialize every byte of the request, so reset/pool invariants remain necessary.
+
+The request's result and guard references retain resource entries through the
+**low 24 bits of entry.flags**, not the separate entry.counter word used by the
+acquired wrapper. Atomic operations modify the full 32-bit word; their release
+test masks the decremented result:
+
+```text
+drop_request_entry(entry):
+    previous = atomic_fetch_add_u32(entry.flags, -1)
+    after = uint32(previous - 1)
+    if (after & 0x00ffffff) == 0:
+        release_request_reference(entry)
+```
+
+Initialization takes temporary and destination references, exchanges the old
+result entry, and drops old and temporary references separately. Guard-entry
+assignment increments the incoming entry before exchange and drops the old one.
+Zero key uses the shared sentinel. Do not substitute the acquired-wrapper
+`previous_count == 1` test for this masked post-decrement rule or merge the two
+counters. No overflow protection for the packed count is established here.
+
+Reset clears the key, drops result and guard entry references, and writes the
+shared sentinel into both fields. It clears completion/alternate callbacks and
+user pointer, resets lane to one and kind to one, clears request bytes 0x48
+through 0x4a, and resets the context reference through an unexpanded assignment
+helper. If an allocated processing context exists it calls context cleanup and
+allocator release, then clears that pointer. Sentinel assignments in this reset
+do not locally increment the sentinel's packed count.
+
+Request return optionally invokes an opaque map operation when its registration
+byte is set, performs reset, then conditionally appends to the free-object ring
+under the ring guard. It increments the separate free-object count even if the
+ring has no room and decrements the kind-zero request count according to the
+**pre-reset** kind. No local growth occurs. Nested entry into the same ring guard
+can occur from the previously decoded caller, so guard semantics remain relevant.
+
+## Packed-reference release may defer cleanup
+
+Under the resource-manager guard, this release helper rejects entry bit26 or a
+nonzero low-24 count. It then rechecks the count and examines current record,
+entry bit27 and a global byte. Several conditions route to the existing inner
+recycler, which applies its own stronger counter/flag checks.
+
+```text
+release_request_reference(entry):
+    enter(manager.entry_guard)
+    if entry.flags.bit26 or low24(entry.flags) != 0:
+        leave(manager.entry_guard)
+        return
+    if low24(entry.flags) != 0 or entry.record == null or
+       entry.flags.bit27 or global_defer_override != 0:
+        inner_recycle_if_eligible(manager, entry)
+        process_now = false
+    elif entry.flags.bit24:
+        process_now = false
+    else:
+        atomic_set_bit(entry.flags, 24)
+        grow_deferred_ring_by_16384_if_full()
+        append_entry_if_room()
+        process_now = manager.mode == 1 and current_context_mode() != 3
+    leave(manager.entry_guard)
+    if process_now:
+        process_manager(manager)
+```
+
+Bit24 is set before the ring's growth/room outcome is known, and processing may
+be requested even if insertion did not occur locally. Allocator/capacity
+contracts remain open. This deferred ring is distinct from the key/record/entry
+triple ring. A release can run manager processing synchronously after unlocking;
+therefore reference drops are not necessarily constant-time or free of callbacks.
+No arbitrary native destruction/modification safety is implied.

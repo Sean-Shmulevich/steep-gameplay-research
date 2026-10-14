@@ -421,3 +421,35 @@ unlock and `14115abb0`, `1411a8370` afterward. No direct wake identity asserted.
 Next: request initializer `1411b8730`, release `1411ade10`, provider ordering
 `141185730`, and one dependent lifetime helper. Keep capacity and registration
 lifetime requirements explicit. Four bounded bodies <=24,000 linked bytes each.
+
+## Request initialization and release pass
+
+Four pdata bodies: `1411b8730` (332 bytes), `1411ade10` (268),
+`1411ae9d0` (259), `1411a8a10` (369).
+
+Initializer stores EDX at request+3c and kind0 at+38, confirming producer lane1.
+Key R8 is stored at+0; request+8 and+10 are retained through entry+c packed
+low24 references. Increment/XADD act on full32; release tests `(old-1)&ffffff`.
+Context reference+40 uses `1406a53e0`; callback+28/user+18 and reprocess+49
+come from stack arguments. A timing-shaped call `141c38ae0` and global store
+remain unnamed.
+
+Reset drops +8/+10 packed references, assigns sentinel `143301d40`, clears
++0,+18,+28,+30, byte+48, word+49; lane+3c=1, kind+38=1. Context+40
+is reset via assignment helper. Processing context+20 is cleaned by `141151560`
+and allocator release before nulling. Return helper reads pre-reset kind and
+key, optionally calls `14108dbc0` on thread+260 under guard+230 for byte+4a,
+then reset; free ring+1a8 conditional append, unconditional thread+224 increment,
+kind0 decrement thread+220 under guard+1d8.
+
+Packed-reference release `1411a8a10` guards manager+b8; bit26/low24 reject.
+Inner fallback `1411943b0` applies when rechecked low24 nonzero, null record,
+bit27 set or global override byte nonzero. Otherwise bit24 blocks duplicate
+queueing; set bit24 then append to manager+98 ring with growth+4000 hex via
+`1411af100`. Mode+58=1 and context mode !=3 request `141198820` after
+unlock. Unentered bit31-setting block at `1411a8a70` is bypassed by the normal
+entry jump and is not included as executed behavior.
+
+Next: deferred entry-ring consumer in `141198a40`, context assignment helper
+`1406a53e0`, and at most two dependent ownership helpers. Provider-ordering
+`141185730` remains a separate lead. Preserve packed count versus entry+8 count.

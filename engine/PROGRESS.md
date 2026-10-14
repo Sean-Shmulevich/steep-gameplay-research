@@ -541,3 +541,12 @@ Joined free-ring acquisition, request initializer call, signed lane submission a
 loading notification protocol. Decoded lane1 provider query/membership recheck
 and normal TLS/mode restoration. Context-submission operations remain opaque.
 No process access; documentation-only, last full suite remains 426 tests.
+
+
+## Request reset and packed entry references
+
+Decoded initializer lane/kind assignment, separate packed low24 reference holds,
+sentinel reset, callback/context clearing and conditional free-pool return.
+Packed-reference release can defer entries and process manager work after unlock.
+Capacity and deeper ownership remain open. Documentation-only; last full suite
+remains 426 tests.

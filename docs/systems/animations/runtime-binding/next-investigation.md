@@ -89,3 +89,9 @@ Request free-ring acquisition, lane insertion and loading-worker notification ar
 now joined. Lane1 refill saves/restores TLS and queries/revalidates provider
 registrations. Next inspect initializer/release and provider ordering, retaining
 capacity and lifetime contracts.
+
+
+Request initialization/reset now closes lane assignment and packed entry-reference
+handling. Release can enqueue the separate deferred-entry ring and synchronously
+process it after unlocking. Follow that ring's consumer and context assignment
+next; preserve the two distinct entry reference counters.
