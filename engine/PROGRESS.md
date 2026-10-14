@@ -952,3 +952,16 @@ extremes, rewind, integer rounding/wrap and failure atomicity. Channel semantics
 and native output parity remain open. Scalar sampler guide includes pseudocode.
 
 Validation: 518 tests pass; packaging, hashes and local links pass.
+
+## Mask-time float formats and complete sample-corpus coverage
+
+Verified encoding-26 quaternion decoder calls and interpolation constants, plus
+encoding-29 vector interpolation and explicit fourth-lane clearing. Integrated
+both formats with serialized adaptation and dispatch. All nine remaining tracks
+pass, yielding 1,052/1,052 tracks and 7,364 consistency checks in six private
+bodies. Two synthetic tests exercise shifted timelines, rewinds, dispatch,
+truncation and nonnormalized vector output. This is not whole-engine coverage.
+Documented why the existing marker-search extraction is not a general container
+parser and the structural, shared-reference and binding work still needed.
+
+Validation: 520 tests pass; packaging, hashes and local links pass.
