@@ -81,4 +81,4 @@ context resolves KinoComponent
     -> receiver slot calls KinoComponent time update
 ```
 
-Still missing: the current player's context-to-KinoComponent association, the lifecycle invocation that installs/removes its routes, native object lifetime, and a live observation of the same component in a claimed batch. The route does not establish that every player component or actor pointer itself belongs in slot 16.
+The [activation follow-up](KINO_ACTIVATION.md) now identifies direct registration/removal in KinoComponent methods and a virtual-table callback that requests activation from component flag bit 26. Still missing: the current player's context-to-KinoComponent association, higher-level lifecycle callers, native object lifetime, and a live observation of the same component in a claimed batch. The route does not establish that every player component or actor pointer itself belongs in slot 16.

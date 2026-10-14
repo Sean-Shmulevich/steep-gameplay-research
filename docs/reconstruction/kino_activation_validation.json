@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 384,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original standalone activation routine and original context-list lookup using synthetic component/owner/world/group data. All seven Boolean gate combinations with three component flag bytes. Registry operations, interface slot 0x140 and post-unregister helper are recording stubs. Compared exact operation order, slot selection, active byte, component flag byte, auxiliary flag word and scalar helper argument. No external helper effects, native locking, lifecycle caller or live player identity validation."
+}

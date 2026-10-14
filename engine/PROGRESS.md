@@ -1250,3 +1250,16 @@ tests. The component-specific type route is now established; player context look
 lifecycle invocation and live batch identity remain open.
 
 Validation: 592 tests pass; packaging, hashes and local links pass.
+
+## Direct KinoComponent activation
+
+Recovered the component's direct activation routine and its table callback, which
+requests activation from component flag bit 26. Slot 16 is inserted only when the
+owner context is absent from the time group's context lists; slots 17 and 19/37
+are also registered. Disable removes both variants, with missing-world and repeated
+request behavior retained. Added an explicit effect planner; opaque interface and
+post-unregister calls remain visible. Original routine and context lookup matched
+384 synthetic cases with external effects stubbed. Four tests cover transitions
+and event-registry composition. Higher-level callers and live identity remain open.
+
+Validation: 596 tests pass; packaging, hashes and local links pass.

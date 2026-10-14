@@ -337,3 +337,5 @@ The [animation-stage probe](../docs/reconstruction/ANIMATION_STAGE_DEPENDENCIES.
 [`event_registry`](../docs/reconstruction/ANIMATION_EVENT_REGISTRY.md) provides 53 serial token lists with exact-identity duplicate suppression and last-entry replacement on removal. Slot 16 supplies the animation-time source. Component-specific activation and live player membership are not established by this API.
 
 [`kino_event_routes`](../docs/reconstruction/KINO_EVENT_ROUTES.md) exposes the constructor-installed KinoComponent slot-16 route and secondary slot-22/23 selection from owning-object mode bits. Context lookup and lifecycle invocation remain caller-supplied evidence.
+
+[`kino_activation`](../docs/reconstruction/KINO_ACTIVATION.md) produces the direct activation routine's ordered registry/helper effects and resulting flags. It distinguishes context-group coverage from slot-16 insertion and preserves active state on the inspected missing-world branch. External helper effects remain explicit and unimplemented by this planner.
