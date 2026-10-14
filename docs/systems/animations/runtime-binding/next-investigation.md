@@ -67,3 +67,9 @@ The +54-to-+50 publication edge is now closed by the exchange/conditional-add
 writer. Follow outer cadence and lifetime if continuing scheduler work; follow
 descriptor operations for animation semantics. Zero stored counters alone do not
 prove no in-flight publication.
+
+
+Publication is bracketed by reverse-order callback passes using exclusion masks
+2 and 1. The direct caller builds a temporary processing context. Follow its
+callers before assigning a frame cadence; callback registration/lifetime remains
+open.

@@ -508,3 +508,11 @@ absence of a local wake operation and the consumer's unsigned countdown.
 Outer cadence, population/lifetime and native pause safety remain open.
 
 Validation: all 426 independent tests pass.
+
+
+## Publication callback ordering
+
+Decoded exclusion-mask callback passes around resource publication, reverse record
+order, optional secondary calls and live group-count reads. Direct caller creates
+a stack processing context; cadence remains unproved. Documentation-only; last
+full suite remains 426 tests. No original process accessed.

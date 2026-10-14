@@ -792,3 +792,51 @@ whether the conditional add executes, without inventing notification or running
 unbounded loops. Tests cover interleaved arrivals, later publication and wrap.
 The higher-level routine's complete workload and invocation cadence remain open;
 this result closes the count transfer, not scheduling frequency or pause safety.
+
+## Callback passes around publication
+
+The helper on either side of resource-count publication walks callback groups.
+It sets the high bit of the group's packed count word, uses the low 31 bits as
+the group count, and publishes each current global group descriptor through a
+caller-supplied pointer. Groups whose descriptor flags overlap the supplied mask
+are skipped. Eligible nonempty groups execute 32-byte callback records in reverse
+storage order.
+
+```text
+run_callback_groups(groups, current_group_out, exclusion_mask):
+    groups.count_word |= 0x80000000
+    index = 0
+    while index < (groups.count_word & 0x7fffffff):
+        descriptor = global_group_descriptors[index]
+        current_group_out.value = descriptor
+        if (descriptor.flags & exclusion_mask) == 0:
+            records = groups[index]
+            for record in reverse(records):
+                if record.receiver != null:
+                    record.primary(record.receiver, record.argument,
+                                   current_group_out)
+                    if record.secondary != null:
+                        record.secondary(record.receiver, record.argument,
+                                         current_group_out)
+        index += 1
+```
+
+The routine re-reads the group count during iteration. It snapshots each group's
+record traversal bounds before invoking that group's callbacks, but it loads
+record contents as it visits them. This is not an immutable callback snapshot or
+a proof that callbacks may safely mutate the storage. It sets the high count bit
+without clearing it locally. Scratch bookkeeping allocation/cleanup is omitted
+from the pseudocode; ownership and mutation rules remain open.
+
+The resource publisher runs this helper with exclusion mask 2, transfers the
+staged count into published, then runs it with mask 1. Therefore a descriptor
+with flags zero participates in both passes; one with both low bits set is
+excluded from both. Masks select groups, not individual callback records. The
+caller's EDX values zero/one are not used as a callback stage argument in the
+inspected helper; record.argument supplies EDX to callbacks instead.
+
+The immediate direct caller constructs a stack-local processing context, copies
+caller inputs into it, calls a preparation helper, executes the resource routine,
+and calls context cleanup. This proves ordering within that wrapper. It does not
+establish invocation frequency, main-loop identity or an animation-frame boundary.
+The next caller layer is needed before describing this as per-frame work.

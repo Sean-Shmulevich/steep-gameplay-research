@@ -300,3 +300,26 @@ Next scheduler-facing targets: `141194f00` and the outer routine's caller cadenc
 with queue population and lifetime checks. Descriptor-path leads remain valid
 separately. Publication is now closed; native notification and global pause remain
 unproved. Do not repeat the +54/+50 writer search as an open edge.
+
+## Publication callback passes and direct caller
+
+Inspected `141194f00` (512 pdata-linked bytes) and direct wrapper
+`1411d5fd0` (394). An instruction-aligned E8/E9 scan found the publication
+routine call at `1411d60ad`, with RCX pointing to stack context rbp-10.
+Context construction `141188190`, preparation `14118d050`, processing
+`141198d70`, then cleanup `14118a210` are ordered in that wrapper. No
+frame-frequency claim follows from the direct caller alone.
+
+Callback helper sets groups+110 high bit and uses its low31 count. Global group
+descriptor array pointer is loaded through `143301e88` at `141194fe2`. Each descriptor+4 is tested against saved R9D exclusion mask;
+EDX input is overwritten before callback dispatch. Group storage has stride16,
+pointer+0/count+8. Records have stride32, receiver+0, primary+8, secondary+10,
+argument+18. Traverse last-to-first; callbacks receive receiver, argument and
+current-group-out pointer. Null receiver skips both; primary is not null-checked.
+Current group descriptor is written to the output pointer even for skipped groups.
+Count is re-read at group-loop end; high bit is not cleared locally.
+
+Next bounded pass: callers of `1411d5fd0`, group descriptor producer, and
+callback registrations associated with these groups. Four dependent bodies at
+most, each <=24,000 pdata-linked bytes. Preserve unknown callback mutation and
+outer cadence contracts.
