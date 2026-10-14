@@ -28,3 +28,15 @@ class QuaternionSampleTests(unittest.TestCase):
     def test_invalid_inputs(self):
         for a,b,t in (([0]*4,[0]*4,.5),([0,0,0,1],[0,0,0,1],2)):
             with self.assertRaises(ValueError):blend(a,b,t)
+
+
+class QuaternionCopyThresholdTests(unittest.TestCase):
+    def test_exact_float32_epsilon_copies_but_next_value_blends(self):
+        from engine.animation_endpoints import f32
+        source=[0,0,0,1]
+        boundary=[.001,0,0,f32(1-2**-23)]
+        outside=[.001,0,0,f32(1-3*2**-24)]
+        self.assertEqual(blend(source,boundary,.5),source)
+        result=blend(source,outside,.5)
+        self.assertGreater(result[0],0)
+        self.assertNotEqual(result,source)

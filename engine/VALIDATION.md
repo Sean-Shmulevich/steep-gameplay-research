@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 501 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 502 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -60,3 +60,7 @@ Eight queue-policy tests cover signed overflow and division, ordering, affinity,
 Six queue-producer tests bring the suite to 338. They validate pure arithmetic and routing boundaries, including absent versus null worker slots. No threads are allocated and no original scheduler execution is claimed.
 
 Five explicit-worker topology tests bring the suite to 348. The 100-receiver probe holds one range while another worker completes the remainder, and verifies successor release waits for the held dispatch. This models serially chosen interleavings with worker identity; it does not test OS thread races.
+
+Encoding-12 expanded reference comparison found four midpoint branch disagreements
+among 9,689 samples. See the encoding-12 guide and aggregate receipt; this is not
+a native-equivalence pass.

@@ -879,3 +879,14 @@ No new independent-reference/native comparison claimed. Two synthetic tests cove
 selectors, unused bit and integrated decoding.
 
 Validation: 501 tests pass; packaging, hashes and local links pass.
+
+## Encoding-12 reference comparison and threshold audit
+
+Compared every key and interval midpoint on 141 original serialized tracks:
+9,689 samples. Key-time error stays below 1.046e-7, but four midpoint comparisons
+cross the source-copy threshold differently from the older host-double reference;
+maximum difference is 0.0002589571241477101. Recorded aggregate outlier diagnostics
+and added an exact float32 epsilon boundary regression. Preserved the recovered
+branch instead of tuning to the old reference. Native seed parity remains open.
+
+Validation: 502 tests pass; packaging, hashes and local links pass.

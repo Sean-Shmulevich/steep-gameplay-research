@@ -30,3 +30,26 @@ This is internal consistency on original serialized slices, not an independent
 numerical-reference or native-execution comparison for this new encoding.
 Synthetic tests cover all four selector values, ignored third high bit, output
 norm and serialized-to-dispatch integration.
+
+## Expanded independent-reference comparison
+
+A subsequent original-byte comparison tested every stored key time and every
+nonempty interval midpoint for all 141 encoding-12 tracks. The 9,689 samples used
+the older decoded-key/host-double pose-assembly reference as comparator. Record
+lengths all matched. Maximum key-time component difference was
+`1.0459658117412118e-07`; maximum midpoint difference was
+`0.0002589571241477101`, with four samples above `1e-5`.
+
+The [expanded receipt](animation_48bit_validation.json) retains the outliers'
+dot products, interpolation weights and copy decisions without sample values.
+All four lie at the absolute-unit-dot copy threshold. One reconstructed float32
+dot is exactly `0.9999998807907104`, so the recovered inclusive epsilon branch
+copies the source while the older reference interpolates. In the other three,
+the reference copies while our float32 calculation interpolates. Both component
+reconstruction rounding and dot reduction affect this branch.
+
+This is a documented numerical disagreement, not a clean native-equivalence
+result. No tolerance was widened to hide it. A synthetic regression now tests
+the exact epsilon boundary and the next representable value outside it. Resolving
+native hardware parity requires observed reciprocal estimates or direct native
+sample outputs; the scalar reciprocal seed remains a declared substitute.
