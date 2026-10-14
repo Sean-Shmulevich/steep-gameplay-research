@@ -54,6 +54,8 @@ The owned pause controller's separate 200-frame check completed 300 substeps wit
 
 ## Next implementation and release gates
 
+The [scheduler observation adapter](../docs/reconstruction/SCHEDULER_OBSERVATION.md) now supplies exact-size decoding and two guard-bracketed sweeps for the recovered animation job topology. Its transport and selected-player ownership join remain external. It provides no native pause operation and cannot establish atomicity from repeated reads.
+
 1. **Owned inspection and mutation contracts.** Optional mixed gameplay dispatch now passes parity, replay and rollback tests. Expose useful phase inspection and bounded owned mutations without inventing native topology or persistent graph ownership.
 2. **Native event contract.** Resolve protected handle operations, the outer interface callback and owner destruction. The request byte and wait-shaped helper are concrete leads, not sufficient pause guarantees.
 3. **Active membership and input freshness.** Join the selected player to registry entry 24, eligible world, scheduler instance and submitted request. Match action production to consumption; equal vector values or wall-clock input delivery are insufficient.

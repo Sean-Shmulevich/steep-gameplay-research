@@ -2,6 +2,8 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Latest observation work: a [guarded scheduler collector](../docs/reconstruction/SCHEDULER_OBSERVATION.md) decodes seven animation/action job headers and the animation claim count through a caller-supplied read transport. Six synthetic tests check its failure and reporting contracts. The existing private dependency verifier rechecked 778 instruction spans, 19 specific checks and 20 table bindings. No game process was running during this pass, and no native capture or pause was performed. Next: freshly join the selected player's world to the scheduler owner, then collect bounded passive sweeps using process-identity-checked transport. Equal counters never establish safe stepping.
+
 ## Implemented and integrated
 
 - Standard-library source tree with explicit Z-up/XYZW conventions and synthetic scenarios.
