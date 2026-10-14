@@ -335,3 +335,5 @@ Its [`claim` API](../docs/reconstruction/ANIMATION_CLAIM_LIFECYCLE.md) consumes 
 The [animation-stage probe](../docs/reconstruction/ANIMATION_STAGE_DEPENDENCIES.md) runs a recovered seven-job dependency slice through the mixed scheduler. It demonstrates the action gather retaining its hold until animation dispatches finish, using explicit synthetic receiver lists and no-op bodies.
 
 [`event_registry`](../docs/reconstruction/ANIMATION_EVENT_REGISTRY.md) provides 53 serial token lists with exact-identity duplicate suppression and last-entry replacement on removal. Slot 16 supplies the animation-time source. Component-specific activation and live player membership are not established by this API.
+
+[`kino_event_routes`](../docs/reconstruction/KINO_EVENT_ROUTES.md) exposes the constructor-installed KinoComponent slot-16 route and secondary slot-22/23 selection from owning-object mode bits. Context lookup and lifecycle invocation remain caller-supplied evidence.

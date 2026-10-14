@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "setup_cases": 1,
+  "predicate_cases": 256,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original constructor setup slice, original metadata getter and route append helper using synthetic preallocated groups. Verified both KinoComponent metadata bindings and route records. Original callable adapter, thunk and predicate tested for all 256 owning-object mode bytes. Not full world construction, context type resolution, registration lifecycle or live player membership."
+}

@@ -1237,3 +1237,16 @@ and adapter bounds. KinoComponent-specific activation and live player membership
 remain unresolved; generic slot geometry is not a membership proof.
 
 Validation: 589 tests pass; packaging, hashes and local links pass.
+
+## KinoComponent descriptor routes
+
+The world constructor explicitly binds KinoComponent metadata to an unconditional
+slot-16 route and a separate fallback-22/conditional-23 route. The latter reads
+the owning object's mode byte and selects 23 exactly when its low three bits equal
+one. Generic removal covers both secondary candidates without reevaluating that
+predicate. Original setup instructions produced both records, and the original
+predicate matched all 256 mode bytes. Added route-selection/cleanup API and three
+tests. The component-specific type route is now established; player context lookup,
+lifecycle invocation and live batch identity remain open.
+
+Validation: 592 tests pass; packaging, hashes and local links pass.
