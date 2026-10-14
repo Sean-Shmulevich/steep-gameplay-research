@@ -62,12 +62,8 @@ def evaluate_pose(rig,clips,state,dt,definition,inputs):
     memo={};active=set();visits=[];contexts={};missing_masks=[]
     bind=[animation._pose(b['local_bind']) for b in rig['bones']]
     def scalar(value):
-        if isinstance(value,dict):
-            if set(value)!={'input'} or value['input'] not in inputs:raise ValueError('Unresolved graph scalar input')
-            value=inputs[value['input']]
-        if isinstance(value,bool):value=float(value)
-        if not isinstance(value,(int,float)) or not math.isfinite(value):raise ValueError('Invalid graph scalar')
-        return value
+        from .animation_decisions import evaluate_expression
+        return evaluate_expression(value,inputs)
     def pose_blend(a,b,weight,mask=None,excluded=()):
         out=[]
         if mask is not None:
@@ -151,6 +147,14 @@ def validate_definition(definition,clips):
     for name,node in nodes.items():
         if not isinstance(name,str) or not isinstance(node,dict):raise ValueError('Invalid node record')
         kind=node.get('type')
+        from .animation_decisions import validate_expression
+        for field in ('condition','rate','coordinate','weight'):
+            if field in node:validate_expression(node[field])
+        for field in ('weights','knots'):
+            if field in node:
+                if not isinstance(node[field],list):raise ValueError('scalar expression list required')
+                for value in node[field]:validate_expression(value)
+
         if kind=='clip':
             if node.get('clip') not in clips:raise ValueError('Missing graph clip')
             edges[name]=[]

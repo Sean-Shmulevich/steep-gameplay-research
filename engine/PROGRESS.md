@@ -1083,3 +1083,16 @@ with exact continuation/replay agreement and no incidents. This does not recover
 original authored graph selection, procedural layers or root-motion ownership.
 
 Validation: 544 tests pass; packaging, hashes and local links pass.
+
+## Executable authored comparison predicates
+
+Added recovered float32 scalar comparators and the verified 184-byte authored
+record decoder. Graph scalar expressions can now apply comparisons to explicit
+inputs; all-node validation rejects malformed inactive expressions. Destination
+connections and active-child clocks remain designed behavior, not recovered
+transitions. Three tests cover tolerance/rounding/unordered semantics, record
+bindings and threshold-driven selection with retained clocks. Five saved authored
+examples match expected predicates; 15 supplied sample evaluations complete.
+Outgoing authored edges and captured-parameter timing remain unresolved.
+
+Validation: 547 tests pass; packaging, hashes and local links pass.

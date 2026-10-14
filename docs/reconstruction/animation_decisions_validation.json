@@ -1,0 +1,8 @@
+{
+  "scope": "decode five existing selected authored comparison records and evaluate supplied finite samples; no destination links or native execution",
+  "example_file_sha256": "93c0e88ec4acb137a68868185f9069da3dcf16aa310d9409d966a3ec9b14441c",
+  "records_matched": 5,
+  "evaluation_cases": 15,
+  "failures": 0,
+  "outgoing_destinations_resolved": false
+}
