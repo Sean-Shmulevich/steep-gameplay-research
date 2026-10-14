@@ -1,0 +1,51 @@
+{
+  "scope": "structural framing of existing indexed bootstrap bodies, not sampling or native execution",
+  "index_sha256": "cb4f750476ab30c3c073495bd51b2b903a6483ef5a8e7e8e7c9e2d643f64a8f0",
+  "indexed_bodies": 3760,
+  "results": {
+    "parsed": 3760
+  },
+  "versions": {
+    "2": 3760
+  },
+  "codec_counts": {
+    "9": 80025,
+    "10": 12038,
+    "11": 7570,
+    "12": 72405,
+    "13": 16605,
+    "14": 17414,
+    "15": 729,
+    "16": 536,
+    "17": 1,
+    "21": 89407,
+    "22": 6292,
+    "23": 5458,
+    "24": 9258,
+    "25": 862,
+    "26": 1061,
+    "27": 301497,
+    "28": 12515,
+    "29": 5649,
+    "39": 7396,
+    "40": 44,
+    "41": 60,
+    "54": 7362,
+    "66": 6
+  },
+  "unresolved_shared_records": 0,
+  "bodies_with_only_supported_value_codecs": 2991,
+  "unsupported_value_codec_counts": {
+    "10": 12038,
+    "13": 16605,
+    "15": 729,
+    "16": 536,
+    "17": 1,
+    "22": 6292,
+    "25": 862,
+    "28": 12515,
+    "40": 44,
+    "41": 60,
+    "66": 6
+  }
+}

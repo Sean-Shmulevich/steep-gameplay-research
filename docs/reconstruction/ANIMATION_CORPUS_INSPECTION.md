@@ -40,3 +40,8 @@ inspector can now derive boundaries through the structural reader; its supported
 versions, unresolved shared references and other limits are documented separately.
 Bodies and metadata remain private; this report publishes hashes and counts only.
 Earlier independent-reference comparisons remain separate from these checks.
+
+The structural reader can frame more channel formats than the sampler supports.
+It can therefore report unsupported value codecs in whole bodies rather than
+stopping at their first occurrence. See the [broader inventory](ANIMATION_CONTAINER.md#broader-indexed-inventory)
+for a separate 3,760-body framing check; its counts are not sampling coverage.

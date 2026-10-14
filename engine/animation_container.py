@@ -5,7 +5,7 @@ Returned metadata is caller-owned; public diagnostics must omit private IDs.
 """
 import math
 import struct
-from .animation_decoder import unpack_serialized_channel
+from .animation_channel_framing import frame_serialized_channel
 
 
 def parse_clip_body(data):
@@ -65,7 +65,7 @@ def parse_clip_body(data):
             tracks.append({'track_number':index,'binding_hash':binding,
                            'shared_track_reference':reference,'serialized_start':start,'serialized_end':position})
         else:
-            parsed=unpack_serialized_channel(data,position);take(parsed['consumed'])
+            parsed=frame_serialized_channel(data,position);take(parsed['consumed'])
             tracks.append({'track_number':index,'binding_hash':binding,'codec':parsed['encoding'],
                            'serialized_start':start,'serialized_end':position})
     if position!=len(data):raise ValueError('trailing clip bytes')

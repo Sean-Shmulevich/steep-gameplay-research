@@ -59,22 +59,24 @@ skip bounded optional version-2 blob
 validate channel count equals binding count
 for each binding:
     if tag is 254: preserve unresolved u32 shared reference
-    else: use supported serialized-channel adapter to obtain exact record length
+    else: frame the declared time format and element width to obtain record length
 require exact body consumption
 ```
 
 ## Scope and safeguards
 
-Unknown event classes, unsupported channel encodings, invalid tags, reserved
+Unknown event classes, unsupported channel families, invalid tags, reserved
 fields, counts, nonfinite duration, unsorted lists, truncation and trailing bytes
 are rejected. Counts are bounded by remaining bytes before allocation/iteration.
 These rejection policies are ours, not claims about original malformed-input
 handling. The version-detection rule is source-reported and limited to these
 serialization versions.
 
-Channel decoding support remains the explicitly registered subset. This reader
-is not yet an arbitrary-clip importer: wide-time and other value formats remain
-unsupported. It preserves tag-254 references but does not resolve them, establish
+Channel framing and value decoding are separate. The framing reader handles byte,
+wide and mask timestamps for the documented families, including values that the
+sampler cannot yet decode. Unsupported value formats remain explicit in corpus
+reports; successful framing is not successful sampling. This is not an arbitrary
+clip importer: other families and container versions can still be unsupported. It preserves tag-254 references but does not resolve them, establish
 their target domain or silently treat them as local indices. No such reference
 appears in our six original bodies. Blob bytes and event bodies are not decoded.
 It does not infer rig identity, root-motion ownership or graph selection.
@@ -92,3 +94,30 @@ decoy type marker, all truncation positions, invalid counts/types, trailing byte
 and unresolved shared references. Version 1 and tag-254 handling have synthetic
 coverage only. Broader original-body testing and remaining channel formats are
 the next acceptance gates before general asset import.
+
+## Broader indexed inventory
+
+The [inventory receipt](animation_inventory_validation.json) records a new walk of
+3,760 existing indexed bootstrap bodies. All parsed with exact consumption, all
+were version 2, and no shared-track references appeared. Of these, 2,991 have only
+currently supported value codec IDs. That last count is eligibility by format,
+not successful sampling or playback. This scan did not sample their channels.
+
+Framing now uses `engine.animation_channel_framing.frame_serialized_channel`.
+It supports the source-documented element widths for families 3, 4, 5, 7, 8, 9,
+11, 12, 13, 14, 16, 18, 19 and 22, plus independently inspected family 0.
+The tag modulo three chooses byte, wide or mask time framing. It validates
+nonzero count, timestamp ordering, mask population and available sample bytes.
+Allocation metadata is preserved but is not treated as stream length. Large
+wide-time counts do not pass through the sampler's uint8 count restriction.
+
+The scan reads only each indexed `body`/`size` region and calls `parse_clip_body`;
+its index hash identifies the private boundary source. It does not independently
+verify how that outer inventory found every body. Public receipts contain counts
+and hashes, with no clip names, identifiers or payloads.
+
+The next high-yield decoder work is wide-time variants 13, 28 and 10: these occur
+in 16,605, 12,515 and 12,038 tracks respectively. They reuse known value formats,
+but require recovered wide-count headers and key-selection behavior. Encodings
+22 and 25 are additional wide-time priorities. Packed 64-bit quaternion values,
+scalar variants and a small special-channel family remain afterward.

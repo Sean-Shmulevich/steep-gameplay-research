@@ -980,3 +980,17 @@ and shared references have no original-body validation yet; unknown channel
 formats and event classes fail explicitly. No native playback proof claimed.
 
 Validation: 524 tests pass; packaging, hashes and local links pass.
+
+## Broad clip framing and decoder priorities
+
+Separated serialized channel framing from value sampling. Bounded framing now
+handles documented families and byte/wide/mask timestamps without asserting
+value-decoder support. All 3,760 existing indexed bootstrap bodies parse exactly;
+all are version 2 and none has a shared reference. 2,991 bodies contain only
+currently supported value codec IDs, an eligibility count rather than sampling
+proof. The receipt inventories missing codecs, prioritizing wide-time 13, 28 and
+10. Three synthetic tests cover large wide counts, unsupported-but-framed values,
+mask counts, malformed times and truncation. Outer index completeness remains
+unverified; six-body sampling coverage is unchanged.
+
+Validation: 527 tests pass; packaging, hashes and local links pass.
