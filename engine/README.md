@@ -319,3 +319,5 @@ Runtime descriptor addressing is exposed by [`animation_outputs`](../docs/recons
 Runtime class-0 identity lookup and compile dependencies are available through [`animation_identity`](../docs/reconstruction/ANIMATION_IDENTITY_API.md). Original map population and parameter freshness remain open.
 
 Lazy parameter preparation and explicit reset boundaries are exposed by [`animation_parameters`](../docs/reconstruction/ANIMATION_PARAMETER_LIFECYCLE.md). Reset placement is recovered within one update routine; scheduler cadence remains open.
+
+The recovered local animation deferral gate and float32 interval accumulation are exposed by [`animation_update_policy`](../docs/reconstruction/ANIMATION_UPDATE_POLICY.md). Caller scheduling and live configuration remain unresolved.

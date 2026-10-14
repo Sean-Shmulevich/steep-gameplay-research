@@ -45,7 +45,7 @@ if reset_gate:
 
 The graph's parameter-context pointer used here is the same field selected by the class-0 scalar getter. The reset addresses the same collection, stride and prepared-byte offset used by preparation. This is a concrete ownership and lifecycle join, not merely a match to a byte value elsewhere in the image.
 
-The reset occurs after branch work and before final temporary-resource release. Calling the outer update does not unconditionally reset the flags. Its eligibility branches, indirect callers and relationship to the physics scheduler remain unresolved. In particular, this evidence does not establish that newly ingested controls reach each animation or physics substep.
+The reset occurs after branch work and before final temporary-resource release. Calling the outer update does not unconditionally reset the flags. Its local eligibility rule is now recovered in [update policy](ANIMATION_UPDATE_POLICY.md). Its indirect callers and relationship to the physics scheduler remain unresolved. In particular, this evidence does not establish that newly ingested controls reach each animation or physics substep.
 
 ## Executable interface
 

@@ -1134,3 +1134,15 @@ blocks. Four tests cover shared groups, callback ordering and reset boundaries.
 Concrete callbacks, map population and outer update scheduling remain open.
 
 Validation: 559 tests pass; packaging, hashes and local links pass.
+
+## Animation deferral gate and interface identity
+
+Recovered pending-count, graph-state, mode-bit and byte-counter eligibility for
+animation deferral, including wrap-before-compare and float32 accumulated time.
+Connected update and registration to a constructed interface at owner+24;
+its virtual update slot is 0x50. Added a pure branch planner, not an automatic
+engine cadence. Original gate/effect blocks matched 400 synthetic cases, and
+four tests cover branch and arithmetic boundaries. Registration also consumes
+an incoming callable container; concrete callback classes remain unresolved.
+
+Validation: 563 tests pass; packaging, hashes and local links pass.

@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 400,
+  "deferred": 35,
+  "full": 365,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original eligibility gate and interval/counter effect blocks with synthetic state. Does not execute intervening callbacks, full graph update, reset gate consumption or scheduler caller. Portable branch_interval is based on static argument-flow inspection."
+}
