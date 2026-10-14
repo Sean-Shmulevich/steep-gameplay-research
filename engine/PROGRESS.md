@@ -801,3 +801,13 @@ unresolved runtime tick-scale producer. Four synthetic tests cover branch behavi
 and safeguards; full channel decoding remains incomplete.
 
 Validation: 479 tests pass; packaging, hashes and local links pass.
+
+## Connected encoding-zero decoder
+
+Traced reciprocal-time scalar initialization to float32 1/60. Connected channel
+byte parsing, key selection, time clamping, quaternion interpolation and recursive
+resource dispatch through an encoding-zero decoder callback. Five synthetic tests
+include a full dispatch-to-pose-value path. No private-clip/native comparison;
+other encodings, rig selection and physical motion coupling remain open.
+
+Validation: 484 tests pass; packaging, hashes and local links pass.

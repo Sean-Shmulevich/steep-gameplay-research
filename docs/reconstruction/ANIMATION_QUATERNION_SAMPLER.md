@@ -10,10 +10,12 @@ and packed current/next ticks. No gameplay clip identity is established here.
 
 The sampler converts two selected tick values to float32 and multiplies by a
 runtime-initialized scale vector. It clamps float sample time to those endpoints,
-then divides elapsed time by their difference to obtain t. That scale vector is
-zero in the frozen image. Its initialization copies a scalar through
-`0x140081e80`; tracing that scalar's producer remains open. Do not infer this
-conversion from the event system's separate 120-unit timestamps.
+then divides elapsed time by their difference to obtain t. The scale vector is
+zero in the frozen image, but its initializer is now traced: `0x140081e60`
+divides constant 1.0 by constant 60.0 using DIVSS and stores the scalar;
+`0x140081e80` broadcasts it into the vector. Thus the intended initialized scale
+is float32(1/60). This is separate from event timestamps at 120 units. Static
+initialization code does not prove execution order in a live process.
 
 For supplied quaternion samples a/b and weight t, the inspected blend is:
 
@@ -62,7 +64,38 @@ Tests cover source-copy behavior without normalization, negative-hemisphere
 correction, polynomial symmetry, the aligned branch, reciprocal seed injection
 and invalid inputs. No native playback comparison was performed.
 
-A complete encoding-zero decoder still needs verified time-scale initialization,
-payload bounds/alignment handling, and integration with key selection and the
-resource dispatcher. The interpolation helper does not silently invent those
-missing producer contracts.
+The subsequent decoder adapter below connects time scale, payload layout, key
+selection and interpolation. Container/rig/graph integration and live validation
+remain incomplete.
+
+
+## Connected encoding-zero channel decoder
+
+`engine.animation_decoder.sample_encoding_zero` accepts a private or synthetic
+channel byte sequence, float time, unsigned hint and cached key index. Byte zero
+must be encoding zero. Byte one is key count; count-1 byte timestamps follow.
+Float4 samples begin at `(count+16) & 0xfffffff0`, relative to channel base.
+Each sample occupies sixteen bytes. The adapter checks bounds and count before
+selection and rejects nonfinite selected samples. Native aligned load addresses
+assume suitable allocation alignment; Python decoding does not require it.
+
+When the packed tick result is at most 65535, it copies the selected float4
+without normalization. Otherwise it converts the two ticks with float32(1/60),
+clamps float time to that interval, computes a rounded interpolation fraction
+and invokes the recovered quaternion helper. Float time and integer hint remain
+independent: the caller owns their consistency. No hidden hint recomputation or
+looping is introduced.
+
+`encoding_zero_decoder` plugs this implementation into the recovered recursive
+sampling adapter. It accepts descriptor ID 0 and width 16, preserving output
+identity and updating SampleState.cursor while leaving the hint unchanged.
+The ID is our explicit mapping of the recovered encoding registration. Failed
+validation leaves output/cursor unchanged, an API safeguard rather than native
+fault behavior. The default normalization seed remains a scalar substitute for
+hardware RSQRTPS; direct callers can supply an observed seed.
+
+Synthetic integration tests now run encoded bytes through resource-chain dispatch,
+key selection and quaternion output. They cover single-key nonunit copy, the
+60-tick one-second midpoint, rewind, independent time clamping, malformed payloads
+and failure atomicity. No private-clip comparison has been performed for this
+new decoder. Other encodings remain unsupported here.

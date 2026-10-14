@@ -103,5 +103,5 @@ implemented, including cursor reuse, rewind search and packed tick outputs.
 Interpolation and other timestamp-format selectors remain separate work.
 
 The [encoding-zero interpolation branches](ANIMATION_QUATERNION_SAMPLER.md)
-now have a sampler-specific executable helper. Runtime time-scale initialization
-and full payload decoding remain unconnected.
+now have a sampler-specific executable helper. The encoding-zero decoder now connects its time scale and payload layout to
+key selection and interpolation; other encodings remain unconnected.

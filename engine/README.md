@@ -301,3 +301,7 @@ including shared output and hint/cursor state.
 
 [Byte-time key selection](../docs/reconstruction/ANIMATION_KEY_SELECTION.md)
 implements cached forward lookup and rewind binary search over supplied ticks.
+
+[Encoding-zero channel decoder](../docs/reconstruction/ANIMATION_QUATERNION_SAMPLER.md)
+connects supplied channel bytes to quaternion output and supports the recovered
+resource-dispatch callback interface. Other encoding IDs are rejected.
