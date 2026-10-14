@@ -313,3 +313,5 @@ Its private-corpus comparison is limited to reserialized decoded keys.
 [Corpus inspection](../docs/reconstruction/ANIMATION_CORPUS_INSPECTION.md) provides
 `python3 -m engine.animation_corpus` for caller-owned clip bodies and track-boundary
 metadata. It reports unsupported formats and emits aggregate diagnostics only.
+
+Runtime descriptor addressing is exposed by [`animation_outputs`](../docs/reconstruction/ANIMATION_OUTPUT_API.md), with distinct scalar/timeline storage and explicit owner evaluation. Authored-to-runtime lowering remains open.

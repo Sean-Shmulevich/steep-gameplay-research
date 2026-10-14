@@ -1096,3 +1096,15 @@ examples match expected predicates; 15 supplied sample evaluations complete.
 Outgoing authored edges and captured-parameter timing remain unresolved.
 
 Validation: 547 tests pass; packaging, hashes and local links pass.
+
+## Runtime animation output addressing
+
+Added the runtime output descriptor adapter with stored-order flattening, class
+8/9 resolution, scalar and timeline reads, and explicit owner-before-read
+evaluation. Four synthetic tests exercise multi-output nodes, empty nodes,
+handle bit selection, callback ordering and invalid snapshot bounds. This
+implements existing recovered rules; it does not close authored graph lowering.
+The resource-handle initializer and three related functions were reread; their
+key-copy and provider lookup behavior agree with the existing research.
+
+Validation: 551 tests pass; packaging, hashes and local links pass.
