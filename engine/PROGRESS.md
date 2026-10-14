@@ -857,3 +857,14 @@ and 889 comparisons, maximum sign-invariant component difference
 seed policy and general rotations. Native parity and full rig selection remain open.
 
 Validation: 496 tests pass; packaging, hashes and local links pass.
+
+## Repeatable animation corpus inspection
+
+Added a payload-free CLI/API for supported-record parsing and cached/reset sample
+consistency. Six original extracted bodies contain 1,052 tracks: 803 validated,
+249 unsupported, no shared records and no failures across 5,621 sample checks.
+Encoding 12 accounts for 141 unsupported tracks and is the next targeted blocker.
+This is scoped corpus coverage, not engine coverage or native equivalence. Three
+synthetic tests distinguish supported, unsupported/shared and invalid records.
+
+Validation: 499 tests pass; packaging, hashes and local links pass.

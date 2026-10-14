@@ -1,0 +1,177 @@
+{
+  "scope": "six existing private clip bodies; supplied track boundaries; no native execution",
+  "clips": [
+    {
+      "scope": "supplied-boundary decoding and cached/reset consistency; not native equivalence",
+      "body_sha256": "17575abd0a96871560994f54641ba26e0c28907faef61d84edabeb928dc13ee8",
+      "records": 182,
+      "codec_counts": {
+        "9": 24,
+        "12": 26,
+        "21": 34,
+        "24": 3,
+        "27": 87,
+        "39": 4,
+        "54": 4
+      },
+      "unsupported_codec_counts": {
+        "12": 26,
+        "24": 3,
+        "39": 4,
+        "54": 4
+      },
+      "unresolved_shared_records": 0,
+      "validated_tracks": 145,
+      "sample_checks": 1015,
+      "failures": [],
+      "all_tracks_supported_and_validated": false,
+      "game_payloads_included": false
+    },
+    {
+      "scope": "supplied-boundary decoding and cached/reset consistency; not native equivalence",
+      "body_sha256": "571473a8764aebffbf76a22e8454509053ef2a838b2576b344802fa124a51e28",
+      "records": 174,
+      "codec_counts": {
+        "9": 22,
+        "11": 1,
+        "12": 24,
+        "21": 35,
+        "24": 3,
+        "27": 85,
+        "39": 2,
+        "54": 2
+      },
+      "unsupported_codec_counts": {
+        "11": 1,
+        "12": 24,
+        "24": 3,
+        "39": 2,
+        "54": 2
+      },
+      "unresolved_shared_records": 0,
+      "validated_tracks": 142,
+      "sample_checks": 994,
+      "failures": [],
+      "all_tracks_supported_and_validated": false,
+      "game_payloads_included": false
+    },
+    {
+      "scope": "supplied-boundary decoding and cached/reset consistency; not native equivalence",
+      "body_sha256": "10807a14991b9dc8221bbe4530bfc8ee2211a8f65e5f32d2162d3afe0fc4d4ec",
+      "records": 174,
+      "codec_counts": {
+        "9": 10,
+        "11": 13,
+        "12": 12,
+        "14": 24,
+        "21": 6,
+        "23": 17,
+        "24": 1,
+        "26": 2,
+        "27": 79,
+        "29": 6,
+        "39": 2,
+        "54": 2
+      },
+      "unsupported_codec_counts": {
+        "11": 13,
+        "12": 12,
+        "14": 24,
+        "23": 17,
+        "24": 1,
+        "26": 2,
+        "29": 6,
+        "39": 2,
+        "54": 2
+      },
+      "unresolved_shared_records": 0,
+      "validated_tracks": 95,
+      "sample_checks": 665,
+      "failures": [],
+      "all_tracks_supported_and_validated": false,
+      "game_payloads_included": false
+    },
+    {
+      "scope": "supplied-boundary decoding and cached/reset consistency; not native equivalence",
+      "body_sha256": "621f50ac641e9c93606bf841bb8cb58dde2f999243f989a69809fb221d3550a6",
+      "records": 174,
+      "codec_counts": {
+        "9": 23,
+        "11": 1,
+        "12": 24,
+        "21": 34,
+        "24": 3,
+        "27": 85,
+        "39": 2,
+        "54": 2
+      },
+      "unsupported_codec_counts": {
+        "11": 1,
+        "12": 24,
+        "24": 3,
+        "39": 2,
+        "54": 2
+      },
+      "unresolved_shared_records": 0,
+      "validated_tracks": 142,
+      "sample_checks": 994,
+      "failures": [],
+      "all_tracks_supported_and_validated": false,
+      "game_payloads_included": false
+    },
+    {
+      "scope": "supplied-boundary decoding and cached/reset consistency; not native equivalence",
+      "body_sha256": "6b490859c97683aaf9f9d8573bc236cd74a16af29c931f8d8eb34026a226bc72",
+      "records": 170,
+      "codec_counts": {
+        "9": 24,
+        "12": 24,
+        "21": 32,
+        "24": 3,
+        "27": 83,
+        "39": 2,
+        "54": 2
+      },
+      "unsupported_codec_counts": {
+        "12": 24,
+        "24": 3,
+        "39": 2,
+        "54": 2
+      },
+      "unresolved_shared_records": 0,
+      "validated_tracks": 139,
+      "sample_checks": 973,
+      "failures": [],
+      "all_tracks_supported_and_validated": false,
+      "game_payloads_included": false
+    },
+    {
+      "scope": "supplied-boundary decoding and cached/reset consistency; not native equivalence",
+      "body_sha256": "e2346f7591997710a19215db4d1d86d6fa938ca1db215aef0fbb5eb1599944d4",
+      "records": 178,
+      "codec_counts": {
+        "9": 24,
+        "12": 31,
+        "21": 29,
+        "24": 2,
+        "26": 1,
+        "27": 87,
+        "39": 2,
+        "54": 2
+      },
+      "unsupported_codec_counts": {
+        "12": 31,
+        "24": 2,
+        "26": 1,
+        "39": 2,
+        "54": 2
+      },
+      "unresolved_shared_records": 0,
+      "validated_tracks": 140,
+      "sample_checks": 980,
+      "failures": [],
+      "all_tracks_supported_and_validated": false,
+      "game_payloads_included": false
+    }
+  ]
+}

@@ -309,3 +309,7 @@ resource-dispatch callback interface. Other encoding IDs are rejected.
 The shared `registered_channel_decoder` additionally supports
 [encoding-27 vector channels](../docs/reconstruction/ANIMATION_VECTOR_SAMPLER.md).
 Its private-corpus comparison is limited to reserialized decoded keys.
+
+[Corpus inspection](../docs/reconstruction/ANIMATION_CORPUS_INSPECTION.md) provides
+`python3 -m engine.animation_corpus` for caller-owned clip bodies and track-boundary
+metadata. It reports unsupported formats and emits aggregate diagnostics only.
