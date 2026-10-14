@@ -714,3 +714,22 @@ and Reference. Added a payload-free machine-readable catalog with source hash
 and evidence limits. This supplies names for mask-group producers but does not
 establish group=bone or variant=mirror. Eight special swap hashes remain unnamed.
 Documentation/data pass; last full suite remains452 tests.
+
+
+## Binding record encoding and inspection API
+
+Added executable type conversion, four-byte main record packing and field
+inspection with remap/Reference-bit boundary tests. A dedicated guide supplies
+runnable synthetic examples and distinguishes main records from special mapping
+swap/mask words. Full target matching and rig integration remain unresolved.
+See docs/reconstruction/ANIMATION_BINDING_API.md.
+
+Validation: 455 tests pass; packaging, source hashes and local links pass.
+
+## Evaluator sample preparation
+
+Static inspection recovered two distinguished-channel identity comparisons and
+presence/cache masks for ten channel pairs. Documented eligibility, compact
+sample ordering, exact tolerance, sentinels and initialization assumptions in
+ANIMATION_EVALUATOR_PREPARATION.md. Pair identities and later cache consumers
+remain open. No runtime implementation changed after the 455-test checkpoint.

@@ -43,3 +43,29 @@ class BindingMaskTests(unittest.TestCase):
         self.assertEqual(masks(first, [1, 3, 5]), [8])
         with self.assertRaises(ValueError):
             masks([1], [0, 1])
+
+
+class ChannelBindingEncodingTests(unittest.TestCase):
+    def test_type_groups_and_default_do_not_truncate(self):
+        from engine.animation_binding import matching_channel_type as convert
+        self.assertEqual([convert(i) for i in range(8)], [6, 5, 5, 5, 0, 2, 3, 1])
+        self.assertEqual(convert(8), 8)
+        self.assertEqual(convert(255), 8)
+
+    def test_remap_splits_target_and_flags_without_changing_source(self):
+        from engine.animation_binding import encode_channel_binding, inspect_channel_binding
+        encoded = encode_channel_binding(0x1234, 9, 0x2c52cbb0, True,
+                                         remap_word=(37 << 3) | 5)
+        self.assertEqual(encoded, {'target_index': 37, 'source_word': 0xd234})
+        self.assertEqual(inspect_channel_binding(**encoded),
+                         {'target_index': 37, 'source_index': 0x234,
+                          'remap_bits': 5, 'special_bit': True})
+
+    def test_second_variant_is_reference_channel_specific(self):
+        from engine.animation_binding import encode_channel_binding as encode
+        self.assertEqual(encode(7, 65535, 0x58988870, True),
+                         {'target_index': 65535, 'source_word': 7})
+        self.assertEqual(encode(7, 9, 0x2c52cbb0, False, 65535),
+                         {'target_index': 8191, 'source_word': 0x7007})
+        with self.assertRaises(ValueError):
+            encode(7, 9, 0x2c52cbb0, 1)

@@ -285,3 +285,8 @@ For detailed physics-to-animation inspection, configure
 The trace then includes copied phase entry/return state, input generation and full
 owned animation pose. See [phase capture](../docs/reconstruction/TRACE_ANALYSIS.md#optional-phase-state-capture)
 for abort and capacity interpretation.
+
+
+For standalone recovered animation binding helpers and synthetic examples, see
+[the binding inspection API](../docs/reconstruction/ANIMATION_BINDING_API.md).
+These helpers require caller-supplied mapping data and are not a complete rig loader.
