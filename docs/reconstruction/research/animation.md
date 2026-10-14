@@ -1336,3 +1336,68 @@ conditional scalar use, but does not establish seconds, normalized time, blend
 weight, duration, transition policy or a specific landing animation. The virtual
 handle getter, aggregate getter, row identity and predicate remain explicit
 interfaces. Other direct callers are leads, not inspected equivalents.
+
+
+## Aggregate ownership and state callbacks
+
+The aggregate getter follows two pointers: owner to an intermediate object, then
+that object to the aggregate. It performs no local null check, allocation or
+availability test. This establishes a context-owner route to the aggregate;
+it still does not identify the acquired eight-byte resource wrapper with a
+secondary-provider wrapper.
+
+The preceding caller's row identity and predicate helpers share one callback
+table. Each reads a first word from the embedded handle and an optional wrapper
+through its backing object. It passes the wrapper's first pointer when present,
+or null otherwise, as the first callback argument; the handle's first word is the
+second argument. Separate table slots produce the compared key and tested byte.
+Their installed targets remain unresolved, so neither is a decoded readiness or
+playback-state predicate yet.
+
+## Activation caller stores scalar and adjusts a settings byte
+
+A second aggregate caller returns early when a context byte is already nonzero.
+Otherwise it sets that byte to one before subsequent helpers, gets an original
+handle through a virtual method, and initializes lookup scalar bits and flag to
+zero. It selects a replacement and stores the scalar at the same node-selected
+context offset used by the earlier conditional scalar reader.
+
+It zero-initializes a six-byte settings block and asks another virtual method to
+fill it. If selected and original handle pointers differ, it replaces settings
+byte 3 with the byte comparison result `settings[3] != lookup_flag`. Pointer
+equality leaves the settings byte unchanged. This is an inequality operation,
+not a bitwise XOR for arbitrary non-boolean byte values.
+
+```text
+# Observed activation prefix. Later binding helpers remain opaque.
+if context.activation_byte != 0:
+    return
+context.activation_byte = 1
+prepare_context_row(context, node.state_index)
+original = node.virtual_get_handle(context)
+scalar_bits = 0
+lookup_flag = 0
+selected = select_replacement(aggregate_from_owner(context.owner), original,
+                              scalar_bits, lookup_flag)
+context.node_scalar_bits = scalar_bits
+settings = six_zero_bytes()
+node.virtual_fill_settings(context, settings)
+if selected is not original:
+    settings[3] = u8(settings[3] != lookup_flag)
+prepare_selected(node, context, selected, settings)
+bind_state_row(context.state_row, selected, settings[0], settings[1])
+```
+
+The inspected continuation copies settings bytes 2, 3 and 5 into state-row
+bytes, passes selected handle and a packed settings/scalar block into a binding
+helper, then performs further resource and mode-dependent work. These calls are
+not expanded by the prefix pseudocode. The activation byte's reset owner and
+cadence remain unknown, so this gate cannot yet be called once-per-frame or
+once-per-clip. The six settings bytes have no established semantic names.
+
+The independent `engine.animation_provider` module implements only the earlier
+ordered lookup contract over synthetic caller-owned objects. It retains scalar
+bits exactly and accepts an explicit availability callback. Tests cover primary
+precedence, failed-row writes, duplicate keys, skipped wrappers, and a callback
+that changes the wrapper pointer before the required reread. These tests validate
+our local adapter, not original clip playback or native concurrency.

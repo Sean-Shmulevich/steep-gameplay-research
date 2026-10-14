@@ -1,0 +1,79 @@
+"""Recovered animation replacement lookup over caller-owned synthetic objects.
+
+Evidence: docs/reconstruction/research/animation.md, Ordered provider replacement
+and Wrapper availability delegates to a context callback. These are our object
+shapes, not decoded native layouts. No loading, pointer lifetime, readiness,
+thread safety, clip selection, or integration with the synthetic pose player is
+implied. Availability remains a caller-supplied predicate.
+"""
+from dataclasses import dataclass
+from typing import Any, Callable
+
+
+@dataclass
+class Handle:
+    key: int
+
+
+@dataclass
+class Row:
+    key: int
+    scalar_bits: int
+    flag: int
+    available: bool
+    handle: Handle
+
+
+@dataclass
+class Provider:
+    rows: list[Row]
+
+
+@dataclass
+class Wrapper:
+    pointer: Provider | None
+    control_word: int = 0
+
+
+@dataclass
+class Outputs:
+    scalar_bits: int = 0
+    flag: int = 0
+
+
+def select_replacement(primary: Provider | None, wrappers: list[Wrapper | None],
+                       original: Handle, outputs: Outputs,
+                       accepts: Callable[[Any], bool]) -> Handle:
+    """Preserve identity, ordered lookup, and output writes on failed matches.
+
+    Caller contract: keys/words/bytes have their native unsigned widths, rows
+    are valid objects, and availability reflects only a non-null row pointer.
+    Scalars remain raw bits to avoid inventing units or changing float payloads.
+    Native relative-array decoding and concurrent mutation are outside this model.
+    """
+    def find(provider):
+        for row in provider.rows:
+            if row.key == original.key:
+                outputs.scalar_bits = row.scalar_bits
+                outputs.flag = row.flag
+                if row.available:
+                    return row.handle
+        return None
+
+    if primary is not None:
+        selected = find(primary)
+        if selected is not None:
+            return selected
+    for wrapper in wrappers:
+        if wrapper is None:
+            continue
+        if not (wrapper.control_word & 0x80000000):
+            if not accepts(wrapper.pointer):
+                continue
+        # Deliberately reread after the callback, matching the native helper.
+        provider = wrapper.pointer
+        if provider is not None:
+            selected = find(provider)
+            if selected is not None:
+                return selected
+    return original

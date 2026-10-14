@@ -509,3 +509,28 @@ false AL copies scalar to output. Flag unused afterward.
 
 Next bounded pass: `1412f47d0`, `1412efaa0`, `1412fc0a0`, then one remaining
 aggregate caller. Preserve unknown scalar units and separate wrapper identities.
+
+
+## Aggregate getter, shared callback table, activation prefix
+
+`1412f47d0` leaf: owner+d0 pointer, then intermediate+a0 pointer, return.
+`1412efaa0` leaf ends at `1412eface`; `1412fc0a0` ends at `1412fc0ce`.
+Both branches tail-dispatch, no RET required. Each reads embedded handle+0 into
+RDX and backing=handle+8; wrapper=backing+8. RCX=wrapper+0 contents if nonnull,
+else RCX=0. Global callback table `143310298`, slot90 key helper, slot98 predicate.
+Adjacent INT3 and next-function bytes excluded. Installation targets remain open.
+
+Inspected `1412a5950` (1131 pdata bytes). Context data+10 scalar/byte array,
+node+60 byte offset is early gate; set1 before `1412dafb0` with node+6c index.
+Virtual+b0 returns original handle; local scalar0/flag0 passed through aggregate.
+Scalar stored at node+5c offset. Six-byte settings zeroed, virtual+c0 fills.
+At `1412a5a8b`, selected/original pointer inequality enables byte3 := (byte3 !=
+lookup_flag); equality preserves it. `14129e5a0` receives node/context/selected/
+settings. `14128f930` receives state row/selected/settings bytes0 and1. Row array
+at data+e8, stride30 hex,index node+6c. Settings bytes2/3/5 -> row28/29/2a.
+`1412f8c30` receives row+8, owner+d8, selected, packed row20/24 scalars plus
+settings bytes3/4/5. Remaining calls and mode2/3 tail arithmetic are inspected
+instructions but not semantically decoded here; no time-unit claim.
+
+Next: callback-table registration for slots90/98, `14129e5a0`, `14128f930`,
+and `1412f8c30`. Find activation-byte reset owner before assigning cadence.

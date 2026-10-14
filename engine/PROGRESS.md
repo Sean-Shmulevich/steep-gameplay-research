@@ -571,3 +571,19 @@ predicate; scalar units and predicate semantics remain unresolved. This narrows
 the adapter contract without inventing an animation selection policy.
 Documentation-only static pass; no native process access. Last full suite remains
 429 tests; no new runtime behavior claimed.
+
+
+## Executable animation provider lookup contract
+
+Added a standalone provider lookup adapter with exact scalar-bit retention,
+ordered primary/secondary precedence, original-handle fallback and callback
+pointer reread. Five synthetic tests exercise failure side effects and identity.
+The adapter is not wired into the synthetic pose player while selection and
+resource ownership remain unresolved.
+
+Further static inspection connects the aggregate through context ownership,
+identifies shared callback-table key/predicate slots, and decodes activation's
+scalar write and replacement-dependent settings-byte inequality. Settings meaning,
+callback targets and activation reset cadence remain open.
+
+Validation: all 434 independent tests pass; packaging, hashes and links pass.
