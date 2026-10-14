@@ -70,6 +70,14 @@ A person watching the game window during the single-step session reported a brie
 
 Telling these apart needs frame-accurate capture around a release, and reproducing the native mode-transition notification, which may also control the camera mode.
 
+## Entering and leaving through the engine's own routines
+
+[A later session](live_native_routines_stop_mode_validation.json) entered stop mode by running the engine's compact setter (request argument 1) and left it by running the native clear routine, each once on a new thread in the game process. Both completed. The mode group changed exactly as with the byte-level writes, and the same jobs froze and resumed. The process continued normally.
+
+A window recording at about 33 fps showed that entering stop mode **cuts in a single frame** from the gameplay camera to a closer pause camera, which also hides the waypoint marker. Leaving cuts back in a single frame. Frames during the hold were nearly static. The native path produced the same pause view as the byte-level enter, so the camera change belongs to the engine's pause path rather than to the skipped notification.
+
+This also offers the most likely explanation for the per-step artefact below. While held, `UpdateCamera` is frozen and the pause camera is shown. A released step runs the camera job once, which plausibly renders one gameplay-camera frame before the pause camera returns. This has not yet been recorded during stepping.
+
 ## What stop mode suspends
 
 [A survey of every embedded engine job](live_stop_mode_job_survey_validation.json) sampled each job's last-run and current-request counters in baseline, held and resumed phases. While held, `CheckEngineStop` takes its bypass, so the whole simulation half of the frame stops, not just `Step`.

@@ -1,0 +1,61 @@
+{
+  "status": "native_enter_and_leave_executed",
+  "observations": 1,
+  "method": "Engine compact setter (argument 1) and clear routine (argument 0) each executed once on a new thread in the game process, after identity, routine-signature and mode-group checks; run by the user. Window recorded at ~33 fps across the hold.",
+  "calls": [
+    {
+      "routine": "enter",
+      "completed": true,
+      "before": "00000001",
+      "after": "00010101"
+    },
+    {
+      "routine": "leave",
+      "completed": true,
+      "before": "00010101",
+      "after": "00000001"
+    }
+  ],
+  "jobs_by_phase": {
+    "baseline": {
+      "step": "ran",
+      "paused": "frozen",
+      "camera": "ran",
+      "pad": "ran",
+      "sound": "ran",
+      "end_frame": "ran"
+    },
+    "held": {
+      "step": "frozen",
+      "paused": "ran",
+      "camera": "frozen",
+      "pad": "frozen",
+      "sound": "frozen",
+      "end_frame": "ran"
+    },
+    "resumed": {
+      "step": "ran",
+      "paused": "frozen",
+      "camera": "ran",
+      "pad": "ran",
+      "sound": "ran",
+      "end_frame": "ran"
+    }
+  },
+  "recording": {
+    "frames": 484,
+    "approx_fps": 32.8,
+    "one_frame_flashes": 0,
+    "camera_cuts_detected": 2,
+    "cut_frames_mean_abs_diff": 19.7,
+    "typical_held_frame_diff": 0.02
+  },
+  "observation": "Entering stop mode cuts in one frame from the gameplay camera to a closer pause camera without the waypoint marker; leaving cuts back in one frame. Same view as the byte-level enter.",
+  "process_survived": true,
+  "debugger_attached": false,
+  "configuration_restored": true,
+  "scope": "One native enter/leave. Shows the pause camera cut is part of the engine pause path, not an artefact of skipping the native notification. Does not observe what the notification changes internally.",
+  "private_result_sha256": [
+    "2ec04dba7b609505481a24776d4c3d4eabaceff97a1bc4ab21a545697d8cde55"
+  ]
+}
