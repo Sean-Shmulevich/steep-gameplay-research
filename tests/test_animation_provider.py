@@ -115,3 +115,24 @@ class PlaybackRangeTests(unittest.TestCase):
         self.assertEqual(resolve(10, 0.006, 1, True)['start_tick'], 1)
         with self.assertRaises(ValueError):
             resolve(float('nan'), 0, 0, False)
+
+
+class TimestampCursorTests(unittest.TestCase):
+    def test_reset_and_advance_at_duplicate_boundary(self):
+        from engine.animation_provider import timestamp_cursor as cursor
+        times = [0, 120, 120, 240]
+        self.assertEqual(cursor(times, 1.0), 0)
+        self.assertEqual(cursor(times, 1.0, previous=0), 2)
+        self.assertEqual(cursor(times, 0.0), -1)
+        self.assertEqual(cursor(times, 0.0, previous=-1), 0)
+
+    def test_reset_exhaustion_and_empty_are_not_last_index(self):
+        from engine.animation_provider import timestamp_cursor as cursor
+        self.assertEqual(cursor([0, 120], 2.0), 2)
+        self.assertEqual(cursor([], 0.0), 0)
+        self.assertEqual(cursor([], 0.0, previous=-1), -1)
+
+    def test_forward_path_does_not_rewind(self):
+        from engine.animation_provider import timestamp_cursor as cursor
+        self.assertEqual(cursor([0, 120, 240], 0.0, previous=1), 1)
+        self.assertEqual(cursor([0, 120], 1.0, previous=0xffffffff), 1)

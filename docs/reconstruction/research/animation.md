@@ -1637,3 +1637,79 @@ path temporarily changes the progress-like scalar, invokes an opaque operation,
 restores a capped previous value, and can restore requested endpoints followed by
 the range/cache reset. It is not yet identified as seek, synchronization, or an
 animation mode, so none of those semantics enter the executable model.
+
+
+## Position setters and timestamp cursor boundaries
+
+Two explicit setters write the evaluator's relative position. One multiplies the
+requested fraction by effective range duration before capping; the other caps a
+requested absolute offset. Both use MINSS with the requested value as source,
+so neither provides a zero lower bound. These are explicit writes, not proof of
+the automatic playback clock's update rule.
+
+```text
+set_fraction(fraction, preserve_history):
+    duration = f32(end - start)
+    position = MINSS(duration, f32(duration * fraction))
+    if not preserve_history:
+        position_copy = position
+        two_history_words = 0
+    invalidate_both_index_caches()
+
+set_offset(offset, preserve_history, invalidate):
+    position = MINSS(f32(end - start), offset)
+    if not preserve_history:
+        position_copy = position
+        two_history_words = 0
+    if invalidate:
+        invalidate_both_index_caches()
+```
+
+The boolean parameter names above describe observed effects. They are not
+recovered API names. The two history words' precise meanings remain unknown.
+
+A separate reset helper computes absolute position as float32 relative position
+plus effective start, then walks selected timestamp tracks. It filters each
+track by a mask intersection. A matching track's unsigned16 timestamps are divided
+by float32 120.0. The first timestamp greater than or equal to current position
+sets the cursor to the preceding index, or all-one bits for index zero. If no
+such timestamp exists, it writes the count itself. An empty track writes zero.
+Unselected tracks keep their old cursor.
+
+```text
+reset_cursor(times, absolute_position):
+    for index in range(count):
+        if f32(times[index] / 120.0) >= absolute_position:
+            return index - 1  # index0 becomes native ffffffff
+    return count
+```
+
+Another track consumer has a dispatch branch and a cursor-only branch. The latter
+starts at zero for the all-one sentinel, otherwise unsigned cursor+1, and advances
+while decoded timestamp is less than or equal to current absolute position. It
+does not rewind when position decreases. Thus exact equality differs between
+reset and advancement, and duplicate timestamps at the boundary are all consumed
+by the forward path. Do not replace reset's exhaustion result with count-1.
+
+```text
+advance_cursor(times, absolute_position, cursor):
+    index = 0 if cursor == 0xffffffff else u32(cursor + 1)
+    while index < count:
+        if f32(times[index] / 120.0) > absolute_position:
+            break
+        cursor = index
+        index += 1
+    return cursor
+```
+
+Reset and forward traversal read different count fields in the track. Their
+relationship remains unproved. The synthetic cursor helper takes the chosen
+sequence explicitly and accepts finite positions; it is not an event dispatcher.
+The native COMISS branches differ on NaN and no NaN equivalence is claimed.
+
+The dispatch branch requires a nonzero caller gate, a compatible track level,
+a mask intersection, and evaluator flag bit 3. It passes current position, cached
+cursor, resource, start/end tick words and other context to an unresolved helper.
+A failed gate still takes the cursor-only branch, so skipping delivery does not
+necessarily preserve the cursor. The original temporal clock producer, flag
+bit 0/1 consumers, and dispatched payload semantics remain open.

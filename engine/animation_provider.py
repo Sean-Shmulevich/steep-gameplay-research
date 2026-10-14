@@ -138,3 +138,39 @@ def resolve_playback_range(resource_length, requested_start, requested_end,
         return integer & 0xffff
     return {'start': start, 'end': end,
             'start_tick': ticks(start), 'end_tick': ticks(end)}
+
+
+def timestamp_cursor(encoded_times, absolute_position, previous=None):
+    """Recovered reset or forward-only cache walk over synthetic uint16 times.
+
+    Evidence: animation research, Timestamp cursor boundaries. ``previous=None``
+    selects reset; otherwise -1 denotes the before-first sentinel. Native reset
+    and advance read distinct count fields, so the caller must supply the correct
+    sequence for the selected operation. No event delivery is implemented.
+    """
+    import math
+    import struct
+    def f32(value):
+        return struct.unpack('<f', struct.pack('<f', value))[0]
+    position = f32(absolute_position)
+    if not math.isfinite(position):
+        raise ValueError('cursor adapter requires a finite position')
+    times = []
+    for encoded in encoded_times:
+        if type(encoded) is not int or not 0 <= encoded <= 65535:
+            raise ValueError('expected uint16 timestamp')
+        times.append(f32(encoded / 120.0))
+    if previous is None:
+        for index, time in enumerate(times):
+            if time >= position:
+                return index - 1
+        # The native exhaustion result is count, including zero for empty input.
+        return len(times)
+    if type(previous) is not int or previous < -1 or previous > 0xffffffff:
+        raise ValueError('expected cursor index or -1')
+    index = 0 if previous in (-1, 0xffffffff) else (previous + 1) & 0xffffffff
+    result = previous
+    while index < len(times) and times[index] <= position:
+        result = index
+        index += 1
+    return result

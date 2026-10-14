@@ -619,3 +619,14 @@ wrapping. Resource assignment uses the known packed-reference release path.
 Context backoff, progress clock semantics and units remain explicit unknowns.
 
 Validation: 440 tests pass; packaging, source hashes and local links pass.
+
+
+## Playback position setters and timestamp cursor boundaries
+
+Decoded fraction/offset setters, history/cache gates, reset's strict-before cursor
+and forward traversal's inclusive boundary. Added standalone synthetic cursor
+model with duplicate timestamp, exhaustion and rewind tests. Dispatch can be
+skipped while cursors advance. Automatic clock update, payload delivery and the
+two native count fields remain unresolved; no event system integration claimed.
+
+Validation: 443 tests pass; packaging, source hashes and local links pass.

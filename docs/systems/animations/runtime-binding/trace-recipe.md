@@ -638,3 +638,32 @@ capped previous scalar, selector-specific `140db4e80`, optionally restores custo
 endpoints and calls `140dcb7c0` resettrue. Semantics deliberately unresolved.
 Next: `140db85f0`, +378 clock writers, bit0/1 consumers, and resource length
 producer. Prove units and update cadence before integrating playback controls.
+
+
+## Position setters and timestamp cache traversal
+
+Inspected `140dbff80` (147), `140dc0540` (145), `140db85f0` (195),
+`140db51b0` (445). First setter position+378=MINSS(duration,duration*XMM1),
+R8b false copies+388 and zeroes qword+380; both caches invalidated. Second
+position=MINSS(duration,XMM1); same R8b history gate, R9b controls invalidation.
+Aligned direct caller roots for first: `140d6e720`,`140ddf090`; second:
+`1408c1b60`,`140d2f1a0`,`140d56080`,`140d65d80`,`140d66240`,
+`140d662c0`,`140d6b280`,`140d70590`. Caller semantics not yet inspected.
+
+Reset `140db85f0`: mask evaluator+372 & inputDX; absolute=+378 + +364;
+resource+30 pointer array/count+3a. Track mask+28; timestamp pointer+8,
+reset count+10 u16; divide constant `141e4a8e8`=120. COMISS/JAE first >= gives
+index-1, zero index -> ffffffff, exhaustion -> count, zero count ->0. Writes
+cursor array evaluator+2bc at original track index. Filtered-out tracks untouched.
+
+Consumer `140db51b0`: evaluator+374 & inputDX; same absolute position. Level
+from owner+98 dword bits18..20, track+24 signed level0 or <= permits dispatch.
+Caller gate nonzero, level pass, track+28 mask intersection, evaluator+376 bit3
+-> `140db5370` with tick words+36c/+36e and context. Otherwise cursor-only:
+track count+22 u16 (distinct reset+10), ffffffff->index0 elsecursor+1; decoded
+time COMISS/JA exits strictly greater; otherwise stores index and advances.
+Unordered native comparisons are not modeled by finite-input helper.
+
+Next: `140ddf090` wrapper/name, clock update via interior pointers, dispatch
+`140db5370`, and relationship between track count+10 and+22. Do not mistake
+explicit position setters for the automatic clock writer.
