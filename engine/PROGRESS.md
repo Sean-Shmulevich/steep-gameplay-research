@@ -1158,3 +1158,16 @@ lookups stubbed. Four tests cover packet behavior and policy composition.
 Component writers, source table population and scheduler caller remain open.
 
 Validation: 567 tests pass; packaging, hashes and local links pass.
+
+## KinoComponent update and clock source
+
+Identified the threshold source type as KinoComponent and connected its stored
+interface to the exact owner+24 factory result. Its update method conditionally
+calls the recovered outer update. The animation-time task configuration supplies
+a receiver-slot dispatcher, with worker selection and membership still open.
+Recovered component flags, missing-owner/world behavior and owner bit58 clock
+selection. Original selection matched 256 synthetic cases; four tests pass.
+Rejected a same-offset serializer belonging to ProgressionCameraTransition.
+Clock domains, threshold-field writer and physics-relative timing remain open.
+
+Validation: 571 tests pass; packaging, hashes and local links pass.

@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 256,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original component interval-selection block with synthetic owner/world pointers and clock values. Covers all component flag bytes, missing owner/world and both owner-clock branches. Job dispatch, live membership, interface call gates and full update not emulated."
+}

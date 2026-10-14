@@ -323,3 +323,5 @@ Lazy parameter preparation and explicit reset boundaries are exposed by [`animat
 The recovered local animation deferral gate and float32 interval accumulation are exposed by [`animation_update_policy`](../docs/reconstruction/ANIMATION_UPDATE_POLICY.md). Caller scheduling and live configuration remain unresolved.
 
 The named threshold callback's packet arithmetic is exposed by [`animation_thresholds`](../docs/reconstruction/ANIMATION_THRESHOLD_PRODUCER.md), including its direct deferral-policy join. Native component resolution remains external.
+
+[`animation_component_clock`](../docs/reconstruction/ANIMATION_COMPONENT_DISPATCH.md) selects the recovered component interval source and exposes local interface-call gates. The component/factory join is static; live scheduler membership remains open.
