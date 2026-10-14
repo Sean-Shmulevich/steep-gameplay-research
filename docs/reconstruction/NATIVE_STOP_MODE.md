@@ -61,6 +61,15 @@ Setting the mode again as soon as `Step` starts is safe for routing. By then the
 
 This is a working native pause and single-step at **engine-request granularity**, with rendering alive throughout. It does not control simulation substeps inside a request, input delivered during the hold, or the native transition side effects noted above.
 
+### Visual artefact on each step
+
+A person watching the game window during the single-step session reported a brief glitched overlay of the image on every released step. The screenshot capture (about one second per frame) was too slow to record it. Two explanations fit what is known, and neither is confirmed:
+
+- **Camera switch.** While held, the paused path shows a different, closer camera. A released request runs `Step`, which may update the gameplay camera for that one frame before the paused camera resumes.
+- **Temporal reconstruction.** Anti-aliasing history, motion vectors or motion blur may blend the previous image after a sudden jump in world and camera state.
+
+Telling these apart needs frame-accurate capture around a release, and reproducing the native mode-transition notification, which may also control the camera mode.
+
 ## Remaining release work
 
 - Reproduce or invoke the native setter notification and clear-side transitions, and determine whether the camera change comes from their absence.
