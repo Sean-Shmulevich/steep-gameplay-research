@@ -1,0 +1,18 @@
+{
+  "scope": "original serialized clip-body slices adapted to runtime channel layout; comparison against prior decoded-key reference, not live native execution",
+  "clip_bodies": 6,
+  "body_sha256": [
+    "17575abd0a96871560994f54641ba26e0c28907faef61d84edabeb928dc13ee8",
+    "571473a8764aebffbf76a22e8454509053ef2a838b2576b344802fa124a51e28",
+    "10807a14991b9dc8221bbe4530bfc8ee2211a8f65e5f32d2162d3afe0fc4d4ec",
+    "621f50ac641e9c93606bf841bb8cb58dde2f999243f989a69809fb221d3550a6",
+    "6b490859c97683aaf9f9d8573bc236cd74a16af29c931f8d8eb34026a226bc72",
+    "e2346f7591997710a19215db4d1d86d6fa938ca1db215aef0fbb5eb1599944d4"
+  ],
+  "encoding": 27,
+  "tracks": 506,
+  "samples": 3542,
+  "all_record_lengths_match": true,
+  "maximum_absolute_component_difference": 9.5367431640625e-07,
+  "game_payloads_included": false
+}

@@ -823,3 +823,15 @@ container extraction and native parity remain unverified. Only aggregate receipt
 is public; three new synthetic tests cover decoder and dispatch boundaries.
 
 Validation: 487 tests pass; packaging, hashes and local links pass.
+
+## Original serialized channel check
+
+Added a bounded byte-time serialized-record adapter for encodings zero and 27,
+retaining opaque allocation metadata and copying sample bytes without decoding
+and re-encoding. Original private slices supplied 506 encoding-27 tracks across
+six clip bodies. All lengths matched recorded boundaries; 3,542 sample comparisons
+had maximum component difference 9.5367431640625e-07. Published hashes and aggregate
+counts only. Native execution, fresh archive extraction and full container parsing
+remain separate. Three synthetic adapter tests cover padding, offsets and rejection.
+
+Validation: 490 tests pass; packaging, hashes and local links pass.

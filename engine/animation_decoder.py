@@ -103,3 +103,37 @@ def registered_channel_decoder(descriptor, payload, width, time, output, state):
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
+
+
+def unpack_serialized_channel(data, offset=0):
+    """Adapt one serialized byte-time encoding 0/27 record to runtime layout.
+
+    Disk layout: encoding:u8, opaque_allocation:u32, count:u32, count-1 time
+    bytes, tightly packed samples. Does not parse a clip or resolve shared refs.
+    Returns consumed length and opaque metadata; trailing records are permitted.
+    Evidence: ANIMATION_SERIALIZED_CHANNELS.md. Rejects counts exceeding the
+    runtime uint8 representation rather than truncating them.
+    """
+    data = memoryview(data)
+    if type(offset) is not int or offset < 0 or offset+9 > len(data):
+        raise ValueError('truncated serialized channel header')
+    encoding = data[offset]
+    if encoding not in (0,27):
+        raise ValueError('unsupported serialized channel encoding')
+    allocation,count = struct.unpack_from('<II',data,offset+1)
+    if not 1 <= count <= 255:
+        raise ValueError('serialized count outside supported runtime range')
+    stride,alignment = (16,16) if encoding==0 else (12,4)
+    end = offset+9+(count-1)+count*stride
+    if end > len(data):
+        raise ValueError('truncated serialized channel data')
+    times = data[offset+9:offset+9+count-1]
+    # Validate sorted byte timestamps without decoding sample components.
+    select_byte_key(count,times,0)
+    sample_offset = (count+alignment)&~(alignment-1)
+    result = bytearray(sample_offset)
+    result[:2] = bytes((encoding,count))
+    result[2:count+1] = times
+    result.extend(data[offset+9+count-1:end])
+    return {'encoding':encoding,'payload':bytes(result),'consumed':end-offset,
+            'opaque_allocation':allocation}

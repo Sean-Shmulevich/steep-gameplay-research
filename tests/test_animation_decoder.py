@@ -73,3 +73,28 @@ class Encoding27Tests(unittest.TestCase):
     def test_truncation_rejected(self):
         from engine.animation_decoder import sample_encoding_27 as vector
         with self.assertRaises(ValueError):vector(self.data()[:-1],0,0)
+
+
+class SerializedChannelTests(unittest.TestCase):
+    def test_vector_record_offset_trailing_bytes_and_raw_copy(self):
+        from engine.animation_decoder import unpack_serialized_channel, sample_encoding_27
+        samples=struct.pack('<6f',1,2,3,5,6,7)
+        record=bytes([27])+struct.pack('<II',123,2)+bytes([60])+samples
+        decoded=unpack_serialized_channel(b'prefix'+record+b'tail',6)
+        self.assertEqual(decoded['consumed'],len(record))
+        self.assertEqual(decoded['opaque_allocation'],123)
+        self.assertEqual(decoded['payload'][4:],samples)
+        self.assertEqual(sample_encoding_27(decoded['payload'],.5,30)['value'],[3,4,5,0])
+
+    def test_quaternion_alignment(self):
+        from engine.animation_decoder import unpack_serialized_channel
+        samples=struct.pack('<4f',0,0,0,1)
+        result=unpack_serialized_channel(bytes([0])+struct.pack('<II',16,1)+samples)
+        self.assertEqual(result['payload'][16:],samples)
+        self.assertEqual(len(result['payload']),32)
+
+    def test_unsupported_reference_and_count_and_truncation(self):
+        from engine.animation_decoder import unpack_serialized_channel
+        for data in (bytes([254])+bytes(12),bytes([27])+struct.pack('<II',1,256),
+                     bytes([27])+struct.pack('<II',1,1)):
+            with self.assertRaises(ValueError):unpack_serialized_channel(data)

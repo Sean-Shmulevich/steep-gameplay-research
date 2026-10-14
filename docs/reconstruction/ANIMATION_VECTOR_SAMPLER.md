@@ -43,3 +43,8 @@ not verify that original raw channel bytes are extracted correctly, establish
 native decoder parity, or confirm live rig/clip selection. No private keys,
 poses or original channel bytes are included. Next validation should use original
 channel slices and independently verify their container offsets.
+
+A subsequent [serialized-channel check](ANIMATION_SERIALIZED_CHANNELS.md) sampled
+506 tracks directly from six original extracted clip bodies. That closes the
+reserialized-key limitation for those records while retaining separate native
+execution and archive-extraction boundaries.
