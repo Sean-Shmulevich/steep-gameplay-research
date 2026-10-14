@@ -6,7 +6,7 @@ rig identity, graph selection or physics coupling is implied by this decoder.
 import math
 import struct
 from .animation_endpoints import f32
-from .animation_key_selection import select_byte_key
+from .animation_key_selection import select_byte_key, select_mask_key
 from .animation_interpolation import quaternion_sample_blend
 
 
@@ -95,21 +95,22 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
-    """Sampling callback for verified encoding IDs 0, 9, 12, 21 and 27 only."""
-    if type(descriptor) is not int or descriptor not in (0,9,12,21,27) or width != 16:
-        raise ValueError('supported descriptors are 0, 9, 12, 21 and 27 with width 16')
+    """Sampling callback for verified encoding IDs 0, 9, 12, 14, 21 and 27 only."""
+    if type(descriptor) is not int or descriptor not in (0,9,12,14,21,27) or width != 16:
+        raise ValueError('supported descriptors are 0, 9, 12, 14, 21 and 27 with width 16')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,12:sample_encoding_12,21:sample_encoding_21,27:sample_encoding_27}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,27:sample_encoding_27}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
 
 
 def unpack_serialized_channel(data, offset=0):
-    """Adapt one serialized byte-time encoding 0/9/12/21/27 record to runtime layout.
+    """Adapt one supported serialized channel record to runtime layout.
 
     Disk layout: encoding:u8, opaque_allocation:u32, count:u32, count-1 time
-    bytes, tightly packed samples. Does not parse a clip or resolve shared refs.
+    bytes, tightly packed samples. Encoding 14 instead uses mode and mask bytes.
+    Does not parse a clip or resolve shared refs.
     Returns consumed length and opaque metadata; trailing records are permitted.
     Evidence: ANIMATION_SERIALIZED_CHANNELS.md. Rejects counts exceeding the
     runtime uint8 representation rather than truncating them.
@@ -118,9 +119,23 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,12,21,27):
+    if encoding not in (0,9,12,14,21,27):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
+    if encoding == 14:
+        if offset+10>len(data):raise ValueError('missing mask mode')
+        mode=data[offset+9];size=mode&63
+        mask=data[offset+10:offset+10+size]
+        select_mask_key(mode,mask,0)
+        if int.from_bytes(mask,'little').bit_count()!=count:
+            raise ValueError('mask key count mismatch')
+        end=offset+10+size+6*count
+        if end>len(data):raise ValueError('truncated masked quaternion samples')
+        result=bytearray((size+3)&~1)
+        result[:2]=bytes((encoding,mode));result[2:2+size]=mask
+        result.extend(data[offset+10+size:end])
+        return {'encoding':encoding,'payload':bytes(result),'consumed':end-offset,
+                'opaque_allocation':allocation}
     if not 1 <= count <= 255:
         raise ValueError('serialized count outside supported runtime range')
     stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),27:(12,4)}[encoding]
@@ -251,3 +266,25 @@ def sample_encoding_9(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None)
 
 def sample_encoding_12(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
     return _sample_general_packed(payload,time,hint,cursor,12,rsqrt_estimate)
+
+
+def sample_encoding_14(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    """Sample mask-time 48-bit quaternions; incoming cursor is intentionally unused."""
+    data=memoryview(payload)
+    if len(data)<2 or data[0]!=14:raise ValueError('expected encoding-14 header')
+    mode=data[1];size=mode&63;mask=data[2:2+size]
+    selected=select_mask_key(mode,mask,hint)
+    count=int.from_bytes(mask,'little').bit_count();offset=(size+3)&~1
+    if len(data)<offset+6*count:raise ValueError('truncated masked quaternion samples')
+    time=f32(time)
+    if not math.isfinite(time):raise ValueError('expected finite sample time')
+    index=selected['cursor']
+    value=quaternion_smallest_three48(struct.unpack_from('<3H',data,offset+6*index))
+    packed,weight=selected['packed_ticks'],None
+    if packed>65535:
+        other=quaternion_smallest_three48(struct.unpack_from('<3H',data,offset+6*(index+1)))
+        scale=f32(1/60)
+        start,end=f32((packed&65535)*scale),f32((packed>>16)*scale)
+        weight=f32(f32(max(start,min(end,time))-start)/f32(end-start))
+        value=quaternion_sample_blend(value,other,weight,rsqrt_estimate=rsqrt_estimate)
+    return {**selected,'value':value,'weight':weight}

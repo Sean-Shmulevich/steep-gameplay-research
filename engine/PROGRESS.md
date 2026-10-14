@@ -899,3 +899,14 @@ Four tests include 520 expanded-key oracle comparisons. Full encoding-14 decoder
 integration remains next; corpus coverage has not increased in this pass.
 
 Validation: 506 tests pass; packaging, hashes and local links pass.
+
+## Encoding-14 mask-time sampling integration
+
+Connected mask selection to 48-bit quaternion sampling and resource dispatch.
+Added serialized mode/mask parsing with population-count validation and taught
+the corpus probe to derive mask-track duration correctly. All 24 new original
+tracks pass, yielding 968/1,052 supported tracks and 6,776 consistency checks.
+Two synthetic tests cover cursor independence, shifted timing and malformed counts.
+Independent numerical/native validation remains open for this encoding.
+
+Validation: 508 tests pass; packaging, hashes and local links pass.

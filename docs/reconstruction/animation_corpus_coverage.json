@@ -73,7 +73,6 @@
       },
       "unsupported_codec_counts": {
         "11": 13,
-        "14": 24,
         "23": 17,
         "24": 1,
         "26": 2,
@@ -82,8 +81,8 @@
         "54": 2
       },
       "unresolved_shared_records": 0,
-      "validated_tracks": 107,
-      "sample_checks": 749,
+      "validated_tracks": 131,
+      "sample_checks": 917,
       "failures": [],
       "all_tracks_supported_and_validated": false,
       "game_payloads_included": false

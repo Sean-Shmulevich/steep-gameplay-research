@@ -178,3 +178,24 @@ class Encoding12Tests(unittest.TestCase):
         sample_channel(Resource([Channel(12,parsed['payload'],16)]),0,0,out,SampleState(0),registered_channel_decoder)
         self.assertEqual(len(out),4)
         self.assertAlmostEqual(sum(v*v for v in out),1,places=6)
+
+
+class Encoding14Tests(unittest.TestCase):
+    def test_serialized_mask_dispatch_and_cursor_independence(self):
+        from engine.animation_decoder import unpack_serialized_channel, sample_encoding_14
+        mode=0x41
+        raw=bytes([14])+struct.pack('<II',12,2)+bytes([mode,0b00001001])+struct.pack('<6H',12000,17000,21000,13000,18000,20000)
+        parsed=unpack_serialized_channel(raw)
+        self.assertEqual(parsed['consumed'],len(raw))
+        a=sample_encoding_14(parsed['payload'],.05,3,0xffffffff)
+        self.assertEqual(a,sample_encoding_14(parsed['payload'],.05,3,999))
+        self.assertAlmostEqual(a['weight'],.5,places=6)
+        self.assertEqual(sample_encoding_14(parsed['payload'],1,60)['cursor'],1)
+
+    def test_mask_count_mismatch_and_truncation(self):
+        from engine.animation_decoder import unpack_serialized_channel
+        for count in (1,3):
+            data=bytes([14])+struct.pack('<II',12,count)+bytes([1,9])+bytes(12)
+            with self.assertRaises(ValueError):unpack_serialized_channel(data)
+        with self.assertRaises(ValueError):
+            unpack_serialized_channel(bytes([14])+struct.pack('<II',12,2)+bytes([1,9]))

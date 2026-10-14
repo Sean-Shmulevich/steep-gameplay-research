@@ -43,3 +43,24 @@ all four shifts and invalid masks. A separate expanded-timestamp bisect oracle
 checks 520 hint/shift combinations. This pass establishes the selector; complete
 serialized encoding-14 adaptation and sampling remain next work. Corpus support
 therefore remains 944 of 1,052 tracks.
+
+## Connected encoding-14 decoder
+
+`sample_encoding_14` now combines this selector with the verified 48-bit value
+reader and quaternion interpolation. Its cursor argument is accepted for the
+shared callback interface but intentionally ignored. The new cursor is the rank
+returned by mask selection. Float time remains separate from the integer hint.
+
+The serialized record has encoding, uint32 opaque allocation, uint32 sample count,
+then a mode byte, L mask bytes and count six-byte samples. The adapter checks the
+mask population count against the serialized count, creates the runtime two-byte
+header, inserts alignment and copies sample bytes. Unlike byte-time encodings,
+key count is not stored in runtime byte +1. It is derived from the mask. Empty
+masks, missing first key, count mismatch and truncated samples are rejected by
+the independent adapter.
+
+Original serialized slices now validate all 24 encoding-14 tracks in the six-body
+corpus. Total supported tracks rise to 968/1,052, with 6,776 cached/reset sampling
+checks and no failures. This establishes parsing and internal consistency on
+those records, not independent numerical or live native equivalence. Earlier
+selector-only coverage statements above describe the preceding checkpoint.

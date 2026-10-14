@@ -59,3 +59,7 @@ comparison covers 127 tracks.
 [Encoding 12](ANIMATION_48BIT_SAMPLER.md) adds six-byte packed quaternion samples
 with runtime alignment two. All 141 tracks of this encoding in the checked corpus
 pass cached/reset consistency checks.
+
+[Encoding 14](ANIMATION_MASK_KEY_SELECTION.md) uses mode-plus-mask timestamp storage,
+with declared count validated against mask population count. Its six-byte samples
+are now supported by the adapter and resource dispatcher.
