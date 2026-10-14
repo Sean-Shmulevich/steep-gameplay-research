@@ -97,3 +97,7 @@ This establishes a concrete descriptor-to-quaternion-sampler connection. It does
 not establish that encoding zero is used by a particular player clip. The 72
 callbacks should be joined to asset-format evidence individually; output width
 alone does not identify translation, rotation, scale or auxiliary semantics.
+
+Encoding zero's [byte-time key selection](ANIMATION_KEY_SELECTION.md) is now
+implemented, including cursor reuse, rewind search and packed tick outputs.
+Interpolation and other timestamp-format selectors remain separate work.

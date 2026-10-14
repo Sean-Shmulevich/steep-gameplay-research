@@ -781,3 +781,13 @@ and sampling callbacks. Published a payload-free catalog and inspected encoding
 zero's quaternion sampling path. This creates direct decoder entry points;
 full interpolation/key-selection fidelity and live registration remain open.
 No runtime code changed; last full suite remains 470 passing tests.
+
+## Byte-time key selection
+
+Recovered the encoding-zero sampler's cursor helper: implicit initial zero,
+unsigned hint, forward scan, rewind upper bound and packed current/next ticks.
+Added an executable helper and five tests, including an independent bisect oracle
+across 2,313 hint/cursor combinations. Other timestamp selectors and interpolation
+remain open; no game payloads used.
+
+Validation: 475 tests pass; packaging, hashes and local links pass.

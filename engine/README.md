@@ -298,3 +298,6 @@ with an explicit reciprocal-square-root seed policy.
 [Animation sampling dispatch](../docs/reconstruction/ANIMATION_SAMPLING_DISPATCH.md)
 provides an adapter for recursive resource routing and caller-supplied decoders,
 including shared output and hint/cursor state.
+
+[Byte-time key selection](../docs/reconstruction/ANIMATION_KEY_SELECTION.md)
+implements cached forward lookup and rewind binary search over supplied ticks.
