@@ -890,3 +890,12 @@ and added an exact float32 epsilon boundary regression. Preserved the recovered
 branch instead of tuning to the old reference. Native seed parity remains open.
 
 Validation: 502 tests pass; packaging, hashes and local links pass.
+
+## Bit-mask animation timestamps
+
+Decoded encoding-14's mask selector and verified the byte population-count table.
+Implemented shifted bit search, clamped unsigned hints, rank and packed endpoints.
+Four tests include 520 expanded-key oracle comparisons. Full encoding-14 decoder
+integration remains next; corpus coverage has not increased in this pass.
+
+Validation: 506 tests pass; packaging, hashes and local links pass.

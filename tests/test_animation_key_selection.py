@@ -35,3 +35,35 @@ class ByteKeySelectionTests(unittest.TestCase):
         for args in ((3,[20,10],0), (2,[],0), (2,[256],0), (1,[],-1)):
             with self.assertRaises(ValueError):
                 select(*args)
+
+
+class MaskKeySelectionTests(unittest.TestCase):
+    def test_gaps_equality_and_last_key(self):
+        from engine.animation_key_selection import select_mask_key as mask
+        self.assertEqual(mask(1,bytes([0b00101001]),2),
+                         {'cursor':0,'packed_ticks':3<<16,'path':'mask_scan'})
+        self.assertEqual(mask(1,bytes([0b00101001]),3)['packed_ticks'],3|(5<<16))
+        self.assertEqual(mask(1,bytes([0b00101001]),0xffffffff)['packed_ticks'],5)
+
+    def test_shift_and_byte_boundary_rank(self):
+        from engine.animation_key_selection import select_mask_key as mask
+        result=mask(0xc2,bytes([1,5]),64)
+        self.assertEqual(result['cursor'],1)
+        self.assertEqual(result['packed_ticks'],64|(80<<16))
+
+    def test_all_hints_match_expanded_key_oracle(self):
+        from engine.animation_key_selection import select_mask_key as mask
+        raw=bytes([0b00101001,0b10000001])
+        for shift in range(4):
+            times=[i<<shift for i in range(16) if (int.from_bytes(raw,'little')>>i)&1]
+            for hint in range(130):
+                selected=bisect.bisect_right(times,hint)-1
+                expected=times[selected]
+                if selected+1<len(times):expected|=times[selected+1]<<16
+                result=mask((shift<<6)|2,raw,hint)
+                self.assertEqual((result['cursor'],result['packed_ticks']),(selected,expected))
+
+    def test_bad_mask_contract(self):
+        from engine.animation_key_selection import select_mask_key as mask
+        for mode,data in ((0,b''),(1,b'\x02'),(2,b'\x01')):
+            with self.assertRaises(ValueError):mask(mode,data,0)

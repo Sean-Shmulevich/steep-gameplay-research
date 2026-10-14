@@ -62,3 +62,6 @@ The existing reference time-key reader describes compatible implicit-first-zero
 storage. This pass supplies the binary-derived selection/cursor behavior. The
 next task is joining key selection to verified interpolation formulas and
 sampling units, preserving the distinction between hint ticks and float time.
+
+The [bit-mask selector](ANIMATION_MASK_KEY_SELECTION.md) is now decoded separately.
+It writes a sample rank but does not reuse a prior cursor.

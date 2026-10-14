@@ -49,3 +49,29 @@ def select_byte_key(count, stored_ticks, hint, cursor=0xffffffff):
     if after < count:
         packed |= times[after] << 16
     return {'cursor': selected, 'packed_ticks': packed, 'path': path}
+
+
+def select_mask_key(mode, mask_bytes, hint):
+    """Recovered packed-mask selector; no prior cursor is read.
+
+    mode low6 is mask byte length, high2 is tick shift. Native searches backward
+    without a lower bound, so this API requires bit zero and nonzero mask size.
+    Evidence: ANIMATION_MASK_KEY_SELECTION.md.
+    """
+    if type(mode) is not int or not 0<=mode<=255:
+        raise ValueError('expected uint8 mask mode')
+    if type(hint) is not int or not 0<=hint<=0xffffffff:
+        raise ValueError('expected uint32 time hint')
+    data=bytes(mask_bytes);size=mode&63;shift=mode>>6
+    if size==0 or len(data)!=size or not data[0]&1:
+        raise ValueError('expected nonempty mask with initial key bit')
+    mask=int.from_bytes(data,'little');limit=size*8
+    position=min(hint>>shift,limit-1)
+    previous=position
+    while not (mask>>previous)&1:previous-=1
+    after=position+1
+    while after<limit and not (mask>>after)&1:after+=1
+    packed=previous
+    if after<limit:packed|=after<<16
+    return {'cursor':(mask&((1<<previous)-1)).bit_count(),
+            'packed_ticks':(packed<<shift)&0xffffffff,'path':'mask_scan'}
