@@ -278,3 +278,25 @@ Next bounded bodies: preparation fallback `1411d8a90`, processing fallback
 `1411ec690`, and up to two dependent descriptor operations. Specialized
 indexed leads are `1411d8400` and `1411ec1f0`; non-indexed processing uses
 `1411ec450`. Preserve generic descriptor dispatch versus animation semantics.
+
+## Counter publication writer
+
+A bounded opcode/reference search finds transfer inside pdata root `141198d70`,
+3237 linked bytes. The specific sequence is `14119963a` through `14119964d`:
+EAX receives R14D; XCHG at `14119963d` targets `143301dd4` (manager+54);
+nonzero captured EAX is LOCK XADDed at `141199647` into `143301dd0`
+(manager+50). Zero skips the add. Instruction boundaries and RIP targets were
+verified against the image.
+
+A direct-branch worklist over the linked body tracks R14 writes and reaches the
+publication with only zero, initialized/reset on the relevant paths. The check
+visited 785 instruction/state pairs and assumes the Windows x64 nonvolatile-R14
+call contract; it is static register-flow evidence, not a runtime observation.
+Immediate predecessor region includes call `141194f00` at `14119961c` with
+EDX=0/R9D=2; a later call at `141199683` uses EDX=1/R9D=1. The full processing
+routine and those helpers are not claimed decoded by this focused transfer audit.
+
+Next scheduler-facing targets: `141194f00` and the outer routine's caller cadence,
+with queue population and lifetime checks. Descriptor-path leads remain valid
+separately. Publication is now closed; native notification and global pause remain
+unproved. Do not repeat the +54/+50 writer search as an open edge.

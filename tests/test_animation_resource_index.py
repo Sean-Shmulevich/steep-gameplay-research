@@ -81,3 +81,25 @@ class DeferredAnimationDecisionTests(unittest.TestCase):
         from engine.animation_resource_index import deferred_entry_decision
         self.assertEqual(deferred_entry_decision(8, 8, 0x04000000, has_current_record=True),
                          {'action': 'dispatch_current_record', 'flags': 0x84000000})
+
+
+class ResourcePublicationTests(unittest.TestCase):
+    def test_arrival_between_exchange_and_add_stays_staged(self):
+        from engine.animation_resource_index import capture_resource_count, publish_resource_count
+        taken = capture_resource_count(2)
+        staged_after_arrival = taken['remaining_word'] + 1
+        published = publish_resource_count(3, taken['captured'])
+        self.assertEqual((staged_after_arrival, published['published']), (1, 5))
+
+    def test_publication_after_consumer_capture_waits_for_next_batch(self):
+        from engine.animation_resource_index import capture_resource_count, publish_resource_count
+        batch = capture_resource_count(2)
+        later = publish_resource_count(batch['remaining_word'], 3)
+        self.assertEqual(batch['captured'], 2)
+        self.assertEqual(later['published'], 3)
+
+    def test_zero_wrap_and_unsigned_capture(self):
+        from engine.animation_resource_index import capture_resource_count, publish_resource_count
+        self.assertFalse(publish_resource_count(5, 0)['atomic_add_executed'])
+        self.assertEqual(publish_resource_count(0xffffffff, 1)['published'], 0)
+        self.assertEqual(capture_resource_count(0x80000000)['captured'], 0x80000000)

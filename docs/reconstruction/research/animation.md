@@ -753,3 +753,42 @@ The specialized and fallback operations themselves remain unexpanded. The new
 result narrows the next work to concrete descriptor operations and the origin of
 the descriptor/type metadata; no clip decoding, pose update, or authored UID
 conversion is claimed.
+
+## Staged-to-published count transfer closed
+
+A targeted writer search identifies the missing transfer in a larger resource
+processing routine. The producer increments the staged count; the transfer
+exchanges staged with zero and conditionally adds its captured value to published;
+the consumer separately exchanges published with zero. These are three distinct
+atomic boundaries, not one atomic transaction.
+
+```text
+publish_resource_triples(manager):
+    captured = atomic_exchange_u32(manager.staged_count, 0)
+    if captured != 0:
+        atomic_fetch_add_u32(manager.published_count, captured)
+
+consume_resource_triples(manager):
+    captured = atomic_exchange_u32(manager.published_count, 0)
+    # Existing decoded consumer executes captured decrement-to-zero iterations.
+```
+
+The transfer is bracketed by two calls to the same unexpanded processing helper
+with distinct integer arguments. There is no worker wake operation in the
+exchange/add sequence itself. Do not borrow the loading-destruction publisher's
+notification behavior merely because its counter arithmetic looks similar.
+Likewise, the resource consumer's nonzero/decrement loop differs from the
+loading-destruction consumer's signed-positive gate.
+
+A staged arrival after the exchange remains staged for a later publication. A
+publication after consumer capture remains published for a later batch. During
+the interval between staged capture and publication, both stored counters can be
+zero while the captured count is held in a register. Neither zero observation
+proves queue emptiness or safe teardown. Native arithmetic wraps at 32 bits;
+count/ring consistency still depends on producer success and outer ownership.
+
+The executable resource-count helpers preserve these boundaries and report
+whether the conditional add executes, without inventing notification or running
+unbounded loops. Tests cover interleaved arrivals, later publication and wrap.
+The higher-level routine's complete workload and invocation cadence remain open;
+this result closes the count transfer, not scheduling frequency or pause safety.

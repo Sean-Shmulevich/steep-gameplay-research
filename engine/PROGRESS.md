@@ -497,3 +497,14 @@ Decoded packed effective-type selection and descriptor notification receiver
 adjustment/stage ordering. Direct operations remain generic dispatchers with
 unexpanded specialized/fallback work. No clip or pose semantics assigned.
 Documentation-only pass; last full runtime suite remains 423 tests.
+
+
+## Resource triple publication closed
+
+Located the producer-staged to consumer-published counter transfer and checked
+its zero exchange operand by bounded direct-branch register flow. Added uint32
+capture/publication kernels with interleaving and wrap tests, preserving the
+absence of a local wake operation and the consumer's unsigned countdown.
+Outer cadence, population/lifetime and native pause safety remain open.
+
+Validation: all 426 independent tests pass.

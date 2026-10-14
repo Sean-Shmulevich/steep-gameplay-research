@@ -78,3 +78,21 @@ def deferred_entry_decision(queued_key, current_key, flags, *, has_current_recor
         return {'action': 'skip', 'flags': flags}
     return {'action': 'dispatch_current_record' if has_current_record else 'mark_only',
             'flags': flags | 0x80000000}
+
+
+def capture_resource_count(word):
+    """Exchange-to-zero boundary for staged or published uint32 counts.
+
+    Consumer uses decrement-to-zero, not a signed-positive count test. No actual
+    loop is executed here; arbitrary captured counts need not fit ring occupancy.
+    """
+    captured = _uint(word, 32)
+    return {'remaining_word': 0, 'captured': captured}
+
+
+def publish_resource_count(published, captured):
+    """Separate conditional atomic-add boundary; no wake operation is implied."""
+    published = _uint(published, 32)
+    captured = _uint(captured, 32)
+    return {'published': (published + captured) & 0xffffffff,
+            'atomic_add_executed': captured != 0}

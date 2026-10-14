@@ -61,3 +61,9 @@ decoding. Counter publication remains open.
 Resolver argument tracing now closes the predicate's false branch for these
 mode-zero callers: optional handles are left null. Prioritize direct row prepare
 and process operations from the latest trace recipe, not the guarded branch.
+
+
+The +54-to-+50 publication edge is now closed by the exchange/conditional-add
+writer. Follow outer cadence and lifetime if continuing scheduler work; follow
+descriptor operations for animation semantics. Zero stored counters alone do not
+prove no in-flight publication.
