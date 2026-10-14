@@ -743,3 +743,12 @@ four boundary/order tests. Also documented a separate initial-pose pair table.
 Compact-cache consumers and physical root-motion application remain unproven.
 
 Validation: 459 tests pass; packaging and local links pass. No live test run.
+
+## Endpoint fallback channel selection
+
+Decoded the hash-zero lookup used without an auxiliary binding. Added unsigned
+lower-bound/type matching and endpoint source-selection helpers. Four tests cover
+duplicates, first match, hash boundaries, absent binding versus missing channel,
+and public adapter validation. Root-bone identity remains unresolved.
+
+Validation: 463 tests pass; packaging, hashes and local links pass.

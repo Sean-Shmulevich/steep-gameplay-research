@@ -95,3 +95,55 @@ def inspect_channel_binding(target_index, source_word):
     return {'target_index': target, 'source_index': word & 0xfff,
             'remap_bits': (word >> 12) & 7,
             'special_bit': bool(word & 0x8000)}
+
+
+def find_typed_channel(hashes, descriptor_types, requested_hash, requested_type):
+    """Unsigned lower bound followed by same-hash type matching.
+
+    Evidence: ANIMATION_ENDPOINT_MOTION.md, Fallback channel lookup. Types are
+    descriptor +0x20 bytes, not channel encoding bytes. Sorted/length validation
+    is our API safeguard. Missing returns native uint16 sentinel 0xffff.
+    """
+    hashes, descriptor_types = tuple(hashes), tuple(descriptor_types)
+    key, kind = _uint(requested_hash, 32), _uint(requested_type, 32)
+    if len(hashes) != len(descriptor_types) or len(hashes) > 65535:
+        raise ValueError('expected equal arrays with uint16 count')
+    for value in hashes:
+        _uint(value, 32)
+    for value in descriptor_types:
+        _uint(value, 8)
+    if any(a > b for a, b in zip(hashes, hashes[1:])):
+        raise ValueError('expected unsigned sorted channel hashes')
+    first, count = 0, len(hashes)
+    while count:
+        half = count // 2
+        middle = first + half
+        if hashes[middle] < key:
+            first = middle + 1
+            count -= half + 1
+        else:
+            count = half
+    while first < len(hashes) and hashes[first] == key:
+        if matching_channel_type(descriptor_types[first]) == kind:
+            return first
+        first += 1
+    return 0xffff
+
+
+def select_endpoint_channels(binding_source_words=None, *, hashes=(),
+                             descriptor_types=()):
+    """Return two source indices or None for absent endpoint channels.
+
+    A present binding suppresses fallback even if its index is missing. With no
+    binding, look up hash zero with converted types 5 and 6 respectively.
+    """
+    if binding_source_words is not None:
+        words = tuple(binding_source_words)
+        if len(words) != 2:
+            raise ValueError('expected two distinguished binding source words')
+        indices = tuple(_uint(word, 16) & 0xfff for word in words)
+        return tuple(None if index == 0xfff else index for index in indices)
+    hashes, descriptor_types = tuple(hashes), tuple(descriptor_types)
+    indices = tuple(find_typed_channel(hashes, descriptor_types, 0, kind)
+                    for kind in (5, 6))
+    return tuple(None if index == 0xffff else index for index in indices)

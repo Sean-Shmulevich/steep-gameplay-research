@@ -70,3 +70,13 @@ pose integration. Do not manufacture those dependencies from these examples.
 The next native initialization stage is documented in
 [Evaluator preparation](ANIMATION_EVALUATOR_PREPARATION.md), including channel
 eligibility, identity comparisons and compact sample masks.
+
+## Endpoint source selection
+
+`find_typed_channel(hashes, descriptor_types, requested_hash, requested_type)`
+implements sorted hash lookup with duplicate-hash type matching.
+`select_endpoint_channels(binding_source_words=None, hashes=(), descriptor_types=())`
+uses two binding words when supplied, otherwise searches hash zero for types 5
+and 6. Its missing results are `None`. A present-but-missing binding channel
+suppresses fallback. See [endpoint motion](ANIMATION_ENDPOINT_MOTION.md) for
+source evidence and input contracts.

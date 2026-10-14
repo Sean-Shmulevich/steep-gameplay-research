@@ -69,3 +69,35 @@ class ChannelBindingEncodingTests(unittest.TestCase):
                          {'target_index': 8191, 'source_word': 0x7007})
         with self.assertRaises(ValueError):
             encode(7, 9, 0x2c52cbb0, 1)
+
+
+class TypedChannelLookupTests(unittest.TestCase):
+    def test_duplicate_hashes_and_first_matching_type(self):
+        from engine.animation_binding import find_typed_channel as find
+        hashes = [0, 0, 0, 7, 7, 0xffffffff]
+        raw = [0, 4, 1, 0, 2, 255]
+        self.assertEqual(find(hashes, raw, 0, 5), 2)
+        self.assertEqual(find(hashes, raw, 7, 5), 4)
+        self.assertEqual(find(hashes, raw, 0xffffffff, 8), 5)
+        self.assertEqual(find([0, 0], [1, 2], 0, 5), 0)
+
+    def test_absence_and_hash_group_boundary(self):
+        from engine.animation_binding import find_typed_channel as find
+        self.assertEqual(find([], [], 0, 5), 65535)
+        self.assertEqual(find([0, 1], [0, 1], 0, 5), 65535)
+        self.assertEqual(find([0, 9], [1, 1], 8, 5), 65535)
+        self.assertEqual(find([0], [1], 0, 9), 65535)
+
+    def test_binding_absence_differs_from_missing_binding_channel(self):
+        from engine.animation_binding import select_endpoint_channels as select
+        data = {'hashes': [0, 0], 'descriptor_types': [1, 0]}
+        self.assertEqual(select(**data), (0, 1))
+        self.assertEqual(select((0xffff, 0xa123), **data), (None, 0x123))
+        self.assertEqual(select((0xfff, 0xfff), **data), (None, None))
+
+    def test_api_rejects_invalid_resource_contract(self):
+        from engine.animation_binding import find_typed_channel as find
+        for hashes, raw in [([7, 0], [1, 0]), ([0], []), ([True], [1]),
+                            ([0], [256])]:
+            with self.assertRaises(ValueError):
+                find(hashes, raw, 0, 5)

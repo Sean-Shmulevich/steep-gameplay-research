@@ -10,8 +10,8 @@ preparation, not a recovered frame-by-frame playback update.
 For each distinguished channel, a nonnull auxiliary binding supplies its source
 index from the low twelve bits of the record at +0x18 or +0x1c. Sentinel 4095
 skips that channel. With no binding, the routine instead calls `0x140d49c10`
-with selector zero and type 5 or 6. That lookup remains to be decoded. Its
-65535 return sentinel also skips sampling. Skipped channels retain prior output.
+with hash zero and converted type 5 or 6. The decoded lookup is described
+below. Its 65535 return sentinel also skips sampling. Skipped channels retain prior output.
 
 Both selected channels are sampled at the effective range start and end. The
 routine computes signed-conversion sampling hints from float32 time multiplied
@@ -74,5 +74,42 @@ contract; this routine does not validate it before the last paired read.
 
 The table lives at evaluator +0x390 and does not consume the compact caches at
 +0x70/+0x90. Their later consumers remain open. Next work should connect the
-endpoint outputs and initial-pose table to evaluation, and decode the fallback
-channel lookup before assigning root-bone identities.
+endpoint outputs and initial-pose table to evaluation. Hash zero selection is
+now established, but assigning root-bone identities still requires the producer.
+
+
+## Fallback channel lookup
+
+The wrapper at `0x140d49c10` loads resource +0x40 and tail-calls `0x140da83a0`.
+The latter has 258 bytes of instructions through its final return, followed by
+alignment and an eight-entry switch table. Its metadata contains a hash-array
+pointer at +6 and a uint16 count at +0x10. The channel array is passed separately.
+
+```python
+index = unsigned_lower_bound(channel_hashes, requested_hash)
+while index < count and channel_hashes[index] == requested_hash:
+    descriptor = descriptor_table[channels[index].encoding_byte]
+    raw_type = descriptor.type_byte
+    converted_type = (6, 5, 5, 5, 0, 2, 3, 1)[raw_type] if raw_type < 8 else 8
+    if converted_type == requested_type:
+        return index
+    index += 1
+return 65535
+```
+
+It returns the first matching type among duplicate hashes. A different hash ends
+the search immediately; it does not continue scanning for type alone. Hash
+comparison is unsigned. Sorted hashes and valid metadata/channel alignment are
+native data contracts, not validations performed by this routine.
+
+The two endpoint fallback searches therefore select the first hash-zero channel
+with converted type 5 and the first with converted type 6. Hash zero is not the
+CRC32 named Reference channel identified elsewhere. The absence of an auxiliary
+binding triggers fallback; a present binding containing source sentinel 4095
+skips the endpoint without fallback.
+
+Public helpers in `engine.animation_binding` implement `find_typed_channel` and
+`select_endpoint_channels`. Callers supply descriptor type bytes, not channel
+encoding bytes. Synthetic tests cover unsigned high hashes, duplicate type
+ordering, hash-group termination and present-but-missing bindings. Invalid
+sortedness, widths and array lengths are rejected by the public adapter.
