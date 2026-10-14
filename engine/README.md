@@ -305,3 +305,7 @@ implements cached forward lookup and rewind binary search over supplied ticks.
 [Encoding-zero channel decoder](../docs/reconstruction/ANIMATION_QUATERNION_SAMPLER.md)
 connects supplied channel bytes to quaternion output and supports the recovered
 resource-dispatch callback interface. Other encoding IDs are rejected.
+
+The shared `registered_channel_decoder` additionally supports
+[encoding-27 vector channels](../docs/reconstruction/ANIMATION_VECTOR_SAMPLER.md).
+Its private-corpus comparison is limited to reserialized decoded keys.

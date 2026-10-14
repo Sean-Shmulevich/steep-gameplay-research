@@ -1,0 +1,10 @@
+{
+  "scope": "decoded private keys reserialized into verified encoding-27 layout; not original-byte parsing or native gameplay validation",
+  "source_sha256": "dba9d9223dd59c0dc5b1b952ccc9573de4ef1f433b3be2505f1a84d994b21c44",
+  "tracks": 835,
+  "samples": 5845,
+  "maximum_absolute_component_difference": 9.5367431640625e-07,
+  "comparison": "prior pose-assembly host-double sampling reference",
+  "fourth_lane_zero": true,
+  "game_payloads_included": false
+}

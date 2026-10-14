@@ -811,3 +811,15 @@ include a full dispatch-to-pose-value path. No private-clip/native comparison;
 other encodings, rig selection and physical motion coupling remain open.
 
 Validation: 484 tests pass; packaging, hashes and local links pass.
+
+## Encoding-27 vector decoding and corpus comparison
+
+The representative corpus contains no encoding-zero tracks. Prioritized encoding
+27 instead: recovered twelve-byte vector stride, four-byte alignment, linear
+float32 sampling and cleared fourth lane. Connected it to resource dispatch.
+Compared 5,845 samples from 835 reserialized private decoded tracks against the
+prior reference; maximum component difference 9.5367431640625e-07. Original-byte
+container extraction and native parity remain unverified. Only aggregate receipt
+is public; three new synthetic tests cover decoder and dispatch boundaries.
+
+Validation: 487 tests pass; packaging, hashes and local links pass.

@@ -50,3 +50,26 @@ class EncodingZeroTests(unittest.TestCase):
     def test_bad_headers_and_truncation(self):
         for data in (b'',b'\x00\x00',b'\x01\x01'+bytes(30),b'\x00\x01'):
             with self.assertRaises(ValueError):sample(data,0,0)
+
+
+class Encoding27Tests(unittest.TestCase):
+    def data(self):
+        return bytes([27,2,60,0])+struct.pack('<6f',1,2,3,5,-2,11)
+
+    def test_interpolation_and_terminal_zero_fourth_lane(self):
+        from engine.animation_decoder import sample_encoding_27 as vector
+        self.assertEqual(vector(self.data(),.5,30)['value'],[3,0,7,0])
+        self.assertEqual(vector(self.data(),1,60)['value'],[5,-2,11,0])
+        self.assertEqual(vector(self.data(),-1,0)['value'],[1,2,3,0])
+
+    def test_dispatch_uses_vector_decoder(self):
+        from engine.animation_decoder import registered_channel_decoder
+        resource=Resource([Channel(27,self.data(),16)])
+        out=[];state=SampleState(30)
+        sample_channel(resource,0,.5,out,state,registered_channel_decoder)
+        self.assertEqual(out,[3,0,7,0])
+        self.assertEqual(state.cursor,0)
+
+    def test_truncation_rejected(self):
+        from engine.animation_decoder import sample_encoding_27 as vector
+        with self.assertRaises(ValueError):vector(self.data()[:-1],0,0)

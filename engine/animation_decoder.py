@@ -57,3 +57,49 @@ def encoding_zero_decoder(descriptor, payload, width, time, output, state):
     result = sample_encoding_zero(payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
+
+
+def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
+    """Decode byte-time float3 vectors into float4 with a zero fourth lane.
+
+    Evidence: ANIMATION_VECTOR_SAMPLER.md. Uses the same key selector as encoding
+    zero, four-byte sample alignment, and twelve-byte sample stride.
+    """
+    data = memoryview(payload)
+    if len(data) < 2 or data[0] != 27:
+        raise ValueError('expected encoding-27 channel header')
+    count = data[1]
+    if count == 0:
+        raise ValueError('zero-key channel has no sample payload')
+    offset = (count+4) & 0xfffffffc
+    if len(data) < offset+12*count:
+        raise ValueError('truncated vector channel')
+    selected = select_byte_key(count,data[2:count+1],hint,cursor)
+    time = f32(time)
+    if not math.isfinite(time):
+        raise ValueError('expected finite sample time')
+    index = selected['cursor']
+    value = list(struct.unpack_from('<3f',data,offset+12*index))
+    if not all(math.isfinite(v) for v in value):
+        raise ValueError('nonfinite selected vector')
+    packed, weight = selected['packed_ticks'], None
+    if packed > 65535:
+        other = struct.unpack_from('<3f',data,offset+12*(index+1))
+        if not all(math.isfinite(v) for v in other):
+            raise ValueError('nonfinite selected vector')
+        scale = f32(1/60)
+        start,end = f32((packed&65535)*scale),f32((packed>>16)*scale)
+        weight = f32(f32(max(start,min(end,time))-start)/f32(end-start))
+        value = [f32(a+f32(weight*f32(b-a))) for a,b in zip(value,other)]
+    return {**selected,'value':value+[0.0],'weight':weight}
+
+
+def registered_channel_decoder(descriptor, payload, width, time, output, state):
+    """Sampling callback for verified encoding IDs 0 and 27 only."""
+    if type(descriptor) is not int or descriptor not in (0,27) or width != 16:
+        raise ValueError('supported descriptors are 0 and 27 with width 16')
+    cursor = 0xffffffff if state.cursor == -1 else state.cursor
+    result = (sample_encoding_zero if descriptor == 0 else sample_encoding_27)(
+        payload,time,state.hint,cursor)
+    output[:] = result['value']
+    state.cursor = result['cursor']
