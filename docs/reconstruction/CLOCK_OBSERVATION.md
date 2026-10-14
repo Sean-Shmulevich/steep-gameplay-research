@@ -1,6 +1,6 @@
 # Passive clock hierarchy observation
 
-The [clock reader](../../engine/clock_observation.py) prepares the next original-game timing observation. It has synthetic transport tests, but has not yet been run against a live game. It never launches a process, attaches a debugger, sends input or writes memory.
+The [clock reader](../../engine/clock_observation.py) prepares the next original-game timing observation. It has synthetic transport tests and a subsequent ten-sample original-game capture described below. It never launches a process, attaches a debugger, sends input or writes memory.
 
 ## Static hierarchy connection
 
@@ -29,6 +29,18 @@ These are sequential reads. Matching guards do not pin object lifetimes, rule ou
 
 The [static receipt](clock_hierarchy_validation.json) records inspected span hashes and 1007 arithmetic checks of the frequency-divisor reduction.
 
-Five synthetic transport tests cover complete membership, changed list contents at the final check, oversized lists, short reads, missing guards, signed fields and nonfinite bit preservation. The private passive runner now accepts a clock option alongside fresh player acquisition and scheduler observations. No live clock result is claimed in this pass.
+Five synthetic transport tests cover complete membership, changed list contents at the final check, oversized lists, short reads, missing guards, signed fields and nonfinite bit preservation. The private passive runner now accepts a clock option alongside fresh player acquisition and scheduler observations. The subsequent live capture used this path twice with fresh player acquisition.
 
 The next bounded session should take several passive samples with no debugger. Establish live root membership, active mode, interval range, scales and holds before introducing another breakpoint. Then collect component selection flags and packet values in a separate bounded debugger window. An idle/movement comparison additionally needs an observed movement or active-clip signal.
+
+## Original-game baseline
+
+[Ten guarded samples](live_clock_validation.json), in two batches with fresh player/world acquisition, observed all three world clocks at child indices 17, 18 and 19 in a 20-entry root list. The game reached its gameplay HUD; startup navigation sent no riding controls and no debugger was attached. This does not identify the active clip or prove the rider was idle.
+
+Every sample reported driver mode 2 and table entry zero exactly `1.0`. This mode caps elapsed seconds at that entry. The configured rate field was 30, but mode 2 does not use the fixed-rate branch; it must not be interpreted as a proved 30 Hz simulation cadence.
+
+Observed intervals ranged from 0.0112831006 to 0.0172816999 seconds. Within each sample, root and all three world clocks had identical interval bits. Holds and pending holds were zero, scale values were one, and all three clock flags were zero. Root/world invocation counters advanced across the samples, with some updates missed by the reader. Matching values and guards remain sequential observations, not proof of a common atomic generation or exact scheduling order.
+
+This supports a specific explanation for the earlier debugger packet's `1.0`: a long interruption could reach the one-second elapsed-time cap. That explanation is an inference across separate sessions. The earlier capture did not record driver mode or raw timer input, and the baseline did not reproduce a controlled pause. No idle-versus-movement conclusion is established.
+
+After both captures, the research bottle was deliberately closed. The launcher exited successfully and the bounded controller restored its configuration. Raw process identities, reads and screenshots remain private.

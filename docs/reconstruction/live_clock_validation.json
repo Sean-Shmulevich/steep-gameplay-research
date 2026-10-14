@@ -1,0 +1,48 @@
+{
+  "status": "observed",
+  "original_game": true,
+  "batches": 2,
+  "guarded_samples": 10,
+  "fresh_player_acquisitions": 2,
+  "debugger_attached": false,
+  "memory_writes": false,
+  "riding_input_sent": false,
+  "driver_modes": [
+    2
+  ],
+  "cap_seconds": 1.0,
+  "rate_field": 30.0,
+  "rate_field_controls_active_mode": false,
+  "timer_divisor": 10000,
+  "root_child_count": 20,
+  "world_membership": {
+    "ordinary": [
+      17
+    ],
+    "alternate": [
+      18
+    ],
+    "third": [
+      19
+    ]
+  },
+  "membership_same_all_samples": true,
+  "all_four_interval_bits_match_each_sample": true,
+  "interval_seconds_range": [
+    0.011283100582659245,
+    0.017281699925661087
+  ],
+  "all_holds_and_pending_zero": true,
+  "all_scale_values_one": true,
+  "all_clock_flags_zero": true,
+  "atomic": false,
+  "debugger_pause_causality_proven": false,
+  "idle_clip_identified": false,
+  "safe_to_step_established": false,
+  "game_stop": "deliberate research bottle stop after capture",
+  "configuration_restored": true,
+  "private_result_sha256": [
+    "25c01baf1fe8ae0ad22a4a927cbe7bf5c550e8364379ab27aee1cd3b132e36ee",
+    "f32f1d80af92fcd3a01761ba0a467259f8bc178fceee0f119d3054f82715e7e2"
+  ]
+}
