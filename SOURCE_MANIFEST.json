@@ -515,13 +515,13 @@
       "source": "runtime/testbench/run38/animation/NEXT_STEP.md",
       "published": "docs/systems/animations/runtime-binding/next-investigation.md",
       "source_sha256": "346995e54550a1756e2b922c4709a6814b1301ddfc6956cee838f480730f61fb",
-      "published_sha256": "6881c24ab1ea70c39ed7c3310d39ca59576fa0f3170b5e334457e598be0c2cd7"
+      "published_sha256": "d68eaa46ffad65c9318a28eeb745be0a7db841ca6bde3147169269ff4aecd99a"
     },
     {
       "source": "runtime/testbench/run38/animation/private/NEXT_TRACE.md",
       "published": "docs/systems/animations/runtime-binding/trace-recipe.md",
       "source_sha256": "63d1d6ca328c3cd5d6898ddc32ad3bd035ad6d9e3168aecbc63fb6c05e74c921",
-      "published_sha256": "85314f6477859b6d9975f18ed3a4ddabf68136e93178f4a59121117e6b8c26e1"
+      "published_sha256": "39bc156f3edefa855060f0f47cc5b5d0b2275eb2d50e6eb0b56a5f221450d0bf"
     },
     {
       "source": "runtime/testbench/run38/environment/CLIENT_LOGIC.md",

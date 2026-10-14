@@ -550,3 +550,13 @@ sentinel reset, callback/context clearing and conditional free-pool return.
 Packed-reference release can defer entries and process manager work after unlock.
 Capacity and deeper ownership remain open. Documentation-only; last full suite
 remains 426 tests.
+
+
+## Deferred cleanup reference revival
+
+Decoded after-dequeue packed-reference recheck, hook/routing order and inner
+recycle attempt. Added a decision kernel with tests for revived references,
+zero/nonzero mode routing and absent records. Context assignment now establishes
+retain-before-swap/release-after-swap locally. No native process access.
+
+Validation: all 429 independent tests pass.

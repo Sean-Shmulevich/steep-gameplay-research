@@ -453,3 +453,23 @@ entry jump and is not included as executed behavior.
 Next: deferred entry-ring consumer in `141198a40`, context assignment helper
 `1406a53e0`, and at most two dependent ownership helpers. Provider-ordering
 `141185730` remains a separate lead. Preserve packed count versus entry+8 count.
+
+## Deferred cleanup consumer and context assignment
+
+Inspected `141198a40` (686 pdata bytes) and `1406a53e0` (125).
+Consumer guards loading-thread+1d8 and manager+b8; manager+5c blocks reentry.
+Normal path sets +5c=1 and global override, performs additional guarded sentinel
+setup, then drains manager+98/count+a0/read+a8/capacity+ac. Entry+c low24
+nonzero clears bit24 and skips record work/recycler. Zero count with non-null
+entry+0 calls record virtual+48, then mode+58 zero uses `14118d870`, else
+appends record to caller collection. Clears bit24 then calls `1411943b0`.
+End publishes loading staged+28c to pending+288 and runs known notification;
+normal exit clears busy/override and releases guards. No global quiescence claim.
+
+Context assign `1406a53e0` compares destination with incoming, CAS-increments
+incoming+8 before pointer XCHG, XADD-decrements displaced+8 and invokes
+vtable+8 only for old count1. This is distinct from entry+c packed references.
+
+Next: concrete record virtual+48 implementation and caller collection ownership
+for nonzero modes other than1; original provider-row adapter and authored key
+conversion remain unresolved. Avoid repeating counter-publication or reset scans.

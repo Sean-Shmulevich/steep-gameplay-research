@@ -103,3 +103,30 @@ class ResourcePublicationTests(unittest.TestCase):
         self.assertFalse(publish_resource_count(5, 0)['atomic_add_executed'])
         self.assertEqual(publish_resource_count(0xffffffff, 1)['published'], 0)
         self.assertEqual(capture_resource_count(0x80000000)['captured'], 0x80000000)
+
+
+class DeferredCleanupDecisionTests(unittest.TestCase):
+    def test_revived_reference_cancels_cleanup_but_clears_queue_bit(self):
+        from engine.animation_resource_index import deferred_cleanup_decision
+        decision = deferred_cleanup_decision(0x81000001, has_record=True, manager_mode=0)
+        self.assertEqual(decision, {'flags_after_clear': 0x80000001,
+                                   'invoke_record_hook': False,
+                                   'destruction_destination': None,
+                                   'attempt_inner_recycle': False})
+
+    def test_record_routing_uses_zero_versus_nonzero_mode(self):
+        from engine.animation_resource_index import deferred_cleanup_decision
+        for mode, destination in ((0, 'loading_destruction_ring'),
+                                  (1, 'caller_collection'), (-1, 'caller_collection')):
+            result = deferred_cleanup_decision(0x01000000, has_record=True, manager_mode=mode)
+            self.assertEqual(result['destruction_destination'], destination)
+            self.assertTrue(result['invoke_record_hook'])
+            self.assertTrue(result['attempt_inner_recycle'])
+
+    def test_missing_record_still_attempts_recycler(self):
+        from engine.animation_resource_index import deferred_cleanup_decision
+        result = deferred_cleanup_decision(0x05000000, has_record=False, manager_mode=0)
+        self.assertFalse(result['invoke_record_hook'])
+        self.assertIsNone(result['destruction_destination'])
+        self.assertTrue(result['attempt_inner_recycle'])
+        self.assertEqual(result['flags_after_clear'], 0x04000000)

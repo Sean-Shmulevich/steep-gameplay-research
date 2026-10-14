@@ -96,3 +96,24 @@ def publish_resource_count(published, captured):
     captured = _uint(captured, 32)
     return {'published': (published + captured) & 0xffffffff,
             'atomic_add_executed': captured != 0}
+
+
+def deferred_cleanup_decision(flags, *, has_record, manager_mode):
+    """Decision after dequeue under native guards, before callbacks/CAS.
+
+    Returning flags describes clearing bit24 while preserving observed bits.
+    A native CAS must reload on failure; final recycler rechecks eligibility.
+    """
+    flags = _uint(flags, 32)
+    if type(has_record) is not bool:
+        raise ValueError('has_record must be bool')
+    if type(manager_mode) is not int or not -(1 << 31) <= manager_mode < (1 << 31):
+        raise ValueError('manager_mode must be int32')
+    revived = (flags & 0xffffff) != 0
+    destination = None
+    if not revived and has_record:
+        destination = 'loading_destruction_ring' if manager_mode == 0 else 'caller_collection'
+    return {'flags_after_clear': flags & ~0x01000000,
+            'invoke_record_hook': not revived and has_record,
+            'destruction_destination': destination,
+            'attempt_inner_recycle': not revived}

@@ -95,3 +95,9 @@ Request initialization/reset now closes lane assignment and packed entry-referen
 handling. Release can enqueue the separate deferred-entry ring and synchronously
 process it after unlocking. Follow that ring's consumer and context assignment
 next; preserve the two distinct entry reference counters.
+
+
+Deferred cleanup now rechecks revived packed references, clears the queued bit
+and routes zero-reference records by manager mode. Context assignment is locally
+retain-before-swap. Next pursue concrete record hooks or return to the missing
+provider-row/UID join; outer lifetime contracts remain unresolved.

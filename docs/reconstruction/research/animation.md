@@ -1132,3 +1132,77 @@ contracts remain open. This deferred ring is distinct from the key/record/entry
 triple ring. A release can run manager processing synchronously after unlocking;
 therefore reference drops are not necessarily constant-time or free of callbacks.
 No arbitrary native destruction/modification safety is implied.
+
+## Deferred cleanup rechecks revived references
+
+The previously studied destruction-publication phase now closes the deferred
+entry consumer. It takes the loading destruction-ring guard and manager entry
+guard, rejects reentry when a manager busy word is nonzero, and otherwise sets
+that word plus a global override byte before draining the deferred-entry ring.
+Additional guarded global/sentinel setup is present; it is not interpreted as an
+engine-wide pause or a standalone ownership protocol.
+
+```text
+consume_deferred_entries(manager, caller_collection):
+    # Outer guard, busy and global-state setup omitted here.
+    while signed32(manager.deferred_ring.count) > 0:
+        entry = pop_deferred_entry()
+        record = entry.record
+        if low24(entry.flags) != 0:
+            atomic_clear_bit(entry.flags, 24)
+            continue
+        if record != null:
+            record.virtual_cleanup_hook()
+            if manager.mode == 0:
+                enqueue_loading_destruction(record)
+            else:
+                append(caller_collection, record)
+        atomic_clear_bit(entry.flags, 24)
+        inner_recycle_if_eligible(manager, entry)
+    publish_staged_loading_destructions_and_notify_if_needed()
+    # Normal exit clears manager busy and global override before guard release.
+```
+
+The low-24 reference check occurs after dequeue. A reference acquired since
+queueing cancels this cleanup attempt; the queued bit is cleared so later release
+can enqueue again. The hook and record routing are skipped in that case. A null
+record with zero packed count still proceeds to the inner recycler. That recycler
+rechecks the separate count and flags, so an attempted recycle does not prove
+that the entry was actually freed or reused.
+
+For a non-null record, the virtual hook precedes the mode read and routing. Mode
+zero queues destruction for the loading thread; every nonzero mode appends to the
+caller collection. Earlier manager-wrapper inspection establishes immediate
+caller-side destruction only when its later mode read equals one. These conditions
+must not be collapsed into a universal immediate-versus-deferred boolean.
+
+The count is re-read on each loop iteration; unlike the triple consumer this is
+not a captured batch count. No null-entry guard appears after the ring pop.
+Callback effects, allocation success and ring invariants remain required
+contracts. The executable decision helper models observed branch inputs only;
+it neither pins records nor replaces the native CAS/recycler checks.
+
+## Context reference assignment
+
+The request context-reference assignment helper returns immediately when the
+stored pointer equals the supplied pointer. Otherwise it increments the incoming
+object's separate 32-bit counter by compare-exchange before atomically exchanging
+the destination pointer. It decrements the displaced object's counter and calls
+virtual slot 1 only when the pre-decrement value was one. Null incoming and old
+pointers are handled independently.
+
+```text
+assign_context_reference(destination, incoming):
+    if destination.pointer == incoming:
+        return
+    if incoming != null:
+        atomic_increment_by_cas(incoming.counter)
+    old = atomic_exchange_pointer(destination.pointer, incoming)
+    if old != null and atomic_fetch_add_u32(old.counter, -1) == 1:
+        old.virtual_release()
+```
+
+This establishes retain-before-publication and release-after-exchange locally.
+It does not establish a weak-reference upgrade, acquisition from a concurrently
+freed raw pointer, exception recovery, or overall context ownership. The request's
+context reference and allocated processing context remain distinct fields.
