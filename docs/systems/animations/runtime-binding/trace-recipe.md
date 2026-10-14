@@ -74,3 +74,33 @@ Next four-function bound: lookup `1411925a0`, release `141194350`,
 name-key helper `141274eb0`, then one evidence-selected consumer joining the
 wrapper to the provider rows. Preserve unknown lookup/ownership contracts until
 those bodies are inspected. This pass did not access a running game.
+
+## Shared lookup and name-key pass
+
+Four pdata-linked bodies inspected: `1411925a0` (147 bytes), `141194350`
+(81 bytes), `141274eb0` (116 bytes), and `141192640` (627 bytes).
+
+Outer lookup's zero-key/zero-record branch increments `143301d48` and returns
+sentinel `143301d40`. Otherwise guard `manager+b8` brackets inner lookup
+`141192640` and returned entry counter `+8` increment. Release wrapper guards
+inner `1411943b0` with the same enter `141c3a280` / leave `1412213c0`
+helpers. Their platform semantics are not asserted.
+
+Inner lookup uses record helper `14119ed60` when no record override is given.
+Record `+8` low 19 bits encode index+1. Manager block descriptors at `+e8`
+have stride 16; block index is `(encoded-1)>>14`, entry index is
+`(encoded-1)&3fff`, entry stride 24. Key map at `manager+100` uses
+`14109a650` find and `14109aef0` insert. Record binding is `1411b8d40`;
+existing-entry rebinding requires a differing record and either the explicit
+record override or `1411dbfc0()==3`. New block initialization is `1411a1f40`
+with count `4000`; block free-head word is `+c` and sentinel is `ffffffff`.
+Entry fields are record `+0`, counter `+8`, flags `+c`, key `+10`.
+
+Name-key helper calls `141347210`, computes byte length excluding NUL, then
+calls `1413471b0` with seed, name pointer, length, matching the registration
+call shape. This does not establish seed stability across initialization.
+
+Next bounded candidates: inner release `1411943b0`, record lookup
+`14119ed60`, record binder `1411b8d40`, and one dependent consumer if it
+closes the wrapper-to-provider-row relationship. Keep authored UID conversion
+separate. Four functions, at most 24,000 pdata-linked bytes each.

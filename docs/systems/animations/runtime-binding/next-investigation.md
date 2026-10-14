@@ -29,3 +29,9 @@ its entry wrapper. The next targets are now the shared entry lookup, conditional
 release and name-key helper, followed by the wrapper-to-row-resolver join. The
 [trace recipe](trace-recipe.md) records the exact four-function scope. Runtime
 installation and authored UID conversion are still separate unverified claims.
+
+
+Shared lookup now exposes cached-index, key-map and entry-creation paths. Next
+inspect record lookup, record binding and inner release using the latest
+[trace recipe](trace-recipe.md). Entry acquisition does not establish loaded
+clip readiness.

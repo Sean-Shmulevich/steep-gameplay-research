@@ -429,3 +429,15 @@ ordered atomic decrement/release gates. Added portable pseudocode with lookup,
 name hashing, release semantics and wrapper-to-row adaptation still explicit
 unknowns. Four bounded function bodies inspected; no live game access. Last
 runtime suite remains 413 tests. Documentation/package checks apply to this pass.
+
+
+## Shared animation entry selection
+
+Decoded zero-key sentinel acquisition, guarded lookup/reference increment,
+packed cached index, fallback key map, block free-list creation and conditional
+record rebinding. Release's inner operation remains opaque. Name hashing call
+arguments now match registration under an equal seed. Added executable offset,
+key-range and release-gate kernels with boundary tests. No original process
+access or loaded-animation claim. Next: record lookup/binder and inner release.
+
+Validation: all 417 independent tests pass, including four new arithmetic boundary tests.

@@ -227,3 +227,95 @@ Next pass: inspect the shared lookup, conditional release, and name-key helper,
 then follow the acquired wrapper into the row resolver if the remaining function
 budget allows it. Keep allocation helpers opaque unless allocation semantics
 become necessary to distinguish a resource hit from failure.
+
+## Shared entry lookup
+
+The next four-function static pass establishes the outer acquire helper's
+reference increment, zero-key sentinel branch, inner entry-selection algorithm,
+and the release wrapper's shared synchronization boundary. It also establishes
+that the name-key helper uses the same seed/byte-hash helpers and NUL-terminated
+length convention as registration. The seed's lifetime and hash algorithm remain
+unexpanded; equal seed and input bytes produce matching arguments to the hash.
+
+```text
+acquire_entry(manager, key, supplied_record):
+    if key == 0 and supplied_record == null:
+        atomic_increment_u32(shared_empty_entry.counter)
+        return shared_empty_entry
+    enter_manager_guard(manager.guard)
+    entry = find_or_create_entry(manager, key, supplied_record)
+    atomic_increment_u32(entry.counter)
+    leave_manager_guard(manager.guard)
+    return entry
+
+find_or_create_entry(manager, key, supplied_record):
+    record = supplied_record
+    if record == null:
+        record = opaque_record_lookup(key)
+    entry = null
+    if record != null:
+        encoded = record.index_word & 0x7ffff
+        if encoded != 0:
+            index = encoded - 1
+            block = index >> 14
+            slot = index & 0x3fff
+            entry = address(manager.blocks[block].base, slot * 24)
+    if entry == null:
+        if key == 0:
+            key = opaque_key_from_record(record, 0, true, 0xbb96607d)
+        if key != 0:
+            map_slot = opaque_map_find(manager.key_map, key, 0)
+            if map_slot != null:
+                entry = map_slot.value
+    if entry != null:
+        if record != null and record != entry.record:
+            if record == supplied_record or opaque_context_mode() == 3:
+                opaque_bind_record(manager, entry, record)
+        return entry
+
+    if key == 0:
+        key = uint32(atomic_fetch_add_u32(generated_key_counter, 1) + 1)
+    block = first_block_whose_free_head_is_not_uint32_max()
+    if block == null:
+        block = opaque_append_block()
+        opaque_initialize_block(block, 0x4000)
+    entry = pop_block_free_entry_or_null(block)
+    # When popped: record=null, key=key, counter=0, flags=0.
+    # The previous counter word supplies the next free index.
+    opaque_bind_record(manager, entry, record)
+    if uint64(key + 0xffffffff10000000) > 0x7ffffff:
+        opaque_publication_context_begin()
+        opaque_map_insert(manager.key_map, key, 0).value = entry
+        opaque_publication_context_end()
+    return entry
+```
+
+This is control/data-flow pseudocode. Conditional diagnostic virtual calls at
+entry/exit are omitted; their purpose and effects were not inspected. Guard
+enter/leave targets likewise remain opaque rather than assigned a platform lock
+type. The release wrapper enters the same manager guard, calls an unexpanded
+inner release helper, then leaves it. Actual freeing, rechecking and deferred
+cleanup remain unknown.
+
+Block descriptors have stride 16 and entries stride 24. The record's cached
+index is one-based in the low 19 bits; zero means no cached index. The shown
+routine does not bounds-check a cached index against allocated blocks. A key-map
+miss can create an entry, so acquisition alone is not proof that clip bytes are
+loaded or usable. The new-entry map-publication exception is exactly the
+inclusive unsigned key range `0xf0000000` through `0xf7ffffff`; its semantic
+meaning is unknown. It does not suppress the earlier map lookup.
+
+The outer helper increments the selected entry before returning it. This explains
+why the wrapper initializer later drops a temporary reference after taking its
+own. The zero-key sentinel is the same initial entry used by the wrapper, so old
+and new pointers can be equal. Counts and low flag bits still determine each
+release call separately. Nonzero-key allocation failure behavior remains an
+unproved contract: the inner path can pass a null entry to an unexpanded binder,
+and the outer helper dereferences its result without a local null guard.
+
+Executable local arithmetic is in
+[animation_resource_index.py](../../../engine/animation_resource_index.py).
+Tests cover one-based block boundaries, ignored high index bits, the inclusive
+64-bit key-range exception, and release gates. This module neither reads memory
+nor loads resources. The actual record lookup, record binding, inner release,
+wrapper-to-provider-row join and authored UID conversion remain open.
