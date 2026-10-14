@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 320,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original local clock arithmetic through reciprocal calculation with synthetic state; excludes accumulation, children, locking, live clock selection and upstream elapsed-time production.",
+  "float_comparison": "exact float32 bits",
+  "source_sha256": "6f71ae0f24450238665dc580bb5396c4541d2baf25cc3d144ff6454a4c7222d4"
+}

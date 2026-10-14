@@ -1,6 +1,6 @@
 # Component-to-animation update connection
 
-The update interface is now connected to a concrete `KinoComponent` method and its factory. A named animation-time task configuration provides a receiver-dispatch lead. The component call is established statically. A later [live membership check](ANIMATION_MEMBERSHIP_OBSERVATION.md) observed the selected player's Kino component in the source registry and gathered storage; callback execution and timing relative to physics substeps remain unproved.
+The update interface is now connected to a concrete `KinoComponent` method and its factory. A named animation-time task configuration provides a receiver-dispatch lead. The component call is established statically. A later [live membership check](ANIMATION_MEMBERSHIP_OBSERVATION.md) observed the selected player's Kino component in the source registry and gathered storage; a later [live call pair](ANIMATION_CALL_TRACE.md) observed its interface update running and returning. Timing relative to physics substeps remains unproved.
 
 ## Component identity and factory
 
@@ -36,7 +36,7 @@ if component_flags bit 1 is clear and owner exists and owner.world exists:
         interval = world.ordinary_interval
 ```
 
-The selected value is copied as float32. The ordinary and alternate sources are two fields within the same world object. They have not been identified as physics, render, scaled or unscaled clocks. A zero interval does not bypass the component's later dispatch gates by itself.
+The selected value is copied as float32. The ordinary and alternate sources are two fields within the same world object. The [shared clock producer](WORLD_CLOCK.md) applies holds and optional scales, then divides its input by 1000. Their precise per-frame scheduling and physics/render relationship remain open. A zero interval does not bypass the component's later dispatch gates by itself.
 
 `engine.animation_component_clock.component_interval` implements this rule over explicit observations. `dispatch_component_update` expresses the three local call gates. Neither function schedules callbacks or identifies a player. Finite-value and bounds validation are adapter guards.
 
@@ -54,7 +54,7 @@ The original interval-selection block matched 256 synthetic cases spanning all c
 
 ## Remaining work
 
-1. Observe the matched player's component callback entry/exit. The gather writer, worker table and unadjusted visitor are established, and passive source/storage membership was observed in one live session.
+1. Extend the observed interface call pair to full component callback boundaries and request identity. The live pair brackets only the nested interface call.
 2. Trace the two world-clock producers and job dependencies to relate this update to physics substeps and input ingestion.
 3. Find writes to KinoComponent's threshold byte and identify the first threshold component and source table.
 4. Follow concrete parameter-group callback types. The interface is now identified, but those producers remain separate.

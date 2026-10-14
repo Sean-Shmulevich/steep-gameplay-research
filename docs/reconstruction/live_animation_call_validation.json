@@ -1,0 +1,52 @@
+{
+  "status": "observed",
+  "original_game": true,
+  "selected_player_membership_reacquired": true,
+  "pairs": 1,
+  "unmatched": 0,
+  "packets": [
+    {
+      "before": {
+        "interval_bits": 1065353216,
+        "interval": 1.0,
+        "interval_finite": true,
+        "status_bytes": [
+          0,
+          0,
+          1
+        ]
+      },
+      "after": {
+        "interval_bits": 1065353216,
+        "interval": 1.0,
+        "interval_finite": true,
+        "status_bytes": [
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "detached": true,
+  "code_unchanged": true,
+  "breakpoints_removed": [
+    true,
+    true
+  ],
+  "window_end": {
+    "reason": "deadline",
+    "events": 2,
+    "trace_stops": 0,
+    "filtered_stops": 0
+  },
+  "game_stop": "planned_time_limit",
+  "configuration_restored": true,
+  "scope": "One selected-player animation interface call. No scheduler step control, pose-evaluation proof, uninstrumented timing, clock-source capture or active-clip identification.",
+  "private_artifact_sha256": {
+    "events.jsonl": "f1c456ac129c79b83177352c7d4f6c9d994793a9b5f9d6cf2aa67e160ba7f22a",
+    "result.json": "7ca972cd255e0aa1692cebea75cbaa8aabb5d7056f040caa2b32c1cebecf7c66",
+    "config.json": "5fa1c49e738665748752f0f24bf2078e52f09daa66dea0f3857d369baef20e5b"
+  }
+}

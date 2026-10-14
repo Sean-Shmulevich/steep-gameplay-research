@@ -34,6 +34,10 @@ The private observer now checks configured identity guards at setup and at accep
 
 Seven repository tests cover status changes, nesting/interleaving, missing events, unexpected stops, duplicate stack reuse, identity mismatches, capture termination, raw float bits and malformed input. The command-line analyzer was also run on the successful native fixture receipt.
 
-## Remaining live step
+## Original-game observation
 
-Acquire the player and Kino component again, build the debugger configuration from fresh identity links, verify both original instruction signatures, and leave enough watchdog time for attach/setup and cleanup. This fixture establishes the recorder's tested mechanisms. It does not establish that the original game's call sites are reached in the selected mode, that attaching will be harmless, or that native scheduler state can be modified safely.
+A fresh player/world/Kino acquisition and membership check supplied the component filter and identity guards. The hardware-breakpoint window captured one before/after pair on the same thread, component and caller stack, with no unmatched events or reported errors. Both snapshots held interval `1.0` and status bytes `[0, 0, 1]`. Both breakpoints were removed, instruction bytes remained unchanged and LLDB detached successfully. The bounded game session subsequently reached its planned time limit and restored configuration.
+
+The [sanitized receipt](live_animation_call_validation.json) preserves the result and private artifact hashes. Raw addresses, packets and logs remain private. This is live evidence that the selected player's interface call ran and returned. Unchanged status bytes do not establish a particular branch or completed pose evaluation. The capture did not identify the active clip or correlate the invocation to a scheduler request.
+
+The [world-clock producer](WORLD_CLOCK.md) now explains the local interval arithmetic. Why this observed call received `1.0` remains unresolved. Debugger wall time cannot measure the uninstrumented callback or prove normal animation cadence. Safe scheduler stepping remains unproved.
