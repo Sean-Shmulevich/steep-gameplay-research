@@ -156,3 +156,25 @@ class Encoding9Tests(unittest.TestCase):
         self.assertNotEqual(out[0],0)
         self.assertNotEqual(out[1],0)
         self.assertEqual(state.cursor,0)
+
+
+class Encoding12Tests(unittest.TestCase):
+    def test_omitted_component_bits_and_unused_third_high_bit(self):
+        from engine.animation_decoder import quaternion_smallest_three48 as decode
+        base=[12000,17000,21000]
+        for missing in range(4):
+            words=[base[0]|((missing&1)<<15),base[1]|((missing>>1)<<15),base[2]]
+            result=decode(words)
+            self.assertGreater(result[missing],0)
+            self.assertAlmostEqual(sum(v*v for v in result),1,places=6)
+            words[2]|=32768
+            self.assertEqual(result,decode(words))
+
+    def test_serialized_decoder_integration(self):
+        from engine.animation_decoder import unpack_serialized_channel,registered_channel_decoder
+        raw=bytes([12])+struct.pack('<II',6,1)+struct.pack('<3H',12000,17000,21000)
+        parsed=unpack_serialized_channel(raw)
+        out=[]
+        sample_channel(Resource([Channel(12,parsed['payload'],16)]),0,0,out,SampleState(0),registered_channel_decoder)
+        self.assertEqual(len(out),4)
+        self.assertAlmostEqual(sum(v*v for v in out),1,places=6)

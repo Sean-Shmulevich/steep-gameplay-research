@@ -8,7 +8,7 @@ from pathlib import Path
 from .animation_decoder import unpack_serialized_channel, registered_channel_decoder
 from .animation_sampling import Channel, Resource, SampleState, sample_channel
 
-SUPPORTED = frozenset((0,9,21,27))
+SUPPORTED = frozenset((0,9,12,21,27))
 
 
 def inspect_clip(body, records):

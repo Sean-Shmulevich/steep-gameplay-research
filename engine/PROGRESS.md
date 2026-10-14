@@ -868,3 +868,14 @@ This is scoped corpus coverage, not engine coverage or native equivalence. Three
 synthetic tests distinguish supported, unsupported/shared and invalid records.
 
 Validation: 499 tests pass; packaging, hashes and local links pass.
+
+## Encoding-12 48-bit quaternion decoding
+
+Recovered six-byte stride, two-byte alignment, fifteen-bit component scale and
+omitted-component selection from the first two word high bits. Added the decoder
+to serialized adaptation, dispatch and corpus inspection. All 141 new tracks pass,
+raising this corpus to 944/1,052 supported tracks and 6,608 consistency checks.
+No new independent-reference/native comparison claimed. Two synthetic tests cover
+selectors, unused bit and integrated decoding.
+
+Validation: 501 tests pass; packaging, hashes and local links pass.

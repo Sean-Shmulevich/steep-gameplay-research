@@ -95,18 +95,18 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
-    """Sampling callback for verified encoding IDs 0, 9, 21 and 27 only."""
-    if type(descriptor) is not int or descriptor not in (0,9,21,27) or width != 16:
-        raise ValueError('supported descriptors are 0, 9, 21 and 27 with width 16')
+    """Sampling callback for verified encoding IDs 0, 9, 12, 21 and 27 only."""
+    if type(descriptor) is not int or descriptor not in (0,9,12,21,27) or width != 16:
+        raise ValueError('supported descriptors are 0, 9, 12, 21 and 27 with width 16')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,21:sample_encoding_21,27:sample_encoding_27}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,12:sample_encoding_12,21:sample_encoding_21,27:sample_encoding_27}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
 
 
 def unpack_serialized_channel(data, offset=0):
-    """Adapt one serialized byte-time encoding 0/9/21/27 record to runtime layout.
+    """Adapt one serialized byte-time encoding 0/9/12/21/27 record to runtime layout.
 
     Disk layout: encoding:u8, opaque_allocation:u32, count:u32, count-1 time
     bytes, tightly packed samples. Does not parse a clip or resolve shared refs.
@@ -118,12 +118,12 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,21,27):
+    if encoding not in (0,9,12,21,27):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
     if not 1 <= count <= 255:
         raise ValueError('serialized count outside supported runtime range')
-    stride,alignment = {0:(16,16),9:(4,4),21:(2,2),27:(12,4)}[encoding]
+    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),27:(12,4)}[encoding]
     end = offset+9+(count-1)+count*stride
     if end > len(data):
         raise ValueError('truncated serialized channel data')
@@ -196,29 +196,58 @@ def quaternion_smallest_three32(word, *, rsqrt_estimate=None):
     return values
 
 
-def sample_encoding_9(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+def _sample_general_packed(payload,time,hint,cursor,encoding,rsqrt_estimate):
     """Sample byte-time general quaternion tracks with scalar value-decode seeds.
 
     rsqrt_estimate applies to interpolation normalization only. Direct packed
     word decoding accepts its own estimate through quaternion_smallest_three32.
     """
     data=memoryview(payload)
-    if len(data)<2 or data[0]!=9:
-        raise ValueError('expected encoding-9 channel header')
+    if len(data)<2 or data[0]!=encoding:
+        raise ValueError('unexpected packed quaternion channel header')
     count=data[1]
     if count==0:raise ValueError('zero-key channel has no sample payload')
-    offset=(count+4)&0xfffffffc
-    if len(data)<offset+4*count:raise ValueError('truncated quaternion channel')
+    stride,alignment=(4,4) if encoding==9 else (6,2)
+    offset=(count+alignment)&~(alignment-1)
+    if len(data)<offset+stride*count:raise ValueError('truncated quaternion channel')
     selected=select_byte_key(count,data[2:count+1],hint,cursor)
     time=f32(time)
     if not math.isfinite(time):raise ValueError('expected finite sample time')
     index=selected['cursor']
-    value=quaternion_smallest_three32(struct.unpack_from('<I',data,offset+4*index)[0])
+    def decode(index):
+        if encoding==9:
+            return quaternion_smallest_three32(struct.unpack_from('<I',data,offset+stride*index)[0])
+        return quaternion_smallest_three48(struct.unpack_from('<3H',data,offset+stride*index))
+    value=decode(index)
     packed,weight=selected['packed_ticks'],None
     if packed>65535:
-        other=quaternion_smallest_three32(struct.unpack_from('<I',data,offset+4*(index+1))[0])
+        other=decode(index+1)
         scale=f32(1/60)
         start,end=f32((packed&65535)*scale),f32((packed>>16)*scale)
         weight=f32(f32(max(start,min(end,time))-start)/f32(end-start))
         value=quaternion_sample_blend(value,other,weight,rsqrt_estimate=rsqrt_estimate)
     return {**selected,'value':value,'weight':weight}
+
+
+def quaternion_smallest_three48(words, *, rsqrt_estimate=None):
+    """Three uint16 words, fifteen-bit components, selector in first two high bits."""
+    words=tuple(words)
+    if len(words)!=3 or any(type(w) is not int or not 0<=w<=65535 for w in words):
+        raise ValueError('expected three uint16 quaternion words')
+    values=[f32(f32((w&32767)*f32(4.316100603318773e-05))+f32(-.7071067690849304)) for w in words]
+    squares=[f32(v*v) for v in values]
+    n=f32(1-f32(squares[0]+f32(squares[1]+squares[2])))
+    if not math.isfinite(n) or n<=0:raise ValueError('expected positive omitted-component radicand')
+    r=f32(1/math.sqrt(n) if rsqrt_estimate is None else rsqrt_estimate)
+    if not math.isfinite(r) or r<=0:raise ValueError('expected positive finite reciprocal seed')
+    missing=f32(n*f32(f32(3-f32(f32(r*n)*r))*f32(.5*r)))
+    values.insert((words[0]>>15)|((words[1]>>15)<<1),missing)
+    return values
+
+
+def sample_encoding_9(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_general_packed(payload,time,hint,cursor,9,rsqrt_estimate)
+
+
+def sample_encoding_12(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
+    return _sample_general_packed(payload,time,hint,cursor,12,rsqrt_estimate)

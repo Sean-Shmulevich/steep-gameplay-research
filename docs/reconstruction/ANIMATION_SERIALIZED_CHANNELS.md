@@ -55,3 +55,7 @@ shared-track resolution, other encodings and active graph selection remain open.
 [Encoding 9](ANIMATION_SMALLEST_THREE_SAMPLER.md) is also supported, with four-byte
 packed general quaternion samples and runtime alignment four. Its original-byte
 comparison covers 127 tracks.
+
+[Encoding 12](ANIMATION_48BIT_SAMPLER.md) adds six-byte packed quaternion samples
+with runtime alignment two. All 141 tracks of this encoding in the checked corpus
+pass cached/reset consistency checks.
