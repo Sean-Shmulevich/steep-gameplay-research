@@ -56,3 +56,8 @@ Item helpers now expose all-row prerequisite checks, first-row preparation and
 all-row processing with a shared reentrant guard on one branch. Next inspect the
 resolver and handle predicate; dispatched work is not yet identified as clip
 decoding. Counter publication remains open.
+
+
+Resolver argument tracing now closes the predicate's false branch for these
+mode-zero callers: optional handles are left null. Prioritize direct row prepare
+and process operations from the latest trace recipe, not the guarded branch.

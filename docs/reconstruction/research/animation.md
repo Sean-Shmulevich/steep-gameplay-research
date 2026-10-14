@@ -628,3 +628,75 @@ acquisition path. It is not yet an animation sampling algorithm. Highest-value
 next targets are the temporary resolver and handle predicate, or the guarded
 operations if those reveal a concrete resource type. The staged-to-published
 count transfer remains a separate open synchronization edge.
+
+## Resolver construction and caller-specific branch narrowing
+
+A four-function follow-up resolves the handle predicate and traces constructor
+arguments through resolution and row assembly. The predicate is exactly:
+
+```text
+has_backed_handle(handle_field_address):
+    handle = load_pointer(handle_field_address)
+    return handle != null and load_pointer(handle) != null
+```
+
+Both return branches were inspected. This predicate alone is not a type test or
+animation-readiness test. More importantly, the traced item helpers pass zero for
+the resolver's handle-construction mode. That zero reaches the row builder,
+which initializes each row's optional handle to null and skips handle creation
+when mode is zero. Thus, absent unproved side effects or concurrent mutation,
+these callers reach the **direct row operations**, not the guarded optional-handle
+operations described in the prior section. The guarded helpers remain accurate
+local findings but are not established active work on this particular route.
+
+```text
+construct_resolution(output, record, descriptor, options):
+    initialize_empty_inline_row_array(output)
+    metadata = record.virtual_metadata()
+    resolve_into_rows(descriptor, record, metadata, output, options)
+    return output  # inner boolean result is not propagated here
+
+resolve_into_rows(descriptor, record, metadata, output, options):
+    scratch = initialize_1024_work_records()
+    intermediate = inline_pointer_array()
+    if not opaque_traverse(descriptor, record, metadata, intermediate,
+                           scratch, options):
+        success = false
+    else:
+        assemble_rows(output, intermediate, options)
+        success = true
+    release_owned_intermediate_storage()
+    release_owned_scratch_storage_in_reverse_order()
+    return success
+
+assemble_rows(output, intermediate, options):
+    reserve_output_for(intermediate.count)
+    for source in intermediate:
+        opaque_normalize(source)
+        row = copy_selected_source_fields(source)
+        row.optional_handle = null
+        if options.handle_mode != 0:
+            if source.special_byte != 0 or options.handle_mode == 2:
+                row.optional_handle = opaque_acquire_handle(source, options)
+                # Native path also manages two handle reference counters.
+        append_row(output, row)
+        options.output_pointer = source.auxiliary_pointer
+```
+
+The copy pseudocode abbreviates field layout only; the evidence recipe preserves
+its mapping. Normalization and traversal are still opaque, so the source grammar
+and authored-ID interpretation remain unresolved. General nonzero-mode handle
+reference counting is not reduced to an invented ownership contract here.
+
+The constructor sets row storage to an inline area, initializes an empty count
+and a packed capacity/ownership word. Resolution uses 1024 scratch records of
+144 bytes; their existence is not proof of a maximum authored graph size because
+traversal behavior is uninspected. Row assembly creates 64-byte rows. The row
+handle field is null in the mode-zero path before append. Normal return cleans
+owned scratch storage; exception safety remains unproved.
+
+This changes the next investigation: inspect the direct preparation and
+processing operations, plus their normalization/traversal inputs if needed.
+Do not keep following the guarded branch solely because it was present in the
+generic helper. Producer-to-published counter transfer and authored UID conversion
+remain independent open edges.

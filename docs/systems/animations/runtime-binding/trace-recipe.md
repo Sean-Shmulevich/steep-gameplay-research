@@ -226,3 +226,35 @@ Next bounded pass: resolver `1411c6410`, predicate `1411cc130`, then at most
 two evidence-selected helpers. Alternatively inspect the guarded operations if
 the resolver remains generic. Keep producer+54 to consumer+50 publication open;
 do not infer it from this dispatch path. Four new bodies <=24,000 bytes each.
+
+## Resolver and mode-zero branch narrowing
+
+Inspected constructor `1411c6410` (172 pdata-linked bytes), predicate
+`1411cc130` (20-byte leaf including both returns through `1411cc143`),
+resolver wrapper `1411c22c0` (486), row assembly `1411c2030` (645).
+
+Predicate reads `[RCX]`, then `[that pointer]`, returning false if either is zero.
+Constructor initializes output+18 to output+28, output+20 packed word 8004,
+and calls record virtual+30 before resolver wrapper. Wrapper initializes 400 hex
+scratch records of stride 90 hex, calls `1411e8960`, and invokes row assembly
+only when AL is nonzero. Constructor returns output without testing wrapper AL.
+
+The item callers supply zero stack mode. Constructor forwards that dword at
+its outgoing stack+30; wrapper preserves it into R9D for row assembly. Assembly
+stores it in R15D, tests at `1411c20e9`, and skips handle acquisition when zero.
+Local optional handle starts null; appended row+30 receives that null. This closes
+the generic predicate's false branch for the traced mode-zero construction path,
+subject to unresolved helper side effects and external synchronization.
+
+Row source mapping after normalize `1411dd420`: source+28 contributes row+0,
+source+30 row+8, source+38 low byte row+10, source+20 row+18,
+source+58 dword row+20, source+8 row+28. Row+30 is optional handle,
+row+38 its flag. Variant bit0 at source+38 chooses a 32-bit versus 64-bit copy
+into row+0. Source+50 is written through the supplied output-pointer argument.
+Nonzero modes may call `1411e65d0` and adjust handle+48/+4c counters;
+full general-mode ownership is outside this pass.
+
+Next bounded candidates: direct prepare `1411d7b60`, direct process
+`1411ec030`, and up to two dependent functions. Traversal `1411e8960`
+and normalization `1411dd420` remain leads for descriptor grammar. Do not
+promote guarded optional-handle dispatch to active mode-zero behavior.

@@ -480,3 +480,12 @@ processing, normal temporary cleanup and shared reentrant guard behavior.
 Published pseudocode preserves dispatch-success versus result-success distinction.
 Resolver/operation identities and counter publication remain open. No runtime
 change or live process access; last full suite remains 423 tests.
+
+
+## Resolver mode narrows active item path
+
+Decoded handle predicate, temporary resolver construction and row assembly.
+Traced zero mode from item callers to handle-creation bypass, selecting direct
+row operations on this route. Guarded operations remain generic findings, not
+proved active work here. Documented row mapping and traversal boundary. Runtime
+unchanged; last full suite remains 423 tests.
