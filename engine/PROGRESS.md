@@ -835,3 +835,14 @@ counts only. Native execution, fresh archive extraction and full container parsi
 remain separate. Three synthetic adapter tests cover padding, offsets and rejection.
 
 Validation: 490 tests pass; packaging, hashes and local links pass.
+
+## Encoding-21 packed rotations
+
+Recovered the two-byte Z/W quaternion layout from single and paired decode paths.
+Connected it to byte-time sampling, serialized adaptation and resource dispatch.
+Validated 170 original serialized tracks with 1,190 reference comparisons; maximum
+sign-invariant component difference 1.1199491845026444e-07. Published aggregate
+receipt only. Three synthetic tests cover packed bits, dispatch, rewind and bounds.
+Other rotation encodings and full rig selection remain open.
+
+Validation: 493 tests pass; packaging, hashes and local links pass.

@@ -98,3 +98,32 @@ class SerializedChannelTests(unittest.TestCase):
         for data in (bytes([254])+bytes(12),bytes([27])+struct.pack('<II',1,256),
                      bytes([27])+struct.pack('<II',1,1)):
             with self.assertRaises(ValueError):unpack_serialized_channel(data)
+
+
+class Encoding21Tests(unittest.TestCase):
+    def test_packed_word_swap_and_extremes(self):
+        from engine.animation_decoder import quaternion_z16
+        for word in (0,16384,32767):
+            a,b=quaternion_z16(word),quaternion_z16(word|32768)
+            self.assertEqual(a[:2],[0,0])
+            self.assertEqual(a[2:],b[2:][::-1])
+            self.assertAlmostEqual(sum(x*x for x in a),1,places=6)
+
+    def test_serialized_dispatch_and_rewind(self):
+        from engine.animation_decoder import unpack_serialized_channel, registered_channel_decoder
+        raw=bytes([21])+struct.pack('<II',4,2)+bytes([60])+struct.pack('<2H',16384,32767)
+        decoded=unpack_serialized_channel(raw)
+        self.assertEqual(decoded['consumed'],len(raw))
+        resource=Resource([Channel(21,decoded['payload'],16)])
+        state=SampleState(60);out=[]
+        sample_channel(resource,0,1,out,state,registered_channel_decoder)
+        self.assertEqual(state.cursor,1)
+        state.hint=30
+        sample_channel(resource,0,.5,out,state,registered_channel_decoder)
+        self.assertEqual(state.cursor,0)
+        self.assertEqual(out[:2],[0,0])
+        self.assertAlmostEqual(sum(x*x for x in out),1,places=6)
+
+    def test_truncated_sample(self):
+        from engine.animation_decoder import sample_encoding_21
+        with self.assertRaises(ValueError):sample_encoding_21(bytes([21,1]),0,0)

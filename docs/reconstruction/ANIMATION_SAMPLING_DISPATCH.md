@@ -109,3 +109,6 @@ key selection and interpolation; other encodings remain unconnected.
 [Encoding 27](ANIMATION_VECTOR_SAMPLER.md) now has a connected vector decoder and
 a scoped comparison against 835 privately decoded tracks. This comparison uses
 reserialized keys, not original channel slices.
+
+[Encoding 21](ANIMATION_PACKED_SAMPLER.md) adds a two-byte restricted quaternion
+path with serialized-byte validation on 170 private tracks.
