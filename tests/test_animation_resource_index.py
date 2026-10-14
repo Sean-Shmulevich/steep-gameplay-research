@@ -39,3 +39,28 @@ class AnimationResourceIndexTests(unittest.TestCase):
                         (publish_in_key_map, 1.0)):
             with self.assertRaises(ValueError):
                 fn(bad)
+
+
+class AnimationResourceLifetimeTests(unittest.TestCase):
+    def test_inner_release_rechecks_count_and_blocking_flags(self):
+        from engine.animation_resource_index import release_entry_eligible
+        self.assertTrue(needs_release_call(1, 0x04000000))
+        self.assertFalse(release_entry_eligible(0, 0x04000000))
+        self.assertFalse(release_entry_eligible(0, 0x01000000))
+        self.assertFalse(release_entry_eligible(1, 0))
+        self.assertFalse(release_entry_eligible(0, 1))
+        self.assertTrue(release_entry_eligible(0, 0xfa000000))
+
+    def test_index_write_preserves_flags_and_round_trips(self):
+        from engine.animation_resource_index import encode_record_index
+        for index in (0, 16383, 16384, 0x7fffe):
+            word = encode_record_index(0xa5f80000, index)
+            self.assertEqual(word & 0xfff80000, 0xa5f80000)
+            self.assertEqual(decode_record_index(word)['index'], index)
+
+    def test_index_write_wraps_without_claiming_validity(self):
+        from engine.animation_resource_index import encode_record_index
+        self.assertIsNone(decode_record_index(encode_record_index(0, 0x7ffff)))
+        self.assertEqual(decode_record_index(encode_record_index(0, 0x80000))['index'], 0)
+        with self.assertRaises(ValueError):
+            encode_record_index(0, -1)

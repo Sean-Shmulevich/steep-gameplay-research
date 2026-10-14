@@ -35,3 +35,8 @@ Shared lookup now exposes cached-index, key-map and entry-creation paths. Next
 inspect record lookup, record binding and inner release using the latest
 [trace recipe](trace-recipe.md). Entry acquisition does not establish loaded
 clip readiness.
+
+
+Binding/release follow-up now identifies a deferred key/record/entry queue and
+its exact insertion and recycling gates. Follow that queue's consumer next;
+see the latest trace-recipe section. Do not label entry flag bit 31 as readiness.

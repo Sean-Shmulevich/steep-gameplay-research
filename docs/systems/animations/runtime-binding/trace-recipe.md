@@ -104,3 +104,32 @@ Next bounded candidates: inner release `1411943b0`, record lookup
 `14119ed60`, record binder `1411b8d40`, and one dependent consumer if it
 closes the wrapper-to-provider-row relationship. Keep authored UID conversion
 separate. Four functions, at most 24,000 pdata-linked bytes each.
+
+## Binding and release follow-up
+
+Four pdata-linked bodies: `1411943b0` (352 bytes), `14119ed60` (168),
+`1411b8d40` (370), `1411afb10` (159).
+
+Inner release rejects entry flags bits 26/24, nonzero counter and nonzero low
+24 flag bits. It clears record `+8` low 19 bits, optionally calls `141194510`
+when that record word has bit 28, clears entry record pointer and bit 31, then
+sets entry bit 26. Nonzero keys optionally erase through `1411ae050` unless
+reserved-range or entry bit 28. `14119e460` finds the block; entry counter
+word receives old free head, block free head receives signed entry offset /24.
+The block at `141194400` setting bit 31 is bypassed by the observed initial
+jump to `141194412`; no entry-route execution of that block is claimed.
+
+Record lookup checks key and global enable byte, enters its global guard, tries
+`14119e730` (slot+8), then `14119e3f0`, then key-map `14109a650`.
+Binding calls `1411931f0` for the key and `14119d3c0` for index before
+publishing `(index+1)&7ffff` into record+8 by CAS. Context `1411dbfc0()==3`
+and global mode `143301dd8 != 1` select deferred queue `1411afb10`.
+Otherwise an initially empty entry receives the record and bit 31 is set.
+Existing non-null entries are not directly overwritten by these local branches.
+
+Queue fields at manager base: storage+0, count+8, write+c, capacity+14,
+notification+54. Triple is key/record/entry, each eight bytes. Growth helper
+`1411af230` receives capacity+800 and preserve=true. Notification increments
+at `1411afba5` even if growth failed the room test. Consumer and synchronization
+remain open. Next bounded pass: queue consumer, `1411931f0`, `14119d3c0`,
+and one dependent reader; four bodies, each <=24,000 pdata-linked bytes.

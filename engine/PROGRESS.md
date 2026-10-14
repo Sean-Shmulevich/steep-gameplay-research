@@ -441,3 +441,13 @@ key-range and release-gate kernels with boundary tests. No original process
 access or loaded-animation claim. Next: record lookup/binder and inner release.
 
 Validation: all 417 independent tests pass, including four new arithmetic boundary tests.
+
+
+## Animation record binding and recycling
+
+Decoded record lookup precedence, cached-index publication, mode-dependent
+deferred triples, and guarded free-list recycling. Added inner release and index
+writer kernels with tests for flag distinctions and truncation. Queue consumer
+and ready-resource interpretation remain open. No live process accessed.
+
+Validation: all 420 independent tests pass; packaging and links verified.

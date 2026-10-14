@@ -319,3 +319,92 @@ Tests cover one-based block boundaries, ignored high index bits, the inclusive
 64-bit key-range exception, and release gates. This module neither reads memory
 nor loads resources. The actual record lookup, record binding, inner release,
 wrapper-to-provider-row join and authored UID conversion remain open.
+
+## Record binding, deferred work and guarded recycling
+
+A further four-function pass closes the inner release predicate, record-binding
+branches and deferred queue insertion. Record lookup rejects zero keys or a
+cleared global enable byte. Otherwise it enters a global guard and tries three
+sources in order: an opaque helper returning a slot whose `+8` is the record;
+another opaque lookup; then the existing key-map helper. It leaves the guard and
+returns the selected record or null. Source identities and loading policy remain
+unknown.
+
+Binding first compares old and requested record pointers. Equal pointers return
+immediately. Detaching a different non-null old record clears its low-19-bit
+cached index, clears the entry pointer and entry flag bit 31, then repeats the
+old record's cached-index clear. Preserve the repeated operation; do not infer
+that it proves safety against concurrent rebinding.
+
+For a non-null requested record:
+
+```text
+bind_nonnull_record(manager, entry, record):
+    opaque_prepare_key(entry.key)
+    index = opaque_entry_index(manager, entry)
+    atomic_replace_low19(record.index_word, (index + 1) & 0x7ffff)
+    if opaque_context_mode() == 3 and global_mode != 1:
+        if entry.record == null:
+            entry.record = record
+            atomic_clear_bit(entry.flags, 31)
+        enqueue(manager, {key: entry.key, record: record, entry: entry})
+    elif entry.record == null:
+        entry.record = record
+        atomic_set_bit(entry.flags, 31)
+```
+
+If an entry already has a different non-null record, this function does not
+immediately overwrite it. The special context branch still queues the new
+record; the other branch leaves the entry pointer unchanged after writing the
+new record's index. The unexpanded prepare/index helpers may have effects that
+must be understood before treating this as an independent mutation API.
+
+The deferred queue stores triples in 24-byte slots. It grows capacity by 2048
+through an unexpanded preserve-resize helper when full. After successful room
+checking it writes a triple, increments count and advances write index using
+signed remainder. Its separate atomic notification counter increments even when
+growth leaves insufficient room and insertion is skipped. Valid storage and
+positive capacity remain caller/allocator contracts; notification count alone
+is not a count of successfully inserted triples. No mutex is acquired inside
+this queue helper.
+
+Inner release uses a stronger predicate than the caller's decrement gate:
+
+```text
+release_under_manager_guard(manager, entry):
+    if entry.flags.bit26 or entry.flags.bit24:
+        return
+    if entry.counter != 0 or (entry.flags & 0x00ffffff) != 0:
+        return
+    record = entry.record
+    key = entry.key
+    if record != null:
+        atomic_clear_low19(record.index_word)
+        if record.index_word.bit28:
+            opaque_record_release(key)
+        entry.record = null
+        atomic_clear_bit(entry.flags, 31)
+    atomic_set_bit(entry.flags, 26)
+    if key != 0:
+        if key not in inclusive_range(0xf0000000, 0xf7ffffff):
+            if not entry.flags.bit28:
+                opaque_erase_key(manager.key_map, key)
+        block = opaque_find_entry_block(manager, entry)
+        entry.counter_word = block.free_head
+        block.free_head = signed_index_of_entry_in_block(entry, stride=24)
+```
+
+This reuses the counter word as a free-list link and marks bit 26 before
+recycling. It does not directly free the block's allocation. The meanings of
+bits 24, 26, 28 and 31 are deliberately described by their operations rather
+than named as loaded/ready/owned. Record bit 28 and entry bit 28 are distinct
+fields. Lookup acquisition, record attachment, queued processing and readiness
+remain separate stages.
+
+Executable helpers now include the guarded release predicate and low-19-bit
+index writer. Tests distinguish caller eligibility from the inner recheck and
+cover index wrap/truncation without treating overflow indices as valid.
+
+Next: find the deferred triple consumer and the producer of its context/mode
+gates, then connect its processed record to the provider row reader. The authored
+UID conversion and runtime clip/landing selection remain unresolved.

@@ -43,3 +43,20 @@ def needs_release_call(previous_count, flags):
     count = _uint(previous_count, 32)
     flags = _uint(flags, 32)
     return count == 1 and (flags & 0xffffff) == 0
+
+
+def release_entry_eligible(current_count, flags):
+    """Inner guarded release predicate; distinct from caller decrement gate."""
+    count = _uint(current_count, 32)
+    flags = _uint(flags, 32)
+    return count == 0 and (flags & 0x05ffffff) == 0
+
+
+def encode_record_index(record_word, entry_index):
+    """CAS desired value: preserve high bits, replace low 19 with index+1.
+
+    Truncation is observed behavior, not a claim that overflow indices are valid.
+    """
+    word = _uint(record_word, 32)
+    index = _uint(entry_index, 32)
+    return (word & 0xfff80000) | ((index + 1) & 0x7ffff)
