@@ -327,3 +327,5 @@ The named threshold callback's packet arithmetic is exposed by [`animation_thres
 [`animation_component_clock`](../docs/reconstruction/ANIMATION_COMPONENT_DISPATCH.md) selects the recovered component interval source and exposes local interface-call gates. The component/factory join is static; live scheduler membership remains open.
 
 The selected animation-time visitor is available as [`animation_batch`](../docs/reconstruction/ANIMATION_BATCH_BINDING.md), preserving per-batch callback capture and reverse local receiver order. Native membership and cross-job ordering remain open.
+
+[`animation_membership`](../docs/reconstruction/ANIMATION_MEMBERSHIP_COPY.md) models the pre-action gather task's source-registry copy into that job. It preserves capacity and inactive entries on reuse, and preserves the existing active count when the source is empty. Registry policy and surrounding reset/order remain open.

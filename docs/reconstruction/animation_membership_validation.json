@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "cases": 180,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original first registry-copy block with synthetic scheduler owner and source registry. Counts zero through eight, capacities zero through nine, prior active counts zero and capacity. Synchronization, allocation metadata, allocation, release and byte-copy helpers are stubbed. Checked destination count, capacity, pointer replacement, all destination entries including retained tail, and helper-call order. No real registry membership, allocation failure, concurrent lifetime or surrounding reset validation."
+}

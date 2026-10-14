@@ -1183,3 +1183,17 @@ and entry replacement. Four tests cover the portable boundary. Actual membership
 clock producers and cross-job dependencies remain open.
 
 Validation: 575 tests pass; packaging, hashes and local links pass.
+
+## Animation registry copy into the job
+
+Located the exact destination writer in the configured UpdatePreActionGather
+task. It copies a source registry into the animation-time job, preserving source
+order and pointer identity. Nonempty sources reset the active count; an empty
+source skips that reset. The portable API retains this distinction and models
+capacity reuse and inactive tail preservation. Original branch/field-update
+instructions matched 180 synthetic cases with external helpers stubbed. Four
+tests cover the API, including composition with the selected batch visitor.
+Registry insertion/removal, surrounding destination reset and task dependency
+edges remain open. No original-game pause/step control was attempted.
+
+Validation: 579 tests pass; packaging, hashes and local links pass.

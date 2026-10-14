@@ -61,6 +61,6 @@ The constructor/setup/table chain and range-worker visitor call were statically 
 
 ## Remaining boundary
 
-The next useful joins are the gather/membership writer for this exact job, its dependency edges, and the producers of the world-clock fields consumed by KinoComponent. These would connect the static route to who runs, when, and with which interval. The selected visitor and receiver adjustment are no longer open questions for this constructor/setup pair.
+The [membership copy](ANIMATION_MEMBERSHIP_COPY.md) now connects a source registry to this exact job through the configured pre-action gather task. Registry insertion/removal, destination reset, dependency edges, and the producers of the world-clock fields consumed by KinoComponent remain open. These would establish who runs, when, and with which interval. The selected visitor and receiver adjustment are no longer open questions for this constructor/setup pair.
 
 Evidence anchors: owner constructor `1408aff20`, embedded job offset `0x3af0`, final table `141ec7f38`, worker slot `0x40` -> `1408c7800`, visitor slot `0x80` -> `1408f2b60`, setup `140905dd0`, receiver callback `1409d44c0`, callback field job+`0x1c0`. The earlier adjusted-receiver candidate was `1408f2b00`; it is not selected by this table. Original code and receiver payloads remain private.
