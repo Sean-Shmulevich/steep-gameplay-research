@@ -4,6 +4,8 @@ The automated suite covers synthetic fixtures, recovered local numerical kernels
 
 Current checkpoint: 613 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
+The separate [bounded debugger preflight](../docs/reconstruction/ANIMATION_DEBUGGER_BOUNDARY.md) passed three isolated Wine fixture cases: hardware entry/return stops, an independent no-hit deadline and rejection of a wrong signature with cleanup. These are additional private integration checks, not added to the 613 Python tests. They do not establish original-game packet capture, timing fidelity or safe scheduler control.
+
 Six [animation membership reader tests](../docs/reconstruction/ANIMATION_MEMBERSHIP_OBSERVATION.md) distinguish current source membership, retained destination storage and the unclaimed prefix. They reject inconsistent reads and do not dereference stale destination pointers. Synthetic membership checks do not prove callback execution.
 
 A separate live capture found one selected-player Kino match at source/storage index 3, with source count and destination capacity both four and zero remaining claims. All guard rechecks passed. The [receipt](../docs/reconstruction/live_animation_membership_validation.json) supports passive membership in that session, not callback execution, atomicity or safe stepping.
