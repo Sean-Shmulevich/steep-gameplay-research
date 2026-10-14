@@ -1,0 +1,19 @@
+{
+  "scope": "encoding 10 and 13; seven-position cached/reset consistency across indexed bodies; not native agreement",
+  "encodings": [
+    {
+      "encoding": 10,
+      "bodies": 676,
+      "validated_tracks": 12038,
+      "sample_checks": 84266,
+      "failures": 0
+    },
+    {
+      "encoding": 13,
+      "bodies": 707,
+      "validated_tracks": 16605,
+      "sample_checks": 116235,
+      "failures": 0
+    }
+  ]
+}

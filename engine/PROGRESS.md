@@ -1006,3 +1006,16 @@ consistency checks. These are not native numerical comparisons. Wide quaternion
 formats remain next; the prior inventory receipt is a historical framing snapshot.
 
 Validation: 530 tests pass; packaging, hashes and local links pass.
+
+## Wide-time quaternion formats 10 and 13
+
+Inspected both callbacks through their final-key branches, verifying common
+value helpers, alignment, interpolation constants and operation order. Integrated
+32-bit and 48-bit quaternion values with the recovered wide selector and runtime
+headers. Two synthetic tests cover byte/wide equivalence, rewind, registered
+dispatch, truncation and extended count. Original inventory checks pass all
+12,038 encoding-10 and 16,605 encoding-13 tracks: 200,501 sample consistency checks
+with no failures. No native numerical parity is claimed; scalar reciprocal seeds
+remain substitutes and existing reference discrepancies remain documented.
+
+Validation: 532 tests pass; packaging, hashes and local links pass.
