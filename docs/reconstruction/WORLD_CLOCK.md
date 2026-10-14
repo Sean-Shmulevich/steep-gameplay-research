@@ -6,7 +6,7 @@ The [component interval selector](ANIMATION_COMPONENT_DISPATCH.md) reads the ord
 
 The world constructor initializes three adjacent clock records. The ordinary and alternate animation intervals are each at offset 24 within the first two records. A world initialization path invokes the same clock routine on all three records with input 33 and accumulation enabled. This establishes a concrete writer route, not the per-frame producer or every mode's update order.
 
-The routine divides its processed input by 1000 to produce the interval and calculates integer ticks from that input multiplied by 30. This supports interpreting the input as milliseconds, the interval as seconds and ticks as 30000 per second. These unit names are inferred from arithmetic, not recovered symbols. Other consumers and the source of each per-frame input still need tracing.
+The routine divides its processed input by 1000 to produce the interval and calculates integer ticks from that input multiplied by 30. This supports interpreting the input as milliseconds, the interval as seconds and ticks as 30000 per second. These unit names are inferred from arithmetic, not recovered symbols. A [direct caller policy](FRAME_CLOCK_POLICY.md) now explains several timing modes and the input conversion into the global root clock. Its live child membership and selected mode remain unproved.
 
 ## Local arithmetic
 

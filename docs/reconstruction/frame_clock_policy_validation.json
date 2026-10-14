@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 480,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original interval mode-selection and minimum block with synthetic elapsed values and state. Excludes hardware timer conversion, waiting, accumulation, root-clock update, and live world membership.",
+  "float_comparison": "exact float32 bits",
+  "source_sha256": "754481ae5102f2e6d31a1cfab078074bfba3d9cebb417a8bb247a4d8cf69bcd4"
+}
