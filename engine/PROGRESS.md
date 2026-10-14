@@ -598,3 +598,13 @@ new-owner publication and bind-result storage, plus preliminary binding with zer
 tags. Callback semantics, endpoint units and context identifier remain open.
 
 Validation: 437 tests pass; packaging, hashes and local links pass.
+
+
+## Named evaluator interfaces and error-resource fallback
+
+Connected six callback names through registration, setters and concrete targets.
+The unknown key/predicate are GetAnimationId and IsPlayingErrorAnimation; the
+resource scalar is GetAnimationResourceLength. Decoded mutating error-entry
+fallback, evaluator pool acquisition/release order and two settings-to-flag bit
+assignments. Length units, bit meanings, pool lifetime and activation cadence
+remain open. Static documentation pass; last full suite remains 437 tests.

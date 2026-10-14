@@ -1504,3 +1504,81 @@ caller subsequently performs the tag-aware binding described above. Therefore
 one activation can invoke the binding path twice. The global identifier and
 opaque evaluation result must be resolved before assigning a frame or event
 meaning to the preliminary path.
+
+
+## Registered evaluator callbacks and error-resource fallback
+
+Name registration, slot setters, and the installation caller now connect the
+previously opaque callback slots to these names and implementations:
+
+| Interface | Registered name | Inspected local behavior |
+| --- | --- | --- |
+| Resource scalar | GetAnimationResourceLength | Resolve resource; return its stored float length |
+| Resource metadata | GetAnimationData | Resolve resource; return its stored data pointer |
+| Binding creation | AcquireEvaluator | Obtain a pooled evaluator or allocate one; initialize and register it with the owner |
+| Binding release | ReleaseEvaluator | Remove evaluator from owner collection; hand it to the pool-release helper |
+| Bound key | GetAnimationId | Read evaluator resource entry's key |
+| Bound predicate | IsPlayingErrorAnimation | True when that key is zero or equals the global error resource key |
+
+These are recovered registration strings, not names inferred solely from use.
+The registered length name supports interpreting the default endpoint as resource
+length. The physical time unit still needs a producer or playback-consumer check.
+The metadata adapter still applies the previously documented minus-eight
+adjustment to the returned data pointer.
+
+```text
+GetAnimationId(owner_unused, evaluator):
+    return evaluator.resource_entry.key
+
+IsPlayingErrorAnimation(owner_unused, evaluator):
+    key = evaluator.resource_entry.key
+    return key == 0 or key == global_error_resource_entry.key
+```
+
+Consequently the earlier conditional scalar reader emits its scalar only when the
+selected key differs from the current evaluator's animation ID and the evaluator
+is not playing the error animation. Equality and error animation both retain the
+negative-finite sentinel. This supersedes the anonymous predicate interpretation;
+it does not yet identify the scalar as blend weight or transition duration.
+
+Resource length, data and evaluator acquisition use the same resource resolver.
+It accepts a resource record pointer only when the shared entry's sign bit is set
+and its record pointer is non-null. Otherwise it retains the global error entry,
+atomically replaces the wrapper's entry, releases the displaced separate
+reference, and rereads the replacement through the same sign-bit gate.
+
+```text
+resolve_resource(wrapper):
+    record = wrapper.entry.record if wrapper.entry.flags.bit31 else null
+    if record != null:
+        return record
+    replacement = global_error_resource_entry
+    atomic_increment(replacement.separate_reference_count)
+    old = atomic_exchange(wrapper.entry, replacement)
+    if atomic_fetch_add(old.separate_reference_count, -1) == 1:
+        if low24(old.flags) == 0:
+            release_entry_if_eligible(old)
+    return wrapper.entry.record if wrapper.entry.flags.bit31 else null
+```
+
+This is a mutating fallback, not a read-only query. The callers dereference its
+result without a local null guard, so a valid published error resource is an
+external invariant. The resolver does not wait for loading to complete. Once it
+replaces the wrapper entry, later publication of the displaced entry does not by
+itself reattach that wrapper. Rebinding requires another writer.
+
+AcquireEvaluator obtains owner-related objects through two opaque lookups, then
+tries a pool. If empty it allocates 1152 bytes aligned to 16 and constructs the
+evaluator. It resolves the selected resource, initializes the evaluator, appends
+it to the owner's collection and returns it. The observed allocation-failure
+branch passes null onward to initialization; no graceful-failure guarantee is
+claimed. ReleaseEvaluator removes the token from that collection before passing
+it to the pool helper. The pool's retention/destruction policy remains open.
+
+The initializer first invokes a resource-assignment helper with a true byte, then
+passes the packed start/end floats to a range helper. It writes packed settings
+byte 8 low bit into evaluator flag bit 0 and settings byte 10 low bit into flag
+bit 1, preserving other bits. In the upstream six-byte activation settings these
+are bytes 3 and 5 respectively. Packed byte 9 is not read in this initializer.
+The two bits' semantic names remain unresolved; the remaining context setup
+helper may perform additional work.

@@ -575,3 +575,38 @@ semantics and global identifier remain open; no frame-boundary claim.
 
 Next: setters/installation for `143310280` slots30/48 and `143310298` slots68/
 70/90/98, child accessor virtual implementations, activation gate reset owner.
+
+
+## Callback installation and concrete evaluator targets
+
+Aligned registration sequences establish names -> setters -> slots. Resource
+table `143310280`: GetAnimationResourceLength setter `14124ff20` slot30,
+registration string load `14125ebfd`, setter association `14125ec70`;
+GetAnimationData setter `14124fd10` slot48, load `14125ef5d`, association
+`14125efd0`. Evaluator table `143310298`: AcquireEvaluator setter `1412501a0`
+slot68/load `14125da6d`/association `14125dae0`; ReleaseEvaluator `14124fcc0`
+slot70/load `14125dafd`/association `14125db70`; GetAnimationId `14124fcb0`
+slot90/load `14125dd3d`/association `14125ddb0`; IsPlayingErrorAnimation
+`141250010` slot98/load `14125ddcd`/association `14125de40`.
+
+Install callers `140ddd3c0` and `140ddd730` pass target R8, same name RDX to
+previously decoded dispatcher `141297690`. Targets inspected: AcquireEvaluator
+`140dd3000` (315), ReleaseEvaluator `140dde770` (49), GetAnimationId
+`140dd8f70` (9-byte leaf), IsPlayingErrorAnimation `140ddba00` (36-byte leaf),
+GetAnimationResourceLength `140dd9000` (19), GetAnimationData `140dd8f50` (21).
+Key is evaluator+28 entry+10. Error predicate compares global object's +30 entry
+key+10, or zero. Resource length/data resolver outputs record+58 float/+80 pointer.
+
+Resolver `140dd8ed0` (117): wrapper+0 entry; sign of entry+c gates record+0.
+Absent gated record retains global error entry+8, XCHG wrapper, XADD old+8 -1;
+old count1 and low24 flags0 invokes `141194350`. Rereads gated replacement.
+Acquire tries `140de12c0` pool, else size480 hex/alignment10 hex allocation and
+ctor `140dd0990`; resource resolve then `140ddaaf0`; owner+38 collection append
+`140999d70`. Release owner+38 remove `140766ab0`, then pool helper `140dd69c0`.
+
+Initializer `140ddaaf0` (206) calls `140dbd9a0` with R8b=1 and selected record,
+then `140dbe8f0` with packed floats0/4. Packed byte8 lowbit -> evaluator+376 bit0;
+byteA lowbit -> bit1. Byte9 not read locally. Opaque owner context `140db3070`.
+
+Next: `140dbd9a0`, `140dbe8f0`, evaluator flag-bit consumers and length producer.
+Also inspect pool release contract and activation-byte reset for lifetime/cadence.
