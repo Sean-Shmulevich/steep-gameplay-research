@@ -2,7 +2,7 @@
 
 The automated suite covers synthetic fixtures, recovered local numerical kernels and the independent runtime's contracts. It does not establish original-game equivalence. Run `python3 -m unittest discover -s tests -q` from the repository root; HTTP tests require permission to bind loopback.
 
-Current checkpoint: 534 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
+Current checkpoint: 536 tests passed. Repository packaging, source hashes and local links passed verification; the inspector JavaScript passed syntax checking. The new private-scene browser rendering has not yet been visually validated.
 
 ## Private archive checks
 
@@ -64,3 +64,9 @@ Five explicit-worker topology tests bring the suite to 348. The 100-receiver pro
 Encoding-12 expanded reference comparison found four midpoint branch disagreements
 among 9,689 samples. See the encoding-12 guide and aggregate receipt; this is not
 a native-equivalence pass.
+
+The complete existing indexed bootstrap inventory now passes structural parsing
+and seven-position channel sampling checks: 3,760 bodies, 654,190 tracks and
+4,579,330 cached/reset comparisons, with no failures or unresolved references.
+This does not test every interval, native numerical agreement or all archives.
+See the animation corpus guide and full inventory receipt for scope.

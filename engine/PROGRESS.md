@@ -1043,3 +1043,15 @@ Only formats 40, 41 and 66 remain unsupported in the indexed inventory, totaling
 110 tracks. Inventory format eligibility is distinct from full sampling validation.
 
 Validation: 534 tests pass; packaging, hashes and local links pass.
+
+## Remaining indexed formats and full sampling sweep
+
+Recovered scalar wide/mask formats 40/41 and opaque selected-key format 66. The
+latter copies eight bytes without interpolation; preserved as uint64 bits rather
+than assuming four signed components. Added descriptor widths, serialized layout
+and dispatch. Two tests cover scalar timeline equivalence and opaque selection
+independent of float time. Full indexed sweep passes every one of 654,190 tracks
+in 3,760 bodies, totaling 4,579,330 seven-position consistency checks. No native
+agreement or every-key coverage is claimed. Raw-channel-to-rig integration is next.
+
+Validation: 536 tests pass; packaging, hashes and local links pass.

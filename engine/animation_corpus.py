@@ -8,7 +8,7 @@ from pathlib import Path
 from .animation_decoder import unpack_serialized_channel, registered_channel_decoder
 from .animation_sampling import Channel, Resource, SampleState, sample_channel
 
-SUPPORTED = frozenset((0,9,10,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,39,54))
+SUPPORTED = frozenset((0,9,10,11,12,13,14,15,16,17,21,22,23,24,25,26,27,28,29,39,40,41,54,66))
 
 
 def inspect_clip(body, records):
@@ -39,16 +39,16 @@ def inspect_clip(body, records):
             if parsed['consumed']!=end-start or parsed['encoding']!=codec:
                 raise ValueError('record mismatch')
             payload=parsed['payload'];count=payload[1]
-            if codec in (10,13,16,22,25,28):
+            if codec in (10,13,16,22,25,28,40):
                 from .animation_decoder import wide_channel_layout
                 count,ticks,_=wide_channel_layout(payload)
                 final_tick=ticks[-1] if ticks else 0
-            elif codec in (11,14,17,23,26,29):
+            elif codec in (11,14,17,23,26,29,41):
                 mode=payload[1];mask=int.from_bytes(payload[2:2+(mode&63)],'little')
                 final_tick=(mask.bit_length()-1)<<(mode>>6)
             else:
                 final_tick=payload[count] if count>1 else 0
-            resource=Resource([Channel(codec,payload,4 if codec in (39,54) else 16)])
+            resource=Resource([Channel(codec,payload,4 if codec in (39,40,41,54) else 8 if codec==66 else 16)])
             state=SampleState(0)
             for fraction in (0,.25,.5,.75,1,.5,0):
                 time=final_tick/60*fraction;hint=int(time*60)
