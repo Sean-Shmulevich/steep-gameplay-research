@@ -534,3 +534,44 @@ instructions but not semantically decoded here; no time-unit claim.
 
 Next: callback-table registration for slots90/98, `14129e5a0`, `14128f930`,
 and `1412f8c30`. Find activation-byte reset owner before assigning cadence.
+
+
+## Endpoint tags and binding callbacks
+
+Inspected `14129e5a0` (802 bytes), `14128f930` (339), `1412f8c30` (161),
+`141281690` (323), `1412efa60` (49) and leaf `1412f2990` through terminal
+branches at `1412f29b4` INT3. Same frozen-image evidence; no process access.
+
+`14128f930`: row+18 metadata from `1412efa60`, row+20=0, row+24 scalar from
+`1412f2990`. Non-null metadata and either tag byte enables `141281b00` with
+EDX=ffffff90,R8=0. ffff result means absent child; otherwise metadata+10 pointer
+array index*8. Child non-null requires metadata+58 object, virtual+10 float limit;
+null calls `141c4a60c` then INT3. Nonzero tags call `141281690` with output
+row20/24; ignore bool. COMISS start,end then JBE skips fallback for <= or
+unordered; otherwise row20=0 and row24 fresh `1412f2990` result.
+
+`141281690`: child+20 accessor, child+10 relative array. Accessor virtual+18
+returns count; +20 reads byte at index with stack width1, first equal tag wins;
++28 returns value narrowed to AX then zero-extended. CVTDQ2PS, DIVSS by
+`141e4a8e8` verified float32 120.0, MAXSS zero, MINSS limit. Miss writes0/AL0;
+hit writes capped decoded value/AL1. No unit interpretation proved.
+
+`1412efa60`: selected+8 optional backing first pointer -> table `143310280`
+slot48; non-null return adjusted -8. `1412f2990` same backing convention ->
+table `143310280` slot30, float result. Distinct from table `143310298`.
+
+`1412f8c30`: destination token+0 non-null -> table `143310298` slot70 with
+old owner+8 optional wrapper first pointer as RCX, token RDX; clear token.
+Store new owner at destination+8. Table slot68 receives new owner's +8 optional
+wrapper first pointer RCX, selected+8 optional backing first pointer RDX,
+settings R8; returned token stored at destination+0 without non-null check.
+
+`14129e5a0` compares context+60 against RIP global; equal skips all. Otherwise
+copies six settings bytes; invokes `14128f930` with tags0,0 then `1412f8c30`;
+`141288150`; context+20c8 indexed pointer -> `1412eb6a0` with constructed
+scratch descriptors. True AL stores result scalar at node+64 context offset and
+zero at node+68 offset. Temporary descriptor cleanup `141345770`. Full scratch
+semantics and global identifier remain open; no frame-boundary claim.
+
+Next: setters/installation for `143310280` slots30/48 and `143310298` slots68/
+70/90/98, child accessor virtual implementations, activation gate reset owner.

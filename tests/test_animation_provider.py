@@ -65,3 +65,28 @@ class ProviderLookupTests(unittest.TestCase):
         self.assertIs(select_replacement(None, [wrapper], original, Outputs(),
                             lambda _: self.fail('sign bit bypasses callback')),
                       replacement)
+
+
+class TaggedEndpointTests(unittest.TestCase):
+    def test_first_duplicate_and_missing_tag(self):
+        from engine.animation_provider import tagged_endpoint
+        records = [(2, 240), (2, 480), (3, 120)]
+        self.assertEqual(tagged_endpoint(records, 2, 10.0), (True, 2.0))
+        self.assertEqual(tagged_endpoint(records, 4, 10.0), (False, 0.0))
+
+    def test_limit_and_unsigned_encoding_boundaries(self):
+        from engine.animation_provider import tagged_endpoint
+        import struct
+        f32 = lambda x: struct.unpack('<f', struct.pack('<f', x))[0]
+        self.assertEqual(tagged_endpoint([(255, 65535)], 255, 1000.0),
+                         (True, f32(65535 / 120)))
+        self.assertEqual(tagged_endpoint([(1, 121)], 1, 1.0), (True, 1.0))
+        self.assertEqual(tagged_endpoint([(1, 0)], 1, -1.0), (True, -1.0))
+
+    def test_minss_nan_and_equal_zero_choose_decoded_source(self):
+        from engine.animation_provider import tagged_endpoint
+        import math
+        self.assertEqual(tagged_endpoint([(1, 120)], 1, float('nan')), (True, 1.0))
+        found, value = tagged_endpoint([(1, 0)], 1, -0.0)
+        self.assertTrue(found)
+        self.assertEqual(math.copysign(1, value), 1)

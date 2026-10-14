@@ -587,3 +587,14 @@ scalar write and replacement-dependent settings-byte inequality. Settings meanin
 callback targets and activation reset cadence remain open.
 
 Validation: all 434 independent tests pass; packaging, hashes and links pass.
+
+
+## Tagged animation endpoints and binding order
+
+Recovered unsigned16 / 120 float32 endpoint conversion, first tag match,
+zero-on-miss, limit cap and start/end fallback. Added a standalone synthetic
+endpoint kernel with floating-point boundary tests. Decoded old-token release,
+new-owner publication and bind-result storage, plus preliminary binding with zero
+tags. Callback semantics, endpoint units and context identifier remain open.
+
+Validation: 437 tests pass; packaging, hashes and local links pass.

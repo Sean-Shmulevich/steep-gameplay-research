@@ -1401,3 +1401,106 @@ bits exactly and accepts an explicit availability callback. Tests cover primary
 precedence, failed-row writes, duplicate keys, skipped wrappers, and a callback
 that changes the wrapper pointer before the required reread. These tests validate
 our local adapter, not original clip playback or native concurrency.
+
+
+## Tagged endpoint conversion
+
+The state-row binding helper initializes an endpoint pair to zero and a
+resource-callback scalar. It stores a metadata object obtained from another
+resource callback. When metadata exists and either of the first two settings
+bytes is nonzero, it searches for a child with raw type code `ffffff90`. If that
+child exists, it obtains a limit through the metadata object's virtual method.
+Each nonzero settings byte is then used as a tag to select an endpoint.
+
+The child accessor reports a record count, reads one byte per record for tag
+comparison, and returns an unsigned 16-bit value for the first matching record.
+The exact conversion is:
+
+```text
+find_tagged_endpoint(child, tag, limit, output):
+    count = child.accessor.count(child.data)
+    for index in unsigned_range(count):
+        record_tag = child.accessor.read_byte(child.data, index, width=1)
+        if record_tag == tag:
+            encoded = low16(child.accessor.value(child.data, index))
+            decoded = float32(float32(encoded) / float32(120.0))
+            output = MINSS(limit, MAXSS(+0.0, decoded))
+            return true
+    output = +0.0
+    return false
+```
+
+The divisor is read from the frozen image as float32 120.0. No seconds or frame
+rate is inferred from that number. Integer-to-float conversion is exact over the
+unsigned 16-bit domain. MINSS chooses its source operand for equal or unordered
+operands: a NaN limit yields the decoded value, and equal signed zeros choose the
+decoded positive zero. A negative limit can produce a negative result because the
+zero lower bound is applied before the limit cap.
+
+The caller ignores each lookup's boolean result. Thus a nonzero missing end tag
+changes the initially supplied end value to zero. After both lookups, an ordered
+start greater than end restores start to zero and rereads the resource default
+end callback. Equal or unordered endpoints do not trigger that fallback.
+
+```text
+initialize_endpoints(row, selected, start_tag, end_tag):
+    row.metadata = resource_metadata(selected)
+    row.start = +0.0
+    row.end = resource_default_end(selected)
+    if row.metadata == null or (start_tag == 0 and end_tag == 0):
+        return
+    child = find_child(row.metadata, raw_type=0xffffff90)
+    if child == null:
+        return
+    limit = row.metadata.limit_source.virtual_value()
+    if start_tag != 0:
+        find_tagged_endpoint(child, start_tag, limit, row.start)
+    if end_tag != 0:
+        find_tagged_endpoint(child, end_tag, limit, row.end)
+    if ordered_greater(row.start, row.end):
+        row.start = +0.0
+        row.end = resource_default_end(selected)  # a fresh callback
+```
+
+A null limit-source object reaches a failure helper and trap, rather than a
+zero-limit fallback. The metadata callback returns an interior pointer which the
+local adapter adjusts backward by eight bytes when non-null. Child type naming,
+accessor implementation, default/limit units and selected resource identity remain
+open. The standalone tagged-endpoint helper tests conversion, first-match order,
+missing tags, capping and floating-point operand rules with synthetic records.
+
+## Binding callback replacement order
+
+The packed endpoint/settings block reaches a binding helper. If the destination
+contains an old token, the helper invokes a callback with the old owner's optional
+wrapped pointer and token, then clears the token. It stores the new owner before
+calling a creation/binding callback with the new owner's optional wrapped pointer,
+the selected resource's optional backing pointer, and the packed settings block.
+It stores that callback's returned token, including a null result.
+
+```text
+replace_binding(destination, new_owner, selected, settings):
+    if destination.token != null:
+        callbacks.release(optional_wrapped_pointer(destination.owner),
+                          destination.token)
+        destination.token = null
+    destination.owner = new_owner
+    destination.token = callbacks.bind(optional_wrapped_pointer(new_owner),
+                                        optional_backing_pointer(selected),
+                                        settings)
+```
+
+There is no local same-resource skip or rollback to the old token on a null bind
+result. Callback internals may impose additional behavior. The callback names
+here describe their observed positions, not proven allocation/destruction
+semantics. This ordering alone establishes neither native lifetime safety nor
+completion of resource loading.
+
+The activation preparation helper can perform an earlier binding with both tag
+bytes forced to zero when its context identifier differs from a global value.
+It copies the other settings, performs an opaque context/evaluation path, and on
+success updates another scalar and clears another byte. The outer activation
+caller subsequently performs the tag-aware binding described above. Therefore
+one activation can invoke the binding path twice. The global identifier and
+opaque evaluation result must be resolved before assigning a frame or event
+meaning to the preliminary path.

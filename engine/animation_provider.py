@@ -77,3 +77,30 @@ def select_replacement(primary: Provider | None, wrappers: list[Wrapper | None],
             if selected is not None:
                 return selected
     return original
+
+
+def tagged_endpoint(records, requested_tag, limit):
+    """First matching byte tag, decoded as float32(uint16 / 120), then capped.
+
+    Evidence: animation research, Tagged endpoint conversion. ``records`` are
+    synthetic (tag, encoded_endpoint) pairs replacing unresolved native accessor
+    callbacks. Returns (found, value); a miss writes zero. Preserve MINSS source
+    preference for equal/unordered operands, including NaN in the supplied limit.
+    Values are in the resource's unproven playback units.
+    """
+    import struct
+    def f32(value):
+        return struct.unpack('<f', struct.pack('<f', value))[0]
+    if type(requested_tag) is not int or not 0 <= requested_tag <= 255:
+        raise ValueError('expected byte tag')
+    for tag, encoded in records:
+        if type(tag) is not int or not 0 <= tag <= 255:
+            raise ValueError('expected byte record tag')
+        if tag != requested_tag:
+            continue
+        if type(encoded) is not int or not 0 <= encoded <= 65535:
+            raise ValueError('expected uint16 endpoint')
+        value = f32(encoded / 120.0)
+        bound = f32(limit)
+        return True, bound if bound < value else value
+    return False, 0.0
