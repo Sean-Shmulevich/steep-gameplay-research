@@ -1206,3 +1206,133 @@ This establishes retain-before-publication and release-after-exchange locally.
 It does not establish a weak-reference upgrade, acquisition from a concurrently
 freed raw pointer, exception recovery, or overall context ownership. The request's
 context reference and allocated processing context remain distinct fields.
+
+
+## Ordered provider replacement and original-handle fallback
+
+Static inspection now establishes the aggregate lookup around the previously
+recovered provider-row reader. These names describe roles, not original classes.
+The aggregate first consults its optional direct provider. It then visits an
+ordered array of wrapper pointers, skipping null wrappers and wrappers whose
+availability check returns null. The first provider that returns a replacement
+handle wins. If every provider misses, the aggregate returns the original handle.
+
+```text
+select_replacement(aggregate, original, scalar_inout, flag_inout):
+    if aggregate.primary != null:
+        replacement = find_row(aggregate.primary, original.key,
+                               scalar_inout, flag_inout)
+        if replacement != null:
+            return replacement
+    for wrapper in aggregate.ordered_wrappers:
+        if wrapper == null:
+            continue
+        provider = unwrap_if_available(wrapper)
+        if provider == null:
+            continue
+        replacement = find_row(provider, original.key,
+                               scalar_inout, flag_inout)
+        if replacement != null:
+            return replacement
+    return original
+
+find_row(provider, requested_key, scalar_inout, flag_inout):
+    for row in provider.rows:
+        if row.key != requested_key:
+            continue
+        scalar_inout.bits = row.scalar_bits
+        flag_inout = row.flag
+        if row.availability_pointer != null:
+            return address_of(row.embedded_handle)
+    return null
+```
+
+The output writes precede the row availability test. An unavailable matching row
+can overwrite both outputs, and lookup continues through duplicate keys. Later
+provider misses do not restore earlier output values. For example, if the primary
+provider has an unavailable matching row with scalar 0.5 and all later providers
+miss, the result is the original handle with scalar 0.5. That example uses a
+synthetic scalar solely to demonstrate the observed write order.
+
+The primary provider bypasses the wrapper availability helper. Therefore a
+reconstruction must not apply the secondary-provider gate universally. Nor should
+it convert a missing replacement into a missing original resource.
+
+Both arrays use the previously observed relative-pointer convention: bit 62 set
+and bit 61 clear means the stored value is relative to the pointer field;
+otherwise it is direct. Counts use the low 29 bits. Wrapper entries are eight
+bytes; provider rows are 56 bytes. The row byte-length multiply executes in
+32 bits before address addition. This is a representation observation, not a
+claim that corrupt or overflowing arrays are safe.
+
+## Wrapper availability delegates to a context callback
+
+The wrapper helper returns its stored pointer directly when its control word is
+negative as a signed 32-bit integer. Otherwise it calls a predicate with that
+pointer, returns null on false, and rereads the stored pointer on true.
+
+```text
+unwrap_if_available(wrapper):
+    if signed32(wrapper.control_word) < 0:
+        return wrapper.pointer
+    if context_accepts(wrapper.pointer):
+        return wrapper.pointer  # reread after callback
+    return null
+
+context_accepts(pointer):
+    context = opaque_context_lookup(global_index)
+    if context == null or pointer == null:
+        return false
+    descriptor = context.callback_descriptor
+    if descriptor.word0 == 0 and descriptor.word1 == 0:
+        return false
+    if descriptor.callback == null:
+        return false
+    callback_context = address_of(descriptor)
+    if descriptor.word1 != 0:
+        encoded = u64(~descriptor.word0) XOR descriptor.word1
+        if encoded < 256:  # unsigned comparison
+            callback_context = descriptor.word1
+    return descriptor.callback(0, callback_context, pointer)
+```
+
+Only the low return byte controls the wrapper branch. The callback's installation,
+meaning and lifetime contract remain unresolved. In particular, this is not yet
+proof of resource readiness, clip decoding completion or membership in a specific
+animation graph. The control word lies beyond the eight-byte allocation returned
+by the earlier acquire callback; these wrappers must not be identified with that
+allocation without another ownership link.
+
+## A caller consumes the replacement scalar conditionally
+
+One direct caller initializes its output to float32 bits `ff7fffff`, the most
+negative finite float32 value. It obtains an original handle through a virtual
+method and initializes the lookup scalar from a context array using a stored byte
+offset. It initializes the lookup flag to zero, obtains the aggregate through a
+separate helper, and calls the replacement lookup above.
+
+It then selects a 48-byte context row using a stored unsigned 16-bit index. The
+selected handle's key is compared with a helper result from that row. If they
+match, the sentinel output remains. If they differ, another row predicate is
+called; only a false result copies the lookup scalar to the output.
+
+```text
+conditional_scalar_output(node, context, output):
+    output.bits = 0xff7fffff
+    original = node.virtual_get_handle(context.data)
+    scalar = load_f32(context.scalar_array, node.scalar_byte_offset)
+    flag = 0
+    selected = select_replacement(get_aggregate(context.owner), original,
+                                  scalar, flag)
+    row = context.state_rows[node.state_index_u16]
+    if row_identity(row) != selected.key:
+        if not row_predicate(row):
+            output = scalar
+```
+
+The lookup flag is not consumed in this caller. The scalar can reflect a failed
+provider row even when the selected handle is the original. This caller proves a
+conditional scalar use, but does not establish seconds, normalized time, blend
+weight, duration, transition policy or a specific landing animation. The virtual
+handle getter, aggregate getter, row identity and predicate remain explicit
+interfaces. Other direct callers are leads, not inspected equivalents.

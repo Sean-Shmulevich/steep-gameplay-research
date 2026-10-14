@@ -473,3 +473,39 @@ vtable+8 only for old count1. This is distinct from entry+c packed references.
 Next: concrete record virtual+48 implementation and caller collection ownership
 for nonzero modes other than1; original provider-row adapter and authored key
 conversion remain unresolved. Avoid repeating counter-publication or reset scans.
+
+
+## Aggregate provider precedence and conditional scalar use
+
+Inspected aggregate `1412fc7f0` (223 bytes), wrapper `141348ac0` (44),
+context predicate `141349430` (114), and caller `141288640` (254).
+Rechecked row reader `1412fc8d0` (174). Same frozen image as prior passes;
+static only, no process access. Behavioral pseudocode is in reconstruction
+research/animation.md under Ordered provider replacement.
+
+Aggregate+20 primary direct provider is tried first. Ordered wrapper array at
++0/header+8 follows; low29 count, stride8. Null entries/unwrap results skip.
+Every successful row reader result returns immediately; exhaustion returns the
+original RDX handle. Scalar R8 and flag R9 are shared across attempts. Row reader
+writes row+18 dword and +1c byte before checking +10 pointer; returns row+20.
+Rows at provider+18/header+20, stride38 hex, key+8 vs original+10.
+
+Wrapper signed dword+c negative bypasses predicate; otherwise pointer+0 goes to
+`141349430`, low AL decides and pointer+0 is reread on success. Predicate obtains
+context via `141cadaf0` with global index, checks pointer/context and descriptor
+at context+18. Descriptor words +0/+8 jointly zero reject; callback+10 null
+reject. If word1 nonzero and unsigned ((~word0) XOR word1)<100 hex, callback
+RDX=word1; otherwise RDX=&descriptor. Tail callback RCX=0,R8=pointer. Do not
+identify this wrapper with the previously observed eight-byte acquire allocation.
+
+Aligned direct E8/E9 caller scan of aggregate yielded calls at `1412886c4`
+(root `141288640`), `1412a5a25` (root `1412a5950`) and `141317cce`
+(root `141317ac0`). Only first caller inspected here. It writes ff7fffff to output,
+gets original via node virtual+b8, loads float from context data+10 array using
+node+5c byte offset, initializes local flag0, gets aggregate via `1412f47d0`.
+After selection, selected+10 key compared with `1412efaa0` on row+8 in data+e8
+array, stride30 hex, index node+6c u16. On unequal key only, calls `1412fc0a0`;
+false AL copies scalar to output. Flag unused afterward.
+
+Next bounded pass: `1412f47d0`, `1412efaa0`, `1412fc0a0`, then one remaining
+aggregate caller. Preserve unknown scalar units and separate wrapper identities.

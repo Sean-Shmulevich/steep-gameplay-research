@@ -560,3 +560,14 @@ zero/nonzero mode routing and absent records. Context assignment now establishes
 retain-before-swap/release-after-swap locally. No native process access.
 
 Validation: all 429 independent tests pass.
+
+
+## Animation replacement precedence and scalar side effects
+
+Decoded primary-before-ordered-provider selection, original-handle fallback,
+output writes from unavailable matching rows, and context-callback availability.
+One caller conditionally publishes the scalar after a key comparison and a row
+predicate; scalar units and predicate semantics remain unresolved. This narrows
+the adapter contract without inventing an animation selection policy.
+Documentation-only static pass; no native process access. Last full suite remains
+429 tests; no new runtime behavior claimed.
