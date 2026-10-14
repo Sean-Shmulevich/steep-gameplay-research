@@ -116,3 +116,7 @@ Trace reads of these masks alongside the two compact sample arrays to establish
 how skipped pairs map to cache positions. Identify the producer of the ten-pair
 table and of the two distinguished binding records before assigning bones or
 root-motion semantics. This pass has no live-game validation.
+
+A subsequent initializer stage computes
+[endpoint motion and an initial-pose table](ANIMATION_ENDPOINT_MOTION.md).
+It does not consume the two compact caches described here.

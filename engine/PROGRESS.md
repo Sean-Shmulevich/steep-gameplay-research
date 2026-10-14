@@ -733,3 +733,13 @@ presence/cache masks for ten channel pairs. Documented eligibility, compact
 sample ordering, exact tolerance, sentinels and initialization assumptions in
 ANIMATION_EVALUATOR_PREPARATION.md. Pair identities and later cache consumers
 remain open. No runtime implementation changed after the 455-test checkpoint.
+
+## Animation endpoint motion
+
+Decoded the next initializer stage: start/end samples, 60-unit sampling hints,
+four-lane displacement, conjugate-start times end rotation, variant sign changes
+and reciprocal-square-root refinement. Added a caller-sample numerical API and
+four boundary/order tests. Also documented a separate initial-pose pair table.
+Compact-cache consumers and physical root-motion application remain unproven.
+
+Validation: 459 tests pass; packaging and local links pass. No live test run.

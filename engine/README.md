@@ -290,3 +290,7 @@ for abort and capacity interpretation.
 For standalone recovered animation binding helpers and synthetic examples, see
 [the binding inspection API](../docs/reconstruction/ANIMATION_BINDING_API.md).
 These helpers require caller-supplied mapping data and are not a complete rig loader.
+
+[Animation endpoint motion](../docs/reconstruction/ANIMATION_ENDPOINT_MOTION.md)
+provides displacement and relative-rotation arithmetic over supplied samples,
+with an explicit reciprocal-square-root seed policy.
