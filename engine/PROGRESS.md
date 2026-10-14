@@ -1121,3 +1121,16 @@ group callbacks and flag reset remain open. No authored-to-runtime identity
 join or input freshness claim is made.
 
 Validation: 555 tests pass; packaging, hashes and local links pass.
+
+## Parameter-group preparation and conditional reset
+
+Located the reset loop in the animation update tail and joined it to the same
+parameter context consumed by class-0 scalar reads. An accumulating branch
+skips the reset. Registration creates a callback group, clears its prepared
+flag, and maps successful identifier lookups to a byte-sized group index.
+The portable API keeps reset selection explicit instead of assuming a tick
+cadence. Original helper validation passed 48 calls and six isolated reset
+blocks. Four tests cover shared groups, callback ordering and reset boundaries.
+Concrete callbacks, map population and outer update scheduling remain open.
+
+Validation: 559 tests pass; packaging, hashes and local links pass.

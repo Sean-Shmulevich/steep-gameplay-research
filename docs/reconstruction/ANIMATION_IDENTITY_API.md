@@ -36,9 +36,9 @@ Collisions visit `bucket+1`, then `bucket+3`, then `bucket+6`, and so on, maskin
 
 ## Consumption lead
 
-The scalar getter's class-0 branch uses the compiled value as an index into a separate context-owned parameter system. Before reading, it invokes a preparation helper. That helper reads an index-to-group byte; `255` skips preparation. Otherwise it selects a 72-byte group record. A group flag suppresses repeated calls. If clear, it calls a virtual callback and then sets the flag. The flag reset and callback implementation are not established here, so this is not evidence of once-per-frame timing.
+The scalar getter's class-0 branch uses the compiled value as an index into a separate context-owned parameter system. Before reading, it invokes a preparation helper. That helper reads an index-to-group byte; `255` skips preparation. Otherwise it selects a 72-byte group record. A group flag suppresses repeated calls. If clear, it calls a virtual callback and then sets the flag. The reset loop and its conditional update-tail placement are now described in [parameter lifecycle](ANIMATION_PARAMETER_LIFECYCLE.md). Callback implementation and frame cadence remain open.
 
-The subsequent scalar read has atomic access accounting and a wait path. The preparation helper alone does not prove input freshness, synchronization, or a particular input-ingestion phase. This gives a more specific next lead: find the identity-map producer, then trace the selected group callback and flag reset. A match to an authored GUID is still required before connecting these bindings to grab, landing or steering parameters.
+The subsequent scalar read has atomic access accounting and a wait path. The preparation helper alone does not prove input freshness, synchronization, or a particular input-ingestion phase. This gives a more specific next lead: find the identity-map producer, then trace the selected group callback and the outer update caller. A match to an authored GUID is still required before connecting these bindings to grab, landing or steering parameters.
 
 ## Evidence and validation
 

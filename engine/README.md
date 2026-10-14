@@ -317,3 +317,5 @@ metadata. It reports unsupported formats and emits aggregate diagnostics only.
 Runtime descriptor addressing is exposed by [`animation_outputs`](../docs/reconstruction/ANIMATION_OUTPUT_API.md), with distinct scalar/timeline storage and explicit owner evaluation. Authored-to-runtime lowering remains open.
 
 Runtime class-0 identity lookup and compile dependencies are available through [`animation_identity`](../docs/reconstruction/ANIMATION_IDENTITY_API.md). Original map population and parameter freshness remain open.
+
+Lazy parameter preparation and explicit reset boundaries are exposed by [`animation_parameters`](../docs/reconstruction/ANIMATION_PARAMETER_LIFECYCLE.md). Reset placement is recovered within one update routine; scheduler cadence remains open.

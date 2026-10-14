@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "preparation_calls": 48,
+  "reset_blocks": 6,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "scope": "Original preparation helper with synthetic virtual callback returning immediately, absolute and relative arrays, owner and null context, sentinel, already-prepared and repeated reads. Original reset block with synthetic arrays and byte-exact surrounding-memory preservation. Outer update branch, real callbacks, concurrency, mapping population and scheduler cadence not emulated."
+}
