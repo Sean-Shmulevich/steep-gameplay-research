@@ -1,0 +1,19 @@
+{
+  "scope": "six raw clip bodies, both explicit base rigs, five sample times; prior independent reconstruction comparison, not native proof",
+  "unit_scale": 1,
+  "reference_sha256": "dba9d9223dd59c0dc5b1b952ccc9573de4ef1f433b3be2505f1a84d994b21c44",
+  "body_sha256": [
+    "17575abd0a96871560994f54641ba26e0c28907faef61d84edabeb928dc13ee8",
+    "571473a8764aebffbf76a22e8454509053ef2a838b2576b344802fa124a51e28",
+    "10807a14991b9dc8221bbe4530bfc8ee2211a8f65e5f32d2162d3afe0fc4d4ec",
+    "621f50ac641e9c93606bf841bb8cb58dde2f999243f989a69809fb221d3550a6",
+    "6b490859c97683aaf9f9d8573bc236cd74a16af29c931f8d8eb34026a226bc72",
+    "e2346f7591997710a19215db4d1d86d6fa938ca1db215aef0fbb5eb1599944d4"
+  ],
+  "poses": 60,
+  "bones_compared": 4320,
+  "max_local_translation_error": 9.997059396971153e-08,
+  "max_local_rotation_error": 1.1545568057158562e-07,
+  "max_model_translation_error": 2.487312426024957e-07,
+  "max_model_rotation_error": 1.4188999740427644e-07
+}

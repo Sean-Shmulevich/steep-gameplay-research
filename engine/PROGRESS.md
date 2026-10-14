@@ -1055,3 +1055,17 @@ in 3,760 bodies, totaling 4,579,330 seven-position consistency checks. No native
 agreement or every-key coverage is claimed. Raw-channel-to-rig integration is next.
 
 Validation: 536 tests pass; packaging, hashes and local links pass.
+
+## Raw compressed channels to rig poses
+
+Added explicit raw-body/decoded-rig pairing with identifier binding, compressed
+channel sampling, bind-component fallback, scale and hierarchy propagation.
+Auxiliary channels and unmatched transforms remain diagnostics; duplicate targets
+and shared references require resolution. Four tests cover binding, scale,
+hierarchy, rewinds, isolation and failure atomicity. Six original bodies paired
+with both base rigs produce 60 poses/4,320 bones compared against the older
+independent reference. Maximum local translation/rotation errors are 9.998e-8
+and 1.155e-7; model errors are 2.488e-7 and 1.419e-7. This is not live pose proof.
+Simulation animation graph/checkpoint integration remains pending.
+
+Validation: 540 tests pass; packaging, hashes and local links pass.

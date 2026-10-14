@@ -64,5 +64,6 @@ This tests the declared index and seven positions per channel. It does not test
 every key/interval, independent numerical agreement, all archive records, version
 1 containers, shared references or native gameplay. Previously documented
 reciprocal-seed substitutes and float32 reference disagreements remain relevant.
-The next integration boundary is raw channels to rig poses; the existing decoded
-asset adapter still accepts predecoded keys rather than these channel buffers.
+The [raw pose adapter](RAW_ANIMATION_POSE.md) now joins these channels to an explicit
+rig. Simulation graph integration remains pending; the existing decoded-key asset
+adapter remains a separate path.
