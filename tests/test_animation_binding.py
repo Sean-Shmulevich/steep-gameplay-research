@@ -101,3 +101,32 @@ class TypedChannelLookupTests(unittest.TestCase):
                             ([0], [256])]:
             with self.assertRaises(ValueError):
                 find(hashes, raw, 0, 5)
+
+
+class ChannelRoutingTests(unittest.TestCase):
+    def test_special_hashes_and_wrapping_range(self):
+        from engine.animation_binding import alternate_channel_candidate as candidate
+        from engine.animation_binding import ORDINARY_CHANNEL_HASHES
+        for value in ORDINARY_CHANNEL_HASHES:
+            self.assertFalse(candidate(0, 1, [value]))
+        for value in (0xffffffda, 0xffffffe3):
+            self.assertFalse(candidate(0, 1, [value]))
+        for value in (0xffffffd9, 0xffffffe4, 0xffffffff, 1):
+            self.assertTrue(candidate(0, 1, [value]))
+
+    def test_missing_metadata_is_not_a_validity_check(self):
+        from engine.animation_binding import alternate_channel_candidate as candidate
+        self.assertTrue(candidate(0, 1, None))
+        self.assertTrue(candidate(1, 1, []))
+        with self.assertRaises(ValueError):
+            candidate(0, 1, [])
+
+    def test_route_requires_both_gates_and_hash_zero_stays_ordinary(self):
+        from engine.animation_binding import channel_sample_route as route
+        for flags, present, expected in ((0, True, 'ordinary'),
+                                        (8, False, 'ordinary'),
+                                        (8, True, 'alternate')):
+            self.assertEqual(route(0, 1, resource_flags=flags,
+                                   alternate_present=present, hashes=[1]), expected)
+        self.assertEqual(route(0, 1, resource_flags=8,
+                               alternate_present=True, hashes=[0]), 'ordinary')

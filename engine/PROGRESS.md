@@ -752,3 +752,13 @@ duplicates, first match, hash boundaries, absent binding versus missing channel,
 and public adapter validation. Root-bone identity remains unresolved.
 
 Validation: 463 tests pass; packaging, hashes and local links pass.
+
+## Animation alternate-resource routing
+
+Recovered the channel hash exclusions and wrapping reserved range in the sampling
+predicate. Added routing inspection helpers and three tests. Hash-zero endpoint
+fallback channels use the ordinary decoder even with an alternate resource.
+The predicate's true result for missing metadata or out-of-range indices is
+preserved and explicitly distinguished from channel validity.
+
+Validation: 466 tests pass; packaging, hashes and links pass. No live sampling.

@@ -80,3 +80,8 @@ uses two binding words when supplied, otherwise searches hash zero for types 5
 and 6. Its missing results are `None`. A present-but-missing binding channel
 suppresses fallback. See [endpoint motion](ANIMATION_ENDPOINT_MOTION.md) for
 source evidence and input contracts.
+
+`alternate_channel_candidate` and `channel_sample_route` expose the recovered
+hash exclusions and resource gates for choosing a sampler. They do not validate
+payloads or execute either decoder. Details and edge cases are in the endpoint
+motion guide's Alternate-resource routing section.

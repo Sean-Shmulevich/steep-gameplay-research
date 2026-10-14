@@ -147,3 +147,40 @@ def select_endpoint_channels(binding_source_words=None, *, hashes=(),
     indices = tuple(find_typed_channel(hashes, descriptor_types, 0, kind)
                     for kind in (5, 6))
     return tuple(None if index == 0xffff else index for index in indices)
+
+
+ORDINARY_CHANNEL_HASHES = frozenset((
+    0, 0x898e99d5, 0x1087c86f, 0x6780f8f9, 0xf9e46d5a,
+    0x8ee35dcc, 0x17ea0c76, 0x60ed3ce0, 0xf0522171,
+    0x875511e7, 0xe7929802,
+))
+
+
+def alternate_channel_candidate(channel_index, channel_count, hashes=None):
+    """Recovered routing predicate; True does not prove channel validity.
+
+    Missing metadata and out-of-range indices return True in the native helper.
+    Caller must still check resource flag bit3 and alternate-resource presence.
+    Evidence: ANIMATION_ENDPOINT_MOTION.md, Alternate-resource routing.
+    """
+    index = _uint(channel_index, 32)
+    count = _uint(channel_count, 16)
+    if index >= count or hashes is None:
+        return True
+    values = tuple(hashes)
+    if index >= len(values):
+        raise ValueError('hash metadata does not cover requested channel')
+    key = _uint(values[index], 32)
+    return key not in ORDINARY_CHANNEL_HASHES and not 0xffffffda <= key <= 0xffffffe3
+
+
+def channel_sample_route(channel_index, channel_count, *, resource_flags,
+                         alternate_present, hashes=None):
+    """Expose dispatch choice without dereferencing or decoding a resource."""
+    flags = _uint(resource_flags, 8)
+    if type(alternate_present) is not bool:
+        raise ValueError('expected boolean alternate_present')
+    if flags & 8 and alternate_channel_candidate(channel_index, channel_count, hashes):
+        if alternate_present:
+            return 'alternate'
+    return 'ordinary'

@@ -113,3 +113,37 @@ Public helpers in `engine.animation_binding` implement `find_typed_channel` and
 encoding bytes. Synthetic tests cover unsigned high hashes, duplicate type
 ordering, hash-group termination and present-but-missing bindings. Invalid
 sortedness, widths and array lengths are rejected by the public adapter.
+
+## Alternate-resource routing
+
+The predicate at `0x14075b680` is a 114-byte leaf routine with both return paths
+inspected. It compares the unsigned channel index against resource +0x7a. An
+out-of-range index returns true. Missing metadata at resource +0x40 also returns
+true. Otherwise it reads that channel's hash through metadata +6 and returns
+false for these identifiers:
+
+```text
+00000000 898e99d5 1087c86f 6780f8f9 f9e46d5a 8ee35dcc
+17ea0c76 60ed3ce0 f0522171 875511e7 e7929802
+```
+
+It also returns false for the inclusive unsigned range `ffffffda..ffffffe3`.
+The native expression is unsigned32 `hash + 0x26 <= 9`, including wraparound.
+Every other hash returns true. The ten nonzero isolated hashes remain unnamed.
+
+The caller dispatches to the alternate resource only when all three conditions
+hold: resource flag bit 3, predicate true, alternate-resource pointer nonnull.
+Otherwise it uses the ordinary descriptor decoder. Thus a valid hash-zero
+fallback channel stays on the ordinary decoder even when the alternate resource
+is installed. This is a source-backed narrowing of the endpoint sampling path.
+
+The identical exclusion sequence is inlined in the initial-pose table branches.
+The earlier single-sample eligibility helper rejects alternate-routed channels
+before checking field_22 and the descriptor's result of one. Missing metadata
+and out-of-range results are not evidence of a safe or valid channel access.
+
+`engine.animation_binding.alternate_channel_candidate` implements the predicate;
+`channel_sample_route` composes the flag and pointer-presence gates. These helpers
+do not access resources, execute the alternate callback or validate channel
+payloads. Tests cover every isolated identifier, wrapping-range boundaries,
+missing metadata, invalid indices and the hash-zero dispatch consequence.
