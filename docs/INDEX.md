@@ -32,6 +32,8 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Root-to-Step mode gates and provider boundaries](reconstruction/ENGINE_ROOT_STEP_ROUTE.md)
 - [Engine event submission branch](reconstruction/ENGINE_EVENT_SUBMISSION.md)
 - [EndFrame completion and rearm](reconstruction/ENGINE_LOOP_HANDSHAKE.md)
+- [Engine event adapters: create, reset, signal, wait, close](reconstruction/ENGINE_EVENT_ADAPTER.md)
+- [Engine frame graph coverage of the EndFrame signal](reconstruction/ENGINE_FRAME_GRAPH_COVERAGE.md)
 - [Explicit wait-helper accounting](reconstruction/WAIT_HELPER_DISPATCH.md)
 - [Executable alternate propagation](reconstruction/ALTERNATE_DEPENDENCY_MODEL.md)
 - [Engine-step action-chain caller](reconstruction/ACTION_REARM_CALLER.md)

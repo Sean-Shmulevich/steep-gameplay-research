@@ -1,0 +1,44 @@
+{
+  "status": "observed",
+  "observations": 1,
+  "input": "Escape twice via window-targeted SendInput; first opened the Progress menu (screen text verified), second did not close it",
+  "phases": {
+    "gameplay": {
+      "samples": 8,
+      "mode_group_bytes": [
+        "00000001"
+      ],
+      "owner_copy_bytes": [
+        "00000000"
+      ]
+    },
+    "after_escape_1": {
+      "samples": 8,
+      "mode_group_bytes": [
+        "00000001"
+      ],
+      "owner_copy_bytes": [
+        "00000000"
+      ]
+    },
+    "after_escape_2": {
+      "samples": 8,
+      "mode_group_bytes": [
+        "00000001"
+      ],
+      "owner_copy_bytes": [
+        "00000000"
+      ]
+    }
+  },
+  "byte_order": "global group bytes +0..+3 = neighbor_flag, mode, companion, request_argument",
+  "engine_mode_changed": false,
+  "request_argument_previously_written": true,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "configuration_restored": true,
+  "scope": "Passive engine-owner mode sampling before and after opening the in-game menu. The menu did not enter the engine stop-routing mode. A nonzero request argument shows the mode setter ran earlier in the session; when is not observed.",
+  "private_result_sha256": [
+    "41aca36cfeae74712460003e87c93f229181dc2164d14fe5923a608268cc10aa"
+  ]
+}
