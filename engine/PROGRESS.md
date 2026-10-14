@@ -941,3 +941,14 @@ rewind, dispatch and malformed inputs. Scalar reciprocal seeds remain substitute
 no native parity is claimed. See the three-float sampler guide for pseudocode.
 
 Validation: 515 tests pass; packaging, hashes and local links pass.
+
+## Scalar animation channels 39 and 54
+
+Recovered signed-byte float scaling and uint32 interpolation, including native
+zero-extension after wrapped subtraction. Added descriptor-specific four-byte
+dispatch and corpus inspection. All 28 new tracks pass; corpus now supports
+1,043/1,052 tracks with 7,301 consistency checks. Three tests cover signed
+extremes, rewind, integer rounding/wrap and failure atomicity. Channel semantics
+and native output parity remain open. Scalar sampler guide includes pseudocode.
+
+Validation: 518 tests pass; packaging, hashes and local links pass.

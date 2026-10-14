@@ -14,15 +14,12 @@
         "39": 4,
         "54": 4
       },
-      "unsupported_codec_counts": {
-        "39": 4,
-        "54": 4
-      },
+      "unsupported_codec_counts": {},
       "unresolved_shared_records": 0,
-      "validated_tracks": 174,
-      "sample_checks": 1218,
+      "validated_tracks": 182,
+      "sample_checks": 1274,
       "failures": [],
-      "all_tracks_supported_and_validated": false,
+      "all_tracks_supported_and_validated": true,
       "game_payloads_included": false
     },
     {
@@ -39,15 +36,12 @@
         "39": 2,
         "54": 2
       },
-      "unsupported_codec_counts": {
-        "39": 2,
-        "54": 2
-      },
+      "unsupported_codec_counts": {},
       "unresolved_shared_records": 0,
-      "validated_tracks": 170,
-      "sample_checks": 1190,
+      "validated_tracks": 174,
+      "sample_checks": 1218,
       "failures": [],
-      "all_tracks_supported_and_validated": false,
+      "all_tracks_supported_and_validated": true,
       "game_payloads_included": false
     },
     {
@@ -70,13 +64,11 @@
       },
       "unsupported_codec_counts": {
         "26": 2,
-        "29": 6,
-        "39": 2,
-        "54": 2
+        "29": 6
       },
       "unresolved_shared_records": 0,
-      "validated_tracks": 162,
-      "sample_checks": 1134,
+      "validated_tracks": 166,
+      "sample_checks": 1162,
       "failures": [],
       "all_tracks_supported_and_validated": false,
       "game_payloads_included": false
@@ -95,15 +87,12 @@
         "39": 2,
         "54": 2
       },
-      "unsupported_codec_counts": {
-        "39": 2,
-        "54": 2
-      },
+      "unsupported_codec_counts": {},
       "unresolved_shared_records": 0,
-      "validated_tracks": 170,
-      "sample_checks": 1190,
+      "validated_tracks": 174,
+      "sample_checks": 1218,
       "failures": [],
-      "all_tracks_supported_and_validated": false,
+      "all_tracks_supported_and_validated": true,
       "game_payloads_included": false
     },
     {
@@ -119,15 +108,12 @@
         "39": 2,
         "54": 2
       },
-      "unsupported_codec_counts": {
-        "39": 2,
-        "54": 2
-      },
+      "unsupported_codec_counts": {},
       "unresolved_shared_records": 0,
-      "validated_tracks": 166,
-      "sample_checks": 1162,
+      "validated_tracks": 170,
+      "sample_checks": 1190,
       "failures": [],
-      "all_tracks_supported_and_validated": false,
+      "all_tracks_supported_and_validated": true,
       "game_payloads_included": false
     },
     {
@@ -145,13 +131,11 @@
         "54": 2
       },
       "unsupported_codec_counts": {
-        "26": 1,
-        "39": 2,
-        "54": 2
+        "26": 1
       },
       "unresolved_shared_records": 0,
-      "validated_tracks": 173,
-      "sample_checks": 1211,
+      "validated_tracks": 177,
+      "sample_checks": 1239,
       "failures": [],
       "all_tracks_supported_and_validated": false,
       "game_payloads_included": false

@@ -95,11 +95,14 @@ def sample_encoding_27(payload, time, hint, cursor=0xffffffff):
 
 
 def registered_channel_decoder(descriptor, payload, width, time, output, state):
-    """Sampling callback for verified encoding IDs 0, 9, 11, 12, 14, 21, 23, 24 and 27 only."""
-    if type(descriptor) is not int or descriptor not in (0,9,11,12,14,21,23,24,27) or width != 16:
-        raise ValueError('supported descriptors are 0, 9, 11, 12, 14, 21, 23, 24 and 27 with width 16')
+    """Sampling callback for supported quaternion, vector and scalar encoding IDs."""
+    supported=(0,9,11,12,14,21,23,24,27,39,54)
+    if type(descriptor) is not int or descriptor not in supported:
+        raise ValueError('unsupported descriptor')
+    if width != (4 if descriptor in (39,54) else 16):
+        raise ValueError('descriptor output width mismatch')
     cursor = 0xffffffff if state.cursor == -1 else state.cursor
-    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,24:sample_encoding_24,27:sample_encoding_27}[descriptor](
+    result = {0:sample_encoding_zero,9:sample_encoding_9,11:sample_encoding_11,12:sample_encoding_12,14:sample_encoding_14,21:sample_encoding_21,23:sample_encoding_23,24:sample_encoding_24,27:sample_encoding_27,39:sample_encoding_39,54:sample_encoding_54}[descriptor](
         payload,time,state.hint,cursor)
     output[:] = result['value']
     state.cursor = result['cursor']
@@ -119,7 +122,7 @@ def unpack_serialized_channel(data, offset=0):
     if type(offset) is not int or offset < 0 or offset+9 > len(data):
         raise ValueError('truncated serialized channel header')
     encoding = data[offset]
-    if encoding not in (0,9,11,12,14,21,23,24,27):
+    if encoding not in (0,9,11,12,14,21,23,24,27,39,54):
         raise ValueError('unsupported serialized channel encoding')
     allocation,count = struct.unpack_from('<II',data,offset+1)
     if encoding in (11,14,23):
@@ -139,7 +142,7 @@ def unpack_serialized_channel(data, offset=0):
                 'opaque_allocation':allocation}
     if not 1 <= count <= 255:
         raise ValueError('serialized count outside supported runtime range')
-    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),24:(12,4),27:(12,4)}[encoding]
+    stride,alignment = {0:(16,16),9:(4,4),12:(6,2),21:(2,2),24:(12,4),27:(12,4),39:(1,1),54:(4,4)}[encoding]
     end = offset+9+(count-1)+count*stride
     if end > len(data):
         raise ValueError('truncated serialized channel data')
@@ -339,3 +342,42 @@ def quaternion_three_floats(words, *, rsqrt_estimate=None):
 
 def sample_encoding_24(payload,time,hint,cursor=0xffffffff,*,rsqrt_estimate=None):
     return _sample_general_packed(payload,time,hint,cursor,24,rsqrt_estimate)
+
+
+def _sample_scalar(payload,time,hint,cursor,encoding):
+    """Recovered scalar byte-time paths; see ANIMATION_SCALAR_SAMPLERS.md."""
+    data=memoryview(payload)
+    if len(data)<2 or data[0]!=encoding:raise ValueError('unexpected scalar channel header')
+    count=data[1]
+    if not count:raise ValueError('zero-key channel has no sample payload')
+    stride=1 if encoding==39 else 4
+    offset=(count+stride)&~(stride-1)
+    if len(data)<offset+stride*count:raise ValueError('truncated scalar channel')
+    selected=select_byte_key(count,data[2:count+1],hint,cursor)
+    time=f32(time)
+    if not math.isfinite(time):raise ValueError('expected finite sample time')
+    def decode(index):
+        if encoding==39:
+            return f32(struct.unpack_from('<b',data,offset+index)[0]*f32(.008))
+        return struct.unpack_from('<I',data,offset+4*index)[0]
+    value=decode(selected['cursor']);packed=selected['packed_ticks'];weight=None
+    if packed>65535:
+        other=decode(selected['cursor']+1)
+        scale=f32(1/60)
+        start,end=f32((packed&65535)*scale),f32((packed>>16)*scale)
+        weight=f32(f32(max(start,min(end,time))-start)/f32(end-start))
+        if encoding==39:
+            value=f32(value+f32(weight*f32(other-value)))
+        else:
+            difference=f32((other-value)&0xffffffff)
+            increment=math.trunc(f32(f32(weight*difference)+f32(.5)))
+            value=(value+increment)&0xffffffff
+    return {**selected,'value':[value],'weight':weight}
+
+
+def sample_encoding_39(payload,time,hint,cursor=0xffffffff):
+    return _sample_scalar(payload,time,hint,cursor,39)
+
+
+def sample_encoding_54(payload,time,hint,cursor=0xffffffff):
+    return _sample_scalar(payload,time,hint,cursor,54)
