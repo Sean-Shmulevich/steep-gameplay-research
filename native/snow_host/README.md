@@ -148,15 +148,26 @@ fails with `SNOW_E_PLAYER_CHANGED` / `player_changed` and the binding is dropped
 so a read is a consistent snapshot. `player.get` also works while the game runs and reports
 `held: false`; such reads race the simulation and are not a consistent snapshot.
 
-**Velocity assignment (experimental, host 0.4).** `set_player_velocity` (plugins) and
-`player.set_velocity` (clients) call the engine's own velocity-assignment routine. The game itself uses it,
-and it sets the body's linear velocity, zeroes angular velocity and resets the player's speed history.
-It is accepted only while held, with finite values up to `SNOW_MAX_SET_SPEED` (300 units/s), after the
-adapter re-checks the routine's code bytes and the player's identity. **Live, while riding it has no lasting
-effect:** the body read back exactly the assigned value (0, then 12 units/s upward), but within the next
-released step the riding controller re-imposed its own velocity (about 36.5 units/s) and the trajectory
-was unchanged. Where the controller takes that velocity from is under investigation; until then, treat this
-call as a building block, not a gameplay effect.
+**Velocity assignment (host 0.4).** `set_player_velocity` (plugins) and `player.set_velocity` (clients)
+call the engine's own velocity-assignment routine, which the game itself uses. It sets the player's
+linear velocity, zeroes angular velocity and resets the player's speed history. It is accepted only while
+held, with finite values up to `SNOW_MAX_SET_SPEED` (300 units/s), after the adapter re-checks the routine's
+code bytes and the player's identity. The new velocity takes effect from the next released step; after that
+the game's own physics and controls carry on from it.
+
+The player is two coupled physics bodies: the main body that `get_player` reports, and a heavier rider body
+joined to it by a leg constraint. The routine has a flag that also re-poses the rider and gives it the same
+velocity, and the adapter sets it. Without it, only the main body changes. The rider keeps its speed, and
+the coupling drags the main body back within a few steps. This is how the first live attempt appeared to
+have no effect. Live results while riding at about 37 units/s, paused:
+
+| Assignment | Next released steps |
+|---|---|
+| main body only, 0 | main body speed 7, 16, 25 units/s over three steps (rider still at about 36) |
+| both bodies, 0 | 1.1, 3.6, 4.7, 5.1, 4.5 units/s over five steps: the player nearly stops, then slope and gravity act |
+| both bodies, 12 units/s up | rose 0.110–0.132 units per step for ten steps (12 units/s × about 10 ms); both bodies stayed near 12 units/s upward |
+
+All steps were exactly one and resume needed no fallback restore.
 
 **Compatibility.** `get_player` is appended to `SnowHostApiV1`; the API version stays 1. A plugin that
 needs it checks `struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)`, as
@@ -179,10 +190,9 @@ acquisition, rode forward with ordinary key holds, paused mid-ride and released 
 - The orientation axes were unit length. After resume the player kept moving (60.7 units in about 1 s
   of reads and waits), the binding stayed valid, and resume needed no fallback restore.
 
-**Live result, host 0.4 (same day, one bounded session paused mid-ride).** In-process acquisition found
-the same player as the external acquisition: identical position, axes and velocities. All 18 single steps
-were exactly one. The velocity assignment behaved as described above. Resume needed no fallback restore,
-and the binding stayed valid afterwards.
+**Live result, host 0.4 (same day, two bounded sessions paused mid-ride).** In-process acquisition found
+the same player as the external acquisition: identical position, axes and velocities. The velocity results
+are in the table above. Resume needed no fallback restore, and the binding stayed valid afterwards.
 
 A first attempt the same day stopped in startup navigation (the game opened on the map screen) before
 the host was loaded. One session establishes the read path while riding; it does not cover respawn,
@@ -235,7 +245,7 @@ For the game build, replace `fixture_adapter.c` with the private adapter and add
 
 ## Next
 
-1. Find what re-imposes the riding player's velocity each step, then make assigned velocity persist; then position.
+1. Position assignment (teleport) through an engine routine, then sport and world-change events.
 2. Events: world loaded, player changed, sport changed.
 3. Measure what a released step simulates (time delta, substeps, input), and a world-change stress run.
 4. Load at launch instead of late load.
