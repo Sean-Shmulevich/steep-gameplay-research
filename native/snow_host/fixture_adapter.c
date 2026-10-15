@@ -78,7 +78,12 @@ static int player_set_pose(const float tr[16], const float lin[3], const float a
     LeaveCriticalSection(&player_lock);
     return 0;
 }
-static int player_acquire(char *why, size_t n) { return player_bind("fixture-player", why, n); }
+static int player_acquire(int *world_changed, char *why, size_t n) { *world_changed = 0; return player_bind("fixture-player", why, n); }
+static int player_check(char *why, size_t n) {
+    if (player_mode) return 0;
+    snprintf(why, n, "fixture player gone");
+    return 1;
+}
 static int player_set_velocity(const float v[3], char *why, size_t n) {
     if (!player_mode) { snprintf(why, n, "no player"); return 1; }
     EnterCriticalSection(&player_lock);
@@ -95,8 +100,9 @@ static int player_read(SnowPlayerRaw *out, char *why, size_t n) {
     for (int k = 0; k < 3; k++) { out->transform[12 + k] = player_pos[k]; out->linear_velocity[k] = player_vel[k]; }
     LeaveCriticalSection(&player_lock);
     out->angular_velocity[1] = 0.5f;
+    out->flags = 0x1u | 0x2u;   /* valid, in world */
     return 0;
 }
 
 const SnowAdapter snow_adapter = {"fixture-simulated", bind, read, cas_group, enter, leave, player_bind, player_read,
-                                   player_set_velocity, player_acquire, player_set_pose};
+                                   player_set_velocity, player_acquire, player_check, player_set_pose};

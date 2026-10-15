@@ -65,6 +65,11 @@ static long long commands_completed, commands_failed;
 static uint64_t steps_released;
 static int player_bound;
 static uint64_t player_generation;   /* opaque player identity exposed to clients and plugins */
+#define WATCH_MS 250
+/* Player events are queued wherever a change is noticed (possibly on the plugin thread inside a plugin's
+ * get_player) and delivered only from the executor, between commands and on the watch tick. */
+static SnowPlayerEventV1 pending_events[8];
+static int pending_count;
 static ULONGLONG start_tick;
 static LARGE_INTEGER qpf;
 
@@ -202,24 +207,64 @@ void snow_host_state(SnowHostStateV1 *out) {
     out->steps_released = steps_released;
 }
 
+static void queue_event(uint32_t kind, uint64_t identity, int world_changed) {
+    if (pending_count == (int)(sizeof pending_events / sizeof *pending_events)) return;
+    SnowPlayerEventV1 e = {sizeof e, kind, identity, (uint32_t)(world_changed != 0), 0};
+    pending_events[pending_count++] = e;
+}
+
+static void drop_binding(const char *why) {
+    if (!player_bound) return;
+    player_bound = 0;
+    host_log("player", "binding dropped: %s", why);
+    queue_event(SNOW_PLAYER_LOST, player_generation, 0);
+}
+
+/* In-process acquisition; queues ACQUIRED on success. */
+static int acquire_now(char *why, size_t n) {
+    int world_changed = 0;
+    if (!snow_adapter.player_acquire || snow_adapter.player_acquire(&world_changed, why, n)) return 0;
+    player_bound = 1; player_generation++;
+    host_log("player", "acquired in-process (identity %llu%s)", (unsigned long long)player_generation,
+             world_changed ? ", new world" : "");
+    queue_event(SNOW_PLAYER_ACQUIRED, player_generation, world_changed);
+    return 1;
+}
+
+/* Executor only: deliver queued events to plugins. */
+static void flush_events(void) {
+    for (int i = 0; i < pending_count; i++) {
+        host_log("player", "event %s identity %llu%s", pending_events[i].kind == SNOW_PLAYER_ACQUIRED ? "acquired" : "lost",
+                 (unsigned long long)pending_events[i].identity, pending_events[i].world_changed ? " (new world)" : "");
+        snow_plugins_on_player(&pending_events[i]);
+    }
+    pending_count = 0;
+}
+
+/* Executor only, about every WATCH_MS: check the binding against the engine's registries, re-acquire. */
+static void watch_tick(void) {
+    if (!bound) return;
+    char why[160] = "";
+    if (player_bound && snow_adapter.player_check && snow_adapter.player_check(why, sizeof why)) drop_binding(why);
+    if (!player_bound) acquire_now(why, sizeof why);
+    flush_events();
+}
+
 /* Read the bound player's body. Executor context (or the plugin thread while the executor waits). */
 static int player_fill(SnowPlayerStateV1 *out, char *why, size_t n) {
     why[0] = 0;
     if (!bound || !snow_adapter.player_read) { snprintf(why, n, "player state unsupported"); return SNOW_E_NO_PLAYER; }
-    if (!player_bound) {
-        /* Nothing bound: try the adapter's in-process acquisition, if it has one. */
-        if (!snow_adapter.player_acquire || snow_adapter.player_acquire(why, n)) {
-            if (!why[0]) snprintf(why, n, "no player bound");
-            return SNOW_E_NO_PLAYER;
-        }
-        player_bound = 1; player_generation++;
-        host_log("player", "acquired in-process (identity %llu)", (unsigned long long)player_generation);
+    if (!player_bound && !acquire_now(why, n)) {
+        /* Nothing bound and no in-process acquisition. */
+        if (!why[0]) snprintf(why, n, "no player bound");
+        return SNOW_E_NO_PLAYER;
     }
+    if (snow_adapter.player_check && snow_adapter.player_check(why, n)) { drop_binding(why); return SNOW_E_PLAYER_CHANGED; }
     SnowPlayerRaw r;
     int rc = snow_adapter.player_read(&r, why, n);
-    if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
+    if (rc == 2) { drop_binding(why); return SNOW_E_PLAYER_CHANGED; }
     if (rc) return SNOW_E_NO_PLAYER;
-    out->reserved = 0;
+    out->flags = r.flags;
     out->identity = player_generation;
     for (int k = 0; k < 3; k++) {
         out->position[k] = r.transform[12 + k];
@@ -249,8 +294,12 @@ static int player_set(const float v[3], char *why, size_t n) {
         m2 += (double)v[k] * v[k];
     }
     if (m2 > (double)SNOW_MAX_SET_SPEED * SNOW_MAX_SET_SPEED) { snprintf(why, n, "speed above %.0f", SNOW_MAX_SET_SPEED); return SNOW_E_REFUSED; }
-    int rc = snow_adapter.player_set_velocity(v, why, n);
-    if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
+    SnowPlayerStateV1 cur = {sizeof cur, 0, 0, {0}, {{0}}, {0}, {0}};
+    int rc = player_fill(&cur, why, n);
+    if (rc) return rc;
+    if ((cur.flags & SNOW_PLAYER_FLAGS_VALID) && !(cur.flags & SNOW_PLAYER_IN_WORLD)) { snprintf(why, n, "player body is not being simulated"); return SNOW_E_REFUSED; }
+    rc = snow_adapter.player_set_velocity(v, why, n);
+    if (rc == 2) { drop_binding(why); return SNOW_E_PLAYER_CHANGED; }
     if (rc) return SNOW_E_REFUSED;
     host_log("player", "velocity set to (%.3f, %.3f, %.3f)", v[0], v[1], v[2]);
     return SNOW_OK;
@@ -281,6 +330,7 @@ static int player_place(const SnowPlayerStateV1 *t, char *why, size_t n) {
     SnowPlayerStateV1 cur = {sizeof cur, 0, 0, {0}, {{0}}, {0}, {0}};
     int rc = player_fill(&cur, why, n);
     if (rc) return rc;
+    if ((cur.flags & SNOW_PLAYER_FLAGS_VALID) && !(cur.flags & SNOW_PLAYER_IN_WORLD)) { snprintf(why, n, "player body is not being simulated"); return SNOW_E_REFUSED; }
     double dist2 = 0;
     for (int k = 0; k < 3; k++) dist2 += ((double)t->position[k] - cur.position[k]) * ((double)t->position[k] - cur.position[k]);
     if (dist2 > (double)SNOW_MAX_TELEPORT_DISTANCE * SNOW_MAX_TELEPORT_DISTANCE) { snprintf(why, n, "move of %.1f exceeds %.0f", sqrt(dist2), SNOW_MAX_TELEPORT_DISTANCE); return SNOW_E_REFUSED; }
@@ -288,8 +338,9 @@ static int player_place(const SnowPlayerStateV1 *t, char *why, size_t n) {
     for (int c = 0; c < 3; c++) for (int k = 0; k < 3; k++) tr[4 * c + k] = t->axes[c][k];
     for (int k = 0; k < 3; k++) tr[12 + k] = t->position[k];
     tr[15] = 1.0f;
+    if (snow_adapter.player_check && snow_adapter.player_check(why, n)) { drop_binding(why); return SNOW_E_PLAYER_CHANGED; }
     rc = snow_adapter.player_set_pose(tr, t->linear_velocity, t->angular_velocity, why, n);
-    if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
+    if (rc == 2) { drop_binding(why); return SNOW_E_PLAYER_CHANGED; }
     if (rc) return SNOW_E_REFUSED;
     host_log("player", "placed at (%.3f, %.3f, %.3f), moved %.3f", t->position[0], t->position[1], t->position[2], sqrt(dist2));
     return SNOW_OK;
@@ -311,16 +362,19 @@ static void put_vec(Out *o, const char *name, const float *v) {
 
 static int do_player_bind(const Request *r, Out *o) {
     char why[160] = "";
-    player_bound = 0;
+    if (!r->has_handle && !snow_adapter.player_acquire) { put(o, "\"error\":\"bad_params\",\"detail\":\"handle required\""); return 0; }
+    if (r->has_handle && !snow_adapter.player_bind) { put(o, "\"error\":\"unsupported\""); return 0; }
+    drop_binding("rebind requested");
     if (!r->has_handle) {
         /* No handle: in-process acquisition. */
-        if (!snow_adapter.player_acquire) { put(o, "\"error\":\"bad_params\",\"detail\":\"handle required\""); return 0; }
-        if (snow_adapter.player_acquire(why, sizeof why)) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
-    } else if (!snow_adapter.player_bind) { put(o, "\"error\":\"unsupported\""); return 0; }
-    else if (snow_adapter.player_bind(r->handle, why, sizeof why)) {
-        put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0;
+        if (!acquire_now(why, sizeof why)) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
+    } else {
+        if (snow_adapter.player_bind(r->handle, why, sizeof why)) {
+            put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0;
+        }
+        player_bound = 1; player_generation++;
+        queue_event(SNOW_PLAYER_ACQUIRED, player_generation, 0);
     }
-    player_bound = 1; player_generation++;
     SnowPlayerStateV1 st = {sizeof st, 0, 0, {0}, {{0}}, {0}, {0}};
     int rc = player_fill(&st, why, sizeof why);
     if (rc) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
@@ -376,7 +430,7 @@ static int do_player_get(Out *o) {
         put_str(o, why); return 0;
     }
     /* Outside a host-held pause the reads race the simulation and are not a consistent snapshot. */
-    put(o, "\"identity\":%llu,\"held\":%s", (unsigned long long)st.identity, host_paused ? "true" : "false");
+    put(o, "\"identity\":%llu,\"held\":%s,\"flags\":%u", (unsigned long long)st.identity, host_paused ? "true" : "false", st.flags);
     put_vec(o, "position", st.position);
     put(o, ",\"axes\":[[%.9g,%.9g,%.9g],[%.9g,%.9g,%.9g],[%.9g,%.9g,%.9g]]",
         st.axes[0][0], st.axes[0][1], st.axes[0][2], st.axes[1][0], st.axes[1][1], st.axes[1][2],
@@ -575,13 +629,16 @@ static DWORD WINAPI executor(LPVOID unused) {
     (void)unused;
     /* Plugins load on the executor so every plugin call is serialized with commands. */
     host_log("host", "plugins: %d active", snow_plugins_init(dir));
+    int watching = snow_adapter.player_check || snow_adapter.player_acquire;
     for (;;) {
-        DWORD wait = INFINITE;
+        DWORD wait = watching ? WATCH_MS : INFINITE;
         if (host_paused) {
             ULONGLONG now = GetTickCount64();
-            wait = lease_deadline > now ? (DWORD)(lease_deadline - now) : 0;
+            DWORD left = lease_deadline > now ? (DWORD)(lease_deadline - now) : 0;
+            if (left < wait) wait = left;
         }
         if (WaitForSingleObject(work_ev, wait) == WAIT_TIMEOUT) {
+            if (!host_paused || GetTickCount64() < lease_deadline) { watch_tick(); continue; }
             char buf[1024]; Out o = {buf, sizeof buf, 0};
             int ok = release_hold(&o, "lease_expired");
             host_log("recovery", "lease expired; resume %s: %s", ok ? "ok" : "FAILED", buf);
@@ -592,6 +649,7 @@ static DWORD WINAPI executor(LPVOID unused) {
         execute(&pending, &o);
         host_log("exec", "%.*s", (int)(o.len > 300 ? 300 : o.len - 1), reply);
         SetEvent(done_ev);
+        flush_events();
     }
     return 0;
 }

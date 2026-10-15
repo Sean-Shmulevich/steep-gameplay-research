@@ -1,4 +1,4 @@
-# Snow mod host (v0.5, command interface, plugin API v1 and player state)
+# Snow mod host (v0.6, command interface, plugin API v1, player state and events)
 
 Status: first release of the host interface. A persistent DLL is loaded late into
 the running game. It exposes guarded pause, world-step and resume operations
@@ -6,7 +6,8 @@ through a local command channel, and loads native plugins that run between world
 steps ([plugin API v1](#plugins-api-v1)). One live session passed on 2026-10-14 (see below
 and the [sanitized validation record](validation.json)). Host 0.3 added the first game
 state for plugins and clients, the [selected player's body](#player-state-host-03). Host 0.4
-finds the player in-process and adds velocity assignment; host 0.5 adds placement.
+finds the player in-process and adds velocity assignment, host 0.5 adds placement, and host 0.6
+adds player events, a liveness check against the engine's registries and a "being simulated" flag.
 
 ```text
 Python client ──TCP 127.0.0.1──▶ io thread ──mailbox──▶ executor thread ──▶ game adapter ──▶ game
@@ -58,7 +59,7 @@ A valid request receives `{"id":N,"status":"accepted"}`, then one final line wit
 | `simulation.step_world` | `count` 1–60 | `unit: world_step_job`, one record per step (`step_before`, `step_released`, `step_after`, `release_ms`, `exactly_one`), totals |
 | `simulation.resume` | — | `fallback_restore`, `engine` |
 | `player.bind` | `handle` (string, optional) | `identity`. Without a handle the adapter finds the player in-process; with one, it validates the external acquisition's handle |
-| `player.get` | — | `identity`, `held`, `position`, `axes`, `linear_velocity`, `angular_velocity`. Acquires in-process first if nothing is bound |
+| `player.get` | — | `identity`, `held`, `flags`, `position`, `axes`, `linear_velocity`, `angular_velocity`. Acquires in-process first if nothing is bound |
 | `player.set_velocity` | `vx`, `vy`, `vz` (numbers) | `set`, `after` (a `player.get` result). Only while host-paused |
 | `player.set_position` | `px`, `py`, `pz`; optional `vx`, `vy`, `vz` | `set`, `after`. Keeps orientation (and velocity unless given). Only while host-paused |
 
@@ -82,6 +83,7 @@ fills in its name, version and callbacks, and returns 0.
 | `on_step` | After each released world step: exactly one `Step` ran and the hold is re-armed, so the simulation is held during the call. Receives the batch position and a host-wide step count |
 | `on_resume` | After `Step` is verified advancing again. Reason: requested, lease expired, or client disconnected |
 | `on_unload` | When a plugin that returned nonzero is disabled cleanly, just before it is unloaded |
+| `on_player` | Host 0.6+, optional: the player binding was lost or (re)acquired ([events](#player-events-host-06)). The simulation may be running |
 
 The host provides `log` (into `snow_host.log`, tagged with the plugin name),
 `config_path` (`plugins\<file>.ini`, which may not exist), `get_state`
@@ -130,6 +132,7 @@ fallback restore, and `Step` advanced through the 20 s check.
 | Field | Meaning |
 |---|---|
 | `identity` | Opaque; changes whenever the host binds a player |
+| `flags` | Host 0.6+: `SNOW_PLAYER_FLAGS_VALID`, `SNOW_PLAYER_IN_WORLD`. Without `IN_WORLD` the body is not being simulated and its values are stale |
 | `position` | Body origin in world units (not calibrated to metres; not necessarily the visible board centre) |
 | `axes` | The body's three basis vectors in world space |
 | `linear_velocity`, `angular_velocity` | As stored by the engine, in world units per second |
@@ -226,6 +229,30 @@ A first attempt the same day stopped in startup navigation (the game opened on t
 the host was loaded. One session establishes the read path while riding; it does not cover respawn,
 sport or world changes, where the binding is expected to drop.
 
+## Player events (host 0.6)
+
+**Liveness.** A bound player is valid only while the engine's live registries still hold exactly that actor.
+The host checks this before every read and setter, and about every 250 ms on the executor. Pointer and type
+checks alone could accept an actor whose memory was freed but is still mapped; the registry walk does not.
+
+**Events.** When the check fails, the host drops the binding and calls `on_player` with
+`SNOW_PLAYER_LOST`. As soon as a single player is registered again, it binds that player and calls
+`on_player` with `SNOW_PLAYER_ACQUIRED` and a new `identity` (`world_changed` is set if the world differs).
+Events are delivered on the plugin thread from the executor, between commands and on the watch tick, never
+from inside another plugin call. `on_player` is appended to `SnowPluginV1`. Plugins built against older
+headers still load (the host accepts the 0.2 structure size, and the fixture checks it), and simply get no
+events.
+
+**Simulated or not.** `SNOW_PLAYER_IN_WORLD` reports whether the main body belongs to a physics world. In a
+70 s live ride the flag stayed set while riding, cleared at the moment the body froze after a crash, stayed
+clear while the player was moved to a respawn point, and came back when riding resumed. The actor was the
+same throughout, so no event fired: a crash and respawn reuses the player. Velocity assignment and placement
+refuse while the flag is clear.
+
+Live, 2026-10-15: over about 50 s of riding the watcher reported exactly one `acquired` event and no false
+`lost`. A forced crash (assigning 80 units/s into the slope) did not replace the player. The fixture covers
+loss, automatic re-acquisition and event delivery (56/56 checks).
+
 ## Client
 
 `scripts/snow_host_client.py` is both a library and a CLI:
@@ -273,7 +300,7 @@ For the game build, replace `fixture_adapter.c` with the private adapter and add
 
 ## Next
 
-1. Explain the zero-velocity placement reversal; then sport and world-change events so bindings refresh cleanly.
+1. Observe a sport switch and a world change live (expected to fire `lost`/`acquired`), then a ground query for safe placement.
 2. Events: world loaded, player changed, sport changed.
 3. Measure what a released step simulates (time delta, substeps, input), and a world-change stress run.
 4. Load at launch instead of late load.

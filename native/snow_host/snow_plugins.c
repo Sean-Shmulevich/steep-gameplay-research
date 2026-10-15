@@ -14,6 +14,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +27,10 @@
 
 enum { P_ACTIVE, P_DISABLED, P_FAULTED, P_REJECTED };
 static const char *state_names[] = {"active", "disabled", "faulted", "rejected"};
-enum { J_INIT, J_PAUSE, J_STEP, J_RESUME, J_UNLOAD };
+enum { J_INIT, J_PAUSE, J_STEP, J_RESUME, J_UNLOAD, J_PLAYER };
+/* Smallest SnowPluginV1 accepted (host 0.2 layout, ending at on_unload) and the size that includes on_player. */
+#define PLUGIN_V1_MIN (offsetof(SnowPluginV1, on_unload) + sizeof(void (*)(void)))
+#define PLUGIN_HAS_ON_PLAYER (offsetof(SnowPluginV1, on_player) + sizeof(void (*)(void)))
 
 typedef struct Plugin {
     WCHAR file[MAX_PATH];
@@ -46,6 +50,7 @@ typedef struct Job {
     Plugin *p;
     SnowStepInfoV1 step;          /* copied: plugin code never sees executor memory */
     SnowResumeReason reason;
+    SnowPlayerEventV1 event;
 } Job;
 
 /* Each plugin thread owns its Job slot. The executor copies arguments in and
@@ -72,6 +77,7 @@ static void run_job(Job *j) {
     case J_STEP: j->rc = d->on_step ? d->on_step(d->user, &j->step) : 0; break;
     case J_RESUME: j->rc = d->on_resume ? d->on_resume(d->user, j->reason) : 0; break;
     case J_UNLOAD: if (d->on_unload) d->on_unload(d->user); j->rc = 0; break;
+    case J_PLAYER: j->rc = d->struct_size >= PLUGIN_HAS_ON_PLAYER && d->on_player ? d->on_player(d->user, &j->event) : 0; break;
     }
 }
 
@@ -243,7 +249,7 @@ int snow_plugins_init(const WCHAR *dir) {
         int rc = call(p, &j, INIT_BUDGET_MS);
         if (rc < 0) continue; /* faulted; never unloaded */
         if (rc) { disable(p, P_REJECTED, "SnowMod_Initialize returned %d", rc); FreeLibrary(p->module); continue; }
-        if (p->desc.api_version != SNOW_PLUGIN_API_VERSION || p->desc.struct_size < sizeof(SnowPluginV1)) {
+        if (p->desc.api_version != SNOW_PLUGIN_API_VERSION || p->desc.struct_size < PLUGIN_V1_MIN) {
             disable(p, P_REJECTED, "api_version %u / struct_size %u unsupported", p->desc.api_version, p->desc.struct_size);
             continue; /* initialized code may hold state; leave it loaded but never call it */
         }
@@ -288,6 +294,15 @@ void snow_plugins_on_resume(SnowResumeReason reason) {
         if (p->state != P_ACTIVE) continue;
         Job j = {.kind = J_RESUME, .reason = reason};
         after(p, call(p, &j, SNOW_PLUGIN_CALL_BUDGET_MS), "on_resume");
+    }
+}
+
+void snow_plugins_on_player(const SnowPlayerEventV1 *event) {
+    for (int i = 0; i < plugin_count; i++) {
+        Plugin *p = &plugins[i];
+        if (p->state != P_ACTIVE || p->desc.struct_size < PLUGIN_HAS_ON_PLAYER || !p->desc.on_player) continue;
+        Job j = {.kind = J_PLAYER, .event = *event};
+        after(p, call(p, &j, SNOW_PLUGIN_CALL_BUDGET_MS), "on_player");
     }
 }
 

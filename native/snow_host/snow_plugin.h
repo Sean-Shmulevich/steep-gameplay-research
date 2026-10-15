@@ -58,9 +58,16 @@ typedef struct SnowStepInfoV1 {
  * Units are the engine's world units (not calibrated to metres); velocities are per second
  * as stored by the engine. The position is the body origin, not necessarily the visible board
  * centre. `identity` is opaque and changes whenever the host binds a different player. */
+/* SnowPlayerStateV1.flags (host 0.6+; zero from older hosts).
+ * When SNOW_PLAYER_IN_WORLD is clear, the main body is not part of a physics world and is not being
+ * simulated: its values are stale. Observed live after a crash and during respawn staging, while the actor
+ * stayed the same (no player event). The setters refuse in that state. */
+#define SNOW_PLAYER_FLAGS_VALID 0x1u     /* the adapter filled the bits below */
+#define SNOW_PLAYER_IN_WORLD 0x2u        /* the main body belongs to a physics world (is being simulated) */
+
 typedef struct SnowPlayerStateV1 {
     uint32_t struct_size;
-    uint32_t reserved;
+    uint32_t flags;                /* SNOW_PLAYER_* above (was reserved) */
     uint64_t identity;
     float position[3];
     float axes[3][3];              /* orientation: the body's three basis vectors in world space */
@@ -81,6 +88,23 @@ typedef struct SnowPlayerStateV1 {
 /* Largest distance set_player_pose may move the player in one call, in world units. Larger moves risk
  * placing the player where the world is not loaded. */
 #define SNOW_MAX_TELEPORT_DISTANCE 100.0f
+
+/* Player binding events (host 0.6+). The host re-checks the bound player against the engine's live
+ * registries about every 250 ms and before every setter. When the player disappears or is replaced
+ * (respawn, sport switch, world change) it reports LOST, drops the binding, and reports ACQUIRED once it
+ * has found the new player. */
+typedef enum SnowPlayerEventKind {
+    SNOW_PLAYER_ACQUIRED = 1,
+    SNOW_PLAYER_LOST = 2
+} SnowPlayerEventKind;
+
+typedef struct SnowPlayerEventV1 {
+    uint32_t struct_size;
+    uint32_t kind;                 /* SnowPlayerEventKind */
+    uint64_t identity;             /* ACQUIRED: the new identity; LOST: the identity that is gone */
+    uint32_t world_changed;        /* ACQUIRED: 1 if the new player is in a different world than the previous one */
+    uint32_t reserved;
+} SnowPlayerEventV1;
 
 typedef enum SnowResumeReason {
     SNOW_RESUME_REQUESTED = 0,     /* simulation.resume */
@@ -125,6 +149,10 @@ typedef struct SnowPluginV1 {
     int (*on_step)(void *user, const SnowStepInfoV1 *step);
     int (*on_resume)(void *user, SnowResumeReason reason);
     void (*on_unload)(void *user);
+    /* Host 0.6+, optional; plugins built against older headers simply leave it out. Runs on the plugin
+     * thread like every callback, but the simulation may be running, so get_player and the setters may
+     * refuse. Return 0, or nonzero to disable the plugin. */
+    int (*on_player)(void *user, const SnowPlayerEventV1 *event);
 } SnowPluginV1;
 
 typedef int (*SnowModInitializeFn)(const SnowHostApiV1 *host, SnowPluginV1 *plugin);

@@ -6,7 +6,7 @@
 #include <wchar.h>
 #include "snow_plugin.h"
 
-#define SNOW_HOST_VERSION "0.5.0"
+#define SNOW_HOST_VERSION "0.6.0"
 
 /* Provided by snow_host.c. */
 void snow_host_log(const char *tag, const char *fmt, ...);
@@ -21,5 +21,6 @@ int snow_plugins_active(void);
 void snow_plugins_on_pause(void);
 void snow_plugins_on_step(const SnowStepInfoV1 *step);
 void snow_plugins_on_resume(SnowResumeReason reason);
+void snow_plugins_on_player(const SnowPlayerEventV1 *event);
 size_t snow_plugins_describe(char *buf, size_t n); /* JSON array */
 #endif

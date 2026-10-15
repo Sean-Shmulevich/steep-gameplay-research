@@ -2,7 +2,8 @@
  *
  * On pause it records the position; after each released world step it logs how far the
  * player has moved since the pause and the current speed. After resume it checks that
- * get_player is refused (the simulation is running again).
+ * get_player is refused (the simulation is running again). With host 0.6+ it also logs player
+ * events (lost, acquired), for example across a respawn or a sport switch.
  *
  * Build: x86_64-w64-mingw32-gcc -O2 -shared -I.. -o player_logger.dll player_logger.c
  * Requires host 0.3+ (get_player); with an older host it declines to load.
@@ -56,6 +57,15 @@ static int on_step(void *user, const SnowStepInfoV1 *step) {
     return 0;
 }
 
+static int on_player(void *user, const SnowPlayerEventV1 *e) {
+    (void)user;
+    if (e->kind == SNOW_PLAYER_ACQUIRED)
+        logf_("player %llu acquired%s", (unsigned long long)e->identity, e->world_changed ? " in a new world" : "");
+    else if (e->kind == SNOW_PLAYER_LOST)
+        logf_("player %llu lost", (unsigned long long)e->identity);
+    return 0;
+}
+
 static int on_resume(void *user, SnowResumeReason reason) {
     (void)user; (void)reason;
     SnowPlayerStateV1 p;
@@ -75,5 +85,6 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api, SnowPlugi
     plugin->on_pause = on_pause;
     plugin->on_step = on_step;
     plugin->on_resume = on_resume;
+    plugin->on_player = on_player;   /* ignored by hosts older than 0.6 */
     return 0;
 }

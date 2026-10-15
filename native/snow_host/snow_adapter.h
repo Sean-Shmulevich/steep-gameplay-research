@@ -27,6 +27,7 @@ typedef struct SnowPlayerRaw {
     float transform[16];           /* four 16-byte columns: three basis vectors, then translation */
     float linear_velocity[3];
     float angular_velocity[3];
+    uint32_t flags;                /* SNOW_PLAYER_* flags from snow_plugin.h, or 0 */
 } SnowPlayerRaw;
 
 typedef struct SnowAdapter {
@@ -50,8 +51,12 @@ typedef struct SnowAdapter {
      * only while the simulation is held, with a finite, bounded value. 0 = ok, 1 = refused,
      * 2 = identity changed (binding dropped). */
     int (*player_set_velocity)(const float v[3], char *why, size_t n);
-    /* Optional. Find and bind the selected player in-process (no external handle). 0 or a reason. */
-    int (*player_acquire)(char *why, size_t n);
+    /* Optional. Find and bind the selected player in-process (no external handle). 0 or a reason.
+     * *world_changed is set to 1 when its world differs from the previously bound player's. */
+    int (*player_acquire)(int *world_changed, char *why, size_t n);
+    /* Optional. Is the bound player still registered with the engine (cheap, read-only)? 0 = yes,
+     * 1 = no (the adapter drops its binding). */
+    int (*player_check)(char *why, size_t n);
     /* Optional. Place the bound player through the engine's own routine. transform uses the SnowPlayerRaw
      * layout. Called only while held with validated values. 0 = ok, 1 = refused, 2 = identity changed. */
     int (*player_set_pose)(const float transform[16], const float lin[3], const float ang[3], char *why, size_t n);
