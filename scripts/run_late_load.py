@@ -82,6 +82,7 @@ def main():
     parser.add_argument('--check', action='store_true', help='Check local prerequisites without launching Wine or the game')
     parser.add_argument('--experiment', choices=['probe', 'host'], default='probe')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
+    parser.add_argument('--plan', choices=['demo', 'stress'], default='demo', help='Host plan: demo, or stress (300-step run, 10 toggles, stepping while moving)')
     args = parser.parse_args()
     if not 1 <= args.steps <= 60:
         raise RuntimeError('--steps must be 1..60')
@@ -106,6 +107,7 @@ def main():
     out.mkdir()
     build = out / 'build'
     build.mkdir()
+    (build / 'plugins').mkdir()
     result = {'ok': False, 'session': str(out), 'experiment': args.experiment, 'original_dll_replaced': False}
     children = []; handles = []; watchdog = None
 
@@ -123,8 +125,10 @@ def main():
         if args.experiment == 'host':
             print('Building the mod host and its loader...', flush=True)
             commands = [
-                [cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host), '-o', str(build/'snow_host.dll'), str(host/'snow_host.c'), str(root/HOST_ADAPTER), '-lws2_32'],
+                [cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host), '-o', str(build/'snow_host.dll'), str(host/'snow_host.c'), str(host/'snow_plugins.c'), str(root/HOST_ADAPTER), '-lws2_32'],
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'host_loader.exe'), str(host/'host_loader.c')],
+                # Example plugin, loaded by the host from build/plugins.
+                [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host), '-o', str(build/'plugins/step_logger.dll'), str(host/'examples/step_logger.c')],
             ]
         else:
             print('Building the attachment-only DLL and guarded loader...', flush=True)
@@ -136,7 +140,7 @@ def main():
             for command in commands:
                 subprocess.run(command, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=60)
         print('Launching original game (five-minute maximum, memory watchdog active)...', flush=True)
-        watchdog = start([sys.executable, str(root/'runtime/bounded-test.py'), '--renderer', 'd3dmetal', '--seconds', '300', '--direct', '--disable-d3d10', '--native-xinput', '--result-dir', str(out/'watchdog')], 'launch')
+        watchdog = start([sys.executable, str(root/'runtime/bounded-test.py'), '--renderer', 'd3dmetal', '--seconds', '480' if args.plan == 'stress' else '300', '--direct', '--disable-d3d10', '--native-xinput', '--result-dir', str(out/'watchdog')], 'launch')
         print('Advancing recognized startup screens; please leave controls alone.', flush=True)
         nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation')], 'navigation')
         wait_stage(nav, watchdog, 170)
@@ -145,11 +149,11 @@ def main():
             raise RuntimeError('Gameplay HUD was not verified; no pause or load attempted.')
         if args.experiment == 'host':
             print(f'Gameplay verified. Loading the host, then pause, {args.steps} world steps, resume, and 20 seconds of observation...', flush=True)
-            probe = start([sys.executable, str(REPO/'scripts/host_session_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe'), '--steps', str(args.steps)], 'probe')
+            probe = start([sys.executable, str(REPO/'scripts/host_session_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe'), '--steps', str(args.steps), '--plan', args.plan], 'probe')
         else:
             print('Gameplay verified. Pausing, loading, resuming, and observing for 20 seconds...', flush=True)
             probe = start([sys.executable, str(REPO/'scripts/late_load_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe')], 'probe')
-        wait_stage(probe, watchdog, 90 + (3 * args.steps if args.experiment == 'host' else 0))
+        wait_stage(probe, watchdog, 300 if args.plan == 'stress' else 90 + (3 * args.steps if args.experiment == 'host' else 0))
         result['probe'] = json.loads((out/'probe/result.json').read_text())
         if not result['probe'].get('ok'):
             raise RuntimeError('Probe did not pass all checks; see probe/result.json.')
