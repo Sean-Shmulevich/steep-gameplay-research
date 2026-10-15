@@ -16,6 +16,7 @@
 #include <ws2tcpip.h>
 #include <windows.h>
 #include <stdarg.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,8 +38,8 @@ typedef struct Request {
     char method[48];
     long long count, lease_ms;
     char handle[48];
-    double vel[3];
-    int has_id, has_count, has_lease, has_handle, has_vel;
+    double vel[3], pos[3];
+    int has_id, has_count, has_lease, has_handle, has_vel, has_pos;
 } Request;
 
 static HMODULE self;
@@ -160,6 +161,11 @@ static const char *parse_params(const char *s, Request *r) {
             if (!(s = parse_num(s, &r->vel[k]))) return NULL;
             r->has_vel |= 1 << k;
         }
+        else if (!strcmp(key, "px") || !strcmp(key, "py") || !strcmp(key, "pz")) {
+            int k = key[1] - 'x';
+            if (!(s = parse_num(s, &r->pos[k]))) return NULL;
+            r->has_pos |= 1 << k;
+        }
         else if (!strcmp(key, "handle")) { if (!(s = parse_str(s, r->handle, sizeof r->handle))) return NULL; r->has_handle = 1; }
         else return NULL;
         s = ws(s);
@@ -250,6 +256,50 @@ static int player_set(const float v[3], char *why, size_t n) {
     return SNOW_OK;
 }
 
+static int finite3(const float *v) {
+    for (int k = 0; k < 3; k++) if (!(v[k] == v[k]) || v[k] > 1e7f || v[k] < -1e7f) return 0;
+    return 1;
+}
+
+/* Placement, same contexts as player_set. Validates before the adapter is called. */
+static int player_place(const SnowPlayerStateV1 *t, char *why, size_t n) {
+    why[0] = 0;
+    if (!host_paused) { snprintf(why, n, "simulation not held by host"); return SNOW_E_NOT_HELD; }
+    if (!bound || !player_bound) { snprintf(why, n, "no player bound"); return SNOW_E_NO_PLAYER; }
+    if (!snow_adapter.player_set_pose) { snprintf(why, n, "adapter has no placement routine"); return SNOW_E_REFUSED; }
+    if (!finite3(t->position) || !finite3(t->linear_velocity) || !finite3(t->angular_velocity) ||
+        !finite3(t->axes[0]) || !finite3(t->axes[1]) || !finite3(t->axes[2])) { snprintf(why, n, "non-finite value"); return SNOW_E_REFUSED; }
+    for (int a = 0; a < 3; a++)
+        for (int b = a; b < 3; b++) {
+            double d = 0;
+            for (int k = 0; k < 3; k++) d += (double)t->axes[a][k] * t->axes[b][k];
+            if (fabs(d - (a == b ? 1.0 : 0.0)) > 1e-3) { snprintf(why, n, "axes not orthonormal"); return SNOW_E_REFUSED; }
+        }
+    double sv = 0, sw = 0;
+    for (int k = 0; k < 3; k++) { sv += (double)t->linear_velocity[k] * t->linear_velocity[k]; sw += (double)t->angular_velocity[k] * t->angular_velocity[k]; }
+    if (sv > (double)SNOW_MAX_SET_SPEED * SNOW_MAX_SET_SPEED || sw > 1e4) { snprintf(why, n, "velocity above limit"); return SNOW_E_REFUSED; }
+    SnowPlayerStateV1 cur = {sizeof cur, 0, 0, {0}, {{0}}, {0}, {0}};
+    int rc = player_fill(&cur, why, n);
+    if (rc) return rc;
+    double dist2 = 0;
+    for (int k = 0; k < 3; k++) dist2 += ((double)t->position[k] - cur.position[k]) * ((double)t->position[k] - cur.position[k]);
+    if (dist2 > (double)SNOW_MAX_TELEPORT_DISTANCE * SNOW_MAX_TELEPORT_DISTANCE) { snprintf(why, n, "move of %.1f exceeds %.0f", sqrt(dist2), SNOW_MAX_TELEPORT_DISTANCE); return SNOW_E_REFUSED; }
+    float tr[16] = {0};
+    for (int c = 0; c < 3; c++) for (int k = 0; k < 3; k++) tr[4 * c + k] = t->axes[c][k];
+    for (int k = 0; k < 3; k++) tr[12 + k] = t->position[k];
+    tr[15] = 1.0f;
+    rc = snow_adapter.player_set_pose(tr, t->linear_velocity, t->angular_velocity, why, n);
+    if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
+    if (rc) return SNOW_E_REFUSED;
+    host_log("player", "placed at (%.3f, %.3f, %.3f), moved %.3f", t->position[0], t->position[1], t->position[2], sqrt(dist2));
+    return SNOW_OK;
+}
+
+int snow_host_set_pose(const SnowPlayerStateV1 *target) {
+    char why[160];
+    return player_place(target, why, sizeof why);
+}
+
 int snow_host_set_velocity(const float v[3]) {
     char why[160];
     return player_set(v, why, sizeof why);
@@ -289,6 +339,29 @@ static int do_player_set_velocity(const Request *r, Out *o) {
         put(o, "\"error\":\"%s\",\"detail\":", names[rc]); put_str(o, why); return 0;
     }
     put(o, "\"set\":[%.9g,%.9g,%.9g],\"after\":{", v[0], v[1], v[2]);
+    int ok = do_player_get(o);
+    put(o, "}");
+    return ok;
+}
+
+static int do_player_set_position(const Request *r, Out *o) {
+    if (r->has_pos != 7 || (r->has_vel && r->has_vel != 7)) {
+        put(o, "\"error\":\"bad_params\",\"detail\":\"px, py and pz required; vx, vy, vz all or none\""); return 0;
+    }
+    static const char *names[] = {"ok", "bad_params", "not_paused_by_host", "no_player", "player_changed", "refused"};
+    char why[160];
+    SnowPlayerStateV1 t = {sizeof t, 0, 0, {0}, {{0}}, {0}, {0}};
+    int rc = host_paused ? player_fill(&t, why, sizeof why) : SNOW_E_NOT_HELD;
+    if (rc == SNOW_E_NOT_HELD) snprintf(why, sizeof why, "simulation not held by host");
+    if (!rc) {
+        for (int k = 0; k < 3; k++) {
+            t.position[k] = (float)r->pos[k];
+            if (r->has_vel) t.linear_velocity[k] = (float)r->vel[k];
+        }
+        rc = player_place(&t, why, sizeof why);
+    }
+    if (rc) { put(o, "\"error\":\"%s\",\"detail\":", names[rc]); put_str(o, why); return 0; }
+    put(o, "\"set\":[%.9g,%.9g,%.9g],\"after\":{", t.position[0], t.position[1], t.position[2]);
     int ok = do_player_get(o);
     put(o, "}");
     return ok;
@@ -491,6 +564,7 @@ static void execute(const Request *r, Out *o) {
     else if (!strcmp(r->method, "player.bind")) ok = do_player_bind(r, o);
     else if (!strcmp(r->method, "player.get")) ok = do_player_get(o);
     else if (!strcmp(r->method, "player.set_velocity")) ok = do_player_set_velocity(r, o);
+    else if (!strcmp(r->method, "player.set_position")) ok = do_player_set_position(r, o);
     put(o, "},\"status\":\"%s\"}\n", ok ? "completed" : "failed");
     if (ok) commands_completed++; else commands_failed++;
     if (host_paused) lease_deadline = GetTickCount64() + lease_ms;
@@ -537,7 +611,8 @@ static void send_line(SOCKET s, long long id, const char *status, const char *er
 static int known(const char *m) {
     static const char *methods[] = {"host.hello", "host.heartbeat", "simulation.status", "simulation.pause",
                                     "simulation.resume", "simulation.step_world", "plugins.list",
-                                    "player.bind", "player.get", "player.set_velocity"};
+                                    "player.bind", "player.get", "player.set_velocity",
+                                    "player.set_position"};
     for (size_t i = 0; i < sizeof methods / sizeof *methods; i++) if (!strcmp(m, methods[i])) return 1;
     return 0;
 }

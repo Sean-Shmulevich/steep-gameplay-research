@@ -78,6 +78,9 @@ typedef struct SnowPlayerStateV1 {
 
 /* Largest velocity magnitude set_player_velocity accepts, in world units per second. */
 #define SNOW_MAX_SET_SPEED 300.0f
+/* Largest distance set_player_pose may move the player in one call, in world units. Larger moves risk
+ * placing the player where the world is not loaded. */
+#define SNOW_MAX_TELEPORT_DISTANCE 100.0f
 
 typedef enum SnowResumeReason {
     SNOW_RESUME_REQUESTED = 0,     /* simulation.resume */
@@ -104,6 +107,11 @@ typedef struct SnowHostApiV1 {
      * speed history. Only while the simulation is held; takes effect on the next released step.
      * Returns SNOW_OK or a SNOW_E_* code. */
     int (*set_player_velocity)(void *context, const float velocity[3]);
+    /* Host 0.5+ (check struct_size as above). Places the bound player through the engine's own placement
+     * routine: position, axes (orthonormal), linear and angular velocity are taken from *target
+     * (struct_size must be set; identity is ignored). Typical use: get_player, edit, set_player_pose.
+     * Only while held; moves of at most SNOW_MAX_TELEPORT_DISTANCE. Returns SNOW_OK or SNOW_E_*. */
+    int (*set_player_pose)(void *context, const SnowPlayerStateV1 *target);
 } SnowHostApiV1;
 
 typedef struct SnowPluginV1 {

@@ -1,4 +1,4 @@
-# Snow mod host (v0.4, command interface, plugin API v1 and player state)
+# Snow mod host (v0.5, command interface, plugin API v1 and player state)
 
 Status: first release of the host interface. A persistent DLL is loaded late into
 the running game. It exposes guarded pause, world-step and resume operations
@@ -6,7 +6,7 @@ through a local command channel, and loads native plugins that run between world
 steps ([plugin API v1](#plugins-api-v1)). One live session passed on 2026-10-14 (see below
 and the [sanitized validation record](validation.json)). Host 0.3 added the first game
 state for plugins and clients, the [selected player's body](#player-state-host-03). Host 0.4
-finds the player in-process and adds an experimental velocity assignment.
+finds the player in-process and adds velocity assignment; host 0.5 adds placement.
 
 ```text
 Python client ──TCP 127.0.0.1──▶ io thread ──mailbox──▶ executor thread ──▶ game adapter ──▶ game
@@ -59,7 +59,8 @@ A valid request receives `{"id":N,"status":"accepted"}`, then one final line wit
 | `simulation.resume` | — | `fallback_restore`, `engine` |
 | `player.bind` | `handle` (string, optional) | `identity`. Without a handle the adapter finds the player in-process; with one, it validates the external acquisition's handle |
 | `player.get` | — | `identity`, `held`, `position`, `axes`, `linear_velocity`, `angular_velocity`. Acquires in-process first if nothing is bound |
-| `player.set_velocity` | `vx`, `vy`, `vz` (numbers) | `set`, `after` (a `player.get` result). Only while host-paused; experimental, see below |
+| `player.set_velocity` | `vx`, `vy`, `vz` (numbers) | `set`, `after` (a `player.get` result). Only while host-paused |
+| `player.set_position` | `px`, `py`, `pz`; optional `vx`, `vy`, `vz` | `set`, `after`. Keeps orientation (and velocity unless given). Only while host-paused |
 
 Error codes: `adapter_unavailable`, `host_faulted`, `not_ordinary`, `step_not_advancing`, `hold_not_verified`, `not_paused_by_host`, `not_held`, `step_not_frozen`, `group_changed`, `rearm_failed`, `step_timeout`, `frames_stalled`, `not_exactly_one`, `owner_changed`, `restore_failed`, `step_not_resumed`, `bad_params`, `read_failed`,
 `unsupported`, `player_rejected`, `no_player`, `player_changed`.
@@ -169,6 +170,25 @@ have no effect. Live results while riding at about 37 units/s, paused:
 
 All steps were exactly one and resume needed no fallback restore.
 
+**Placement (host 0.5).** `set_player_pose` (plugins) takes a `SnowPlayerStateV1`: read with
+`get_player`, edit `position`, `axes` and velocities, and pass it back. `player.set_position` (clients)
+keeps the current orientation and, unless `vx`/`vy`/`vz` are given, the current velocity. Both call the
+engine's own placement routine, which the game calls from several places in player code. It sets the main
+body's pose and velocities under the runtime lock, re-poses the rider body and resets the motion caches. The
+host accepts finite values, orthonormal axes, the speed limit above and moves of at most
+`SNOW_MAX_TELEPORT_DISTANCE` (100 units) per call, only while held.
+
+Live while riding at about 43 units/s, paused:
+
+| Placement | Result |
+|---|---|
+| 3 units straight up, velocity kept | read back exactly; over the next five steps the player continued from the new position at the usual 0.42–0.49 units per step |
+| 3 units straight up, velocity zero | read back exactly with both bodies at zero velocity, but the first released step moved the player 3.32 units down and back to about 43 units/s, undoing the placement |
+
+The placement routine has a separate branch for zero linear and angular velocity, which records extra
+state. Why a zero-velocity placement in the air is undone is not yet known, so for now place with a
+non-zero velocity, or place and then assign velocity separately.
+
 **Compatibility.** `get_player` is appended to `SnowHostApiV1`; the API version stays 1. A plugin that
 needs it checks `struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)`, as
 [examples/player_logger.c](examples/player_logger.c) does. Plugins built against host 0.2 keep working.
@@ -245,7 +265,7 @@ For the game build, replace `fixture_adapter.c` with the private adapter and add
 
 ## Next
 
-1. Position assignment (teleport) through an engine routine, then sport and world-change events.
+1. Explain the zero-velocity placement reversal; then sport and world-change events so bindings refresh cleanly.
 2. Events: world loaded, player changed, sport changed.
 3. Measure what a released step simulates (time delta, substeps, input), and a world-change stress run.
 4. Load at launch instead of late load.

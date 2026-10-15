@@ -52,6 +52,9 @@ typedef struct SnowAdapter {
     int (*player_set_velocity)(const float v[3], char *why, size_t n);
     /* Optional. Find and bind the selected player in-process (no external handle). 0 or a reason. */
     int (*player_acquire)(char *why, size_t n);
+    /* Optional. Place the bound player through the engine's own routine. transform uses the SnowPlayerRaw
+     * layout. Called only while held with validated values. 0 = ok, 1 = refused, 2 = identity changed. */
+    int (*player_set_pose)(const float transform[16], const float lin[3], const float ang[3], char *why, size_t n);
 } SnowAdapter;
 
 extern const SnowAdapter snow_adapter;

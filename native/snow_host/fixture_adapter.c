@@ -70,6 +70,14 @@ static int player_bind(const char *handle, char *why, size_t n) {
     LeaveCriticalSection(&player_lock);
     return 0;
 }
+static int player_set_pose(const float tr[16], const float lin[3], const float ang[3], char *why, size_t n) {
+    (void)ang;
+    if (!player_mode) { snprintf(why, n, "no player"); return 1; }
+    EnterCriticalSection(&player_lock);
+    for (int k = 0; k < 3; k++) { player_pos[k] = tr[12 + k]; player_vel[k] = lin[k]; }
+    LeaveCriticalSection(&player_lock);
+    return 0;
+}
 static int player_acquire(char *why, size_t n) { return player_bind("fixture-player", why, n); }
 static int player_set_velocity(const float v[3], char *why, size_t n) {
     if (!player_mode) { snprintf(why, n, "no player"); return 1; }
@@ -91,4 +99,4 @@ static int player_read(SnowPlayerRaw *out, char *why, size_t n) {
 }
 
 const SnowAdapter snow_adapter = {"fixture-simulated", bind, read, cas_group, enter, leave, player_bind, player_read,
-                                   player_set_velocity, player_acquire};
+                                   player_set_velocity, player_acquire, player_set_pose};
