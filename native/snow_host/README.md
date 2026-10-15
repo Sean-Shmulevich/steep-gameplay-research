@@ -185,9 +185,17 @@ Live while riding at about 43 units/s, paused:
 | 3 units straight up, velocity kept | read back exactly; over the next five steps the player continued from the new position at the usual 0.42–0.49 units per step |
 | 3 units straight up, velocity zero | read back exactly with both bodies at zero velocity, but the first released step moved the player 3.32 units down and back to about 43 units/s, undoing the placement |
 
-The placement routine has a separate branch for zero linear and angular velocity, which records extra
-state. Why a zero-velocity placement in the air is undone is not yet known, so for now place with a
-non-zero velocity, or place and then assign velocity separately.
+| 5 units along world x and 3 up, linear velocity zero | read back exactly and stayed at the new x and y. That direction was uphill, which put the player inside the slope; the physics then pushed them out over several steps (speeds up to 73 units/s, rising about 1 unit per step), and the next placement was refused because angular velocity exceeded the host's limit |
+
+**The host does not check the ground.** A placement can put the player inside terrain, and the physics then
+ejects them violently. Keep moves small and above the surface; one way is to move along the current velocity
+or straight up.
+
+Why the zero-velocity lift was undone is not yet known. The placement routine has a separate branch for
+linear *and* angular velocity at or below 1e-5 that resets the player's ground-contact frame. Because
+`player.set_position` keeps the current angular velocity, that branch did not run in these tests. Until
+this is understood, place with the velocity you want the player to have, or place and then assign velocity
+separately.
 
 **Compatibility.** `get_player` is appended to `SnowHostApiV1`; the API version stays 1. A plugin that
 needs it checks `struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)`, as
