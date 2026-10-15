@@ -9,6 +9,7 @@ Library:
 
 CLI:
     snow_host_client.py status | pause [--lease-ms N] | step [N] | resume | demo [--steps N]
+                        | player [--bind HANDLE]
 
 Each request receives an 'accepted' line, then exactly one 'completed' or
 'failed' line; malformed or unknown requests receive one 'rejected' line.
@@ -120,6 +121,8 @@ def main(argv=None):
     step = sub.add_parser('step', help='Pause, step N world steps, resume')
     step.add_argument('count', type=int, nargs='?', default=1)
     sub.add_parser('resume')
+    pl = sub.add_parser('player', help='Read the bound player (bind first with --bind HANDLE)')
+    pl.add_argument('--bind', metavar='HANDLE', help='opaque handle from an external acquisition')
     d = sub.add_parser('demo', help='Pause, step and record status, resume')
     d.add_argument('--steps', type=int, default=5)
     d.add_argument('--lease-ms', type=int, default=30000)
@@ -147,12 +150,22 @@ def main(argv=None):
             if out['pause'].get('status') == 'completed':
                 out['step'] = client.request('simulation.step_world', count=args.count)
             out['resume'] = client.request('simulation.resume')
+        elif args.command == 'player':
+            out = {}
+            if args.bind:
+                out['bind'] = client.request('player.bind', handle=args.bind)
+            out['get'] = client.request('player.get')
         elif args.command == 'resume':
             out = client.request('simulation.resume')
         else:
             out = demo(client, args.steps, args.lease_ms)
     print(json.dumps(out, indent=1))
-    ok = out.get('ok', out.get('status') == 'completed') if args.command != 'step' else out['resume'].get('status') == 'completed'
+    if args.command == 'step':
+        ok = out['resume'].get('status') == 'completed'
+    elif args.command == 'player':
+        ok = all(r.get('status') == 'completed' for r in out.values())
+    else:
+        ok = out.get('ok', out.get('status') == 'completed')
     return 0 if ok else 1
 
 

@@ -22,6 +22,13 @@ typedef struct SnowCounters {
     uint32_t end_frame;  /* EndFrame job, last-run request */
 } SnowCounters;
 
+/* Raw body state for the bound player. */
+typedef struct SnowPlayerRaw {
+    float transform[16];           /* four 16-byte columns: three basis vectors, then translation */
+    float linear_velocity[3];
+    float angular_velocity[3];
+} SnowPlayerRaw;
+
 typedef struct SnowAdapter {
     const char *name;
     /* Verify process/image identity once. Returns 0 or writes a reason. */
@@ -33,6 +40,12 @@ typedef struct SnowAdapter {
     /* The engine's own stop-mode setter (request argument 1) and clear routine. */
     int (*enter)(void);
     int (*leave)(void);
+    /* Optional (may be NULL). Bind the player named by an opaque handle string supplied by the
+     * client from an external acquisition; the adapter validates it. Returns 0 or writes a reason. */
+    int (*player_bind)(const char *handle, char *why, size_t n);
+    /* Re-validate the bound player's identity chain and read its body. 0 = ok, 1 = no player,
+     * 2 = identity changed (the adapter drops the binding). */
+    int (*player_read)(SnowPlayerRaw *out, char *why, size_t n);
 } SnowAdapter;
 
 extern const SnowAdapter snow_adapter;

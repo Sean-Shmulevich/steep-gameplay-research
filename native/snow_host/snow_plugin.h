@@ -54,6 +54,27 @@ typedef struct SnowStepInfoV1 {
     double release_ms;         /* time from release to Step starting */
 } SnowStepInfoV1;
 
+/* Selected player's physical body, read while the simulation is held (host 0.3+).
+ * Units are the engine's world units (not calibrated to metres); velocities are per second
+ * as stored by the engine. The position is the body origin, not necessarily the visible board
+ * centre. `identity` is opaque and changes whenever the host binds a different player. */
+typedef struct SnowPlayerStateV1 {
+    uint32_t struct_size;
+    uint32_t reserved;
+    uint64_t identity;
+    float position[3];
+    float axes[3][3];              /* orientation: the body's three basis vectors in world space */
+    float linear_velocity[3];
+    float angular_velocity[3];
+} SnowPlayerStateV1;
+
+/* get_player results. */
+#define SNOW_OK 0
+#define SNOW_E_BAD_ARGS 1          /* null pointer or struct_size too small */
+#define SNOW_E_NOT_HELD 2          /* only callable while the host holds the simulation (on_pause, on_step) */
+#define SNOW_E_NO_PLAYER 3         /* no player bound, or unsupported by this adapter */
+#define SNOW_E_PLAYER_CHANGED 4    /* the bound player's identity checks failed; the binding was dropped */
+
 typedef enum SnowResumeReason {
     SNOW_RESUME_REQUESTED = 0,     /* simulation.resume */
     SNOW_RESUME_LEASE_EXPIRED = 1,
@@ -71,6 +92,9 @@ typedef struct SnowHostApiV1 {
     const char *config_path;
     /* Snapshot of host state. Returns 0 on success. */
     int (*get_state)(void *context, SnowHostStateV1 *out);
+    /* Host 0.3+ (check struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)).
+     * Fills *out (set out->struct_size first) and returns SNOW_OK or a SNOW_E_* code. */
+    int (*get_player)(void *context, SnowPlayerStateV1 *out);
 } SnowHostApiV1;
 
 typedef struct SnowPluginV1 {

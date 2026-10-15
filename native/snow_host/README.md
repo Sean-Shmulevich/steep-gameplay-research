@@ -1,11 +1,11 @@
-# Snow mod host (v0.2, command interface and plugin API v1)
+# Snow mod host (v0.3, command interface, plugin API v1 and player state)
 
 Status: first release of the host interface. A persistent DLL is loaded late into
 the running game. It exposes guarded pause, world-step and resume operations
 through a local command channel, and loads native plugins that run between world
 steps ([plugin API v1](#plugins-api-v1)). One live session passed on 2026-10-14 (see below
-and the [sanitized validation record](validation.json)). Plugins do not yet have
-access to game state; see [Next](#next).
+and the [sanitized validation record](validation.json)). Host 0.3 adds the first game
+state for plugins and clients: the [selected player's body](#player-state-host-03).
 
 ```text
 Python client ──TCP 127.0.0.1──▶ io thread ──mailbox──▶ executor thread ──▶ game adapter ──▶ game
@@ -56,8 +56,11 @@ A valid request receives `{"id":N,"status":"accepted"}`, then one final line wit
 | `simulation.pause` | `lease_ms` | `baseline_group`, `engine`. Repeating it while the host holds the pause renews the lease. |
 | `simulation.step_world` | `count` 1–60 | `unit: world_step_job`, one record per step (`step_before`, `step_released`, `step_after`, `release_ms`, `exactly_one`), totals |
 | `simulation.resume` | — | `fallback_restore`, `engine` |
+| `player.bind` | `handle` (string) | `identity`. The handle comes from an external player acquisition; the adapter validates it |
+| `player.get` | — | `identity`, `held`, `position`, `axes`, `linear_velocity`, `angular_velocity` |
 
-Error codes: `adapter_unavailable`, `host_faulted`, `not_ordinary`, `step_not_advancing`, `hold_not_verified`, `not_paused_by_host`, `not_held`, `step_not_frozen`, `group_changed`, `rearm_failed`, `step_timeout`, `frames_stalled`, `not_exactly_one`, `owner_changed`, `restore_failed`, `step_not_resumed`, `bad_params`, `read_failed`.
+Error codes: `adapter_unavailable`, `host_faulted`, `not_ordinary`, `step_not_advancing`, `hold_not_verified`, `not_paused_by_host`, `not_held`, `step_not_frozen`, `group_changed`, `rearm_failed`, `step_timeout`, `frames_stalled`, `not_exactly_one`, `owner_changed`, `restore_failed`, `step_not_resumed`, `bad_params`, `read_failed`,
+`unsupported`, `player_rejected`, `no_player`, `player_changed`.
 
 Counter values describe the engine's state. They are not stable identifiers and should not be used as API fields.
 
@@ -78,8 +81,9 @@ fills in its name, version and callbacks, and returns 0.
 | `on_unload` | When a plugin that returned nonzero is disabled cleanly, just before it is unloaded |
 
 The host provides `log` (into `snow_host.log`, tagged with the plugin name),
-`config_path` (`plugins\<file>.ini`, which may not exist) and `get_state`
-(`host_paused`, `steps_released`).
+`config_path` (`plugins\<file>.ini`, which may not exist), `get_state`
+(`host_paused`, `steps_released`) and, from host 0.3, `get_player`
+([player state](#player-state-host-03)).
 
 All plugin calls run one at a time on a host plugin thread, never on a game
 thread, and each has a 250 ms budget (1 s for `SnowMod_Initialize`).
@@ -100,11 +104,13 @@ unaffected. Containment is best-effort: a plugin that faults while holding a
 lock it shares with the game (for example the process heap) can still hang the
 game, and plugin `DllMain` runs under the loader lock without containment.
 
-A Wine fixture test with the synthetic adapter covers eight plugins: the example,
+A Wine fixture test with the synthetic adapter covers nine plugins: the two examples,
 a well-behaved counter, a crash on the third step, a 5 s hang, a nonzero return,
-a declining `Initialize`, a wrong API version and a DLL with no export. All 32
-protocol, recovery and plugin checks pass. During the crash, every one of 10
-steps was still exactly one.
+a declining `Initialize`, a wrong API version and a DLL with no export. All 42
+protocol, recovery, plugin and player checks pass. During the crash, every one of 10
+steps was still exactly one. The fixture's simulated player moves only when its
+simulated `Step` runs: it stays still while held, moves exactly ten steps' worth over
+ten released steps, and a handle that expires drops the binding.
 
 **Live result, 2026-10-15.** The example plugin ran inside the game during the
 stress plan (`run_late_load.py --experiment host --plan stress`), which runs 300
@@ -113,6 +119,54 @@ at about 100 km/h. All 410 steps were exactly one. The plugin received exactly 4
 calls: initialize, 12 `on_pause`, 410 `on_step` and 12 `on_resume`. At every
 resume its own count matched the host's, and it stayed active. Resume needed no
 fallback restore, and `Step` advanced through the 20 s check.
+
+## Player state (host 0.3)
+
+`get_player` (plugins) and `player.get` (clients) return the bound player's physical body:
+
+| Field | Meaning |
+|---|---|
+| `identity` | Opaque; changes whenever the host binds a player |
+| `position` | Body origin in world units (not calibrated to metres; not necessarily the visible board centre) |
+| `axes` | The body's three basis vectors in world space |
+| `linear_velocity`, `angular_velocity` | As stored by the engine, in world units per second |
+
+**Binding.** The host does not yet find the player itself. A client supplies an opaque handle from an
+external acquisition (`player.bind`), and the adapter validates it: object types, back-links and the
+owning world. It pins the owning entity and world at bind time. Every read re-checks the whole chain
+before and after copying the body. If any link changed (respawn, sport or world change), the read
+fails with `SNOW_E_PLAYER_CHANGED` / `player_changed` and the binding is dropped. In-process acquisition is
+[future work](#next).
+
+**When it may be read.** Plugins may call `get_player` only while the host holds the simulation
+(`on_pause`, `on_step`); otherwise it returns `SNOW_E_NOT_HELD`. While held the body is not being stepped,
+so a read is a consistent snapshot. `player.get` also works while the game runs and reports
+`held: false`; such reads race the simulation and are not a consistent snapshot.
+
+**Compatibility.** `get_player` is appended to `SnowHostApiV1`; the API version stays 1. A plugin that
+needs it checks `struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)`, as
+[examples/player_logger.c](examples/player_logger.c) does. Plugins built against host 0.2 keep working.
+
+The body fields and the identity chain come from earlier guarded live reads
+(the [player measurement work](../../docs/reconstruction/TESTBENCH.md)).
+
+**Live result, 2026-10-15.** In one bounded session, the client bound the player from a fresh guarded
+acquisition, rode forward with ordinary key holds, paused mid-ride and released ten single steps:
+
+- Two reads 0.5 s apart while held were identical (position, axes and velocities): the body is still
+  while held.
+- 10 of 10 steps were exactly one, and the player moved after every one: 0.33–0.41 units per step at a
+  speed of about 37.5 units/s. Distance divided by speed was 8.8–11.0 ms per step, consistent with the
+  ~10 ms world-request cadence measured separately. A released step advances the player by about one
+  request's worth of motion.
+- `player_logger` read the player on pause and after each step (cumulative displacement −1.50, −0.32,
+  −3.45 after ten steps, speed 37.45), and `get_player` returned `SNOW_E_NOT_HELD` after resume.
+- The orientation axes were unit length. After resume the player kept moving (60.7 units in about 1 s
+  of reads and waits), the binding stayed valid, and resume needed no fallback restore.
+
+A first attempt the same day stopped in startup navigation (the game opened on the map screen) before
+the host was loaded. One session establishes the read path while riding; it does not cover respawn,
+sport or world changes, where the binding is expected to drop.
 
 ## Client
 
@@ -123,6 +177,7 @@ python3 scripts/snow_host_client.py status
 python3 scripts/snow_host_client.py step 5        # pause, 5 world steps, resume
 python3 scripts/snow_host_client.py pause         # hold until Enter; heartbeats keep the lease
 python3 scripts/snow_host_client.py demo --steps 10
+python3 scripts/snow_host_client.py player --bind <handle>
 ```
 
 ## Live run
@@ -152,6 +207,7 @@ An earlier attempt the same day refused to bind. The adapter's page-protection c
 ```text
 x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Werror -O2 -shared -o snow_host.dll snow_host.c snow_plugins.c fixture_adapter.c -lws2_32
 x86_64-w64-mingw32-gcc -Wall -Wextra -Werror -O2 -shared -I. -o plugins/step_logger.dll examples/step_logger.c
+x86_64-w64-mingw32-gcc -Wall -Wextra -Werror -O2 -shared -I. -o plugins/player_logger.dll examples/player_logger.c -lm
 x86_64-w64-mingw32-gcc -Wall -Wextra -Werror -O2 -municode -o host_loader.exe host_loader.c
 ```
 
@@ -159,7 +215,7 @@ For the game build, replace `fixture_adapter.c` with the private adapter and add
 
 ## Next
 
-1. Game-state access for plugins: validated adapter getters and setters (player transform and velocity first), offered through `SnowHostApiV1` and usable only from `on_step` or while paused.
+1. In-process player acquisition (no external handle), then guarded setters (player transform and velocity first), usable only while held.
 2. Events: world loaded, player changed, sport changed.
 3. Measure what a released step simulates (time delta, substeps, input), and a world-change stress run.
 4. Load at launch instead of late load.

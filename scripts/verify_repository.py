@@ -31,6 +31,7 @@ native_sources = {
     'native/snow_host/snow_plugins.h',
     'native/snow_host/snow_plugins.c',
     'native/snow_host/examples/step_logger.c',
+    'native/snow_host/examples/player_logger.c',
 }
 errors = []
 files = []

@@ -35,7 +35,8 @@ typedef struct Request {
     long long id;
     char method[48];
     long long count, lease_ms;
-    int has_id, has_count, has_lease;
+    char handle[48];
+    int has_id, has_count, has_lease, has_handle;
 } Request;
 
 static HMODULE self;
@@ -59,6 +60,8 @@ static ULONGLONG lease_deadline;
 static char last_recovery[96];
 static long long commands_completed, commands_failed;
 static uint64_t steps_released;
+static int player_bound;
+static uint64_t player_generation;   /* opaque player identity exposed to clients and plugins */
 static ULONGLONG start_tick;
 static LARGE_INTEGER qpf;
 
@@ -145,6 +148,7 @@ static const char *parse_params(const char *s, Request *r) {
         s = ws(s);
         if (!strcmp(key, "count")) { if (!(s = parse_int(s, &r->count))) return NULL; r->has_count = 1; }
         else if (!strcmp(key, "lease_ms")) { if (!(s = parse_int(s, &r->lease_ms))) return NULL; r->has_lease = 1; }
+        else if (!strcmp(key, "handle")) { if (!(s = parse_str(s, r->handle, sizeof r->handle))) return NULL; r->has_handle = 1; }
         else return NULL;
         s = ws(s);
         if (*s == ',') { s++; continue; }
@@ -178,6 +182,71 @@ static int parse_request(const char *s, Request *r) {
 void snow_host_state(SnowHostStateV1 *out) {
     out->host_paused = (uint32_t)host_paused;
     out->steps_released = steps_released;
+}
+
+/* Read the bound player's body. Executor context (or the plugin thread while the executor waits). */
+static int player_fill(SnowPlayerStateV1 *out, char *why, size_t n) {
+    why[0] = 0;
+    if (!bound || !player_bound || !snow_adapter.player_read) { snprintf(why, n, "no player bound"); return SNOW_E_NO_PLAYER; }
+    SnowPlayerRaw r;
+    int rc = snow_adapter.player_read(&r, why, n);
+    if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
+    if (rc) return SNOW_E_NO_PLAYER;
+    out->reserved = 0;
+    out->identity = player_generation;
+    for (int k = 0; k < 3; k++) {
+        out->position[k] = r.transform[12 + k];
+        for (int c = 0; c < 3; c++) out->axes[c][k] = r.transform[4 * c + k];
+        out->linear_velocity[k] = r.linear_velocity[k];
+        out->angular_velocity[k] = r.angular_velocity[k];
+    }
+    return SNOW_OK;
+}
+
+/* Plugin API get_player: only while the host holds the simulation, so the body is not being stepped. */
+int snow_host_player(SnowPlayerStateV1 *out) {
+    if (!host_paused) return SNOW_E_NOT_HELD;
+    char why[160];
+    return player_fill(out, why, sizeof why);
+}
+
+static void put_vec(Out *o, const char *name, const float *v) {
+    put(o, ",\"%s\":[%.9g,%.9g,%.9g]", name, v[0], v[1], v[2]);
+}
+
+static int do_player_bind(const Request *r, Out *o) {
+    if (!snow_adapter.player_bind) { put(o, "\"error\":\"unsupported\""); return 0; }
+    if (!r->has_handle) { put(o, "\"error\":\"bad_params\",\"detail\":\"handle required\""); return 0; }
+    char why[160] = "";
+    player_bound = 0;
+    if (snow_adapter.player_bind(r->handle, why, sizeof why)) {
+        put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0;
+    }
+    player_bound = 1; player_generation++;
+    SnowPlayerStateV1 st = {sizeof st, 0, 0, {0}, {{0}}, {0}, {0}};
+    int rc = player_fill(&st, why, sizeof why);
+    if (rc) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
+    put(o, "\"identity\":%llu", (unsigned long long)st.identity);
+    return 1;
+}
+
+static int do_player_get(Out *o) {
+    SnowPlayerStateV1 st = {sizeof st, 0, 0, {0}, {{0}}, {0}, {0}};
+    char why[160];
+    int rc = player_fill(&st, why, sizeof why);
+    if (rc) {
+        put(o, "\"error\":\"%s\",\"detail\":", rc == SNOW_E_PLAYER_CHANGED ? "player_changed" : "no_player");
+        put_str(o, why); return 0;
+    }
+    /* Outside a host-held pause the reads race the simulation and are not a consistent snapshot. */
+    put(o, "\"identity\":%llu,\"held\":%s", (unsigned long long)st.identity, host_paused ? "true" : "false");
+    put_vec(o, "position", st.position);
+    put(o, ",\"axes\":[[%.9g,%.9g,%.9g],[%.9g,%.9g,%.9g],[%.9g,%.9g,%.9g]]",
+        st.axes[0][0], st.axes[0][1], st.axes[0][2], st.axes[1][0], st.axes[1][1], st.axes[1][2],
+        st.axes[2][0], st.axes[2][1], st.axes[2][2]);
+    put_vec(o, "linear_velocity", st.linear_velocity);
+    put_vec(o, "angular_velocity", st.angular_velocity);
+    return 1;
 }
 
 static double ms_since(LARGE_INTEGER t0) {
@@ -218,6 +287,7 @@ static int do_status(Out *o) {
         bound ? "true" : "false", GetTickCount64() - start_tick, host_paused ? "true" : "false",
         faulted ? "true" : "false", commands_completed, commands_failed);
     put(o, ",\"plugins_active\":%d,\"steps_released\":%llu", snow_plugins_active(), (unsigned long long)steps_released);
+    put(o, ",\"player_bound\":%s", player_bound ? "true" : "false");
     if (host_paused) put(o, ",\"lease_ms\":%lu,\"lease_remaining_ms\":%lld", lease_ms, (long long)(lease_deadline - GetTickCount64()));
     if (last_recovery[0]) { put(o, ",\"last_recovery\":"); put_str(o, last_recovery); }
     if (!bound) { put(o, ",\"bind_error\":"); put_str(o, bind_why); return 1; }
@@ -354,6 +424,8 @@ static void execute(const Request *r, Out *o) {
     else if (!strcmp(r->method, "simulation.pause")) ok = do_pause(r, o);
     else if (!strcmp(r->method, "simulation.resume")) ok = do_resume(o);
     else if (!strcmp(r->method, "simulation.step_world")) ok = do_step(r, o);
+    else if (!strcmp(r->method, "player.bind")) ok = do_player_bind(r, o);
+    else if (!strcmp(r->method, "player.get")) ok = do_player_get(o);
     put(o, "},\"status\":\"%s\"}\n", ok ? "completed" : "failed");
     if (ok) commands_completed++; else commands_failed++;
     if (host_paused) lease_deadline = GetTickCount64() + lease_ms;
@@ -399,7 +471,8 @@ static void send_line(SOCKET s, long long id, const char *status, const char *er
 }
 static int known(const char *m) {
     static const char *methods[] = {"host.hello", "host.heartbeat", "simulation.status", "simulation.pause",
-                                    "simulation.resume", "simulation.step_world", "plugins.list"};
+                                    "simulation.resume", "simulation.step_world", "plugins.list",
+                                    "player.bind", "player.get"};
     for (size_t i = 0; i < sizeof methods / sizeof *methods; i++) if (!strcmp(m, methods[i])) return 1;
     return 0;
 }
