@@ -1,10 +1,11 @@
-# Snow mod host (v0.1, command interface)
+# Snow mod host (v0.2, command interface and plugin API v1)
 
 Status: first release of the host interface. A persistent DLL is loaded late into
 the running game. It exposes guarded pause, world-step and resume operations
-through a local command channel. One live session passed on 2026-10-14 (see below
-and the [sanitized validation record](validation.json)). The native plugin API is
-not implemented yet.
+through a local command channel, and loads native plugins that run between world
+steps ([plugin API v1](#plugins-api-v1)). One live session passed on 2026-10-14 (see below
+and the [sanitized validation record](validation.json)). Plugins do not yet have
+access to game state; see [Next](#next).
 
 ```text
 Python client ──TCP 127.0.0.1──▶ io thread ──mailbox──▶ executor thread ──▶ game adapter ──▶ game
@@ -50,7 +51,8 @@ A valid request receives `{"id":N,"status":"accepted"}`, then one final line wit
 
 | Method | Params | Result |
 |---|---|---|
-| `host.hello`, `simulation.status`, `host.heartbeat` | — | versions, adapter, `bound`, `host_paused`, lease, `last_recovery`, and `engine` {group, held, step, paused_job, end_frame} |
+| `host.hello`, `simulation.status`, `host.heartbeat` | — | versions, adapter, `bound`, `host_paused`, lease, `last_recovery`, `plugins_active`, `steps_released`, and `engine` {group, held, step, paused_job, end_frame} |
+| `plugins.list` | — | `plugins`: one entry per discovered DLL with `file`, `name`, `version`, `state` (`active`, `disabled`, `faulted`, `rejected`), `reason`, `calls` |
 | `simulation.pause` | `lease_ms` | `baseline_group`, `engine`. Repeating it while the host holds the pause renews the lease. |
 | `simulation.step_world` | `count` 1–60 | `unit: world_step_job`, one record per step (`step_before`, `step_released`, `step_after`, `release_ms`, `exactly_one`), totals |
 | `simulation.resume` | — | `fallback_restore`, `engine` |
@@ -60,6 +62,57 @@ Error codes: `adapter_unavailable`, `host_faulted`, `not_ordinary`, `step_not_ad
 Counter values describe the engine's state. They are not stable identifiers and should not be used as API fields.
 
 The host also writes `snow_host.json` (state, port, adapter binding) and a tagged `snow_host.log` next to the DLL.
+
+## Plugins (API v1)
+
+The public header is [snow_plugin.h](snow_plugin.h); [examples/step_logger.c](examples/step_logger.c)
+is a complete plugin. Plugins are DLLs in a `plugins` folder next to `snow_host.dll`.
+Each exports `int SnowMod_Initialize(const SnowHostApiV1 *host, SnowPluginV1 *plugin)`,
+fills in its name, version and callbacks, and returns 0.
+
+| Callback | When it runs |
+|---|---|
+| `on_pause` | After the host has verified the hold |
+| `on_step` | After each released world step: exactly one `Step` ran and the hold is re-armed, so the simulation is held during the call. Receives the batch position and a host-wide step count |
+| `on_resume` | After `Step` is verified advancing again. Reason: requested, lease expired, or client disconnected |
+| `on_unload` | When a plugin that returned nonzero is disabled cleanly, just before it is unloaded |
+
+The host provides `log` (into `snow_host.log`, tagged with the plugin name),
+`config_path` (`plugins\<file>.ini`, which may not exist) and `get_state`
+(`host_paused`, `steps_released`).
+
+All plugin calls run one at a time on a host plugin thread, never on a game
+thread, and each has a 250 ms budget (1 s for `SnowMod_Initialize`).
+[snow_plugins.c](snow_plugins.c) contains failures per plugin:
+
+- **Rejected at load:** no export, `Initialize` returned nonzero, wrong
+  `api_version` or `struct_size`, or an invalid name.
+- **Disabled:** a callback returned nonzero. The plugin gets `on_unload` and is
+  unloaded.
+- **Faulted:** a call exceeded its budget, or crashed (access violation, illegal
+  instruction, divide by zero, stack overflow and similar). A vectored handler
+  scoped to plugin threads moves the faulting thread onto a private stack, where
+  it reports the fault and exits. A plugin that timed out is abandoned on its own
+  thread with its own job slot. Faulted plugins are never unloaded.
+
+In every case the host keeps stepping and resuming, and other plugins are
+unaffected. Containment is best-effort: a plugin that faults while holding a
+lock it shares with the game (for example the process heap) can still hang the
+game, and plugin `DllMain` runs under the loader lock without containment.
+
+A Wine fixture test with the synthetic adapter covers eight plugins: the example,
+a well-behaved counter, a crash on the third step, a 5 s hang, a nonzero return,
+a declining `Initialize`, a wrong API version and a DLL with no export. All 32
+protocol, recovery and plugin checks pass. During the crash, every one of 10
+steps was still exactly one.
+
+**Live result, 2026-10-15.** The example plugin ran inside the game during the
+stress plan (`run_late_load.py --experiment host --plan stress`), which runs 300
+consecutive steps, 10 pause/5-step/resume cycles, and 60 steps paused mid-ride
+at about 100 km/h. All 410 steps were exactly one. The plugin received exactly 435
+calls: initialize, 12 `on_pause`, 410 `on_step` and 12 `on_resume`. At every
+resume its own count matched the host's, and it stayed active. Resume needed no
+fallback restore, and `Step` advanced through the 20 s check.
 
 ## Client
 
@@ -97,7 +150,8 @@ An earlier attempt the same day refused to bind. The adapter's page-protection c
 ## Build
 
 ```text
-x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Werror -O2 -shared -o snow_host.dll snow_host.c fixture_adapter.c -lws2_32
+x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Werror -O2 -shared -o snow_host.dll snow_host.c snow_plugins.c fixture_adapter.c -lws2_32
+x86_64-w64-mingw32-gcc -Wall -Wextra -Werror -O2 -shared -I. -o plugins/step_logger.dll examples/step_logger.c
 x86_64-w64-mingw32-gcc -Wall -Wextra -Werror -O2 -municode -o host_loader.exe host_loader.c
 ```
 
@@ -105,6 +159,7 @@ For the game build, replace `fixture_adapter.c` with the private adapter and add
 
 ## Next
 
-1. Repeat the live host run (longer step runs, movement, airtime) and measure what a released step simulates.
-2. Add an engine-ordered execution point, then events: world loaded, player changed, simulation step.
-3. Add native plugin discovery and a versioned C function table (`SnowMod_Initialize(const SnowHostApiV1 *, SnowPluginV1 *)`) with per-plugin logging and configuration.
+1. Game-state access for plugins: validated adapter getters and setters (player transform and velocity first), offered through `SnowHostApiV1` and usable only from `on_step` or while paused.
+2. Events: world loaded, player changed, sport changed.
+3. Measure what a released step simulates (time delta, substeps, input), and a world-change stress run.
+4. Load at launch instead of late load.

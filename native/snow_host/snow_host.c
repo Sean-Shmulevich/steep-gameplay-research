@@ -1,4 +1,5 @@
-/* Snow mod host v0: persistent late-loaded host with a loopback command channel.
+/* Snow mod host: persistent late-loaded host with a loopback command channel
+ * and native plugins (snow_plugin.h, managed by snow_plugins.c).
  *
  * DllMain does nothing. SnowHost_Start (run once on a new thread after
  * LoadLibraryW returns) starts two threads:
@@ -18,8 +19,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "snow_adapter.h"
+#include "snow_plugins.h"
 
-#define HOST_VERSION "0.1.0"
+#define HOST_VERSION SNOW_HOST_VERSION
 #define API_VERSION 1
 #define DEFAULT_PORT 47017
 #define MAX_LINE 4096
@@ -56,12 +58,15 @@ static DWORD lease_ms;
 static ULONGLONG lease_deadline;
 static char last_recovery[96];
 static long long commands_completed, commands_failed;
+static uint64_t steps_released;
 static ULONGLONG start_tick;
 static LARGE_INTEGER qpf;
 
 /* ---------- logging and output ---------- */
 
-static void host_log(const char *tag, const char *fmt, ...) {
+#define host_log snow_host_log
+
+void snow_host_log(const char *tag, const char *fmt, ...) {
     WCHAR path[MAX_PATH];
     if (_snwprintf(path, MAX_PATH, L"%ls\\snow_host.log", dir) < 0) return;
     char line[512];
@@ -169,6 +174,12 @@ static int parse_request(const char *s, Request *r) {
 
 /* ---------- executor: the only code that calls the adapter ---------- */
 
+/* Plugin API get_state. Runs on the plugin thread while the executor waits. */
+void snow_host_state(SnowHostStateV1 *out) {
+    out->host_paused = (uint32_t)host_paused;
+    out->steps_released = steps_released;
+}
+
 static double ms_since(LARGE_INTEGER t0) {
     LARGE_INTEGER t; QueryPerformanceCounter(&t);
     return (double)(t.QuadPart - t0.QuadPart) * 1000.0 / (double)qpf.QuadPart;
@@ -206,6 +217,7 @@ static int do_status(Out *o) {
     put(o, ",\"bound\":%s,\"uptime_ms\":%llu,\"host_paused\":%s,\"faulted\":%s,\"commands_completed\":%lld,\"commands_failed\":%lld",
         bound ? "true" : "false", GetTickCount64() - start_tick, host_paused ? "true" : "false",
         faulted ? "true" : "false", commands_completed, commands_failed);
+    put(o, ",\"plugins_active\":%d,\"steps_released\":%llu", snow_plugins_active(), (unsigned long long)steps_released);
     if (host_paused) put(o, ",\"lease_ms\":%lu,\"lease_remaining_ms\":%lld", lease_ms, (long long)(lease_deadline - GetTickCount64()));
     if (last_recovery[0]) { put(o, ",\"last_recovery\":"); put_str(o, last_recovery); }
     if (!bound) { put(o, ",\"bind_error\":"); put_str(o, bind_why); return 1; }
@@ -238,6 +250,7 @@ static int do_pause(const Request *r, Out *o) {
         put(o, "\"error\":\"hold_not_verified\"");
         return 0; /* host_paused stays set; the client should resume, or the lease will */
     }
+    snow_plugins_on_pause();
     put(o, "\"baseline_group\":"); put_group(o, pause_baseline);
     put(o, ",\"lease_ms\":%lu,", lease_ms); put_counters(o, "engine", &h2);
     return 1;
@@ -265,6 +278,8 @@ static int release_hold(Out *o, const char *reason) {
     }
     host_paused = 0;
     if (reason) snprintf(last_recovery, sizeof last_recovery, "%s", reason);
+    snow_plugins_on_resume(!reason ? SNOW_RESUME_REQUESTED :
+                           !strcmp(reason, "lease_expired") ? SNOW_RESUME_LEASE_EXPIRED : SNOW_RESUME_CLIENT_DISCONNECTED);
     put(o, "\"fallback_restore\":%s,", fallback ? "true" : "false"); put_counters(o, "engine", &c);
     return 1;
 }
@@ -310,6 +325,10 @@ static int do_step(const Request *r, Out *o) {
         put(o, "%s{\"step_before\":%u,\"step_released\":%u,\"step_after\":%u,\"end_frame_after\":%u,\"release_ms\":%.3f,\"exactly_one\":%s}",
             n ? "," : "", b.step, released, after.step, after.end_frame, release_ms, one ? "true" : "false");
         if (!one) { n++; put(o, "],\"error\":\"not_exactly_one\""); goto partial; }
+        /* Engine-ordered execution point: exactly one Step ran and the hold is re-armed. */
+        steps_released++;
+        SnowStepInfoV1 info = {sizeof info, (uint32_t)n, (uint32_t)count, 0, steps_released, release_ms};
+        snow_plugins_on_step(&info);
     }
     put(o, "],\"requested\":%lld,\"completed\":%lld,\"exactly_one\":%d,\"max_release_ms\":%.3f", count, n, exact, max_release);
     return 1;
@@ -323,7 +342,11 @@ static void execute(const Request *r, Out *o) {
     put(o, "{\"id\":%lld,\"result\":{", r->id);
     if (!strcmp(r->method, "host.hello") || !strcmp(r->method, "simulation.status") || !strcmp(r->method, "host.heartbeat"))
         ok = do_status(o);
-    else if (!strcmp(r->method, "_disconnect")) {
+    else if (!strcmp(r->method, "plugins.list")) {
+        char list[MAX_REPLY / 2];
+        snow_plugins_describe(list, sizeof list);
+        put(o, "\"plugins\":%s", list); ok = 1;
+    } else if (!strcmp(r->method, "_disconnect")) {
         ok = 1;
         if (host_paused) { ok = release_hold(o, "client_disconnected"); host_log("recovery", "client disconnected while paused: %s", ok ? "resumed" : "FAILED"); }
     } else if (!bound) put(o, "\"error\":\"adapter_unavailable\",\"detail\":"), put_str(o, bind_why);
@@ -339,6 +362,8 @@ static void execute(const Request *r, Out *o) {
 
 static DWORD WINAPI executor(LPVOID unused) {
     (void)unused;
+    /* Plugins load on the executor so every plugin call is serialized with commands. */
+    host_log("host", "plugins: %d active", snow_plugins_init(dir));
     for (;;) {
         DWORD wait = INFINITE;
         if (host_paused) {
@@ -374,7 +399,7 @@ static void send_line(SOCKET s, long long id, const char *status, const char *er
 }
 static int known(const char *m) {
     static const char *methods[] = {"host.hello", "host.heartbeat", "simulation.status", "simulation.pause",
-                                    "simulation.resume", "simulation.step_world"};
+                                    "simulation.resume", "simulation.step_world", "plugins.list"};
     for (size_t i = 0; i < sizeof methods / sizeof *methods; i++) if (!strcmp(m, methods[i])) return 1;
     return 0;
 }

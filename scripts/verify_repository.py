@@ -27,6 +27,10 @@ native_sources = {
     'native/snow_host/snow_adapter.h',
     'native/snow_host/fixture_adapter.c',
     'native/snow_host/host_loader.c',
+    'native/snow_host/snow_plugin.h',
+    'native/snow_host/snow_plugins.h',
+    'native/snow_host/snow_plugins.c',
+    'native/snow_host/examples/step_logger.c',
 }
 errors = []
 files = []

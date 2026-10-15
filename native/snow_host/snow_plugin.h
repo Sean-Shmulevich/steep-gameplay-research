@@ -1,0 +1,94 @@
+/* Snow mod host plugin API, version 1.
+ *
+ * A plugin is a DLL in the `plugins` folder next to snow_host.dll that exports
+ *
+ *     int SnowMod_Initialize(const SnowHostApiV1 *host, SnowPluginV1 *plugin);
+ *
+ * The host passes a zeroed `plugin`. Initialize fills it and returns 0, or
+ * returns nonzero to decline loading. It must set api_version to
+ * SNOW_PLUGIN_API_VERSION and struct_size to sizeof(SnowPluginV1).
+ *
+ * Threading and timing:
+ * - Every call into a plugin (Initialize and all callbacks) runs on the host's
+ *   plugin thread, one call at a time. Plugins need no locking against the host.
+ * - on_step runs after the host has released exactly one world Step and
+ *   re-armed the hold, so the world simulation is held while it runs.
+ *   Rendering continues meanwhile.
+ * - Each call has a time budget (SNOW_PLUGIN_CALL_BUDGET_MS). A call that
+ *   exceeds it, crashes (access violation, illegal instruction, divide by zero,
+ *   stack overflow), or returns nonzero disables that plugin for the rest of
+ *   the session. The host keeps running and other plugins are unaffected.
+ *   A plugin disabled by a nonzero return gets on_unload and is unloaded.
+ *   A crashed or timed-out plugin is never unloaded, because its code may
+ *   still be on a stack.
+ * - Containment is best-effort: a plugin that faults while holding a lock it
+ *   shares with the game (for example the process heap) can still hang the game.
+ * - Plugin DllMain runs under the loader lock and is not contained; keep it trivial.
+ *
+ * Callbacks must not call back into the command channel, and must not block on
+ * the game. They receive the plugin's own `user` pointer.
+ */
+#ifndef SNOW_PLUGIN_H
+#define SNOW_PLUGIN_H
+#include <stdint.h>
+
+#define SNOW_PLUGIN_API_VERSION 1
+#define SNOW_PLUGIN_CALL_BUDGET_MS 250
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct SnowHostStateV1 {
+    uint32_t struct_size;
+    uint32_t host_paused;      /* 1 while the host holds a pause */
+    uint64_t steps_released;   /* world steps released by this host since start */
+} SnowHostStateV1;
+
+typedef struct SnowStepInfoV1 {
+    uint32_t struct_size;
+    uint32_t index_in_batch;   /* 0-based position within one step_world request */
+    uint32_t batch_size;       /* steps requested by that request */
+    uint32_t reserved;
+    uint64_t steps_released;   /* host-wide count, including this step */
+    double release_ms;         /* time from release to Step starting */
+} SnowStepInfoV1;
+
+typedef enum SnowResumeReason {
+    SNOW_RESUME_REQUESTED = 0,     /* simulation.resume */
+    SNOW_RESUME_LEASE_EXPIRED = 1,
+    SNOW_RESUME_CLIENT_DISCONNECTED = 2
+} SnowResumeReason;
+
+typedef struct SnowHostApiV1 {
+    uint32_t struct_size;
+    uint32_t api_version;          /* SNOW_PLUGIN_API_VERSION */
+    const char *host_version;
+    void *context;                 /* per-plugin; pass back unchanged */
+    /* Append one line to snow_host.log, tagged with the plugin name. */
+    void (*log)(void *context, const char *message);
+    /* UTF-8 path of plugins\<plugin file name without .dll>.ini. The file may not exist. */
+    const char *config_path;
+    /* Snapshot of host state. Returns 0 on success. */
+    int (*get_state)(void *context, SnowHostStateV1 *out);
+} SnowHostApiV1;
+
+typedef struct SnowPluginV1 {
+    uint32_t struct_size;          /* sizeof(SnowPluginV1) */
+    uint32_t api_version;          /* SNOW_PLUGIN_API_VERSION */
+    const char *name;              /* short, stable identifier; required */
+    const char *version;           /* free-form; optional */
+    void *user;
+    /* All callbacks are optional. Return 0, or nonzero to disable the plugin. */
+    int (*on_pause)(void *user);
+    int (*on_step)(void *user, const SnowStepInfoV1 *step);
+    int (*on_resume)(void *user, SnowResumeReason reason);
+    void (*on_unload)(void *user);
+} SnowPluginV1;
+
+typedef int (*SnowModInitializeFn)(const SnowHostApiV1 *host, SnowPluginV1 *plugin);
+
+#ifdef __cplusplus
+}
+#endif
+#endif

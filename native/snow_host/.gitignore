@@ -10,3 +10,5 @@ snow_host.json
 !snow_adapter.h
 !fixture_adapter.c
 !host_loader.c
+!snow_plugins.c
+!examples/step_logger.c
