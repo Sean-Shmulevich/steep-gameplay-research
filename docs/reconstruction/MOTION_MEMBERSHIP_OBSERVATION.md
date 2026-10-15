@@ -2,7 +2,7 @@
 
 This closes the static/live **membership** part of release gate 3 ([scheduler roadmap](../../engine/SCHEDULER_ROADMAP.md)) for one gameplay state. The selected player's snowboard actor is a receiver of `Physic::BeforeSimulation`, whose callback dispatches receiver table slot `0x270`. For this actor that slot is the already-traced player update that reaches action ingestion. The candidate batch named in the [input audit](SCHEDULER_INPUT_AUDIT.md#focused-follow-up-one-motion-batch-is-upstream-of-world-simulation), `Physic::PreBeforeSimulation`, was empty and had never been allocated.
 
-Request association, callback execution and input freshness remain open. Addresses below are image RVAs (preferred base `0x140000000`) for the analyzed image SHA-256 `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. Runtime pointers stay private.
+Per-request execution and order against `PhysicsWorldStep` were later measured (sections below). Actor gates, riding state and input freshness remain open. Addresses below are image RVAs (preferred base `0x140000000`) for the analyzed image SHA-256 `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. Runtime pointers stay private.
 
 ## Static joins
 
@@ -55,7 +55,32 @@ With explicit approval, a private Snow-host plugin replaced **one heap pointer**
 
 Two further 10 s windows replicated this. One was standing: 948 of 948 actor entries, exactly once per request. In the other, forward was held through chained 1.5 s holds for part of the window: 1,002 of 1,002. Game acceptance of that input is unverified. The batch's other receivers rose from exactly 4 to about 4.84 per request during the hold, so membership changed, yet the actor still entered exactly once per request. Over all three windows: 2,959 of 2,959.
 
-This joins membership to execution: in this gameplay state, the selected actor's slot-`0x270` route into action ingestion is entered once in every world request, on worker threads, inside that request's Step frame. Its order against `PhysicsWorldStep` rests on the registered dependency, not on a measured exit. The probe is a research tool with build-specific addresses and is not published.
+This joins membership to execution: in this gameplay state, the selected actor's slot-`0x270` route into action ingestion is entered once in every world request, on worker threads, inside that request's Step frame. The probe is a research tool with build-specific addresses and is not published.
+
+## Order against `PhysicsWorldStep`
+
+**Static chain.** The physics-state constructor (`0x136a550`, bounds from the image's exception table) builds a chain of jobs in a 0x13a0-byte state object. It names the job at `state+0x1b0` `PhysicsWorldStep`, stores its callback `0x8ab390` in that job's delegate (field `state+0x360`), and keeps the job's address at `state+0x10`. Its creator stores the state at `physics+0x18` and passes `physics` as the state's first field. The action-graph setup (`0x90835b`) hands `BeforeSimulation` to a physics-service method (`0x13a75e0`, vtable `0x2911780`, slot `0x70`) with `world+0xff0` as the physics object. That method registers three successors of `BeforeSimulation`: `[state+0x10]` (the step job) and two further jobs at `state+0x368` and `state+0x520`. The live chain matched: `world+0xff0 -> physics`, `physics+0x18 -> state`, `[state] == physics`, `[state+0x10] == state+0x1b0`, the callback field held `0x8ab390`, and the step job carried the vtable its constructor installs (`0x1e89618`).
+
+**Counters at actor entry.** With the entry probe also reading the step job's counters (still one pointer swap), a 10 s standing window gave 1,002 of 1,002 actor entries once per request. At every entry the step job's request count equalled `BeforeSimulation`'s and its started count was one behind: the world step of that request had been requested but had not started.
+
+**Entry/exit probe.** With further explicit approval, a second private plugin swapped **two** heap callback pointers by compare-and-swap and restored both:
+
+- `BeforeSimulation`'s field became a call wrapper recording entry and exit. This is safe for this job because its only caller, the range-job chunk loop (`0x8f2b60`, range table slot `0x80`), passes just the receiver and ignores the result. The wrapper carries unwind information.
+- `PhysicsWorldStep`'s field became an entry-only pass-through.
+
+A synthetic Wine test checked balanced entry/exit, preserved return and callee-saved registers, a stack walk through the wrapper, intact step arguments, restore, and refusal on a wrong step callback.
+
+| Measure (10 s standing window) | Result |
+| --- | --- |
+| Install / restore | both installed and restored, 0 records dropped; session closed normally |
+| Requests | 701; actor entry and exit once per request (701/701); step entry once per request (701/701) |
+| Request association | step request count equal to `BeforeSimulation`'s at every step entry; started equal to requested; inside the Step frame |
+| Order | in 701 of 701 requests every receiver call (3,505, including the actor's) returned before `PhysicsWorldStep`'s callback was entered; none returned after |
+| Gap, last return to step entry | median 11 µs (min 2, p90 17, max 83) |
+| Actor call duration | median 22 µs (p90 31, max 81) |
+| Threads | 10 for the actor, 10 for the step |
+
+In this state the selected actor's update completes before the world step of the same request begins. The cadence was about 14 ms per request in this window against about 10 ms in the entry-only windows; whether that is probe overhead or variance is not established. The short actor call while standing is consistent with the actor's internal gates returning early, which is not yet examined.
 
 ## What this establishes and what it does not
 
@@ -68,7 +93,7 @@ Established for this state:
 Not established:
 
 - (now shown by the entry probe) per-request invocation of the actor's callback;
-- the measured order of that invocation against `PhysicsWorldStep`'s body (entry only, no exit or world-step counter);
+- (now measured) the order of that invocation against `PhysicsWorldStep`: completed before the step's entry in 701 of 701 requests;
 - that the actor's gates (activity, controller, actor `+0x1fd` skip) passed inside the call;
 - riding or other gameplay states: the player had just spawned and no input was sent;
 - input freshness: who writes the action payload and when it is published.
@@ -86,6 +111,6 @@ Both bound counts (256 source receivers, 1024 storage slots), recheck every foll
 
 ## Next
 
-1. Measure order against `PhysicsWorldStep` (record the world-step job's start in the same window, or add a safe exit record).
-2. Repeat the membership and entry measurements during riding.
+1. Examine the actor's internal gates (activity, controller, `+0x1fd` skip) inside the call.
+2. Repeat the membership and order measurements during verified riding.
 3. Continue the separate freshness work on the action payload writer.
