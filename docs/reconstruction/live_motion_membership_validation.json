@@ -1,0 +1,661 @@
+{
+  "schema": "live-motion-membership-validation-v1",
+  "status": "observed",
+  "scope": "Passive selected-player membership in the motion batches that dispatch receiver slot 0x270; not callback execution, request association, input freshness or safe stepping",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "instruction_anchor_spans": 11,
+  "private_result_sha256": "605b95b2fee1294d8e0f1e9e15164f6be33c093d5683b89fc611a7de1f2c00b7",
+  "private_acquisition_sha256": [
+    "92916edad600781834584778edbfbd0c4ad1c2aa35bc7ee22d2808e26876e020",
+    "5863646f360a5fb02625e41c87e2d9e9f96f730f14be94a2e7022012d9e9f0a4"
+  ],
+  "fresh_player_acquisition_passed": true,
+  "membership_passes_completed": 2,
+  "runner_status": "Both membership passes completed; a later scheduler sweep in the same runner then hit the read transport's request cap, so the runner reported failure.",
+  "animation_membership": {
+    "player_kino_source_matches": [
+      {
+        "source_index": 3,
+        "storage_indices": [
+          3
+        ],
+        "unclaimed_prefix_indices": []
+      }
+    ],
+    "source_count": 4
+  },
+  "passes": [
+    {
+      "batches": {
+        "Physic::PreBeforeSimulation": {
+          "batch": "Physic::PreBeforeSimulation",
+          "registry_entry": 24,
+          "source_count": 0,
+          "storage_capacity": 0,
+          "remaining_to_claim": 0,
+          "entity_source_indices": [],
+          "actor_source_indices": [],
+          "owned_source_indices": [],
+          "receivers": [],
+          "guards_matched": true,
+          "atomic_snapshot": false,
+          "callback_execution_established": false,
+          "input_freshness_established": false,
+          "safe_to_step_established": false
+        },
+        "Ai::UpdateAIPreUpdate": {
+          "batch": "Ai::UpdateAIPreUpdate",
+          "registry_entry": 5,
+          "source_count": 1,
+          "storage_capacity": 1,
+          "remaining_to_claim": 0,
+          "entity_source_indices": [],
+          "actor_source_indices": [],
+          "owned_source_indices": [
+            0
+          ],
+          "receivers": [
+            {
+              "source_index": 0,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": true,
+              "table_rva": 31951288,
+              "motion_method_rva": 6803120,
+              "storage_indices": [
+                0
+              ],
+              "unclaimed_prefix_indices": []
+            }
+          ],
+          "guards_matched": true,
+          "atomic_snapshot": false,
+          "callback_execution_established": false,
+          "input_freshness_established": false,
+          "safe_to_step_established": false
+        },
+        "Physic::BeforeSimulation": {
+          "batch": "Physic::BeforeSimulation",
+          "registry_entry": 25,
+          "source_count": 5,
+          "storage_capacity": 5,
+          "remaining_to_claim": 0,
+          "entity_source_indices": [],
+          "actor_source_indices": [
+            2
+          ],
+          "owned_source_indices": [
+            1,
+            2
+          ],
+          "receivers": [
+            {
+              "source_index": 0,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": false,
+              "table_rva": 43061984,
+              "motion_method_rva": 20720512,
+              "storage_indices": [
+                0
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 1,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": true,
+              "table_rva": 32397888,
+              "motion_method_rva": 20717184,
+              "storage_indices": [
+                1
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 2,
+              "is_entity": false,
+              "is_actor": true,
+              "owned_by_entity": true,
+              "table_rva": 31957840,
+              "motion_method_rva": 5656288,
+              "storage_indices": [
+                2
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 3,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": false,
+              "table_rva": 43066712,
+              "motion_method_rva": 20721408,
+              "storage_indices": [
+                3
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 4,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": false,
+              "table_rva": 43066712,
+              "motion_method_rva": 20721408,
+              "storage_indices": [
+                4
+              ],
+              "unclaimed_prefix_indices": []
+            }
+          ],
+          "guards_matched": true,
+          "atomic_snapshot": false,
+          "callback_execution_established": false,
+          "input_freshness_established": false,
+          "safe_to_step_established": false
+        }
+      },
+      "registry_scan": {
+        "schema": "registry-scan-v2",
+        "owned_entries": [
+          4,
+          5,
+          8,
+          12,
+          13,
+          15,
+          16,
+          17,
+          19,
+          23,
+          25,
+          30
+        ],
+        "entity_entries": [],
+        "entries": [
+          {
+            "entry": 0,
+            "count": 2,
+            "status": "read",
+            "owned": []
+          },
+          {
+            "entry": 1,
+            "count": 12,
+            "status": "read",
+            "owned": []
+          },
+          {
+            "entry": 4,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 31951288,
+                "motion_method_rva": 6803120
+              }
+            ]
+          },
+          {
+            "entry": 5,
+            "count": 1,
+            "status": "read",
+            "owned": [
+              {
+                "index": 0,
+                "table_rva": 31951288,
+                "motion_method_rva": 6803120
+              }
+            ]
+          },
+          {
+            "entry": 8,
+            "count": 4,
+            "status": "read",
+            "owned": [
+              {
+                "index": 3,
+                "table_rva": 31951288,
+                "motion_method_rva": 6803120
+              }
+            ]
+          },
+          {
+            "entry": 12,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32630168,
+                "motion_method_rva": 13813840
+              }
+            ]
+          },
+          {
+            "entry": 13,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32630168,
+                "motion_method_rva": 13813840
+              }
+            ]
+          },
+          {
+            "entry": 15,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32630168,
+                "motion_method_rva": 13813840
+              }
+            ]
+          },
+          {
+            "entry": 16,
+            "count": 4,
+            "status": "read",
+            "owned": [
+              {
+                "index": 3,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 17,
+            "count": 4,
+            "status": "read",
+            "owned": [
+              {
+                "index": 3,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 19,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 23,
+            "count": 1,
+            "status": "read",
+            "owned": [
+              {
+                "index": 0,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 25,
+            "count": 5,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32397888,
+                "motion_method_rva": 20717184
+              },
+              {
+                "index": 2,
+                "table_rva": 31957840,
+                "motion_method_rva": 5656288
+              }
+            ]
+          },
+          {
+            "entry": 30,
+            "count": 1,
+            "status": "read",
+            "owned": [
+              {
+                "index": 0,
+                "table_rva": 32397888,
+                "motion_method_rva": 20717184
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batches": {
+        "Physic::PreBeforeSimulation": {
+          "batch": "Physic::PreBeforeSimulation",
+          "registry_entry": 24,
+          "source_count": 0,
+          "storage_capacity": 0,
+          "remaining_to_claim": 0,
+          "entity_source_indices": [],
+          "actor_source_indices": [],
+          "owned_source_indices": [],
+          "receivers": [],
+          "guards_matched": true,
+          "atomic_snapshot": false,
+          "callback_execution_established": false,
+          "input_freshness_established": false,
+          "safe_to_step_established": false
+        },
+        "Ai::UpdateAIPreUpdate": {
+          "batch": "Ai::UpdateAIPreUpdate",
+          "registry_entry": 5,
+          "source_count": 1,
+          "storage_capacity": 1,
+          "remaining_to_claim": 0,
+          "entity_source_indices": [],
+          "actor_source_indices": [],
+          "owned_source_indices": [
+            0
+          ],
+          "receivers": [
+            {
+              "source_index": 0,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": true,
+              "table_rva": 31951288,
+              "motion_method_rva": 6803120,
+              "storage_indices": [
+                0
+              ],
+              "unclaimed_prefix_indices": []
+            }
+          ],
+          "guards_matched": true,
+          "atomic_snapshot": false,
+          "callback_execution_established": false,
+          "input_freshness_established": false,
+          "safe_to_step_established": false
+        },
+        "Physic::BeforeSimulation": {
+          "batch": "Physic::BeforeSimulation",
+          "registry_entry": 25,
+          "source_count": 5,
+          "storage_capacity": 5,
+          "remaining_to_claim": 0,
+          "entity_source_indices": [],
+          "actor_source_indices": [
+            2
+          ],
+          "owned_source_indices": [
+            1,
+            2
+          ],
+          "receivers": [
+            {
+              "source_index": 0,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": false,
+              "table_rva": 43061984,
+              "motion_method_rva": 20720512,
+              "storage_indices": [
+                0
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 1,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": true,
+              "table_rva": 32397888,
+              "motion_method_rva": 20717184,
+              "storage_indices": [
+                1
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 2,
+              "is_entity": false,
+              "is_actor": true,
+              "owned_by_entity": true,
+              "table_rva": 31957840,
+              "motion_method_rva": 5656288,
+              "storage_indices": [
+                2
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 3,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": false,
+              "table_rva": 43066712,
+              "motion_method_rva": 20721408,
+              "storage_indices": [
+                3
+              ],
+              "unclaimed_prefix_indices": []
+            },
+            {
+              "source_index": 4,
+              "is_entity": false,
+              "is_actor": false,
+              "owned_by_entity": false,
+              "table_rva": 43066712,
+              "motion_method_rva": 20721408,
+              "storage_indices": [
+                4
+              ],
+              "unclaimed_prefix_indices": []
+            }
+          ],
+          "guards_matched": true,
+          "atomic_snapshot": false,
+          "callback_execution_established": false,
+          "input_freshness_established": false,
+          "safe_to_step_established": false
+        }
+      },
+      "registry_scan": {
+        "schema": "registry-scan-v2",
+        "owned_entries": [
+          4,
+          5,
+          8,
+          12,
+          13,
+          15,
+          16,
+          17,
+          19,
+          23,
+          25,
+          30
+        ],
+        "entity_entries": [],
+        "entries": [
+          {
+            "entry": 0,
+            "count": 2,
+            "status": "read",
+            "owned": []
+          },
+          {
+            "entry": 1,
+            "count": 12,
+            "status": "read",
+            "owned": []
+          },
+          {
+            "entry": 4,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 31951288,
+                "motion_method_rva": 6803120
+              }
+            ]
+          },
+          {
+            "entry": 5,
+            "count": 1,
+            "status": "read",
+            "owned": [
+              {
+                "index": 0,
+                "table_rva": 31951288,
+                "motion_method_rva": 6803120
+              }
+            ]
+          },
+          {
+            "entry": 8,
+            "count": 4,
+            "status": "read",
+            "owned": [
+              {
+                "index": 3,
+                "table_rva": 31951288,
+                "motion_method_rva": 6803120
+              }
+            ]
+          },
+          {
+            "entry": 12,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32630168,
+                "motion_method_rva": 13813840
+              }
+            ]
+          },
+          {
+            "entry": 13,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32630168,
+                "motion_method_rva": 13813840
+              }
+            ]
+          },
+          {
+            "entry": 15,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32630168,
+                "motion_method_rva": 13813840
+              }
+            ]
+          },
+          {
+            "entry": 16,
+            "count": 4,
+            "status": "read",
+            "owned": [
+              {
+                "index": 3,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 17,
+            "count": 4,
+            "status": "read",
+            "owned": [
+              {
+                "index": 3,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 19,
+            "count": 2,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 23,
+            "count": 1,
+            "status": "read",
+            "owned": [
+              {
+                "index": 0,
+                "table_rva": 32672208,
+                "motion_method_rva": 14497728
+              }
+            ]
+          },
+          {
+            "entry": 25,
+            "count": 5,
+            "status": "read",
+            "owned": [
+              {
+                "index": 1,
+                "table_rva": 32397888,
+                "motion_method_rva": 20717184
+              },
+              {
+                "index": 2,
+                "table_rva": 31957840,
+                "motion_method_rva": 5656288
+              }
+            ]
+          },
+          {
+            "entry": 30,
+            "count": 1,
+            "status": "read",
+            "owned": [
+              {
+                "index": 0,
+                "table_rva": 32397888,
+                "motion_method_rva": 20717184
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "memory_writes": false,
+  "debugger_attached": false,
+  "gameplay_inputs_sent": false,
+  "startup_navigation_inputs_sent": true
+}

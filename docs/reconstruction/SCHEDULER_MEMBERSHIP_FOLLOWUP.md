@@ -1,5 +1,7 @@
 # Motion-batch membership: registration and gathered receivers are separate
 
+> **Update:** the live [motion membership observation](MOTION_MEMBERSHIP_OBSERVATION.md) found entry 24 (the `PreBeforeSimulation` source discussed below) empty in gameplay. The selected player's actor is in entry 25, gathered by `Physic::BeforeSimulation`, which uses the same thunk and copy helper. The copy semantics and gates below still apply to that batch.
+
 This bounded static pass narrows the membership gate in the [scheduler input audit](SCHEDULER_INPUT_AUDIT.md). It does **not** establish that the selected player belongs to `Physic::PreBeforeSimulation`. It establishes that the source registration list and the gathered execution array cannot be treated as interchangeable observations: the source-to-array helper retains the destination when its source is empty. A separate reset or consumption lifecycle must explain that branch before claiming current membership.
 
 No game was launched, attached to or modified. This document contains semantic pseudocode and evidence summaries, not executable addresses, raw exports or game payloads.

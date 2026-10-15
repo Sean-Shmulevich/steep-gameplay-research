@@ -198,6 +198,8 @@ Verification in this follow-up compared **2,536 exported instruction byte spans 
 
 The release gate for claiming this player's ingestion precedes a world request is now concrete: establish membership in this particular candidate batch, validate its player method and actor gates, and associate the active dependency holds with that world request. The separate release gate for **sample freshness** is unchanged.
 
+**Live correction (membership):** a guarded live observation found the `PreBeforeSimulation` source (registry entry 24) empty and its storage never allocated. The selected player's actor, by exact pointer, is instead a receiver of the **successor** batch `Physic::BeforeSimulation` (entry 25). That batch installs the same slot-`0x270` thunk, and for the actor that slot is the player update reaching ingestion. The conditional ordering above therefore runs through `BeforeSimulation -> PhysicsWorldStep`. See [motion membership observation](MOTION_MEMBERSHIP_OBSERVATION.md). Request association, execution, actor gates and freshness remain open.
+
 ## Writer freshness follow-up: constructor setup is not sample publication
 
 A bounded follow-up traced the concrete input-manager constructor's final direct setup call. The constructor initializes the context array to inline storage and sets its context count to zero. Its final setup helper is a complete, call-free leaf: it fills an integer table with sentinel patterns and specific integer mappings inside the manager. It does not dereference an action object, populate the context list, copy a four-lane action vector or publish a sample generation. Calling it the missing input commit routine would therefore be unsupported. The mapping's complete semantic labels were not recovered in this pass.
