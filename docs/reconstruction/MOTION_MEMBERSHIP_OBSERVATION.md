@@ -35,6 +35,26 @@ A registry scan of entries 0–31 found the entity pointer itself in none of the
 
 Earlier sessions in the same series show the guards working: one stopped at a wrong job-table expectation before reporting anything, and one found PreBeforeSimulation unallocated.
 
+## Per-request submission (passive burst)
+
+Burst sampling of both jobs' headers (287 accepted samples over ten roughly 24 ms bursts, read-only) showed `BeforeSimulation` and `Ai::UpdateAIPreUpdate` requested and started together. That happened about every 12 ms, with identical counters in 283 samples. The request-to-start window was visible with one dependency hold (21 samples). One sample caught the AI batch started with one unclaimed receiver while `BeforeSimulation` was still held. Execution counters and the `BeforeSimulation` claim count were always zero: claiming finished faster than the sampling could catch.
+
+## Execution: entry probe
+
+With explicit approval, a private Snow-host plugin replaced **one heap pointer** by compare-and-swap. That pointer is `BeforeSimulation`'s installed callback field, which held the motion thunk. The plugin pointed it at a recording thunk that saves the argument registers, records the entry, restores the registers and tail-jumps into the original thunk unchanged. No game code or tables were modified. The field held the expected thunk and the job held the range table before install, and the plugin compare-and-swapped the field back after a 10 s window. Exit is not recorded, because the callee's full signature is not known. A synthetic Wine test (four threads, forwarded arguments checked) passed before the live run.
+
+| Measure (10 s live window) | Result |
+| --- | --- |
+| Install / restore | installed, restored, 0 records dropped; game continued, session closed normally |
+| Selected actor entries | 1,009, exactly one per `BeforeSimulation` request (1,009 distinct request counts) |
+| Job state at actor entry | started equal to requested in 1,009 of 1,009 |
+| Relation to world `Step` | request count minus Step last-run count constant across all entries: one request per Step |
+| Relation to `EndFrame` | Step last-run exactly one ahead of EndFrame at every entry: within the Step frame |
+| Threads, cadence | 10 distinct worker threads; median 9.87 ms between actor entries (p10 9.02, p90 10.81) |
+| Other receivers | 4,036 entries: the batch's other four receivers, once per request |
+
+This joins membership to execution: in this gameplay state, the selected actor's slot-`0x270` route into action ingestion is entered once in every world request, on worker threads, inside that request's Step frame. Its order against `PhysicsWorldStep` rests on the registered dependency, not on a measured exit. The probe is a research tool with build-specific addresses and is not published.
+
 ## What this establishes and what it does not
 
 Established for this state:
@@ -45,8 +65,9 @@ Established for this state:
 
 Not established:
 
-- that the stored pointer was copied for, or claimed by, a particular world request (remaining-to-claim was 0, and storage keeps stale pointers);
-- that the callback ran, or that the actor's gates (activity, controller, actor `+0x1fd` skip) passed;
+- (now shown by the entry probe) per-request invocation of the actor's callback;
+- the measured order of that invocation against `PhysicsWorldStep`'s body (entry only, no exit or world-step counter);
+- that the actor's gates (activity, controller, actor `+0x1fd` skip) passed inside the call;
 - riding or other gameplay states: the player had just spawned and no input was sent;
 - input freshness: who writes the action payload and when it is published.
 
@@ -63,6 +84,6 @@ Both bound counts (256 source receivers, 1024 storage slots), recheck every foll
 
 ## Next
 
-1. Observe the actor's slot-`0x270` entry/exit with the `BeforeSimulation` request and thread identity, without writes, to join membership to execution.
-2. Repeat during riding.
+1. Measure order against `PhysicsWorldStep` (record the world-step job's start in the same window, or add a safe exit record).
+2. Repeat the membership and entry measurements during riding.
 3. Continue the separate freshness work on the action payload writer.
