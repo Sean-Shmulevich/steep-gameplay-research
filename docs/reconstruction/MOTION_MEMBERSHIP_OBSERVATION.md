@@ -53,6 +53,8 @@ With explicit approval, a private Snow-host plugin replaced **one heap pointer**
 | Threads, cadence | 10 distinct worker threads; median 9.87 ms between actor entries (p10 9.02, p90 10.81) |
 | Other receivers | 4,036 entries: the batch's other four receivers, once per request |
 
+Two further 10 s windows replicated this. One was standing: 948 of 948 actor entries, exactly once per request. In the other, forward was held through chained 1.5 s holds for part of the window: 1,002 of 1,002. Game acceptance of that input is unverified. The batch's other receivers rose from exactly 4 to about 4.84 per request during the hold, so membership changed, yet the actor still entered exactly once per request. Over all three windows: 2,959 of 2,959.
+
 This joins membership to execution: in this gameplay state, the selected actor's slot-`0x270` route into action ingestion is entered once in every world request, on worker threads, inside that request's Step frame. Its order against `PhysicsWorldStep` rests on the registered dependency, not on a measured exit. The probe is a research tool with build-specific addresses and is not published.
 
 ## What this establishes and what it does not
