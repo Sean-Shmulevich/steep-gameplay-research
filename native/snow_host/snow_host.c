@@ -17,6 +17,7 @@
 #include <windows.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "snow_adapter.h"
 #include "snow_plugins.h"
@@ -36,7 +37,8 @@ typedef struct Request {
     char method[48];
     long long count, lease_ms;
     char handle[48];
-    int has_id, has_count, has_lease, has_handle;
+    double vel[3];
+    int has_id, has_count, has_lease, has_handle, has_vel;
 } Request;
 
 static HMODULE self;
@@ -138,6 +140,11 @@ static const char *parse_int(const char *s, long long *v) {
     if (end == s || *end == '.' || *end == 'e' || *end == 'E') return NULL;
     *v = x; return end;
 }
+static const char *parse_num(const char *s, double *v) {
+    char *end; double x = strtod(s, &end);
+    if (end == s || x != x || x > 1e30 || x < -1e30) return NULL;
+    *v = x; return end;
+}
 static const char *parse_params(const char *s, Request *r) {
     s = ws(s); if (*s++ != '{') return NULL;
     s = ws(s); if (*s == '}') return s + 1;
@@ -148,6 +155,11 @@ static const char *parse_params(const char *s, Request *r) {
         s = ws(s);
         if (!strcmp(key, "count")) { if (!(s = parse_int(s, &r->count))) return NULL; r->has_count = 1; }
         else if (!strcmp(key, "lease_ms")) { if (!(s = parse_int(s, &r->lease_ms))) return NULL; r->has_lease = 1; }
+        else if (!strcmp(key, "vx") || !strcmp(key, "vy") || !strcmp(key, "vz")) {
+            int k = key[1] - 'x';
+            if (!(s = parse_num(s, &r->vel[k]))) return NULL;
+            r->has_vel |= 1 << k;
+        }
         else if (!strcmp(key, "handle")) { if (!(s = parse_str(s, r->handle, sizeof r->handle))) return NULL; r->has_handle = 1; }
         else return NULL;
         s = ws(s);
@@ -187,7 +199,16 @@ void snow_host_state(SnowHostStateV1 *out) {
 /* Read the bound player's body. Executor context (or the plugin thread while the executor waits). */
 static int player_fill(SnowPlayerStateV1 *out, char *why, size_t n) {
     why[0] = 0;
-    if (!bound || !player_bound || !snow_adapter.player_read) { snprintf(why, n, "no player bound"); return SNOW_E_NO_PLAYER; }
+    if (!bound || !snow_adapter.player_read) { snprintf(why, n, "player state unsupported"); return SNOW_E_NO_PLAYER; }
+    if (!player_bound) {
+        /* Nothing bound: try the adapter's in-process acquisition, if it has one. */
+        if (!snow_adapter.player_acquire || snow_adapter.player_acquire(why, n)) {
+            if (!why[0]) snprintf(why, n, "no player bound");
+            return SNOW_E_NO_PLAYER;
+        }
+        player_bound = 1; player_generation++;
+        host_log("player", "acquired in-process (identity %llu)", (unsigned long long)player_generation);
+    }
     SnowPlayerRaw r;
     int rc = snow_adapter.player_read(&r, why, n);
     if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
@@ -210,16 +231,43 @@ int snow_host_player(SnowPlayerStateV1 *out) {
     return player_fill(out, why, sizeof why);
 }
 
+/* Velocity assignment, executor context or plugin thread while the executor waits. Held only. */
+static int player_set(const float v[3], char *why, size_t n) {
+    why[0] = 0;
+    if (!host_paused) { snprintf(why, n, "simulation not held by host"); return SNOW_E_NOT_HELD; }
+    if (!bound || !player_bound) { snprintf(why, n, "no player bound"); return SNOW_E_NO_PLAYER; }
+    if (!snow_adapter.player_set_velocity) { snprintf(why, n, "adapter has no velocity setter"); return SNOW_E_REFUSED; }
+    double m2 = 0;
+    for (int k = 0; k < 3; k++) {
+        if (!(v[k] == v[k]) || v[k] > 1e6f || v[k] < -1e6f) { snprintf(why, n, "non-finite velocity"); return SNOW_E_REFUSED; }
+        m2 += (double)v[k] * v[k];
+    }
+    if (m2 > (double)SNOW_MAX_SET_SPEED * SNOW_MAX_SET_SPEED) { snprintf(why, n, "speed above %.0f", SNOW_MAX_SET_SPEED); return SNOW_E_REFUSED; }
+    int rc = snow_adapter.player_set_velocity(v, why, n);
+    if (rc == 2) { player_bound = 0; host_log("player", "binding dropped: %s", why); return SNOW_E_PLAYER_CHANGED; }
+    if (rc) return SNOW_E_REFUSED;
+    host_log("player", "velocity set to (%.3f, %.3f, %.3f)", v[0], v[1], v[2]);
+    return SNOW_OK;
+}
+
+int snow_host_set_velocity(const float v[3]) {
+    char why[160];
+    return player_set(v, why, sizeof why);
+}
+
 static void put_vec(Out *o, const char *name, const float *v) {
     put(o, ",\"%s\":[%.9g,%.9g,%.9g]", name, v[0], v[1], v[2]);
 }
 
 static int do_player_bind(const Request *r, Out *o) {
-    if (!snow_adapter.player_bind) { put(o, "\"error\":\"unsupported\""); return 0; }
-    if (!r->has_handle) { put(o, "\"error\":\"bad_params\",\"detail\":\"handle required\""); return 0; }
     char why[160] = "";
     player_bound = 0;
-    if (snow_adapter.player_bind(r->handle, why, sizeof why)) {
+    if (!r->has_handle) {
+        /* No handle: in-process acquisition. */
+        if (!snow_adapter.player_acquire) { put(o, "\"error\":\"bad_params\",\"detail\":\"handle required\""); return 0; }
+        if (snow_adapter.player_acquire(why, sizeof why)) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
+    } else if (!snow_adapter.player_bind) { put(o, "\"error\":\"unsupported\""); return 0; }
+    else if (snow_adapter.player_bind(r->handle, why, sizeof why)) {
         put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0;
     }
     player_bound = 1; player_generation++;
@@ -228,6 +276,22 @@ static int do_player_bind(const Request *r, Out *o) {
     if (rc) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
     put(o, "\"identity\":%llu", (unsigned long long)st.identity);
     return 1;
+}
+
+static int do_player_get(Out *o);
+static int do_player_set_velocity(const Request *r, Out *o) {
+    if (r->has_vel != 7) { put(o, "\"error\":\"bad_params\",\"detail\":\"vx, vy and vz required\""); return 0; }
+    float v[3] = {(float)r->vel[0], (float)r->vel[1], (float)r->vel[2]};
+    char why[160];
+    int rc = player_set(v, why, sizeof why);
+    if (rc) {
+        static const char *names[] = {"ok", "bad_params", "not_paused_by_host", "no_player", "player_changed", "refused"};
+        put(o, "\"error\":\"%s\",\"detail\":", names[rc]); put_str(o, why); return 0;
+    }
+    put(o, "\"set\":[%.9g,%.9g,%.9g],\"after\":{", v[0], v[1], v[2]);
+    int ok = do_player_get(o);
+    put(o, "}");
+    return ok;
 }
 
 static int do_player_get(Out *o) {
@@ -426,6 +490,7 @@ static void execute(const Request *r, Out *o) {
     else if (!strcmp(r->method, "simulation.step_world")) ok = do_step(r, o);
     else if (!strcmp(r->method, "player.bind")) ok = do_player_bind(r, o);
     else if (!strcmp(r->method, "player.get")) ok = do_player_get(o);
+    else if (!strcmp(r->method, "player.set_velocity")) ok = do_player_set_velocity(r, o);
     put(o, "},\"status\":\"%s\"}\n", ok ? "completed" : "failed");
     if (ok) commands_completed++; else commands_failed++;
     if (host_paused) lease_deadline = GetTickCount64() + lease_ms;
@@ -472,7 +537,7 @@ static void send_line(SOCKET s, long long id, const char *status, const char *er
 static int known(const char *m) {
     static const char *methods[] = {"host.hello", "host.heartbeat", "simulation.status", "simulation.pause",
                                     "simulation.resume", "simulation.step_world", "plugins.list",
-                                    "player.bind", "player.get"};
+                                    "player.bind", "player.get", "player.set_velocity"};
     for (size_t i = 0; i < sizeof methods / sizeof *methods; i++) if (!strcmp(m, methods[i])) return 1;
     return 0;
 }

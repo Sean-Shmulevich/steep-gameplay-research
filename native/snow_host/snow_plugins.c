@@ -198,6 +198,12 @@ static int api_player(void *ctx, SnowPlayerStateV1 *out) {
     return snow_host_player(out);
 }
 
+static int api_set_velocity(void *ctx, const float velocity[3]) {
+    (void)ctx;
+    if (!velocity) return SNOW_E_BAD_ARGS;
+    return snow_host_set_velocity(velocity);
+}
+
 static int valid_name(const char *s) {
     if (!s || !*s || strlen(s) > 47) return 0;
     for (; *s; s++) if ((unsigned char)*s < 0x21 || *s == '"' || *s == '\\' || (unsigned char)*s > 0x7e) return 0;
@@ -226,7 +232,7 @@ int snow_plugins_init(const WCHAR *dir) {
         p->init = (SnowModInitializeFn)(void (*)(void))GetProcAddress(p->module, "SnowMod_Initialize");
         if (!p->init) { disable(p, P_REJECTED, "no SnowMod_Initialize export"); FreeLibrary(p->module); continue; }
         p->api = (SnowHostApiV1){sizeof(SnowHostApiV1), SNOW_PLUGIN_API_VERSION, SNOW_HOST_VERSION, p,
-                                 api_log, p->config_utf8, api_state, api_player};
+                                 api_log, p->config_utf8, api_state, api_player, api_set_velocity};
         Job j = {.kind = J_INIT};
         int rc = call(p, &j, INIT_BUDGET_MS);
         if (rc < 0) continue; /* faulted; never unloaded */

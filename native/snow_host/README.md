@@ -1,11 +1,12 @@
-# Snow mod host (v0.3, command interface, plugin API v1 and player state)
+# Snow mod host (v0.4, command interface, plugin API v1 and player state)
 
 Status: first release of the host interface. A persistent DLL is loaded late into
 the running game. It exposes guarded pause, world-step and resume operations
 through a local command channel, and loads native plugins that run between world
 steps ([plugin API v1](#plugins-api-v1)). One live session passed on 2026-10-14 (see below
-and the [sanitized validation record](validation.json)). Host 0.3 adds the first game
-state for plugins and clients: the [selected player's body](#player-state-host-03).
+and the [sanitized validation record](validation.json)). Host 0.3 added the first game
+state for plugins and clients, the [selected player's body](#player-state-host-03). Host 0.4
+finds the player in-process and adds an experimental velocity assignment.
 
 ```text
 Python client ──TCP 127.0.0.1──▶ io thread ──mailbox──▶ executor thread ──▶ game adapter ──▶ game
@@ -56,8 +57,9 @@ A valid request receives `{"id":N,"status":"accepted"}`, then one final line wit
 | `simulation.pause` | `lease_ms` | `baseline_group`, `engine`. Repeating it while the host holds the pause renews the lease. |
 | `simulation.step_world` | `count` 1–60 | `unit: world_step_job`, one record per step (`step_before`, `step_released`, `step_after`, `release_ms`, `exactly_one`), totals |
 | `simulation.resume` | — | `fallback_restore`, `engine` |
-| `player.bind` | `handle` (string) | `identity`. The handle comes from an external player acquisition; the adapter validates it |
-| `player.get` | — | `identity`, `held`, `position`, `axes`, `linear_velocity`, `angular_velocity` |
+| `player.bind` | `handle` (string, optional) | `identity`. Without a handle the adapter finds the player in-process; with one, it validates the external acquisition's handle |
+| `player.get` | — | `identity`, `held`, `position`, `axes`, `linear_velocity`, `angular_velocity`. Acquires in-process first if nothing is bound |
+| `player.set_velocity` | `vx`, `vy`, `vz` (numbers) | `set`, `after` (a `player.get` result). Only while host-paused; experimental, see below |
 
 Error codes: `adapter_unavailable`, `host_faulted`, `not_ordinary`, `step_not_advancing`, `hold_not_verified`, `not_paused_by_host`, `not_held`, `step_not_frozen`, `group_changed`, `rearm_failed`, `step_timeout`, `frames_stalled`, `not_exactly_one`, `owner_changed`, `restore_failed`, `step_not_resumed`, `bad_params`, `read_failed`,
 `unsupported`, `player_rejected`, `no_player`, `player_changed`.
@@ -131,9 +133,12 @@ fallback restore, and `Step` advanced through the 20 s check.
 | `axes` | The body's three basis vectors in world space |
 | `linear_velocity`, `angular_velocity` | As stored by the engine, in world units per second |
 
-**Binding.** The host does not yet find the player itself. A client supplies an opaque handle from an
-external acquisition (`player.bind`), and the adapter validates it: object types, back-links and the
-owning world. It pins the owning entity and world at bind time. Every read re-checks the whole chain
+**Binding.** From host 0.4 the adapter finds the player in-process. It walks the engine's root
+records to each active world, then that world's motion receivers, and requires exactly one actor that
+passes every identity check. A read with nothing bound acquires first, so plugins need no client. A
+client may still supply an opaque handle from an external acquisition (`player.bind` with `handle`),
+which the adapter validates the same way: object types, back-links and the owning world. Either way the
+adapter pins the owning entity and world at bind time. Every read re-checks the whole chain
 before and after copying the body. If any link changed (respawn, sport or world change), the read
 fails with `SNOW_E_PLAYER_CHANGED` / `player_changed` and the binding is dropped. In-process acquisition is
 [future work](#next).
@@ -142,6 +147,16 @@ fails with `SNOW_E_PLAYER_CHANGED` / `player_changed` and the binding is dropped
 (`on_pause`, `on_step`); otherwise it returns `SNOW_E_NOT_HELD`. While held the body is not being stepped,
 so a read is a consistent snapshot. `player.get` also works while the game runs and reports
 `held: false`; such reads race the simulation and are not a consistent snapshot.
+
+**Velocity assignment (experimental, host 0.4).** `set_player_velocity` (plugins) and
+`player.set_velocity` (clients) call the engine's own velocity-assignment routine. The game itself uses it,
+and it sets the body's linear velocity, zeroes angular velocity and resets the player's speed history.
+It is accepted only while held, with finite values up to `SNOW_MAX_SET_SPEED` (300 units/s), after the
+adapter re-checks the routine's code bytes and the player's identity. **Live, while riding it has no lasting
+effect:** the body read back exactly the assigned value (0, then 12 units/s upward), but within the next
+released step the riding controller re-imposed its own velocity (about 36.5 units/s) and the trajectory
+was unchanged. Where the controller takes that velocity from is under investigation; until then, treat this
+call as a building block, not a gameplay effect.
 
 **Compatibility.** `get_player` is appended to `SnowHostApiV1`; the API version stays 1. A plugin that
 needs it checks `struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)`, as
@@ -163,6 +178,11 @@ acquisition, rode forward with ordinary key holds, paused mid-ride and released 
   −3.45 after ten steps, speed 37.45), and `get_player` returned `SNOW_E_NOT_HELD` after resume.
 - The orientation axes were unit length. After resume the player kept moving (60.7 units in about 1 s
   of reads and waits), the binding stayed valid, and resume needed no fallback restore.
+
+**Live result, host 0.4 (same day, one bounded session paused mid-ride).** In-process acquisition found
+the same player as the external acquisition: identical position, axes and velocities. All 18 single steps
+were exactly one. The velocity assignment behaved as described above. Resume needed no fallback restore,
+and the binding stayed valid afterwards.
 
 A first attempt the same day stopped in startup navigation (the game opened on the map screen) before
 the host was loaded. One session establishes the read path while riding; it does not cover respawn,
@@ -215,7 +235,7 @@ For the game build, replace `fixture_adapter.c` with the private adapter and add
 
 ## Next
 
-1. In-process player acquisition (no external handle), then guarded setters (player transform and velocity first), usable only while held.
+1. Find what re-imposes the riding player's velocity each step, then make assigned velocity persist; then position.
 2. Events: world loaded, player changed, sport changed.
 3. Measure what a released step simulates (time delta, substeps, input), and a world-change stress run.
 4. Load at launch instead of late load.

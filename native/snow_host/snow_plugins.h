@@ -6,12 +6,13 @@
 #include <wchar.h>
 #include "snow_plugin.h"
 
-#define SNOW_HOST_VERSION "0.3.0"
+#define SNOW_HOST_VERSION "0.4.0"
 
 /* Provided by snow_host.c. */
 void snow_host_log(const char *tag, const char *fmt, ...);
 void snow_host_state(SnowHostStateV1 *out);
 int snow_host_player(SnowPlayerStateV1 *out);
+int snow_host_set_velocity(const float v[3]);
 
 /* Provided by snow_plugins.c. */
 int snow_plugins_init(const wchar_t *dir);   /* loads <dir>\plugins\*.dll; returns active count */

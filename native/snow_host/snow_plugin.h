@@ -74,6 +74,10 @@ typedef struct SnowPlayerStateV1 {
 #define SNOW_E_NOT_HELD 2          /* only callable while the host holds the simulation (on_pause, on_step) */
 #define SNOW_E_NO_PLAYER 3         /* no player bound, or unsupported by this adapter */
 #define SNOW_E_PLAYER_CHANGED 4    /* the bound player's identity checks failed; the binding was dropped */
+#define SNOW_E_REFUSED 5           /* value rejected (non-finite or above the host's limit) or unsupported */
+
+/* Largest velocity magnitude set_player_velocity accepts, in world units per second. */
+#define SNOW_MAX_SET_SPEED 300.0f
 
 typedef enum SnowResumeReason {
     SNOW_RESUME_REQUESTED = 0,     /* simulation.resume */
@@ -95,6 +99,11 @@ typedef struct SnowHostApiV1 {
     /* Host 0.3+ (check struct_size >= offsetof(SnowHostApiV1, get_player) + sizeof(void *)).
      * Fills *out (set out->struct_size first) and returns SNOW_OK or a SNOW_E_* code. */
     int (*get_player)(void *context, SnowPlayerStateV1 *out);
+    /* Host 0.4+ (check struct_size as above). Sets the bound player's linear velocity through the
+     * engine's own velocity assignment, which also zeroes angular velocity and resets the player's
+     * speed history. Only while the simulation is held; takes effect on the next released step.
+     * Returns SNOW_OK or a SNOW_E_* code. */
+    int (*set_player_velocity)(void *context, const float velocity[3]);
 } SnowHostApiV1;
 
 typedef struct SnowPluginV1 {

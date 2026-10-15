@@ -46,6 +46,12 @@ typedef struct SnowAdapter {
     /* Re-validate the bound player's identity chain and read its body. 0 = ok, 1 = no player,
      * 2 = identity changed (the adapter drops the binding). */
     int (*player_read)(SnowPlayerRaw *out, char *why, size_t n);
+    /* Optional. Assign the bound player's linear velocity through the engine's own routine. Called
+     * only while the simulation is held, with a finite, bounded value. 0 = ok, 1 = refused,
+     * 2 = identity changed (binding dropped). */
+    int (*player_set_velocity)(const float v[3], char *why, size_t n);
+    /* Optional. Find and bind the selected player in-process (no external handle). 0 or a reason. */
+    int (*player_acquire)(char *why, size_t n);
 } SnowAdapter;
 
 extern const SnowAdapter snow_adapter;
