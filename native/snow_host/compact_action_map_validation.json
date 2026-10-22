@@ -1,0 +1,19 @@
+{
+  "evidence": "Original tagged-map compact-root branch versus bounded read-only decoder",
+  "cases": 589,
+  "passed": true,
+  "game_process": false,
+  "supported_counts": [
+    1,
+    31
+  ],
+  "root_tag": 1,
+  "max_reader_calls": 6,
+  "max_reader_bytes": 528,
+  "code_sha256": "718c52ac26897c09f297349d3d7ab044fc6ca2fe1c6b776a2670714af17f61a2",
+  "limits": [
+    "Radix tag 3 remains unsupported, never reported missing",
+    "No live map identity, concurrent writes, lifetime or publication proof",
+    "Synthetic sorted unique keys; corrupt keys rejected by authored reader"
+  ]
+}

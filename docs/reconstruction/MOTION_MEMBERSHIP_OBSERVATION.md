@@ -1230,3 +1230,41 @@ family is already connected in [the reset-callback study](ACTION_RESET_CALLBACK.
 What remains is the live selected action's concrete subtype and the ordering of
 its refresh/publication relative to the four ingestion reads and physics batch.
 The old getter-target ambiguity is closed; those runtime questions remain open.
+
+## Tagged action-map observation
+
+The map lookup has distinct root encodings. Root zero returns missing. Low tag
+bits 1 select a compact sorted-key representation; tag 3 selects a larger
+radix-tree decoder. Other nonzero tags take an error path in the inspected
+routine. The authored observer reports unsupported encodings explicitly instead
+of silently returning missing.
+
+`engine/action_map_observation.py` implements the inspected compact-root case
+for populations 1 through 31. The root pointer is masked with `~7`. The first
+qword is population minus one, followed by unsigned 64-bit sorted keys. The
+value area begins at the first supported qword tier large enough for header and
+keys: 2, 3, 4, 6, 8, 12, 16, 24 or 32 for this inspected population range.
+The matched key index selects the corresponding qword value slot. The function
+returns that slot, not its stored action pointer; a found slot containing zero
+is distinct from a missing key until the enclosing bank traversal interprets it.
+
+[589 original-instruction comparisons](../../native/snow_host/compact_action_map_validation.json)
+cover every supported population, every present key, keys below/above the range,
+and gaps. The original routine's compact-root instructions execute unchanged;
+its value-area lookup bytes are used privately to construct the fixtures. The
+independent reader's alignment-tier formula produces the exact returned slots.
+Four public tests cover the supported sizes, six read-failure positions,
+changed values between samples, sorted-key rejection and present-null values.
+
+The reader performs at most six exact reads totaling 528 bytes and requires two
+matching observations of the header, keys and selected value. It rejects short
+reads, overflow and corrupt ordering. Unsupported large populations and radix
+roots remain explicitly unsupported. Matching copies do not establish lifetime,
+atomicity, address-reuse detection or freshness. No game calls, locks, mutations
+or live attachment are used by this reader.
+
+Build anchors: root dispatch `0x14109a650`, compact branch `0x14109ad93` through
+`0x14109ae01`, and private compact value-area table at image RVA `0x28dc9e9`.
+Radix dispatch starts at `0x14109a669`; it has several internal node encodings.
+Completing those node forms, or observing the actual selected live map encoding,
+is necessary before claiming that the complete live action bank is readable.

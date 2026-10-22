@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Bounded compact action-map observer added: six reads/528 bytes maximum, duplicate
+samples, explicit missing/found-null/unsupported/invalid distinctions. Exact
+returned slots match 589 original-instruction cases for populations 1..31.
+Four public tests cover faults, mutation, ordering and bounds. Tag-3 radix nodes
+remain unsupported, so complete live action selection is not claimed. Next:
+decode those node forms and bind the reader to live manager/bank ownership. See
+[map observer](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#tagged-action-map-observation).
+
 Static snow-copy-getter/motion-view join closed. Both reach the same selected
 action+0x60 sample field; ingestion uses the constructor-published manager global.
 48 original-instruction cases validate copies, borrowed views, fallback, reader
