@@ -1,0 +1,23 @@
+{
+  "records": 235,
+  "rejected_timing_records": 0,
+  "observed_request_groups": 219,
+  "records_per_group": {
+    "1": 204,
+    "2": 14,
+    "3": 1
+  },
+  "float32_subdivision_matching_groups": 219,
+  "nonmatching_or_partial_groups": 0,
+  "loss_free_export": true,
+  "slot_lifecycle_passed": true,
+  "direct_native_substep_index_used": false,
+  "limits": [
+    "Groups at capture edges or gaps can be partial.",
+    "Matching duration arithmetic does not recover smoothing history or frequency selection.",
+    "Record order is reservation order; concurrent calls can complicate grouping.",
+    "No pointer or raw body payload is included in this summary."
+  ],
+  "evidence": "Derived exact-float32 comparison of the first successful live capture; no new game run",
+  "source_receipt": "update_capture_live_success.json"
+}

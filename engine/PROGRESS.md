@@ -2,6 +2,16 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live timing comparison: the original-game snow wrapper now has 235 guarded
+before/after observations across 219 request groups. All groups match the
+reconstruction's float32 `consumed / count` subdivision relation exactly. See
+[the reproducible analysis command](../native/snow_host/BUILD_AND_RUN.md#reproduce-the-timing-comparison)
+and [sanitized result](../native/snow_host/update_capture_timing_comparison.json).
+This supports local elapsed/derivative semantics; no original smoothing history,
+frequency-selection branch, native substep index or impulse write safety follows
+from that comparison. Raw captures remain private.
+
+
 Latest: the unscaled queue producer now has a static route from the BeforeSimulation actor receiver through input ingestion, carrier preparation and selected motion states. A 72-case original-byte dispatch check establishes the numeric route predicate. Existing live ordering covers actor-return-before-world-step, not execution of this newly identified producer or its consumer. Next is an actor/request-correlated live queue/consume trace. See [route and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#producer-route-reaches-beforesimulation).
 
 Previous: the queue producer and clear method were found in leaf-function gaps omitted by the earlier unwind-table scan. The actor queue accumulates all four float32 lanes, without a lock, mass factor or timestep factor. Both original leaves passed 256 synthetic cases. The nonzero writer is now identified; its caller-to-consumer scheduling remains open, so a live queue API is not yet exposed. See [producer contract](../docs/reconstruction/CENTRAL_IMPULSE.md#queue-producer-recovered-from-leaf-function-gaps).

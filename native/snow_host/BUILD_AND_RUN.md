@@ -165,3 +165,22 @@ is observation at the pending-consumer boundary, with an explicit thread/order
 contract before adding a write API. The earlier empty result remains evidence
 of an inactive-state capture; inactivity is a supported explanation, not proved
 as its sole cause.
+
+### Reproduce the timing comparison
+
+```sh
+python3 scripts/analyze_update_capture.py /path/to/update_capture.ini.trace.jsonl
+```
+
+The analyzer rejects incomplete exports and duplicate record indices. It groups
+consecutive guarded observations by actor/body ownership and request counter,
+then checks `elapsed == f32(consumed / f32(observed_count))` exactly after
+rounding the JSON numbers back to float32. Missing request validity, changed
+ownership and changed request values within a pair break the group. Partial
+groups are reported as nonmatching, not silently repaired. The output omits
+raw pointers, body payloads and process paths.
+
+The [first live timing comparison](update_capture_timing_comparison.json) found
+219 of 219 groups matching the reconstructed subdivision arithmetic, with no
+rejected records. This narrows the timing boundary beyond an approximate ratio
+check; it does not validate upstream smoothing or all scheduler policies.
