@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Frame live attempt rejected: 248 valid job attributions, zero valid frames;
+restoration and cleanup passed. Found integration mismatch between enclosing
+world and physics manager. Corrected +0xff0/+0x18 ownership join passes a fixture
+with distinct objects. Corrected live validation remains pending. Failed capture
+and correction are preserved in the batch-dispatch guide.
+
 Optional frame capture is integrated in ABI v4. Five Wine fixture modes passed,
 including direct ordinal/count/counter recording and clock-mismatch refusal that
 preserves valid job attribution. Windows builds and 43 focused tests passed.

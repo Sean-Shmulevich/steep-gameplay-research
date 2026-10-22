@@ -480,3 +480,44 @@ The host, probe and optional capture plugin build with the new sources. All user
 of the experimental ABI must rebuild together. Next is a bounded original-game
 capture plus analysis that compares direct ordinals against the existing request
 groups, without silently treating either counter as the other's generation.
+
+
+## Enclosing world versus physics manager correction
+
+The first original-game frame attempt produced 248 valid job attributions and
+zero valid frames. The [rejected-frame receipt](../../native/snow_host/batch_frame_rejected_live.json)
+preserves that failure separately from successful slot restoration, capture drain,
+zero drops and session cleanup. The general capture controller passed because it
+required job attribution; this is explicitly not a successful direct-ordinal run.
+
+A static ownership recheck identified an incorrect argument in the integration:
+`binding.world` names the actor's enclosing world object. The timing owner's first
+pointer names that world's physics manager. Those objects are joined through
+`binding.world + 0xff0`, and the manager's +0x18 points back to the timing owner.
+The earlier frame-layout discussion's generic word "world" denoted this manager;
+it must not be equated with the binding's world field. The synthetic fixture had
+collapsed those objects and did not catch the mismatch. No frame reads were
+accepted in the affected live run.
+
+The corrected probe verifies:
+
+```text
+physics_manager = read_pointer(binding.world + 0xff0)
+expected_timing_owner = read_pointer(physics_manager + 0x18)
+frame = guarded_frame_reader(job, expected_return, physics_manager, clocks)
+require frame.timing_owner == expected_timing_owner
+require both ownership links still match on reread
+```
+
+The frame output now calls its manager field `physics_manager`. Its completion
+counter resides at physics_manager+0x20, not enclosing_world+0x20. The two added
+ownership links add at most four exact reads around the 16-read frame reader.
+Failure preserves valid job attribution and clears the optional frame result.
+
+The [corrected fixture](../../native/snow_host/batch_frame_world_join_validation.json)
+uses distinct enclosing-world, manager and timing-owner objects and passes all
+five Wine modes. This is fixture validation only; a corrected live run is still
+required. The analyzer now distinguishes direct frame validity from timing-derived
+group matches and reports partial/repeated ordinal sequences without inventing
+missing steps. It compares the request and completion counters numerically modulo
+2^32 while explicitly withholding semantic equivalence or global generation claims.

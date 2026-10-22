@@ -145,3 +145,41 @@ class JobAttributionTests(unittest.TestCase):
             data[1].update(attribution_attempted=1,attribution_valid=1,job='abcdef',record_index=2,initial_count=5)
             data[1].update(patch)
             self.assertEqual(a.analyze(data)['job_attribution']['malformed_records'],1)
+
+
+class DirectSubstepTests(unittest.TestCase):
+    def capture(self, ordinals, count=3):
+        data=rows(len(ordinals))
+        for r,i in zip(data[1:],ordinals):
+            r.update(attribution_valid=1,frame_valid=1,substep_ordinal=i,
+                     selected_count=count,outer_completion_counter=6)
+        return data
+
+    def test_complete_direct_sequence_and_distinct_counters(self):
+        result=a.analyze(self.capture([0,1,2]))
+        self.assertTrue(result['direct_native_substep_index_used'])
+        direct=result['direct_substeps']
+        self.assertEqual(direct['complete_ordinal_sequences'],1)
+        self.assertEqual(direct['request_minus_outer_mod32_histogram'],{1:3})
+        self.assertFalse(direct['counter_semantic_equivalence_proved'])
+
+    def test_partial_and_duplicate_are_not_complete(self):
+        for seq in ([1,2],[0,0,2],[2,1,0]):
+            self.assertEqual(a.analyze(self.capture(seq))['direct_substeps']['complete_ordinal_sequences'],0)
+
+    def test_missing_frame_and_rebinding_break_groups(self):
+        for patch in ({'frame_valid':0},{'frame_valid':True}):
+            data=self.capture([0,1,2]);data[2].update(patch)
+            result=a.analyze(data)['direct_substeps']
+            self.assertEqual(result['observed_outer_groups'],2)
+            self.assertEqual(result['complete_ordinal_sequences'],0)
+        data=self.capture([0]);data[1]['after']['runtime']='changed'
+        self.assertEqual(a.analyze(data)['direct_substeps']['identity_rejected_records'],1)
+
+    def test_large_count_does_not_allocate_by_count(self):
+        self.assertEqual(a.analyze(self.capture([0],(1<<32)-1))['direct_substeps']['complete_ordinal_sequences'],0)
+
+    def test_old_trace_is_not_direct_substep_evidence(self):
+        result=a.analyze(rows())
+        self.assertFalse(result['direct_native_substep_index_used'])
+        self.assertEqual(result['direct_substeps']['unavailable_records'],3)

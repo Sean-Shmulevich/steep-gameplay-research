@@ -32,7 +32,7 @@ int snow_batch_frame(SnowEntryRead read,void *ctx,uint64_t job,uint64_t expected
        !sample(read,ctx,job,expected_return,expected_world,elapsed_bits,consumed_bits,&a) ||
        !sample(read,ctx,job,expected_return,expected_world,elapsed_bits,consumed_bits,&b) ||
        memcmp(&a,&b,sizeof a)) return 0;
-    out->timing_owner=a.owner;out->world=a.world;out->outer_completion_counter=a.counter;
+    out->timing_owner=a.owner;out->physics_manager=a.world;out->outer_completion_counter=a.counter;
     out->ordinal=(uint32_t)a.ordinal;out->selected_count=a.count;
     out->elapsed_bits=a.elapsed;out->consumed_bits=a.consumed;
     return 1;

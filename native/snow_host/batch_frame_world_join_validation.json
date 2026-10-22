@@ -1,0 +1,38 @@
+{
+  "game_launched": false,
+  "synthetic_objects_only": true,
+  "cases": [
+    {
+      "mode": "normal",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "conflict",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "attributed",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "valid-attribution",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "invalid-frame",
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "evidence": "authored Wine fixture with distinct enclosing world and physics manager",
+  "source_sha256": {
+    "native/snow_host/snow_update_probe.c": "45843afeb37bc06f243ce9c1b164ce93d18ad5a63d4f8f55f138c12cd3531846",
+    "native/snow_host/snow_batch_frame.c": "1602bd0e623ead344061ae15eddf9e8846268b1dc41dcc50dcbcb0e39bbab62e",
+    "tests/fixtures/snow_update_probe_fixture.c": "4c12818edc8811c08a6e82c7ba6cca6896985ff299fbdf492ca86cdd55641bc9"
+  }
+}

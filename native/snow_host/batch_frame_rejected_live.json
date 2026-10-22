@@ -1,0 +1,90 @@
+{
+  "direct_substeps": {
+    "valid_records": 0,
+    "unavailable_records": 0,
+    "invalid_frame_records": 248,
+    "malformed_records": 0,
+    "identity_rejected_records": 0,
+    "selected_count_histogram": {},
+    "observed_outer_groups": 0,
+    "complete_ordinal_sequences": 0,
+    "partial_or_nonsequential_groups": 0,
+    "request_minus_outer_mod32_histogram": {},
+    "counter_semantic_equivalence_proved": false,
+    "global_invocation_identity_established": false
+  },
+  "job_attribution": {
+    "valid_records": 248,
+    "rejected_records": 0,
+    "unattempted_records": 0,
+    "unavailable_records": 0,
+    "malformed_records": 0,
+    "unique_job_addresses": 10,
+    "initial_record_count_histogram": {
+      "1": 248
+    },
+    "batch_generation_established": false
+  },
+  "wrapper_intervals": {
+    "available_intervals": 248,
+    "unavailable_intervals": 0,
+    "invalid_intervals": 0,
+    "zero_duration_intervals": 0,
+    "same_actor_overlapping_pairs": 0,
+    "nonoverlapping_adjacent_pairs": 247,
+    "thread_changes_between_nonoverlapping_neighbors": 199,
+    "reservation_order_entry_reversals": 0,
+    "scheduler_exclusion_proved": false,
+    "input_ingestion_order_proved": false
+  },
+  "preconsume_counter": {
+    "available_pairs": 248,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "decrement_by_one_pairs": 248,
+    "unchanged_pairs": 0,
+    "unsigned_delta_histogram": {
+      "4294967295": 248
+    },
+    "consumer_execution_proved": false
+  },
+  "preconsume_countdown": {
+    "available_pairs": 248,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "elapsed_subtraction_matches": 248,
+    "consumed_subtraction_matches": 149,
+    "distinct_clock_pairs": 99,
+    "distinct_elapsed_matches": 99,
+    "distinct_consumed_matches": 0
+  },
+  "records": 248,
+  "rejected_timing_records": 0,
+  "observed_request_groups": 198,
+  "records_per_group": {
+    "1": 149,
+    "2": 48,
+    "3": 1
+  },
+  "float32_subdivision_matching_groups": 198,
+  "nonmatching_or_partial_groups": 0,
+  "loss_free_export": true,
+  "slot_lifecycle_passed": true,
+  "direct_native_substep_index_used": false,
+  "limits": [
+    "Groups at capture edges or gaps can be partial.",
+    "Matching duration arithmetic does not recover smoothing history or frequency selection.",
+    "Record order is reservation order; concurrent calls can complicate grouping.",
+    "No pointer or raw body payload is included in this summary."
+  ],
+  "evidence": "live frame-attribution attempt rejected; job attribution retained",
+  "trace_sha256": "fe715cf90fd6be0ffcf6bed6a474bf809d29d74150d3b6175520be1beaafd10f",
+  "direct_frame_capture_passed": false,
+  "session": {
+    "ok": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_replaced": false
+  },
+  "diagnosis": "Pre-correction probe passed enclosing world as expected physics manager; static ownership audit identified distinct objects. Corrected join fixture-tested, not yet live-tested."
+}

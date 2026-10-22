@@ -28,7 +28,7 @@ static void reject(void){
 }
 int main(void){
     setup();SnowBatchFrame out;assert(observe(&out));assert(reads==16);
-    assert(out.timing_owner==owner && out.world==world && out.ordinal==1 && out.selected_count==2);
+    assert(out.timing_owner==owner && out.physics_manager==world && out.ordinal==1 && out.selected_count==2);
     assert(out.outer_completion_counter==UINT64_MAX && out.elapsed_bits==0x3c088889 && out.consumed_bits==0x3c888889);
     setup();q(job+0x1b70,0);q(world+0x20,0);assert(observe(&out));
     assert(out.ordinal==0 && out.outer_completion_counter==0);

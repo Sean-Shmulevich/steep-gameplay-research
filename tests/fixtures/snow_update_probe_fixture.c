@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-static unsigned char actor[0x1200],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[64];
+static unsigned char actor[0x1200],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[0x1000],physics_manager[64];
 static __attribute__((section(".tracevt"),aligned(4096))) unsigned char table[4096]={1};
 static uint32_t request=7,substep=2,calls;
 static unsigned char job[0x1c00],timing[0x1400],callable[16],records[80],job_table[16],callable_table[16];
@@ -65,8 +65,8 @@ int main(int argc,char **argv) {
         profile.batch_return=0x9876;
         q(job+0x1b58,(void *)(uintptr_t)profile.batch_return);
         q(job+0x1b60,timing);q(job+0x1b70,(void *)(uintptr_t)1);
-        q(timing,world);uint32_t steps=2;memcpy(timing+0x1390,&steps,4);
-        f(timing+0x1394,.125f);f(timing+0x136c,bad_frame ? .25f : .5f);q(world+0x20,(void *)(uintptr_t)42);
+        q(timing,physics_manager);q(world+0xff0,physics_manager);q(physics_manager+0x18,timing);uint32_t steps=2;memcpy(timing+0x1390,&steps,4);
+        f(timing+0x1394,.125f);f(timing+0x136c,bad_frame ? .25f : .5f);q(physics_manager+0x20,(void *)(uintptr_t)42);
         profile.job_table=(uintptr_t)job_table;profile.callable_table=(uintptr_t)callable_table;
         q(job,job_table);q(job+0x198,records);q(job+0x1f8,callable);
         uint32_t count=5;memcpy(job+0x1a4,&count,4);q(callable,callable_table);

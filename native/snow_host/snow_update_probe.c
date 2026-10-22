@@ -48,8 +48,16 @@ typedef struct { const SnowEntryRegisters *entry; uint64_t actor; uint32_t elaps
 static int attribute_entry(void *context,SnowEntryAttribution *out,SnowBatchFrame *frame) {
     EntryContext *c=context;
     if(!snow_entry_attribute(read_memory,NULL,&entry_profile,c->entry,c->actor,out)) return 0;
-    if(entry_profile.batch_return && snow_batch_frame(read_memory,NULL,out->job,
-           entry_profile.batch_return,binding.world,c->elapsed,c->consumed,frame)) return 3;
+    if(entry_profile.batch_return) {
+        uint64_t physics=0,owner=0,again=0;
+        if(binding.world<=UINT64_MAX-0xff8 &&
+           read_memory(NULL,binding.world+0xff0,&physics,8) && physics && physics<=UINT64_MAX-0x20 &&
+           read_memory(NULL,physics+0x18,&owner,8) && owner &&
+           snow_batch_frame(read_memory,NULL,out->job,entry_profile.batch_return,physics,c->elapsed,c->consumed,frame) &&
+           frame->timing_owner==owner &&
+           read_memory(NULL,binding.world+0xff0,&again,8) && again==physics &&
+           read_memory(NULL,physics+0x18,&again,8) && again==owner) return 3;
+    }
     return 1;
 }
 void SnowProbe_EntryDispatch(void *actor,float elapsed,float derivative,const SnowEntryRegisters *entry) {

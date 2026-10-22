@@ -150,6 +150,46 @@ def job_attribution(records):
             'batch_generation_established':False}
 
 
+def direct_substeps(records):
+    counts = Counter(); selected = Counter(); differences = Counter()
+    groups = []; previous = None
+    for r in records:
+        flag = r.get('frame_valid')
+        if flag is None:
+            counts['unavailable_records'] += 1; previous = None; continue
+        if type(flag) is not int or flag not in (0,1):
+            counts['malformed_records'] += 1; previous = None; continue
+        if not flag:
+            counts['invalid_frame_records'] += 1; previous = None; continue
+        ordinal, count, outer = (r.get(k) for k in
+                                ('substep_ordinal','selected_count','outer_completion_counter'))
+        if (any(type(x) is not int for x in (ordinal,count,outer)) or
+                not 0 <= ordinal < count < 1 << 32 or not 0 <= outer < 1 << 64 or
+                type(r.get('attribution_valid')) is not int or r['attribution_valid'] != 1):
+            counts['malformed_records'] += 1; previous = None; continue
+        before, after = r['before'], r['after']
+        if (not (before['valid'] & 1 and after['valid'] & 1) or
+                any(before[k] != after[k] for k in ('runtime','main','rider'))):
+            counts['identity_rejected_records'] += 1; previous = None; continue
+        counts['valid_records'] += 1; selected[count] += 1
+        if (before['valid'] & 4 and after['valid'] & 4 and before['request']==after['request']
+                and type(before['request']) is int and 0 <= before['request'] < 1 << 32):
+            differences[(before['request'] - outer) & 0xffffffff] += 1
+        key=(r['actor'],before['runtime'],before['main'],before['rider'],outer)
+        if previous != key: groups.append([])
+        groups[-1].append((ordinal,count));previous=key
+    complete = sum(len(g)==g[0][1] and all(n==g[0][1] and ordinal==i
+                   for i,(ordinal,n) in enumerate(g)) for g in groups)
+    return {**{k:counts[k] for k in ('valid_records','unavailable_records','invalid_frame_records',
+                                    'malformed_records','identity_rejected_records')},
+            'selected_count_histogram':dict(sorted(selected.items())),
+            'observed_outer_groups':len(groups),'complete_ordinal_sequences':complete,
+            'partial_or_nonsequential_groups':len(groups)-complete,
+            'request_minus_outer_mod32_histogram':dict(sorted(differences.items())),
+            'counter_semantic_equivalence_proved':False,
+            'global_invocation_identity_established':False}
+
+
 def analyze(rows):
     if not rows or rows[0].get('kind') != 'summary':
         raise ValueError('Missing capture summary')
@@ -193,7 +233,9 @@ def analyze(rows):
                     f32(r['elapsed']) == f32(consumed / f32(count)) for r in group)
         exact += int(match)
         mismatched += int(not match)
+    direct = direct_substeps(records)
     return {
+        'direct_substeps': direct,
         'job_attribution': job_attribution(records),
         'wrapper_intervals': interval_order(records),
         'preconsume_counter': counter_changes(records),
@@ -205,7 +247,7 @@ def analyze(rows):
         'nonmatching_or_partial_groups': mismatched,
         'loss_free_export': summary.get('dropped') == 0,
         'slot_lifecycle_passed': all(summary.get(k) == 1 for k in ('installed', 'restored', 'drained')),
-        'direct_native_substep_index_used': False,
+        'direct_native_substep_index_used': direct['valid_records'] > 0,
         'limits': ['Groups at capture edges or gaps can be partial.',
                    'Matching duration arithmetic does not recover smoothing history or frequency selection.',
                    'Record order is reservation order; concurrent calls can complicate grouping.',
