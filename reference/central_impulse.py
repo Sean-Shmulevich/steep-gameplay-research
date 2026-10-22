@@ -285,3 +285,13 @@ def helper_response_filter(rate, displacement, acceleration, reference_axis, dt)
     return {'rate':new_rate,'displacement':new_displacement,'drive':drive,
             'stiffness':stiffness,'clipped':clipped,
             'published':(new_rate,new_displacement)}
+
+
+def advance_preconsume_countdown(value, elapsed_dt):
+    """Recovered local float32 countdown update, before later branch resets.
+
+    CENTRAL_IMPULSE.md, 'Countdown clock and adjacent impulse magnitude'.
+    No zero clamp: expired values continue decreasing. Finite validation is an
+    authored API policy. This does not execute the surrounding impulse branch.
+    """
+    return f32(f32(value) - f32(elapsed_dt))

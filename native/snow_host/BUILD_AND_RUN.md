@@ -203,3 +203,10 @@ The analyzer reports counter availability, invalid pairs, unchanged pairs and
 unsigned delta counts. It deliberately does not label a decrement as proof of
 consumer execution. Old traces without the fields remain analyzable and are
 reported as unavailable, not as zero counters.
+
+The legacy `preconsume_timers` array is now interpreted more precisely:
+element 0 is a neighboring impulse-magnitude scalar; element 1 is a countdown.
+The [clock comparison](preconsume_countdown_validation.json) found exact
+per-substep countdown subtraction in all 228 pairs, including 31 calls where
+the consumed interval differs. `analyze_update_capture.py` reports both
+clock-match counts and isolates those discriminating calls.

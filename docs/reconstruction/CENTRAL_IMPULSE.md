@@ -9903,3 +9903,33 @@ pre-consumption region. It remains indirect evidence rather than an exact
 consumer entry/return probe. Both pending snapshots were zero in every pair, so
 this run supplies no nonzero pending-consumption result. It does not authorize
 arbitrary-thread queue access or establish protection of the post-unlock clear.
+
+## Countdown clock and adjacent impulse magnitude
+
+The earlier ordinal label "two timers" is corrected here. Runtime `+0x1584`
+is decremented by the float at runtime `+0x1520`. The local sequence is:
+
+```text
+countdown = f32(countdown - elapsed_dt)
+```
+
+There is no zero clamp in that sequence. Later branches can clear both fields
+or reset this countdown to the float32 constant `0.3330000042915344` after
+paired direct impulse calls. `reference.central_impulse.advance_preconsume_countdown`
+implements only the subtraction, not those later branch decisions.
+
+Runtime `+0x1580` is instead assigned a curve-scaled value and used as an impulse
+magnitude with the main/rider mass split in the neighboring branch. Treating it
+as a second elapsed timer would be wrong. Its full branch model remains separate
+from the small countdown helper. The trace's `preconsume_timers` array retains
+its legacy name for compatibility: element 0 is this scalar magnitude, element 1
+is the countdown. Do not infer gameplay state names from these fields alone.
+
+[Validation](../../native/snow_host/preconsume_countdown_validation.json) matched
+the portable helper in 48 isolated original-instruction cases. In the existing
+live run, all 228 before/after countdown pairs matched elapsed-time subtraction
+exactly at float32 precision. The 31 calls with different elapsed and consumed
+arguments all matched elapsed, and none matched consumed. This discriminates
+the clocks rather than relying on the 197 single-call cases where they agree.
+The adjacent magnitude was zero throughout this run. The countdown remained
+negative and continued decreasing; no reset or jump impulse was observed.

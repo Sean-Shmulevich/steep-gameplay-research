@@ -38,6 +38,34 @@ def counter_changes(records):
             'consumer_execution_proved': False}
 
 
+def countdown_changes(records):
+    """Legacy preconsume_timers[1] is the countdown; [0] is not a timer."""
+    counts = Counter()
+    for record in records:
+        before, after = record['before'], record['after']
+        arrays = (before.get('preconsume_timers'), after.get('preconsume_timers'))
+        if any(not isinstance(x, list) or len(x) != 2 for x in arrays):
+            counts['unavailable_pairs'] += 1
+            continue
+        values = [arrays[0][1], arrays[1][1], record.get('elapsed'), record.get('derivative')]
+        if (not (before['valid'] & 1 and after['valid'] & 1)
+                or any(before[k] != after[k] for k in ('runtime','main','rider'))
+                or any(type(x) not in (int,float) or not math.isfinite(x) for x in values)):
+            counts['invalid_pairs'] += 1
+            continue
+        old, new, elapsed, consumed = map(f32, values)
+        counts['available_pairs'] += 1
+        counts['elapsed_subtraction_matches'] += int(new == f32(old - elapsed))
+        counts['consumed_subtraction_matches'] += int(new == f32(old - consumed))
+        if elapsed != consumed:
+            counts['distinct_clock_pairs'] += 1
+            counts['distinct_elapsed_matches'] += int(new == f32(old - elapsed))
+            counts['distinct_consumed_matches'] += int(new == f32(old - consumed))
+    return {k: counts[k] for k in ('available_pairs','unavailable_pairs','invalid_pairs',
+            'elapsed_subtraction_matches','consumed_subtraction_matches','distinct_clock_pairs',
+            'distinct_elapsed_matches','distinct_consumed_matches')}
+
+
 def analyze(rows):
     if not rows or rows[0].get('kind') != 'summary':
         raise ValueError('Missing capture summary')
@@ -83,6 +111,7 @@ def analyze(rows):
         mismatched += int(not match)
     return {
         'preconsume_counter': counter_changes(records),
+        'preconsume_countdown': countdown_changes(records),
         'records': len(records), 'rejected_timing_records': rejected,
         'observed_request_groups': len(groups),
         'records_per_group': dict(sorted(histogram.items())),

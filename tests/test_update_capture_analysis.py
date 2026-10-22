@@ -61,3 +61,22 @@ class CaptureTimingAnalysisTests(unittest.TestCase):
         self.assertEqual(result['unavailable_pairs'],2)
         self.assertEqual(result['invalid_pairs'],1)
         self.assertEqual(result['available_pairs'],0)
+
+    def test_countdown_discriminates_elapsed_from_consumed(self):
+        data=rows()
+        for r in data[1:]:
+            r['before']['preconsume_timers']=[2,-1]
+            r['after']['preconsume_timers']=[2,a.f32(-1-r['elapsed'])]
+        result=a.analyze(data)['preconsume_countdown']
+        self.assertEqual(result['elapsed_subtraction_matches'],3)
+        self.assertEqual(result['distinct_clock_pairs'],3)
+        self.assertEqual(result['distinct_consumed_matches'],0)
+
+    def test_countdown_reset_not_subtraction_and_missing_not_zero(self):
+        data=rows()
+        data[1]['before']['preconsume_timers']=[0,-1]
+        data[1]['after']['preconsume_timers']=[2,a.f32(.333)]
+        result=a.analyze(data)['preconsume_countdown']
+        self.assertEqual(result['available_pairs'],1)
+        self.assertEqual(result['unavailable_pairs'],2)
+        self.assertEqual(result['elapsed_subtraction_matches'],0)

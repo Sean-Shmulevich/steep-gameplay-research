@@ -1,0 +1,25 @@
+{
+  "evidence": [
+    "48 isolated original-instruction cases compared with portable countdown helper",
+    "Existing live capture analyzed offline; no new game run"
+  ],
+  "instruction_cases": 48,
+  "instruction_matches": 48,
+  "live": {
+    "available_pairs": 228,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "elapsed_subtraction_matches": 228,
+    "consumed_subtraction_matches": 197,
+    "distinct_clock_pairs": 31,
+    "distinct_elapsed_matches": 31,
+    "distinct_consumed_matches": 0
+  },
+  "scope": "Countdown subtraction only, before possible resets; adjacent impulse magnitude is not modeled as a timer",
+  "reset_constant_static": 0.3330000042915344,
+  "limits": [
+    "Later branches can overwrite the countdown",
+    "Live input was an ordinary moving-rider run, not a controlled jump",
+    "No safe native impulse submission established"
+  ]
+}
