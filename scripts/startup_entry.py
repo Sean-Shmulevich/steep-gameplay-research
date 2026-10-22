@@ -6,10 +6,12 @@ arguments and navigation-result.json). It sends only the existing menu
 transitions the original navigator uses (Enter on the title, offline notice and
 tutorial prompt; the map key on the startup map) and nothing during gameplay.
 Unlike the OCR-only navigator, gameplay is accepted only when the recognized HUD
-agrees with the startup-loaded host: commands ready, world step advancing and a
-player body in a physics world. Host reads are read-only; no pause, write or
-step. Every input and native sample is recorded, including which screen was
-showing when the player body first appeared.
+agrees with the startup-loaded host: commands ready, world step advancing and the
+player acquired with valid flags. An idle freshly spawned rider is not yet in a
+physics world (IN_WORLD sets after the first movement input), so IN_WORLD is
+recorded but not required. Host reads are read-only; no pause, write or step.
+Every input and native sample is recorded, including which screen was showing
+when the player was first acquired.
 
 This skips menu interaction delay, not asset or world loading. Spawn location is
 whatever the profile's startup map closes onto; no map or spawn selection.
@@ -41,8 +43,9 @@ def classify(text, legacy):
     return legacy(text)[0]
 
 
-def native_in_world(sample):
-    return bool(sample and sample.get('ready') and sample.get('advancing') and sample.get('player_flags', 0) & 3 == 3)
+def native_player_ready(sample):
+    """Host ready, world stepping and player acquired with valid flags (IN_WORLD not required)."""
+    return bool(sample and sample.get('ready') and sample.get('advancing') and sample.get('player_flags', 0) & 1)
 
 
 class Policy:
@@ -53,15 +56,17 @@ class Policy:
         self.inputs = {}
         self.last_input = None  # (state, time)
         self.native_streak = 0
+        self.first_player_state = None
         self.first_in_world_state = None
 
     def step(self, state, native, now):
         """Return ('send', scan) | ('wait', reason) | ('entered', None) | ('abort', reason)."""
-        if native_in_world(native):
-            if self.first_in_world_state is None:
-                self.first_in_world_state = state
+        if native_player_ready(native) and self.first_player_state is None:
+            self.first_player_state = state
+        if native_player_ready(native) and native['player_flags'] & 2 and self.first_in_world_state is None:
+            self.first_in_world_state = state
         if state == 'gameplay':
-            self.native_streak = self.native_streak + 1 if native_in_world(native) else 0
+            self.native_streak = self.native_streak + 1 if native_player_ready(native) else 0
             if self.native_streak >= self.confirmations:
                 return 'entered', None
             return 'wait', 'hud_without_native_confirmation'
@@ -192,6 +197,7 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
                 result['outcome'] = 'input_failed: ' + why
                 break
         sleep(1.0)
+    result['first_player_acquired_screen'] = policy.first_player_state
     result['first_player_in_world_screen'] = policy.first_in_world_state
     result['elapsed_seconds'] = round(clock() - start, 1)
     return result

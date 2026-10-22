@@ -8,6 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import startup_entry as se
 
 IN_WORLD = {'ready': True, 'advancing': True, 'player_flags': 3}
+ACQUIRED = {'ready': True, 'advancing': True, 'player_flags': 1}  # idle spawn, not yet simulated
 NO_PLAYER = {'ready': True, 'advancing': True, 'player_error': 'no_player'}
 
 
@@ -27,7 +28,7 @@ class PolicyTests(unittest.TestCase):
         p = se.Policy()
         for native in (None, {'error': 'ConnectionRefusedError'}, NO_PLAYER,
                        {'ready': True, 'advancing': False, 'player_flags': 3},
-                       {'ready': True, 'advancing': True, 'player_flags': 1}):
+                       {'ready': True, 'advancing': True, 'player_flags': 0}):
             self.assertEqual(p.step('gameplay', native, 0), ('wait', 'hud_without_native_confirmation'))
 
     def test_gameplay_needs_consecutive_native_confirmations(self):
@@ -49,12 +50,19 @@ class PolicyTests(unittest.TestCase):
         p.step('title', None, 0)
         self.assertEqual(p.step('offline_notice', None, 1), ('send', 28))
 
-    def test_records_screen_when_player_first_enters_world(self):
+    def test_idle_spawn_without_in_world_is_accepted(self):
+        p = se.Policy(confirmations=2)
+        self.assertEqual(p.step('gameplay', ACQUIRED, 0)[0], 'wait')
+        self.assertEqual(p.step('gameplay', ACQUIRED, 1), ('entered', None))
+        self.assertIsNone(p.first_in_world_state)
+
+    def test_records_screens_when_player_acquired_and_in_world(self):
         p = se.Policy()
         p.step('offline_notice', NO_PLAYER, 0)
-        p.step('map', IN_WORLD, 1)
-        p.step('gameplay', IN_WORLD, 2)
-        self.assertEqual(p.first_in_world_state, 'map')
+        p.step('unknown', ACQUIRED, 1)
+        p.step('map', ACQUIRED, 2)
+        p.step('gameplay', IN_WORLD, 3)
+        self.assertEqual((p.first_player_state, p.first_in_world_state), ('unknown', 'gameplay'))
 
     def test_classify_gameplay_hud_before_legacy(self):
         legacy = lambda text: ('map', 50)
@@ -95,13 +103,14 @@ class NavigateTests(unittest.TestCase):
     def test_full_startup_sequence_enters_with_native_confirmation(self):
         frames = [('unknown', {'error': 'ConnectionRefusedError'}), ('unknown', {'ready': False}),
                   ('title', {'ready': True, 'advancing': True, 'player_error': 'no_player'}),
-                  ('unknown', NO_PLAYER), ('offline_notice', NO_PLAYER), ('map', IN_WORLD),
-                  ('gameplay', IN_WORLD), ('gameplay', IN_WORLD)]
+                  ('unknown', NO_PLAYER), ('unknown', ACQUIRED), ('offline_notice', ACQUIRED), ('map', ACQUIRED),
+                  ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)]
         result, game = self.run_frames(frames)
         self.assertEqual(result['outcome'], 'entered')
         self.assertTrue(result['gameplay_hud_observed'] and result['gameplay_native_verified'])
         self.assertEqual([s for _, s in game.sent], [28, 28, 50])
-        self.assertEqual(result['first_player_in_world_screen'], 'map')
+        self.assertEqual(result['first_player_acquired_screen'], 'unknown')
+        self.assertIsNone(result['first_player_in_world_screen'])
         self.assertFalse(result['gameplay_inputs_sent'])
 
     def test_hud_without_player_exhausts_budget_without_inputs(self):

@@ -4675,3 +4675,10 @@ automates recognized screens; it does not bypass them. Trace the native
 continue/map-confirm transition and readiness conditions before proposing an
 API. This belongs to loader/testbench lifecycle work and remains separate from
 scheduler ordering. Do not skip initialization merely to hide startup screens.
+
+Startup entry prototype: `run_late_load.py --navigator native` uses existing
+menu transitions gated by the startup-loaded host. No supported skip option or
+exposed flow command was found statically. Live: three inputs reached the HUD at
+124 s, and the player was acquired during loading, before the map. The first gate
+wrongly required IN_WORLD (idle spawn lacks it) and is corrected; that correction
+is replay-checked only. See [startup entry](../native/snow_host/STARTUP_ENTRY.md).

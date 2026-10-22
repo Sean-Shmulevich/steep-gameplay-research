@@ -1,0 +1,49 @@
+{
+  "kind": "startup_entry_live_attempt",
+  "date": "2026-10-22",
+  "command": "run_late_load.py --experiment host --load-at startup --navigator native --plan demo",
+  "outcome": "navigation_not_accepted",
+  "reason": "native gate required IN_WORLD; idle spawned rider reported valid flags without IN_WORLD for 77 s",
+  "host_startup_verified": true,
+  "host_started_without_visible_window": true,
+  "inputs": [
+    {
+      "t": 83.0,
+      "state": "title",
+      "scan": 28,
+      "ok": true
+    },
+    {
+      "t": 101.4,
+      "state": "offline_notice",
+      "scan": 28,
+      "ok": true
+    },
+    {
+      "t": 114.1,
+      "state": "map",
+      "scan": 50,
+      "ok": true
+    }
+  ],
+  "timeline_seconds_from_navigation_start": {
+    "host_command_service_answered": 25.7,
+    "host_ready": 36.5,
+    "world_step_advancing": 42.4,
+    "title_recognized": 83.0,
+    "player_acquired_valid_flags": 96.4,
+    "player_acquired_screen": "unknown",
+    "offline_notice_recognized": 101.4,
+    "map_recognized": 114.1,
+    "gameplay_hud_recognized": 123.5
+  },
+  "in_world_observed": false,
+  "gameplay_inputs_sent": false,
+  "host_plan_run": false,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "corrected_gate_offline_replay": "accepts at 126.1 s (frame 60); not live proof"
+}
