@@ -4239,3 +4239,14 @@ spin and rigid angular momentum, failed-publication atomicity, stale tokens and
 HTTP/command replay. Full suite: 1,633 tests passed in 18.322 seconds with the
 scoped macOS 26.5 SDK workaround. Packaging verification passed. No live impulse
 submission was attempted by this change.
+
+### Composed snow jump inspection
+
+`python3 -m engine.snow_jump_bench engine/examples/snow_jump_input.json` now
+connects caller-supplied sampled curves to the validated local jump state machine
+and central-impulse body arithmetic. The output includes ordered requests and
+before/after scalar/body state. Four integration tests cover the multi-update
+sequence, no input mutation, spin preservation, absent rider and suppressed
+velocity writes with retained countdown reset. The example, serial orchestration
+and supplied release/contact/mass inputs are authored. Original input production,
+profile selection, body solving and animation remain outside this bench.

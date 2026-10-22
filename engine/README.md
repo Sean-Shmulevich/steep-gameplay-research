@@ -676,3 +676,31 @@ not simulate a separate coupled rider, original runtime locking, or native callb
 scheduling. Impulse is applied once, with no extra timestep multiplier. This is
 separate from the live host's speed setter, which resets spin. Evidence:
 [central impulse contract](../docs/reconstruction/CENTRAL_IMPULSE.md#recovered-routine-contract).
+
+## Snow jump inspection bench
+
+```sh
+python3 -m engine.snow_jump_bench engine/examples/snow_jump_input.json --output /tmp/snow-jump-result.json
+```
+
+This offline bench composes the recovered compiled-curve evaluator, stateful
+jump branch and central-impulse arithmetic. It reports per-update gains, branch,
+scalar state, ordered body requests and before/after linear and angular values.
+The example is explicitly authored synthetic data, not an extracted profile.
+
+Provide initial cached factor/countdown, one main body and optional rider body,
+three sampled curves, configuration masses/base/gravity, and a sequence of
+elapsed interval, release signal, air time, contact depth and projected speed.
+Combined mass is supplied explicitly; the bench does not infer it from profile
+rider mass. Curves are compiled once and evaluated for inspection on each row;
+those diagnostic evaluations do not assert that the original branch visited them.
+
+The bench applies requests serially to its own body dictionaries, preserving
+float32 ordering and suppression gates. It does not integrate gravity, solve
+contacts/constraints, generate release signals, animate a rider, or call backend
+dispatch. Spin preservation here covers central arithmetic only. The browser
+prototype retains its labeled synthetic jump policy; this bench does not silently
+replace that policy or invent missing live profile selection.
+
+See the [stateful jump evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#stateful-jump-consumer)
+and [instruction comparison](../native/snow_host/jump_branch_validation.json).
