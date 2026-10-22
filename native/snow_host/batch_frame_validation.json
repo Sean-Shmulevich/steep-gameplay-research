@@ -1,0 +1,93 @@
+{
+  "evidence": "original_outer_loop_and_batch_prologue_epilogue_emulation",
+  "cases": 12,
+  "passed": true,
+  "game_process": false,
+  "batch_code_sha256": "f8d4c7a92188be9c0e2634d5049a0731dc9f36af6e0b290bc0a3b305d1cfcc48",
+  "job_relative_frame_offsets": {
+    "caller_return": 7000,
+    "timing_owner": 7008,
+    "saved_loop_ordinal": 7024
+  },
+  "code_sha256": "e30572206cf93a3d86c6ef609512613fa2ab33fc54b11e1a2618c4287ab2e6c1",
+  "rows": [
+    {
+      "initial_count": 0,
+      "count_written_at_second_batch": null,
+      "iterations": 0,
+      "counter_wrapped": false
+    },
+    {
+      "initial_count": 0,
+      "count_written_at_second_batch": null,
+      "iterations": 0,
+      "counter_wrapped": true
+    },
+    {
+      "initial_count": 1,
+      "count_written_at_second_batch": null,
+      "iterations": 1,
+      "counter_wrapped": false
+    },
+    {
+      "initial_count": 1,
+      "count_written_at_second_batch": null,
+      "iterations": 1,
+      "counter_wrapped": true
+    },
+    {
+      "initial_count": 2,
+      "count_written_at_second_batch": null,
+      "iterations": 2,
+      "counter_wrapped": false
+    },
+    {
+      "initial_count": 2,
+      "count_written_at_second_batch": null,
+      "iterations": 2,
+      "counter_wrapped": true
+    },
+    {
+      "initial_count": 5,
+      "count_written_at_second_batch": null,
+      "iterations": 5,
+      "counter_wrapped": false
+    },
+    {
+      "initial_count": 5,
+      "count_written_at_second_batch": null,
+      "iterations": 5,
+      "counter_wrapped": true
+    },
+    {
+      "initial_count": 5,
+      "count_written_at_second_batch": 1,
+      "iterations": 1,
+      "counter_wrapped": false
+    },
+    {
+      "initial_count": 5,
+      "count_written_at_second_batch": 1,
+      "iterations": 1,
+      "counter_wrapped": true
+    },
+    {
+      "initial_count": 1,
+      "count_written_at_second_batch": 3,
+      "iterations": 3,
+      "counter_wrapped": false
+    },
+    {
+      "initial_count": 1,
+      "count_written_at_second_batch": 3,
+      "iterations": 3,
+      "counter_wrapped": true
+    }
+  ],
+  "limits": [
+    "Gather count supplied; constructor, submission, wait, worker and backend bodies bypassed.",
+    "Optional profiler branches disabled.",
+    "Count mutation is synthetic and does not establish a native writer.",
+    "No input sampling, actor membership or concurrency proof."
+  ]
+}

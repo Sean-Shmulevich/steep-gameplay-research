@@ -356,3 +356,66 @@ ingestion. The entry shim and actor/job/record link have now been exercised in
 the original process. That does not establish full scheduler reconstruction,
 universal no-overlap behavior, safe arbitrary-thread mutation or deterministic
 replay.
+
+
+## Direct outer-loop ordinal in the batch frame
+
+The live job pointer provides a build-specific route back to the batch caller's
+saved registers. Let S be stack pointer at entry to the first actor-batch routine.
+Its prologue saves RBX at S+8 and RDI at S+24, pushes three registers, sets
+RBP=S-24-0x1ae0, and constructs the local job at RBP-0x60. Thus job=S-0x1b58.
+For the inspected outer world-loop call site, RBX is the timing owner and EDI is
+the zero-based loop ordinal. The batch saves these before using its own registers.
+
+```text
+batch_entry_rsp = job + 0x1b58
+caller_return  = read_u64(job + 0x1b58)
+timing_owner   = read_u64(job + 0x1b60)  # saved outer RBX
+loop_ordinal   = read_u64(job + 0x1b70)  # saved outer RDI
+```
+
+The expected caller return is the instruction immediately following the first
+actor-batch call in the outer loop, `141389ad8` in this analyzed image. This check
+must precede interpreting the saved registers. It is distinct from the visitor
+return address already checked at actor entry.
+
+The [instruction receipt](../../native/snow_host/batch_frame_validation.json)
+executes the original outer loop plus original batch prologue and epilogue in
+12 scenarios. At the constructor call, its RCX supplies the actual job address.
+The test reads the derived stack locations and verifies the caller return,
+timing-owner pointer, owner-to-world link and ordinal sequence. It covers zero,
+one, two and five iterations, synthetic count changes, and outer counter wrap.
+A supplied gather count makes the constructor reachable. Construction, submission,
+wait, actor execution and backend calls are bypassed; this is a frame-layout join,
+not a concurrent or live-frame read. No frame offsets were inferred by scanning
+for plausible pointer values.
+
+A bounded future observation can join these reads with:
+
+```text
+require caller_return == verified_outer_loop_return
+require timing_owner points to the already attributed world
+selected_count = read_u32(timing_owner + 0x1390)
+require loop_ordinal fits uint32 and loop_ordinal < selected_count
+elapsed_bits  = read_u32(timing_owner + 0x1394)
+consumed_bits = read_u32(timing_owner + 0x136c)
+outer_counter = read_u64(world + 0x20)
+```
+
+Compare both scalar bit patterns with the callback arguments and bracket all
+identity/control reads. The outer counter here is the loop's own completion
+counter; do not silently identify it with the existing trace's request field,
+which came from a separately resolved started counter. Their live relationship
+needs measurement. Likewise, the ordinal would be a direct observation of the
+outer loop index for this call route, not a globally unique invocation ID.
+
+The first batch's explicit wait keeps its caller frame active while ordinary
+workers execute. That provides a conditional lifetime argument for this route,
+but the memory-reader must still reject bad addresses, changed links, unexpected
+callers and mismatched world identity. A different batch caller invalidates this
+saved-register interpretation. Game exceptions, alternate entry routes and
+reentrant worlds remain outside the checked cases.
+
+This is the next attribution extension to implement and test before another live
+capture. The existing live receipt contains no such saved-register reads and
+must continue to report direct native substep indexing unavailable.

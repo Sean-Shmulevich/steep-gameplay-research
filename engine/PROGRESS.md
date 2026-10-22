@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Direct substep lead: original outer-loop plus batch-frame instructions passed
+12 cases locating the saved timing owner and zero-based loop ordinal relative to
+the now-observable job pointer. This has not been read live. Next: guarded frame
+reader, matching caller/world/scalar checks, then a bounded live ordinal capture.
+See [batch frame](../docs/reconstruction/SNOW_BATCH_DISPATCH.md#direct-outer-loop-ordinal-in-the-batch-frame).
+
 Live actor-to-job attribution passed: 221/221 calls, zero drops, restoration/drain
 and session cleanup passed. Ten job addresses; all five two-call request groups
 reused one job address within their request. A job pointer plus request is still
