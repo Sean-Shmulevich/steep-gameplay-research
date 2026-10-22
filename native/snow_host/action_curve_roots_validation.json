@@ -1,0 +1,23 @@
+{
+  "evidence": "Original polynomial solver and degree fallbacks, portable runtime math supplied",
+  "cases": 1441,
+  "passed": true,
+  "comparison": "Exact ordered root bytes, root count and ordered runtime-math arguments",
+  "paths": {
+    "lower_degree_0_roots": 17,
+    "lower_degree_1_roots": 28,
+    "lower_degree_2_roots": 36,
+    "cubic_1_roots": 1055,
+    "cubic_3_roots": 305
+  },
+  "excluded_zero_divisor_cases": 2,
+  "substitutions": [
+    "sqrt, acos, cos and power use Python math rounded to float32 in both original emulator and reconstruction"
+  ],
+  "limits": [
+    "Original CRT transcendental implementations not validated",
+    "Zero-divisor and non-finite intermediate behavior excluded",
+    "No live curve parameters or gameplay equivalence"
+  ],
+  "game_process": false
+}

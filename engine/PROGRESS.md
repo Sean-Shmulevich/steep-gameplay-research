@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Ordered cubic/quadratic/linear root solver reconstructed: 1,441 offline
+original-instruction cases match root bytes, counts and runtime-math call
+arguments with shared portable math callbacks. Root ordering and the quadratic
+near-zero tolerance are preserved. Original CRT math and two excluded cubic
+zero-divisor cases remain open, along with live curve parameters and clock
+units. No game access used. See
+[ordered curve roots](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#ordered-curve-roots).
+
 Keyed ramp curve selection and interpolation now match 2,100 offline
 original-instruction cases, including exact output bits and cubic coefficients.
 Constant/linear paths execute directly; cubic cases supply ordered solver

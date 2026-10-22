@@ -1947,3 +1947,69 @@ execute in the emulator. Fixtures cover repeated positions, endpoint queries,
 short linear intervals, unknown modes, clamps and zero through three roots.
 No live process was used. The actual root algorithm at RVA `0x11822d0`, its
 quadratic fallback, active curve contents and clock units remain unresolved.
+
+## Ordered curve roots
+
+[`action_curve_roots.py`](../../engine/action_curve_roots.py) reconstructs the
+solver at RVA `0x11822d0` and quadratic fallback `0x1182500`. The interface
+accepts coefficients `(d,c,b,a)` for `d+c*t+b*t²+a*t³`, returning roots in the
+original output order. It has no state or clock. All arithmetic rounds after
+each float32 operation; the quadratic tolerance comparisons use double
+constants. Inputs and intermediate arithmetic must remain finite. Runtime
+`sqrt`, `acos`, `cos` and `power` are explicit caller dependencies.
+
+When a is exactly zero, the quadratic path sets `h=c/(2*b)` and
+`D=h*h-d/b`. If b is also exactly zero, it returns `-d/c` for nonzero c,
+otherwise no roots, including the all-zero polynomial. Quadratic behavior:
+
+```text
+D < -0.0001: return []
+D < +0.0001: return [-h]
+otherwise:  return [sqrt(D)-h, -sqrt(D)-h]
+```
+
+The interval is intentional recovered behavior, not a mathematical claim that
+a slightly negative discriminant has a real root. The two-root output is
+larger first, smaller last. Signed zero from negation is preserved.
+
+For a nonzero cubic coefficient, normalize `B=b/a`, `C=c/a`, `D=d/a`.
+The following is algebraic shorthand; use the implementation for exact
+float32 ordering:
+
+```text
+Q = (B*B - 3*C)/9
+R = (2*B*B*B - 9*B*C + 27*D)/54
+delta = R*R - Q*Q*Q
+if delta <= 0:
+    theta = acos(clamp(R/sqrt(Q*Q*Q), -1, 1))
+    scale = -2*sqrt(Q)
+    return [scale*cos(theta/3)-B/3,
+            scale*cos((theta+float32(2*pi))/3)-B/3,
+            scale*cos((theta+float32(4*pi))/3)-B/3]
+else:
+    U = power(abs(R)+sqrt(delta), float32(1/3))
+    sign = +1 if R < 0 else -1
+    return [sign*(Q/U+U)-B/3]
+```
+
+Roots are not sorted or deduplicated. In particular, the cubic curve consumer
+chooses the third result on the trigonometric path. The exponent is rounded
+float32 one-third; replacing `power` with an exact cube-root operation would
+change the implementation. Zero Q/R can cause a zero divisor in the original
+trigonometric path. The portable kernel rejects this case explicitly rather
+than inventing a triple-root repair. Original non-finite behavior remains an
+open boundary.
+
+To compose with the key evaluator, supply `solve_roots` using a partial of
+`ordered_curve_roots` with the four runtime-math callbacks. Tests demonstrate
+this with Python `math` callbacks, which are labeled portable fixtures. No
+claim is made that these callbacks reproduce the original CRT bit-for-bit.
+
+The [solver receipt](../../native/snow_host/action_curve_roots_validation.json)
+records 1,441 matching original-instruction cases: 81 lower-degree and 1,360
+cubic cases. Ordered root bytes, root count, and the order and exact float32
+arguments of runtime-math calls match. Both the emulator and reconstruction
+use the same supplied Python math callbacks. Two zero-divisor cases are
+explicitly excluded. This resolves solver branch arithmetic and root ordering
+within that contract; original runtime-math implementations, non-finite cases,
+active curve keys and physical clock units still require work.
