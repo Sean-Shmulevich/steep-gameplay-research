@@ -10174,3 +10174,27 @@ raw inputs and clocks. In that example the constant-one lookup fixture reached
 cooked zero on frame four; the reconstructed table reaches it on frame five.
 That difference demonstrates the effect of decay arithmetic in the composed
 model. It does not establish the original game's jump latency.
+
+
+### Stateful cooker with reconstructed lookup
+
+The [joined cooker comparison](../../native/snow_host/input_cooker_joined_validation.json)
+executes the original cooker and lookup without intercepting the lookup call.
+It loads the independently reconstructed default table, previously checked
+against the complete original builder for the SSE scalar path. Only the floor
+helper remains intercepted.
+
+Twenty-four synthetic sequences cover six coefficient profiles and four interval
+patterns, including 30, 60 and 120 Hz and a varying interval sequence. Across
+6,144 consecutive frames, output float32 bytes and lookup arguments match exactly.
+There are 4,995 ToZero and 1,149 ToOne visits, with 960 lookup arguments below the
+padded domain. Each sequence retains the prior native result; it does not reset
+filter state at every comparison. The receipt records zero transitions and
+target-hit counts per scenario. Raw-device mapping, release/jump execution,
+native cadence and live floating-point mode are not tested here.
+
+`engine.physics.step` now uses this float32 cooker and reconstructed default
+decay for steering. Its coefficients 0/12 and 0/9, clock choice, target mapping
+and subsequent turning policy remain authored. Diagnostics expose the cooker
+branch, lookup argument/result and step. The historical `reference.snow.cooker`
+remains available as the earlier approximation; the engine no longer calls it.

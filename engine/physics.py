@@ -1,7 +1,8 @@
 """Independent snow/walking vertical slice; Z up, metres and seconds.
 
-Recovered local kernels: reference.snow contact_forces, cooker, preset_weight,
-and rider_spring. Point contact geometry, constraints, steering/edge policies,
+Recovered local kernels: reference.snow contact_forces, preset_weight,
+and rider_spring; reference.input_cooker with reconstructed default decay.
+Point contact geometry, constraints, steering/edge policies,
 material scaling, jump energy, landing classifier, integration and ALL default
 settings below are synthetic design choices. They are not original game rules.
 The absorption spring is visual state only; it never injects body momentum.
@@ -9,6 +10,12 @@ The absorption spring is visual state only; it never injects body momentum.
 import copy
 import math
 from reference import snow
+from reference.input_cooker import cook
+from reference.decay_exp import cooker_table
+from reference.runtime_curve import evaluate
+
+# Fixed reconstructed SSE paths are a host choice, not live CPU detection.
+_STEERING_DECAY = cooker_table(vector_path='sse2', scalar_path='sse2')
 
 DEFAULTS = dict(gravity=9.81, push_acceleration=1.2, brake_deceleration=8.0,
                 edge_response=5.0, turn_rate=1.5, jump_speed=2.0,
@@ -116,9 +123,11 @@ def step(body, controls, world, dt, config):
     lean = float(controls.get('lean', 0))
     if max(abs(raw), abs(flip), abs(lean)) > 1:
         raise ValueError('control axis outside [-1,1]')
-    state['steer'] = snow.cooker(state['steer'], raw, dt,
+    cooker_result = cook(state['steer'], raw, dt,
         dict(baseDampFactorToZero=0., proportionalDampFactorToZero=12.,
-             baseDampFactorToOne=0., proportionalDampFactorToOne=9.))
+             baseDampFactorToOne=0., proportionalDampFactorToOne=9.),
+        decay_lookup=lambda argument: evaluate(argument, **_STEERING_DECAY))
+    state['steer'] = cooker_result['value']
     steer = state['steer']
     height, n, material, support_velocity = _sample(world, p)
     rel = sub(v, support_velocity)
@@ -213,8 +222,9 @@ def step(body, controls, world, dt, config):
     body.clear()
     body.update(b)
     return dict(sport=sport, events=events, speed=norm(v), grounded=grounded,
-        control_blend=speed_blend, steering=steer, contact_impulse=list(contact_impulse),
+        control_blend=speed_blend, steering=steer, steering_cooker=cooker_result, contact_impulse=list(contact_impulse),
         absorption=a, material=material.get('name', 'unnamed'),
         evidence=dict(kernels='recovered local reference math',
                       controller='synthetic independent implementation',
+                      steering_filter='recovered float32 cooker and default SSE decay; synthetic coefficients and cadence',
                       landing='synthetic thresholds; no original classifier claim'))

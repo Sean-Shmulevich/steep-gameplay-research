@@ -4265,3 +4265,10 @@ for both vector paths with the scalar SSE endpoint. The jump bench exposes this
 as an explicit reconstructed-default mode. Scalar FMA attempts failed on an
 unsupported emulator instruction and remain unverified; live CPU/floating-point
 settings and native input scheduling are still open.
+
+
+Steering runtime update: original cooker plus original lookup matched 6,144
+stateful frames using the reconstructed default table. The independent runtime
+now uses those recovered filter semantics instead of the historical double
+approximation. Controller tuning and scheduling remain authored. Added per-step
+filter diagnostics and a stateful reversal integration test.

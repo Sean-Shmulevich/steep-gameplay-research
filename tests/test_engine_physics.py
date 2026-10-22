@@ -118,3 +118,23 @@ class PhysicsTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class ReconstructedSteeringTests(unittest.TestCase):
+    def test_runtime_retains_exact_cooker_state_across_reversal(self):
+        from reference.input_cooker import cook
+        from reference.decay_exp import cooker_table
+        from reference.runtime_curve import evaluate
+        table=cooker_table(vector_path='sse2',scalar_path='sse2')
+        coefficients=dict(baseDampFactorToZero=0.,proportionalDampFactorToZero=12.,
+                          baseDampFactorToOne=0.,proportionalDampFactorToOne=9.)
+        body=rider(); value=0.
+        for target in [1]*20+[-1]*20+[0]*120:
+            expected=cook(value,target,1/60,coefficients,
+                          decay_lookup=lambda x:evaluate(x,**table))
+            result=step(body,{'steer':target},Plane(),1/60,{})
+            self.assertEqual(result['steering_cooker'],expected)
+            self.assertEqual(body['_snow_physics']['steer'],expected['value'])
+            self.assertIn('synthetic coefficients',result['evidence']['steering_filter'])
+            value=expected['value']
+        self.assertEqual(value,0)

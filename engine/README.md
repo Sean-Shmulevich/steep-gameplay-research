@@ -770,3 +770,13 @@ from reconstructed arithmetic and mathematically generated mantissas.
 `decay_configuration` in the result records the selection. Supplied-sample mode
 remains available. The new example submits on frame five and enters cooldown on
 frame six; its coefficients and scenario are still authored synthetic data.
+
+
+Ground-sport steering now uses `reference.input_cooker` and the reconstructed
+default SSE decay table. This replaces the earlier double-precision filter in
+`engine.physics`; small trajectory/hash changes relative to older versions are
+expected. The fixed CPU path is a reconstruction choice. The coefficients,
+control cadence and turn policy remain synthetic. Physics diagnostics include
+`steering_cooker` with direction, lookup argument/result, step and final value.
+Old checkpoints retain their stored steering value and continue with the new
+arithmetic; reproducing an older version's exact trajectory requires that version.

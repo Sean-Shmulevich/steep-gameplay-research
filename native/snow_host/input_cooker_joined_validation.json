@@ -1,0 +1,444 @@
+{
+  "evidence": "stateful original cooker and original lookup with reconstructed instruction-validated table",
+  "game_process": false,
+  "sequences": [
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 10,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 2,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.03333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        33,
+        128,
+        192
+      ],
+      "target_hit_frames": 240
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 10,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 2,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.016666666666666666
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        34,
+        129,
+        192
+      ],
+      "target_hit_frames": 194
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 10,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 2,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.008333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        37,
+        131,
+        192
+      ],
+      "target_hit_frames": 125
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 10,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 2,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.003,
+        0.017,
+        0.045,
+        0.008
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        34,
+        130,
+        192
+      ],
+      "target_hit_frames": 187
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 5
+      },
+      "cadence": [
+        0.03333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        45,
+        140,
+        192
+      ],
+      "target_hit_frames": 103
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 5
+      },
+      "cadence": [
+        0.016666666666666666
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        59,
+        153,
+        192
+      ],
+      "target_hit_frames": 76
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 5
+      },
+      "cadence": [
+        0.008333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        192
+      ],
+      "target_hit_frames": 48
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 20,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 5
+      },
+      "cadence": [
+        0.003,
+        0.017,
+        0.045,
+        0.008
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        58,
+        150,
+        192
+      ],
+      "target_hit_frames": 80
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 25,
+        "proportionalDampFactorToZero": 1,
+        "baseDampFactorToOne": 25,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.03333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        33,
+        128,
+        192
+      ],
+      "target_hit_frames": 251
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 25,
+        "proportionalDampFactorToZero": 1,
+        "baseDampFactorToOne": 25,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.016666666666666666
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        34,
+        129,
+        192
+      ],
+      "target_hit_frames": 244
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 25,
+        "proportionalDampFactorToZero": 1,
+        "baseDampFactorToOne": 25,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.008333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        36,
+        130,
+        192
+      ],
+      "target_hit_frames": 232
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 25,
+        "proportionalDampFactorToZero": 1,
+        "baseDampFactorToOne": 25,
+        "proportionalDampFactorToOne": 1
+      },
+      "cadence": [
+        0.003,
+        0.017,
+        0.045,
+        0.008
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        34,
+        129,
+        192
+      ],
+      "target_hit_frames": 245
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0.001,
+        "proportionalDampFactorToZero": 0.1,
+        "baseDampFactorToOne": 0.002,
+        "proportionalDampFactorToOne": 0.2
+      },
+      "cadence": [
+        0.03333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [],
+      "target_hit_frames": 0
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0.001,
+        "proportionalDampFactorToZero": 0.1,
+        "baseDampFactorToOne": 0.002,
+        "proportionalDampFactorToOne": 0.2
+      },
+      "cadence": [
+        0.016666666666666666
+      ],
+      "frames": 256,
+      "zero_transition_frames": [],
+      "target_hit_frames": 0
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0.001,
+        "proportionalDampFactorToZero": 0.1,
+        "baseDampFactorToOne": 0.002,
+        "proportionalDampFactorToOne": 0.2
+      },
+      "cadence": [
+        0.008333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [],
+      "target_hit_frames": 0
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0.001,
+        "proportionalDampFactorToZero": 0.1,
+        "baseDampFactorToOne": 0.002,
+        "proportionalDampFactorToOne": 0.2
+      },
+      "cadence": [
+        0.003,
+        0.017,
+        0.045,
+        0.008
+      ],
+      "frames": 256,
+      "zero_transition_frames": [],
+      "target_hit_frames": 0
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 1,
+        "proportionalDampFactorToZero": 2000,
+        "baseDampFactorToOne": 1,
+        "proportionalDampFactorToOne": 2000
+      },
+      "cadence": [
+        0.03333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        32,
+        128,
+        192
+      ],
+      "target_hit_frames": 256
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 1,
+        "proportionalDampFactorToZero": 2000,
+        "baseDampFactorToOne": 1,
+        "proportionalDampFactorToOne": 2000
+      },
+      "cadence": [
+        0.016666666666666666
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        32,
+        128,
+        192
+      ],
+      "target_hit_frames": 256
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 1,
+        "proportionalDampFactorToZero": 2000,
+        "baseDampFactorToOne": 1,
+        "proportionalDampFactorToOne": 2000
+      },
+      "cadence": [
+        0.008333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        32,
+        128,
+        192
+      ],
+      "target_hit_frames": 256
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 1,
+        "proportionalDampFactorToZero": 2000,
+        "baseDampFactorToOne": 1,
+        "proportionalDampFactorToOne": 2000
+      },
+      "cadence": [
+        0.003,
+        0.017,
+        0.045,
+        0.008
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        32,
+        128,
+        192
+      ],
+      "target_hit_frames": 255
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 0,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 0
+      },
+      "cadence": [
+        0.03333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        192
+      ],
+      "target_hit_frames": 128
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 0,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 0
+      },
+      "cadence": [
+        0.016666666666666666
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        192
+      ],
+      "target_hit_frames": 128
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 0,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 0
+      },
+      "cadence": [
+        0.008333333333333333
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        192
+      ],
+      "target_hit_frames": 128
+    },
+    {
+      "coefficients": {
+        "baseDampFactorToZero": 0,
+        "proportionalDampFactorToZero": 0,
+        "baseDampFactorToOne": 0,
+        "proportionalDampFactorToOne": 0
+      },
+      "cadence": [
+        0.003,
+        0.017,
+        0.045,
+        0.008
+      ],
+      "frames": 256,
+      "zero_transition_frames": [
+        192
+      ],
+      "target_hit_frames": 128
+    }
+  ],
+  "exact_frame_outputs": 6144,
+  "lookup_argument_matches": 6144,
+  "branches": {
+    "ToZero": 4995,
+    "ToOne": 1149
+  },
+  "low_clamped_arguments": 960,
+  "limitations": [
+    "Default table from verified SSE scalar/vector factory, not a live memory read",
+    "Floor helper intercepted for finite nonnegative indices",
+    "Synthetic inputs and caller-chosen cadence; device mapping and native scheduling excluded",
+    "Release/jump routines not executed in this comparison"
+  ],
+  "source_sha256": "76d485e4c3f74b58a530201975443da41f9a3cf62dc3fd437fb6b070512d0b8f"
+}
