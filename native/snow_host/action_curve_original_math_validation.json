@@ -1,0 +1,56 @@
+{
+  "evidence": "Offline full original polynomial solver and original runtime math; independent solver also evaluated with original math callbacks",
+  "cases": 1441,
+  "original_math_callback_comparison_mismatches": 0,
+  "portable_math_comparison_mismatches": 6,
+  "math_calls": {
+    "sqrt": 1703,
+    "power": 1055,
+    "acos": 305,
+    "cos": 915
+  },
+  "math_difference_counts": {
+    "acos": 9,
+    "cos": 1
+  },
+  "runtime_dispatch_flag": 0,
+  "triple_root_cases": [
+    {
+      "coefficients": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "root_count": 3,
+      "all_root_bits": "0xffc00000"
+    },
+    {
+      "coefficients": [
+        0,
+        0,
+        0,
+        -1
+      ],
+      "root_count": 3,
+      "all_root_bits": "0xffc00000"
+    },
+    {
+      "coefficients": [
+        -1,
+        3,
+        -3,
+        1
+      ],
+      "root_count": 3,
+      "all_root_bits": "0xffc00000"
+    }
+  ],
+  "game_process": false,
+  "limits": [
+    "Only current offline image runtime dispatch state tested",
+    "Original math callbacks execute private original instructions; not portable implementations",
+    "Finite-intermediate production API still rejects triple-root zero-divisor path",
+    "No original-game runtime environment or live curve parameters verified"
+  ]
+}

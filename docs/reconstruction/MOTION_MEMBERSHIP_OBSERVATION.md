@@ -2013,3 +2013,37 @@ use the same supplied Python math callbacks. Two zero-divisor cases are
 explicitly excluded. This resolves solver branch arithmetic and root ordering
 within that contract; original runtime-math implementations, non-finite cases,
 active curve keys and physical clock units still require work.
+
+### Original runtime-math comparison
+
+The original math routines can execute offline from the private image. A second
+validation now executes the complete original solver without substituted calls.
+A separate emulator evaluates the original math routines as callbacks for the
+independent solver. All 1,441 finite-intermediate cases match exact ordered
+root bytes and count when those original callbacks are supplied.
+
+This does **not** make the public Python math fixtures bit-equivalent. Comparing
+the same complete original solver with Python math callbacks produced six
+root-output mismatches. At the individual callback boundary, nine `acos` calls
+and one `cos` call differed. The 1,703 sampled square-root and 1,055 power calls
+matched; these counts are observations on this corpus, not proofs over their
+full input domains. Small math-result differences can be amplified by the
+subtraction used to construct roots. Sorting roots or tolerating an arbitrary
+epsilon would hide rather than resolve this difference.
+
+The offline image's runtime dispatch flag is zero. Other CPU-selected math
+paths and the live game's initialized dispatch state have not been verified.
+The public independent solver still requires explicit math callbacks; original
+instruction bytes and emulator images remain private. The next portable-math
+work should target `acos` and `cos` arithmetic on their curve-use domains.
+
+Three separate probes also executed the original zero-divisor path for
+coefficient sequences `(0,0,0,1)`, `(0,0,0,-1)` and `(-1,3,-3,1)`. Each returned
+count three with every root equal to the negative quiet-NaN bit pattern
+`0xffc00000`, under the emulator's current floating-point environment. A
+mathematically repaired triple-root return would differ from this observed
+behavior. The independent API intentionally keeps these cases outside its
+finite-intermediate contract. NaN propagation through the complete curve
+consumer and other floating-point environments remains unverified.
+
+See [original-math comparison receipt](../../native/snow_host/action_curve_original_math_validation.json).

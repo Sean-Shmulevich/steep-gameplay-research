@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Original CRT routines now execute offline. With original math callbacks, the
+independent root solver matches all 1,441 complete-original cases. Python math
+fixtures differ in six root outputs; isolated differences are in acos/cos.
+Three original triple-root probes return three NaNs, confirming the excluded
+edge path. Runtime dispatch variants and portable acos/cos fidelity remain
+open. See [original math comparison](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#original-runtime-math-comparison).
+
 Ordered cubic/quadratic/linear root solver reconstructed: 1,441 offline
 original-instruction cases match root bytes, counts and runtime-math call
 arguments with shared portable math callbacks. Root ordering and the quadratic
