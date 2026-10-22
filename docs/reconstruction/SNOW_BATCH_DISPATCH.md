@@ -182,3 +182,43 @@ forward the original call exactly once. The snapshot pointer must not escape
 the dispatch lifetime. Exceptions and nonlocal exits are outside the tested
 normal-return contract. This proves adapter calling-convention behavior under
 emulation, not Wine integration, native job lifetime or batch-generation identity.
+
+
+## Guarded entry attribution decoder
+
+[snow_entry_attribute](../../native/snow_host/snow_entry_attribution.h) accepts
+captured entry registers, the actor argument, an externally verified build
+profile and an exact-read callback. It checks the return address before any
+memory read, then checks job table, job record-array base and initial count,
+callable pointer/table, range-pointer slot, actor table and selected record.
+The selected record must have tag zero and the same actor pointer. Range offset
+and index must fit the initial record count and 16-byte record alignment.
+
+The initial count comes from job+0x1a4, initialized alongside remaining count
+job+0x1a0 by the inspected batch constructor call site. The decoder deliberately
+does not bound records by remaining count: claimed callbacks can execute after
+remaining reaches zero. The supplied profile holds build-specific expected
+tables and caller return address; this module does not guess them or acquire a
+player. Combined count beyond 0x3fff is rejected as an authored domain bound.
+
+The decoder repeats its observations and rejects differences. It clears all
+output on failure, bounds address arithmetic against uint64 overflow, makes at
+most 18 exact reads, and performs no game writes. This bracket check cannot detect
+ABA or pin a job, actor or record array. Successful output means the observations
+matched this route, not that object lifetime or concurrent writer exclusion was
+proved. Job and record addresses are private trace data and do not identify a
+fresh batch invocation by themselves.
+
+The native fixture exercises a shifted claimed range and index, each of the 18
+read failures, changes to all nine observed fields between passes, wrong return
+route, misalignment, out-of-range and overflowing indices, zero/excess count and
+address overflow. All failed cases produce zero output. Run it with:
+
+```sh
+python3 -m unittest tests.test_snow_update_trace.SnowUpdateTraceTests.test_entry_attribution -v
+```
+
+This decoder remains separate from the live recorder. Integration must copy the
+result before forwarding, record failed attribution explicitly, and preserve
+exactly-once forwarding regardless of attribution success. The original call
+must never depend on a successful optional observation.

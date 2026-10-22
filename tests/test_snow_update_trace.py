@@ -7,6 +7,9 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 
 class SnowUpdateTraceTests(unittest.TestCase):
+    def test_entry_attribution(self):
+        self.run_fixture("snow_entry_attribution")
+
     def test_native_capture_lifecycle(self):
         self.run_fixture("snow_update_trace")
 

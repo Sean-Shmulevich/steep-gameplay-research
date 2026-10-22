@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Guarded actor-entry decoder: added a bounded read-only check of caller, job,
+callable, actor and claimed record, with bracket rereads and zero output on
+failure. Native fixture covers every read failure, changing fields and range/
+overflow boundaries. Live recorder integration and batch generation remain open.
+See [entry decoder](../docs/reconstruction/SNOW_BATCH_DISPATCH.md#guarded-entry-attribution-decoder).
+
 Entry adapter fixture: an authored Win64 assembly adapter captures the entry
 registers before the C prologue. The compiled PE passed emulation checks for
 metadata/scalar forwarding, shadow-space separation, stack alignment and
