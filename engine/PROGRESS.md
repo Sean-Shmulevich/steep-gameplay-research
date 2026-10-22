@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Saved input-history flag joins a sticky input-change latch routine. Original
+instructions passed 192 cases covering threshold/history, external gates,
+suppression and NaNs. Independent float32 latch API added. Actual mode-6
+child-to-consumer dispatch, baseline/reset writers and final actuation remain
+open. See [latch evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#input-change-latch-consumer).
+
 Input-history flag consumer connected through original motion dispatch. Twenty
 cases validate the ordered predicate/scalar gates and copying into a later
 transition request; equality and NaN behavior preserved. Independent route API

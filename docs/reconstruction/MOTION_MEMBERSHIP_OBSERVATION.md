@@ -696,3 +696,61 @@ full-register assertion in the private harness was corrected to inspect the
 actual byte argument. No downstream transition body, physical impulse, animation
 change or live call ordering was exercised in this pass. The next useful trace
 is the consumer of motion `+0x47e` and the child handler selected by this request.
+
+## Input-change latch consumer
+
+A retained instruction export identified the next consumer of motion `+0x47e`
+at `0x1404f64e0`. Its full local routine now passed 192 original-instruction
+cases with supplied external setting/action gates. See
+[receipt](../../native/snow_host/input_latch_validation.json) and
+[executable latch math](../../engine/motion_input_latches.py).
+
+Two sticky latches contribute to the returned combined byte:
+
+```text
+if first_latch == 0:
+    distance_xy_squared = (baseline.x-current.x)^2 +
+                          (baseline.y-current.y)^2
+    retain_clear = (setting_gate or action_gate) and
+                   not_ordered_greater(distance_xy_squared, threshold) and
+                   (unsigned(first_nonzero_count) > 3 or action_gate)
+    first_latch = not retain_clear
+
+if second_latch == 0 and not secondary_suppressed:
+    distance_y_squared = (baseline_secondary.y-current_secondary.y)^2
+    second_latch = ordered_greater(distance_y_squared, threshold) or
+                   unsigned(second_nonzero_count) <= 3
+
+combined = first_latch or second_latch
+return combined
+```
+
+The operations use float32 subtraction, multiplication and addition. Equality
+does not satisfy greater-than. The inspected `JA` branches are also false for
+unordered float comparisons, so replacing the first test with an ordinary
+`distance <= threshold` changes NaN behavior. The independent API preserves
+that distinction. Counts are ingestion calls, not milliseconds or substeps.
+
+Build anchors: first/current vectors motion `+0x360` and baseline `+0x6e0`;
+secondary current Y `+0x374`, baseline Y `+0x704`; counts `+0x384/+0x388`;
+threshold profile `+0x68`; latches `+0x47e/+0x47f`; combined `+0x47d`.
+Secondary suppression is motion `+0x5d != 0 or +0x65 != 0`. It prevents updating
+the second latch here, while an already set latch remains set. The routine
+also zeroes its local secondary-vector copy under suppression.
+
+The setting gate comes from an external lookup with identifier `0x1519`. The
+action gate combines an actor/controller eligibility byte with an external
+query involving action IDs `0x7e` and `0x76`. Their user-facing meanings and
+service contracts remain unresolved. The optional call controlled by motion
+`+0x694` was disabled in this experiment. The baseline producers and external
+latch-reset writers were not tested.
+
+The matrix crossed both initial latch bits, setting/action gates, nonzero counts
+3/4, unchanged/changed/NaN input and secondary suppression. It validated both
+latch writes and the combined return. In this routine an already set latch never
+clears, explaining how the entry-time history flag can affect later processing
+even if the input changes afterward. This establishes an input-change gate,
+not the final force, trick, animation or collision behavior. The transition
+request separately constructs a mode-6 child through `0x14055d1f0`; joining that
+child's update to this latch consumer is still required before treating the
+static field match as a complete executed chain.
