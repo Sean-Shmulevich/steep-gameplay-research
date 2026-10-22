@@ -29,6 +29,11 @@ class LateLoadRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'requires --experiment host'):
                 runner.main()
 
+    def test_native_navigator_requires_startup_load(self):
+        with patch.object(sys, 'argv', ['runner', '--experiment', 'host', '--navigator', 'native']):
+            with self.assertRaisesRegex(RuntimeError, 'requires --load-at startup'):
+                runner.main()
+
     def test_startup_missing_workspace_reports_prerequisites(self):
         with tempfile.TemporaryDirectory() as tmp:
             with patch.object(sys, 'argv', ['runner', '--workspace', tmp, '--experiment', 'host', '--load-at', 'startup', '--check']):

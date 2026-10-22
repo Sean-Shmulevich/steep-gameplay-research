@@ -103,6 +103,7 @@ def main():
     parser.add_argument('--load-at', choices=['gameplay', 'startup'], default='gameplay', help='Load host automatically during process startup or after gameplay is verified')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
     parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'composite-observe', 'source-observe', 'chain-observe', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
+    parser.add_argument('--navigator', choices=['ocr', 'native'], default='ocr', help='Startup navigation: existing OCR navigator, or scripts/startup_entry.py gated by the startup-loaded host')
     parser.add_argument('--capture-steering', action='store_true', help='Opt-in 700 ms scan-30 pulse during a five-second motion capture')
     parser.add_argument('--observe-motion', action='store_true', help='Opt-in bounded before/after motion observations for update-capture')
     parser.add_argument('--attribute-jobs', action='store_true', help='Opt-in job attribution for the update-capture plan')
@@ -118,6 +119,8 @@ def main():
         parser.error('--attribute-jobs requires --experiment host --plan update-capture')
     if not 1 <= args.steps <= 60:
         raise RuntimeError('--steps must be 1..60')
+    if args.navigator == 'native' and args.load_at != 'startup':
+        raise RuntimeError('--navigator native requires --load-at startup')
     if args.load_at == 'startup' and args.experiment != 'host':
         raise RuntimeError('--load-at startup requires --experiment host')
     root = args.workspace.expanduser().resolve()
@@ -198,7 +201,10 @@ def main():
             print('Loading the host automatically during startup...', flush=True)
             early = start([sys.executable, str(REPO/'scripts/startup_host_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'startup')], 'startup')
         print('Advancing recognized startup screens; please leave controls alone.', flush=True)
-        nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation'), '200'], 'navigation')
+        if args.navigator == 'native':
+            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)], 'navigation')
+        else:
+            nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation'), '200'], 'navigation')
         if args.load_at == 'startup':
             wait_stage(early, watchdog, 90)
             result['startup'] = json.loads((out/'startup/result.json').read_text())
