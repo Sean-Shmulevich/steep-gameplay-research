@@ -102,7 +102,7 @@ def main():
     parser.add_argument('--experiment', choices=['probe', 'host'], default='probe')
     parser.add_argument('--load-at', choices=['gameplay', 'startup'], default='gameplay', help='Load host automatically during process startup or after gameplay is verified')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
-    parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
+    parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
     parser.add_argument('--capture-steering', action='store_true', help='Opt-in 700 ms scan-30 pulse during a five-second motion capture')
     parser.add_argument('--observe-motion', action='store_true', help='Opt-in bounded before/after motion observations for update-capture')
     parser.add_argument('--attribute-jobs', action='store_true', help='Opt-in job attribution for the update-capture plan')
@@ -124,6 +124,11 @@ def main():
     cc = preflight(root, args.experiment)
     if args.load_at == 'startup' and '--launcher' not in (root/'runtime/bounded-test.py').read_text():
         raise RuntimeError('Local bounded launcher needs --launcher support')
+    if args.plan == 'action-observe':
+        if args.experiment != 'host':
+            parser.error('action-observe requires --experiment host')
+        if not (root/'analysis/central-impulse/private/observe_live_actions.py').is_file():
+            raise RuntimeError('Private action observer is unavailable')
     if args.check:
         print(f'Prerequisites OK: {root}\nOriginal DLL verified. No game launched.')
         return 0

@@ -1,0 +1,26 @@
+{
+  "evidence": "Live read-only action lookup in startup-loaded gameplay session",
+  "passed": true,
+  "action_id": 118,
+  "selected_bank_index": 0,
+  "status": "found",
+  "sample_all_zero": true,
+  "table_rva": "0x1e6b6f0",
+  "callback_rva": "0x4b24c0",
+  "read_requests": 38,
+  "read_seconds": 1.296923291112762,
+  "selected_lookup_signatures_match": true,
+  "input_sent_by_collector": false,
+  "writes_by_collector": false,
+  "atomic_snapshot": false,
+  "stable_20_seconds": true,
+  "settings_restored": true,
+  "bottle_stopped": true,
+  "original_dll_verified": true,
+  "limits": [
+    "One idle action observation",
+    "Callback bytes were not compared live",
+    "Composite child identities and selection were not read",
+    "No input ingestion or reset ordering proof"
+  ]
+}

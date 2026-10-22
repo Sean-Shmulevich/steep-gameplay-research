@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live action identity established for one idle gameplay observation: action 0x76
+in bank zero resolves to the composite selector callback, not directly to the
+two-axis producer. Its zero sample and identity traversal matched; the game
+continued normally and cleanup passed. Static composite branches are expressed
+as pseudocode, with child selection and live callback-byte checks still open.
+Next: original-instruction validation of selection and live child/mode discovery.
+See [live composite action](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#live-selected-action-is-composite).
+
 Fresh-root action observation added. It resolves the manager global for each
 invocation and discards the action if that root changes during traversal. The
 private collector reuses the persistent identity-checked read helper and checks

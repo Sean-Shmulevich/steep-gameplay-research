@@ -1413,3 +1413,62 @@ private command's argument handling was checked without accessing a process.
 No live result is claimed for this collector yet. Its first live run should use
 a freshly identified gameplay process and record both success and refusal
 outcomes before attempting time-series sampling.
+
+### Live selected action is composite
+
+The first bounded `action-observe` run succeeded in gameplay after startup host
+loading. Action 0x76 resolved from selected bank index zero to a nonnull action,
+with two matching traversal receipts and an unchanged manager global. The
+selected sample was sixteen zero bytes. There were 38 persistent-helper
+requests taking about 1.30 seconds in total. The game remained in ordinary
+simulation for the subsequent 20-second check; cleanup restored settings,
+stopped the owned bottle and verified the original input DLL. See the
+[public receipt](../../native/snow_host/action_identity_live_observation.json).
+
+The observed virtual table is image RVA 0x1e6b6f0 and its third callback is RVA
+0x4b24c0. The analyzed implementation at that callback is a composite action
+selector. It is not the directly evaluated two-axis callback at RVA 0x4b2680.
+The runtime callback bytes themselves were not compared in this capture; the
+classification joins the observed callback address to the analyzed image.
+This does not yet identify any live child as a keyboard or controller source.
+
+For a nonnull configuration at action+0xb0, the analyzed callback reads the
+child pointer array at +0xb8 and its unsigned 16-bit count at +0xc2. It calls
+each visited child's third virtual method before checking child status +0x30.
+For non-final children, configuration+0x28 points to records whose +0x10
+integer controls selection. The following pseudocode preserves the branches:
+
+```text
+result_status = 0
+for i in range(child_count):
+    child[i].callback_slot_2()
+    status = child[i].status_byte
+    if i == child_count - 1:
+        copy_sample_fields(child[i], parent)
+        result_status = status
+        continue
+    mode = configuration.records[i].mode
+    if mode == 1 and status == 0:
+        break
+    if mode == 0 and status != 0:
+        copy_sample_fields(child[i], parent)
+        result_status = 1
+        break
+parent.status_byte = result_status
+```
+
+`copy_sample_fields` copies the three 16-byte fields at +0x50, +0x60 and +0x70,
+and the four bytes at +0x80. These match the previously inspected raw/sample/
+direction/magnitude layout. It also briefly copies the child status before
+the final status assignment. Unknown mode values continue to the next child.
+A mode-1 failure exits without copying these fields; zero children also leaves
+them untouched while clearing status. Thus a false status does not by itself
+prove that this callback zeroed its sampled vector. A preceding reset may have
+cleared it, but that execution order was not observed here.
+
+The null-configuration path invokes a separate allocation/diagnostic route and
+is not represented by this pseudocode. This branch analysis has not yet had
+original-instruction fixture validation. Next: validate the composite selector,
+then read its live child identities and mode records with the same root and
+traversal guards. Timing attribution must follow the selected producer rather
+than assuming that action 0x76 itself computes directional input.

@@ -210,3 +210,20 @@ The [clock comparison](preconsume_countdown_validation.json) found exact
 per-substep countdown subtraction in all 228 pairs, including 31 calls where
 the consumed interval differs. `analyze_update_capture.py` reports both
 clock-match counts and isolates those discriminating calls.
+
+## Bounded action identity observation
+
+In the established private research workspace, run:
+
+```sh
+python3 scripts/run_late_load.py --experiment host --load-at startup --plan action-observe
+```
+
+This requires the private action collector and analyzed image in addition to
+the normal launch prerequisites. It navigates recognized startup screens,
+checks host readiness, reads action 0x76 without gameplay input, checks ordinary
+simulation for 20 seconds, then closes its session and restores settings. The
+collector uses process identity and selected instruction signatures; it makes
+no atomicity claim. Raw reads stay in the private session directory. The first
+live run passed and identified a composite action; see the
+[action identity receipt](action_identity_live_observation.json).
