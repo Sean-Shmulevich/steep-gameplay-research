@@ -4314,3 +4314,8 @@ synthetic angle tables, intercepted trigonometry and captured RSQRTPS seeds. The
 reference now exposes one callable composition covering gates through rotation.
 Original numerical services, smoothing-control production and fitted candidates
 remain before native-fidelity runtime adoption.
+
+Contact clock producer: 162 original-block cases match. The smoothing .2 control
+is accumulated contact time, and immersion <= .001 is cleared before the normal
+builder's > 0 gate. Jump bench optionally derives air time from supplied immersion;
+native immersion geometry remains external.

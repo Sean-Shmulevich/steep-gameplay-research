@@ -57,3 +57,7 @@ for candidate-selection and smoothing boundaries.
 `contact_normal.smooth_normal` composes the recovered smoothing gates, gain and
 rotation with explicit numerical-service callbacks. Its joined receipt labels
 synthetic angle tables, host trigonometry and emulator reciprocal-sqrt seeds.
+
+`contact_clocks.py` updates immersion and contact/air clocks. See
+[contact clock before normal rebuilding](../docs/reconstruction/CENTRAL_IMPULSE.md#contact-clock-before-normal-rebuilding)
+for its ordering before normal selection and smoothing.

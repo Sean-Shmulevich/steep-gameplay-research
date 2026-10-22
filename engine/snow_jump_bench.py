@@ -12,6 +12,7 @@ from reference.runtime_curve import compile_samples, evaluate
 from reference.snow_jump_step import jump_step
 from reference.snow_charge_release import update_release
 from reference.input_cooker import cook
+from reference.contact_clocks import advance as advance_contact_clocks
 from reference.decay_table import build as build_decay_table
 from reference.decay_exp import cooker_table
 
@@ -34,6 +35,7 @@ def run(document):
     config = values['config']
     curves = {key:compile_samples(**values['curves'][key]) for key in ('coil','depth','speed')}
     release_state = values.get('release_state')
+    contact_state = values.get('contact_state')
     cooker = values.get('cooker')
     decay_table = None
     if cooker is not None:
@@ -55,8 +57,15 @@ def run(document):
     for index, frame in enumerate(frames):
         release_before = deepcopy(release_state)
         cooker_result = None
+        contact_before = deepcopy(contact_state)
         if f32(frame['elapsed_dt']) <= 0:
             raise ValueError('Positive elapsed_dt required by bench policy')
+        if contact_state is not None:
+            if 'air_time' in frame:
+                raise ValueError('Choose contact_state or explicit air_time, not both')
+            contact_state = advance_contact_clocks(frame['immersion'],
+                contact_state['air_time'], contact_state['contact_time'], frame['elapsed_dt'])
+            frame['air_time'] = contact_state['air_time']
         if cooker is not None:
             if 'cooked' in frame:
                 raise ValueError('Choose cooker or explicit cooked input, not both')
@@ -91,12 +100,13 @@ def run(document):
             body['linear']=applied['linear']; body['angular']=applied['angular']
             applications.append({'body':name,'impulse':request['impulse'],**applied})
         state = {key:result[key] for key in ('cached_factor','cooldown')}
-        trace.append({'index':index,'cooker':cooker_result,'release_state_before':release_before,
+        trace.append({'index':index,'contact_state_before':contact_before,
+                      'contact_state_after':deepcopy(contact_state),'cooker':cooker_result,'release_state_before':release_before,
                       'release_state_after':deepcopy(release_state),'gains':gains,'branch':result['branch'],
                       'state_before':old_state,'state_after':dict(state),
                       'bodies_before':before,'bodies_after':deepcopy(bodies),'applications':applications})
     return {'schema':'snow-jump-bench-result-v1','provenance':'authored_synthetic',
-            'game_access':False,'decay_configuration':deepcopy(cooker['decay']) if cooker else None,'trace':trace,'final_state':state,'final_bodies':bodies,'final_release_state':release_state,
+            'game_access':False,'decay_configuration':deepcopy(cooker['decay']) if cooker else None,'trace':trace,'final_state':state,'final_bodies':bodies,'final_release_state':release_state,'final_contact_state':contact_state,
             'limits':['Inputs, clocks, depth, speed, masses and optional decay samples are supplied scenario data.',
                       'Cooker-to-release orchestration is authored; native scheduling and live CPU dispatch remain unverified.',
                       'Curve preprocessing is not a record of native curve visits.',

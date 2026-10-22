@@ -10450,3 +10450,35 @@ RSQRTPS seed is captured from the emulator. Thus the result validates compositio
 under explicit service inputs, not original angle/trigonometric implementations.
 Native gate-state production and fitted candidates remain supplied boundaries.
 The runnable runtime still uses its documented normal approximation.
+
+
+## Contact clock before normal rebuilding
+
+`reference.contact_clocks.advance` reconstructs the three-field clock update.
+All inputs and additions round to float32. If supplied immersion > float32(.001),
+retain immersion, clear air time, and add elapsed time to contact time. Otherwise
+clear immersion and contact time, and add elapsed time to air time. Equality at
+.001 takes the air branch.
+
+The inspected caller executes this block immediately before invoking normal
+reconstruction. Consequently its small positive immersion values <= .001 have
+already become zero when the normal builder applies its separate > 0 guard.
+The isolated guard receipt above remains correct, but does not establish that
+.00001 reaches rebuilding on this joined call route. This ordering narrows that
+earlier boundary explicitly.
+
+The normal smoother's previously unnamed +0xa6c control is this contact-time
+accumulator. Its strict > float32(.2) test therefore activates angular smoothing
+after accumulated contact time exceeds .2. Before then, candidate selection can
+still occur, but the smoother passes that candidate through. This is not a
+universal landing or grounded-state rule. The underlying immersion is supplied
+by volume/contact geometry and is not interchangeable with a renderer's ground
+flag. Float32 accumulation controls the exact frame crossing the threshold.
+
+The [instruction receipt](../../native/snow_host/contact_clocks_validation.json)
+compares all three outputs in 162 finite cases. The volume producer and elapsed
+clock source remain inputs. The jump bench optionally accepts `contact_state`
+with air_time/contact_time and per-frame `immersion`, then derives air time before
+jump evaluation. It rejects simultaneous explicit air_time. This joins recovered
+clock and jump arithmetic under authored scenario scheduling; it does not execute
+the original collision query or prove the full simulation cadence.

@@ -1,0 +1,11 @@
+{
+  "evidence": "original immersion classification and contact/air clock block",
+  "game_process": false,
+  "exact_three_field_cases": 162,
+  "ordering": "clock block precedes normal-builder call in inspected caller",
+  "limitations": [
+    "Immersion volume producer and elapsed clock source supplied",
+    "Finite cases only; no native collision/contact query executed"
+  ],
+  "source_sha256": "6e7ae75d88be057d62283cca74bb7c38708865f51533dfc456e122217005b996"
+}

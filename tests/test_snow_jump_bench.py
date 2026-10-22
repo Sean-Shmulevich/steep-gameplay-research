@@ -100,3 +100,21 @@ class SnowJumpBenchTests(unittest.TestCase):
         self.assertEqual(result['decay_configuration'],document['cooker']['decay'])
         document['cooker']['decay']['samples']=[1]*257
         with self.assertRaisesRegex(ValueError,'only mode'): run(document)
+
+    def test_contact_clock_controls_airborne_jump_suppression(self):
+        document=self.scenario()
+        document['frames']=[deepcopy(document['frames'][0]) for _ in range(2)]
+        document['contact_state']={'air_time':0.,'contact_time':.3}
+        for frame in document['frames']:
+            del frame['air_time']
+            frame['immersion']=.001
+        result=run(document)
+        self.assertEqual([row['branch'] for row in result['trace']],['disabled','disabled'])
+        self.assertEqual(result['final_contact_state']['contact_time'],0)
+        self.assertGreater(result['final_contact_state']['air_time'],0)
+        document['frames'][1]['immersion']=.5
+        result=run(document)
+        self.assertEqual(result['trace'][1]['branch'],'submit')
+        self.assertEqual(result['final_contact_state']['air_time'],0)
+        document['frames'][0]['air_time']=0
+        with self.assertRaisesRegex(ValueError,'not both'):run(document)

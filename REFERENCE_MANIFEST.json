@@ -1139,6 +1139,17 @@
         "Explicit reciprocal-square-root, decay, angle, sine and cosine services. Aggregation, selection and composed smoother reconstructed. Fitting, original numerical services and gate producer excluded."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.contact_clocks",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "1fad6519009e40bf0ccd01b3a8175d6f319a05ca41c065f92846ebe04ce556b0",
+      "published": "reference/contact_clocks.py",
+      "published_sha256": "6e7ae75d88be057d62283cca74bb7c38708865f51533dfc456e122217005b996",
+      "adaptations": [
+        "Finite supplied immersion and elapsed interval; volume/contact query excluded. Preserves strict threshold and float32 accumulation."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

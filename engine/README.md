@@ -793,3 +793,11 @@ it. This follows the recovered retention behavior but uses support as a proxy
 for native positive immersion and omits native candidate fitting/smoothing.
 Missing checkpoint state and airborne spawns use a synthetic world-up seed.
 `input_speed.projection_normal` and `normal_update` expose these choices.
+
+The jump bench can derive its air clock: add `contact_state` containing
+`air_time` and `contact_time`, then replace each frame's `air_time` with supplied
+`immersion`. The recovered clock clears immersion/contact time at immersion <=
+float32(.001), otherwise clears air time and advances contact time. Trace rows
+include before/after contact state and the result includes `final_contact_state`.
+Explicit `air_time` alongside `contact_state` is rejected. Immersion geometry is
+still external; a synthetic contact flag is not silently converted into volume.
