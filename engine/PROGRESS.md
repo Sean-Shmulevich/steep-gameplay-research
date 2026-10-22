@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Vector-source prefix reconstructed and matched in 4,320 original-instruction
+cases. Kind selects vector channels 0/1 or scalar channels 10/12; seven-slot
+ownership precedence and last-mask-entry suppression gate the read. Lane
+selection preserves raw bits and Z/W. Cache lock is released before copying
+values, so no atomic snapshot claim. Next: live source/processor identities
+and gate state. See [source gates](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#vector-source-ownership-and-masking).
+
 Live composite child enumeration passed. Action 0x76 has two observed children:
 a vector-source callback with mode-zero early acceptance, then the reconstructed
 two-axis callback as final fallback. Both were inactive; all sampled bytes were

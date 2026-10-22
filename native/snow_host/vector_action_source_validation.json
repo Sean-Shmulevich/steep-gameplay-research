@@ -1,0 +1,13 @@
+{
+  "evidence": "Original vector action prefix including ownership and cache getters; lock calls substituted",
+  "cases": 4320,
+  "passed": true,
+  "raw_bit_comparison": true,
+  "gate_getter_lock_order_compared": true,
+  "game_process": false,
+  "limits": [
+    "Lock implementation and concurrent cache writers not modeled",
+    "Stops before processor invocation",
+    "Physical device mapping not established"
+  ]
+}

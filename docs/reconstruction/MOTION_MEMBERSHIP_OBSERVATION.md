@@ -1568,3 +1568,71 @@ Next: decode the vector source helper, recover the two children's live source
 configuration and processor identities, and then capture their publication
 relative to motion ingestion. The relevant callbacks and child ownership are
 now concrete; device mapping and scheduler ordering remain open.
+
+### Vector-source ownership and masking
+
+`engine/vector_action_source.py` reconstructs the first child's source selection,
+ownership predicate, cache suppression and lane selection with raw bytes. It
+does not identify physical devices or implement the writers of these caches.
+The child configuration's unsigned kind at +0x30 selects:
+
+| Kind | Ownership family | Cached channel | Output before lane selection |
+| --- | --- | --- | --- |
+| 0 | vector | 0 | Four cached lanes |
+| 1 | vector | 1 | Four cached lanes |
+| 2 | scalar | 10 | Cached scalar in X; Y/Z/W zero |
+| 3 | scalar | 12 | Cached scalar in X; Y/Z/W zero |
+| Other | none | none | All zero |
+
+The caller passes the child+0x10 source owner to the ownership predicate. Its
++8 unsigned index combines with the selected channel to locate seven priority
+slots. Starting at the highest slot and walking downward, the first nonnull
+owner blocks the read if it differs from the caller. All-null or first-self
+permits it; lower-priority entries are then irrelevant. Relative to the shared
+table pointer, the highest-slot address is:
+
+```text
+vector: table + 0xf050 + 0xe8 * (owner.index + 8 * channel)
+scalar: table + 0x0850 + 0xe8 * (owner.index + 8 * channel)
+for slot in [highest, highest-8, ..., highest-48]:
+    if slot.value != 0:
+        blocked = slot.value != owner
+        return blocked
+return false
+```
+
+If permitted, each getter follows the pointer at owner+0 to its cache object.
+It enters the lock at cache+0x2e8 and inspects the unsigned 16-bit stack count at
++0x252. A nonempty stack uses the pointer array at +0x248. Only the last entry
+matters: nonnull suppresses the result to positive zero; a null last entry
+permits the cache read even if earlier entries are nonnull. The getter releases
+the lock before copying the vector or scalar:
+
+```text
+blocked = stack.count != 0 and stack[stack.count - 1] != null
+unlock()
+if blocked: return zero
+vector_value = cache.bytes[0x1f0 + 16 * channel : +16]
+scalar_value = cache.bytes[0x168 + 4 * channel : +4]
+```
+
+The getter lock therefore does not itself prove an atomic cache-value read.
+Its role in coordinating stack mutations and upstream writers remains open.
+When kind is 0 or 1, lane mode +0x34 equal to one clears Y; equal to two moves
+Y to X and clears Y. Z/W remain unchanged. Other lane modes retain all lanes.
+Scalar kinds ignore lane mode. Unknown kinds skip ownership and cache calls.
+
+The [original-instruction receipt](../../native/snow_host/vector_action_source_validation.json)
+records 4,320 passing comparisons of the original callback prefix, source
+helper, both ownership predicates and both cache getters. Only the lock/unlock
+calls are substituted; the test also verifies gate/getter/lock call order.
+Cases cover all supported kinds plus unknown values, every highest-nonnull
+priority position with self and foreign owners, empty/null/nonnull mask tops,
+lane modes and raw signed-zero/NaN/infinity payloads. Comparison stops before
+processor invocation. This supersedes the unvalidated source-prefix boundary
+above but leaves processor selection, device-cache production and live gate
+state unresolved.
+
+The next useful live read is the child source owner, source configuration and
+processor identities, not simply its sampled vector. These distinguish neutral
+input, ownership suppression and mask suppression before testing refresh timing.
