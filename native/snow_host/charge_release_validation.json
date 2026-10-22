@@ -1,0 +1,29 @@
+{
+  "evidence": "original release-state instructions compared with public float32 model",
+  "game_process": false,
+  "cases": 1536,
+  "exact_matches": 1536,
+  "different_clock_cases": 1369,
+  "mode_counts": {
+    "1": 765,
+    "2": 371,
+    "0": 400
+  },
+  "active_mode_release_cases": 46,
+  "threshold_getter_calls": 162,
+  "checks": [
+    "Six state fields compared by float32 bytes",
+    "Separate elapsed and derivative durations",
+    "Zero and nonzero saved charge",
+    "Exact elapsed threshold candidates",
+    "Modes 0 1 and 2",
+    "Nonzero prior release copies and rate"
+  ],
+  "limitations": [
+    "Threshold getter intercepted with supplied scalar; profile blend not executed",
+    "Cooker and hardware mapping not executed",
+    "Original block begins after cooked value has been stored",
+    "No live input ingestion or gameplay behavior proved"
+  ],
+  "source_sha256": "7652d89fc8f8129a939cfcac65844e110cb1dc16b381e52828cddcc0112c4404"
+}

@@ -720,3 +720,9 @@ Do not also provide `release_signal`; the bench rejects that ambiguity. Trace
 rows expose before/after release state. Device remapping, cooker output and mode
 selection remain supplied inputs. This addition has synthetic boundary and
 composition tests, not a new original-instruction or live input-ingestion proof.
+
+The release-state kernel subsequently passed an
+[original-instruction comparison](../native/snow_host/charge_release_validation.json)
+with 1,536 exact cases, including unequal timing arguments. This strengthens the
+kernel evidence; the surrounding authored bench and its supplied cooked samples
+remain distinct from original input-service behavior.

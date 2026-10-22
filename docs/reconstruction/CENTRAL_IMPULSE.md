@@ -10019,3 +10019,25 @@ state boundaries and one charge/release sequence. The newly implemented release
 stage has not received the isolated original-instruction comparison performed
 for the jump consumer. Device-to-cooker mapping, exponential lookup data, profile
 selection and mode ownership remain explicit integration dependencies.
+
+### Charge-release original-instruction validation
+
+The [new 1,536-case comparison](../../native/snow_host/charge_release_validation.json)
+executes the original selected release-state block against the public module.
+All six stored fields matched by float32 bytes: cooked value, saved charge,
+elapsed clock, rate and both signal copies. In 1,369 cases the elapsed and
+derivative intervals differed. Mode coverage was 765 cases for mode 1, 400 for
+mode 0 and 371 for mode 2. Forty-six active-mode cases emitted a release.
+
+The harness intercepted the threshold getter, checked its selector and supplied
+a scalar threshold. It did not execute profile blending or the cooker. The
+original block starts after the new cooked value has already been stored, so
+this verifies release-state consumption of that sample rather than its producer.
+It extends the earlier private harness, which had used equal timing arguments,
+and supersedes the synthetic-only qualification for this local release module.
+
+`releaseJumpThreshold` in this branch is compared with elapsed release time.
+It is not a minimum cooked-charge strength. A port that tests charge >= 0.25
+at raw trigger release implements a different policy. The saved-charge signal
+can be smaller than that threshold and still pass the timing test; the jump
+consumer's curves and gates then decide the requested impulse.
