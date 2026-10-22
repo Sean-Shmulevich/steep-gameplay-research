@@ -1,0 +1,13 @@
+{
+  "evidence": "original contact loop and normalization block",
+  "game_process": false,
+  "exact_four_lane_accumulations": 128,
+  "exact_normalizations": 98,
+  "normalization_seed": "Captured after original RSQRTPS in emulator and supplied to reference",
+  "limitations": [
+    "RSQRTPS seed is platform-dependent; no native-hardware equivalence claimed",
+    "Degenerate normalization excluded and explicitly rejected by reference",
+    "Contact scalar outputs, fallback fitting, hemisphere choice and smoothing excluded"
+  ],
+  "source_sha256": "e18f37216a1bd0361a0bea302df5ca3b3b773fa1204400029dccdda5b1dd3a4d"
+}

@@ -48,3 +48,8 @@ for threshold units and the upstream producer boundary.
 `projected_speed.py` preserves the cached-velocity projection and float32
 reduction order. See [projected input speed](../docs/reconstruction/CENTRAL_IMPULSE.md#projected-input-speed)
 for the supplied-normal boundary and runtime substitution.
+
+`contact_normal.py` aggregates eligible weighted normals in record order and
+normalizes with an explicit reciprocal-square-root seed. See
+[contact normal aggregation](../docs/reconstruction/CENTRAL_IMPULSE.md#contact-normal-aggregation)
+for candidate-selection and smoothing boundaries.

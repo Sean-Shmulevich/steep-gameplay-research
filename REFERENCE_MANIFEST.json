@@ -1128,6 +1128,17 @@
         "Finite three-component inputs; diagnostic tangent and dot exposed. Normal and cached velocity producers are caller dependencies. No implicit normalization."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.contact_normal",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "081fca1bd99edfd951711aa6adf8f1d88c2b617523a28529324c39d5e7b072bf",
+      "published": "reference/contact_normal.py",
+      "published_sha256": "e18f37216a1bd0361a0bea302df5ca3b3b773fa1204400029dccdda5b1dd3a4d",
+      "adaptations": [
+        "Explicit reciprocal-square-root seed; zero-length normalization rejected as authored boundary. Contact candidate selection, fitting and smoothing excluded."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

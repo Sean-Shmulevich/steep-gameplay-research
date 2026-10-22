@@ -10306,3 +10306,32 @@ and whether it was retained or replaced by a supported candidate. This supersede
 the previous runtime behavior of resampling the input projection normal every
 airborne frame. The native initialization and exact airborne transitions remain
 open until their producers are reconstructed or measured.
+
+
+## Contact normal aggregation
+
+`reference.contact_normal` reconstructs the eligible-record accumulation loop and
+normalization arithmetic. In record order, each eligible contact contributes
+`float32(weight * normalLane)` to each of four float32 accumulator lanes.
+Ineligible records contribute nothing. The sum is not divided by total weight
+before normalizing; inserting such a division could change rounding.
+
+For accumulated vector v, compute squared length with x + (y + z) reduction,
+excluding W. With a supplied reciprocal-square-root instruction seed r, the
+normalization scale is `(3 - ((r * squaredLength) * r)) * (0.5 * r)`, rounding
+each operation to float32. Multiply the XYZ sum by that scale and explicitly
+clear W. The instruction seed is a dependency because RSQRTPS is approximate.
+The reference does not silently substitute exact square root. It rejects zero
+length as an authored boundary rather than inventing a native fallback.
+
+The [instruction comparison](../../native/snow_host/contact_normal_validation.json)
+matched all four accumulated lanes in 128 cases and all normalized lanes in 98
+nondegenerate cases. Normalization used the seed captured after the emulated
+original RSQRTPS instruction. This verifies the downstream arithmetic given that
+seed, not bit identity with a physical CPU's approximation.
+
+The result is an intermediate candidate. Existing code still applies fallback
+fitting, hemisphere/candidate selection and optional angular smoothing before
+publishing the frame normal. Those stages and full contact-record producers
+remain unresolved. This module is therefore not yet substituted for the runtime's
+terrain candidate; doing so would omit known intervening behavior.

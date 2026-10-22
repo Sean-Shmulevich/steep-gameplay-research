@@ -4289,3 +4289,8 @@ frame writer copies the final candidate unchanged. Runtime now retains its last
 supported projection normal in flight; support gating, terrain candidates and
 world-up initialization remain authored substitutions. Full native normal
 aggregation, fitting and rotation smoothing remain open.
+
+Contact normal research: 128 original-loop accumulation cases and 98 nondegenerate
+normalization cases matched. Added a portable reference with explicit RSQRTPS
+seed dependency. Candidate fitting, selection and temporal smoothing still block
+replacing the runtime's labeled terrain-normal substitute with this intermediate.
