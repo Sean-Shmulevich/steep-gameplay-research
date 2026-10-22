@@ -2,7 +2,9 @@
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import startup_entry as se
@@ -170,6 +172,12 @@ class NavigateTests(unittest.TestCase):
     def test_spawn_match_rejects_missing_position(self):
         self.assertFalse(se.spawn_matches(None, [0, 0, 0], 1))
         self.assertFalse(se.spawn_matches([0, 0], [0, 0, 0], 1))
+
+    def test_cli_accepts_negative_spawn_in_runner_form(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(se, 'Game'), \
+                patch.object(se, 'navigate', return_value={'outcome': 'entered'}) as nav:
+            self.assertEqual(se.main([tmp + '/o', '200', '--expect-spawn=-2312.9,-4273.3,2385.9']), 0)
+        self.assertEqual(nav.call_args.kwargs['expect_spawn'], [-2312.9, -4273.3, 2385.9])
 
     def test_budget_bounds_cli(self):
         with self.assertRaises(SystemExit):

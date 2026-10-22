@@ -205,7 +205,8 @@ def main():
             early = start([sys.executable, str(REPO/'scripts/startup_host_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'startup')], 'startup')
         print('Advancing recognized startup screens; please leave controls alone.', flush=True)
         if args.navigator != 'ocr':
-            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)] + (['--intro-key', 'enter'] if args.navigator == 'native-intro' else []) + (['--expect-spawn', args.expect_spawn] if args.expect_spawn else []), 'navigation')
+            # '--expect-spawn=' form keeps a leading '-' coordinate a value, not an option.
+            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)] + (['--intro-key', 'enter'] if args.navigator == 'native-intro' else []) + (['--expect-spawn=' + args.expect_spawn] if args.expect_spawn else []), 'navigation')
         else:
             nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation'), '200'], 'navigation')
         if args.load_at == 'startup':
