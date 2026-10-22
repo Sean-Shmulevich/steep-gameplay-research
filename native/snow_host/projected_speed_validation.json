@@ -1,0 +1,12 @@
+{
+  "evidence": "original projected-speed arithmetic block with supplied cached velocity and normal",
+  "game_process": false,
+  "exact_speed_cases": 1028,
+  "normal_inputs": "unit, zero and arbitrary nonunit vectors",
+  "limitations": [
+    "Normal producer and cached velocity acquisition not executed",
+    "Finite synthetic vectors only",
+    "Only stored speed compared; diagnostic tangent/dot follow inspected intermediate arithmetic"
+  ],
+  "source_sha256": "9be5055d6925c3d1be7f5e246ab6ade8893ce787cd4f15464f1e35ab9bd33f14"
+}

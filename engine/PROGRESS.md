@@ -4277,3 +4277,8 @@ Input preset arithmetic: 690 selector and 120 blend cases match original
 instructions. Runtime uses the float32 selector. Native projected-speed sourcing
 and normal/fast coefficient routing remain unresolved runtime integration work;
 its current relative-speed magnitude and turning policy remain authored.
+
+Projected input speed: 1,028 original-instruction cases match the reconstructed
+velocity projection. Runtime profile selection now uses projected body velocity;
+terrain-normal sourcing and sampling cadence remain authored substitutes. Added
+airborne tests separating vertical motion from tangent profile speed.

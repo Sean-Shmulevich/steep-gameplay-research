@@ -12,6 +12,7 @@ import math
 from reference import snow
 from reference.input_cooker import cook
 from reference.input_profile import preset_weight
+from reference.projected_speed import projected_speed
 from reference.decay_exp import cooker_table
 from reference.runtime_curve import evaluate
 
@@ -152,7 +153,9 @@ def step(body, controls, world, dt, config):
         state['charge'] = 0.
     state['jump_held'] = jump
     gravity = (0., 0., -cfg['gravity'])
-    speed_blend = preset_weight(norm(rel))
+    input_speed = projected_speed(v, n)
+    input_speed['projected_velocity'] = list(input_speed['projected_velocity'])
+    speed_blend = preset_weight(input_speed['speed'])
     if supported:
         gravity = sub(gravity, mul(n, dot(gravity, n)))
         heading += steer * cfg['turn_rate'] * dt * (1 - 0.45 * speed_blend)
@@ -223,9 +226,10 @@ def step(body, controls, world, dt, config):
     body.clear()
     body.update(b)
     return dict(sport=sport, events=events, speed=norm(v), grounded=grounded,
-        control_blend=speed_blend, steering=steer, steering_cooker=cooker_result, contact_impulse=list(contact_impulse),
+        control_blend=speed_blend, input_speed=input_speed, steering=steer, steering_cooker=cooker_result, contact_impulse=list(contact_impulse),
         absorption=a, material=material.get('name', 'unnamed'),
         evidence=dict(kernels='recovered local reference math',
                       controller='synthetic independent implementation',
+                      input_speed='recovered projection; terrain normal and sampling time are authored substitutes',
                       steering_filter='recovered float32 cooker and default SSE decay; synthetic coefficients and cadence',
                       landing='synthetic thresholds; no original classifier claim'))

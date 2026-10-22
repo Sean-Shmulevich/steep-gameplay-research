@@ -780,3 +780,9 @@ control cadence and turn policy remain synthetic. Physics diagnostics include
 `steering_cooker` with direction, lookup argument/result, step and final value.
 Old checkpoints retain their stored steering value and continue with the new
 arithmetic; reproducing an older version's exact trajectory requires that version.
+
+Input-profile speed now projects body velocity against the sampled terrain normal
+with recovered float32 arithmetic. Diagnostics include `input_speed`. The normal
+source and sampling time remain authored, especially while airborne; this is not
+proof of original cached-normal behavior. Vertical flight over flat terrain no
+longer selects the fast input profile solely because of vertical speed.

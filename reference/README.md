@@ -44,3 +44,7 @@ for instruction comparison, rounding mode and the remaining scalar endpoint.
 `input_profile.py` provides float32 speed conversion, endpoint-priority preset
 selection and scalar blending. See [input speed profile selection](../docs/reconstruction/CENTRAL_IMPULSE.md#input-speed-profile-selection)
 for threshold units and the upstream producer boundary.
+
+`projected_speed.py` preserves the cached-velocity projection and float32
+reduction order. See [projected input speed](../docs/reconstruction/CENTRAL_IMPULSE.md#projected-input-speed)
+for the supplied-normal boundary and runtime substitution.

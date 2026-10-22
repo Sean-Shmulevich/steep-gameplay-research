@@ -10238,3 +10238,39 @@ Float32 boundary detail: supplying the mathematical value 12/3.6 rounds the
 converted speed just below 12, producing weight 0.9999998211860657. A slightly
 larger input such as 3.3333335 reaches the fast endpoint. Tests retain this result
 rather than forcing ideal-real-number boundary equality.
+
+
+## Projected input speed
+
+`reference.projected_speed` reconstructs the cached-state speed writer. Given
+cached linear velocity v and the supplied normal n, each operation rounds to
+float32, with reduction order x + (y + z):
+
+```text
+p[i] = v[i] * n[i]
+d = p.x + (p.y + p.z)
+t[i] = v[i] - d * n[i]
+s[i] = t[i] * t[i]
+speed = sqrt(s.x + (s.y + s.z))
+```
+
+This block does not normalize n or subtract a moving surface's velocity. A unit
+normal removes the normal component; a nonunit normal retains the literal
+arithmetic rather than silently correcting it. The fourth SIMD lane does not
+contribute to the stored scalar. The inspected producer loads cached velocity
+before this block and stores the resulting magnitude for subsequent consumers.
+
+The [instruction comparison](../../native/snow_host/projected_speed_validation.json)
+matched 1,028 stored-speed outputs exactly, including pure-normal motion, zero
+normals and nonunit normals. Normal sourcing, cached-body acquisition and update
+cadence were supplied, not executed. The diagnostic tangent and dot values
+follow inspected intermediates; the receipt compares the final stored speed.
+
+The independent runtime now computes the input profile speed from body velocity
+projected against its sampled terrain normal. This replaces its previous total
+relative-speed magnitude. The terrain normal and sampling time are authored
+substitutes for the original cached normal and update order. While airborne the
+runtime still samples terrain below the body; it does not claim native airborne
+normal behavior. `input_speed` diagnostics expose speed, projection and dot.
+Pure vertical flight above a horizontal plane consequently stays at the normal
+profile rather than selecting the fast profile just from vertical speed.

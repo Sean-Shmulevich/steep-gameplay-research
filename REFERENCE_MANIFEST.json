@@ -1117,6 +1117,17 @@
         "Finite initialized inputs only; preserves float32 conversion, endpoint branch priority and unclamped scalar blend. Resource routing and speed producer excluded."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.projected_speed",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "d7cc421588f0378517f13f28d52b5faf86acf6db0ceec2e921a4eb3cd95c0b41",
+      "published": "reference/projected_speed.py",
+      "published_sha256": "9be5055d6925c3d1be7f5e246ab6ade8893ce787cd4f15464f1e35ab9bd33f14",
+      "adaptations": [
+        "Finite three-component inputs; diagnostic tangent and dot exposed. Normal and cached velocity producers are caller dependencies. No implicit normalization."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

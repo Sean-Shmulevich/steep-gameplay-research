@@ -138,3 +138,18 @@ class ReconstructedSteeringTests(unittest.TestCase):
             self.assertIn('synthetic coefficients',result['evidence']['steering_filter'])
             value=expected['value']
         self.assertEqual(value,0)
+
+
+class ProjectedInputSpeedTests(unittest.TestCase):
+    def test_vertical_flight_does_not_select_fast_input_profile(self):
+        body=rider();body.update(position=[0,0,10],velocity=[0,0,30],grounded=False)
+        result=step(body,{'steer':1},Plane(),.01,{})
+        self.assertEqual(result['input_speed']['speed'],0)
+        self.assertEqual(result['control_blend'],0)
+        self.assertIn('authored substitutes',result['evidence']['input_speed'])
+
+    def test_tangent_motion_selects_profile_despite_large_vertical_speed(self):
+        body=rider();body.update(position=[0,0,10],velocity=[2.5,0,30],grounded=False)
+        result=step(body,{},Plane(),.01,{})
+        self.assertEqual(result['input_speed']['speed'],2.5)
+        self.assertAlmostEqual(result['control_blend'],.4,places=6)
