@@ -28,8 +28,10 @@
       "source": "publication-review/reconstruction-pass/scheduler.md",
       "source_sha256": "2fde75e87ccd74156995e2044681c963cece61e6ed5e7470afa7b395f4d58c80",
       "published": "docs/reconstruction/research/scheduler.md",
-      "published_sha256": "2fde75e87ccd74156995e2044681c963cece61e6ed5e7470afa7b395f4d58c80",
-      "adaptations": []
+      "published_sha256": "354db857dfd4818caeb5cea5df54e4ee57bbc74e3a6aff2c093b3aba0f2cdc17",
+      "adaptations": [
+        "Added outer world-loop instruction validation and conditional worker-migration interpretation; original source hash retained."
+      ]
     },
     {
       "source": "publication-review/reconstruction-pass/input-probes.md",

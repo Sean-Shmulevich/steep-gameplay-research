@@ -147,3 +147,63 @@ Useful first acceptance cases: changing a pose query does not advance simulation
 Read-only comparison against the frozen RVA-aligned image with SHA-256 `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2` verified 291 exported instruction spans from six selected files and four post-physics job table bindings. Files checked were the run28 base destructor, explicit wait, finish-execution and finalizer exports, plus run19 range visitor and range worker exports. No verification artifacts outside this report were modified.
 
 This confirms retained static evidence consistency, not new function execution or complete scheduler coverage. The most productive unresolved join is still exact input-source freshness and ingestion placement; the most important prerequisite for modifying the original scheduler is owner lifetime plus exclusion of new submissions. Full engine reconstruction is not required to investigate either one.
+
+
+## Outer world-loop instruction check
+
+A [12-case instruction receipt](../../../native/snow_host/world_loop_validation.json)
+executes the outer world-loop instructions with every called function intercepted.
+It checks zero, one, two and five substeps, counter wrap, and synthetic changes to
+the selected count at the second-batch return. Optional profiler branches are
+disabled. The batch workers, waits and backend solver are not executed by this
+check. Their contracts still come from the separate static research above.
+
+The checked loop is more precisely expressed as:
+
+```text
+prepare_world_service()
+i = 0
+while unsigned(i) < load(selected_count):
+    snow_batch_and_wait(world, load(elapsed), load(consumed))
+    intervening_services()
+    backend_prepare(world.backend)
+    backend_integrate(world.backend, load(elapsed))
+    backend_followup(world.backend)
+    intervening_services()
+    second_actor_batch_and_wait(world, load(elapsed))
+    i = uint32(i + 1)
+world.request_counter = uint64(world.request_counter + 1)
+```
+
+The selected count is reread at each loop condition. It is not a local immutable
+snapshot in this function. Synthetic mutation from five to one ended after one
+iteration; mutation from one to three continued through three iterations. This
+is a check of load placement, not evidence that native code changes the count
+mid-loop or permission to do so. Each relevant call reloads its scalar arguments;
+intercepted callees deliberately clobbered the volatile scalar registers.
+
+The world counter increments once on return even when the selected count is zero.
+It also wraps modulo 2^64. Consequently a counter advance alone does not prove a
+physics substep executed. Conversely, several actor invocations can share a
+counter value while the loop executes multiple substeps. Capture group size is
+still not a directly observed native substep index.
+
+### What explains the observed worker migration
+
+The [player-wrapper interval analysis](../CENTRAL_IMPULSE.md#player-update-intervals-and-worker-migration)
+found no overlap across two captures, while neighboring invocations often ran on
+different workers. The established batch-and-wait route explains how substeps
+can be sequential without fixed worker affinity: the next iteration is reached
+after the first batch, integration and second batch return.
+
+That explanation is conditional on each batch's wait contract and the same outer
+world invocation. It does not exclude duplicate actor records within one batch,
+another caller invoking the same actor, or another subsystem writing its state.
+A complete exclusion claim needs registration uniqueness, all relevant dispatch
+routes, and matching live world/job identity. The outer loop has no per-actor
+mutex in this checked body. Do not infer one from the absence of overlap.
+
+The next discriminating trace should correlate the outer-loop invocation and
+batch identity with the existing actor entry/exit records. It should retain
+separate identities for the motion-ingestion invocation and input publication.
+The conditional order above does not place device ingestion between substeps.
