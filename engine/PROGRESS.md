@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live chain capture passed with two enabled stages: time-dependent axis shaping
+then diagonal correction. Corrected source guards now pass live. Diagonal
+correction is reconstructed and matches 1,412 original-instruction cases; it
+preserves dominant XY magnitude, not unit length. First-stage runtime gate,
+parameters and curve behavior remain open. Next: reconstruct its transition
+state and ramp timing before input-to-substep attribution. See
+[live chain and correction](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#live-chain-and-diagonal-correction).
+
 Ordered processor-chain kernel matches 2,343 original-instruction cases,
 including child call order, raw/working/published fields and bypass behavior.
 A bounded one-level chain observer is implemented and fixture-tested, preserving

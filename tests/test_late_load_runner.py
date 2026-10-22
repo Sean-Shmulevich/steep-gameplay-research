@@ -15,7 +15,7 @@ spec.loader.exec_module(runner)
 
 class LateLoadRunnerTests(unittest.TestCase):
     def test_action_observer_missing_private_collector_fails_before_launch(self):
-        for plan in ('action-observe', 'composite-observe', 'source-observe'):
+        for plan in ('action-observe', 'composite-observe', 'source-observe', 'chain-observe'):
             with self.subTest(plan=plan), tempfile.TemporaryDirectory() as tmp:
                 with patch.object(sys, 'argv', ['runner', '--workspace', tmp,
                                   '--experiment', 'host', '--plan', plan, '--check']):

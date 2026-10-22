@@ -240,3 +240,9 @@ configuration to the child observation. The first run produced a partial
 receipt and rejected changing unused handle bits. The corrected comparison has
 passed recorded-read replay but still needs a new live run. See the
 [source receipt](action_sources_live_observation.json).
+
+Use `--plan chain-observe` to include one level of the directional processor
+chain and recheck its source afterward. The first run passed with two stages,
+using 212 of the helper's 224 permitted requests. A larger traversal may exhaust
+that bound and must report refusal, not silently omit checks. See the
+[live chain receipt](action_chain_live_observation.json).

@@ -1,0 +1,12 @@
+{
+  "evidence": "Complete original diagonal-correction leaf, no substituted calls",
+  "cases": 1412,
+  "passed": true,
+  "comparison": "Exact float32 output bytes and return address",
+  "game_process": false,
+  "limits": [
+    "Finite input domain",
+    "No live nonzero input or stage parameter capture",
+    "Time-shaped preceding stage remains separate"
+  ]
+}

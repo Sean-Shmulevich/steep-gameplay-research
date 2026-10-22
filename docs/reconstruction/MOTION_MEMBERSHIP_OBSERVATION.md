@@ -1774,3 +1774,57 @@ result rejection, empty chains, duplicate stage identities, bounds, faults at
 each read and changed configuration. No game was launched for this pass. The
 chain observer still needs integration with a freshly verified source and a
 live capture; the actual directional chain's stage types remain unresolved.
+
+### Live chain and diagonal correction
+
+The `chain-observe` run passed. The corrected source reader accepted both
+children live, with matching processor callback prefixes. The directional
+source remained unchanged after its chain was read, and the enclosing
+composite and rooted action lookups still matched. There were 212 helper
+requests, below its 224-request cap. The subsequent twenty-second simulation
+check and owned-session cleanup passed. See the
+[live chain receipt](../../native/snow_host/action_chain_live_observation.json).
+
+The directional processor contains two stages in this order, both enabled by
+their observed configuration flags:
+
+| Stage | Callback RVA | Inspected behavior |
+| --- | --- | --- |
+| 0 | 0x490220 | Conditional time-based per-axis transition/ramp and curve evaluation |
+| 1 | 0x490d70 | Diagonal correction preserving dominant-axis magnitude |
+
+The first stage also has an internal global activation gate. Enabled chain
+configuration therefore does not establish that its shaping branch executed.
+Its local state transition helper is RVA 0x4cf880; elapsed-clock conversion,
+duration, axis selection and curve evaluation are the next reconstruction
+targets. The live capture did not read those parameters or record execution.
+
+The second stage is implemented in `engine/action_diagonal.py`. For finite
+float32 input it first copies all four lanes, returning unchanged if all four
+absolute values are at most float32(1e-5). Otherwise:
+
+```text
+x, y = input.xy
+if abs(f32(abs(x) - abs(y))) <= float32(1e-5):
+    scale = float32(0.7071067690849304)
+else:
+    large, small = (x, y) if abs(x) > abs(y) else (y, x)
+    ratio = f32(f32(1 / large) * small)
+    scale = f32(1 / f32(sqrt(f32(1 + f32(ratio * ratio)))))
+output = [f32(x * scale), f32(y * scale), input.z, input.w]
+```
+
+Ignoring rounding and the near-equal shortcut, the output XY length equals
+`max(abs(x), abs(y))`. This is not unconditional unit normalization. Full
+diagonal input becomes approximately `[0.7071, 0.7071]`; partial input retains
+its dominant-axis magnitude. Z/W are unchanged but participate in the initial
+four-lane near-zero gate. Thus nonzero Z/W can cause small XY values to take
+the correction branch.
+
+The [diagonal validation receipt](../../native/snow_host/action_diagonal_validation.json)
+records 1,412 exact output-byte and return-address matches against the entire
+original leaf, with no substituted calls. Cases cover signs, axes, diagonals,
+adjacent float32 values around the epsilon, Z/W gate effects and seeded finite
+inputs. Nonfinite input is explicitly rejected by this portable adapter;
+original SIMD NaN behavior is not claimed. The preceding time-shaped stage
+and the live values entering this stage remain separate fidelity boundaries.
