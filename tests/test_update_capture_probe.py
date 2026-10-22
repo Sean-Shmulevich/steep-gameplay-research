@@ -39,6 +39,15 @@ class UpdateCaptureControllerTests(unittest.TestCase):
             self.assertTrue(result['attribution_required'])
             self.assertEqual(result['attributed_records'],0)
 
+    def test_required_direct_substeps_missing_is_failure(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);client=self.fixture(root)
+            (root/'plugins/update_capture.ini').write_text('[capture]\nrequire_substeps=1\n')
+            result=capture_update(client,root)
+            self.assertFalse(result['ok'])
+            self.assertTrue(result['substeps_required'])
+            self.assertEqual(result['direct_substep_records'],0)
+
     def test_restoration_failure_is_failure(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d); self.assertFalse(capture_update(self.fixture(root,restored=0),root)['ok'])

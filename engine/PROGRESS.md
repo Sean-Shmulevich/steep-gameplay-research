@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Direct native substep capture passed: 270/270 calls, counts 1/2/3/8, 176 complete
+ordinal sequences and one final boundary-truncated group. Restoration/health/
+cleanup passed. Request counter was +7 modulo 2^32 versus completion counter in
+this session only. Next: correlate BeforeSimulation motion ingestion with direct
+substep records. See [live validation](../docs/reconstruction/SNOW_BATCH_DISPATCH.md#live-direct-substep-validation).
+
 Frame live attempt rejected: 248 valid job attributions, zero valid frames;
 restoration and cleanup passed. Found integration mismatch between enclosing
 world and physics manager. Corrected +0xff0/+0x18 ownership join passes a fixture

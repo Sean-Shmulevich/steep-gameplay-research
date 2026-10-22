@@ -1,0 +1,115 @@
+{
+  "direct_substeps": {
+    "valid_records": 270,
+    "unavailable_records": 0,
+    "invalid_frame_records": 0,
+    "malformed_records": 0,
+    "identity_rejected_records": 0,
+    "selected_count_histogram": {
+      "1": 91,
+      "2": 165,
+      "3": 6,
+      "8": 8
+    },
+    "observed_outer_groups": 177,
+    "complete_ordinal_sequences": 176,
+    "partial_or_nonsequential_groups": 1,
+    "request_minus_outer_mod32_histogram": {
+      "7": 270
+    },
+    "counter_semantic_equivalence_proved": false,
+    "global_invocation_identity_established": false
+  },
+  "job_attribution": {
+    "valid_records": 270,
+    "rejected_records": 0,
+    "unattempted_records": 0,
+    "unavailable_records": 0,
+    "malformed_records": 0,
+    "unique_job_addresses": 10,
+    "initial_record_count_histogram": {
+      "1": 270
+    },
+    "batch_generation_established": false
+  },
+  "wrapper_intervals": {
+    "available_intervals": 270,
+    "unavailable_intervals": 0,
+    "invalid_intervals": 0,
+    "zero_duration_intervals": 0,
+    "same_actor_overlapping_pairs": 0,
+    "nonoverlapping_adjacent_pairs": 269,
+    "thread_changes_between_nonoverlapping_neighbors": 230,
+    "reservation_order_entry_reversals": 0,
+    "scheduler_exclusion_proved": false,
+    "input_ingestion_order_proved": false
+  },
+  "preconsume_counter": {
+    "available_pairs": 270,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "decrement_by_one_pairs": 270,
+    "unchanged_pairs": 0,
+    "unsigned_delta_histogram": {
+      "4294967295": 270
+    },
+    "consumer_execution_proved": false
+  },
+  "preconsume_countdown": {
+    "available_pairs": 270,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "elapsed_subtraction_matches": 270,
+    "consumed_subtraction_matches": 91,
+    "distinct_clock_pairs": 179,
+    "distinct_elapsed_matches": 179,
+    "distinct_consumed_matches": 0
+  },
+  "records": 270,
+  "rejected_timing_records": 0,
+  "observed_request_groups": 177,
+  "records_per_group": {
+    "1": 92,
+    "2": 82,
+    "3": 2,
+    "8": 1
+  },
+  "float32_subdivision_matching_groups": 176,
+  "nonmatching_or_partial_groups": 1,
+  "loss_free_export": true,
+  "slot_lifecycle_passed": true,
+  "direct_native_substep_index_used": true,
+  "limits": [
+    "Groups at capture edges or gaps can be partial.",
+    "Matching duration arithmetic does not recover smoothing history or frequency selection.",
+    "Record order is reservation order; concurrent calls can complicate grouping.",
+    "No pointer or raw body payload is included in this summary."
+  ],
+  "evidence": "live original-game direct outer-loop ordinal observation",
+  "trace_sha256": "dc692ca2b49db0eaad8e2127d8dcf1bb6597ed960eafd90a62b8c88ef7e047e9",
+  "direct_frame_capture_passed": true,
+  "session": {
+    "ok": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_replaced": false
+  },
+  "boundary_group": {
+    "position": "last",
+    "observed_ordinals": [
+      0
+    ],
+    "selected_count": 2,
+    "record_index": 269
+  },
+  "eight_step_group_observed_ordinals": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ]
+}

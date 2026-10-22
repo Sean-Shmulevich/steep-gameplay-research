@@ -521,3 +521,56 @@ required. The analyzer now distinguishes direct frame validity from timing-deriv
 group matches and reports partial/repeated ordinal sequences without inventing
 missing steps. It compares the request and completion counters numerically modulo
 2^32 while explicitly withholding semantic equivalence or global generation claims.
+
+
+## Live direct substep validation
+
+The corrected ownership join passed a bounded original-game capture. All 270
+selected player calls had valid job attribution and valid direct frame metadata.
+The [aggregate receipt](../../native/snow_host/direct_substep_live_observation.json)
+contains no pointers or body payloads. Zero records were dropped. Slot restoration,
+drain, post-capture health observation and cleanup passed; temporary launch settings
+were restored and the bottle stopped without replacing the original DLL.
+
+The observed selected-count histogram counts calls, not outer requests:
+
+| Selected count | Captured actor calls |
+| --- | ---: |
+| 1 | 91 |
+| 2 | 165 |
+| 3 | 6 |
+| 8 | 8 |
+
+There were 177 observed outer-completion-counter groups. Of these, 176 contained
+complete ordinal sequences from zero through selected_count-1. The eight-step
+group explicitly contained 0,1,2,3,4,5,6,7. The only incomplete group was last in
+the capture: record 269 observed ordinal zero of two, then capture closed. Do not
+report a missing second simulation step from that capture-boundary truncation.
+
+The old request field was numerically seven ahead of the outer completion counter
+modulo 2^32 for all 270 calls. That is a session observation, not an invariant to
+hard-code or evidence that their semantic roles are interchangeable. The raw
+summary's legacy `substep_available=false` describes the old snapshot counter
+field. Direct ordinals are separately represented by each record's `frame_valid`
+and `substep_ordinal`; the aggregate analyzer reports direct native indexing true.
+
+No captured actor intervals overlapped, while 230 neighboring calls switched
+workers. Ten job addresses appeared. The direct ordinal now distinguishes calls
+that reused a batch job address within an outer request, without estimating their
+position from elapsed-time arithmetic. It still does not supply a globally unique
+world invocation ID across resets, concurrent/reentrant worlds or counter wrap.
+
+Use the strict reproduction mode to require valid direct records rather than
+merely valid job attribution:
+
+```sh
+python3 scripts/run_late_load.py --experiment host --load-at startup \
+  --plan update-capture --attribute-jobs --require-substeps
+```
+
+The next evidence target is the player's motion-ingestion call in the separately
+identified BeforeSimulation receiver batch. Correlate it with these direct outer
+counter/ordinal observations and the input payload read at each snow invocation.
+This live pass closes the selected route's direct substep observation gap; it does
+not establish input freshness, universal scheduler exclusion, mutation safety or
+deterministic replay.
