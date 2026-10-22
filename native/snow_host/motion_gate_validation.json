@@ -1,0 +1,1939 @@
+{
+  "evidence": "original_instruction_emulation_with_substituted_callees",
+  "passed": true,
+  "cases": 192,
+  "game_process": false,
+  "code_sha256": {
+    "0x140564ee0": "e89c3d1544b8a419c643b3350e907a86e3cded66ebe1e8d97635992c50705faf",
+    "0x1405654c0": "7b40b5d537bca383858f4025e99391b8c7411044a5e5eaf647ceabbce2988dc4"
+  },
+  "rows": [
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 0,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": true
+    },
+    {
+      "active": 1,
+      "controller_blocked": 0,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 0,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 0,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 0,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 0,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": null,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 0,
+      "ingested": false
+    },
+    {
+      "active": 1,
+      "controller_blocked": 1,
+      "motion_enabled": 1,
+      "initial_skip": 1,
+      "predicate_a": 1,
+      "predicate_b": 1,
+      "synthetic_preparation_skip": 1,
+      "ingested": false
+    }
+  ],
+  "limits": [
+    "All helper bodies including ingestion, carrier and dispatch are substituted.",
+    "Preparation skip mutations are synthetic sensitivity tests, not evidence those helpers write this flag.",
+    "Controller handle is valid and stable; actor auxiliary pointer is null.",
+    "Stops after optional motion call; later actor bookkeeping is excluded.",
+    "No proof of live gate values, action freshness or per-substep input reuse."
+  ]
+}

@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Motion ingestion gate branches validated in 192 original-instruction emulation
+cases with substituted helpers. Preparation precedes the skip read; callback
+entry and an entry-time skip snapshot cannot prove ingestion. Next capture must
+observe ingestion itself and correlate it with direct native substeps. No new
+live session was launched. See [gate contract](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#motion-ingestion-gates-original-instruction-validation).
+
 Direct native substep capture passed: 270/270 calls, counts 1/2/3/8, 176 complete
 ordinal sequences and one final boundary-truncated group. Restoration/health/
 cleanup passed. Request counter was +7 modulo 2^32 versus completion counter in

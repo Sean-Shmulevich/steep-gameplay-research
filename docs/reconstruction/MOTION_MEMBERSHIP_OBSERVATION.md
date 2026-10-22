@@ -114,3 +114,70 @@ Both bound counts (256 source receivers, 1024 storage slots), recheck every foll
 1. Examine the actor's internal gates (activity, controller, `+0x1fd` skip) inside the call.
 2. Repeat the membership and order measurements during verified riding.
 3. Continue the separate freshness work on the action payload writer.
+
+## Motion ingestion gates, original-instruction validation
+
+A subsequent isolated emulation executed the original actor entry and nested
+motion-update branches in 192 synthetic cases. All cases passed. The
+[validation receipt](../../native/snow_host/motion_gate_validation.json) records
+code hashes, inputs and outcomes. This establishes local branch behavior with
+substituted callees, not live input consumption.
+
+The gate order is:
+
+```text
+actor_before_simulation(actor):
+    decrement_nonzero_countdown(actor)
+    prepare_motion(actor.motion)          # body unresolved here
+    prepare_actor(actor)                  # body unresolved here
+    update_speed_state(actor)             # happens before activity gates
+    if actor.activity_byte == 0: return
+    controller = resolve_signed_handle(actor.controller_handle)
+    if controller.block_byte != 0: return
+    if actor.motion_enabled_byte != 0:
+        update_motion(actor.motion)
+    continue_actor_bookkeeping()
+
+update_motion(motion):
+    actor = motion.actor
+    if actor.predicate_a():
+        prepare_a(motion)
+    elif actor.predicate_b():
+        prepare_b(motion)
+    if actor.skip_byte != 0: return        # read AFTER preparation
+    ingest_actions(motion)
+    update_optional_auxiliary_flag(motion)
+    prepare_carrier(motion)
+    dispatch_motion_state(motion)
+```
+
+These names describe roles for this explanation; they are not recovered type or
+field names. Build-specific anchors are actor entry `0x140564ee0`, nested update
+`0x1405654c0`, ingestion `0x140541da0`, activity byte `+0x1fa`, controller handle
+`+0xff0`, controller block byte `+0xfc`, motion enable byte `+0xfc9`, skip byte
+`+0x1fd`, motion object `actor+0x1010`, and its actor pointer `motion+0x40`.
+Predicates use actor slots `0x458` and `0x460`. Preparation A takes precedence;
+false from both predicates still permits ingestion when skip is zero.
+
+The actor's later `+0xfc8` eligibility calculation is downstream of this optional
+motion call. Its additional gates must not be imported into the earlier
+input-ingestion condition.
+
+Validation covered all 64 combinations of the four gate bytes and two predicate
+results, each with preparation leaving skip untouched, clearing it or setting
+it. The latter two mutations were supplied by the test. They demonstrate why a
+skip snapshot at callback entry cannot alone establish whether ingestion ran;
+they do not prove either preparation helper writes that field. The test checked
+preparation precedence and ingestion/carrier/dispatch order. It substituted all
+helper bodies, used a valid stable controller handle and null auxiliary object,
+and stopped before later actor bookkeeping.
+
+### Consequence for the next recorder
+
+Record the ingestion call itself, or its return site, to establish consumption.
+An outer callback entry and its gate-byte snapshot are supporting context only.
+Associate that event with the existing request and direct native substep records
+without assuming a fixed counter offset. Record action payloads at ingestion and
+at the snow consumer separately. Equal payloads would establish observed reuse
+only; a writer/publication event is needed to establish freshness. None of these
+new correlated observations has yet been captured live.
