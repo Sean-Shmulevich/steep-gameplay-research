@@ -4250,3 +4250,11 @@ sequence, no input mutation, spin preservation, absent rider and suppressed
 velocity writes with retained countdown reset. The example, serial orchestration
 and supplied release/contact/mass inputs are authored. Original input production,
 profile selection, body solving and animation remain outside this bench.
+
+
+Cooker composition update: the offline jump bench now connects explicit decay
+samples through the recovered cooker, release state, jump curves and central
+impulses. A synthetic sequence verifies release waits for cooked zero, independent
+cooker/derivative intervals and spin preservation. Original exponential samples
+and native execution cadence remain unresolved; this is an authored composition
+of individually studied kernels, not an original-game replay.

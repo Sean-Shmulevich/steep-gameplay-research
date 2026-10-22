@@ -50,3 +50,41 @@ class SnowJumpBenchTests(unittest.TestCase):
         self.assertEqual(result['trace'][3]['release_state_after']['release_signal'],0)
         document['frames'][0]['release_signal']=1
         with self.assertRaisesRegex(ValueError,'not both'): run(document)
+
+    def cooked_scenario(self):
+        path=Path(__file__).resolve().parents[1]/'engine/examples/snow_cooker_jump_input.json'
+        return json.loads(path.read_text())
+
+    def test_cooker_delays_release_until_zero_and_preserves_spin(self):
+        document=self.cooked_scenario(); original=deepcopy(document)
+        result=run(document); rows=result['trace']
+        self.assertEqual(document,original)
+        self.assertEqual([r['cooker']['value'] for r in rows],[.25,.5,.25,0,0])
+        self.assertEqual([r['branch'] for r in rows],
+                         ['no_release','no_release','no_release','submit','cooldown'])
+        self.assertEqual([r['cooker']['direction'] for r in rows],
+                         ['ToZero','ToOne','ToZero','ToZero','ToZero'])
+        self.assertEqual(rows[3]['release_state_after']['release_signal'],1)
+        self.assertEqual(rows[4]['applications'],[])
+        for name in document['bodies']:
+            self.assertEqual(result['final_bodies'][name]['angular'],tuple(document['bodies'][name]['angular']))
+            self.assertGreater(result['final_bodies'][name]['linear'][2],0)
+
+    def test_cooker_clock_is_separate_from_release_clocks(self):
+        document=self.cooked_scenario()
+        document['frames'][2]['cooker_dt']=.02
+        rows=run(document)['trace']
+        self.assertEqual(rows[2]['cooker']['value'],0)
+        self.assertEqual(rows[2]['branch'],'submit')
+        self.assertEqual(rows[2]['release_state_after']['rate'],-25)
+        self.assertAlmostEqual(rows[2]['release_state_after']['elapsed'],.01)
+
+    def test_cooker_rejects_missing_provenance_and_ambiguous_inputs(self):
+        for alteration, message in [
+            (lambda d:d.pop('release_state'),'requires release_state'),
+            (lambda d:d['frames'][0].update(cooked=0),'not both'),
+            (lambda d:d['cooker']['decay'].pop('provenance'),'decay samples'),
+            (lambda d:d['frames'][0].update(cooker_dt=0),'Positive cooker_dt'),
+        ]:
+            document=self.cooked_scenario(); alteration(document)
+            with self.assertRaisesRegex(ValueError,message): run(document)

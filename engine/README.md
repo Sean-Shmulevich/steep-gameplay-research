@@ -726,3 +726,30 @@ The release-state kernel subsequently passed an
 with 1,536 exact cases, including unequal timing arguments. This strengthens the
 kernel evidence; the surrounding authored bench and its supplied cooked samples
 remain distinct from original input-service behavior.
+
+
+### Cooker through jump impulse
+
+```sh
+python3 -m engine.snow_jump_bench engine/examples/snow_cooker_jump_input.json --output /tmp/snow-cooker-jump-result.json
+```
+
+The optional `cooker` block adds recovered float32 input filtering before charge
+release, jump curves and central impulse arithmetic. It requires `release_state`,
+four named `coefficients`, `epsilon`, and a `decay` block containing 257 explicit
+`samples`, `low`, `high`, `padding` and `provenance: authored_synthetic`. Each frame
+supplies `cooker_target` and a positive `cooker_dt`; it must omit `cooked` and
+`release_signal`. Targets and remapped raw charge remain separate caller inputs.
+
+Each trace row reports the cooker direction, lookup argument, lookup result,
+step and final value alongside release state, jump branch and body changes.
+The example intentionally uses a constant-one synthetic lookup and base damping
+25 to make the cooked sequence 0.25, 0.5, 0.25, 0, 0. Raw release on the third
+frame triggers an impulse on the fourth. The fifth is suppressed by cooldown.
+This fixture is a diagnostic, not a realistic decay curve or game tuning.
+
+`cooker_dt`, `elapsed_dt` and `derivative_dt` are independent supplied clocks.
+The serial orchestration is authored and does not establish their relationship
+in the original scheduler. Native exponential sample generation, device mapping,
+contact dynamics and animation remain outside this bench. Existing scenarios
+with supplied cooked values or supplied release signals retain their behavior.

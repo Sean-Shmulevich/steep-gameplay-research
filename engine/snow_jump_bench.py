@@ -1,7 +1,7 @@
 """Offline composition of recovered curve, jump-state and central-impulse kernels.
 
 The JSON scenario and serial orchestration are authored. No contact solver,
-input cooker, animation, live game access or original-engine equivalence.
+animation, live game access or original-engine equivalence.
 """
 import argparse
 from copy import deepcopy
@@ -11,6 +11,8 @@ from reference.central_impulse import central_impulse, f32
 from reference.runtime_curve import compile_samples, evaluate
 from reference.snow_jump_step import jump_step
 from reference.snow_charge_release import update_release
+from reference.input_cooker import cook
+from reference.decay_table import build as build_decay_table
 
 
 def run(document):
@@ -31,9 +33,31 @@ def run(document):
     config = values['config']
     curves = {key:compile_samples(**values['curves'][key]) for key in ('coil','depth','speed')}
     release_state = values.get('release_state')
+    cooker = values.get('cooker')
+    decay_table = None
+    if cooker is not None:
+        if release_state is None:
+            raise ValueError('Cooker requires release_state')
+        decay = cooker['decay']
+        if decay.get('provenance') != 'authored_synthetic':
+            raise ValueError('Explicit authored_synthetic decay samples required')
+        decay_table = build_decay_table(decay['samples'], low=decay['low'],
+                                       high=decay['high'], padding=decay['padding'])
     trace = []
     for index, frame in enumerate(frames):
         release_before = deepcopy(release_state)
+        cooker_result = None
+        if f32(frame['elapsed_dt']) <= 0:
+            raise ValueError('Positive elapsed_dt required by bench policy')
+        if cooker is not None:
+            if 'cooked' in frame:
+                raise ValueError('Choose cooker or explicit cooked input, not both')
+            if f32(frame['cooker_dt']) <= 0:
+                raise ValueError('Positive cooker_dt required by bench policy')
+            cooker_result = cook(release_state['cooked'], frame['cooker_target'],
+                frame['cooker_dt'], cooker['coefficients'], epsilon=cooker['epsilon'],
+                decay_lookup=lambda argument: evaluate(argument, **decay_table))
+            frame['cooked'] = cooker_result['value']
         if release_state is not None:
             if 'release_signal' in frame:
                 raise ValueError('Choose explicit release_signal or release_state, not both')
@@ -42,8 +66,6 @@ def run(document):
                 derivative_dt=frame['derivative_dt'],release_threshold=config['release_threshold'],
                 input_update_mode=frame['input_update_mode'])
             frame['release_signal']=release_state['release_signal']
-        if f32(frame['elapsed_dt']) <= 0:
-            raise ValueError('Positive elapsed_dt required by bench policy')
         # Curves are pure diagnostic preprocessing here, not proof of native visits.
         gains = {key:evaluate(frame[field],**curves[key]) for key,field in
                  (('coil','release_signal'),('depth','depth'),('speed','projected_speed'))}
@@ -61,13 +83,14 @@ def run(document):
             body['linear']=applied['linear']; body['angular']=applied['angular']
             applications.append({'body':name,'impulse':request['impulse'],**applied})
         state = {key:result[key] for key in ('cached_factor','cooldown')}
-        trace.append({'index':index,'release_state_before':release_before,
+        trace.append({'index':index,'cooker':cooker_result,'release_state_before':release_before,
                       'release_state_after':deepcopy(release_state),'gains':gains,'branch':result['branch'],
                       'state_before':old_state,'state_after':dict(state),
                       'bodies_before':before,'bodies_after':deepcopy(bodies),'applications':applications})
     return {'schema':'snow-jump-bench-result-v1','provenance':'authored_synthetic',
             'game_access':False,'trace':trace,'final_state':state,'final_bodies':bodies,'final_release_state':release_state,
-            'limits':['Release signal, air clock, depth, speed and masses are supplied scenario inputs.',
+            'limits':['Inputs, clocks, depth, speed, masses and optional decay samples are supplied scenario data.',
+                      'Cooker-to-release orchestration is authored; native scheduling and exponential samples remain unverified.',
                       'Curve preprocessing is not a record of native curve visits.',
                       'No gravity integration, contacts, constraints, dispatch or animation is simulated.',
                       'Preserved angular velocity covers central arithmetic only.']}
