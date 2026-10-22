@@ -42,3 +42,14 @@ New complete invoker `14043f5c0` reads `[RDX]` into RAX at `14043f5c6`, thus sel
 Next function is `14046f200`, called from `14043f5da`, selected by constructor-bound owner+`1a0`. Export it next. Do not substitute the adjacent scalar target. Compare its actual receiver adjustment and action-object read with prior `14046f140 -> manager+50 -> 14046f150 -> 1404748a0 -> action+20/fallback`, and vector helper `14062ca40`'s adjustment, using receiver ownership.
 
 No new vector field writer, sample generation, timestamp, units or commit order was recovered. The manager's constructor global `14312bb00` is a new identity seed, not yet a proved live ingestion-object join. Subsequent setup `14047c660` and later rebinding are not excluded. The state-vector override and ingestion/physics dependency remain as run37 documented them.
+
+## Follow-up: getter target resolved
+
+The previously unresolved `14046f200` target is now inspected and validated in
+48 original-instruction cases. It forwards the unchanged manager and selected
+index to `14046f150`, then copies returned object `+40`. Motion's borrowed view
+reaches the same field, selected action `+60`. The ingestion global also matches
+the constructor-published manager global. See the
+[getter/view join](../../../reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#copy-getter-and-ingestion-view-join)
+for exact scope and limitations. Earlier open-edge text above is retained as
+historical evidence; live rebinding, subtype and freshness remain unresolved.

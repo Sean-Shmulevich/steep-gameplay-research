@@ -1186,3 +1186,47 @@ next useful join is the selected live bank/context plus the writer that updates
 the action object's vector, or a direct ingestion event that can distinguish the
 four action reads in one call. Search precedence should be retained in either
 instrumentation plan rather than sampling an arbitrary matching action record.
+
+## Copy getter and ingestion view join
+
+The unresolved getter named in the older
+[action-ownership evidence](../systems/input/action-ownership/evidence.md) is
+now inspected and emulated. `0x14046f200(manager, output, action_id)` performs:
+
+```python
+object = manager_lookup(manager, manager.selected_index, action_id)
+output.bits16 = object.vector_bits16
+return output
+```
+
+It passes the unchanged manager receiver and action ID into `0x14046f150`,
+using manager `+0x50` as the selected index. It reads exactly 16 bytes at returned
+object `+0x40` and writes them to caller output. The manager lookup returns a
+selected action pointer plus `0x20`, or the fallback object. Thus a selected
+record supplies bytes at action `+0x60`. Motion's `0x14046f140` followed by view
+`0x14062ca40` reaches the identical bytes; the view just returns object `+0x40`.
+This is a copy getter versus a borrowed-address accessor, not two vector types.
+
+The motion ingestion global load resolves to `0x14312bb00`, the same global
+published by the previously inspected manager constructor. That constructor
+passes its manager receiver to the callable binder. This closes the static
+initializer/receiver join to motion's manager lookup. It does not establish
+current live identity after further setup or possible rebinding.
+
+[48 original-instruction cases](../../native/snow_host/action_getter_join_validation.json)
+execute both paths with ordinary and owner-thread reader admission, valid and
+out-of-range selected indices, hit and fallback results, two initial reader
+counts, and three byte patterns including signed zero and a NaN payload. The
+bank lookup and thread-ID service are substituted; actual manager admission,
+release, copy getter and vector-view instructions execute. Both paths preserve
+the input bits and restore the reader count. A subsequent synthetic source
+mutation leaves the completed copy unchanged while changing borrowed storage.
+No concurrent writer is simulated.
+
+Crucially, the manager lookup releases its reader count before either vector
+access. A copied output is detached after copying, but this does not prove an
+atomic source read, lifetime retention or freshness. The action callback writer
+family is already connected in [the reset-callback study](ACTION_RESET_CALLBACK.md).
+What remains is the live selected action's concrete subtype and the ordering of
+its refresh/publication relative to the four ingestion reads and physics batch.
+The old getter-target ambiguity is closed; those runtime questions remain open.

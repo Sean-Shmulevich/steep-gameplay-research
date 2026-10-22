@@ -1,0 +1,21 @@
+{
+  "evidence": "Original copy getter, manager reader path and vector-view body; bank lookup and thread ID substituted",
+  "passed": true,
+  "cases": 48,
+  "game_process": false,
+  "source_offsets": {
+    "selected_action_vector": 96,
+    "returned_subobject_vector": 64
+  },
+  "code_sha256": {
+    "0x46f140": "87eda982278f240da1f541a40618103050da7002c56e1bcdd30a0f4a72788981",
+    "0x46f200": "593b6cd8a5abacfd1301055c35f3ea5fe1e4dc19bb2c0471f5c48c873ee459a9",
+    "0x62ca40": "d6d23346e0b806d16162498ac7889a0f0a7dd841ea8c6c1afac5a90aff651a1c"
+  },
+  "limits": [
+    "No competing threads or writer protocol executed",
+    "Bank record selection substituted; separately validated traversal",
+    "Live manager identity and rebindings remain unresolved",
+    "Copied output is not proof of atomic source acquisition or freshness"
+  ]
+}

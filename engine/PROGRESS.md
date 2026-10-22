@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Static snow-copy-getter/motion-view join closed. Both reach the same selected
+action+0x60 sample field; ingestion uses the constructor-published manager global.
+48 original-instruction cases validate copies, borrowed views, fallback, reader
+count balance and raw-bit preservation. Reader count is released before vector
+access, so no atomicity/freshness claim. Earlier getter-target open edge is now
+superseded. Next: live concrete subtype and refresh/publication versus ingestion
+ordering. See [join](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#copy-getter-and-ingestion-view-join).
+
 Action-bank selection reconstructed: three ordered groups, reverse traversal
 within each, first nonnull action wins, optional miss-stop aborts all remaining
 search. Original instructions matched 98 cases including null map values and
