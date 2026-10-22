@@ -1,0 +1,42 @@
+{
+  "evidence": "original-game observation-slot lifecycle; empty capture",
+  "date": "2026-10-22",
+  "capture_success": false,
+  "gameplay_hud_verified": true,
+  "manual_navigation_intervention": "One guarded Enter press advanced the offline notice after independent Tesseract recognition. Map dismissal then used the navigator.",
+  "host_player_bound": true,
+  "plugin_configured_while_held": true,
+  "summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 0,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false
+  },
+  "final_engine": {
+    "ordinary": true,
+    "held": false,
+    "faulted": false,
+    "step": 13414
+  },
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "controller_error": "A redundant final resume raised not_paused_by_host and obscured the empty-capture result. Fixed after this run; not live-retested.",
+  "limits": [
+    "Zero records do not prove invocation of the selected actor update route.",
+    "No physics or impulse arithmetic was observed.",
+    "The intended 20-second stability stage was not reached.",
+    "Possible inactive actor, different dispatch route, or filter mismatch remain hypotheses."
+  ],
+  "next_checks": [
+    "Count all hook dispatches separately from selected-actor matches.",
+    "Record binding identity and activity gates in sanitized form.",
+    "Verify player movement before repeating bounded observation."
+  ]
+}

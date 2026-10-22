@@ -59,8 +59,7 @@ spin-preserving impulse path is not installed in the native game yet.
 put that DLL in `plugins`: it does not implement `SnowMod_Initialize`. The separate
 optional `--capture-plugin` build supplies `plugins/update_capture.dll`, which
 does implement the host callbacks and remains disabled until configured. Its synthetic
-Windows fixture passes under Wine, and it now has explicit guarded slot install/restore entry points. Those entry
-points have only been exercised against synthetic objects, not the live game. Its README explains configuration, capture close/drain and lifetime
+Windows fixture passes under Wine, and it now has explicit guarded slot install/restore entry points. A later [live lifecycle check](update_capture_live_slot_validation.json) installed and restored the slot in gameplay but recorded zero calls; invocation remains unproved. Its README explains configuration, capture close/drain and lifetime
 requirements. Source availability does not turn it into a finished live hook.
 
 Game assets, executable payloads, raw memory dumps, recordings, saves and local
@@ -109,3 +108,20 @@ This uses an installed `tesseract` executable, returns structured text and timin
 and fails on OCR timeout or process failure. It performs no capture or input.
 Game screenshots remain private. OCR text alone does not establish player-object
 identity or a safe physics boundary.
+
+The [second live attempt](update_capture_live_slot_validation.json) reached
+gameplay with one manually assisted offline-dialog dismissal. The configured
+plugin reported installation, restoration and drain success, but zero records.
+The host ended in ordinary mode and cleanup passed. A redundant resume in the
+controller obscured this result; the controller now avoids a second resume
+after a confirmed first one and preserves an earlier exception if cleanup fails.
+Eight focused controller tests pass; the fix has not yet been repeated live.
+
+Fast Vision OCR returned promptly but misread the offline notice. The private
+capture command now retains native window selection/capture and uses the public
+Tesseract helper for recognition; that combination recognized the gameplay HUD
+in this run. Full unattended startup remains to be retested.
+
+Next discriminate no slot dispatch from no selected-actor match, then verify
+motion before repeating capture. Empty records establish neither a physical
+update boundary nor a safe location for impulse writes.

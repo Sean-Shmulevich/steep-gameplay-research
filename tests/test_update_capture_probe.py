@@ -57,3 +57,21 @@ class UpdateCaptureControllerTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError,'Already held'):
                     capture_update(client,Path(d))
                 client.call.assert_called_once_with('simulation.status')
+
+    def test_confirmed_resume_is_not_repeated(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d); client=self.fixture(root)
+            result=capture_update(client,root)
+            self.assertTrue(result['ok'])
+            self.assertEqual(sum(c.args==('simulation.resume',) for c in client.call.call_args_list),1)
+
+    def test_resume_failure_does_not_hide_configuration_failure(self):
+        with tempfile.TemporaryDirectory() as d:
+            client=Mock()
+            def call(method,**kw):
+                if method=='simulation.resume': raise RuntimeError('transport lost')
+                return {'host_paused':False}
+            client.call.side_effect=call
+            with self.assertRaisesRegex(RuntimeError,'configuration'):
+                capture_update(client,Path(d),timeout=0)
+            self.assertEqual(client.call.call_args_list[-1].args,('simulation.resume',))

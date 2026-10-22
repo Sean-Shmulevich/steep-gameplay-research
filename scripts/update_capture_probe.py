@@ -14,6 +14,7 @@ def capture_update(client, build, *, timeout=12):
     status=client.call('simulation.status')
     if status.get('host_paused') or status.get('engine', {}).get('held'):
         raise RuntimeError('Already held; refusing to take over an existing pause')
+    resumed=False
     try:
         result['pause']=client.call('simulation.pause',lease_ms=30000)
         end=time.monotonic()+timeout
@@ -23,6 +24,7 @@ def capture_update(client, build, *, timeout=12):
             time.sleep(.1)
         else: raise RuntimeError('Capture configuration was not confirmed; inspect host log')
         result['resume']=client.call('simulation.resume')
+        resumed=True
         end=time.monotonic()+timeout
         while time.monotonic()<end:
             try:
@@ -40,5 +42,10 @@ def capture_update(client, build, *, timeout=12):
                       and summary['dropped']==0 and len(records)>0 and result['valid_pairs']>0)
         if not result['ok']: result['error']='Capture installation/restoration/drain/data gate failed'
     finally:
-        result['final_resume']=client.call('simulation.resume')
+        if not resumed:
+            try:
+                result['final_resume']=client.call('simulation.resume')
+            except Exception as exc:
+                result['ok']=False
+                result['resume_error']=str(exc)
     return result
