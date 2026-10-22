@@ -1,0 +1,24 @@
+{
+  "evidence": "original packed exponential leaf instructions, no intercepted calls",
+  "game_process": false,
+  "domain": [
+    -10,
+    0
+  ],
+  "mxcsr": "0x1f80 round to nearest even",
+  "exact_lane_cases": {
+    "sse2": 4356,
+    "sse41": 4356
+  },
+  "host_exp_different_lanes": {
+    "sse2": 1893,
+    "sse41": 1893
+  },
+  "independently_generated_mantissas_matching_per_path": 64,
+  "limitations": [
+    "CPU dispatch choice not observed live",
+    "Exceptional and outside-domain paths excluded",
+    "Scalar final sample routine not covered"
+  ],
+  "source_sha256": "8575fa43388f346a71565d540d162d41db31c0826a397403ecb029bfa973df89"
+}

@@ -1095,6 +1095,17 @@
         "Caller supplies 257 samples. Four original builder cases and 1056 evaluator cases with intercepted exponential and floor helpers; no native exponential equivalence claimed."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.decay_exp",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "312dd9789b6d45403ce4af8f78e1eb5dc4be2eec944d79e24789be2567f31ad1",
+      "published": "reference/decay_exp.py",
+      "published_sha256": "8575fa43388f346a71565d540d162d41db31c0826a397403ecb029bfa973df89",
+      "adaptations": [
+        "Domain restricted to [-10, 0]. Explicit SSE2/SSE4.1 path and nearest-even rounding. Mathematically generated mantissas; scalar endpoint and live dispatch excluded."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

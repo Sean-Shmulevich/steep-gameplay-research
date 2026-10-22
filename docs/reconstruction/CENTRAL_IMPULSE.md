@@ -10115,3 +10115,37 @@ samples are authored fixtures, not recovered original samples. Their native
 implementations remain unresolved. The floor helper was also intercepted for
 finite nonnegative indices. This was offline instruction emulation, not a live
 game test; no initialized original table is included.
+
+
+## Decay exponential lanes
+
+`reference.decay_exp.exp_lane` reconstructs both packed-vector paths over the
+cooker's finite [-10, 0] domain. The caller selects `sse2` or `sse41`; automatic
+CPU dispatch and exceptional/outside-domain paths are excluded. The reference
+uses round-to-nearest-even and float32 rounding after each arithmetic operation.
+
+Both paths scale the input by float32(64 / ln(2)). SSE2 obtains the rounded integer
+through a 12582912 bias and uses its bit representation. SSE4.1 uses integer
+conversion and explicit nearest rounding. They subtract the integer multiplied
+by two parts of ln(2)/64, 0.01082611083984375 and
+4.313856607041089e-06, rounding each multiplication and subtraction separately.
+For the remainder r, the polynomial order is `((r + r) + 2) + (r * r)`.
+
+The integer's low six bits select a mantissa; the remaining bits construct an
+exponent for the polynomial's scale. The 64 mantissas can be independently
+computed as the low 23 bits of float32(2 ** (j / 64)). All 64 generated entries
+matched each original path's table. No table payload is copied into the module.
+The explicit bit construction and rounding order are in the reference code.
+
+The [instruction receipt](../../native/snow_host/decay_exp_validation.json)
+compares 4,356 lane cases per path, including the 257-point decay grid and a
+4,097-point domain sweep, plus padding lanes. All outputs match exactly under
+MXCSR 0x1f80. No calls were intercepted in these leaf comparisons. Host exp
+rounded to float32 differs in 1,893 tested lanes per path; at -5 the reconstructed
+value is 0.006737947463989258 rather than 0.0067379469983279705.
+
+This closes the packed-lane arithmetic boundary over the tested domain. The
+builder's final sample uses a separate scalar routine, which is not covered by
+this receipt. Live CPU dispatch remains unobserved. Using this lane routine for
+all 257 samples is therefore a composed substitute for that last scalar call,
+not yet proof of the complete original initialized table.

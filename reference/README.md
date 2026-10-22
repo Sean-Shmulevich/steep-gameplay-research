@@ -35,3 +35,8 @@ accessor freshness, locks and bank rotation remain supplied service boundaries.
 `decay_table.py` builds the cooker decay lookup from 257 caller-supplied samples.
 See [decay lookup construction](../docs/reconstruction/CENTRAL_IMPULSE.md#decay-lookup-construction)
 for exact float32 ordering and the unresolved exponential sample producer.
+
+`decay_exp.py` reconstructs both packed exponential lane paths on [-10, 0].
+Its mantissas are mathematically generated. See
+[decay exponential lanes](../docs/reconstruction/CENTRAL_IMPULSE.md#decay-exponential-lanes)
+for instruction comparison, rounding mode and the remaining scalar endpoint.
