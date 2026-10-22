@@ -1,0 +1,14 @@
+{
+  "evidence": "Original instruction prefix with synthetic action lookup and actor predicate; original vector-view body",
+  "passed": true,
+  "cases": 96,
+  "game_process": false,
+  "action_reads_per_case": 4,
+  "code_sha256": "5aaad002cf9114aaf2947a744293d428970d790626186dcba9021e88a4273e55",
+  "limits": [
+    "Action lookup body substituted; original view returns object+0x40; no device or lifetime proof",
+    "Stops before helper and actor-edge tail",
+    "Finite smoothing inputs; NaN payload tested only in counter-bearing first read",
+    "No live call cadence or writer identity established"
+  ]
+}

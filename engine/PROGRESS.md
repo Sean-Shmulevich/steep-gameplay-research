@@ -2,6 +2,15 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Ingestion prefix reconstructed and validated in 96 original-instruction cases.
+It performs four separate action reads, updates two counters, flips X bits and
+smooths both current vectors. Alternate selection affects only the first read.
+This identifies ingestion itself as another writer matching the live smoothing
+trace; the formula match cannot identify which writer ran. Independent API and
+four focused tests added. Next: trace action-bank publication and observe the
+actual ingestion boundary; secondary smoothing is not yet recorded live. See
+[read sequence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#ingestion-read-sequence-and-both-smoothing-writers).
+
 Live controlled steering capture passed: 580 motion/profile/frame-valid updates,
 431 complete observed batches, no drops. Both input edges appeared at ordinal
 zero; no motion changes inside updates or 149 within-batch gaps. Actual profile

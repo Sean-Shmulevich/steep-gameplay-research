@@ -1075,3 +1075,68 @@ Next: connect the observed mode transitions and counter edges to the previously
 inspected BeforeSimulation motion-update route. A function-entry observation or
 producer-generation marker would distinguish actual ingestion execution from
 matching field changes. Do not infer per-substep ingestion from the counter.
+
+## Ingestion read sequence and both smoothing writers
+
+`engine/motion_input_ingestion.py` implements the inspected ingestion prefix,
+validated against original instructions in
+[96 emulated cases](../../native/snow_host/motion_ingestion_validation.json).
+This reconstructs local behavior, not scheduling or device polling. The prefix
+runs from ingestion entry through its second smoothing store, before the helper
+and actor-edge tail.
+
+Its ordered operations are:
+
+```python
+first_id = 0xd9 if alternate_enabled and actor_predicate() else 0x76
+primary = read_action(first_id)        # independent lookup and vector read
+primary.x_bits ^= sign_mask_if_flipped
+primary_count = increment_u32(primary_count) if nonzero_or_nan(primary.xy) else 0
+secondary = read_action(0x77)
+secondary.x_bits ^= sign_mask_if_flipped
+secondary_count = increment_u32(secondary_count) if nonzero_or_nan(secondary.xy) else 0
+current_primary = read_action(0x76)    # read again, not primary's cached value
+current_primary.x_bits ^= sign_mask_if_flipped
+smoothed_primary = f32(f32((1-alpha)*smoothed_primary) + f32(alpha*current_primary))
+current_secondary = read_action(0x77)  # another independent read
+current_secondary.x_bits ^= sign_mask_if_flipped
+reset_byte = 0
+smoothed_secondary = f32(f32((1-alpha)*smoothed_secondary) + f32(alpha*current_secondary))
+```
+
+The predicate is called only when the alternate gate is enabled. Both signed
+zeros count as zero; unordered NaN comparisons increment the counter. The X
+operation toggles its sign bit, retaining NaN payload bits and flipping signed
+zero. Counters wrap modulo 2^32. All four lanes participate in smoothing with
+float32 multiplication/addition order and no alpha clamp. The reference API
+requires four separately supplied payloads so callers cannot accidentally treat
+these reads as one atomic input snapshot.
+
+Build anchors: ingestion `0x140541da0` through `0x140541ff7`; global alternate
+gate read at `0x140541daa`; actor predicate slot `0x460`; actor sign byte `+0x1b6`;
+primary/secondary payloads `motion+0x160/+0x170`; current payloads
+`+0x360/+0x370`; counters `+0x384/+0x388`; smoothed vectors `+0x6f0/+0x710`;
+reset byte `+0x465`; alpha via the signed profile handle and profile `+0x64`.
+The existing recorder includes primary smoothing but not secondary `+0x710`.
+
+The vector-view routine `0x14062ca40` is simply `return object+0x40`; the emulation
+executes that original body. The action lookup is substituted with deliberately
+distinct payloads, and the actor predicate is synthetic. Cases cover all
+alternate/predicate/sign combinations, alpha 0/0.1/1/1.5, zero/nonzero/NaN
+counter inputs and wrap. Smoothing test inputs are finite. The tail helper at
+`0x1404ed2e0` and actor predicate-edge bookkeeping are excluded.
+
+This supplies a second concrete writer for the live smoothing result. The
+previous baseline-refresh slice `0x140532e3a` writes the same primary smoothed
+vector with the same formula, while also copying baseline vectors. A match to
+that formula does not distinguish its invocation from ingestion. Ingestion's
+four lookups, paired counter updates, second smoothing writer and tail give a
+more specific event sequence for the next observation.
+
+A further static lead: the action-lookup wrapper `0x14046f140` forwards the
+service's selected index at `+0x50` into `0x14046f150`. That function acquires a
+reader count, selects a bank from its pointer array, calls lookup `0x1404748a0`,
+returns the found record plus `0x20` or a fallback object, and releases the reader
+count before the caller obtains its vector view. Full writer/publication and
+lifetime semantics remain open. Do not treat the returned address as a retained
+lock or proof of immutable contents.
