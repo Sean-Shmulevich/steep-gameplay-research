@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Directional ramp reconstructed through press/release/reversal, axis gates,
+timer clamp, signed curve output and two clock reads. All 1,600 original-code
+cases match output/state/timer bits with supplied clock and curve dependencies.
+Release decays in the remembered direction; reversal clears the timer. Live
+duration, curve and physical clock units remain open. Next: evaluator decoding
+and bounded parameter capture. See
+[ramp reconstruction](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#directional-ramp-timing-and-transitions).
+
 Live chain capture passed with two enabled stages: time-dependent axis shaping
 then diagonal correction. Corrected source guards now pass live. Diagonal
 correction is reconstructed and matches 1,412 original-instruction cases; it

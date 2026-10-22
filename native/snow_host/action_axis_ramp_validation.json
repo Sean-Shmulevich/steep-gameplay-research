@@ -1,0 +1,18 @@
+{
+  "evidence": "Original complete directional ramp callback and transition helper, supplied clock and curve providers",
+  "cases": 1600,
+  "passed": true,
+  "comparison": [
+    "Output float32 bytes",
+    "Current and remembered states",
+    "Timer and saved clock bits",
+    "Curve inputs and clock query order"
+  ],
+  "game_process": false,
+  "limits": [
+    "Positive duration and finite arithmetic domain",
+    "Curve supplied as quadratic fixture, not recovered curve",
+    "Clock physical units and live parameters unknown",
+    "Global gate and handle-resolution external helper supplied"
+  ]
+}

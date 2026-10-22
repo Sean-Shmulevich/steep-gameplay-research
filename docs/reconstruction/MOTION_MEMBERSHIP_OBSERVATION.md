@@ -1828,3 +1828,75 @@ adjacent float32 values around the epsilon, Z/W gate effects and seeded finite
 inputs. Nonfinite input is explicitly rejected by this portable adapter;
 original SIMD NaN behavior is not claimed. The preceding time-shaped stage
 and the live values entering this stage remain separate fidelity boundaries.
+
+### Directional ramp timing and transitions
+
+`engine/action_axis_ramp.py` implements the first observed chain stage in a
+finite, positive-duration domain. It accepts explicit start/end clock readings,
+configuration gates, per-axis state and a caller-supplied curve evaluator. It
+does not manufacture the live duration or curve. The global input-manager
+byte +0x91 can bypass this method's shaping after its initial input copy. A
+failed configuration-availability gate also bypasses shaping. Both leave the
+saved clock unchanged.
+
+On the active path, duration comes from resolved configuration+0x28 and axis
+mode from +0x2c. Each axis retains a current state, remembered direction and
+timer in arrays at processor+0xec/+0x100/+0x114; count is the unsigned word at
++0xf6. Normal state values are negative=0, neutral=1 and positive=2:
+
+```text
+if abs(input) <= float32(1e-5):
+    if current != neutral:
+        remembered = current
+        current = neutral
+elif input > 0:
+    if current != positive:
+        current = positive
+        if remembered == negative: timer = +0
+        remembered = positive
+else:
+    if current != negative:
+        current = negative
+        if remembered == positive: timer = +0
+        remembered = negative
+```
+
+For neutral state, the timer decreases by elapsed time and output sign uses
+the remembered direction. Otherwise the timer increases and sign uses current
+state. The result is clamped to `[0, duration]`, divided by duration and passed
+to the supplied curve unless the absolute normalized phase is at most
+float32(1e-5). That small-phase branch emits signed zero without a curve call.
+Output sign is positive only for state 2. Consequently release can retain a
+decaying directional output, while reversal starts a new ramp at zero. Input
+magnitude beyond its sign/near-zero classification does not directly determine
+the ramp output on this path.
+
+Axis entry zero reads/writes X; all later entries read/write Y. Mode 2 skips
+entry zero, and mode 1 skips entry one. The generic loop does not limit count
+to two, so the reconstruction preserves that behavior without assuming a live
+array size. Skipped entries keep their state and input lane unchanged. Z/W are
+retained from the initial vector copy.
+
+The clock accessor returns an object whose +0x1050 unsigned 64-bit field is
+converted through a signed float32 conversion, with a float32 2^64 correction
+for a set high bit, then divided by float32(1000). A missing object yields zero.
+Elapsed time subtracts the saved float32 at processor+0xe8. After all axes, a
+second accessor call supplies the new saved clock. These can differ within
+one invocation. The physical unit and upstream clock producer remain open;
+the divisor alone is not proof of seconds. The portable conversion rounds the
+integer directly to float32 precision to avoid double-rounding uint64 values.
+
+The [validation receipt](../../native/snow_host/action_axis_ramp_validation.json)
+records 1,600 passing original-instruction comparisons of the entire callback
+and transition helper. Clock access, external configuration gate helper and
+curve evaluation are supplied; the curve fixture is quadratic and is not
+claimed as the game's curve. Cases include release, reversal, unusual retained
+states, skipped axes, zero through three entries, missing/backward/large clocks
+and both bypass gates. Comparisons cover exact output, timer and saved-clock
+bits; current/remembered states; curve inputs; and clock query order.
+
+Next: identify the active curve object and duration, decode its evaluator and
+verify the clock producer. Those dependencies are required before this kernel
+can claim the original player's response timing. A narrow live parameter
+collector should reuse fresh chain provenance and respect the existing helper
+budget rather than append unbounded reads to the 212-request chain capture.
