@@ -1,0 +1,30 @@
+{
+  "evidence": "synthetic native reader and Windows probe fixture",
+  "game_process": false,
+  "abi": 2,
+  "fields": [
+    "preconsume_counter signed int32",
+    "preconsume_timers two raw float32 values"
+  ],
+  "checks": [
+    "Signed minimum counter represented unchanged",
+    "Negative and positive timer values preserved",
+    "Failure at each snapshot read invalidates the whole output",
+    "Synthetic original-call counter decrement preserved in before/after records",
+    "Windows game-adapter and capture-plugin builds pass"
+  ],
+  "static_source": "CENTRAL_IMPULSE.md: Local pre-consumption branch; inspected decrement immediately precedes pending-vector threshold",
+  "limits": [
+    "No live observation of these added fields yet",
+    "Counter changes can have other writers; decrement agreement is not unique proof of consumer entry",
+    "No physics write or new detour added"
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_update_trace.h": "21d1ba3050c74eddf931b616425b8cd5a659143a62c1487a67c7be34d9e51b9f",
+    "native/snow_host/snow_update_snapshot.c": "f8a17114cd7867ff5ef873eb7ffe81da4c5948a6a52764fe8969e75b6171497f",
+    "native/snow_host/snow_update_probe.h": "7c813f43c059453f3a46f931ea6d64740f89588e633616bfc2b9fab045eefcdb",
+    "native/snow_host/examples/update_capture.c": "71647281a9544e9573e6472b544343ae808e8bb2d0eb6ff6b8fcb2e5286d74b0",
+    "tests/fixtures/snow_update_snapshot_fixture.c": "b35a18f63c75cee272a369070f1c660b1fe14951798523496baec4163f48ab5c",
+    "tests/fixtures/snow_update_probe_fixture.c": "7b5cb99eb3b0ababbfc4097ae4df0027fe9a4df90bfb73b2dc02d229c8d5b71a"
+  }
+}

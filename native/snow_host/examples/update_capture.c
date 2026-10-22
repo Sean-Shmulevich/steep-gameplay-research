@@ -24,7 +24,9 @@ static void sample(FILE *f,const SnowUpdateSnapshot *s) {
     fprintf(f,"{\"valid\":%u,\"runtime\":\"%llx\",\"main\":\"%llx\",\"rider\":\"%llx\",\"request\":%llu,\"substep\":%llu,\"gates\":[%u,%u,%u,%u],\"pending\":",
       s->valid,(unsigned long long)s->runtime,(unsigned long long)s->main_body,(unsigned long long)s->rider_body,
       (unsigned long long)s->request,(unsigned long long)s->substep,s->gates[0],s->gates[1],s->gates[2],s->gates[3]);
-    floats(f,s->pending,4); fputs(",\"main_linear\":",f); floats(f,s->linear[0],3);
+    floats(f,s->pending,4);
+    fprintf(f,",\"preconsume_counter\":%d,\"preconsume_timers\":",(int)s->preconsume_counter);
+    floats(f,s->preconsume_timers,2); fputs(",\"main_linear\":",f); floats(f,s->linear[0],3);
     fputs(",\"rider_linear\":",f); floats(f,s->linear[1],3);
     fputs(",\"main_angular\":",f); floats(f,s->angular[0],3);
     fputs(",\"rider_angular\":",f); floats(f,s->angular[1],3);
@@ -85,7 +87,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     snprintf(output,sizeof output,"%s.trace.jsonl",api->config_path);
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-1";
+    plugin->name="update_capture"; plugin->version="experimental-2";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

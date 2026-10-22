@@ -184,3 +184,10 @@ The [first live timing comparison](update_capture_timing_comparison.json) found
 219 of 219 groups matching the reconstructed subdivision arithmetic, with no
 rejected records. This narrows the timing boundary beyond an approximate ratio
 check; it does not validate upstream smoothing or all scheduler policies.
+
+Probe ABI v2 adds `preconsume_counter` and `preconsume_timers` to snapshots and
+JSONL rows. Rebuild all probe consumers with the matching header; this is an
+experimental exact-build ABI, not a compatible extension for old record buffers.
+The [marker contract](../../docs/reconstruction/CENTRAL_IMPULSE.md#non-mutating-pre-consumption-markers)
+and [synthetic validation](preconsume_snapshot_validation.json) distinguish
+static placement from the pending live check. No physics setter is added.

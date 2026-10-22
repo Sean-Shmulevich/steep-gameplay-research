@@ -30,6 +30,8 @@ int snow_update_snapshot(SnowUpdateMemoryRead read,void *ctx,const SnowUpdateBin
     const uint32_t offsets[4]={0x1fa,0xfdc,0xfc8,0xfc9};
     for(unsigned i=0;i<4;i++) R(b->actor+offsets[i],&s.gates[i],1);
     R(a.runtime+0x1570,s.pending,sizeof s.pending);
+    R(a.runtime+0xa80,&s.preconsume_counter,sizeof s.preconsume_counter);
+    R(a.runtime+0x1580,s.preconsume_timers,sizeof s.preconsume_timers);
     uint64_t bodies[2]={a.main,a.rider};
     for(unsigned i=0;i<2;i++) if(bodies[i]) {
         R(bodies[i]+0x1a0,s.linear[i],sizeof s.linear[i]);

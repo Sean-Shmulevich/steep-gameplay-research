@@ -13,6 +13,8 @@ typedef struct {
     uint64_t runtime, main_body, rider_body, request, substep;
     uint32_t valid;
     unsigned char gates[4];
+    int32_t preconsume_counter;
+    float preconsume_timers[2];
     float pending[4], linear[2][3], angular[2][3], inverse_mass[2];
 } SnowUpdateSnapshot;
 typedef struct {

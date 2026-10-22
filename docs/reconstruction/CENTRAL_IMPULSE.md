@@ -342,8 +342,10 @@ request and substep records. It must count skipped wrappers separately from
 eligible wrappers. Changes across the shared update still include other snow
 forces, so they cannot be attributed entirely to pending impulse consumption.
 
-The slot's current live receiver, invocation cadence, object lifetime and safe
-instrumentation mechanism remain unverified. A vtable location is not permission
+A later [moving-rider capture](../../native/snow_host/update_capture_live_success.json)
+observed 235 paired invocations of this selected actor slot and restored it after
+a bounded interval. Object lifetime guarantees and general instrumentation safety
+remain unproved; that one successful run does not establish them. A vtable location is not permission
 to call the function from an arbitrary host thread or proof that replacing the
 slot is safe. Exact consumer entry/exit remains the stronger measurement target.
 
@@ -9864,3 +9866,25 @@ three quaternion inputs. Full output buffers, flags, unchanged supplemental
 records, group visits and normalization-input/seed consumption match. This is
 separate storage with synthetic profiles; arbitrary overlap, outer mode-one
 preprocessing and live animation selection remain unproved.
+
+## Non-mutating pre-consumption markers
+
+Probe ABI v2 extends the paired actor snapshots with the signed counter and two
+raw timers from the local pre-consumption branch above. In the analyzed layout,
+they are runtime offsets `0xa80`, `0x1580` and `0x1584`. The saved instruction
+sequence decrements the counter immediately before loading and threshold-testing
+the pending vector. These are ordinal storage fields, not named gameplay states.
+
+The [reader/fixture validation](../../native/snow_host/preconsume_snapshot_validation.json)
+covers signed representation, raw timer values, failed-read invalidation and a
+synthetic wrapped-call decrement. No original-game capture of these fields has
+run yet. Comparing unsigned 32-bit before/after bit patterns modulo 2^32 avoids
+misclassifying signed wrap. A net decrement of one supports this path, but other
+writes or helper effects can obscure it; it is not equivalent to an entry probe
+at the consumer. Whole-wrapper velocity differences still include other forces.
+
+The pending queue remains an unsafe arbitrary-thread mod entry: its four-lane
+add is not atomic, and the consumer clears after releasing its lock. A future
+write API must establish an ordered owner and define one-shot completion before
+using the queue. This observation change provides evidence for that decision
+without publishing such a write API prematurely.

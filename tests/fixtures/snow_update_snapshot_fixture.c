@@ -23,6 +23,8 @@ static void setup(void) {
     writeq(BASE+0x36e8,BASE+0x5000); writeq(BASE+0x3b90,BASE+0x6000);
     writeq(binding.request_counter,17); writeq(binding.substep_counter,2);
     memory[0x1fa]=1; memory[0xfc8]=1; memory[0xfc9]=1;
+    int32_t counter=INT32_MIN; memcpy(memory+0x3a80,&counter,4);
+    writef(BASE+0x4580,-.25f); writef(BASE+0x4584,.75f);
     for(unsigned j=0;j<4;j++) writef(BASE+0x4570+4*j,(float)j+1);
     for(unsigned i=0;i<2;i++) {
         uint64_t body=BASE+0x5000+i*0x1000;
@@ -39,6 +41,7 @@ int main(void) {
     SnowUpdateSnapshot s; setup(); assert(sample(&s)); unsigned total=reads;
     assert(s.valid==15 && s.pending[3]==4 && s.runtime==BASE+0x3000);
     assert(s.linear[0][2]==2 && s.angular[0][0]==3 && s.angular[1][2]==15);
+    assert(s.preconsume_counter==INT32_MIN && s.preconsume_timers[0]==-.25f && s.preconsume_timers[1]==.75f);
     assert(s.inverse_mass[0]==.25f && s.inverse_mass[1]==.5f);
     assert(s.request==17 && s.substep==2 && s.gates[0] && !s.gates[1]);
     for(unsigned i=1;i<=total;i++) { setup(); fail_at=i; invalid(&s); }
