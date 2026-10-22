@@ -1018,3 +1018,60 @@ profile rejection. The Windows motion fixture verifies the actual reader returns
 the synthetic coefficient bits. The previous ABI-v5 live trace remains readable
 and is correctly treated as lacking a profile coefficient. No ABI-v6 game
 capture has run yet; controlled nonzero input remains the next live experiment.
+
+### Controlled input during capture
+
+The configured-workspace launcher accepts `--capture-steering` together with
+`--observe-motion` on the host `update-capture` plan. This selects a five-second
+capture and invokes the existing guarded OS-input helper after resume, requesting
+scan 30 for 700 ms. Scan 30 is the physical A key; semantic steering response
+must be established from observations rather than the name of this option.
+
+The helper checks process creation identity and the exact game window, requires
+foreground focus, refuses an already-held key, and releases attempted keys in
+its cleanup block. Its private JSONL records QPC timestamps for key delivery.
+The controller requires successful helper exit, two accepted OS deliveries and
+confirmed release. This does not prove game acceptance or exact ingestion time.
+No direct game-action injection is introduced. The optional callback is absent
+for the original observation-only path; tests verify execution after resume and
+that a failed delivery report makes the capture result fail.
+
+### Live nonzero input and observed coefficient
+
+The [steering capture receipt](../../native/snow_host/steering_motion_live_observation.json)
+contains 580 valid motion/profile/direct-frame observations across 431 complete
+observed batches. The input helper reported accepted scan-30 key-down and key-up
+and confirmed release after its requested 700 ms hold. Lifecycle, hook restore,
+drain, launch-setting restoration, bottle shutdown and original DLL hash checks
+passed. No records were dropped.
+
+Both sampled input-vector transitions appeared at ordinal zero of a new batch.
+No sampled motion fields changed inside any wrapper or across the 149 qualified
+consecutive-substep gaps. Across 430 outer-counter boundaries, inputs changed
+twice; the primary nonzero-input counter advanced by one 56 times, reset by 56
+once, and stayed unchanged on the other 373 boundaries. This is consistent with
+the recovered counter update/reset rule, but is not an observed ingestion call
+count. The second counter remained zero.
+
+The live profile alpha bits were `0x3dcccccd`, float32 0.1, in all 580 records.
+Using that observed value, the existing baseline-smoothing function predicted
+all 430 four-vector transitions bit-for-bit, including the nonzero interval.
+This supersedes the earlier coefficient fit for this session only. Current
+input at writer execution time was not observed directly.
+
+The numeric state tuple changed among `(0,3,1)`, `(0,4,6)` and `(0,3,7)`, with
+521, 35 and 24 observations respectively. This ties the state hierarchy to a
+live input experiment; it does not assign semantic animation/trick names to
+those states or prove input alone caused each transition.
+
+QPC frequencies agreed between the helper and recorder. Relative to the helper's
+post-delivery reports, the last unchanged update exited about 7.71 ms after
+key-down and 15.80 ms after key-up; the first changed update entered about
+22.35 ms and 29.52 ms after those reports. These bracket observations, not exact
+latency: the helper reports after its OS call, and the motion reads occur inside
+wrapper intervals rather than at their endpoint timestamps.
+
+Next: connect the observed mode transitions and counter edges to the previously
+inspected BeforeSimulation motion-update route. A function-entry observation or
+producer-generation marker would distinguish actual ingestion execution from
+matching field changes. Do not infer per-substep ingestion from the counter.

@@ -6,7 +6,7 @@ the loopback command channel: status, pause, single world steps, resume, and a
 guarded byte restore in the private workspace is the fallback. No game addresses
 appear in this script.
 """
-import argparse, json, math, subprocess, sys, time
+import argparse, configparser, json, math, subprocess, sys, time
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from snow_host_client import SnowHostClient, HostError, demo
@@ -70,8 +70,8 @@ def steps_ok(r):
     return r['completed'] == r['requested'] and r['exactly_one'] == r['requested']
 
 
-def hold_forward(ident, ms=1500):
-    """Background SendInput hold of the forward key (scan 17) on the verified game window."""
+def hold_forward(ident, ms=1500, scan=17):
+    """Bounded SendInput hold on the verified game window; defaults to forward."""
     control = TB/'run3/control/input-control.exe'
     p = subprocess.run(helper + [str(control), 'windows', '--pid', str(ident['pid']), '--image', 'steep.exe'],
                        capture_output=True, text=True, timeout=20)
@@ -80,7 +80,7 @@ def hold_forward(ident, ms=1500):
     win = [x for x in rows if x.get('kind') == 'window' and x.get('title') == 'Steep' and x.get('visible')]
     assert len(win) == 1, 'game window not unique'
     argv = helper + [str(control), 'hold', '--pid', str(ident['pid']), '--image', 'steep.exe', '--hwnd', win[0]['hwnd'],
-                     '--created', tid['creation_filetime'], '--mode', 'sendinput', '--scan', '17', '--duration-ms', str(ms), '--focus']
+                     '--created', tid['creation_filetime'], '--mode', 'sendinput', '--scan', str(scan), '--duration-ms', str(ms), '--focus']
     return subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 
 
@@ -246,7 +246,20 @@ try:
         time.sleep(.5)
         result['player_after_wait']=client.call('player.get')
         assert result['player_before_capture']['identity']==result['player_after_wait']['identity'], 'Player changed before capture'
-        result['update_capture']=capture_update(client,H)
+        config=configparser.ConfigParser();config.read(H/'plugins/update_capture.ini')
+        def steering_pulse():
+            child=hold_forward(i,700,scan=30)
+            text,_=child.communicate(timeout=20)
+            (out/'capture-steering-input.jsonl').write_text(text)
+            events=[json.loads(line) for line in text.splitlines() if line.startswith('{')]
+            released=any(e.get('kind')=='hold_complete' and e.get('all_injected_keys_released') for e in events)
+            deliveries=[e for e in events if e.get('kind')=='key_delivery']
+            accepted=len(deliveries)==2 and all(e.get('api_reported_sent')==1 and e.get('scan_raw')==30 for e in deliveries)
+            return {'ok':child.returncode==0 and released and accepted,'scan':30,'duration_ms':700,
+                    'accepted_deliveries':sum(e.get('api_reported_sent')==1 for e in deliveries),
+                    'exit_code':child.returncode,'keys_released':released,'os_delivery_only':True}
+        pulse=steering_pulse if config.getboolean('capture','steering_pulse',fallback=False) else None
+        result['update_capture']=capture_update(client,H,during_capture=pulse)
         assert result['update_capture']['ok'], 'Update capture failed; inspect plugin trace and host log'
     elif args.plan == 'acceptance':
         from host_acceptance import run_acceptance, prepare_rider

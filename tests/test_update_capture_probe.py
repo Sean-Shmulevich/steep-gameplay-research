@@ -93,3 +93,14 @@ class UpdateCaptureControllerTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'configuration'):
                 capture_update(client,Path(d),timeout=0)
             self.assertEqual(client.call.call_args_list[-1].args,('simulation.resume',))
+
+    def test_input_pulse_after_resume_and_failure_gate(self):
+        for ok in (True,False):
+            with tempfile.TemporaryDirectory() as d:
+                root=Path(d);client=self.fixture(root)
+                def pulse():
+                    self.assertEqual(client.call.call_args_list[-1].args,('simulation.resume',))
+                    return {'ok':ok,'keys_released':True}
+                result=capture_update(client,root,during_capture=pulse)
+                self.assertEqual(result['ok'],ok)
+                self.assertTrue(result['input_delivery']['keys_released'])

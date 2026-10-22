@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import time
 
-def capture_update(client, build, *, timeout=12):
+def capture_update(client, build, *, timeout=12, during_capture=None):
     build=Path(build)
     log=build/'snow_host.log'
     trace=build/'plugins/update_capture.ini.trace.jsonl'
@@ -30,6 +30,8 @@ def capture_update(client, build, *, timeout=12):
         else: raise RuntimeError('Capture configuration was not confirmed; inspect host log')
         result['resume']=client.call('simulation.resume')
         resumed=True
+        if during_capture is not None:
+            result['input_delivery']=during_capture()
         end=time.monotonic()+timeout
         while time.monotonic()<end:
             try:
@@ -46,6 +48,7 @@ def capture_update(client, build, *, timeout=12):
         result['gate_patterns']=sorted({tuple(r['before']['gates']) for r in records})
         result['request_count']=len({r['before']['request'] for r in records if r['before']['valid']&4})
         result['ok']=(summary['installed']==1 and summary['restored']==1 and summary['drained']==1
+                      and (during_capture is None or result['input_delivery'].get('ok') is True)
                       and summary['dropped']==0 and len(records)>0 and result['valid_pairs']>0
                       and (not require_attribution or result['attributed_records']>0)
                       and (not require_substeps or result['direct_substep_records']>0))

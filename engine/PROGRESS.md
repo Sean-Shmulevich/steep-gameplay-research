@@ -2,6 +2,16 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live controlled steering capture passed: 580 motion/profile/frame-valid updates,
+431 complete observed batches, no drops. Both input edges appeared at ordinal
+zero; no motion changes inside updates or 149 within-batch gaps. Actual profile
+alpha was float32 0.1 and existing smoothing matched all 430 boundary transitions.
+Primary counter advanced 56 times then reset; live numeric mode transitions also
+observed. OS input released and session cleanup passed. Next: instrument the
+known BeforeSimulation ingestion route or generation marker to resolve execution
+ordering beyond field correlation. See
+[steering evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#live-nonzero-input-and-observed-coefficient).
+
 Profile-coefficient observation added, ABI v6. Inspected signed-handle lookup
 reads alpha directly; profile failure/instability preserves valid motion. The
 analyzer compares the recovered baseline formula with observed coefficients,

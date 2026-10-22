@@ -1,0 +1,139 @@
+{
+  "evidence": "Live original-game ABI-v6 capture during bounded OS key pulse",
+  "session_label": "20261022T222758Z-b38267db",
+  "private_trace_sha256": "d8aa3e87fe227cb9d2c59f37907b88db0f0433e1d42986759e6fe21fa6fcec35",
+  "records": 580,
+  "motion_observations": {
+    "counts": {
+      "attempted_records": 580,
+      "before_rejected": 0,
+      "after_rejected": 0,
+      "valid_pairs": 580,
+      "observed_boundary_pairs": 430,
+      "adjacent_same_batch_pairs": 149
+    },
+    "within_update_changed_fields": {},
+    "same_batch_gap_changed_fields": {},
+    "observed_boundary_changed_fields": {
+      "baseline_bits": 430,
+      "ingested_bits": 2,
+      "current_input_bits": 2,
+      "nonzero_counts": 57,
+      "state_current": 3,
+      "child_current": 3,
+      "state_mode": 2,
+      "child_mode": 3
+    },
+    "ingestion_execution_proved": false,
+    "atomic_snapshot_proved": false,
+    "producer_generation_established": false
+  },
+  "profile_smoothing": {
+    "counts": {
+      "profile_available_pairs": 580,
+      "tested_boundaries": 430,
+      "exact_formula_matches": 430
+    },
+    "writer_identity_proved": false,
+    "input_at_writer_time_observed": false,
+    "profile_lifetime_proved": false
+  },
+  "direct_substeps": {
+    "valid_records": 580,
+    "unavailable_records": 0,
+    "invalid_frame_records": 0,
+    "malformed_records": 0,
+    "identity_rejected_records": 0,
+    "selected_count_histogram": {
+      "1": 286,
+      "2": 284,
+      "3": 6,
+      "4": 4
+    },
+    "observed_outer_groups": 431,
+    "complete_ordinal_sequences": 431,
+    "partial_or_nonsequential_groups": 0,
+    "request_minus_outer_mod32_histogram": {
+      "7": 580
+    },
+    "counter_semantic_equivalence_proved": false,
+    "global_invocation_identity_established": false
+  },
+  "wrapper_intervals": {
+    "available_intervals": 580,
+    "unavailable_intervals": 0,
+    "invalid_intervals": 0,
+    "zero_duration_intervals": 0,
+    "same_actor_overlapping_pairs": 0,
+    "nonoverlapping_adjacent_pairs": 579,
+    "thread_changes_between_nonoverlapping_neighbors": 498,
+    "reservation_order_entry_reversals": 0,
+    "scheduler_exclusion_proved": false,
+    "input_ingestion_order_proved": false
+  },
+  "live_alpha_bits_histogram": {
+    "1036831949": 580
+  },
+  "first_input_counter_boundary_delta_histogram": {
+    "-56": 1,
+    "0": 373,
+    "1": 56
+  },
+  "mode_histogram": [
+    {
+      "top": 0,
+      "state": 3,
+      "child": 1,
+      "records": 521
+    },
+    {
+      "top": 0,
+      "state": 4,
+      "child": 6,
+      "records": 35
+    },
+    {
+      "top": 0,
+      "state": 3,
+      "child": 7,
+      "records": 24
+    }
+  ],
+  "input_delivery": {
+    "ok": true,
+    "scan": 30,
+    "duration_ms": 700,
+    "accepted_deliveries": 2,
+    "exit_code": 0,
+    "keys_released": true,
+    "os_delivery_only": true
+  },
+  "input_observations_relative_to_reports": [
+    {
+      "key_up_report": false,
+      "first_observed_changed_ordinal": 0,
+      "last_unchanged_exit_after_delivery_report_ms": 7.7134,
+      "first_changed_entry_after_delivery_report_ms": 22.3461
+    },
+    {
+      "key_up_report": true,
+      "first_observed_changed_ordinal": 0,
+      "last_unchanged_exit_after_delivery_report_ms": 15.8004,
+      "first_changed_entry_after_delivery_report_ms": 29.5173
+    }
+  ],
+  "qpc_frequencies_agree": true,
+  "lifecycle": {
+    "ok": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Delivery report is emitted after the OS call, not at ingestion",
+    "Observation brackets are not exact input latency",
+    "No atomic snapshot, writer identity, call count or universal cadence proved",
+    "State mode meanings are not inferred from numeric transitions",
+    "No direct game action or scheduler mutation introduced"
+  ]
+}
