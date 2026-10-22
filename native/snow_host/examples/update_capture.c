@@ -40,9 +40,11 @@ static DWORD WINAPI capture(LPVOID ignored) {
     do { drained=SnowProbe_Close(&used,&dropped); if(drained) break; Sleep(1); } while(GetTickCount64()<until);
     FILE *f=fopen(output,"w");
     if(f) {
+        SnowProbeDispatchCounts counts={0};
+        int counts_valid=SnowProbe_ReadDispatchCounts(&counts);
         LARGE_INTEGER frequency; QueryPerformanceFrequency(&frequency);
-        fprintf(f,"{\"kind\":\"summary\",\"installed\":%d,\"restored\":%d,\"drained\":%d,\"records\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"substep_available\":false}\n",
-          installed,restored,drained,(unsigned long long)used,(unsigned long long)dropped,(unsigned long long)frequency.QuadPart);
+        fprintf(f,"{\"kind\":\"summary\",\"installed\":%d,\"restored\":%d,\"drained\":%d,\"records\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"substep_available\":false,\"dispatch_counts_valid\":%d,\"selected_calls\":%llu,\"other_calls\":%llu}\n",
+          installed,restored,drained,(unsigned long long)used,(unsigned long long)dropped,(unsigned long long)frequency.QuadPart,counts_valid,(unsigned long long)counts.selected_calls,(unsigned long long)counts.other_calls);
         if(drained) for(size_t i=0;i<used;i++) {
             SnowUpdateRecord r; if(!SnowProbe_ReadRecord(i,&r)) break;
             fprintf(f,"{\"kind\":\"record\",\"index\":%llu,\"actor\":\"%llx\",\"thread\":%llu,\"entry\":%llu,\"exit\":%llu,\"elapsed\":",

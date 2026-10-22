@@ -7,6 +7,7 @@ static SnowUpdateTrace trace;
 static SnowUpdateRecord records[CAPACITY];
 static SnowUpdateBinding binding;
 static LONG ready;
+static volatile LONG64 selected_calls,other_calls;
 static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
     (void)ctx; SIZE_T got=0;
     return ReadProcessMemory(GetCurrentProcess(),(const void *)(uintptr_t)at,dst,n,&got) && got==n;
@@ -33,9 +34,19 @@ void SnowProbe_Dispatch(void *actor,float elapsed,float derivative) {
     /* Publishing before Configure succeeds violates the ABI. Never install until ready. */
     if(InterlockedCompareExchange(&ready,2,2)!=2) return;
     if((uint64_t)(uintptr_t)actor!=binding.actor) {
+        InterlockedIncrement64(&other_calls);
         trace.original(actor,elapsed,derivative); return;
     }
+    InterlockedIncrement64(&selected_calls);
     snow_trace_call(&trace,actor,elapsed,derivative);
+}
+int SnowProbe_ReadDispatchCounts(SnowProbeDispatchCounts *out) {
+    if(!out) return 0;
+    out->selected_calls=out->other_calls=0;
+    if(InterlockedCompareExchange(&ready,2,2)!=2) return 0;
+    out->selected_calls=(uint64_t)InterlockedCompareExchange64(&selected_calls,0,0);
+    out->other_calls=(uint64_t)InterlockedCompareExchange64(&other_calls,0,0);
+    return 1;
 }
 int SnowProbe_Close(size_t *used,size_t *dropped) {
     if(InterlockedCompareExchange(&ready,2,2)!=2) return 0;

@@ -15,6 +15,12 @@
 SNOW_PROBE_API int SnowProbe_Configure(const SnowUpdateBinding *, SnowUpdateOriginal);
 SNOW_PROBE_API void SnowProbe_Dispatch(void *, float, float);
 SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
+/* Diagnostic lifetime counters include late forwarding after Close. Each field
+ * is atomic; the pair is not an atomic snapshot and drain does not freeze it.
+ * Read after Restore+Close for a useful bounded-session observation, not proof
+ * that a thread with a cached dispatch pointer cannot call later. */
+typedef struct { uint64_t selected_calls, other_calls; } SnowProbeDispatchCounts;
+SNOW_PROBE_API int SnowProbe_ReadDispatchCounts(SnowProbeDispatchCounts *);
 SNOW_PROBE_API int SnowProbe_ReadRecord(size_t, SnowUpdateRecord *);
 /* Explicit opt-in pointer replacement at actor_table+0x2c0. One install attempt.
  * Return 1 on success, 0 on refusal/conflict, -1 on page-protection failure.

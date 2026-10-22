@@ -1,0 +1,35 @@
+{
+  "evidence": "synthetic Windows fixtures executed under Wine",
+  "game_process": false,
+  "fixture_checks": [
+    "Before configuration counters are unavailable and output is zeroed",
+    "Null output is refused",
+    "Selected and other actor calls counted independently",
+    "Calls after Close increment lifetime counts without changing recorded snapshots",
+    "Original slot mismatch refused"
+  ],
+  "plugin_export": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 363,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 363,
+    "other_calls": 0
+  },
+  "limitations": [
+    "Counters are independent atomic reads, not a coherent pair.",
+    "Late cached dispatch calls can increment after restoration and drain.",
+    "No original-game invocation or physics inferred."
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_update_probe.c": "7a7297d2ba08bf6872efb6e0335d29df60dff9c4181d0a4da67e568ede3bb43d",
+    "native/snow_host/snow_update_probe.h": "f002ed9214e83fe268fcdaeac3b97a312cc11b36d7a8279aa668b07549cc257c",
+    "native/snow_host/examples/update_capture.c": "ee919d56bc84708d5079306991efbfc7516edb685717224f42e4e887b4a80315",
+    "tests/fixtures/snow_update_probe_fixture.c": "3d60a37e152f0ebe98bd530842330c0edc21aadbe62bb6f3675926a3b32372ba"
+  }
+}

@@ -125,3 +125,16 @@ in this run. Full unattended startup remains to be retested.
 Next discriminate no slot dispatch from no selected-actor match, then verify
 motion before repeating capture. Empty records establish neither a physical
 update boundary nor a safe location for impulse writes.
+
+The capture summary now includes `dispatch_counts_valid`, `selected_calls` and
+`other_calls`. These are lifetime hook-entry counts, including forwarding after
+capture closes; each counter is atomic, but the pair is not an atomic snapshot.
+[Windows fixture validation](update_capture_dispatch_validation.json) covers
+filtering, late calls and the plugin export. A synthetic plugin run exported
+363 selected calls and 363 records with zero other calls or drops.
+
+For the next live result, interpret zero selected and nonzero other calls as
+evidence that the hook ran for other actors. Both zero means no dispatch was
+observed through this installed hook during the interval. Neither result alone
+identifies an alternative scheduler route. Selected calls with zero records
+require checking capture closure and lifetime timing before blaming snapshots.

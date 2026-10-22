@@ -37,6 +37,9 @@ int main(int argc,char **argv) {
     int (*get)(size_t,SnowUpdateRecord *)=(void *)GetProcAddress(dll,"SnowProbe_ReadRecord");
     int (*install)(void)=(void *)GetProcAddress(dll,"SnowProbe_InstallSlot");
     int (*restore)(void)=(void *)GetProcAddress(dll,"SnowProbe_RestoreSlot");
+    int (*counts)(SnowProbeDispatchCounts *)=(void *)GetProcAddress(dll,"SnowProbe_ReadDispatchCounts");
+    SnowProbeDispatchCounts c={99,99};
+    assert(counts && !counts(&c) && c.selected_calls==0 && c.other_calls==0);
     assert(configure && dispatch && close_probe && get && install && restore);
     q(table+0x2c0,argc==3 ? (void *)competitor : (void *)original);
     DWORD old; assert(VirtualProtect(table,sizeof table,PAGE_READONLY,&old));
@@ -46,6 +49,8 @@ int main(int argc,char **argv) {
     SnowUpdateBinding b={(uintptr_t)actor,(uintptr_t)table,(uintptr_t)world,(uintptr_t)&request,(uintptr_t)&substep};
     SnowUpdateRecord r; size_t used=0,dropped=0;
     assert(configure(&b,original)); assert(!configure(&b,original)); assert(!get(0,&r));
+    assert(counts(&c) && c.selected_calls==0 && c.other_calls==0);
+    assert(!counts(NULL));
     if(argc==3) {
         assert(!install()); assert(read_slot()==competitor); assert(restore()); readonly_table();
         puts("PASS: mismatched original refused without slot mutation"); return 0;
@@ -57,6 +62,7 @@ int main(int argc,char **argv) {
     set_slot((void *)competitor); assert(restore()==0); assert(read_slot()==competitor); readonly_table();
     set_slot((void *)dispatch); assert(restore()==1); assert(read_slot()==original); readonly_table();
     assert(restore()==1);
+    assert(counts(&c) && c.selected_calls==2 && c.other_calls==1);
     assert(close_probe(&used,&dropped)); assert(used==2 && dropped==0 && calls==3);
     assert(get(1,&r) && r.before.valid==15 && r.after.valid==0);
     assert(get(0,&r) && !get(2,&r));
@@ -69,6 +75,7 @@ int main(int argc,char **argv) {
     assert(get(0,&r) && memcmp(&r,&saved,sizeof r)==0);
     assert(FreeLibrary(dll)); /* pinned code must remain callable */
     dispatch(actor,.125f,.5f); assert(calls==5);
+    assert(counts(&c) && c.selected_calls==4 && c.other_calls==1);
     puts("PASS: Windows DLL capture, filtered forwarding, closed reads, late calls, pinning, slot installation, protection restoration and conflict refusal");
     return 0;
 }
