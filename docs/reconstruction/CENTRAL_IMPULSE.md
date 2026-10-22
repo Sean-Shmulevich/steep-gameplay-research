@@ -10198,3 +10198,43 @@ decay for steering. Its coefficients 0/12 and 0/9, clock choice, target mapping
 and subsequent turning policy remain authored. Diagnostics expose the cooker
 branch, lookup argument/result and step. The historical `reference.snow.cooker`
 remains available as the earlier approximation; the engine no longer calls it.
+
+
+## Input speed profile selection
+
+`reference.input_profile` preserves the preset selection branch order and scalar
+blend arithmetic. Each operation below rounds to float32:
+
+```text
+converted = runtimeSpeed * float32(3.6)
+if converted <= normalThreshold: weight = 0
+else if converted >= fastThreshold: weight = 1
+else: weight = (converted - normalThreshold) / (fastThreshold - normalThreshold)
+value = ((1 - weight) * normalValue) + (weight * fastValue)
+```
+
+The selector is gradual between ascending thresholds, not a switch. The normal
+comparison takes priority. Equal or reversed finite thresholds consequently
+select an endpoint without dividing by zero. The separate scalar blend does not
+clamp its supplied weight.
+
+For thresholds 7 and 12, the interval in runtime-speed units is 7/3.6 through
+12/3.6, approximately 1.94 through 3.33. If runtime speed is metres per second,
+the threshold numbers are kilometres per hour. This corrects the initial task's
+7–12 m/s assumption and agrees with the existing snow guide's conversion.
+It does not assign that conversion to every speed curve in the game.
+
+The [instruction receipt](../../native/snow_host/input_profile_validation.json)
+covers 690 selector cases and 120 scalar blend cases. It executes the conversion
+instruction, initialized finite selector branches and scalar blend tail. Getter
+validation, nonfinite settings, resource selection and the upstream speed producer
+are outside this check. Earlier research identifies that native producer as
+projected speed; `engine.physics` still supplies relative speed magnitude as an
+authored approximation. The engine now uses the exact selector arithmetic for
+its diagnostic and synthetic turn-policy blend, without claiming native steering
+profile routing. Profile coefficients remain caller-supplied or synthetic.
+
+Float32 boundary detail: supplying the mathematical value 12/3.6 rounds the
+converted speed just below 12, producing weight 0.9999998211860657. A slightly
+larger input such as 3.3333335 reaches the fast endpoint. Tests retain this result
+rather than forcing ideal-real-number boundary equality.

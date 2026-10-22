@@ -4272,3 +4272,8 @@ stateful frames using the reconstructed default table. The independent runtime
 now uses those recovered filter semantics instead of the historical double
 approximation. Controller tuning and scheduling remain authored. Added per-step
 filter diagnostics and a stateful reversal integration test.
+
+Input preset arithmetic: 690 selector and 120 blend cases match original
+instructions. Runtime uses the float32 selector. Native projected-speed sourcing
+and normal/fast coefficient routing remain unresolved runtime integration work;
+its current relative-speed magnitude and turning policy remain authored.

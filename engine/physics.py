@@ -11,6 +11,7 @@ import copy
 import math
 from reference import snow
 from reference.input_cooker import cook
+from reference.input_profile import preset_weight
 from reference.decay_exp import cooker_table
 from reference.runtime_curve import evaluate
 
@@ -151,7 +152,7 @@ def step(body, controls, world, dt, config):
         state['charge'] = 0.
     state['jump_held'] = jump
     gravity = (0., 0., -cfg['gravity'])
-    speed_blend = snow.preset_weight(norm(rel))
+    speed_blend = preset_weight(norm(rel))
     if supported:
         gravity = sub(gravity, mul(n, dot(gravity, n)))
         heading += steer * cfg['turn_rate'] * dt * (1 - 0.45 * speed_blend)

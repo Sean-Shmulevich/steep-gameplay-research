@@ -40,3 +40,7 @@ for exact float32 ordering and the unresolved exponential sample producer.
 Its mantissas are mathematically generated. See
 [decay exponential lanes](../docs/reconstruction/CENTRAL_IMPULSE.md#decay-exponential-lanes)
 for instruction comparison, rounding mode and the remaining scalar endpoint.
+
+`input_profile.py` provides float32 speed conversion, endpoint-priority preset
+selection and scalar blending. See [input speed profile selection](../docs/reconstruction/CENTRAL_IMPULSE.md#input-speed-profile-selection)
+for threshold units and the upstream producer boundary.

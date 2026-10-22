@@ -1106,6 +1106,17 @@
         "Default table factory covers both vector paths and scalar SSE endpoint; joined original builder comparison. Scalar FMA and live CPU dispatch excluded. Domain restricted to [-10, 0]; mathematically generated mantissas."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.input_profile",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "7e8ea046cecd12658b8c6964aac3164f223efa2eada42ffd8e972cd67d5d5b16",
+      "published": "reference/input_profile.py",
+      "published_sha256": "cb77ff8885eb9b525c8cf491e79c8fc1dd4ad78fd41197d86c2b5f23a8b86d20",
+      "adaptations": [
+        "Finite initialized inputs only; preserves float32 conversion, endpoint branch priority and unclamped scalar blend. Resource routing and speed producer excluded."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

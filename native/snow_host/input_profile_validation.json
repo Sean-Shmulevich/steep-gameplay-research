@@ -1,0 +1,34 @@
+{
+  "evidence": "original finite preset branches, conversion instruction, and scalar blend tail",
+  "game_process": false,
+  "preset_exact_cases": 690,
+  "blend_exact_cases": 120,
+  "threshold_pairs": [
+    [
+      7,
+      12
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      12,
+      7
+    ],
+    [
+      7,
+      7
+    ],
+    [
+      -5,
+      8
+    ]
+  ],
+  "limitations": [
+    "Initialized finite settings supplied; guarded getters and nonfinite paths excluded",
+    "Speed producer and normal/fast resource selection not executed",
+    "Blend weight is not clamped by scalar blend tail"
+  ],
+  "source_sha256": "cb77ff8885eb9b525c8cf491e79c8fc1dd4ad78fd41197d86c2b5f23a8b86d20"
+}
