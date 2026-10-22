@@ -1,0 +1,243 @@
+{
+  "evidence": "original_disable_cancel_enable_service_commit_chain",
+  "passed": true,
+  "cases": 8,
+  "game_process": false,
+  "rows": [
+    {
+      "old_present": 0,
+      "pending_present": 0,
+      "secondary_present": 0,
+      "disable_events": [],
+      "cycle_events": [],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 0,
+      "pending_present": 0,
+      "secondary_present": 1,
+      "disable_events": [
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 0,
+      "pending_present": 1,
+      "secondary_present": 0,
+      "disable_events": [
+        [
+          "slot0",
+          "pending"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot0",
+          "pending"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 0,
+      "pending_present": 1,
+      "secondary_present": 1,
+      "disable_events": [
+        [
+          "slot0",
+          "pending"
+        ],
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot0",
+          "pending"
+        ],
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 1,
+      "pending_present": 0,
+      "secondary_present": 0,
+      "disable_events": [
+        [
+          "slot16",
+          "old"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot16",
+          "old"
+        ],
+        [
+          "slot8",
+          "old"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 1,
+      "pending_present": 0,
+      "secondary_present": 1,
+      "disable_events": [
+        [
+          "slot16",
+          "old"
+        ],
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot16",
+          "old"
+        ],
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ],
+        [
+          "slot8",
+          "old"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 1,
+      "pending_present": 1,
+      "secondary_present": 0,
+      "disable_events": [
+        [
+          "slot0",
+          "pending"
+        ],
+        [
+          "slot16",
+          "old"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot0",
+          "pending"
+        ],
+        [
+          "slot16",
+          "old"
+        ],
+        [
+          "slot8",
+          "old"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    },
+    {
+      "old_present": 1,
+      "pending_present": 1,
+      "secondary_present": 1,
+      "disable_events": [
+        [
+          "slot0",
+          "pending"
+        ],
+        [
+          "slot16",
+          "old"
+        ],
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ]
+      ],
+      "cycle_events": [
+        [
+          "slot0",
+          "pending"
+        ],
+        [
+          "slot16",
+          "old"
+        ],
+        [
+          "slot16",
+          "secondary"
+        ],
+        [
+          "slot0",
+          "secondary"
+        ],
+        [
+          "slot8",
+          "old"
+        ]
+      ],
+      "repeated_disable_and_enable_noop": true
+    }
+  ],
+  "code_sha256": {
+    "0x1404fdc20": "d392c395879aa918fd5ff27f8a5298dd859ce02c41a53df550b9e9d85013d5a0",
+    "0x1405557f0": "d0de55117676d6c1ca34c0ef2f16a6221fbb8ecf204e127ea900b2ff1ca304c4",
+    "0x1404e8550": "341da05965c0499e0167f97b275e2b0ab70775d4f0bc9f87eb743d76664d73d4",
+    "0x1404eb310": "70f53f59161a2f755cc13419d0ce1ff8e94ac0c89d20e642209e4c8498fddf00",
+    "0x140555700": "1cf416c34355922b28bf1a50e52b72fb1506b763488e211861600a497ea187b3"
+  },
+  "limits": [
+    "Leaf lifecycle callbacks inert; no memory is actually freed.",
+    "No contention, callback mutations, exceptions or secondary recreation.",
+    "Tests use eligible pending mode zero or sentinel two.",
+    "No live game suspension or physical state rollback is established."
+  ]
+}

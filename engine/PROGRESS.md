@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Disable/enable lifecycle traced through five original routines in eight
+integrated cycles. Disable cancels eligible pending work, parks current in the
+pending slot, and cleans up secondary; enable commits the parked object back.
+Repeated calls were no-ops with inert callbacks. Pending does not necessarily
+mean a newly requested state. Next: distinguish child-state request ownership
+from top-level motion transitions. See [lifecycle evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#disable-parks-the-current-state-in-the-pending-slot).
+
 Original guard -> pending service -> state commit chain passed 16 integrated
 emulation cases. The guard can publish a new current state but return its saved
 old-state decision. New-state entry sees the pending slot cleared; lifecycle

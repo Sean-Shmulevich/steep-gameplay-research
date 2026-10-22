@@ -442,3 +442,74 @@ before the new-state entry callback. Do not place an arbitrary mod callback in
 that publication window: lock ownership is known locally, but lifecycle and
 reentrancy contracts remain unresolved. The next useful join is the writer that
 requests a pending state and sets these mode/enable/pending fields.
+
+## Disable parks the current state in the pending slot
+
+Tracing pending-slot writers identified a disable/enable lifecycle, rather than
+a general request enqueue API. The original disable `0x1404fdc20`, pending
+cancellation `0x1405557f0`, enable `0x1404e8550`, service and commit routines
+passed eight integrated synthetic cycles. See the
+[receipt](../../native/snow_host/motion_suspend_validation.json).
+
+```text
+disable_motion():
+    acquire_recursive_lock()
+    if enabled:
+        enabled = false
+        cancel_pending()
+        if current != null:
+            current.slot16()
+            pending = current             # reread after callback
+            pending_mode = current_mode
+            current_mode = 2
+            current = null
+        if secondary != null:
+            secondary.slot16()
+            if secondary != null: secondary.slot0(1)
+            secondary = null
+    release_recursive_lock()
+
+cancel_pending():
+    acquire_recursive_lock()
+    if pending_mode != 2:
+        if pending != null: pending.slot0(1)
+        pending = null
+        pending_mode = 2
+    release_recursive_lock()
+
+enable_motion():
+    acquire_recursive_lock()
+    if not enabled:
+        enabled = true
+        service_pending()                 # depth and enabled gates still apply
+    release_recursive_lock()
+```
+
+The byte at `+0x2c` now has an observed enable/disable role in these routines.
+The current object is not passed to slot zero by the disable path: it is retained
+in the pending slot. An already pending eligible object is passed to slot zero
+before replacement. The secondary object follows slot16, slot0(1), clear-pointer
+ordering and is not automatically recreated by the tested enable path.
+
+Each tested cycle began enabled with current mode zero when current existed,
+and eligible pending mode zero when pending existed. All eight combinations of
+current, pending and secondary presence passed. Repeated disable did no further
+callback work. Enable restored the parked current object through the real commit
+routine, invoking its slot8 callback; repeated enable also did no further work.
+Locks and query nesting returned to zero after every operation. Leaf callbacks
+were inert, so no actual allocation was freed and callback-induced mutations,
+exceptions or resource effects were not tested.
+
+This means a pending pointer is not evidence of a newly requested sport or
+motion state: it may be the previous current object parked while disabled.
+Record enabled/current/pending/mode together when interpreting a snapshot.
+The cycle does not restore physics, input, animation time, world state or random
+state. It is neither whole-game pause nor backward stepping.
+
+Other direct references to the cancellation routine include construction and
+cleanup of objects with different surrounding layouts. Shared helpers do not
+establish that every caller is the player's motion object. Candidate child-state
+request routines near `0x1404fc720` write their own `+0x28`/`+0x1c` pair and then
+service an owner at `+0x10`; that is a separate ownership join to trace before
+calling them top-level transition requests. Generic request coalescing remains
+unresolved.
