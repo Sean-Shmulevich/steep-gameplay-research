@@ -15,13 +15,14 @@ spec.loader.exec_module(runner)
 
 class LateLoadRunnerTests(unittest.TestCase):
     def test_action_observer_missing_private_collector_fails_before_launch(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            with patch.object(sys, 'argv', ['runner', '--workspace', tmp,
-                              '--experiment', 'host', '--plan', 'action-observe', '--check']):
-                with patch.object(runner, 'preflight', return_value='/compiler'):
-                    with self.assertRaisesRegex(RuntimeError, 'Private action observer'):
-                        runner.main()
-            self.assertEqual(list(Path(tmp).iterdir()), [])
+        for plan in ('action-observe', 'composite-observe', 'source-observe'):
+            with self.subTest(plan=plan), tempfile.TemporaryDirectory() as tmp:
+                with patch.object(sys, 'argv', ['runner', '--workspace', tmp,
+                                  '--experiment', 'host', '--plan', plan, '--check']):
+                    with patch.object(runner, 'preflight', return_value='/compiler'):
+                        with self.assertRaisesRegex(RuntimeError, 'Private action observer'):
+                            runner.main()
+                self.assertEqual(list(Path(tmp).iterdir()), [])
 
     def test_startup_probe_combination_refused_before_launch(self):
         with patch.object(sys, 'argv', ['runner', '--load-at', 'startup']):

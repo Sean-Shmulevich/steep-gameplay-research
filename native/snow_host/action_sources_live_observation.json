@@ -1,0 +1,46 @@
+{
+  "evidence": "Partial live source capture, with offline semantic replay of recorded vector reads",
+  "live_plan_passed": false,
+  "initial_vector_status": "unstable",
+  "directional_status": "observed",
+  "vector_semantic_replay_status": "observed",
+  "handle_change": "unused bytes changed; object pointer and active sign bit did not",
+  "source_owner_shared": true,
+  "source_index": 0,
+  "vector": {
+    "source_kind": 0,
+    "lane_mode": 0,
+    "channel": 0,
+    "ownership_blocked": false,
+    "mask_count": 0,
+    "mask_blocked": false,
+    "processing_enabled": true
+  },
+  "vector_cached_all_zero": true,
+  "vector_processor_callback_rva": "0x490c60",
+  "directional_query_ids": [
+    65,
+    68,
+    87,
+    83,
+    65535,
+    65535,
+    65535,
+    65535
+  ],
+  "directional_processing_enabled": true,
+  "directional_processor_callback_rva": "0x4906f0",
+  "directional_callback_prefix_matches": true,
+  "parent_lookup_unchanged": true,
+  "composite_unchanged_after_sources": true,
+  "final_engine_ordinary": true,
+  "settings_restored": true,
+  "bottle_stopped": true,
+  "original_dll_verified": true,
+  "limits": [
+    "Corrected reader not rerun live yet",
+    "Vector processor callback bytes not checked in this capture",
+    "No physical key delivery or publication timing observed",
+    "No 20-second stability phase because the reader rejected the vector source"
+  ]
+}

@@ -17,7 +17,7 @@ parser.add_argument('--build', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--port', type=int, default=47017)
 parser.add_argument('--steps', type=int, default=10)
-parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'composite-observe', 'update-capture'], default='demo')
+parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'composite-observe', 'source-observe', 'update-capture'], default='demo')
 parser.add_argument('--game-deadline', type=float)
 parser.add_argument('--preloaded', action='store_true', help='Host was already loaded by the startup launcher')
 args = parser.parse_args()
@@ -267,10 +267,11 @@ try:
         assert result['preparation']['ok'], 'Rider preparation failed; no acceptance mutations attempted'
         result['acceptance'] = run_acceptance(client, lambda: speed_test(client, i), steps=args.steps, ready_wait_seconds=20)
         assert result['acceptance']['ok'], 'Acceptance stages incomplete; inspect individual results'
-    elif args.plan in ('action-observe', 'composite-observe'):
+    elif args.plan in ('action-observe', 'composite-observe', 'source-observe'):
         argv=[sys.executable,str(R/'analysis/central-impulse/private/observe_live_actions.py'),
               str(out/'identity.json'),str(out/'action-observation')]
         if args.plan == 'composite-observe': argv.append('--children')
+        if args.plan == 'source-observe': argv.append('--sources')
         with (out/'action-observation.log').open('w') as log:
             subprocess.run(argv,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=50)
         result['action_observation']=json.loads((out/'action-observation/result.json').read_text())

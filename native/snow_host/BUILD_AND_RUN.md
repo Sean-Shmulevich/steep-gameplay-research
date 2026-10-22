@@ -234,3 +234,9 @@ after enumeration and verifies callback signatures. It does not invoke child
 callbacks or determine the producer that last executed. The first live run
 observed a vector-source child followed by a two-axis fallback; see the
 [child observation receipt](composite_children_live_observation.json).
+
+Use `--plan source-observe` to add source gates, query IDs and processor
+configuration to the child observation. The first run produced a partial
+receipt and rejected changing unused handle bits. The corrected comparison has
+passed recorded-read replay but still needs a new live run. See the
+[source receipt](action_sources_live_observation.json).

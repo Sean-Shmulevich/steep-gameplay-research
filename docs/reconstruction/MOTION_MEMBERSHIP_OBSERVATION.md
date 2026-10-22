@@ -1636,3 +1636,84 @@ state unresolved.
 The next useful live read is the child source owner, source configuration and
 processor identities, not simply its sampled vector. These distinguish neutral
 input, ownership suppression and mask suppression before testing refresh timing.
+
+### Source configuration observation
+
+`engine/action_source_observation.py` reads the source configuration and
+processor behind a known vector or directional child. It requires the caller
+to supply verified family/table/callback identities. It returns processor table,
+processing callback, resolved processor-configuration handle and whether the
+configuration enables processing. An inactive signed handle resolves to null
+and permits processing; an active nonnull configuration with byte +0x18 zero
+bypasses it, matching the inspected caller branch.
+
+Directional children expose their eight source-query IDs in field order. Vector
+children expose kind, lane mode, source owner/index, cache identity, seven owner
+priority entries, mask count/top and the selected cached bytes. A detached
+`derived_source_bits` value applies the reconstructed gates and lane selection
+to those observed bytes. It is not a recording of a callback's execution. Cache
+bytes are read even when suppressed, to preserve that distinction.
+
+The reader compares two receipts of the relevant fields and is capped at 64 reads/4096 bytes.
+It invokes no engine routines or lock operations. Parent and child provenance
+must be checked by the surrounding collector; equal receipts do not guarantee
+atomicity or lifetime. Unknown vector kinds report unsupported for this
+inspection operation even though the reconstructed selector returns zero.
+
+The private `source-observe` plan extends child enumeration, observes the two
+known source families, checks processor callback prefixes, re-enumerates the
+composite and repeats the rooted parent lookup. Public tests cover ownership
+suppression without destroying cached bytes, mask-top behavior, processor
+bypass and inactive handles, directional ID ordering, read failures and changed
+configuration. Raw observations remain in the private workspace.
+
+### Live source configuration and handle correction
+
+The first `source-observe` run was a partial result, not a passing experiment.
+The directional child produced matching observations, but the vector child's
+processor handle had changing bytes outside the pointer and sign bit used by
+the original resolution branch. The original reader compared all sixteen
+handle bytes and refused the observation. The game remained ordinary at final
+status; cleanup restored settings, stopped the bottle and verified the original
+DLL. The normal twenty-second stability stage did not run after the refusal.
+See the [partial receipt](../../native/snow_host/action_sources_live_observation.json).
+
+The reader now compares the handle's object pointer and only the sign bit of
+its signed state word. It does not read the unrelated word at +8, and it does
+not require the unused lower 31 bits of +0xc to remain constant. A pointer or
+active-sign change still rejects the result. Synthetic tests explicitly cover
+both tolerated irrelevant-bit changes and rejected active-sign changes. The
+unused bits' wider lifecycle meaning is not inferred from this observation.
+
+Offline replay of the two recorded live vector traversals passes this corrected
+comparison. That is a reanalysis of captured reads, not a second live capture:
+
+- Vector kind 0, channel 0, lane mode 0: retain all four source lanes.
+- All seven priority owners were null; ownership did not suppress the sample.
+- Mask count was zero; mask suppression did not apply.
+- Cached sample bytes were all zero.
+- Processor configuration resolved to null and processing was enabled.
+- Its processing callback RVA is 0x490c60, the previously decoded pass-through
+  method with the first-use byte. Its code bytes were not checked live here.
+
+The directional child had query IDs `[65, 68, 87, 83, 65535, 65535, 65535, 65535]`
+in configuration field order. They correspond to the primary negative-X,
+positive-X, positive-Y and negative-Y queries, followed by their alternates.
+The primary numbers match the familiar A/D/W/S virtual-key values, but this
+capture did not trace physical key delivery; alternate-sentinel interpretation
+and the downstream key-state lookup still need verification. Static inspection
+of query wrapper RVA 0x9775c0 shows it obtains a global service and forwards
+the ID to RVA 0x116b460; it does not use its incoming source-owner receiver.
+
+Directional processing was enabled with a resolved configuration and callback
+RVA 0x4906f0. Its prefix matched live. The analyzed body is an ordered processor
+chain: it starts with the input vector, visits the pointer array at +0xd0 using
+the count at +0xda, applies each child's own configuration bypass gate, then
+passes that child's output to the next. Which child processors and parameters
+this live chain contains remains open. The directional and vector actions
+shared the same source-owner identity and index zero in this capture.
+
+Next: rerun the corrected reader and enumerate the directional processor chain.
+That will determine what shaping follows the reconstructed directional
+combination before the composite publishes its result. Publication scheduling
+and device-cache writers remain separate unresolved joins.

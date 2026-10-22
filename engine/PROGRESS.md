@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Partial live source capture identifies directional query IDs 65/68/87/83 and a
+chained processor. Vector receipt initially rejected changing unused handle
+bits; pointer/sign-only comparison now passes offline replay of those reads.
+Vector channel zero was unsuppressed and zero, with no lane remapping and a pass-through
+processor address. Corrected reader needs a new live run. Next: directional
+processor child identities and shaping, then publication timing. See
+[source capture and correction](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#live-source-configuration-and-handle-correction).
+
 Vector-source prefix reconstructed and matched in 4,320 original-instruction
 cases. Kind selects vector channels 0/1 or scalar channels 10/12; seven-slot
 ownership precedence and last-mask-entry suppression gate the read. Lane
@@ -4612,3 +4620,12 @@ Contact clock producer: 162 original-block cases match. The smoothing .2 control
 is accumulated contact time, and immersion <= .001 is cleared before the normal
 builder's > 0 gate. Jump bench optionally derives air time from supplied immersion;
 native immersion geometry remains external.
+
+## Startup lifecycle follow-up
+
+User-requested investigation: enter gameplay directly after required engine and
+world initialization, preferably at a repeatable map/spawn. Current launcher
+automates recognized screens; it does not bypass them. Trace the native
+continue/map-confirm transition and readiness conditions before proposing an
+API. This belongs to loader/testbench lifecycle work and remains separate from
+scheduler ordering. Do not skip initialization merely to hide startup screens.
