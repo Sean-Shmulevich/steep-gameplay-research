@@ -1,0 +1,333 @@
+{
+  "evidence": "original_baseline_and_reset_instruction_slices",
+  "passed": true,
+  "baseline_cases": 32,
+  "reset_cases": 8,
+  "game_process": false,
+  "rows": [
+    {
+      "alpha": 0,
+      "primary_hex": "9361f23f0164b1bfff9f0ebe6db2d9bf",
+      "secondary_hex": "0a2d4abf3700b6bf200514bff948213f",
+      "current_hex": "1e79de3f06034c3fe653eebfd821323f",
+      "smoothed_hex": "3eaad7bf0809913f6df244bf3493e23c",
+      "smoothed_after_hex": "3eaad7bf0809913f6df244bf3493e23c"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "b02e45bf05034f3ff53d743fb93b92be",
+      "secondary_hex": "5f0591bff482aabf6a2e98bfa84881be",
+      "current_hex": "ca33e8bf19b89bbe162dee3f9822d23f",
+      "smoothed_hex": "72b0d2bf2f9b31bfc069d7bf52b6fbbf",
+      "smoothed_after_hex": "72b0d2bf2f9b31bfc069d7bf52b6fbbf"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "0df0dcbfdb569dbfa4d930bfc6a1eebf",
+      "secondary_hex": "ea2b863e98fbd5bf77a7673e401877bf",
+      "current_hex": "e53b5abf5e7885bf303e3abfd428eabe",
+      "smoothed_hex": "2060bdbf4444b43f29a89bbf5372c2bf",
+      "smoothed_after_hex": "2060bdbf4444b43f29a89bbf5372c2bf"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "6bd1e4be2baa86be177694bf5b2ae43f",
+      "secondary_hex": "bb13883e0e68e53fcb3e1cbe725fcbbf",
+      "current_hex": "b8188fbfa992d63e0e2d653f3ef6b5bf",
+      "smoothed_hex": "a7b5b1bf0308b93fab40b73e168eb2bf",
+      "smoothed_after_hex": "a7b5b1bf0308b93fab40b73e168eb2bf"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "ee94693e8f699dbf4a0f31bf1616b63e",
+      "secondary_hex": "5ea9e8bf362df23f34a9093ff9aaf83e",
+      "current_hex": "f51bdebf6d7c6f3f3b081b3f3d3181bf",
+      "smoothed_hex": "faadd83f7f25a73f328268bfd5f0bf3f",
+      "smoothed_after_hex": "faadd83f7f25a73f328268bfd5f0bf3f"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "ff5b8f3f7d2687bf65d4ab3f1152cf3f",
+      "secondary_hex": "8cf106bfc9dde73fedbdcfbf28a906be",
+      "current_hex": "1285f4bffc1e6b3eccef623fd2f2b5be",
+      "smoothed_hex": "6663efbf09275b3f8afaacbfdbbf3b3e",
+      "smoothed_after_hex": "6663efbf09275b3f8afaacbfdbbf3b3e"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "d2da933f160adabf2e8cd6bf746e19bf",
+      "secondary_hex": "cc3585bf6a6d993f9b99653dc0e691bd",
+      "current_hex": "1114f13f7778d63fa76859bf89a1b23f",
+      "smoothed_hex": "399ca63fb79bf93d0cc0a2bf9525843f",
+      "smoothed_after_hex": "399ca63fb79bf93d0cc0a2bf9525843f"
+    },
+    {
+      "alpha": 0,
+      "primary_hex": "dd66063f3bd9983f6579c3bfc6caa4bf",
+      "secondary_hex": "8390023f129ee83e9dadd03f513db43e",
+      "current_hex": "47140c3f239b75bfde209abfc94c693f",
+      "smoothed_hex": "58fed93fcc3e353f15bfcd3f5b59a43f",
+      "smoothed_after_hex": "58fed93fcc3e353f15bfcd3f5b59a43f"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "c2df3e3f6797d33fe36ed5bf529eab3f",
+      "secondary_hex": "e4098f3f2705c1bdb0ef0abfb220153f",
+      "current_hex": "cf23fb3f660c96bf6881823ffdc0c4bf",
+      "smoothed_hex": "05201c3f1be3953ed72fbfbfdca1873f",
+      "smoothed_after_hex": "eca9723f488896bd0e875dbf9724d23e"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "bfbd05bec521233f457b8e3f00e6293f",
+      "secondary_hex": "6694d83fa99ac3bf9722efbe7f34a3bf",
+      "current_hex": "da51bebe8a54c7be28634d3f7835f43f",
+      "smoothed_hex": "9527d23e4ee1763f7215083f401182bf",
+      "smoothed_after_hex": "73125c3e693e203fe068193f48fe91be"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "d73dfe3ed832a2be56e1e63f4a0ae6bf",
+      "secondary_hex": "f0e9483ef9d9b13eb561713fbe5a793f",
+      "current_hex": "8486a9bf01e16cbfacc0623ff64e99bd",
+      "smoothed_hex": "a684df3fbeba3f3c15faaf3ec1eded3f",
+      "smoothed_after_hex": "b6837a3f40e463bee65bf53e150db03f"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "92cfe5bfde89e1bf26746c3f2d1655bf",
+      "secondary_hex": "a9fbdfbe76412fbf5eaac03d06de4abf",
+      "current_hex": "99ebf8bf523a573faa2298bfc0fa3c3e",
+      "smoothed_hex": "3ce4933e64328dbf6505b7be8f58b53f",
+      "smoothed_after_hex": "6c008abe02fd1dbf5bb310bf41ea8d3f"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "c0ee30bf672ea5bf35399b3fc7edff3d",
+      "secondary_hex": "6b3ec73f47b5f6be979839be1839043e",
+      "current_hex": "bc55b9bf15ac8fbf35d0813ece689d3f",
+      "smoothed_hex": "93c1883edf345abfe900cebf51097bbf",
+      "smoothed_after_hex": "1c8925beb27d6bbfac6392bf2c25dbbe"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "437d6c3f886b20bec56bc93f9b1acfbf",
+      "secondary_hex": "c332a6bf1ac8be3f2e32dfbf3776843f",
+      "current_hex": "fc5814be8515a7beab8dd9bd8a7ac3bf",
+      "smoothed_hex": "b8c9d0bfbc31ec3ef291613f1d0fd23f",
+      "smoothed_after_hex": "123aa1bfec5f873e0961223f6759593f"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "eaf4b5bf82f77f3fb6c4803f178041be",
+      "secondary_hex": "688e68bfe013c3bf49ea8abf0ca7c73f",
+      "current_hex": "a04ba83fcacee6bf4890bfbdf429d23f",
+      "smoothed_hex": "61431f3ef330253eea3942bf83dd32bf",
+      "smoothed_after_hex": "e404e43e6fdca8bef2a717bf4089e8bd"
+    },
+    {
+      "alpha": 0.25,
+      "primary_hex": "2dfb933f3604283e2c99a23f61bf0d3f",
+      "secondary_hex": "2cbaf6bebf93e1bead24c7bfd691b6be",
+      "current_hex": "5368643f9899573e3de5fa3fca0ed3bf",
+      "smoothed_hex": "aae5ff3ef6673e3f3b9fb5bfbe9377bf",
+      "smoothed_after_hex": "3510193f92471c3f3afc12bf1a9b91bf"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "9b49debe291623bfc2cd343fadf7e5bf",
+      "secondary_hex": "c473f13e542494bfcecab53fe37ad13f",
+      "current_hex": "077d05bf1b7e83bebe1dd63d5e4080bd",
+      "smoothed_hex": "110a11be82f3c83ff16eacbf93eef03e",
+      "smoothed_after_hex": "077d05bf1b7e83bebe1dd63d5e4080bd"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "d20ec3bfcaf708bf5903d9bfdef5c23f",
+      "secondary_hex": "5db8b83f3342b23fc3d7b33fbe5af6bf",
+      "current_hex": "3c5ec43d8d9d173f5e42903fbf36863c",
+      "smoothed_hex": "b896cabf3d4dc63f55a6b4bf9f6efc3f",
+      "smoothed_after_hex": "3c5ec43d8d9d173f5e42903fbf36863c"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "44dd163fe69341bf4aac943f109db6bf",
+      "secondary_hex": "8d44ce3e7d47b2bf6dcdc3bf94afdd3f",
+      "current_hex": "e0c187be4f490bbd6fe4cdbf1a009a3f",
+      "smoothed_hex": "4ad64c3f29ec8b3f26a58fbf7ed375bf",
+      "smoothed_after_hex": "e0c187be4f490bbd6fe4cdbf1a009a3f"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "de58943f0df8f5bf8a36cc3f124fc4bf",
+      "secondary_hex": "8fbe583f4d83a53e114e123f252356bf",
+      "current_hex": "5750953e272b893fefb24ebd1ae6593f",
+      "smoothed_hex": "3b38e73fbf74213f79f7edbe1f22d23f",
+      "smoothed_after_hex": "5750953e272b893fefb24ebd1ae6593f"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "856be63eefc14dbe639aee3f293530bf",
+      "secondary_hex": "3f94f7bf1e9fc3bf7619ffbe88fc2f3f",
+      "current_hex": "77e3dbbf6908a63f239ae23f1061153f",
+      "smoothed_hex": "217e2bbf61fb843f62041ebf27beb5bf",
+      "smoothed_after_hex": "77e3dbbf6908a63f239ae23f1061153f"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "4e1123bfc49c7f3f1556b1bf31a63abf",
+      "secondary_hex": "8e0f5abe3a19aabf2de0063f0a12f83f",
+      "current_hex": "686fc43fe58a833f05e5763fc01c3e3f",
+      "smoothed_hex": "fd752fbf1639d8bf61e264bf5838c23f",
+      "smoothed_after_hex": "686fc43fe58a833f05e5763fc01c3e3f"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "2982e4bf4b04f43f7b24db3e561dd9be",
+      "secondary_hex": "d900fbbf417c1e3e30a39fbe93d4ddbf",
+      "current_hex": "2c3ad53fbfeeb93f86dd8abf070cf33f",
+      "smoothed_hex": "32abc33f09df87bf13c9cf3f3d9c943f",
+      "smoothed_after_hex": "2c3ad53fbfeeb93f86dd8abf070cf33f"
+    },
+    {
+      "alpha": 1,
+      "primary_hex": "fe80afbf51c3653f2087ddbf8ae8f0be",
+      "secondary_hex": "2189d13fdc7fb03fd6bfd2bfd4b1c53f",
+      "current_hex": "e832a3bf4cc806bfa804ea3fcd44a3bf",
+      "smoothed_hex": "6c4f22bf3e3bd43cdba282bf88ccea3f",
+      "smoothed_after_hex": "e832a3bf4cc806bfa804ea3fcd44a3bf"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "a6eaefbf7bc3ea3f53db40bf10bfb53f",
+      "secondary_hex": "c8016fbf9b0ce03fba3fb93fe362973f",
+      "current_hex": "81d3ad3fb0a3debf5338e93face282be",
+      "smoothed_hex": "14fd72bf1aa3673e35c8e93ff8e5c83f",
+      "smoothed_after_hex": "44be2040dd372ec062f0e83ffc8795bf"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "7dc5d33f2fac68be928e3e3f3a09ef3e",
+      "secondary_hex": "f0f4e4bf57489abf46dadfbede5781bf",
+      "current_hex": "8f8cd83f02eb8b3f8341903fb83c07bc",
+      "smoothed_hex": "fb6714bf800ebe3f5601653f9a81f53f",
+      "smoothed_after_hex": "6af6344086b2653fee219f3f06ad78bf"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "3527263f480f943f0d86b7bff84e40bf",
+      "secondary_hex": "14888a3fad7aa9bfbff531bfb132cdbf",
+      "current_hex": "15d01bbfedaf1a3dc858a6bf78cbdbbf",
+      "smoothed_hex": "3a4a5b3d3197ecbe8bd26d3f968ba33f",
+      "smoothed_after_hex": "729270bf954c933ee77c1ac080bb4dc0"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "326ce63f3c7d603fdf8e323f45c44ebf",
+      "secondary_hex": "1096403e950e7e3ec1e68b3fa5f9fd3c",
+      "current_hex": "c53cdabfd0d0e1bff928dcbf732be83f",
+      "smoothed_hex": "4fc6b4beee3e8f3e9103abbf2d78b2be",
+      "smoothed_after_hex": "2f6118c08b5032c0aebbf4bf19483940"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "ad2e01be734b923f316feabfad03dfbf",
+      "secondary_hex": "08b1e7bfb07992bda7cfe5bff920493f",
+      "current_hex": "66c2c93e6ce3c8bf71e9913f9373ea3e",
+      "smoothed_hex": "6f9309bf9aa0083f889f8bbfe7fefcbf",
+      "smoothed_after_hex": "841b5c3fa4be27c0f7561040ca6ad63f"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "05399fbfec5144bd7056f4bfc6c8133f",
+      "secondary_hex": "b011083fdace92bfe8ee54bf60ccba3f",
+      "current_hex": "22d5c8bf65d7733f9c10ff3fb5a0cebf",
+      "smoothed_hex": "9c6af3bf62f6d73d93b58bbc23b0ce3f",
+      "smoothed_after_hex": "668ab3bfd921b03f2bd83f4091a44ec0"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "d08bbe3f7712423f15fcd6bf32f0c43f",
+      "secondary_hex": "0656c43fdfdfdfbfa4572bbf1fd7bd3f",
+      "current_hex": "19df76bfbb2d103f4f7748bf6d24893e",
+      "smoothed_hex": "18cf95be574480bec72fc53fe8f0f63f",
+      "smoothed_after_hex": "706da6bfae55783f5ef1f8bf961510bf"
+    },
+    {
+      "alpha": 1.5,
+      "primary_hex": "45962cbf4f38823ff58dc3bf01d4fd3f",
+      "secondary_hex": "0a4229bf2e5c9d3f187520bd6c74a13f",
+      "current_hex": "51b7573f8f9b6abf0394dd3ed4c1da3e",
+      "smoothed_hex": "843c993f2a673c3fdabe803f759dc5be",
+      "smoothed_after_hex": "76562a3f760edfbfa0c0153ebc78553f"
+    }
+  ],
+  "reset_rows": [
+    {
+      "count": 0,
+      "threshold": 3,
+      "combined_before_and_after": 0,
+      "first_after": 1,
+      "second_after": 0
+    },
+    {
+      "count": 0,
+      "threshold": 3,
+      "combined_before_and_after": 1,
+      "first_after": 1,
+      "second_after": 0
+    },
+    {
+      "count": 3,
+      "threshold": 3,
+      "combined_before_and_after": 0,
+      "first_after": 1,
+      "second_after": 0
+    },
+    {
+      "count": 3,
+      "threshold": 3,
+      "combined_before_and_after": 1,
+      "first_after": 1,
+      "second_after": 0
+    },
+    {
+      "count": 4,
+      "threshold": 3,
+      "combined_before_and_after": 0,
+      "first_after": 0,
+      "second_after": 0
+    },
+    {
+      "count": 4,
+      "threshold": 3,
+      "combined_before_and_after": 1,
+      "first_after": 0,
+      "second_after": 0
+    },
+    {
+      "count": 4294967295,
+      "threshold": 3,
+      "combined_before_and_after": 0,
+      "first_after": 0,
+      "second_after": 0
+    },
+    {
+      "count": 4294967295,
+      "threshold": 3,
+      "combined_before_and_after": 1,
+      "first_after": 0,
+      "second_after": 0
+    }
+  ],
+  "code_sha256": {
+    "0x140532e3a": "f183c719a4b8edf2014d30c42fa1eaa7bfa52962d4b5ef171d9b81d970ffeda1",
+    "0x140536260": "9f1218dbd220dbfce00bc8f9162a94e962e56cab45858ade1beb61bebfe4af17"
+  },
+  "limits": [
+    "Baseline branch selected directly; preceding actor predicate not executed.",
+    "Reset prefix stops before actor and further state side effects.",
+    "Combined byte preservation established only across this prefix.",
+    "No scheduling frequency or live freshness proof."
+  ]
+}

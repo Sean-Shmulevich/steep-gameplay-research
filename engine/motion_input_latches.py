@@ -55,3 +55,48 @@ def update_input_latches(state: InputLatches, *, current_xy, baseline_xy,
         delta = _f32(_f32(baseline_secondary_y)-_f32(current_secondary_y))
         second = _f32(delta*delta) > threshold or second_count <= 3
     return InputLatches(bool(first), bool(second))
+
+
+@dataclass(frozen=True)
+class BaselinePublication:
+    primary: bytes
+    secondary: bytes
+    smoothed: bytes
+    copied_word_bits: int
+
+
+def refresh_input_baselines(primary: bytes, secondary: bytes, current: bytes,
+                            smoothed: bytes, alpha: float,
+                            copied_word_bits: int) -> BaselinePublication:
+    """Selected branch only; caller owns cadence and actor-predicate selection.
+
+    Baselines copy ingestion vectors verbatim. Smoothing uses a separate current
+    vector; it must not silently be replaced with primary. Alpha is not clamped.
+    """
+    for value in (primary, secondary, current, smoothed):
+        if not isinstance(value, bytes) or len(value) != 16:
+            raise ValueError('vectors must be 16 immutable bytes')
+    if type(copied_word_bits) is not int or not 0 <= copied_word_bits <= 0xffffffff:
+        raise ValueError('copied word must be unsigned 32-bit bits')
+    alpha = _f32(alpha)
+    complement = _f32(1.0-alpha)
+    result = [_f32(_f32(complement*a)+_f32(alpha*b))
+              for a,b in zip(struct.unpack('<4f',smoothed),struct.unpack('<4f',current))]
+    return BaselinePublication(primary, secondary, struct.pack('<4f',*result), copied_word_bits)
+
+
+@dataclass(frozen=True)
+class ResetPrefixResult:
+    latches: InputLatches
+    preserved_combined_byte: int
+
+
+def reset_input_latch_prefix(count: int, threshold: int,
+                             combined_byte: int) -> ResetPrefixResult:
+    """Inspected reset prefix; stored combined byte is deliberately preserved."""
+    for value in (count, threshold):
+        if type(value) is not int or not 0 <= value <= 0xffffffff:
+            raise ValueError('count and threshold must be unsigned 32-bit integers')
+    if type(combined_byte) is not int or not 0 <= combined_byte <= 255:
+        raise ValueError('combined byte must be unsigned byte')
+    return ResetPrefixResult(InputLatches(count <= threshold, False), combined_byte)

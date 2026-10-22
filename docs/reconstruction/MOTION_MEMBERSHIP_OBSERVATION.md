@@ -754,3 +754,51 @@ not the final force, trick, animation or collision behavior. The transition
 request separately constructs a mode-6 child through `0x14055d1f0`; joining that
 child's update to this latch consumer is still required before treating the
 static field match as a complete executed chain.
+
+## Baseline publication and partial latch reset
+
+The comparison baselines have a concrete branch-dependent writer in
+`0x140532c70`. Its block `0x140532e3a..0x140532ec9` performs:
+
+```text
+smoothed = f32(f32((1-alpha) * smoothed) + f32(alpha * current_vector))
+cached_word = ingestion_word
+primary_baseline = ingested_primary_vector
+secondary_baseline = ingested_secondary_vector
+```
+
+Here `alpha` is profile `+0x64`, smoothed is motion `+0x6f0`, and current vector
+is `+0x360`. The word copies `+0x150 -> +0xb0`, primary `+0x160 -> +0x6e0`,
+and secondary `+0x170 -> +0x700`. The primary baseline source is not the same
+field as the smoothing input. Upstream ingestion can select an alternative
+primary action, so replacing one with the other would erase a real distinction.
+The branch follows the actor slot-`0x428` result in the inspected control flow;
+it is not an unconditional once-per-frame baseline refresh.
+
+Thirty-two original-instruction slice cases checked all copied bits and exact
+float32 smoothing for alpha 0, 0.25, 1 and 1.5. There is no clamp in this block.
+The test chose this branch directly and did not execute its preceding actor
+predicate or establish how often it runs. See the
+[receipt](../../native/snow_host/input_baseline_validation.json) and
+`refresh_input_baselines` in the input-latch API.
+
+A second concrete writer, reset prefix `0x140536260..0x1405362f1`, clears motion
+XYZ `+0x1d0`, copies both ingestion vectors into the same baselines, sets first
+latch to `unsigned(count+0x384) <= unsigned(profile_threshold+0xe8)`, and clears
+second latch. It does **not** write the combined byte `+0x47d` in this prefix.
+Eight cases spanning counts 0, 3, 4, `0xffffffff` and both prior combined values
+passed. Subsequent actor/state operations were excluded from this validation.
+
+The reset inspection API therefore reports the recomputed latch pair and the
+preserved combined byte separately. A read-only snapshot must not assume those
+values agree until the combined byte's producer has run. This is another reason
+to capture at known execution boundaries rather than infer scheduler order from
+apparently contradictory field values.
+
+There are additional baseline/reset paths, including a conditional second-channel
+reset near `0x14052e43c` and a baseline copy from motion `+0x7b0/+0x7c0` in other
+branches. These remain separate leads, not covered by the new API. The latch
+routine's callers gate its execution through actor `+0xff8` and the resolved
+object's byte `+0x64`; when the combined latch is true they call `0x1404f66f0`.
+That downstream arithmetic and its actor/body consumer are the next targets for
+connecting the input history to a physical effect.

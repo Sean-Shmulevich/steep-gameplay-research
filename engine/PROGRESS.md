@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Baseline publication and reset prefix validated in 32+8 original-instruction
+cases. Baselines copy ingestion vectors on a selected branch, while smoothing
+uses a distinct current vector. Reset can leave the stored combined latch byte
+stale; inspection API now preserves that distinction. Next: follow the combined
+latch's downstream arithmetic and body consumer. See [baseline evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#baseline-publication-and-partial-latch-reset).
+
 Saved input-history flag joins a sticky input-change latch routine. Original
 instructions passed 192 cases covering threshold/history, external gates,
 suppression and NaNs. Independent float32 latch API added. Actual mode-6
