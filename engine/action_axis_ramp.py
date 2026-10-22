@@ -1,7 +1,7 @@
 """Recovered finite-domain directional ramp with explicit clock and curve inputs.
 
 Evidence: MOTION_MEMBERSHIP_OBSERVATION.md, Directional ramp timing and transitions.
-Clock ticks are divided by 1000 as observed; their physical unit is unresolved.
+Clock uses divided world-clock ticks / 1000; inferred seconds, live source unverified.
 """
 from dataclasses import dataclass
 import math

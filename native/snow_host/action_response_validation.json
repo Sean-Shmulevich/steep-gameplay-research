@@ -1,0 +1,21 @@
+{
+  "evidence": "Complete original two-stage chain including ramp, key curves, polynomial roots, original math and diagonal correction",
+  "updates": 1080,
+  "sequences": 9,
+  "updates_per_sequence": 120,
+  "passed": true,
+  "comparison": [
+    "Exact chain output and stage publication bytes",
+    "Persistent axis states, timers and saved clock"
+  ],
+  "substitutions": [
+    "Clock accessor supplies explicit tick pair",
+    "TLS availability helper returns zero"
+  ],
+  "limits": [
+    "Synthetic curve keys and duration, not actual player tuning",
+    "Portable reconstruction still uses supplied sqrt and power",
+    "No device-query, action selection or scheduler placement validation"
+  ],
+  "game_process": false
+}

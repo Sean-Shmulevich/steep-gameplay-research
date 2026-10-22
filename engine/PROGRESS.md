@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Composed directional response matches 1,080 consecutive original-chain updates
+across nine press/hold/release/reversal sequences, including internal gates and
+stage bypass. Real curve/solver/math and diagonal code execute offline; only
+clock and TLS availability are supplied. Public API returns stage receipts and
+retained state. Actual tuning and input-to-substep placement remain open. See
+[composed response](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#composed-directional-response).
+
 Connected ramp time to the existing ordinary clock's divided_ticks field,
 with 480 original updater-to-ramp scalar comparisons across 160 trees.
 Passive clock decoding now exposes divided_ticks without extra reads.

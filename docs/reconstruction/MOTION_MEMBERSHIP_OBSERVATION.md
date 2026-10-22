@@ -2288,3 +2288,39 @@ The passive [clock reader](../../engine/clock_observation.py) now exposes
 larger capture is required. Future captures can compare the actual ramp clock
 source against interval, total ticks and hold/scale state without conflating
 those quantities.
+
+## Composed directional response
+
+[`directional_response`](../../engine/action_response.py) composes the observed
+ramp-then-diagonal processor order using the existing processor-chain kernel.
+It accepts four input lanes, retained axis states, previous clock, explicit
+start/end tick values, duration/mode, a curve callback and separate stage and
+internal activation gates. It returns output, detached retained state, saved
+clock and raw/working/published stage receipts. There is no implicit device
+query, current-world selection or frame clock. Duration and time use the
+ramp clock convention described above; input/output lane units remain defined
+by their upstream and downstream consumers.
+
+A disabled ramp stage preserves its axis state and saved clock but still
+publishes unchanged input for the diagonal stage. An invoked ramp with a
+closed internal gate also preserves state, while remaining distinguishable
+in the chain receipt from an uninvoked stage. Diagonal enablement is separate.
+This matters when testing control changes: a shaping bypass does not imply
+that the whole processing chain is bypassed.
+
+The [composed validation](../../native/snow_host/action_response_validation.json)
+executes nine original-code sequences of 120 consecutive updates each. The
+original chain invokes the original ramp, keyed evaluator, root solver and
+runtime math, then original diagonal correction. Only the clock accessor and
+TLS availability helper are supplied. Constant, linear and cubic synthetic
+curves run with all three ordinary axis modes; sequences include presses,
+holds, release, reversal and independently changing bypass gates. Exact final
+output, each stage's raw/working/published bytes, axis states, timers and saved
+clock match on all 1,080 updates.
+
+The public reconstruction uses independent acos/cos and supplied Python
+sqrt/power for the cubic fixture. It requires caller-supplied curves and does
+not install these synthetic curves or the fixture duration as player tuning.
+This is a composed processor result, not end-to-end gameplay validation.
+Device-state ingestion, active action selection, actual curve parameters,
+thread-local availability and physics-substep ordering still need evidence.
