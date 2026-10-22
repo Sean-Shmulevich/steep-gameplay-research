@@ -1900,3 +1900,50 @@ verify the clock producer. Those dependencies are required before this kernel
 can claim the original player's response timing. A narrow live parameter
 collector should reuse fresh chain provenance and respect the existing helper
 budget rather than append unbounded reads to the 212-request chain capture.
+
+## Keyed ramp curve evaluation
+
+The ramp dependency at RVA `0x1197fc0` is now independently implemented in
+[`action_key_curve.py`](../../engine/action_key_curve.py). Its contract is a
+caller-supplied, nondecreasing sequence of finite float32 keys, a query X,
+optional input/output bounds, and an explicit cubic-root solver. It has no
+persistent state or clock. X/Y units come from its caller; in the ramp caller
+X is normalized timer/duration. No live curve keys have been captured.
+
+The curve object holds a key pointer at +0x10, uint16 count at +0x1a, input
+bounds at +0x1c/+0x20, output bounds at +0x24/+0x28, and enabling bytes at
++0x2c/+0x2d. Each 32-byte key contains point XY, incoming control XY, outgoing
+control XY and a uint32 mode at +0x18. These are build-specific evidence
+anchors, not portable object addresses.
+
+Evaluation first clamps X when enabled. Empty curves return positive zero
+without output clamping. Before/after the key range, it uses the endpoint Y.
+Within the range, it selects the last key whose X is at most the query, so
+exact duplicate positions select the last duplicate. The left key selects
+interpolation: mode 1 is linear, mode 2 cubic, every other mode holds left Y.
+Nonempty results receive the optional output clamp. Equal clamp operands
+preserve the second SSE operand, including signed zero.
+
+Linear evaluation returns left Y when abs(right.X-left.X) is strictly below
+float32(1e-5); otherwise it computes `(X-left.X)/(right.X-left.X)` then scales
+by the Y difference and adds left Y, rounding each operation to float32.
+
+Cubic evaluation uses P0=left point, P1=left outgoing control, P2=right incoming
+control, P3=right point. It forms ascending polynomial coefficients for
+`BezierX(t)-X` and calls a root solver. If that returns one, two or three roots,
+it selects the last returned root and clamps it to [0,1]; no roots gives t=0.
+It evaluates BezierY at that t. Root ordering therefore affects output. The
+implementation preserves the instruction-level float32 operation order in
+both coefficient construction and Y evaluation. It does not silently insert
+a generic numerical solver, a smoothstep curve or a sampled-curve evaluator.
+
+The [offline receipt](../../native/snow_host/action_key_curve_validation.json)
+records 2,100 passing original-instruction cases, comparing exact float32
+results, polynomial coefficient bytes and solver call count. Of those, 1,846
+execute without solver substitution; 254 supply synthetic ordered roots at
+the polynomial solver boundary. Original key selection, linear arithmetic,
+cubic coefficient formation, root selection/clamping and cubic Y arithmetic
+execute in the emulator. Fixtures cover repeated positions, endpoint queries,
+short linear intervals, unknown modes, clamps and zero through three roots.
+No live process was used. The actual root algorithm at RVA `0x11822d0`, its
+quadratic fallback, active curve contents and clock units remain unresolved.

@@ -1,0 +1,19 @@
+{
+  "evidence": "Original keyed evaluator and linear/cubic wrappers executed offline",
+  "cases": 2100,
+  "passed": true,
+  "comparison": "Exact float32 result bytes, polynomial coefficients and solver call count",
+  "paths": {
+    "no_solver": 1846,
+    "supplied_solver": 254
+  },
+  "substitutions": [
+    "Polynomial root solver supplied ordered synthetic roots; original root algorithm not validated"
+  ],
+  "game_process": false,
+  "limits": [
+    "Finite sorted keys and finite arithmetic domain",
+    "Synthetic keys, not captured live ramp configuration",
+    "No original-engine equivalence claim"
+  ]
+}

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Keyed ramp curve selection and interpolation now match 2,100 offline
+original-instruction cases, including exact output bits and cubic coefficients.
+Constant/linear paths execute directly; cubic cases supply ordered solver
+roots. The original polynomial root solver and live curve contents remain
+open. Next: decode that solver offline while another agent uses the game.
+See [keyed curve contract and evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#keyed-ramp-curve-evaluation).
+
 Directional ramp reconstructed through press/release/reversal, axis gates,
 timer clamp, signed curve output and two clock reads. All 1,600 original-code
 cases match output/state/timer bits with supplied clock and curve dependencies.
