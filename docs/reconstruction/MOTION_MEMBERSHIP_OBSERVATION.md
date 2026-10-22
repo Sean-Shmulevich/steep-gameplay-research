@@ -1472,3 +1472,35 @@ original-instruction fixture validation. Next: validate the composite selector,
 then read its live child identities and mode records with the same root and
 traversal guards. Timing attribution must follow the selected producer rather
 than assuming that action 0x76 itself computes directional input.
+
+### Composite selector validation
+
+`engine/composite_action.py` implements the configured composite callback as
+`evaluate_composite(child_count, update_child, mode_at, previous_payload)`.
+The child evaluator returns status and 52 uninterpreted bytes covering the
+three vector fields and magnitude. It is called lazily, only for children the
+original loop visits. Mode lookup occurs after that child's evaluation, and
+never for the final child. The result includes the selected child index and
+exact visited order, without inferring device labels or input generations.
+
+[Original-instruction comparison](../../native/snow_host/composite_action_validation.json)
+now validates 1,393 configured cases. It executes the complete callback and
+substitutes only child virtual calls with supplied status/payload outcomes.
+Cases exhaust lengths zero through three across status bytes 0, 1, 2 and 255
+and modes 0, 1, 2 and 0xffffffff. Another 300 seeded cases exercise lengths four
+through sixteen. Comparisons check the entire parent object and the exact
+child-call sequence, not only the selected vector.
+
+All cases passed: 186 retained the previous payload, 539 selected an early
+child and 668 copied the final child. The fixture includes status/payload
+inconsistency deliberately: status zero is not evidence that vector bytes are
+zero. Early mode-zero selection normalizes a nonzero child status to one;
+final-child selection preserves the complete status byte. Public tests also
+check that skipped child evaluations and final-child mode reads do not occur.
+
+This supersedes the unvalidated-branch boundary above for the configured local
+selector. Null configuration remains excluded. The child producer behavior,
+mutation of parent/configuration during a child call, and ordering relative to
+reset or motion ingestion are not reconstructed by these fixtures. The caller
+must supply those dependencies explicitly. Next is bounded live enumeration
+of the selected composite's child identities and mode records.

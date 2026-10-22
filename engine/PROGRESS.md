@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Configured composite-action selection is now executable and matches 1,393
+original-instruction cases, including complete parent bytes and exact child
+call order. Rejection retains old payload while clearing status; final fallback
+copies even an inactive child's payload and preserves its full status byte.
+This closes local selection arithmetic, not child production or refresh timing.
+Next: inspect the live composite's children and mode records. See
+[composite validation](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#composite-selector-validation).
+
 Live action identity established for one idle gameplay observation: action 0x76
 in bank zero resolves to the composite selector callback, not directly to the
 two-axis producer. Its zero sample and identity traversal matched; the game

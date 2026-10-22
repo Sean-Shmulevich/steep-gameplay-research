@@ -1,0 +1,18 @@
+{
+  "evidence": "Original configured composite callback; child virtual calls replaced with explicit samples",
+  "cases": 1393,
+  "passed": true,
+  "retained_payload_cases": 186,
+  "early_selection_cases": 539,
+  "final_child_cases": 668,
+  "compared": [
+    "Entire parent object",
+    "Exact child evaluation order"
+  ],
+  "game_process": false,
+  "limits": [
+    "Null-configuration route excluded",
+    "Child producers supplied, not reconstructed by this test",
+    "No concurrent mutation or reset-order proof"
+  ]
+}
