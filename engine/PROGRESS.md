@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Independent curve cosine now matches 20,592 original-instruction cases across
+its supported angle domain, including the prior isolated mismatch. Combined
+independent acos/cos retains exact root-output matches in 1,441 solver cases;
+sqrt/power remain explicit portable dependencies. Next: prepare a bounded ramp
+configuration observer offline, then capture actual settings when live use is
+available. See [curve cosine](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#reconstructed-curve-cosine).
+
 Independent finite-domain acos now matches 20,334 original-instruction cases
 without substituted calls. Using it in the root solver removes all six previous
 root-output mismatches across 1,441 cases with the remaining portable math
