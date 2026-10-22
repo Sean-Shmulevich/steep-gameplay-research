@@ -9976,3 +9976,24 @@ boundary tests validate the implementation's contract. The prior 48-case
 original-instruction comparison covers only the countdown subtraction, not this
 whole newly composed branch. Full branch comparison with intercepted curves and
 body calls is the next validation gate. No live jump reset was captured yet.
+
+### Jump branch instruction comparison
+
+The subsequent [288-case original-instruction comparison](../../native/snow_host/jump_branch_validation.json)
+matched the composed jump reference exactly for cached factor, countdown,
+body request vectors, force flag and ordering. Branch coverage comprised 216
+disabled cases, 24 countdown-held cases, 24 no-release cases and 24 submitting
+cases. Cases include exact cooldown expiry, absent rider, negative main mass
+difference, zero curve gain and multiple nonzero gains.
+
+Synthetic constant compiled curves ran through the original clamped-low segment
+evaluation instructions. Body impulse calls and lock enter/leave were intercepted.
+The submitting cases entered one lock, requested rider then main when present,
+and left the same lock; no actual body writes or lock synchronization were
+performed. General curve domains, invalid configuration transfers, upstream input
+release production and outer actor gates are outside this comparison.
+
+A rounding regression test preserves a concrete distinction: coil gain 1.3,
+base 80 and gravity 9.81 yield factor 10.60142707824707 before depth/speed gains.
+Dividing base by gravity first yields 10.601426124572754. Both are plausible
+mathematical rewrites, but only the former matches the inspected instruction order.

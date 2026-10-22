@@ -50,3 +50,9 @@ class SnowJumpStepTests(unittest.TestCase):
         first=self.run_step(air_time=1)
         second=self.run_step(cached_factor=first['cached_factor'],cooldown=first['cooldown'],release_signal=0)
         self.assertEqual(second['submissions'],())
+
+    def test_native_multiply_then_divide_rounding(self):
+        result=self.run_step(coil_gain=1.3,depth_gain=1,speed_gain=1,gravity=9.81)
+        self.assertEqual(result['cached_factor'],10.60142707824707)
+        reordered=f32(f32(f32(80)/f32(9.81))*f32(1.3))
+        self.assertNotEqual(result['cached_factor'],reordered)

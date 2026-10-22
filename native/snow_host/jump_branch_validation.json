@@ -1,0 +1,27 @@
+{
+  "evidence": "original instruction emulation with synthetic constant curve tables",
+  "game_process": false,
+  "cases": 288,
+  "matched": 288,
+  "branches": {
+    "disabled": 216,
+    "no_release": 24,
+    "submit": 24,
+    "cooldown": 24
+  },
+  "checks": [
+    "cached factor and countdown exact float32",
+    "rider-before-main body requests",
+    "force flag",
+    "same lock identity and enter/submissions/leave order",
+    "absent rider and negative main mass split",
+    "zero-gain requests still reset countdown"
+  ],
+  "limitations": [
+    "Constant curves exercised clamped-low segment; general curve evaluator is separate",
+    "Body impulse and lock helpers intercepted; no backend effects or synchronization established",
+    "Outer actor gates and release-input producer excluded",
+    "Protected invalid-configuration paths not executed"
+  ],
+  "source_sha256": "fe4f154c760e7349ca43047db04ae556e31298a4d4ebdf1732cdc3d6d2bd89c2"
+}
