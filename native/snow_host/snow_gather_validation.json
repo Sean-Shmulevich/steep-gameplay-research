@@ -1,0 +1,19 @@
+{
+  "evidence": "original_instruction_emulation",
+  "gather_cases": 6,
+  "claim_size_cases": 65536,
+  "passed": true,
+  "game_process": false,
+  "gather_code_sha256": "48ae62de996f7136e264af8b577b2d92c5407e39ea2f0ca9315f80c866e3da8f",
+  "limits": [
+    "Only selector zero tested.",
+    "Lock and capacity helper calls intercepted; sufficient backing capacity supplied.",
+    "No registration mutation or concurrent execution.",
+    "Claim-size arithmetic checked in isolated instruction spans, not full batch submission."
+  ],
+  "registration_source_review": {
+    "artifact": "retained membership findings",
+    "sha256": "c3619f4a870778e73eacb46b7f7733fbf6624970610df9f0940932b5f9dbdb06",
+    "registration_helpers_executed_this_pass": false
+  }
+}

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Batch identity follow-up: [snow batch preparation](../docs/reconstruction/SNOW_BATCH_DISPATCH.md)
+now has a portable gather/claim-size model, six original-instruction gather cases
+and all 65,536 unsigned-count partition checks. Registration uniqueness is a
+conditional upstream invariant, not enforced by gathering. Batch-local job and
+callable addresses can be reused; joining execution-context job identity to a
+batch invocation is the next attribution gap. No new live run or write API.
+
 Live timing comparison: the original-game snow wrapper now has 235 guarded
 before/after observations across 219 request groups. All groups match the
 reconstruction's float32 `consumed / count` subdivision relation exactly. See
