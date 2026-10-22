@@ -146,3 +146,39 @@ that job to a fresh batch invocation and outer world invocation remains open.
 The job address can still be reused. Thread migration, helper recursion and
 simultaneously active worlds require explicit invocation identities in the
 recorder. No original TLS current-job API or global exclusion guarantee follows.
+
+
+## Authored entry adapter fixture
+
+[The entry adapter](../../native/snow_host/snow_entry_thunk.S) now captures RDI,
+RSI, RBX, the caller return address and entry RSP before entering compiled C.
+It passes a temporary `SnowEntryRegisters` pointer as the fourth Win64 argument
+to `SnowProbe_EntryDispatch`, retaining actor in RCX and the two scalar arguments
+in XMM1/XMM2. The 72-byte stack allocation contains 32 bytes of callee shadow
+space followed by the 40-byte snapshot. Windows unwind metadata describes the
+allocation. No original executable instructions are included in this adapter.
+
+The [test](../../tests/test_snow_entry_thunk.py) builds the adapter and an authored
+C fixture with MinGW, then executes the resulting PE in Unicorn. It checks actor
+and metadata forwarding, scalar bit preservation including signed zero and NaN,
+callee stack alignment, return-address/RSP balance, all eight nonvolatile integer
+registers and XMM6 through XMM15. The test overwrites every callee shadow slot at
+C entry to detect overlap with the snapshot. It checks that the adapter has an
+exception-directory entry; it does not exercise Windows exception unwinding.
+
+```sh
+python3 -m unittest tests.test_snow_entry_thunk -v
+```
+
+This test requires `x86_64-w64-mingw32-gcc` on PATH and `pefile` plus `unicorn`
+importable by Python. It explicitly skips when those dependencies are absent;
+a skipped test is not adapter validation. The development pass ran it with all
+dependencies present and passed all three scalar/register configurations.
+
+The fixture is deliberately not linked into the live probe yet. Its C dispatch
+implementation only records values. A real dispatch must validate the return
+route and guarded job/range/record reads, copy ephemeral data immediately, and
+forward the original call exactly once. The snapshot pointer must not escape
+the dispatch lifetime. Exceptions and nonlocal exits are outside the tested
+normal-return contract. This proves adapter calling-convention behavior under
+emulation, not Wine integration, native job lifetime or batch-generation identity.

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Entry adapter fixture: an authored Win64 assembly adapter captures the entry
+registers before the C prologue. The compiled PE passed emulation checks for
+metadata/scalar forwarding, shadow-space separation, stack alignment and
+nonvolatile register preservation. It is not connected to the live probe yet;
+guarded attribution and exactly-once forwarding are next. See
+[adapter fixture](../docs/reconstruction/SNOW_BATCH_DISPATCH.md#authored-entry-adapter-fixture).
+
 Actor-entry attribution: the selected snow visitor carries its job in RDI and
 its claimed-range pointer slot in RSI at actor entry. Original-instruction checks
 passed 72 visitor cases plus 81 joined range-worker cases. Capture the range base
