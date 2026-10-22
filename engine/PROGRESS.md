@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Optional motion channel integrated into recorder/probe, ABI v5. Before/after
+validity is independent of job, frame and body evidence; rejection clears only
+the failed motion sample. Capture plugin and launcher offer opt-in observation,
+with raw-bit JSONL kept private. Five native fixtures, six Windows/Wine fixture cases and the Windows
+build passed; live correlation remains pending. No game launched. See
+[channel contract](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#optional-motion-channel-in-the-substep-recorder).
+
 Bounded native motion-state reader implemented, max 18 reads with actor/backlink
 checks and duplicate samples. Captures counters, inputs, baselines, independent
 latch bytes and bounded hierarchy ownership. Native fault/branch fixtures and

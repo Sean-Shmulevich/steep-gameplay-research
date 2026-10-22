@@ -29,7 +29,7 @@ def main():
     native = ROOT/'native/snow_host'
     flags = [cc,'-std=c11','-O2','-Wall','-Wextra','-Werror','-I',str(native)]
     sources = ['snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c',
-               'snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S']
+               'snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c']
     with (out/'build.log').open('w') as log:
         subprocess.run(flags+['-shared']+[str(native/s) for s in sources]+['-o',str(out/'probe.dll')],
                        stdout=log,stderr=log,check=True,timeout=60)
@@ -38,7 +38,7 @@ def main():
                        stdout=log,stderr=log,check=True,timeout=60)
     env = dict(os.environ,WINEPREFIX=str(prefix),WINEDEBUG='-all')
     results = []
-    for mode in ['normal','conflict','attributed','valid-attribution','invalid-frame']:
+    for mode in ['normal','conflict','attributed','valid-attribution','invalid-frame','motion']:
         command = [str(wine),str(out/'fixture.exe'),'Z:'+str(out/'probe.dll').replace('/','\\')]
         if mode != 'normal': command.append(mode)
         logpath = out/(mode+'.log')
@@ -54,7 +54,7 @@ def main():
         results.append({'mode':mode,'exit_code':code,'passed':code==0 and 'PASS:' in tail})
         if not results[-1]['passed']: break
     receipt = {'game_launched':False,'synthetic_objects_only':True,'cases':results,
-               'passed':len(results)==5 and all(x['passed'] for x in results)}
+               'passed':len(results)==6 and all(x['passed'] for x in results)}
     (out/'result.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print(json.dumps(receipt))
     return 0 if receipt['passed'] else 1

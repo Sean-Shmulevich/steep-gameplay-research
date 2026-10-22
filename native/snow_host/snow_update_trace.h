@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdatomic.h>
 #include "snow_batch_frame.h"
+#include "snow_motion_observation.h"
 /* Authored capture plumbing. No installation, game offsets, or ownership claims.
  * Initialize once before publishing. Context, records and callbacks must remain
  * alive for ALL callers, including calls after close. Never reopen/reinitialize.
@@ -27,6 +28,8 @@ typedef struct {
     SnowEntryAttribution attribution;
     uint32_t frame_valid;
     SnowBatchFrame frame;
+    uint32_t motion_attempted, motion_before_valid, motion_after_valid;
+    SnowMotionObservation motion_before, motion_after;
 } SnowUpdateRecord;
 typedef void (*SnowUpdateOriginal)(void *, float, float);
 typedef void (*SnowUpdateRead)(void *, SnowUpdateSnapshot *);
@@ -50,6 +53,12 @@ void snow_trace_call(SnowUpdateTrace *, void *, float, float);
 typedef int (*SnowUpdateEntryRead)(void *, SnowEntryAttribution *, SnowBatchFrame *);
 void snow_trace_call_attributed(SnowUpdateTrace *, void *, float, float,
                                 SnowUpdateEntryRead, void *);
+/* Independent optional channel, sampled around original. Return exactly 1 for
+ * valid output; other returns clear that sample only. Same bounded/non-mutating
+ * callback requirements as entry observation. No exception containment. */
+typedef int (*SnowUpdateMotionRead)(void *, void *, SnowMotionObservation *);
+void snow_trace_call_observed(SnowUpdateTrace *, void *, float, float,
+                             SnowUpdateEntryRead, void *, SnowUpdateMotionRead, void *);
 void snow_trace_close(SnowUpdateTrace *);
 /* Records may be read only after this returns true. It does NOT permit unloading
  * the wrapper/context: a cached caller can still enter and forward to original. */

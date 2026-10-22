@@ -15,6 +15,11 @@ void snow_trace_call(SnowUpdateTrace *t, void *actor, float elapsed, float deriv
 }
 void snow_trace_call_attributed(SnowUpdateTrace *t,void *actor,float elapsed,float derivative,
                                 SnowUpdateEntryRead observe,void *context) {
+    snow_trace_call_observed(t,actor,elapsed,derivative,observe,context,NULL,NULL);
+}
+void snow_trace_call_observed(SnowUpdateTrace *t,void *actor,float elapsed,float derivative,
+                             SnowUpdateEntryRead observe,void *context,
+                             SnowUpdateMotionRead motion,void *motion_context) {
     uint_fast64_t g=atomic_load(&t->gate);
     for (;;) {
         if (g & CLOSED) { t->original(actor,elapsed,derivative); return; }
@@ -41,7 +46,16 @@ void snow_trace_call_attributed(SnowUpdateTrace *t,void *actor,float elapsed,flo
             if(!r->attribution_valid) memset(&r->attribution,0,sizeof r->attribution);
         }
         t->read(actor,&r->before);
+        if(motion) {
+            r->motion_attempted=1;
+            r->motion_before_valid=motion(motion_context,actor,&r->motion_before)==1;
+            if(!r->motion_before_valid) memset(&r->motion_before,0,sizeof r->motion_before);
+        }
         t->original(actor,elapsed,derivative);
+        if(motion) {
+            r->motion_after_valid=motion(motion_context,actor,&r->motion_after)==1;
+            if(!r->motion_after_valid) memset(&r->motion_after,0,sizeof r->motion_after);
+        }
         t->read(actor,&r->after);
         r->exit_tick=t->clock();
     }

@@ -1,0 +1,52 @@
+{
+  "game_launched": false,
+  "synthetic_objects_only": true,
+  "cases": [
+    {
+      "mode": "normal",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "conflict",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "attributed",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "valid-attribution",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "invalid-frame",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "motion",
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "evidence": "Authored recorder and synthetic objects; native fixtures and Windows DLL under Wine",
+  "abi": 5,
+  "native_fixture_tests_passed": 5,
+  "windows_capture_plugin_built": true,
+  "live_motion_correlation": false,
+  "source_sha256": {
+    "native/snow_host/snow_update_trace.c": "7dc9c44678bd6bec02c311fbd1515f953e0c9385c510eb21e1a593b0693061da",
+    "native/snow_host/snow_update_trace.h": "242cc9d585379aba83cd536ab988eaf10ff68702fb1a2630d8620201742c9d96",
+    "native/snow_host/snow_update_probe.c": "22e139bdb33f5ccac0c4048f1eb6f6cbf81ae7cea9ef2fe62dd86adc4030fc1e",
+    "native/snow_host/snow_update_probe.h": "b960780fb59dab9ff39c2e1481f205d88b511c6ea7ffe8a32e3be5285708ed04",
+    "native/snow_host/snow_motion_observation.c": "4de61ffceb615426afbfa644b2edcfc1810f2c8073d30277390fc6c574105c0f",
+    "native/snow_host/examples/update_capture.c": "1a044dc204e5bd957eb040873bc82a8b66860ddec9ea2988fa2d9ac24b9a7b4a",
+    "tests/fixtures/snow_update_trace_fixture.c": "246b548e69be4a9d88dff020644eb9364f7a4c1e70cba03c7f4cb0966026f150",
+    "tests/fixtures/snow_update_probe_fixture.c": "74b91435c7e48a157203b2342360064364ca6f86c905b75472effcf33c0dc04c"
+  }
+}

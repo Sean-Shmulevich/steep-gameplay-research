@@ -931,7 +931,7 @@ Build from the repository root, with artifacts outside the findings tree:
 
 ```sh
 mkdir -p /tmp/snow-update-probe
-x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror -shared native/snow_host/snow_update_probe.c native/snow_host/snow_update_trace.c native/snow_host/snow_update_snapshot.c -o /tmp/snow-update-probe/snow_update_probe.dll
+x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror -shared native/snow_host/snow_update_probe.c native/snow_host/snow_update_trace.c native/snow_host/snow_update_snapshot.c native/snow_host/snow_entry_attribution.c native/snow_host/snow_batch_frame.c native/snow_host/snow_entry_thunk.S native/snow_host/snow_motion_observation.c -o /tmp/snow-update-probe/snow_update_probe.dll
 x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror -I native/snow_host tests/fixtures/snow_update_probe_fixture.c -o /tmp/snow-update-probe/fixture.exe
 ```
 

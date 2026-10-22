@@ -1,7 +1,7 @@
 #ifndef SNOW_UPDATE_PROBE_H
 #define SNOW_UPDATE_PROBE_H
 #include "snow_update_snapshot.h"
-/* Experimental ABI v4: caller must use this exact header/build. Configure alone installs no hook.
+/* Experimental ABI v5: caller must use this exact header/build. Configure alone installs no hook.
  * Configure once BEFORE publishing Dispatch; configuration is never retried.
  * Caller verifies executable identity, original target/signature and counter owners.
  * DLL pins itself. Close stops capture, not forwarding; never free supplied objects
@@ -16,6 +16,9 @@ SNOW_PROBE_API int SnowProbe_Configure(const SnowUpdateBinding *, SnowUpdateOrig
 /* Profile is immutable after configure. Caller verifies its build-specific route. */
 SNOW_PROBE_API int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *, SnowUpdateOriginal,
                                                const SnowEntryProfile *);
+/* Opt-in motion channel. NULL profile disables attribution, not motion. */
+SNOW_PROBE_API int SnowProbe_ConfigureObserved(const SnowUpdateBinding *, SnowUpdateOriginal,
+                                             const SnowEntryProfile *, int observe_motion);
 SNOW_PROBE_API void SnowProbe_Dispatch(void *, float, float);
 SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
 /* Diagnostic lifetime counters include late forwarding after Close. Each field

@@ -897,3 +897,41 @@ record, keeping motion-observation validity separate from job/substep validity.
 Only after integrated fixtures should a bounded live capture correlate these
 values against direct substep ordinals. The existing capture ABI and live probe
 were not changed in this pass.
+
+## Optional motion channel in the substep recorder
+
+The authored recorder now supports `snow_trace_call_observed`: an optional
+bounded motion callback before and after the original actor update, independently
+of job attribution, direct frame attribution and body snapshots. Each side has
+its own validity flag. A rejected callback clears only that side's motion output;
+it cannot suppress the original call or discard valid job/frame evidence.
+Closed and full recorders forward without invoking either optional observer.
+Callbacks must return normally; this is not exception containment.
+
+The native probe exposes `SnowProbe_ConfigureObserved` and uses the bounded
+reader above. Configuration is immutable before publishing dispatch. Existing
+configure functions leave motion capture disabled. The record layout is now
+experimental ABI v5: rebuild consumers and DLL together; do not mix older
+headers or DLLs. The capture plugin enables it with `[capture] observe_motion=1`.
+The experiment launcher exposes the same option as `--observe-motion` for the
+host `update-capture` plan. It remains off by default.
+
+Local JSONL includes attempted/before-valid/after-valid flags, ownership and
+mode observations, counters, all three latch bytes, and input/baseline words as
+unsigned raw float32 bits. Invalid motion objects are omitted. These files
+contain process pointers and stay private. At most 36 extra exact memory reads
+are attempted per captured update, up to 18 on each side. Timing includes this
+observer work and must not be interpreted as uninstrumented callback cost.
+
+Validation uses authored native and Windows/Wine fixtures, not game execution.
+The trace fixture tests all nine pairs of callback status 0/1/2, preserves valid
+job/frame results on motion rejection, preserves valid motion when attribution
+fails, and checks disabled/full/closed behavior and before/after order. The
+Windows fixture opts into the real reader on synthetic objects and invalidates
+the actor backlink during original dispatch to check after-only rejection.
+
+Live correlation remains pending. A matching before/after record cannot identify
+an ingestion call, prove atomicity, resolve address reuse, or establish the
+producer's generation. The next experiment should compare these observations
+within directly attributed request/substep sequences, retaining invalid samples
+and measuring observer overhead rather than inferring missing events.

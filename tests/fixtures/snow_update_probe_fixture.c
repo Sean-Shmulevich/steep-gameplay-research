@@ -4,14 +4,14 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-static unsigned char actor[0x1200],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[0x1000],physics_manager[64];
+static __attribute__((aligned(16))) unsigned char actor[0x1800],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[0x1000],physics_manager[64];
 static __attribute__((section(".tracevt"),aligned(4096))) unsigned char table[4096]={1};
 static uint32_t request=7,substep=2,calls;
 static unsigned char job[0x1c00],timing[0x1400],callable[16],records[80],job_table[16],callable_table[16];
 static uint64_t range_base;
 extern void fixture_entry_call(void *,float,float,const SnowEntryRegisters *,SnowUpdateOriginal);
 extern unsigned char fixture_entry_return[];
-static int other, change_identity;
+static int other, change_identity, motion_case;
 static void q(void *dst,void *p) { uint64_t v=(uintptr_t)p; memcpy(dst,&v,8); }
 static void f(void *dst,float v) { memcpy(dst,&v,4); }
 static void original(void *self,float elapsed,float derivative) {
@@ -20,7 +20,7 @@ static void original(void *self,float elapsed,float derivative) {
     /* Authored synthetic effect; not an invocation of recovered game code. */
     uint32_t counter; memcpy(&counter,runtime+0xa80,4); counter--; memcpy(runtime+0xa80,&counter,4);
     float v; memcpy(&v,main_body+0x1a0,4); f(main_body+0x1a0,v+2);
-    if(change_identity) q(actor+0x168,NULL);
+    if(change_identity) { q(actor+0x168,NULL); if(motion_case) q(actor+0x1050,NULL); }
 }
 static void competitor(void *a,float b,float c) { (void)a; (void)b; (void)c; }
 static void set_slot(void *value) {
@@ -36,10 +36,13 @@ static void readonly_table(void) {
 }
 int main(int argc,char **argv) {
     assert(argc==2 || argc==3); HMODULE dll=LoadLibraryA(argv[1]); assert(dll);
+    motion_case=argc==3 && !strcmp(argv[2],"motion");
     int bad_frame=argc==3 && !strcmp(argv[2],"invalid-frame");
-    int valid_attribution=bad_frame || (argc==3 && !strcmp(argv[2],"valid-attribution"));
+    int valid_attribution=motion_case || bad_frame || (argc==3 && !strcmp(argv[2],"valid-attribution"));
     int attributed=valid_attribution || (argc==3 && !strcmp(argv[2],"attributed"));
     int conflict=argc==3 && !attributed;
+    int (*configure_observed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *,int)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureObserved");
+    assert(configure_observed);
     int (*configure_attributed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureAttributed");
     int (*configure)(const SnowUpdateBinding *,SnowUpdateOriginal)=(void *)GetProcAddress(dll,"SnowProbe_Configure");
     void (*dispatch)(void *,float,float)=(void *)GetProcAddress(dll,"SnowProbe_Dispatch");
@@ -72,7 +75,7 @@ int main(int argc,char **argv) {
         uint32_t count=5;memcpy(job+0x1a4,&count,4);q(callable,callable_table);
         range_base=(uintptr_t)(records+32);q(records+56,actor);
     }
-    assert(attributed ? configure_attributed(&b,original,&profile) : configure(&b,original)); assert(!configure(&b,original)); assert(!get(0,&r));
+    assert(motion_case ? configure_observed(&b,original,&profile,1) : (attributed ? configure_attributed(&b,original,&profile) : configure(&b,original))); assert(!configure(&b,original)); assert(!get(0,&r));
     assert(counts(&c) && c.selected_calls==0 && c.other_calls==0);
     assert(!counts(NULL));
     if(conflict) {
@@ -92,7 +95,17 @@ int main(int argc,char **argv) {
     assert(counts(&c) && c.selected_calls==2 && c.other_calls==1);
     assert(close_probe(&used,&dropped)); assert(used==2 && dropped==0 && calls==3);
     assert(get(1,&r) && r.before.valid==15 && r.after.valid==0);
+    if(motion_case) {
+        SnowMotionObservation blank={0};
+        assert(r.motion_attempted && r.motion_before_valid && !r.motion_after_valid);
+        assert(!memcmp(&r.motion_after,&blank,sizeof blank));
+    }
     assert(get(0,&r) && !get(2,&r));
+    assert(r.motion_attempted==(unsigned)motion_case);
+    if(motion_case) {
+        assert(r.motion_before_valid && r.motion_after_valid);
+        assert(r.motion_before.motion==(uintptr_t)(actor+0x1010));
+    }
     assert(r.attribution_attempted==(unsigned)attributed && r.attribution_valid==(unsigned)valid_attribution);
     if(valid_attribution) {
         assert(r.frame_valid==(unsigned)!bad_frame);

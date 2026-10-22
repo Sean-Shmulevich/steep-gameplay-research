@@ -9,7 +9,7 @@ static SnowUpdateRecord records[CAPACITY];
 static SnowUpdateBinding binding;
 static LONG ready;
 static SnowEntryProfile entry_profile;
-static int attributed;
+static int attributed, motion_enabled;
 static volatile LONG64 selected_calls,other_calls;
 static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
     (void)ctx; SIZE_T got=0;
@@ -18,14 +18,18 @@ static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
 static void snapshot(void *actor,SnowUpdateSnapshot *out) {
     (void)actor; snow_update_snapshot(read_memory,NULL,&binding,out);
 }
+static int motion_snapshot(void *context,void *actor,SnowMotionObservation *out) {
+    (void)context;
+    return snow_motion_observe(read_memory,NULL,(uint64_t)(uintptr_t)actor,binding.actor_table,out);
+}
 static uint64_t ticks(void) { LARGE_INTEGER q; QueryPerformanceCounter(&q); return (uint64_t)q.QuadPart; }
 static uint64_t thread_id(void) { return GetCurrentThreadId(); }
-static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,const SnowEntryProfile *profile) {
+static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,const SnowEntryProfile *profile,int motion) {
     HMODULE module; SnowUpdateSnapshot check;
     if(!b || !original) return 0;
     if(InterlockedCompareExchange(&ready,1,0)!=0) return 0;
     binding=*b;
-    attributed=profile!=NULL;
+    attributed=profile!=NULL; motion_enabled=motion;
     if(profile) entry_profile=*profile;
     if(!snow_update_snapshot(read_memory,NULL,&binding,&check) ||
        !GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,
@@ -36,13 +40,20 @@ static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,cons
     InterlockedExchange(&ready,2); return 1;
 }
 int SnowProbe_Configure(const SnowUpdateBinding *b,SnowUpdateOriginal original) {
-    return configure(b,original,NULL);
+    return configure(b,original,NULL,0);
 }
 int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *b,SnowUpdateOriginal original,
                                   const SnowEntryProfile *profile) {
     if(!profile || !b || profile->actor_table!=b->actor_table || !profile->job_table ||
        !profile->callable_table || !profile->return_address) return 0;
-    return configure(b,original,profile);
+    return configure(b,original,profile,0);
+}
+int SnowProbe_ConfigureObserved(const SnowUpdateBinding *b,SnowUpdateOriginal original,
+                                const SnowEntryProfile *profile,int motion) {
+    if(motion!=0 && motion!=1) return 0;
+    if(profile && (!b || profile->actor_table!=b->actor_table || !profile->job_table ||
+                   !profile->callable_table || !profile->return_address)) return 0;
+    return configure(b,original,profile,motion);
 }
 typedef struct { const SnowEntryRegisters *entry; uint64_t actor; uint32_t elapsed,consumed; } EntryContext;
 static int attribute_entry(void *context,SnowEntryAttribution *out,SnowBatchFrame *frame) {
@@ -69,7 +80,8 @@ void SnowProbe_EntryDispatch(void *actor,float elapsed,float derivative,const Sn
     InterlockedIncrement64(&selected_calls);
     EntryContext context={entry,(uint64_t)(uintptr_t)actor,0,0};
     memcpy(&context.elapsed,&elapsed,4);memcpy(&context.consumed,&derivative,4);
-    snow_trace_call_attributed(&trace,actor,elapsed,derivative,attribute_entry,&context);
+    snow_trace_call_observed(&trace,actor,elapsed,derivative,attribute_entry,&context,
+                             motion_enabled ? motion_snapshot : NULL,NULL);
 }
 static void *dispatch_target(void) {
     return attributed ? (void *)(uintptr_t)&SnowProbe_EntryThunk : (void *)(uintptr_t)&SnowProbe_Dispatch;
@@ -82,7 +94,8 @@ void SnowProbe_Dispatch(void *actor,float elapsed,float derivative) {
         trace.original(actor,elapsed,derivative); return;
     }
     InterlockedIncrement64(&selected_calls);
-    snow_trace_call(&trace,actor,elapsed,derivative);
+    snow_trace_call_observed(&trace,actor,elapsed,derivative,NULL,NULL,
+                             motion_enabled ? motion_snapshot : NULL,NULL);
 }
 int SnowProbe_ReadDispatchCounts(SnowProbeDispatchCounts *out) {
     if(!out) return 0;

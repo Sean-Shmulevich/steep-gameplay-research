@@ -15,7 +15,7 @@
 static const SnowHostApiV1 *host;
 static volatile LONG phase;
 static unsigned milliseconds;
-static int attribute_jobs;
+static int attribute_jobs, observe_motion;
 static char output[MAX_PATH];
 static void number(FILE *f,float v) { if(isfinite(v)) fprintf(f,"%.9g",v); else fputs("null",f); }
 static void floats(FILE *f,const float *v,unsigned n) {
@@ -32,6 +32,24 @@ static void sample(FILE *f,const SnowUpdateSnapshot *s) {
     fputs(",\"main_angular\":",f); floats(f,s->angular[0],3);
     fputs(",\"rider_angular\":",f); floats(f,s->angular[1],3);
     fputs(",\"inverse_mass\":",f); floats(f,s->inverse_mass,2); fputc('}',f);
+}
+static void words(FILE *f,const uint32_t *v,unsigned n) {
+    fputc('[',f);for(unsigned i=0;i<n;i++) { if(i) fputc(',',f);fprintf(f,"%u",v[i]); }fputc(']',f);
+}
+static void motion_sample(FILE *f,const SnowMotionObservation *m) {
+    fputc('{',f);
+#define U(name) fprintf(f,"\"" #name "\":%u,",m->name)
+#define P(name) fprintf(f,"\"" #name "\":\"%llx\",",(unsigned long long)m->name)
+    P(motion);P(current);P(pending);P(state_current);P(state_pending);P(child_current);P(child_pending);
+    U(current_mode);U(pending_mode);U(lock_word);U(lock_owner);U(lock_depth);U(query_depth);
+    U(state_mode);U(state_pending_mode);U(child_mode);U(child_pending_mode);
+    U(state_observed);U(child_observed);U(enabled);U(immediate);U(pending_service);
+#undef U
+#undef P
+    fprintf(f,"\"latches\":[%u,%u,%u],\"ingested_bits\":",m->latches[0],m->latches[1],m->latches[2]);
+    words(f,m->ingested,8);fputs(",\"current_input_bits\":",f);words(f,m->current_inputs,8);
+    fputs(",\"nonzero_counts\":",f);words(f,m->nonzero_counts,2);
+    fputs(",\"baseline_bits\":",f);words(f,m->baselines,12);fputc('}',f);
 }
 static DWORD WINAPI capture(LPVOID ignored) {
     (void)ignored;
@@ -61,6 +79,10 @@ static DWORD WINAPI capture(LPVOID ignored) {
             fprintf(f,",\"frame_valid\":%u",r.frame_valid);
             if(r.frame_valid) fprintf(f,",\"substep_ordinal\":%u,\"selected_count\":%u,\"outer_completion_counter\":%llu",
                 r.frame.ordinal,r.frame.selected_count,(unsigned long long)r.frame.outer_completion_counter);
+            fprintf(f,",\"motion_attempted\":%u,\"motion_before_valid\":%u,\"motion_after_valid\":%u",
+                    r.motion_attempted,r.motion_before_valid,r.motion_after_valid);
+            if(r.motion_before_valid) { fputs(",\"motion_before\":",f);motion_sample(f,&r.motion_before); }
+            if(r.motion_after_valid) { fputs(",\"motion_after\":",f);motion_sample(f,&r.motion_after); }
             fputs(",\"before\":",f); sample(f,&r.before); fputs(",\"after\":",f); sample(f,&r.after); fputs("}\n",f);
         }
         fclose(f);
@@ -83,8 +105,7 @@ static int paused(void *user) {
         !ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)(profile.callable_table+0x10),&dispatcher,8,&got) || got!=8 || dispatcher!=0x1413cd590ull)) {
         host->log(host->context,"entry attribution route mismatch"); InterlockedExchange(&phase,3); return 0;
     }
-    int configured=attribute_jobs ? SnowProbe_ConfigureAttributed(&binding,original,&profile) :
-                                   SnowProbe_Configure(&binding,original);
+    int configured=SnowProbe_ConfigureObserved(&binding,original,attribute_jobs ? &profile : NULL,observe_motion);
     if(!configured) {
         host->log(host->context,"capture configuration refused"); InterlockedExchange(&phase,3); return 0;
     }
@@ -105,9 +126,10 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     if(seconds<1 || seconds>5 || strlen(api->config_path)+12>=sizeof output) return 1;
     snprintf(output,sizeof output,"%s.trace.jsonl",api->config_path);
     attribute_jobs=GetPrivateProfileIntA("capture","attribute_jobs",0,api->config_path)==1;
+    observe_motion=GetPrivateProfileIntA("capture","observe_motion",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-4";
+    plugin->name="update_capture"; plugin->version="experimental-5";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }
