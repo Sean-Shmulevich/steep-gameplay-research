@@ -1,0 +1,44 @@
+{
+  "evidence": "Live bounded child enumeration of selected action 0x76",
+  "passed": true,
+  "action_id": 118,
+  "parent_lookup_unchanged": true,
+  "composite_callback_bytes_match": true,
+  "child_callback_prefixes_match": [
+    true,
+    true
+  ],
+  "parent_status": 0,
+  "parent_payload_all_zero": true,
+  "children": [
+    {
+      "index": 0,
+      "table_rva": "0x1e6b650",
+      "callback_rva": "0x4b21d0",
+      "status": 0,
+      "mode": 0,
+      "payload_all_zero": true
+    },
+    {
+      "index": 1,
+      "table_rva": "0x1e6b740",
+      "callback_rva": "0x4b2680",
+      "status": 0,
+      "mode": null,
+      "payload_all_zero": true
+    }
+  ],
+  "requests": 96,
+  "read_seconds": 1.3702534550684504,
+  "stable_20_seconds": true,
+  "settings_restored": true,
+  "bottle_stopped": true,
+  "original_dll_verified": true,
+  "atomic_snapshot": false,
+  "limits": [
+    "Idle observation only",
+    "No selected child execution observed",
+    "Device mapping and writer timing remain unproved",
+    "Child callback prefix checks cover 32 bytes each"
+  ]
+}

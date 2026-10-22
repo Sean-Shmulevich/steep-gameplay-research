@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live composite child enumeration passed. Action 0x76 has two observed children:
+a vector-source callback with mode-zero early acceptance, then the reconstructed
+two-axis callback as final fallback. Both were inactive; all sampled bytes were
+zero. Parent lookup and child receipts matched, callback checks passed, and the
+game/cleanup remained healthy. No device mapping or execution timing claim.
+Next: source-helper decoding and live source/processor configuration. See
+[live children](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#live-composite-has-vector-source-and-directional-children).
+
 Configured composite-action selection is now executable and matches 1,393
 original-instruction cases, including complete parent bytes and exact child
 call order. Rejection retains old payload while clearing status; final fallback

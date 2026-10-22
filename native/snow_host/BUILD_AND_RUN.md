@@ -227,3 +227,10 @@ collector uses process identity and selected instruction signatures; it makes
 no atomicity claim. Raw reads stay in the private session directory. The first
 live run passed and identified a composite action; see the
 [action identity receipt](action_identity_live_observation.json).
+
+Use `--plan composite-observe` with the same command to enumerate up to sixteen
+children of the selected composite action. It checks the parent lookup again
+after enumeration and verifies callback signatures. It does not invoke child
+callbacks or determine the producer that last executed. The first live run
+observed a vector-source child followed by a two-axis fallback; see the
+[child observation receipt](composite_children_live_observation.json).

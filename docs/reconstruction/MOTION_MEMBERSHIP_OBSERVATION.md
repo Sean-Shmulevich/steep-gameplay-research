@@ -1504,3 +1504,67 @@ mutation of parent/configuration during a child call, and ordering relative to
 reset or motion ingestion are not reconstructed by these fixtures. The caller
 must supply those dependencies explicitly. Next is bounded live enumeration
 of the selected composite's child identities and mode records.
+
+### Composite child observation
+
+`engine/composite_action_observation.py` enumerates a verified composite
+parent's child pointers, virtual tables, third callbacks, status bytes and
+52-byte sample payloads. Non-final children include their configured selection
+mode; the final child has no mode read, matching callback control flow. It
+checks the supplied parent table and callback identities before following the
+composite layout. Null configuration, unsupported type, invalid reads, size
+limits and changing receipts have distinct outcomes.
+
+Two complete read receipts must match. Enumeration is capped at sixteen
+children, 136 exact reads and 5600 bytes across both passes. These are fixed
+structural bounds, tested with the maximum child count. It invokes no callback
+and makes no selection claim from sampled status values. Enumeration includes
+children the actual callback may skip. Neither equal receipts nor a matching
+parent identity pins object lifetime or rules out ABA reuse.
+
+The private `composite-observe` launch plan brackets child enumeration with two
+complete rooted action lookups and requires their observations to match. It
+also checks the composite callback's analyzed instruction bytes and compares
+each observed child's first 32 callback bytes with the analyzed image. These
+checks support local identity; they are not full child-code equivalence or
+proof that a child executed in the observed frame. Raw records remain private.
+
+Public fixtures cover final-child mode omission, all read failures, changed
+mode data, null children, unsupported parent callbacks and count limits.
+
+### Live composite has vector-source and directional children
+
+The first `composite-observe` run passed in gameplay. Action 0x76 had exactly
+two children. Both complete child receipts matched and a fresh rooted action
+lookup after enumeration equaled the one before it. The composite callback's
+configured and null-configuration instruction range matched the analyzed image;
+each child's first 32 callback bytes also matched. The capture made 96 read
+requests in about 1.37 seconds. Ordinary simulation continued for 20 seconds,
+then settings restoration, bottle shutdown and original-DLL verification passed.
+See the [live receipt](../../native/snow_host/composite_children_live_observation.json).
+
+| Child | Table RVA | Callback RVA | Selection | Static behavior |
+| --- | --- | --- | --- | --- |
+| 0 | 0x1e6b650 | 0x4b21d0 | Mode 0: accept immediately when status is nonzero | Obtains a vector through helper 0x4b8ca0, applies configured lane selection, then processing and sample publication |
+| 1 | 0x1e6b740 | 0x4b2680 | Final child: copy regardless of status if reached | Previously reconstructed two-axis directional combination and processing |
+
+Both child statuses and all inspected sample bytes were zero. This supports
+the inactive configuration's identities, not an observed execution sequence or
+proof of which child last published the parent. The first callback's vector
+source has not yet been identified as a particular controller, device or axis.
+Likewise the directional callback's source queries need live configuration to
+map them to physical keys. The selector can skip the directional child entirely
+when the vector-source child is active.
+
+Static inspection of the first callback shows that its configuration+0x30
+unsigned value gates an axis-selection branch: for values at most one,
+configuration+0x34 equal to one clears Y, and equal to two moves Y into X and
+clears Y. Other values retain the source vector. It then runs the same style of
+optional processor and magnitude/direction publication as the directional
+family. This is a new static lead, not yet an original-instruction-validated
+reconstruction of the source helper or processor binding.
+
+Next: decode the vector source helper, recover the two children's live source
+configuration and processor identities, and then capture their publication
+relative to motion ingestion. The relevant callbacks and child ownership are
+now concrete; device mapping and scheduler ordering remain open.
