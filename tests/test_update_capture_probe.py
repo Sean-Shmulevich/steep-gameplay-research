@@ -30,6 +30,15 @@ class UpdateCaptureControllerTests(unittest.TestCase):
             self.assertTrue(result['ok']); self.assertEqual(result['valid_pairs'],1)
             self.assertEqual(result['request_count'],1)
             self.assertEqual(client.call.call_args_list[-1].args,('simulation.resume',))
+    def test_required_attribution_missing_is_failure(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d); client=self.fixture(root)
+            (root/'plugins/update_capture.ini').write_text('[capture]\nattribute_jobs=1\n')
+            result=capture_update(client,root)
+            self.assertFalse(result['ok'])
+            self.assertTrue(result['attribution_required'])
+            self.assertEqual(result['attributed_records'],0)
+
     def test_restoration_failure_is_failure(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d); self.assertFalse(capture_update(self.fixture(root,restored=0),root)['ok'])

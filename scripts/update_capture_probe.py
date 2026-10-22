@@ -1,4 +1,5 @@
 """Bounded observation-plan controller. No velocity/pose/impulse commands."""
+import configparser
 import json
 from pathlib import Path
 import time
@@ -10,7 +11,10 @@ def capture_update(client, build, *, timeout=12):
     if trace.exists():
         raise RuntimeError('Refusing a pre-existing capture export; use a fresh session directory')
     start=len(log.read_bytes()) if log.exists() else 0
-    result={'ok':False}
+    config=configparser.ConfigParser()
+    config.read(build/'plugins/update_capture.ini')
+    require_attribution=config.getboolean('capture','attribute_jobs',fallback=False)
+    result={'ok':False,'attribution_required':require_attribution}
     status=client.call('simulation.status')
     if status.get('host_paused') or status.get('engine', {}).get('held'):
         raise RuntimeError('Already held; refusing to take over an existing pause')
@@ -36,10 +40,12 @@ def capture_update(client, build, *, timeout=12):
         summary=rows[0]; records=rows[1:]
         result['summary']=summary
         result['valid_pairs']=sum(bool(r['before']['valid']&1 and r['after']['valid']&1) for r in records)
+        result['attributed_records']=sum(r.get('attribution_attempted')==1 and r.get('attribution_valid')==1 for r in records)
         result['gate_patterns']=sorted({tuple(r['before']['gates']) for r in records})
         result['request_count']=len({r['before']['request'] for r in records if r['before']['valid']&4})
         result['ok']=(summary['installed']==1 and summary['restored']==1 and summary['drained']==1
-                      and summary['dropped']==0 and len(records)>0 and result['valid_pairs']>0)
+                      and summary['dropped']==0 and len(records)>0 and result['valid_pairs']>0
+                      and (not require_attribution or result['attributed_records']>0))
         if not result['ok']: result['error']='Capture installation/restoration/drain/data gate failed'
     finally:
         if not resumed:

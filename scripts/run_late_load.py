@@ -103,7 +103,10 @@ def main():
     parser.add_argument('--load-at', choices=['gameplay', 'startup'], default='gameplay', help='Load host automatically during process startup or after gameplay is verified')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
     parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
+    parser.add_argument('--attribute-jobs', action='store_true', help='Opt-in job attribution for the update-capture plan')
     args = parser.parse_args()
+    if args.attribute_jobs and (args.experiment != 'host' or args.plan != 'update-capture'):
+        parser.error('--attribute-jobs requires --experiment host --plan update-capture')
     if not 1 <= args.steps <= 60:
         raise RuntimeError('--steps must be 1..60')
     if args.load_at == 'startup' and args.experiment != 'host':
@@ -164,7 +167,7 @@ def main():
             commands.append([cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host),
                 '-o', str(build/'plugins/update_capture.dll'),
                 *[str(host/name) for name in ('examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_entry_thunk.S')]])
-            (build/'plugins/update_capture.ini').write_text('[capture]\nenabled=1\nseconds=2\n')
+            (build/'plugins/update_capture.ini').write_text('[capture]\nenabled=1\nseconds=2\nattribute_jobs='+str(int(args.attribute_jobs))+'\n')
         if args.load_at == 'startup':
             commands.append([cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'startup_launcher.exe'), str(host/'startup_launcher.c'), '-luser32'])
         with (out / 'build.log').open('w') as log:

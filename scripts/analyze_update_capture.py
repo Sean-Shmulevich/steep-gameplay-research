@@ -117,6 +117,39 @@ def interval_order(records):
             'input_ingestion_order_proved': False}
 
 
+def job_attribution(records):
+    counts = Counter()
+    jobs = set()
+    sizes = Counter()
+    for r in records:
+        if 'attribution_attempted' not in r and 'attribution_valid' not in r:
+            counts['unavailable_records'] += 1
+            continue
+        attempted, valid = r.get('attribution_attempted'), r.get('attribution_valid')
+        if any(type(x) is not int or x not in (0,1) for x in (attempted,valid)) or valid > attempted:
+            counts['malformed_records'] += 1
+            continue
+        if not attempted:
+            counts['unattempted_records'] += 1
+        elif not valid:
+            counts['rejected_records'] += 1
+        else:
+            job, index, count = r.get('job'), r.get('record_index'), r.get('initial_count')
+            try:
+                address = int(job,16) if isinstance(job,str) else 0
+            except ValueError:
+                address = 0
+            if (not 0 < address < 1 << 64 or type(index) is not int or
+                    type(count) is not int or not 0 <= index < count <= 0x3fff):
+                counts['malformed_records'] += 1
+                continue
+            jobs.add(address); sizes[count] += 1; counts['valid_records'] += 1
+    return {**{k:counts[k] for k in ('valid_records','rejected_records','unattempted_records',
+                                    'unavailable_records','malformed_records')},
+            'unique_job_addresses':len(jobs), 'initial_record_count_histogram':dict(sorted(sizes.items())),
+            'batch_generation_established':False}
+
+
 def analyze(rows):
     if not rows or rows[0].get('kind') != 'summary':
         raise ValueError('Missing capture summary')
@@ -161,6 +194,7 @@ def analyze(rows):
         exact += int(match)
         mismatched += int(not match)
     return {
+        'job_attribution': job_attribution(records),
         'wrapper_intervals': interval_order(records),
         'preconsume_counter': counter_changes(records),
         'preconsume_countdown': countdown_changes(records),

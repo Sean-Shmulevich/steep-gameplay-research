@@ -2,6 +2,11 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live actor-to-job attribution passed: 221/221 calls, zero drops, restoration/drain
+and session cleanup passed. Ten job addresses; all five two-call request groups
+reused one job address within their request. A job pointer plus request is still
+not a substep identity. See [live attribution](../docs/reconstruction/SNOW_BATCH_DISPATCH.md#first-live-actor-to-job-attribution).
+
 Successful integrated attribution: an authored Win64 caller through the installed
 slot now passes the real thunk, guarded decoder and recorder in Wine, identifying
 synthetic record index 3/5 correctly. A reproducible four-mode fixture runner is

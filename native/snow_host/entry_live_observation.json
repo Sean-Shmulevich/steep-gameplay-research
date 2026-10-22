@@ -1,0 +1,77 @@
+{
+  "job_attribution": {
+    "valid_records": 221,
+    "rejected_records": 0,
+    "unattempted_records": 0,
+    "unavailable_records": 0,
+    "malformed_records": 0,
+    "unique_job_addresses": 10,
+    "initial_record_count_histogram": {
+      "1": 221
+    },
+    "batch_generation_established": false
+  },
+  "wrapper_intervals": {
+    "available_intervals": 221,
+    "unavailable_intervals": 0,
+    "invalid_intervals": 0,
+    "zero_duration_intervals": 0,
+    "same_actor_overlapping_pairs": 0,
+    "nonoverlapping_adjacent_pairs": 220,
+    "thread_changes_between_nonoverlapping_neighbors": 182,
+    "reservation_order_entry_reversals": 0,
+    "scheduler_exclusion_proved": false,
+    "input_ingestion_order_proved": false
+  },
+  "preconsume_counter": {
+    "available_pairs": 221,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "decrement_by_one_pairs": 221,
+    "unchanged_pairs": 0,
+    "unsigned_delta_histogram": {
+      "4294967295": 221
+    },
+    "consumer_execution_proved": false
+  },
+  "preconsume_countdown": {
+    "available_pairs": 221,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "elapsed_subtraction_matches": 221,
+    "consumed_subtraction_matches": 211,
+    "distinct_clock_pairs": 10,
+    "distinct_elapsed_matches": 10,
+    "distinct_consumed_matches": 0
+  },
+  "records": 221,
+  "rejected_timing_records": 0,
+  "observed_request_groups": 216,
+  "records_per_group": {
+    "1": 211,
+    "2": 5
+  },
+  "float32_subdivision_matching_groups": 216,
+  "nonmatching_or_partial_groups": 0,
+  "loss_free_export": true,
+  "slot_lifecycle_passed": true,
+  "direct_native_substep_index_used": false,
+  "limits": [
+    "Groups at capture edges or gaps can be partial.",
+    "Matching duration arithmetic does not recover smoothing history or frequency selection.",
+    "Record order is reservation order; concurrent calls can complicate grouping.",
+    "No pointer or raw body payload is included in this summary."
+  ],
+  "evidence": "live original-game actor entry attribution",
+  "trace_sha256": "4f75fcfd8e58de9ab0570360bf9c40c679b229b2bb838a6d80d8d778366bee93",
+  "session": {
+    "passed": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_replaced": false
+  },
+  "additional_observation": {
+    "multiple_call_requests": 5,
+    "multiple_call_requests_reusing_same_job_address": 5
+  }
+}

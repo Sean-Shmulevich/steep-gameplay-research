@@ -311,3 +311,48 @@ The runner launches only its authored fixture executable and loads its authored
 probe DLL. It does not launch or install into the game. These checks do not test
 native game concurrency, exceptions, stack reuse across batch generations or
 full Windows exception unwinding.
+
+
+## First live actor-to-job attribution
+
+The [aggregate live receipt](../../native/snow_host/entry_live_observation.json)
+records 221 selected player calls during a two-second attributed capture. All
+221 passed guarded attribution; none were rejected, malformed or dropped.
+Installation, restoration and drain passed. The session completed its subsequent
+health observation, stopped the bottle, restored temporary launch settings and
+verified the original DLL without replacing it. Raw pointer-bearing JSONL and
+screenshots remain private.
+
+There were ten distinct job addresses. Every captured batch reported initial
+record count one. The calls formed 216 observed request groups: 211 single-call
+groups and five two-call groups. All groups matched float32 consumed/count timing.
+All five two-call groups reused the same job address within the request. Therefore
+job address plus outer request does not distinguish their two invocations. This
+is concrete evidence for keeping a separate batch invocation/substep identity.
+It is not proof that a native generation field exists.
+
+No captured player intervals overlapped; 182 of 220 neighboring calls changed
+worker thread. Every pre-consumption counter pair decremented once. All 221
+countdown pairs matched elapsed subtraction, including ten where elapsed and
+consumed differed. These markers corroborate the existing route without proving
+an exact pending-consumer entry or the timing of input publication.
+
+To request the same bounded observation in the configured research workspace:
+
+```sh
+python3 scripts/run_late_load.py --experiment host --load-at startup \
+  --plan update-capture --attribute-jobs
+```
+
+This launches the game, uses a five-minute watchdog, navigates recognized startup
+screens, captures for two seconds and restores. Leave controls alone during the
+automated sequence. The controller now refuses to call an attribution-requested
+capture successful when it has no valid attributed records. Aggregate analysis
+separates unavailable, unattempted, rejected, valid and malformed attribution;
+unique job addresses are explicitly not counted as batch generations.
+
+The next unresolved edge is batch invocation identity and its connection to input
+ingestion. The entry shim and actor/job/record link have now been exercised in
+the original process. That does not establish full scheduler reconstruction,
+universal no-overlap behavior, safe arbitrary-thread mutation or deterministic
+replay.

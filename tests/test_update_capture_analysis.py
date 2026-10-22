@@ -118,3 +118,30 @@ class WrapperIntervalTests(unittest.TestCase):
         self.assertEqual(result['invalid_intervals'], 1)
         self.assertEqual(result['unavailable_intervals'], 1)
         self.assertEqual(result['same_actor_overlapping_pairs'], 0)
+
+
+class JobAttributionTests(unittest.TestCase):
+    def test_reused_job_address_is_not_batch_generation(self):
+        data=rows()
+        for r in data[1:]:
+            r.update(attribution_attempted=1,attribution_valid=1,job='abcdef',record_index=2,initial_count=5)
+        result=a.analyze(data)['job_attribution']
+        self.assertEqual(result['valid_records'],3)
+        self.assertEqual(result['unique_job_addresses'],1)
+        self.assertEqual(result['initial_record_count_histogram'],{5:3})
+        self.assertFalse(result['batch_generation_established'])
+        self.assertNotIn('abcdef',str(result))
+
+    def test_rejected_unattempted_unavailable_distinct(self):
+        data=rows()
+        data[1].update(attribution_attempted=1,attribution_valid=0)
+        data[2].update(attribution_attempted=0,attribution_valid=0)
+        result=a.analyze(data)['job_attribution']
+        self.assertEqual([result[k] for k in ('rejected_records','unattempted_records','unavailable_records')],[1,1,1])
+
+    def test_malformed_valid_payload_not_accepted(self):
+        for patch in ({'job':'invalid'}, {'record_index':5}, {'attribution_attempted':0}, {'initial_count':True}):
+            data=rows(1)
+            data[1].update(attribution_attempted=1,attribution_valid=1,job='abcdef',record_index=2,initial_count=5)
+            data[1].update(patch)
+            self.assertEqual(a.analyze(data)['job_attribution']['malformed_records'],1)
