@@ -1,0 +1,35 @@
+{
+  "game_launched": false,
+  "synthetic_objects_only": true,
+  "cases": [
+    {
+      "mode": "normal",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "conflict",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "attributed",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "valid-attribution",
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "evidence": "authored Windows fixture executed under Wine; no game objects",
+  "source_sha256": {
+    "native/snow_host/snow_entry_thunk.S": "068149ecd447f24142697b93188254ffe42eae5ac53d110b6c6b0bc45a5a3036",
+    "native/snow_host/snow_entry_attribution.c": "5cf35b0b140fd27870574b4032f18acc2ac6c16b0d2dc183d0096f76e96570c1",
+    "native/snow_host/snow_update_probe.c": "0c245785f51a0c23b6cf524e22b81ff56dad1e9b24c562c8c2342ae496d158ea",
+    "tests/fixtures/snow_entry_caller.S": "5d8904af4679aebb4d959fa5a327a64dbdd5b6a8200be774892b5beb5d5ca1cb",
+    "tests/fixtures/snow_update_probe_fixture.c": "897525f8555964451e0b0f6e7aacdd42fb2be0a40dcd0ddc27deaeaa93e9cf41"
+  }
+}

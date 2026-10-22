@@ -7,6 +7,10 @@
 static unsigned char actor[0x1200],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[8];
 static __attribute__((section(".tracevt"),aligned(4096))) unsigned char table[4096]={1};
 static uint32_t request=7,substep=2,calls;
+static unsigned char job[0x210],callable[16],records[80],job_table[16],callable_table[16];
+static uint64_t range_base;
+extern void fixture_entry_call(void *,float,float,const SnowEntryRegisters *,SnowUpdateOriginal);
+extern unsigned char fixture_entry_return[];
 static int other, change_identity;
 static void q(void *dst,void *p) { uint64_t v=(uintptr_t)p; memcpy(dst,&v,8); }
 static void f(void *dst,float v) { memcpy(dst,&v,4); }
@@ -32,7 +36,8 @@ static void readonly_table(void) {
 }
 int main(int argc,char **argv) {
     assert(argc==2 || argc==3); HMODULE dll=LoadLibraryA(argv[1]); assert(dll);
-    int attributed=argc==3 && !strcmp(argv[2],"attributed");
+    int valid_attribution=argc==3 && !strcmp(argv[2],"valid-attribution");
+    int attributed=valid_attribution || (argc==3 && !strcmp(argv[2],"attributed"));
     int conflict=argc==3 && !attributed;
     int (*configure_attributed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureAttributed");
     int (*configure)(const SnowUpdateBinding *,SnowUpdateOriginal)=(void *)GetProcAddress(dll,"SnowProbe_Configure");
@@ -53,6 +58,14 @@ int main(int argc,char **argv) {
     SnowUpdateBinding b={(uintptr_t)actor,(uintptr_t)table,(uintptr_t)world,(uintptr_t)&request,(uintptr_t)&substep};
     SnowUpdateRecord r; size_t used=0,dropped=0;
     SnowEntryProfile profile={1,2,3,(uintptr_t)table}; /* intentionally wrong route */
+    SnowEntryRegisters entry={(uintptr_t)job,(uintptr_t)&range_base,1,0,0};
+    if(valid_attribution) {
+        profile.return_address=(uintptr_t)fixture_entry_return;
+        profile.job_table=(uintptr_t)job_table;profile.callable_table=(uintptr_t)callable_table;
+        q(job,job_table);q(job+0x198,records);q(job+0x1f8,callable);
+        uint32_t count=5;memcpy(job+0x1a4,&count,4);q(callable,callable_table);
+        range_base=(uintptr_t)(records+32);q(records+56,actor);
+    }
     assert(attributed ? configure_attributed(&b,original,&profile) : configure(&b,original)); assert(!configure(&b,original)); assert(!get(0,&r));
     assert(counts(&c) && c.selected_calls==0 && c.other_calls==0);
     assert(!counts(NULL));
@@ -63,7 +76,9 @@ int main(int argc,char **argv) {
     assert(install()==1); assert(!install()); readonly_table();
     SnowUpdateOriginal installed_target=read_slot();
     assert(attributed ? installed_target!=dispatch : installed_target==dispatch);
-    read_slot()(actor,.125f,.5f); read_slot()(&other,.125f,.5f);
+    if(valid_attribution) fixture_entry_call(actor,.125f,.5f,&entry,read_slot());
+    else read_slot()(actor,.125f,.5f);
+    read_slot()(&other,.125f,.5f);
     change_identity=1; dispatch(actor,.125f,.5f); change_identity=0; q(actor+0x168,runtime);
     set_slot((void *)competitor); assert(restore()==0); assert(read_slot()==competitor); readonly_table();
     set_slot((void *)installed_target); assert(restore()==1); assert(read_slot()==original); readonly_table();
@@ -72,7 +87,11 @@ int main(int argc,char **argv) {
     assert(close_probe(&used,&dropped)); assert(used==2 && dropped==0 && calls==3);
     assert(get(1,&r) && r.before.valid==15 && r.after.valid==0);
     assert(get(0,&r) && !get(2,&r));
-    assert(r.attribution_attempted==(unsigned)attributed && !r.attribution_valid);
+    assert(r.attribution_attempted==(unsigned)attributed && r.attribution_valid==(unsigned)valid_attribution);
+    if(valid_attribution) {
+        assert(r.attribution.job==(uintptr_t)job && r.attribution.record==(uintptr_t)(records+48));
+        assert(r.attribution.actor==(uintptr_t)actor && r.attribution.record_index==3 && r.attribution.initial_count==5);
+    }
     assert(r.before.valid==15 && r.after.valid==15 && r.thread!=0);
     assert(r.before.preconsume_counter==0 && r.after.preconsume_counter==-1);
     assert(r.before.linear[0][0]==10 && r.after.linear[0][0]==12);

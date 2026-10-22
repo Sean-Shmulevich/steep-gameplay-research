@@ -2,6 +2,11 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Successful integrated attribution: an authored Win64 caller through the installed
+slot now passes the real thunk, guarded decoder and recorder in Wine, identifying
+synthetic record index 3/5 correctly. A reproducible four-mode fixture runner is
+available. Original-game job attribution and batch generation remain open.
+
 Opt-in attributed probe: assembly entry, guarded decoder and recorder are wired
 through ConfigureAttributed; capture plugin flag `attribute_jobs=1` enables it.
 Windows builds and normal/conflict/rejected-attribution Wine fixtures passed.

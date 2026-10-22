@@ -280,3 +280,34 @@ synthetic objects, not a running game.
 Actual game attribution, successful integrated native attribution, and batch
 invocation generation remain separate validation gates. Do not treat a successful
 build or optional-mode installation as evidence that a game job was identified.
+
+
+## Integrated successful-attribution fixture
+
+An authored assembly caller now supplies job, claimed-range slot and local index
+through the recovered register convention. Its own return label supplies the
+expected route. Synthetic job, callable and record storage are built in the
+Windows fixture. Calling through the installed actor-table slot reaches the
+entry thunk, guarded decoder, recorder and original synthetic update.
+
+The Wine fixture confirms valid attribution to record index 3 in a five-record
+array, with the range beginning at index 2 and local index 1. It also exercises
+slot conflict refusal/restoration, unrelated-actor forwarding, closed capture,
+late calls and module pinning. All stored pointers describe authored fixture
+objects. This closes successful integrated attribution under Wine for the
+fixture, not game job identity or generation.
+
+The reproducible runner builds fresh sources and runs normal, conflict,
+invalid-attribution and valid-attribution modes:
+
+```sh
+python3 scripts/test_update_probe_fixture.py --wine /path/to/wine \
+  --prefix /path/to/existing-fixture-prefix --out /tmp/new-probe-fixture-output
+```
+
+Supply an existing dedicated fixture prefix. Outputs must be outside the repo in
+a new directory. Logs remain there; the terminal prints a bounded result summary.
+The runner launches only its authored fixture executable and loads its authored
+probe DLL. It does not launch or install into the game. These checks do not test
+native game concurrency, exceptions, stack reuse across batch generations or
+full Windows exception unwinding.
