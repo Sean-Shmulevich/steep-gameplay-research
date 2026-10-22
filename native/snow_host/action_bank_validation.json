@@ -1,0 +1,13 @@
+{
+  "evidence": "Original action-bank traversal with synthetic map lookup",
+  "cases": 98,
+  "passed": true,
+  "game_process": false,
+  "code_sha256": "fb9e678dd964ebb5a70afa78ff78004f084216614051e3b91d1ba9b40bcad966",
+  "limits": [
+    "Map lookup body and record lifetime not validated",
+    "Synthetic three groups of two records; empty groups covered by independent tests only",
+    "No publication or active player bank join",
+    "Stop flag semantic name is authored; control flow is observed"
+  ]
+}

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Action-bank selection reconstructed: three ordered groups, reverse traversal
+within each, first nonnull action wins, optional miss-stop aborts all remaining
+search. Original instructions matched 98 cases including null map values and
+hit-before-stop precedence; five independent tests passed. This explains how a
+fallback can suppress an older matching action, but does not identify the live
+bank, producer generation or publication writer. See
+[selection contract](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#action-bank-search-precedence).
+
 Ingestion prefix reconstructed and validated in 96 original-instruction cases.
 It performs four separate action reads, updates two counters, flips X bits and
 smooths both current vectors. Alternate selection affects only the first read.

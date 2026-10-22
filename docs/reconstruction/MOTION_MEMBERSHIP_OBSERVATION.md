@@ -1140,3 +1140,49 @@ returns the found record plus `0x20` or a fallback object, and releases the read
 count before the caller obtains its vector view. Full writer/publication and
 lifetime semantics remain open. Do not treat the returned address as a retained
 lock or proof of immutable contents.
+
+## Action-bank search precedence
+
+`engine/action_bank_lookup.py` now exposes the inspected local selection policy.
+The [validation receipt](../../native/snow_host/action_bank_validation.json)
+records 98 original-instruction cases with only the map-lookup body substituted.
+This is selection, not a new publication/freshness result.
+
+The action bank has three group headers at `+0x90`, `+0x9c`, and `+0xa8`, each
+12 bytes. Each header contains an array pointer and uint16 count at `+0x0a`.
+The lookup visits groups in that order and records from count minus one down to
+zero. For each record it obtains a map through `record+0x28 -> +0x08`, looks up
+the zero-extended uint32 action ID, and accepts a nonnull value from the returned
+map node. Both an absent node and a node holding null are misses.
+
+```python
+for group in groups_in_stored_order:
+    for record in reversed(group):
+        node = lookup(record.map, uint32(action_id))
+        if node is not None and node.value is not None:
+            return node.value
+        if record.optional_config is not None and record.optional_config.stop_byte != 0:
+            return None       # aborts ALL remaining records and groups
+return None
+```
+
+The optional config is `record+0x20`, with the stop byte at config `+0x2c`.
+A hit takes precedence over that byte. The role name `stop_on_miss` is authored;
+its runtime UI/context meaning remains unresolved. The containing manager
+converts a null result into its fallback action object, so a fallback can mean
+that a higher-priority miss suppressed otherwise available lower records. It
+must not automatically be interpreted as a physical key-up or a fresh zero.
+
+Validation used three groups with two records each, every hit location or no
+hit, every stop location or no stop, and both miss representations. It compared
+the returned value AND exact visitation order. Five independent tests also cover
+empty groups and the uint16 group-count contract. No live active-bank binding,
+map internals, lifetime, writer exclusion or publication generation is claimed.
+
+The manager reader-count guard surrounds selection but is released before
+returning the action object. The vector-view body then returns object `+0x40`.
+Therefore that guard alone is not a retained vector snapshot guarantee. The
+next useful join is the selected live bank/context plus the writer that updates
+the action object's vector, or a direct ingestion event that can distinguish the
+four action reads in one call. Search precedence should be retained in either
+instrumentation plan rather than sampling an arbitrary matching action record.
