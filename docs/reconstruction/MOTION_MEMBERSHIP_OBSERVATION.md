@@ -644,3 +644,55 @@ reads actions `0x74` and `0x75`; those observations are static leads, not a
 license to name this transition jump, landing or recovery. The next useful
 consumer to trace is the child's `+0x18` flag, while preserving the ingestion
 counter as a candidate observation channel.
+
+## Input-history flag reaches a later transition request
+
+The normal motion dispatcher `0x140565100`, already downstream of ingestion in
+`0x1405654c0`, selects the mode-4/leaf-0 route through its jump table. That route
+reads the concrete child's byte `+0x18` and passes it as the second argument to
+`0x1405265f0`. This closes the local consumer join for the entry-time input-history
+flag. It does not yet establish the final gameplay effect of the next request.
+
+The consumer follows this ordered logic, with exact float32 comparisons:
+
+```text
+predicate = actor.slot_0x428()
+value = motion.scalar_0x350
+threshold = profile.scalar_0x60
+if not predicate and threshold >= value:
+    fallback_prepare(motion)
+    motion.word_0x5e0 = 0
+    fallback_request(intermediate_state)
+    motion.byte_0x204 = 1
+elif value >= threshold:
+    motion.xyz_0x1d0 = (0, 0, 0)
+    actor.byte_0x1b77 = 1
+    actor.byte_0x1b76 = 1
+    motion.byte_0x47e = child.entry_input_flag
+    request_transition(motion, true)
+```
+
+The first predicate is a concrete virtual call, not a confirmed airborne or
+contact flag. Neither scalar's units are established here. Equality selects the
+fallback when the predicate is false and the second request when it is true.
+Unordered comparison on either scalar reaches neither request under the tested
+masked floating-point exception configuration. The input-history flag is copied
+only on the second route; it does not select between these immediate branches.
+
+Twenty original-instruction cases ran the real dispatch and consumer with a
+supplied actor predicate and substituted external request bodies. They covered
+both saved flag values, both predicate results, below/equal/above threshold,
+NaN value and NaN threshold. The second route cleared exactly the inspected
+three words, set both actor bytes and copied the flag; other routes preserved
+those fields. Calls occurred under motion lock/query depth one, and both depths
+returned to zero. See the
+[receipt](../../native/snow_host/motion_child_dispatch_validation.json) and
+`route_child_update` in the symbolic request module.
+
+The next request target is `0x14055d030`. It accepts the boolean in the low byte
+of the argument register; its caller does not clear the upper bits. It gates
+again on the current hierarchy before dispatching a child handler. The earlier
+full-register assertion in the private harness was corrected to inspect the
+actual byte argument. No downstream transition body, physical impulse, animation
+change or live call ordering was exercised in this pass. The next useful trace
+is the consumer of motion `+0x47e` and the child handler selected by this request.

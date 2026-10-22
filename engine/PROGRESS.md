@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Input-history flag consumer connected through original motion dispatch. Twenty
+cases validate the ordered predicate/scalar gates and copying into a later
+transition request; equality and NaN behavior preserved. Independent route API
+added. Next: follow motion +0x47e and request child handlers to their actual
+physical/animation effects. See [consumer evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#input-history-flag-reaches-a-later-transition-request).
+
 Real mode-zero child entry now executes in 32 integrated request/service cases.
 It consumes the ingestion-written nonzero-XY count using unsigned <= a profile
 threshold, copies profile bits and sets an actor flag. Added an immutable entry

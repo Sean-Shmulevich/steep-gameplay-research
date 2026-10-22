@@ -1,0 +1,222 @@
+{
+  "evidence": "original_dispatch_and_child_consumer_emulation",
+  "passed": true,
+  "cases": 20,
+  "game_process": false,
+  "rows": [
+    {
+      "actor_predicate": 0,
+      "entry_flag": 0,
+      "value_bits": 0,
+      "threshold_bits": 1065353216,
+      "branch": "fallback",
+      "copied_flag": 127,
+      "events": [
+        "fallback_prepare",
+        "fallback_request"
+      ]
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 0,
+      "value_bits": 1065353216,
+      "threshold_bits": 1065353216,
+      "branch": "fallback",
+      "copied_flag": 127,
+      "events": [
+        "fallback_prepare",
+        "fallback_request"
+      ]
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 0,
+      "value_bits": 1073741824,
+      "threshold_bits": 1065353216,
+      "branch": "threshold_request",
+      "copied_flag": 0,
+      "events": [
+        "threshold_request"
+      ]
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 0,
+      "value_bits": 2143289344,
+      "threshold_bits": 1065353216,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 0,
+      "value_bits": 1065353216,
+      "threshold_bits": 2143289344,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 1,
+      "value_bits": 0,
+      "threshold_bits": 1065353216,
+      "branch": "fallback",
+      "copied_flag": 127,
+      "events": [
+        "fallback_prepare",
+        "fallback_request"
+      ]
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 1,
+      "value_bits": 1065353216,
+      "threshold_bits": 1065353216,
+      "branch": "fallback",
+      "copied_flag": 127,
+      "events": [
+        "fallback_prepare",
+        "fallback_request"
+      ]
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 1,
+      "value_bits": 1073741824,
+      "threshold_bits": 1065353216,
+      "branch": "threshold_request",
+      "copied_flag": 1,
+      "events": [
+        "threshold_request"
+      ]
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 1,
+      "value_bits": 2143289344,
+      "threshold_bits": 1065353216,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 0,
+      "entry_flag": 1,
+      "value_bits": 1065353216,
+      "threshold_bits": 2143289344,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 0,
+      "value_bits": 0,
+      "threshold_bits": 1065353216,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 0,
+      "value_bits": 1065353216,
+      "threshold_bits": 1065353216,
+      "branch": "threshold_request",
+      "copied_flag": 0,
+      "events": [
+        "threshold_request"
+      ]
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 0,
+      "value_bits": 1073741824,
+      "threshold_bits": 1065353216,
+      "branch": "threshold_request",
+      "copied_flag": 0,
+      "events": [
+        "threshold_request"
+      ]
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 0,
+      "value_bits": 2143289344,
+      "threshold_bits": 1065353216,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 0,
+      "value_bits": 1065353216,
+      "threshold_bits": 2143289344,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 1,
+      "value_bits": 0,
+      "threshold_bits": 1065353216,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 1,
+      "value_bits": 1065353216,
+      "threshold_bits": 1065353216,
+      "branch": "threshold_request",
+      "copied_flag": 1,
+      "events": [
+        "threshold_request"
+      ]
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 1,
+      "value_bits": 1073741824,
+      "threshold_bits": 1065353216,
+      "branch": "threshold_request",
+      "copied_flag": 1,
+      "events": [
+        "threshold_request"
+      ]
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 1,
+      "value_bits": 2143289344,
+      "threshold_bits": 1065353216,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    },
+    {
+      "actor_predicate": 1,
+      "entry_flag": 1,
+      "value_bits": 1065353216,
+      "threshold_bits": 2143289344,
+      "branch": "none",
+      "copied_flag": 127,
+      "events": []
+    }
+  ],
+  "code_sha256": {
+    "0x140565100": "221ad0f1a0f643d61e7817143e422e136920449579a2ab96279ea8e3d6c88742",
+    "0x1405265f0": "3cea8f5513fe6b1a3a49d7c47e37503b35596e41c54023fe21fbfae40d514541"
+  },
+  "limits": [
+    "Actor predicate and external request bodies supplied; downstream transition effects not executed.",
+    "Only top-level mode zero, intermediate four, leaf zero path tested.",
+    "NaN cases use masked floating-point exceptions in emulator.",
+    "No physical units, named gameplay state, live timing or action freshness established."
+  ]
+}

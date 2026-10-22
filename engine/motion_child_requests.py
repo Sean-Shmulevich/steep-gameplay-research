@@ -61,3 +61,33 @@ def sample_child_entry(active_count: int, threshold: int,
         if type(value) is not int or not 0 <= value <= 0xffffffff:
             raise ValueError('entry fields must be unsigned 32-bit values')
     return ChildEntrySnapshot(profile_value_bits, True, active_count <= threshold)
+
+
+@dataclass(frozen=True)
+class ChildUpdateRoute:
+    branch: str
+    copied_input_flag: int | None
+
+
+def route_child_update(actor_predicate: bool, value_bits: int,
+                       threshold_bits: int, entry_flag: int) -> ChildUpdateRoute:
+    """Decision/copy portion of mode-four, leaf-zero motion dispatch.
+
+    Inputs are exact float32 bits because comparisons include unordered cases.
+    This does not execute either request or mutate the actor's physical state.
+    """
+    import struct
+    if type(actor_predicate) is not bool:
+        raise ValueError('actor predicate must be boolean')
+    for value in (value_bits, threshold_bits):
+        if type(value) is not int or not 0 <= value <= 0xffffffff:
+            raise ValueError('scalar bits must be unsigned 32-bit integers')
+    if type(entry_flag) is not int or not 0 <= entry_flag <= 255:
+        raise ValueError('entry flag must be an unsigned byte')
+    decode = lambda bits: struct.unpack('<f', struct.pack('<I', bits))[0]
+    value, threshold = decode(value_bits), decode(threshold_bits)
+    if not actor_predicate and threshold >= value:
+        return ChildUpdateRoute('fallback', None)
+    if value >= threshold:
+        return ChildUpdateRoute('threshold_request', entry_flag)
+    return ChildUpdateRoute('none', None)

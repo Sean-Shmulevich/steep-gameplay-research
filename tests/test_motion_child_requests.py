@@ -49,3 +49,21 @@ class ChildInputEntryTests(unittest.TestCase):
         self.assertFalse(sample_child_entry(0xffffffff, 3, 0).within_input_count_threshold)
         self.assertTrue(sample_child_entry(0xffffffff, 0xffffffff, 0).within_input_count_threshold)
         with self.assertRaises(ValueError): sample_child_entry(-1, 3, 0)
+
+class ChildUpdateRouteTests(unittest.TestCase):
+    def test_original_dispatch_consumer(self):
+        from engine.motion_child_requests import route_child_update
+        r = json.loads((Path(__file__).resolve().parents[1] /
+            'native/snow_host/motion_child_dispatch_validation.json').read_text())
+        self.assertEqual(len(r['rows']), 20)
+        for row in r['rows']:
+            result = route_child_update(bool(row['actor_predicate']),
+                row['value_bits'], row['threshold_bits'], row['entry_flag'])
+            self.assertEqual(result.branch, row['branch'])
+            self.assertEqual(result.copied_input_flag,
+                row['copied_flag'] if row['branch']=='threshold_request' else None)
+
+    def test_invalid_bits(self):
+        from engine.motion_child_requests import route_child_update
+        with self.assertRaises(ValueError): route_child_update(False, -1, 0, 0)
+        with self.assertRaises(ValueError): route_child_update(False, 0, 0, 256)
