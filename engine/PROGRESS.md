@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Fresh-root action observation added. It resolves the manager global for each
+invocation and discards the action if that root changes during traversal. The
+private collector reuses the persistent identity-checked read helper and checks
+selected lookup signatures before/after sampling. Public root-change/failure
+fixtures pass; the new private collector has not yet been run live. Next: one
+bounded gameplay observation, then action-to-motion timing only if identity
+checks succeed. See [root guards](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#fresh-manager-root-observation).
+
 Manager-to-action observation now joins selected-bank precedence with the full
 action-map reader and returns concrete action/table/callback identities plus
 raw sample bytes. Two bounded traversal receipts must match; busy, unsupported,

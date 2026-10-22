@@ -1388,3 +1388,28 @@ payloads between passes.
 Next: use a fresh live manager identity to observe concrete action types and
 samples alongside motion ingestion. These offline results do not establish live
 ownership, reset ordering or the ingestion job's position among substeps.
+
+### Fresh manager root observation
+
+`engine/action_root_observation.py` adds `observe_rooted_action` for transports
+that already verify process and build identity. It accepts the manager global's
+address, reads the current manager pointer, runs the bounded binding observer,
+then rechecks the global. A changed root discards all candidate addresses and
+sample bytes. An unpublished null manager reports `unavailable`; failed root
+reads report `invalid`. This adds at most two eight-byte reads to the binding
+observer's budget. It does not pin lifetime or detect an ABA replacement.
+
+The private workspace collector now connects this operation to the existing
+persistent read-only helper. That helper checks PID, executable basename and
+creation time on each request, with 224 requests and a 40-second deadline. The
+collector also compares selected manager/bank/map routine signatures against
+the analyzed image before and after sampling. These selected checks are not a
+whole-image equivalence proof. It reads one requested action, defaults to 0x76,
+and sends neither input nor game calls. Raw observations remain private.
+
+Public fixtures cover a fresh root on each invocation, root replacement after a
+valid action read, an unpublished manager and a short final root read. The
+private command's argument handling was checked without accessing a process.
+No live result is claimed for this collector yet. Its first live run should use
+a freshly identified gameplay process and record both success and refusal
+outcomes before attempting time-series sampling.
