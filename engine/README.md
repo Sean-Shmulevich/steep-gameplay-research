@@ -704,3 +704,19 @@ replace that policy or invent missing live profile selection.
 
 See the [stateful jump evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#stateful-jump-consumer)
 and [instruction comparison](../native/snow_host/jump_branch_validation.json).
+
+To include the recovered charge-release state transitions:
+
+```sh
+python3 -m engine.snow_jump_bench engine/examples/snow_release_jump_input.json --output /tmp/snow-release-jump-result.json
+```
+
+This authored example supplies remapped raw input and cooked coil samples. The
+bench computes saved charge, elapsed release time, rate and one-update release
+signals before evaluating jump curves. It uses separate elapsed and derivative
+intervals. Provide `release_state`, a configuration `release_threshold`, and each
+frame's `cooked`, `raw_remapped_charge`, `derivative_dt` and `input_update_mode`.
+Do not also provide `release_signal`; the bench rejects that ambiguity. Trace
+rows expose before/after release state. Device remapping, cooker output and mode
+selection remain supplied inputs. This addition has synthetic boundary and
+composition tests, not a new original-instruction or live input-ingestion proof.

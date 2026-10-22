@@ -1,0 +1,125 @@
+{
+  "schema": "snow-jump-bench-v1",
+  "provenance": "authored_synthetic",
+  "state": {
+    "cached_factor": 0,
+    "cooldown": 0
+  },
+  "config": {
+    "base_factor": 80,
+    "gravity": 10,
+    "combined_mass": 80,
+    "configured_rider_mass": 20,
+    "release_threshold": 0.25
+  },
+  "bodies": {
+    "main": {
+      "linear": [
+        3,
+        0,
+        0
+      ],
+      "angular": [
+        1,
+        2,
+        3
+      ],
+      "inverse_mass": 0.016666666666666666
+    },
+    "rider": {
+      "linear": [
+        3,
+        0,
+        0
+      ],
+      "angular": [
+        4,
+        5,
+        6
+      ],
+      "inverse_mass": 0.05
+    }
+  },
+  "curves": {
+    "coil": {
+      "domain": [
+        0,
+        1
+      ],
+      "samples": [
+        0,
+        1
+      ]
+    },
+    "depth": {
+      "domain": [
+        0,
+        1
+      ],
+      "samples": [
+        1,
+        1
+      ]
+    },
+    "speed": {
+      "domain": [
+        0,
+        30
+      ],
+      "samples": [
+        1,
+        1
+      ]
+    }
+  },
+  "frames": [
+    {
+      "elapsed_dt": 0.01,
+      "derivative_dt": 0.02,
+      "input_update_mode": 1,
+      "cooked": 0.5,
+      "raw_remapped_charge": 1,
+      "air_time": 0,
+      "depth": 0.5,
+      "projected_speed": 3
+    },
+    {
+      "elapsed_dt": 0.01,
+      "derivative_dt": 0.02,
+      "input_update_mode": 1,
+      "cooked": 0.2,
+      "raw_remapped_charge": 0,
+      "air_time": 0,
+      "depth": 0.5,
+      "projected_speed": 3
+    },
+    {
+      "elapsed_dt": 0.01,
+      "derivative_dt": 0.02,
+      "input_update_mode": 1,
+      "cooked": 0,
+      "raw_remapped_charge": 0,
+      "air_time": 0,
+      "depth": 0.5,
+      "projected_speed": 3
+    },
+    {
+      "elapsed_dt": 0.01,
+      "derivative_dt": 0.02,
+      "input_update_mode": 1,
+      "cooked": 0,
+      "raw_remapped_charge": 0,
+      "air_time": 0,
+      "depth": 0.5,
+      "projected_speed": 3
+    }
+  ],
+  "release_state": {
+    "cooked": 0,
+    "saved_charge": 0,
+    "elapsed": 0,
+    "rate": 0,
+    "release_signal": 0,
+    "release_copy": 0
+  }
+}

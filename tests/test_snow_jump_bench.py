@@ -39,3 +39,14 @@ class SnowJumpBenchTests(unittest.TestCase):
         document=self.scenario(); document['frames'][0]['elapsed_dt']=0; original=deepcopy(document)
         with self.assertRaises(ValueError): run(document)
         self.assertEqual(document,original)
+
+    def test_release_state_drives_one_jump_at_cooked_zero(self):
+        path=Path(__file__).resolve().parents[1]/'engine/examples/snow_release_jump_input.json'
+        document=json.loads(path.read_text()); original=deepcopy(document)
+        result=run(document)
+        self.assertEqual(document,original)
+        self.assertEqual([r['branch'] for r in result['trace']],['no_release','no_release','submit','cooldown'])
+        self.assertEqual(result['trace'][2]['release_state_after']['release_signal'],1)
+        self.assertEqual(result['trace'][3]['release_state_after']['release_signal'],0)
+        document['frames'][0]['release_signal']=1
+        with self.assertRaisesRegex(ValueError,'not both'): run(document)

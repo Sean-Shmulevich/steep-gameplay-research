@@ -10,6 +10,7 @@ from pathlib import Path
 from reference.central_impulse import central_impulse, f32
 from reference.runtime_curve import compile_samples, evaluate
 from reference.snow_jump_step import jump_step
+from reference.snow_charge_release import update_release
 
 
 def run(document):
@@ -29,8 +30,18 @@ def run(document):
     state = {k:f32(values['state'][k]) for k in ('cached_factor','cooldown')}
     config = values['config']
     curves = {key:compile_samples(**values['curves'][key]) for key in ('coil','depth','speed')}
+    release_state = values.get('release_state')
     trace = []
     for index, frame in enumerate(frames):
+        release_before = deepcopy(release_state)
+        if release_state is not None:
+            if 'release_signal' in frame:
+                raise ValueError('Choose explicit release_signal or release_state, not both')
+            release_state=update_release(release_state, new_cooked=frame['cooked'],
+                raw_remapped_charge=frame['raw_remapped_charge'],elapsed_dt=frame['elapsed_dt'],
+                derivative_dt=frame['derivative_dt'],release_threshold=config['release_threshold'],
+                input_update_mode=frame['input_update_mode'])
+            frame['release_signal']=release_state['release_signal']
         if f32(frame['elapsed_dt']) <= 0:
             raise ValueError('Positive elapsed_dt required by bench policy')
         # Curves are pure diagnostic preprocessing here, not proof of native visits.
@@ -50,11 +61,12 @@ def run(document):
             body['linear']=applied['linear']; body['angular']=applied['angular']
             applications.append({'body':name,'impulse':request['impulse'],**applied})
         state = {key:result[key] for key in ('cached_factor','cooldown')}
-        trace.append({'index':index,'gains':gains,'branch':result['branch'],
+        trace.append({'index':index,'release_state_before':release_before,
+                      'release_state_after':deepcopy(release_state),'gains':gains,'branch':result['branch'],
                       'state_before':old_state,'state_after':dict(state),
                       'bodies_before':before,'bodies_after':deepcopy(bodies),'applications':applications})
     return {'schema':'snow-jump-bench-result-v1','provenance':'authored_synthetic',
-            'game_access':False,'trace':trace,'final_state':state,'final_bodies':bodies,
+            'game_access':False,'trace':trace,'final_state':state,'final_bodies':bodies,'final_release_state':release_state,
             'limits':['Release signal, air clock, depth, speed and masses are supplied scenario inputs.',
                       'Curve preprocessing is not a record of native curve visits.',
                       'No gravity integration, contacts, constraints, dispatch or animation is simulated.',

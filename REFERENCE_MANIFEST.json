@@ -1062,6 +1062,17 @@
         "Caller supplies evaluated compiled-curve gains; returns ordered requests instead of native body calls. Finite validation is authored. Whole-branch original-instruction validation remains pending."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.snow_charge_release",
+      "source": "docs/systems/snow/integration/CLIENT_GUIDE.txt",
+      "source_sha256": "0596a361853acdab6ebbeb040302b693cce753587a8238e39dc60a4c3c3f38f3",
+      "published": "reference/snow_charge_release.py",
+      "published_sha256": "7652d89fc8f8129a939cfcac65844e110cb1dc16b381e52828cddcc0112c4404",
+      "adaptations": [
+        "Caller supplies remapped/cooked inputs and mode. Explicit float32 arithmetic and validation. Synthetic boundary tests only; no new instruction-level claim."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

@@ -9997,3 +9997,25 @@ A rounding regression test preserves a concrete distinction: coil gain 1.3,
 base 80 and gravity 9.81 yield factor 10.60142707824707 before depth/speed gains.
 Dividing base by gravity first yields 10.601426124572754. Both are plausible
 mathematical rewrites, but only the former matches the inspected instruction order.
+
+## Charge-release state composition
+
+[reference.snow_charge_release](../../reference/snow_charge_release.py) implements
+the existing [integration guide's](../systems/snow/integration/CLIENT_GUIDE.txt)
+release-state transitions with explicit float32 arithmetic. It consumes previous
+cooked/saved charge, elapsed clock, rate and both release copies, plus a new cooked
+sample, raw remapped input, separate timing arguments, threshold and update mode.
+It returns new state without mutating the caller's dictionary.
+
+The bench can now compose this stage with curves, the jump consumer and central
+body arithmetic. The release is generated when cooked coil reaches exactly zero,
+not immediately when raw input becomes zero. The strict elapsed threshold and
+rate comparison against -1 remain intact. Other update modes retain prior release
+signals and rate while updating cooked coil and elapsed time. This retention must
+not be replaced with a universally cleared one-shot event.
+
+Seven synthetic release tests and one added bench composition case cover the
+state boundaries and one charge/release sequence. The newly implemented release
+stage has not received the isolated original-instruction comparison performed
+for the jump consumer. Device-to-cooker mapping, exponential lookup data, profile
+selection and mode ownership remain explicit integration dependencies.
