@@ -1,0 +1,37 @@
+{
+  "kind": "startup_intro_skip_attempt",
+  "date": "2026-10-22",
+  "command": "run_late_load.py --experiment host --load-at startup --navigator native-intro --plan demo",
+  "ok": true,
+  "experiment": "Enter pressed six times, 6-7 s apart, on visible pre-title screens (logo, warning, safety, autosave)",
+  "finding": "no skip: every pre-title screen still showed in order; first visible screen to title 45.9 s",
+  "comparison_without_intro_inputs": {
+    "visible_to_title_seconds": [
+      46.5,
+      44.6
+    ],
+    "engine_step_at_title": [
+      4519,
+      4398
+    ]
+  },
+  "this_run": {
+    "visible_to_title_seconds": 45.9,
+    "engine_step_at_title": 4477,
+    "title_t": 81.0,
+    "entered_t": 119.7
+  },
+  "title_after_intro_inputs": "advanced normally with its own Enter",
+  "demo": {
+    "ok": true,
+    "steps": 10,
+    "stable_20_seconds": true
+  },
+  "host_commands_failed": 4,
+  "host_commands_failed_previous_run": 44,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  }
+}

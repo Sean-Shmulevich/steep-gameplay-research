@@ -87,11 +87,22 @@ The host counted 44 failed commands. These are the navigator's read-only
 `player.get`/`player.bind` attempts made before the player existed; they are
 expected refusals, not faults.
 
+## Intro-skip experiment, 2026-10-22 ([receipt](startup_intro_skip_attempt.json))
+
+`--navigator native-intro` pressed Enter six times on the visible pre-title
+screens. Nothing was skipped: each video and notice still showed in order. It
+took 45.9 s from the first visible screen to the title, compared with 46.5 and
+44.6 s without the presses, and the engine step count at the title matched (about
+4,400 to 4,500). The title then advanced normally and the whole run passed (demo,
+stability and cleanup). Pressing Enter does not shorten the intros; Escape and
+other keys are untested. Deferring player reads cut the host's refused commands
+from 44 to 4.
+
 ## Open
 
-- Repeat runs to measure reliability (one pass so far).
-- Fewer refused player reads while waiting: bind only after the title has passed.
-- Whether Enter or Escape skips the timed intro videos (about 45 s). Untested.
+- Reliability: two full passes and one earlier gate failure so far.
+- Intro videos (about 45 s): Enter does not skip them. Escape is untested; the
+  native-intro mode stays only as a recorded experiment.
 - A repeatable spawn through drop-zone selection. Untested.
 - Native flow transitions (title, offline notice, map) without input. Not
   attempted.

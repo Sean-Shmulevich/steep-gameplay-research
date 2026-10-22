@@ -4729,3 +4729,8 @@ Startup entry live pass (2026-10-22): with the corrected gate, `--navigator nati
 --plan demo` reached gameplay in 110 s with three inputs, then made 10 exactly-one
 steps, resumed and stayed stable for 20 s; cleanup passed. One pass, so
 reliability is not yet measured. See the [receipt](../native/snow_host/startup_entry_live_pass.json).
+
+Intro skip: pressing Enter on the pre-title videos and notices does not shorten
+them (45.9 s from first visible screen to title, against 46.5 and 44.6 s without
+presses). That run also passed demo, stability and cleanup, giving two native
+passes. See the [receipt](../native/snow_host/startup_intro_skip_attempt.json).
