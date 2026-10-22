@@ -10041,3 +10041,43 @@ It is not a minimum cooked-charge strength. A port that tests charge >= 0.25
 at raw trigger release implements a different policy. The saved-charge signal
 can be smaller than that threshold and still pass the timing test; the jump
 consumer's curves and gates then decide the requested impulse.
+
+## Input cooker arithmetic
+
+[reference.input_cooker](../../reference/input_cooker.py) implements the finite
+float32 cooker leaf with a required external decay lookup. It does not substitute
+`math.exp` or ship a decoded table. Input values and coefficients are rounded to
+float32; operation order is preserved:
+
+```text
+use_zero = abs(target) <= abs(current) or f32(current * target) <= 0
+base, proportional = coefficients[ToZero if use_zero else ToOne]
+x = -f32(elapsed_dt * proportional)
+decay = supplied_lookup(x)
+step = f32(f32(f32(1 - decay) * abs(f32(target - current)))
+           + f32(elapsed_dt * base))
+if target > current:
+    candidate = f32(current + step)
+    if candidate > target: candidate = target
+else:
+    candidate = f32(current - step)
+    if candidate < target: candidate = target
+if abs(f32(target - candidate)) < epsilon:
+    candidate = target
+```
+
+The original code rounds the candidate before overshoot handling; a rewrite
+that first takes `min(step, error)` need not preserve every rounding result.
+Starting from zero takes ToZero. The snap comparison is strict; equality at
+epsilon does not snap. No extra clamp is applied to the supplied lookup value.
+
+[384 original-instruction cases](../../native/snow_host/input_cooker_validation.json)
+matched the public helper's output bytes and lookup argument exactly. Of those,
+288 selected ToZero and 96 selected ToOne. The lookup was intercepted with supplied
+values, including 1.1 to test arithmetic outside the usual exponential range.
+Five portable tests cover branch choice, clamp, snap and required lookup behavior.
+
+This closes the tested local arithmetic, not the original lookup table, profile
+blend, hardware mapping or live input timing. The historical `reference.snow.cooker`
+remains a mathematical reference with its generated exponential approximation;
+use the explicit-lookup helper when preserving those distinctions matters.

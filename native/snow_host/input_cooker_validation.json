@@ -1,0 +1,24 @@
+{
+  "evidence": "original cooker leaf arithmetic; decay lookup intercepted",
+  "game_process": false,
+  "cases": 384,
+  "exact_matches": 384,
+  "branches": {
+    "ToZero": 288,
+    "ToOne": 96
+  },
+  "checks": [
+    "float32 output bytes",
+    "decay lookup argument and one call",
+    "zero-start and sign reversal",
+    "growth and shrink",
+    "overshoot and strict snap",
+    "lookup values 0 0.5 1 and 1.1"
+  ],
+  "limitations": [
+    "Original decay table not evaluated",
+    "Hardware remapping and profile blend not executed",
+    "Synthetic finite inputs only"
+  ],
+  "source_sha256": "76d485e4c3f74b58a530201975443da41f9a3cf62dc3fd437fb6b070512d0b8f"
+}

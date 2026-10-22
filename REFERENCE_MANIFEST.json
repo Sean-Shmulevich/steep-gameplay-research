@@ -1073,6 +1073,17 @@
         "Caller supplies remapped/cooked inputs and mode. Explicit float32 arithmetic and validation. Synthetic boundary tests only; no new instruction-level claim."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.input_cooker",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "6a4b81b9230de0f32d778e8bac429d8ed95d126f94d172363e2ce836c02f123c",
+      "published": "reference/input_cooker.py",
+      "published_sha256": "76d485e4c3f74b58a530201975443da41f9a3cf62dc3fd437fb6b070512d0b8f",
+      "adaptations": [
+        "Finite input validation. Mandatory supplied decay lookup; original table excluded. 384 original-instruction cases with intercepted lookup."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

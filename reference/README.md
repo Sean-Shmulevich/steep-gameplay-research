@@ -7,6 +7,7 @@ Standard-library Python implementations of selected local rules. Provenance and 
 | ik | Limb intermediate target and weighted orientation kernels |
 | camera | Local camera springs, projection and selection helpers |
 | snow | Contact forces, clipping, pressure, stick, shaping, springs and point impulses |
+| input_cooker | Float32 cooker with explicit decay lookup; 384 original-instruction cases |
 | snow_charge_release | Saved charge, release clock and cooked-zero transition; 1,536 exact original-instruction cases |
 | snow_jump_step | Stateful jump gates, float32 factor order and ordered body requests; 288 original-instruction cases with synthetic curves |
 | central_impulse | Native-checked central momentum update; separately labeled equal-delta-v coupled-body policy |
