@@ -15,7 +15,8 @@ when the player was first acquired.
 
 This skips menu interaction delay, not asset or world loading. Spawn location is
 whatever the profile's startup map closes onto; no map or spawn selection.
---intro-key enter is an experiment: bounded Enter presses on visible pre-title
+The idle player's position at entry is recorded as spawn_position; --expect-spawn
+makes a different spawn a failure. --intro-key enter is an experiment: bounded Enter presses on visible pre-title
 screens, to measure whether the timed videos/notices can be skipped.
 
 Usage: startup_entry.py OUT_DIR [BUDGET_SECONDS] [--workspace W] [--port P]
@@ -146,7 +147,9 @@ class Game:
         if not sample['ready'] or not want_player:
             return sample
         try:
-            sample['player_flags'] = client.call('player.get').get('flags', 0)
+            player = client.call('player.get')
+            sample['player_flags'] = player.get('flags', 0)
+            sample['position'] = player.get('position')
         except HostError as exc:
             sample['player_error'] = (exc.response.get('result') or {}).get('error')
             if sample['player_error'] == 'no_player':
@@ -176,7 +179,12 @@ class Game:
         return r.returncode == 0, None if r.returncode == 0 else f'input exit {r.returncode}'
 
 
-def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, max_frames=200):
+def spawn_matches(position, expected, tolerance):
+    return bool(position) and len(position) == 3 and all(abs(a - b) <= tolerance for a, b in zip(position, expected))
+
+
+def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, max_frames=200,
+             expect_spawn=None, spawn_tolerance=0.01):
     policy = policy or Policy()
     start = clock(); deadline = start + budget
     result = {'gameplay_hud_observed': False, 'gameplay_native_verified': False, 'gameplay_inputs_sent': False,
@@ -206,6 +214,11 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
         if action == 'entered':
             result['gameplay_native_verified'] = True
             result['outcome'] = 'entered'
+            result['spawn_position'] = native.get('position')
+            if expect_spawn is not None:
+                result['spawn_matches_expected'] = spawn_matches(native.get('position'), expect_spawn, spawn_tolerance)
+                if not result['spawn_matches_expected']:
+                    result['outcome'] = 'entered_unexpected_spawn'
             print('GAMEPLAY_HUD_OBSERVED', flush=True)
             break
         if action == 'abort':
@@ -230,15 +243,23 @@ def main(argv=None):
     p.add_argument('budget', type=int, nargs='?', default=150)
     p.add_argument('--workspace', type=Path, default=Path(__file__).resolve().parents[2])
     p.add_argument('--port', type=int, default=47017)
+    p.add_argument('--expect-spawn', help='x,y,z the idle player must occupy at entry (fails otherwise)')
+    p.add_argument('--spawn-tolerance', type=float, default=0.01)
     p.add_argument('--intro-key', choices=['enter'], help='Experiment: press this key during pre-title videos/notices')
     a = p.parse_args(argv)
     if not 30 <= a.budget <= 210:
         p.error('Navigation budget must be 30..210 seconds')
     out = a.out.resolve(); out.mkdir(parents=True, exist_ok=False)
     game = Game(a.workspace.resolve(), out, a.port)
-    result = navigate(game, a.budget, policy=Policy(intro_key=ENTER if a.intro_key else None))
+    expect = None
+    if a.expect_spawn:
+        expect = [float(v) for v in a.expect_spawn.split(',')]
+        if len(expect) != 3:
+            p.error('--expect-spawn needs x,y,z')
+    result = navigate(game, a.budget, policy=Policy(intro_key=ENTER if a.intro_key else None),
+                      expect_spawn=expect, spawn_tolerance=a.spawn_tolerance)
     (out / 'navigation-result.json').write_text(json.dumps(result, indent=2) + '\n')
-    return 0 if result['gameplay_native_verified'] else 2
+    return 0 if result['outcome'] == 'entered' else 2
 
 
 if __name__ == '__main__':

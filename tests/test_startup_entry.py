@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import startup_entry as se
 
 IN_WORLD = {'ready': True, 'advancing': True, 'player_flags': 3}
-ACQUIRED = {'ready': True, 'advancing': True, 'player_flags': 1}  # idle spawn, not yet simulated
+ACQUIRED = {'ready': True, 'advancing': True, 'player_flags': 1, 'position': [1.0, 2.0, 3.0]}  # idle spawn
 NO_PLAYER = {'ready': True, 'advancing': True, 'player_error': 'no_player'}
 
 
@@ -154,6 +154,22 @@ class NavigateTests(unittest.TestCase):
         result, _ = self.run_frames(frames)
         self.assertEqual(result['screens'][0]['state'], 'capture_timeout')
         self.assertEqual(result['outcome'], 'entered')
+
+    def test_spawn_recorded_and_checked(self):
+        frames = [('gameplay', ACQUIRED)] * 2
+        result, _ = self.run_frames(frames)
+        self.assertEqual(result['spawn_position'], [1.0, 2.0, 3.0])
+        self.assertNotIn('spawn_matches_expected', result)
+        game = FakeGame(frames); clock = Clock()
+        ok = se.navigate(game, 60, clock=clock, sleep=clock.sleep, expect_spawn=[1.005, 2.0, 3.0])
+        self.assertEqual((ok['outcome'], ok['spawn_matches_expected']), ('entered', True))
+        game = FakeGame(frames); clock = Clock()
+        moved = se.navigate(game, 60, clock=clock, sleep=clock.sleep, expect_spawn=[1.5, 2.0, 3.0])
+        self.assertEqual(moved['outcome'], 'entered_unexpected_spawn')
+
+    def test_spawn_match_rejects_missing_position(self):
+        self.assertFalse(se.spawn_matches(None, [0, 0, 0], 1))
+        self.assertFalse(se.spawn_matches([0, 0], [0, 0, 0], 1))
 
     def test_budget_bounds_cli(self):
         with self.assertRaises(SystemExit):

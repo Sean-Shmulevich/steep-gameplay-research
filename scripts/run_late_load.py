@@ -104,6 +104,7 @@ def main():
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
     parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'composite-observe', 'source-observe', 'chain-observe', 'ramp-observe', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
     parser.add_argument('--navigator', choices=['ocr', 'native', 'native-intro'], default='ocr', help='Startup navigation: existing OCR navigator, or scripts/startup_entry.py gated by the startup-loaded host (native-intro also tries Enter on pre-title screens)')
+    parser.add_argument('--expect-spawn', metavar='X,Y,Z', help='With a native navigator: fail unless the idle player spawns here (tolerance 0.01)')
     parser.add_argument('--capture-steering', action='store_true', help='Opt-in 700 ms scan-30 pulse during a five-second motion capture')
     parser.add_argument('--observe-motion', action='store_true', help='Opt-in bounded before/after motion observations for update-capture')
     parser.add_argument('--attribute-jobs', action='store_true', help='Opt-in job attribution for the update-capture plan')
@@ -119,6 +120,8 @@ def main():
         parser.error('--attribute-jobs requires --experiment host --plan update-capture')
     if not 1 <= args.steps <= 60:
         raise RuntimeError('--steps must be 1..60')
+    if args.expect_spawn and args.navigator == 'ocr':
+        raise RuntimeError('--expect-spawn requires a native navigator')
     if args.navigator != 'ocr' and args.load_at != 'startup':
         raise RuntimeError('--navigator native modes require --load-at startup')
     if args.load_at == 'startup' and args.experiment != 'host':
@@ -202,7 +205,7 @@ def main():
             early = start([sys.executable, str(REPO/'scripts/startup_host_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'startup')], 'startup')
         print('Advancing recognized startup screens; please leave controls alone.', flush=True)
         if args.navigator != 'ocr':
-            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)] + (['--intro-key', 'enter'] if args.navigator == 'native-intro' else []), 'navigation')
+            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)] + (['--intro-key', 'enter'] if args.navigator == 'native-intro' else []) + (['--expect-spawn', args.expect_spawn] if args.expect_spawn else []), 'navigation')
         else:
             nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation'), '200'], 'navigation')
         if args.load_at == 'startup':

@@ -29,6 +29,11 @@ class LateLoadRunnerTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'requires --experiment host'):
                 runner.main()
 
+    def test_expect_spawn_requires_native_navigator(self):
+        with patch.object(sys, 'argv', ['runner', '--experiment', 'host', '--load-at', 'startup', '--expect-spawn', '1,2,3']):
+            with self.assertRaisesRegex(RuntimeError, 'requires a native navigator'):
+                runner.main()
+
     def test_native_navigator_requires_startup_load(self):
         for navigator in ('native', 'native-intro'):
             with patch.object(sys, 'argv', ['runner', '--experiment', 'host', '--navigator', navigator]):
