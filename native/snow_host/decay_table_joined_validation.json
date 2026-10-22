@@ -1,0 +1,40 @@
+{
+  "evidence": "original builder with unmodified vector and scalar exponential calls",
+  "game_process": false,
+  "cases": [
+    {
+      "vector_path": "sse2",
+      "scalar_mode": 0,
+      "status": "exact",
+      "builder_float_fields": 514,
+      "lookup_cases": 4104
+    },
+    {
+      "vector_path": "sse2",
+      "scalar_mode": 1,
+      "status": "unsupported",
+      "reason": "Invalid instruction (UC_ERR_INSN_INVALID)",
+      "failed_instruction": "vfnmadd231sd"
+    },
+    {
+      "vector_path": "sse41",
+      "scalar_mode": 0,
+      "status": "exact",
+      "builder_float_fields": 514,
+      "lookup_cases": 4104
+    },
+    {
+      "vector_path": "sse41",
+      "scalar_mode": 1,
+      "status": "unsupported",
+      "reason": "Invalid instruction (UC_ERR_INSN_INVALID)",
+      "failed_instruction": "vfnmadd231sd"
+    }
+  ],
+  "limitations": [
+    "CPU selectors set in emulator, not observed live",
+    "Floor helper intercepted for finite nonnegative indices",
+    "Only default [-10,0] builder domain tested",
+    "Scalar endpoint is zero only; not a scalar exp reconstruction"
+  ]
+}

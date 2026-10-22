@@ -753,3 +753,20 @@ The serial orchestration is authored and does not establish their relationship
 in the original scheduler. Native exponential sample generation, device mapping,
 contact dynamics and animation remain outside this bench. Existing scenarios
 with supplied cooked values or supplied release signals retain their behavior.
+
+
+To use the instruction-validated default decay table instead of synthetic samples:
+
+```sh
+python3 -m engine.snow_jump_bench engine/examples/snow_reconstructed_cooker_jump_input.json --output /tmp/snow-reconstructed-cooker-jump-result.json
+```
+
+Set `cooker.decay` to exactly `{"mode":"reconstructed_default",
+"vector_path":"sse2","scalar_path":"sse2"}`. The vector path may also be
+`sse41`. Scalar FMA is rejected because the private emulator cannot execute its
+fused instruction. Paths are explicit scenario choices; the bench does not infer
+the running game's CPU dispatch. This mode computes the original default table
+from reconstructed arithmetic and mathematically generated mantissas.
+`decay_configuration` in the result records the selection. Supplied-sample mode
+remains available. The new example submits on frame five and enters cooldown on
+frame six; its coefficients and scenario are still authored synthetic data.

@@ -25,3 +25,11 @@ class DecayExpTests(unittest.TestCase):
         for x in (-11,1,float('inf'),float('nan')):
             with self.assertRaises(ValueError): exp_lane(x,path='sse2')
         with self.assertRaises(ValueError): exp_lane(-1,path='auto')
+
+    def test_default_table_requires_validated_scalar_path(self):
+        from reference.decay_exp import cooker_table
+        a=cooker_table(vector_path='sse2',scalar_path='sse2')
+        b=cooker_table(vector_path='sse41',scalar_path='sse2')
+        self.assertEqual(a,b)
+        self.assertEqual(len(a['segments']),256)
+        with self.assertRaises(ValueError): cooker_table(vector_path='sse2',scalar_path='fma')

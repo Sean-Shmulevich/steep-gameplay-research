@@ -4258,3 +4258,10 @@ impulses. A synthetic sequence verifies release waits for cooked zero, independe
 cooker/derivative intervals and spin preservation. Original exponential samples
 and native execution cadence remain unresolved; this is an authored composition
 of individually studied kernels, not an original-game replay.
+
+
+Default decay initialization now passes joined original-instruction validation
+for both vector paths with the scalar SSE endpoint. The jump bench exposes this
+as an explicit reconstructed-default mode. Scalar FMA attempts failed on an
+unsupported emulator instruction and remain unverified; live CPU/floating-point
+settings and native input scheduling are still open.

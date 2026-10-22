@@ -88,3 +88,15 @@ class SnowJumpBenchTests(unittest.TestCase):
         ]:
             document=self.cooked_scenario(); alteration(document)
             with self.assertRaisesRegex(ValueError,message): run(document)
+
+    def test_reconstructed_decay_changes_release_timing(self):
+        path=Path(__file__).resolve().parents[1]/'engine/examples/snow_reconstructed_cooker_jump_input.json'
+        document=json.loads(path.read_text()); result=run(document)
+        rows=result['trace']
+        self.assertEqual([r['branch'] for r in rows],
+                         ['no_release']*4+['submit','cooldown'])
+        self.assertGreater(rows[3]['cooker']['value'],0)
+        self.assertEqual(rows[4]['cooker']['value'],0)
+        self.assertEqual(result['decay_configuration'],document['cooker']['decay'])
+        document['cooker']['decay']['samples']=[1]*257
+        with self.assertRaisesRegex(ValueError,'only mode'): run(document)

@@ -10149,3 +10149,28 @@ builder's final sample uses a separate scalar routine, which is not covered by
 this receipt. Live CPU dispatch remains unobserved. Using this lane routine for
 all 257 samples is therefore a composed substitute for that last scalar call,
 not yet proof of the complete original initialized table.
+
+
+### Joined default decay table
+
+The later [joined builder comparison](../../native/snow_host/decay_table_joined_validation.json)
+executes the original builder, vector dispatch and scalar SSE endpoint with no
+exponential call interception. For each vector path, all 514 table floats match
+`reference.decay_exp.cooker_table`, followed by 4,104 exact lookup comparisons.
+The scalar SSE call at zero produces exactly 1. The floor helper remains
+intercepted for finite nonnegative indices. This supersedes the missing scalar
+endpoint boundary above for the SSE scalar path only.
+
+The same test attempted both vector paths with scalar FMA enabled. Unicorn
+rejected `vfnmadd231sd`; these attempts are recorded as unsupported, not passes.
+CPU selectors and nearest-even MXCSR are set in the emulator, not observed live.
+The public factory therefore requires `scalar_path='sse2'` and an explicit
+`vector_path`. It supplies the fixed [-10, 0] domain and original padding.
+General scalar exponential behavior and live floating-point mode are unresolved.
+
+The jump bench can now use this complete reconstructed default table without
+caller-supplied exponential samples. Its example still uses authored damping,
+raw inputs and clocks. In that example the constant-one lookup fixture reached
+cooked zero on frame four; the reconstructed table reaches it on frame five.
+That difference demonstrates the effect of decay arithmetic in the composed
+model. It does not establish the original game's jump latency.

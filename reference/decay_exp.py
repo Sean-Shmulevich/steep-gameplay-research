@@ -39,3 +39,17 @@ def exp_lane(value, *, path):
     exponent_bits = ((((integer + 0x1f80) & 0xffffffff) >> 6) << 23) & 0xffffffff
     scale = from_bits(exponent_bits | MANTISSAS[integer & 63])
     return f32(polynomial * scale)
+
+
+def cooker_table(*, vector_path, scalar_path):
+    """Default initialized table; explicit paths and nearest-even rounding.
+
+    Joined original-builder validation covers the scalar SSE endpoint at zero.
+    FMA scalar instructions remain unexecuted by the current private emulator.
+    """
+    if scalar_path != 'sse2':
+        raise ValueError('Only the scalar sse2 endpoint is instruction-validated')
+    from reference.decay_table import build, sample_arguments
+    samples = [exp_lane(x, path=vector_path) for x in sample_arguments()[:256]]
+    samples.append(1.)  # Original scalar SSE routine returns exactly 1 at zero.
+    return build(samples)

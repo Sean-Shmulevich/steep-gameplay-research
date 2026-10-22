@@ -13,6 +13,7 @@ from reference.snow_jump_step import jump_step
 from reference.snow_charge_release import update_release
 from reference.input_cooker import cook
 from reference.decay_table import build as build_decay_table
+from reference.decay_exp import cooker_table
 
 
 def run(document):
@@ -39,10 +40,17 @@ def run(document):
         if release_state is None:
             raise ValueError('Cooker requires release_state')
         decay = cooker['decay']
-        if decay.get('provenance') != 'authored_synthetic':
-            raise ValueError('Explicit authored_synthetic decay samples required')
-        decay_table = build_decay_table(decay['samples'], low=decay['low'],
-                                       high=decay['high'], padding=decay['padding'])
+        if decay.get('mode', 'supplied_samples') == 'reconstructed_default':
+            if set(decay) != {'mode', 'vector_path', 'scalar_path'}:
+                raise ValueError('Reconstructed default requires only mode and explicit CPU paths')
+            decay_table = cooker_table(vector_path=decay['vector_path'], scalar_path=decay['scalar_path'])
+        elif decay.get('mode', 'supplied_samples') == 'supplied_samples':
+            if decay.get('provenance') != 'authored_synthetic':
+                raise ValueError('Explicit authored_synthetic decay samples required')
+            decay_table = build_decay_table(decay['samples'], low=decay['low'],
+                                           high=decay['high'], padding=decay['padding'])
+        else:
+            raise ValueError('Unknown decay mode')
     trace = []
     for index, frame in enumerate(frames):
         release_before = deepcopy(release_state)
@@ -88,9 +96,9 @@ def run(document):
                       'state_before':old_state,'state_after':dict(state),
                       'bodies_before':before,'bodies_after':deepcopy(bodies),'applications':applications})
     return {'schema':'snow-jump-bench-result-v1','provenance':'authored_synthetic',
-            'game_access':False,'trace':trace,'final_state':state,'final_bodies':bodies,'final_release_state':release_state,
+            'game_access':False,'decay_configuration':deepcopy(cooker['decay']) if cooker else None,'trace':trace,'final_state':state,'final_bodies':bodies,'final_release_state':release_state,
             'limits':['Inputs, clocks, depth, speed, masses and optional decay samples are supplied scenario data.',
-                      'Cooker-to-release orchestration is authored; native scheduling and exponential samples remain unverified.',
+                      'Cooker-to-release orchestration is authored; native scheduling and live CPU dispatch remain unverified.',
                       'Curve preprocessing is not a record of native curve visits.',
                       'No gravity integration, contacts, constraints, dispatch or animation is simulated.',
                       'Preserved angular velocity covers central arithmetic only.']}
