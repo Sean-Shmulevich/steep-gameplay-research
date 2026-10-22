@@ -2047,3 +2047,47 @@ finite-intermediate contract. NaN propagation through the complete curve
 consumer and other floating-point environments remains unverified.
 
 See [original-math comparison receipt](../../native/snow_host/action_curve_original_math_validation.json).
+
+### Reconstructed curve acos
+
+[`curve_acos`](../../engine/action_curve_math.py) independently implements the
+return-value path of RVA `0x1c88a8c` for finite float32 input in [-1,1]. Inputs
+outside that domain are rejected. It returns radians and has no persistent
+state. CRT error handling and floating-point exception flags are excluded.
+No runtime binary, coefficient file or game resource is required.
+
+For |x| below 2^-26 it returns float32(pi/2). The endpoints return +0 and
+float32(pi). Otherwise it evaluates a float32 rational approximation:
+
+```text
+outer = abs(x) >= 0.5
+z = (1-abs(x))/2 if outer else x*x
+P = (((-0.013381929136812687 - z*0.003961374517530203)*z
+      - 0.05652986839413643)*z + 0.18416160345077515)*z
+Q = 1.1049696207046509 - z*0.8364112973213196
+r = P/Q
+```
+
+Each operation above rounds to float32. The inner branch combines `r*x` with
+double-precision pi/2 and a low correction of `6.123233995736766e-17` before
+rounding once to float32. Outer branches use `s=float32(sqrt(z))`. Negative
+inputs combine `r*s` and s in double precision, then subtract twice that
+corrected value from double pi. Positive inputs clear the low 16 bits of s,
+reconstruct the lost part using `(z-truncated_s²)/(truncated_s+s)`, and combine
+that correction with `2*s*r` and `2*truncated_s` in float32. The source records
+the exact operation order; replacing this with an algebraically simpler
+expression can alter rounding.
+
+The [acos receipt](../../native/snow_host/action_curve_acos_validation.json)
+records 20,334 exact return-bit matches against the complete original routine,
+without substituted calls. Samples include signed zero, subnormals, adjacent
+float values around each branch threshold, and seeded random values. This is
+sampled evidence, not an exhaustive proof over every float32 input or runtime
+floating-point mode.
+
+Composing this independent acos with the root solver, while retaining Python
+math sqrt/cos/pow fixtures, removes all six previous root-output mismatches
+on the 1,441-case corpus. The independently observed single cos callback
+mismatch remains a fidelity boundary even though it does not change the final
+root bytes in this corpus. Portable cos reconstruction and runtime dispatch
+variants therefore remain open; zero-divisor cases are still excluded.

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Independent finite-domain acos now matches 20,334 original-instruction cases
+without substituted calls. Using it in the root solver removes all six previous
+root-output mismatches across 1,441 cases with the remaining portable math
+fixtures. The known isolated cos mismatch still matters outside this corpus.
+Live testing remains on hold; next offline math target is cosine range reduction
+and polynomial evaluation. See
+[reconstructed acos](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#reconstructed-curve-acos).
+
 Original CRT routines now execute offline. With original math callbacks, the
 independent root solver matches all 1,441 complete-original cases. Python math
 fixtures differ in six root outputs; isolated differences are in acos/cos.

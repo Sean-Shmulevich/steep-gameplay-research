@@ -1,0 +1,24 @@
+{
+  "evidence": "Complete original finite-domain acos, no substituted calls",
+  "cases": 20334,
+  "passed": true,
+  "comparison": "Exact float32 return bytes",
+  "coverage": [
+    "Both signs",
+    "Zero and subnormals",
+    "Neighbors of tiny-input, half-magnitude and endpoint branches",
+    "Seeded random float bits and uniform input samples"
+  ],
+  "limits": [
+    "Sampled finite float32 inputs in [-1,1], not exhaustive",
+    "Floating-point exception side effects excluded",
+    "Original initialized live floating-point environment not verified"
+  ],
+  "game_process": false,
+  "composed_solver_comparison": {
+    "cases": 1441,
+    "root_output_mismatches": 0,
+    "callbacks": "Independent curve_acos; Python math sqrt/cos/pow rounded to float32",
+    "limits": "One isolated cos callback mismatch remains known; zero output mismatches on this corpus do not establish full CRT equivalence"
+  }
+}
