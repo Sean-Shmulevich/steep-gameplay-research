@@ -29,8 +29,10 @@ records to the same request/substep. Then test one bounded native impulse that
 preserves spin. Current velocity assignment resets angular velocity.
 
 The probe core, reader and reversible slot installer are implemented and
-synthetic-tested. Live installation validation, current owner/counter acquisition,
-exporting records with QPC frequency, and a bounded live runner remain. Drained capture does not permit unloading cached
+synthetic-tested. The opt-in capture plugin now supplies held-mode player acquisition, owner/counter
+resolution, bounded observation and QPC-tagged JSONL export. Its complete lifecycle
+is synthetic-tested. Fresh acquisition, slot installation and capture still need
+validation together in a bounded live game session. Drained capture does not permit unloading cached
 callbacks. Keep DLL/context pinned, forward late calls, and never overwrite an
 unexpected callback on restoration. Captured body reads are sequential, and a
 wrapper interval includes other snow forces. Exact consumer observation remains

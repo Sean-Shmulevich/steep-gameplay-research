@@ -1,7 +1,7 @@
 /* Game adapter boundary for the Snow mod host.
  *
  * The host core never contains game addresses. A build links exactly one
- * adapter: the private, build-specific game adapter or the simulated fixture
+ * adapter: the build-specific game adapter or the simulated fixture
  * adapter. Every adapter call happens on the host executor thread.
  */
 #ifndef SNOW_ADAPTER_H

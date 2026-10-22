@@ -14,6 +14,7 @@
 #include <wchar.h>
 #include "snow_adapter.h"
 #include "snow_animation_reader.h"
+#include "steep_probe_binding.h"
 
 #define IMAGE_BASE 0x140000000ull
 #define OWNER_SLOT 0x14312cfe8ull
@@ -389,3 +390,30 @@ static int cached_parent(SnowCachedParentRaw *out, char *why, size_t n) {
 
 const SnowAdapter snow_adapter = {"steep-analyzed-build", bind, read, cas_group, enter, leave, player_bind, player_read,
                                   player_set_velocity, player_acquire, player_check, player_set_pose, animation_channel, cached_parent};
+
+
+int snow_steep_probe_binding(SnowUpdateBinding *out,SnowUpdateOriginal *original,char *why,size_t n) {
+    int changed=0;
+    if(out) memset(out,0,sizeof *out);
+    if(original) *original=NULL;
+    if(!out || !original || !why || !n) return 1;
+    SnowCounters before,after;
+    if(bind(why,n) || read(&before,why,n)) return 1;
+    if(!SNOW_GROUP_HELD(before.group)) { snprintf(why,n,"probe acquisition requires held simulation"); return 1; }
+    if(player_acquire(&changed,why,n) || player_check(why,n)) return 1;
+    const uint64_t actor=p_actor,world=p_world;
+    const SnowUpdateProfile profile={ACTOR_VT,RUNTIME_VT,0x14053ec30ull,0x1408ab390ull};
+    SnowUpdateBinding result;
+    if(!snow_update_resolve_binding(animation_read,NULL,actor,&profile,&result)) {
+        snprintf(why,n,"snow-update owner/counter binding refused"); return 1;
+    }
+    if(result.world!=world || player_check(why,n) || p_actor!=actor || p_world!=world) {
+        snprintf(why,n,"player registration changed during probe binding"); return 1;
+    }
+    if(read(&after,why,n) || after.owner!=before.owner || after.group!=before.group ||
+       after.step!=before.step || !SNOW_GROUP_HELD(after.group)) {
+        snprintf(why,n,"engine hold changed during probe acquisition"); return 1;
+    }
+    *out=result; *original=(SnowUpdateOriginal)(uintptr_t)profile.original_target;
+    return 0;
+}

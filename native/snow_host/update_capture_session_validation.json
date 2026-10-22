@@ -1,0 +1,30 @@
+{
+  "evidence": "synthetic Windows plugin lifecycle under Wine",
+  "game_process": false,
+  "summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 395,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false
+  },
+  "checks": [
+    "opt-in disabled by default",
+    "configure on pause",
+    "start capture on resume",
+    "virtual slot restored",
+    "record count matches export",
+    "main velocity test effect +2 per capture",
+    "both angular vectors preserved",
+    "separate elapsed/derivative arguments",
+    "unknown substep validity bit clear"
+  ],
+  "limitations": [
+    "player acquisition replaced by fixture binding",
+    "no original game physics executed",
+    "no live scheduler safety proof"
+  ]
+}

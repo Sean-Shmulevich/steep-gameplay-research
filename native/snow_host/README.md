@@ -1001,3 +1001,56 @@ resolve immediately before configuration, and stop/rebind on owner replacement.
 Later snapshot equality still cannot exclude ABA or a stale counter allocation.
 Tests cover failure at each of the resolver's 27 reads and independent absence
 of either timing field. The resolver is synthetic-tested, not live-validated.
+
+### Bounded capture plugin
+
+The optional `examples/update_capture.c` plugin connects acquisition, configuration,
+installation, restoration and JSONL export. Build it explicitly:
+
+```sh
+python3 scripts/build_snow_host.py --adapter steep --capture-plugin --out /tmp/snow-capture-host
+```
+
+This adds `plugins/update_capture.dll`. It is disabled unless the adjacent
+`update_capture.ini` contains:
+
+```ini
+[capture]
+enabled=1
+seconds=2
+```
+
+Only 1–5 seconds are accepted. This is an experimental live-game probe, not a
+routine gameplay mod. Its lifecycle has been tested under Wine with synthetic
+objects; actual player acquisition and installation in the game remain untested.
+Use a bounded game session when validating it.
+
+On a host pause callback, the plugin's separate adapter instance acquires the
+player from the live registry, checks held-mode/owner/step stability, resolves the
+world job, and configures the probe. Wait for the host log message `capture
+configured; resume starts bounded observation` before resuming. Host callbacks
+are asynchronous; an immediate pause/resume command pair can outrun acquisition
+and produce no capture. A failed acquisition leaves the plugin available for a
+later pause; failed probe configuration ends that attempt.
+
+The next resume callback starts one worker. The worker installs the slot, observes
+for the configured window, restores the slot, closes capture and allows up to two
+seconds for drain. It then writes `update_capture.ini.trace.jsonl` beside the
+configuration file. It never calls the pose or velocity setters. Installation,
+restoration and drain results are separate fields: a log existing does not mean
+that any of those operations succeeded. A failed restoration requires investigation;
+do not unload the pinned DLL or overwrite a competing slot to force success.
+
+The first JSONL line reports installation/restoration/drain, capacity drops and
+QPC frequency. Subsequent records contain timing, validity, gates, pending impulse,
+main/rider linear and angular velocities and inverse masses. Process pointers in
+these local traces support identity comparisons only; never reuse them in another
+session or publish the raw trace as an asset-free research receipt. Nonfinite
+floats export as null. Substep remains explicitly unavailable.
+
+The synthetic plugin fixture uses the real configuration/callback/worker/export
+path but replaces acquisition with a supplied fake binding. One Wine run produced
+395 records, no drops, successful restoration/drain, the expected authored test
+velocity change and unchanged angular values. See
+[the session receipt](update_capture_session_validation.json). This is a lifecycle
+check, not a native impulse or scheduler-fidelity result.
