@@ -1268,3 +1268,46 @@ Build anchors: root dispatch `0x14109a650`, compact branch `0x14109ad93` through
 Radix dispatch starts at `0x14109a669`; it has several internal node encodings.
 Completing those node forms, or observing the actual selected live map encoding,
 is necessary before claiming that the complete live action bank is readable.
+
+### Radix branch formats and single-entry leaves
+
+`observe_action_map` extends the compact observer with the inspected tag-3 root
+and three branch families. The [252-case original-instruction comparison](../../native/snow_host/action_map_radix_branch_validation.json)
+checks 84 cases per family across levels and digit positions including bitmap
+word boundaries and high-byte selection. Original lookup and terminal-node code
+execute without substituted helpers. The fixtures are single-branch trees;
+deep mixed-format trees remain a separate validation target.
+
+A tag-3 root begins its first 16-byte node at masked root plus eight. Node byte
+15 identifies its format. Branches select a byte of the unsigned key. At the
+lower levels they first compare the stored compressed prefix in bits above the
+selected byte through bit 55. The tag occupies the top byte and is excluded.
+Pointer tag bits are cleared before following branch storage.
+
+- Tags `0x0f..0x15`: short linear digit list, selecting key bytes 1 through 7.
+  Storage begins with count and up to seven digit bytes; 16-byte child nodes
+  begin at storage plus eight. The matching digit's index selects the child.
+- Tags `0x16..0x1c`: bitmap-ranked children for the same byte levels. Digit
+  divided by 32 selects one of eight 16-byte headers. Its 32-bit bitmap tests
+  presence. The popcount of bits below the selected bit indexes packed children
+  through the header's tagged pointer at plus eight.
+- Tags `0x1d..0x22`: dense tables indexed directly by key bytes 1 through 6.
+  Root-only tag `0x23` selects byte 7. Each child occupies 16 bytes.
+- Tags `0x08..0x0e` are empty terminals. Tags `0x2c..0x32` compare the low 56
+  key bits and return the node's first qword as the value slot on a match.
+
+These are functional format descriptions, not recovered class names. Missing
+prefix/digit/leaf matches return `missing`; a present null value remains `found`
+with action zero. Other leaves report `unsupported`. Corrupt linear counts,
+repeated node addresses, null child storage, overflow and failed reads are
+rejected. A depth or budget limit reports `limit`, not missing.
+
+Radix traversal is capped at 16 nodes per pass, 128 total exact reads and 8192
+bytes. Both traversal receipts, including addresses and bytes read, must match.
+This observes only the selected path; it does not detect changes in unvisited
+branches, ABA reuse or guarantee atomicity/lifetime. Tests additionally cover
+prefix rejection before dereference, unstable values, cycles and depth limits.
+
+Packed-array and bitmap leaves still require decoding. Until those and deep
+mixed traversal are validated, the observer is an explicitly partial inspection
+API and must not be used to declare an arbitrary live action absent.

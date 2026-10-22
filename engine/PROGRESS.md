@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Radix action-map branch traversal added: linear digits, bitmap rank and dense
+children, plus empty/single-entry leaves. 252 original-instruction comparisons
+pass across all three families. Bounded reader retains explicit unsupported and
+limit results and compares complete selected-path receipts. Packed-array/bitmap
+leaves and deep mixed-format original validation remain open; no live reader
+claim. See [radix formats](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#radix-branch-formats-and-single-entry-leaves).
+
 Bounded compact action-map observer added: six reads/528 bytes maximum, duplicate
 samples, explicit missing/found-null/unsupported/invalid distinctions. Exact
 returned slots match 589 original-instruction cases for populations 1..31.

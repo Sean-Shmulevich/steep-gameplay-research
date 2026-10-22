@@ -1,0 +1,20 @@
+{
+  "evidence": "Original radix branch dispatch and immediate leaf versus bounded reader",
+  "passed": true,
+  "cases": 252,
+  "families": {
+    "linear": 84,
+    "bitmap": 84,
+    "dense": 84
+  },
+  "game_process": false,
+  "max_reader_nodes_per_pass": 16,
+  "max_reader_calls": 128,
+  "max_reader_bytes": 8192,
+  "code_sha256": "e6f811750a249346a4877fa795378f7201e7ac84d62fd8654c176d32ae7aa4ce",
+  "limits": [
+    "Array and bitmap leaf formats remain unsupported",
+    "Synthetic single-branch trees; deep mixed paths not yet original-instruction validated",
+    "No live ownership, lifetime or concurrent writer proof"
+  ]
+}

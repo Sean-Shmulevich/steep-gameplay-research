@@ -41,3 +41,40 @@ class MapTests(unittest.TestCase):
         r=observe_compact_map(read,4097,keys[0]);self.assertEqual((r.status,r.action),('found',0))
         struct.pack_into('<Q',memory,16,9)
         self.assertEqual(observe_compact_map(read,4097,keys[0]).status,'invalid')
+
+class RadixTests(unittest.TestCase):
+    def test_root_dense_and_immediate_leaf(self):
+        from engine.action_map_observation import observe_action_map
+        mem=bytearray(16384);base=4096
+        struct.pack_into('<Q',mem,8,base+4096);mem[23]=0x23
+        key=3<<56|0x1234;at=4096+3*16
+        struct.pack_into('<QQ',mem,at,123,0x2c<<56|0x1234)
+        read=lambda a,n:bytes(mem[a-base:a-base+n])
+        r=observe_action_map(read,base|3,key)
+        self.assertEqual((r.status,r.action),('found',123))
+        self.assertEqual(observe_action_map(read,base|3,key+1).status,'missing')
+        mem[at+15]=0x24
+        self.assertEqual(observe_action_map(read,base|3,key).status,'unsupported')
+    def test_cycle_and_failed_reads(self):
+        from engine.action_map_observation import observe_action_map
+        # Dense node selecting itself on digit zero.
+        raw=struct.pack('<QQ',4104,0x1d<<56)
+        self.assertEqual(observe_action_map(lambda a,n:raw,4099,0).status,'invalid')
+        self.assertEqual(observe_action_map(lambda a,n:b'',4099,0).status,'invalid')
+
+    def test_prefix_rejection_and_path_change(self):
+        from engine.action_map_observation import observe_action_map
+        # Level-one dense branch compares bits 16..55 before touching children.
+        raw=struct.pack('<QQ',0,0x1d<<56|0x12340000)
+        self.assertEqual(observe_action_map(lambda a,n:raw,4099,0).status,'missing')
+        calls=0
+        def changing(a,n):
+            nonlocal calls
+            calls+=1
+            return struct.pack('<QQ',calls,0x2c<<56|5)
+        self.assertEqual(observe_action_map(changing,4099,5).status,'unstable')
+
+    def test_depth_budget_does_not_claim_missing(self):
+        from engine.action_map_observation import observe_action_map
+        def chain(a,n):return struct.pack('<QQ',a+16,0x1d<<56)
+        self.assertEqual(observe_action_map(chain,4099,0).status,'limit')
