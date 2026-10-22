@@ -1,0 +1,15 @@
+{
+  "evidence": "Original clock accessor and candidate exclusion scan",
+  "cases": 512,
+  "passed": true,
+  "comparison": "Selected pointer and ordered registry identity queries",
+  "substitutions": [
+    "Registry acquisition supplies synthetic identities with nonterminal reference counts"
+  ],
+  "limits": [
+    "Reference release/destruction effects not reconstructed",
+    "No clock producer or physical unit identified",
+    "Synthetic object graph, no live provenance"
+  ],
+  "game_process": false
+}

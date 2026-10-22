@@ -2187,3 +2187,54 @@ all read failure positions, changed configuration/keys, handle metadata,
 bounds, signed zero, padding, inactive handles and global gating. Next: wire a
 narrow private collector with fresh chain provenance; do not append this to the
 212-request capture without re-budgeting the whole experiment.
+
+## Ramp clock object selection
+
+[`select_ramp_clock`](../../engine/action_clock_selection.py) reconstructs the
+selection semantics of the ramp clock accessor at RVA `0x66d970`, including
+its fallback scan at `0x66d9d0`. This selects an object whose +0x1050 field the
+ramp reads; it does not yet identify the field's producer or physical unit.
+The API is stateless and accepts current object/handle facts plus an explicit
+registry-identity callback. Registry ownership and destruction are excluded.
+
+```text
+if manager is absent: return null
+if context exists and context.index != -1:
+    if override handle is active and its object is nonnull:
+        return override object
+for candidate handle in manager order:
+    if active and object is nonnull:
+        if registry_identity(object) not in excluded identities:
+            return object
+if registry_identity(fallback object) not in excluded identities:
+    return fallback object
+return null
+```
+
+The override bypasses the exclusion scan. Inactive candidate handles are
+skipped without registry queries. Exclusion compares registry identities,
+not raw object pointers. The scan preserves candidate order and stops at the
+first eligible object. The fallback is queried even if its raw pointer is
+zero; the callback must define the registry behavior in that case.
+
+Build-specific evidence: context index is +0x200 and override handle pointer
++0x1e8. The manager candidate handle array is +0x72 with uint16 count +0x7c;
+excluded identity array is +0x7e with uint16 count +0x88; fallback object is
++0x98. Handle activation is the sign bit of the dword at +0xc. The original
+acquires registry identities through RVA `0x11925a0`, then decrements a
+reference and can release them through `0x1194350`. Calling the native
+accessor is therefore not equivalent to passive memory inspection. A future
+read-only observer must reconstruct selection from fresh, bounded reads or
+explicitly record an unknown registry dependency.
+
+The [offline receipt](../../native/snow_host/action_clock_selection_validation.json)
+records 512 original-accessor cases matching selected pointers and ordered
+registry queries. It exercises manager absence, context presence/index,
+override activation, candidate activation and exclusions. Registry acquisition
+is supplied with synthetic identities and nonterminal reference counts;
+reference-destruction paths are not validated. No live game was used.
+
+This narrows where to inspect clock state. It does not prove milliseconds,
+seconds, scheduler substeps, pause behavior or clock ownership by the player.
+Next: identify writes to the selected object's +0x1050 and verify how selection
+relates to the active player context before fitting timing constants.
