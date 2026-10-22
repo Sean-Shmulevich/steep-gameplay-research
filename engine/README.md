@@ -786,3 +786,10 @@ with recovered float32 arithmetic. Diagnostics include `input_speed`. The normal
 source and sampling time remain authored, especially while airborne; this is not
 proof of original cached-normal behavior. Vertical flight over flat terrain no
 longer selects the fast input profile solely because of vertical speed.
+
+The input projection normal is now cached in `_snow_physics.projection_normal`.
+Supported updates replace it with sampled terrain; unsupported updates retain
+it. This follows the recovered retention behavior but uses support as a proxy
+for native positive immersion and omits native candidate fitting/smoothing.
+Missing checkpoint state and airborne spawns use a synthetic world-up seed.
+`input_speed.projection_normal` and `normal_update` expose these choices.

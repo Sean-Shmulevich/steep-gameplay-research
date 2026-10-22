@@ -10274,3 +10274,35 @@ runtime still samples terrain below the body; it does not claim native airborne
 normal behavior. `input_speed` diagnostics expose speed, projection and dot.
 Pure vertical flight above a horizontal plane consequently stays at the normal
 profile rather than selecting the fast profile just from vertical speed.
+
+
+### Cached projection normal lifetime
+
+Follow-up inspection identifies the projection normal as the third basis vector
+of a cached frame. The frame writer copies all four candidate lanes directly to
+that slot before constructing the other basis vectors. The upstream rebuilding
+block is entered only when the immersion accumulator is strictly greater than
+zero. Nonpositive values skip the rebuild and preserve the previous normal.
+This is distinct from the separate air-clock threshold of 0.001.
+
+Inside the positive-immersion branch, the inspected code aggregates eligible
+contact normals weighted by contact values, normalizes, considers a fallback fit,
+and can smooth a rotation from the prior normal. The final candidate is passed
+to the frame writer. Those branches and their complete data producers remain
+unreconstructed here. A raw current terrain normal is not equivalent to this
+stateful procedure.
+
+The [bounded instruction receipt](../../native/snow_host/projection_normal_gate_validation.json)
+checks five finite immersion values, including positive 0.00001 below the air
+clock threshold, and three exact four-lane candidate copies. It does not execute
+the intervening candidate generation or complete frame construction.
+
+The runtime now retains `projection_normal` while unsupported and updates it
+from terrain when supported. Support is an authored proxy for positive immersion;
+terrain is an authored candidate without native aggregation or smoothing. Old
+checkpoints and airborne spawns without that state use synthetic world-up. The
+new state is checkpointed with the body. Diagnostics identify the actual normal
+and whether it was retained or replaced by a supported candidate. This supersedes
+the previous runtime behavior of resampling the input projection normal every
+airborne frame. The native initialization and exact airborne transitions remain
+open until their producers are reconstructed or measured.

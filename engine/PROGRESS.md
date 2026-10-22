@@ -4282,3 +4282,10 @@ Projected input speed: 1,028 original-instruction cases match the reconstructed
 velocity projection. Runtime profile selection now uses projected body velocity;
 terrain-normal sourcing and sampling cadence remain authored substitutes. Added
 airborne tests separating vertical motion from tangent profile speed.
+
+Cached-normal lifetime: original guard tests confirm rebuilding only for positive
+immersion, including values below the separate .001 air-clock threshold. The
+frame writer copies the final candidate unchanged. Runtime now retains its last
+supported projection normal in flight; support gating, terrain candidates and
+world-up initialization remain authored substitutions. Full native normal
+aggregation, fitting and rotation smoothing remain open.

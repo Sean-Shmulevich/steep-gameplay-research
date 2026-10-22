@@ -153,3 +153,28 @@ class ProjectedInputSpeedTests(unittest.TestCase):
         result=step(body,{},Plane(),.01,{})
         self.assertEqual(result['input_speed']['speed'],2.5)
         self.assertAlmostEqual(result['control_blend'],.4,places=6)
+
+
+class CachedProjectionNormalTests(unittest.TestCase):
+    def test_airborne_terrain_change_retains_cached_normal(self):
+        body=rider(); world=Plane(slope=.5)
+        first=step(body,{},world,.01,{})
+        saved=body['_snow_physics']['projection_normal'][:]
+        self.assertEqual(first['input_speed']['normal_update'],'supported_candidate')
+        body.update(position=[0,0,100],velocity=[10,0,0],grounded=False)
+        second=step(body,{},Plane(slope=-.5),.01,{})
+        self.assertEqual(body['_snow_physics']['projection_normal'],saved)
+        self.assertEqual(second['input_speed']['projection_normal'],saved)
+        self.assertEqual(second['input_speed']['normal_update'],'retained')
+
+    def test_airborne_spawn_uses_explicit_world_up_seed(self):
+        body=rider();body.update(position=[0,0,100],velocity=[0,0,10],grounded=False)
+        result=step(body,{},Plane(slope=1),.01,{})
+        self.assertEqual(result['input_speed']['projection_normal'],[0,0,1])
+        self.assertEqual(result['input_speed']['speed'],0)
+
+    def test_invalid_cached_normal_leaves_body_unchanged(self):
+        body=rider();body['_snow_physics']={'projection_normal':[1,2]}
+        before=copy.deepcopy(body)
+        with self.assertRaises(ValueError):step(body,{},Plane(),.01,{})
+        self.assertEqual(body,before)

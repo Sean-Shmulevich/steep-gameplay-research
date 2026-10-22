@@ -134,6 +134,13 @@ def step(body, controls, world, dt, config):
     height, n, material, support_velocity = _sample(world, p)
     rel = sub(v, support_velocity)
     supported = bool(b.get('grounded')) and p[2] <= height + 0.03 and dot(rel, n) <= 0.25
+    # Native normal rebuilding is immersion-gated. Support is an authored proxy;
+    # candidate generation/smoothing remain unreconstructed. Seed old checkpoints
+    # and airborne spawns with explicit synthetic world-up.
+    projection_normal = _vec(state.get('projection_normal', [0., 0., 1.]), 3)
+    if supported:
+        projection_normal = n
+    state['projection_normal'] = list(projection_normal)
     was_grounded = supported
     events = []
     contact_impulse = (0., 0., 0.)
@@ -153,7 +160,9 @@ def step(body, controls, world, dt, config):
         state['charge'] = 0.
     state['jump_held'] = jump
     gravity = (0., 0., -cfg['gravity'])
-    input_speed = projected_speed(v, n)
+    input_speed = projected_speed(v, projection_normal)
+    input_speed['projection_normal'] = list(projection_normal)
+    input_speed['normal_update'] = 'supported_candidate' if was_grounded else 'retained'
     input_speed['projected_velocity'] = list(input_speed['projected_velocity'])
     speed_blend = preset_weight(input_speed['speed'])
     if supported:
@@ -230,6 +239,6 @@ def step(body, controls, world, dt, config):
         absorption=a, material=material.get('name', 'unnamed'),
         evidence=dict(kernels='recovered local reference math',
                       controller='synthetic independent implementation',
-                      input_speed='recovered projection; terrain normal and sampling time are authored substitutes',
+                      input_speed='recovered projection; support gate, world-up seed and terrain candidate are authored substitutes',
                       steering_filter='recovered float32 cooker and default SSE decay; synthetic coefficients and cadence',
                       landing='synthetic thresholds; no original classifier claim'))

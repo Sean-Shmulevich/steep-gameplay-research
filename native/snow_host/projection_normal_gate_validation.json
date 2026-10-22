@@ -1,0 +1,32 @@
+{
+  "evidence": "original normal rebuild entry gate and frame-writer copy",
+  "game_process": false,
+  "gate_cases": [
+    {
+      "immersion": -1.0,
+      "rebuild_entered": false
+    },
+    {
+      "immersion": 0.0,
+      "rebuild_entered": false
+    },
+    {
+      "immersion": 1e-05,
+      "rebuild_entered": true
+    },
+    {
+      "immersion": 0.001,
+      "rebuild_entered": true
+    },
+    {
+      "immersion": 1.0,
+      "rebuild_entered": true
+    }
+  ],
+  "exact_four_lane_copy_cases": 3,
+  "limitations": [
+    "Contact candidate generation, fallback fit, smoothing and remaining basis construction excluded",
+    "This guard is immersion > 0, not the separate air-clock threshold .001",
+    "Supported state in reconstructed runtime is only a proxy for native immersion"
+  ]
+}
