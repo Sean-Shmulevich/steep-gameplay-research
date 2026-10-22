@@ -1717,3 +1717,60 @@ Next: rerun the corrected reader and enumerate the directional processor chain.
 That will determine what shaping follows the reconstructed directional
 combination before the composite publishes its result. Publication scheduling
 and device-cache writers remain separate unresolved joins.
+
+### Ordered processor-chain kernel
+
+`engine/action_processor_chain.py` implements the chain observed behind the
+directional child. `process_chain(raw16, configuration_flags, evaluate)` takes
+explicit child configuration outcomes and a caller-supplied child evaluator.
+False means a resolved configuration disables the child; true enables it;
+None means no configuration resolved and the child is invoked. No unknown
+child is silently replaced by a pass-through or default processor.
+
+The inspected loop snapshots its unsigned 16-bit count and visits the pointer
+array in increasing order. Its vector field updates are:
+
+```text
+parent.accumulator = input
+for child in ordered_children:
+    child.raw = parent.accumulator
+    child.working = parent.accumulator
+    config = resolve_using_handle_pointer_and_active_sign(child.handle)
+    if config is null or config.processing_enabled_byte != 0:
+        child.working = copy16(child.process(child.working))
+    child.published = child.working
+    parent.accumulator = child.working
+return address_of(parent.accumulator)
+```
+
+The parent accumulator is +0x30; child raw/working/published are +0x50/+0x20/
++0x60. The child method is virtual slot +0x28. A bypassed child still overwrites
+all three vector fields with the incoming value, but its processing callback
+and callback-specific state updates do not run. An empty chain returns its
+input unchanged. This is sequential composition, not averaging or selection.
+
+The [original-instruction receipt](../../native/snow_host/action_processor_chain_validation.json)
+records 2,343 passing cases. It executes the original chain loop with supplied
+child callback results, covering lengths zero through four, active enabled and
+disabled configurations, inactive handles with pointers, active null handles,
+non-boolean enable bytes and raw NaN/signed-zero payloads. It compares the
+parent output and returned address, exact child call order/arguments, and every
+child's three vector fields. The cases contain 7,032 invoked stages and 1,758
+bypassed stages. Child formulas and concurrent configuration mutation remain
+outside this validation.
+
+`engine/action_processor_chain_observation.py` prepares the corresponding
+read-only inspection. It enumerates one level of up to eight stages, retaining
+order and repeated child pointers. Each stage records its table, callback,
+resolved configuration and enable flag. Two semantic receipts must match;
+handle comparison uses only the pointer and active sign bit. Structural limits
+are 104 reads and 728 bytes across both passes. A larger chain reports `limit`
+instead of silently truncating. Unknown root type, null required links and
+failed reads refuse observation. Nested chains are recorded as callback
+identities, not traversed automatically.
+
+Public tests cover noncommuting composition, bypass publication, unknown child
+result rejection, empty chains, duplicate stage identities, bounds, faults at
+each read and changed configuration. No game was launched for this pass. The
+chain observer still needs integration with a freshly verified source and a
+live capture; the actual directional chain's stage types remain unresolved.

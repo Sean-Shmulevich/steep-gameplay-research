@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Ordered processor-chain kernel matches 2,343 original-instruction cases,
+including child call order, raw/working/published fields and bypass behavior.
+A bounded one-level chain observer is implemented and fixture-tested, preserving
+stage order and duplicate identities. No live chain contents yet. Next: integrate
+the reader with fresh source identity, capture stage callbacks/configuration,
+and decode the actual shaping methods. See
+[chain kernel and reader](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#ordered-processor-chain-kernel).
+
 Partial live source capture identifies directional query IDs 65/68/87/83 and a
 chained processor. Vector receipt initially rejected changing unused handle
 bits; pointer/sign-only comparison now passes offline replay of those reads.

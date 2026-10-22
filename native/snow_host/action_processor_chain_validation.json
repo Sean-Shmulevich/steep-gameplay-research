@@ -1,0 +1,19 @@
+{
+  "evidence": "Original processor-chain loop with supplied child processing results",
+  "cases": 2343,
+  "passed": true,
+  "invoked_stages": 7032,
+  "bypassed_stages": 1758,
+  "raw_bit_comparison": true,
+  "compared": [
+    "Parent output and returned address",
+    "Child call order and arguments",
+    "Child raw working and published fields"
+  ],
+  "game_process": false,
+  "limits": [
+    "Child processing formulas supplied",
+    "No configuration mutation or concurrent lifetime proof",
+    "Live chain contents still unknown"
+  ]
+}
