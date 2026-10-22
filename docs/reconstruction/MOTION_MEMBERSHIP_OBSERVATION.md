@@ -935,3 +935,55 @@ an ingestion call, prove atomicity, resolve address reuse, or establish the
 producer's generation. The next experiment should compare these observations
 within directly attributed request/substep sequences, retaining invalid samples
 and measuring observer overhead rather than inferring missing events.
+
+### Aggregate comparison of motion observations
+
+`scripts/analyze_update_capture.py` includes the optional motion channel via
+`scripts/analyze_motion_capture.py`. It reports field-change counts without
+publishing pointer identities, raw input vectors or baseline payloads. Validation
+rejects malformed flags, word widths, vector lengths and pointer encodings.
+Rejected or missing observations break adjacent comparisons.
+
+Three comparisons remain distinct: before-to-after within an update;
+after-to-before between consecutively numbered substeps in an observed batch;
+and after-to-before across a changed outer completion counter. The latter is an
+observed boundary, not proof that exactly one frame elapsed. Neighbor comparisons
+require one actor and motion address, valid frame/job flags, ordered nonoverlapping
+wrapper intervals and valid ordinal/count bounds. Address equality cannot detect
+object reuse. Equal raw bits cannot prove that a writer did not run.
+
+Synthetic tests cover raw signed-zero differences, within/gap/boundary separation,
+rejected samples, malformed arrays and flags, missing channels, overlap, changed
+actors and skipped ordinals. This analyzer does not promote a comparison into
+input-ingestion ordering or atomic-state evidence.
+
+### Live motion-to-substep correlation
+
+The [aggregate live receipt](../../native/snow_host/motion_substep_live_observation.json)
+records 226 motion-valid, job-valid and direct-frame-valid updates. No records
+were dropped. All 207 observed outer groups had complete ordinal sequences:
+188 records belonged to one-substep batches and 38 to two-substep batches.
+Hook restoration, recorder drain, launch-setting restoration, bottle shutdown
+and original DLL hash verification passed.
+
+No sampled motion field changed inside any of the 226 actor-update wrappers.
+No sampled motion field changed across the 19 consecutive-substep gaps within
+an observed batch. Across all 206 observed outer-counter boundaries, only
+baseline word index 5 changed: the Y component of the smoothed four-vector.
+Ingested/current input words and both nonzero counters were zero in the sampled
+records; the observed mode tuple was top-level 0, state 3, child 1. No steering
+input was applied during this capture.
+
+The smoothed vector's decay matched `refresh_input_baselines` bit-for-bit on
+all 206 boundary comparisons using candidate float32 alpha 0.1 and the sampled
+zero current vector. This is a hypothesis check using the existing recovered
+formula. Alpha was not read from the live profile, and matching the decay does
+not uniquely identify a coefficient, writer or call count. No raw input or
+baseline vectors are published in the receipt.
+
+This gives a concrete cadence lead: in this idle observation, the smoothed
+baseline changed between observed batches and stayed stable through the
+sampled substeps. It does not establish input-ingestion execution or timing.
+Next: capture the live profile coefficient and correlate a controlled nonzero
+input, checking whether changes appear before the first substep and whether
+the same baseline formula still predicts the observed values.

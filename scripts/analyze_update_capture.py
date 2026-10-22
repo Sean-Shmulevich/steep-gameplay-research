@@ -10,6 +10,10 @@ import json
 import math
 from pathlib import Path
 import struct
+try:
+    from scripts.analyze_motion_capture import analyze_motion
+except ImportError:
+    from analyze_motion_capture import analyze_motion
 
 
 def f32(x):
@@ -236,6 +240,7 @@ def analyze(rows):
     direct = direct_substeps(records)
     return {
         'direct_substeps': direct,
+        'motion_observations': analyze_motion(records),
         'job_attribution': job_attribution(records),
         'wrapper_intervals': interval_order(records),
         'preconsume_counter': counter_changes(records),

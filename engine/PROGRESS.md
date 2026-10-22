@@ -2,6 +2,15 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live motion/substep correlation passed: 226 valid pairs, 207 complete observed
+batches, no dropped records. Motion stayed unchanged inside callbacks and across
+19 within-batch gaps; smoothed baseline Y changed across all 206 outer boundaries.
+Existing smoothing math matched all 206 four-vector transitions with candidate
+alpha 0.1, not a live profile read. Inputs/counters were zero, so nonzero response
+and ingestion ordering remain open. Lifecycle and cleanup passed. Added a tested
+payload-free aggregate analyzer. See
+[live evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#live-motion-to-substep-correlation).
+
 Optional motion channel integrated into recorder/probe, ABI v5. Before/after
 validity is independent of job, frame and body evidence; rejection clears only
 the failed motion sample. Capture plugin and launcher offer opt-in observation,

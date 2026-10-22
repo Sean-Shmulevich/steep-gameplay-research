@@ -1,0 +1,86 @@
+{
+  "evidence": "Live original-game observation through bounded authored ABI-v5 recorder",
+  "game_launched": true,
+  "session_label": "20261022T222020Z-2622ef87",
+  "private_trace_sha256": "3f755ef0c8138869cb153ebbd066dae1e2a1906eebd28e5aef0af506fbe2fad1",
+  "motion_observations": {
+    "counts": {
+      "attempted_records": 226,
+      "before_rejected": 0,
+      "after_rejected": 0,
+      "valid_pairs": 226,
+      "observed_boundary_pairs": 206,
+      "adjacent_same_batch_pairs": 19
+    },
+    "within_update_changed_fields": {},
+    "same_batch_gap_changed_fields": {},
+    "observed_boundary_changed_fields": {
+      "baseline_bits": 206
+    },
+    "ingestion_execution_proved": false,
+    "atomic_snapshot_proved": false,
+    "producer_generation_established": false
+  },
+  "direct_substeps": {
+    "valid_records": 226,
+    "unavailable_records": 0,
+    "invalid_frame_records": 0,
+    "malformed_records": 0,
+    "identity_rejected_records": 0,
+    "selected_count_histogram": {
+      "1": 188,
+      "2": 38
+    },
+    "observed_outer_groups": 207,
+    "complete_ordinal_sequences": 207,
+    "partial_or_nonsequential_groups": 0,
+    "request_minus_outer_mod32_histogram": {
+      "7": 226
+    },
+    "counter_semantic_equivalence_proved": false,
+    "global_invocation_identity_established": false
+  },
+  "wrapper_intervals": {
+    "available_intervals": 226,
+    "unavailable_intervals": 0,
+    "invalid_intervals": 0,
+    "zero_duration_intervals": 0,
+    "same_actor_overlapping_pairs": 0,
+    "nonoverlapping_adjacent_pairs": 225,
+    "thread_changes_between_nonoverlapping_neighbors": 190,
+    "reservation_order_entry_reversals": 0,
+    "scheduler_exclusion_proved": false,
+    "input_ingestion_order_proved": false
+  },
+  "observed_motion_mode_tuple": [
+    0,
+    3,
+    1
+  ],
+  "sampled_input_vectors_all_zero_bits": true,
+  "sampled_nonzero_counters_all_zero": true,
+  "changed_baseline_word_indices": [
+    5
+  ],
+  "smoothing_hypothesis": {
+    "alpha_candidate": 0.1,
+    "alpha_read_from_live_profile": false,
+    "comparison": "refresh_input_baselines smoothed four-vector, previous after to next before across changed outer counter",
+    "matching_boundary_pairs": 206,
+    "tested_boundary_pairs": 206,
+    "unique_coefficient_or_writer_proved": false
+  },
+  "lifecycle": {
+    "ok": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "No steering input applied during the two-second capture",
+    "Matching samples do not establish atomicity or address lifetime",
+    "No ingestion-call count or producer generation observed",
+    "Candidate coefficient matches are not a direct live profile read",
+    "No nonzero control response or universal update cadence established"
+  ]
+}
