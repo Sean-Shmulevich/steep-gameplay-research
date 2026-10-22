@@ -1,0 +1,12 @@
+{
+  "evidence": "original angular gain coefficient selection and original cooker/lookup using reconstructed default table",
+  "game_process": false,
+  "exact_gain_cases": 120,
+  "slow_coefficient_cases": 24,
+  "limitations": [
+    "Outer .2 activation gate, cross-product gate and angle lookup not executed",
+    "Subsequent trigonometry, rotation and normalization excluded",
+    "Floor helper intercepted; SSE default decay table supplied",
+    "Finite inputs and round-to-nearest-even mode only"
+  ]
+}

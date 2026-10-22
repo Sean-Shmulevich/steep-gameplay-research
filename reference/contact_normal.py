@@ -63,3 +63,18 @@ def select_candidate(weighted, fitted, previous, *, had_previous_contact, recipr
     use_fit=weighted_dot<=fit_dot
     return {'normal':(fitted+(-0. if corrected else 0.,)) if use_fit else weighted+(0.,),
             'source':'fitted' if use_fit else 'weighted','fit_corrected':corrected}
+
+
+def smoothing_gain(previous_z, candidate_z, elapsed_dt, *, decay_lookup):
+    """Temporary angular interpolation gain, reset on every invocation.
+
+    Only called after the outer smoothing gates; it does not implement them.
+    """
+    from reference.input_cooker import cook
+    previous_z,candidate_z=map(f32,(previous_z,candidate_z))
+    base_rate=1. if previous_z<f32(.15) and candidate_z>f32(.3) else 60.
+    result=cook(f32(.0001),f32(.75),elapsed_dt,
+                {'baseDampFactorToZero':0.,'proportionalDampFactorToZero':0.,
+                 'baseDampFactorToOne':base_rate,'proportionalDampFactorToOne':0.},
+                decay_lookup=decay_lookup,epsilon=f32(.0001))
+    return {'base_rate':base_rate,**result}

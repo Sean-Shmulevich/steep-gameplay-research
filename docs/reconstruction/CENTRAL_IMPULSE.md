@@ -10362,3 +10362,33 @@ captured from emulated RSQRTPS, not an asserted physical-hardware result. Tests
 also cover no-history behavior, ties, strict low-Z boundaries and signed zero.
 The runtime's terrain candidate remains labeled approximate until fitting and
 smoothing are connected; this closes the intermediate selection boundary only.
+
+
+### Normal angular smoothing gain
+
+`reference.contact_normal.smoothing_gain` reconstructs the temporary gain used
+for angular interpolation. Every call initializes current gain to float32(0.0001)
+and cooks toward float32(0.75) with the supplied elapsed interval. ToZero base
+and proportional terms are zero. ToOne proportional is also zero. ToOne base
+is 60, except when prior normal Z < float32(0.15) and selected candidate Z >
+float32(0.3), when base is 1. Both tests are strict. Snap epsilon is 0.0001.
+The 60/1 selection is an additive base rate, not exponential damping. The actual
+cooker/lookup path remains explicit to preserve arithmetic and any lookup-at-zero
+rounding. The gain is freshly initialized; it is not a persistent filter state.
+
+At dt=1/60 the ordinary branch reaches the 0.75 target, while the special branch
+returns about 0.01677. This is a gain on an angular step, not directly a component
+blend of the two normals. The [joined comparison](../../native/snow_host/normal_smoothing_gain_validation.json)
+executes coefficient selection, original cooker and original lookup for 120 cases
+with the reconstructed default table. All gain outputs match, including 24 slow
+coefficient cases and strict Z boundaries. Only the floor helper is intercepted.
+
+Inspection of the surrounding block shows additional gates: the runtime control
+at +0xa6c must exceed float32(0.2), the cross-product lanes must not all be within
+float32(0.00001), and the angle-table result must be nonzero. The cross product
+of old normal and candidate supplies the rotation axis. The code multiplies gain
+by the angle-table result and 0.5, constructs a quaternion using sine/cosine,
+rotates the old normal, then normalizes it before writing the frame. The exact
+angle-table initialization, trigonometric routines, runtime gate producer and
+joined rotation remain unverified here. No complete smoother or runtime adoption
+is claimed by this gain receipt.

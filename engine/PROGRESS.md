@@ -4298,3 +4298,8 @@ replacing the runtime's labeled terrain-normal substitute with this intermediate
 Contact candidate selection: 324 original-instruction comparisons match, including
 low-Z correction, prior-normal alignment and fitted-candidate tie precedence.
 Fitting and subsequent angular smoothing still remain before runtime integration.
+
+Normal smoothing gain: 120 original coefficient/cooker/lookup cases match. The
+gain restarts from .0001 toward .75 each call, using base rate 60 or 1 depending
+on old/candidate Z. Full angular lookup, quaternion rotation and smoothing gate
+ownership remain before this can replace runtime normal substitution.

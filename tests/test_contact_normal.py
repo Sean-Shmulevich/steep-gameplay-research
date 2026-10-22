@@ -51,3 +51,23 @@ class ContactNormalTests(unittest.TestCase):
         r=select_candidate((0,0,1),(1,0,.1),(-1,0,0),
                            had_previous_contact=True,reciprocal_sqrt=lambda x:1)
         self.assertFalse(r['fit_corrected'])
+
+    def test_smoothing_gain_resets_and_uses_base_rate(self):
+        from reference.contact_normal import smoothing_gain
+        from reference.decay_exp import cooker_table
+        from reference.runtime_curve import evaluate
+        table=cooker_table(vector_path='sse2',scalar_path='sse2')
+        lookup=lambda x:evaluate(x,**table)
+        normal=smoothing_gain(1,1,1/60,decay_lookup=lookup)
+        slow=smoothing_gain(0,1,1/60,decay_lookup=lookup)
+        self.assertEqual(normal['base_rate'],60)
+        self.assertEqual(normal['value'],.75)
+        self.assertEqual(slow['base_rate'],1)
+        self.assertLess(slow['value'],.02)
+        self.assertEqual(slow['lookup_argument'],0)
+        self.assertEqual(slow,smoothing_gain(0,1,1/60,decay_lookup=lookup))
+
+    def test_slow_gain_thresholds_are_strict(self):
+        from reference.contact_normal import smoothing_gain
+        for old,new,expected in ((.15,1,60),(0,.3,60),(.1499,.3001,1)):
+            self.assertEqual(smoothing_gain(old,new,.01,decay_lookup=lambda x:1)['base_rate'],expected)
