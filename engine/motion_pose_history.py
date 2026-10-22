@@ -50,3 +50,30 @@ def advance_pose_history(
     if source == 'missing_key':
         return PoseHistory(state.current, state.previous, 0)
     return state
+
+
+def query_endpoints(state: PoseHistory, local_point: tuple[float, float, float]):
+    """Reconstruct the two history-based query endpoints, not body velocity.
+
+    Follows the float32 operations in the endpoint prefix and rotation helper.
+    Does not normalize quaternions or divide displacement by time. The query
+    shape, orientation, collision execution and resulting hit are not modeled.
+    """
+    import struct
+    def f(x):
+        return struct.unpack('<f', struct.pack('<f', x))[0]
+    if len(local_point) != 3:
+        raise ValueError('local point needs three components')
+    v = tuple(f(x) for x in local_point)
+    def endpoint(pose):
+        px, py, pz, _, x, y, z, w = struct.unpack('<8f', pose)
+        q = (x, y, z)
+        products = [f(q[i]*v[i]) for i in range(3)]
+        dot = f(products[0] + f(products[1] + products[2]))
+        cross = [f(f(q[(i+1)%3]*v[(i+2)%3]) -
+                   f(q[(i+2)%3]*v[(i+1)%3])) for i in range(3)]
+        scale = f(f(w*w) - 0.5)
+        return tuple(f(p + f(2.0*f(f(f(dot*q[i]) + f(cross[i]*w)) +
+                                   f(scale*v[i]))))
+                     for i, p in enumerate((px, py, pz)))
+    return endpoint(state.previous), endpoint(state.current)

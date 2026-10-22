@@ -241,3 +241,61 @@ provider gap followed by key invalidation, and reject malformed API inputs. The
 model is an inspection kernel; it is not wired into every snow substep because
 that would invent an update cadence. A future capture should correlate this
 branch's invocation and count with motion requests before assigning it a clock.
+
+## Pose history feeds query endpoints
+
+The further consumer is `0x14055ace0`. Its inspected body checks actor `+0xfe4`,
+a required motion `+0x48` object, and a time threshold before iterating a
+configuration array with 28-byte records. It invokes `0x1404ece90` for each
+record and stops at the first true return. The result becomes motion `+0x565`
+in preparation B. This alone does not identify the gameplay meaning of that byte.
+
+The query helper calls `0x1404f5700`, which consumes the history directly:
+
+```text
+start = previous_position + rotate(previous_rotation, record.local_point)
+end   = current_position  + rotate(current_rotation, record.local_point)
+displacement = end - query_shape_origin
+length = norm(displacement)
+# after a minimum-length test:
+direction = displacement / length
+hit = execute_query(shape, direction, length, world)
+if hit:
+    copy_hit_to_caller_output()
+return hit
+```
+
+The endpoint helper builds a transform whose translation uses `start`; the
+subsequent shape initializer and backend are not independently validated here.
+Thus the endpoint pair is established, while identifying the whole operation as
+a swept collision query is an interpretation of its construction and call flow.
+It is not a velocity calculation: the endpoint prefix has no division by time.
+The exact shape type, hit filtering and physical response remain unresolved.
+
+`query_endpoints` in the independent pose-history module implements the endpoint
+prefix. For quaternion `(q,w)` and point `v`, its rotation helper evaluates:
+
+```text
+rotated = 2 * (dot(q,v)*q + w*cross(q,v) + (w*w - 0.5)*v)
+endpoint = position + rotated
+```
+
+The implementation preserves the inspected float32 operation order. It does not
+normalize the quaternion. The helper's fourth output lane is zero; the API
+returns XYZ. Previous/current positions are the first vector of each history
+pose, and XYZW quaternions the second vector. This convention is now established
+for this consumer; it does not identify the resource key or actor sport.
+
+The [endpoint receipt](../../native/snow_host/motion_endpoint_validation.json)
+contains 32 synthetic cases executed through the original endpoint prefix and
+original rotation helper without substituting those calculations. Both XYZ
+endpoints matched the independent implementation bit for bit, including an
+identity rotation case and arbitrary nonunit quaternions. Execution stopped
+before query orientation construction. No collision backend, hit publication,
+live motion path or input freshness was validated.
+
+The next useful targets are the record-array owner and the downstream hit/flag
+consumers. They can establish what the query tests and how it affects motion.
+The lock-protected guard `0x14052c4a0` is also a state-machine query with possible
+deferred processing, so treating it as a side-effect-free boolean getter would
+be premature.

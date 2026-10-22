@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Pose-history consumer now joins a geometric query path. Its previous/current
+local-point endpoint math is implemented and matches original instructions in
+32 exact-float32 cases. This is query geometry, not established velocity or
+animation playback. Next: identify the query-record owner and hit/flag consumers;
+input freshness and live branch selection remain unresolved. See
+[endpoint evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#pose-history-feeds-query-endpoints).
+
 Preparation B contains a two-pose history whose missing-provider path preserves
 readiness, while missing-key resets it. Twelve original-instruction cases passed;
 an independent bit-preserving history API and receipt-backed tests now exist.

@@ -1,0 +1,370 @@
+{
+  "evidence": "original_endpoint_prefix_and_rotation_helper_emulation",
+  "cases": 32,
+  "passed": true,
+  "comparison": "exact float32 bits",
+  "game_process": false,
+  "code_sha256": {
+    "0x1404f5700": "a861266163d00969eb47a5f4fcf61bd2d219480e22198d2dc0e0e538ad3b70c4",
+    "0x141177cb0": "527e3e236cdd9cc81adcb07aa39d868d9e2530521d5714f468cd58dbdde70977"
+  },
+  "rows": [
+    {
+      "current_hex": "0000803f0000004000004040000000000000000000000000000000000000803f",
+      "previous_hex": "000080400000a0400000c040000000000000000000000000000000000000803f",
+      "local_point": [
+        1,
+        0,
+        0
+      ],
+      "start_hex": "0000a0400000a0400000c040",
+      "end_hex": "000000400000004000004040"
+    },
+    {
+      "current_hex": "a8ca36bfb64635c0b12355c0043a3ec0d29a21bf5e2091c01fa642bf2edc9440",
+      "previous_hex": "9f55834047ae83c0fa01debf18a286c0f3519dc008168ac091ac44c00d10ddbf",
+      "local_point": [
+        -1.8643119385973805,
+        0.2620537865884529,
+        -1.671740530810001
+      ],
+      "start_hex": "775d22c352c9d7c22b036bc2",
+      "end_hex": "d2c30bc12059453e1b211cc3"
+    },
+    {
+      "current_hex": "aac8103f286f1ac06f6508c076d626c0bccde8bf855992bf29b86cc055556140",
+      "previous_hex": "339242c0e70e73c0e3028fbfb65428bf9c9339c0799a8e40aa182a3f09618f40",
+      "local_point": [
+        -0.15258328951136368,
+        -1.588850247163934,
+        -1.1179418469762656
+      ],
+      "start_hex": "927bb2bf8cbe21c3591feac0",
+      "end_hex": "6d6b68c27b9b81c2dbc15ec2"
+    },
+    {
+      "current_hex": "a91b863f283c0f40ce7363c011235ec0044a6740d610653f9b315fc015fd113f",
+      "previous_hex": "f2c344c01c53ddbf9c9b633fdb6991c0425c97408113ac3fdc6a9b3f79d18ac0",
+      "local_point": [
+        0.9354923210835513,
+        0.6055943252136342,
+        -1.0093150741843844
+      ],
+      "start_hex": "b8a3ae422735a0c18c2321c2",
+      "end_hex": "dc915f42938d7c419a4756c2"
+    },
+    {
+      "current_hex": "bc6c8740deee50405f5111c00bed6f40fe3233401cf028c07fc956404b938140",
+      "previous_hex": "efada8bf9eea9040b4d681c07253a8be2bd398c05ef3123fe0d50d40866f63bf",
+      "local_point": [
+        -1.8702209478284662,
+        0.8560644048048944,
+        -1.3513958638464656
+      ],
+      "start_hex": "48336cc28ae3f941dd13e841",
+      "end_hex": "b6f6e9c259a093428d8f12c3"
+    },
+    {
+      "current_hex": "d2afea3e87d138404e4688c09d1786c011cabfbf3f8326c0c5c83f4001800f3e",
+      "previous_hex": "706036be8bac96404b0b864069e107c0eb495f404843504052019c3e0f704bc0",
+      "local_point": [
+        1.0323969070848715,
+        0.5250070393901995,
+        1.1941293034717049
+      ],
+      "start_hex": "6f3c0e42ae6a984258302142",
+      "end_hex": "5ebb75c0b0e9933e5c8262bf"
+    },
+    {
+      "current_hex": "be5774c078fd4dc0a334a33fcb62913f826c8240a54c613f5919af3ff68019c0",
+      "previous_hex": "15a940c0fecf1140f73e88407f8ee23f6d978040b16f4d40b397ee3fa03e8440",
+      "local_point": [
+        -1.6674465508504657,
+        1.3407690852912246,
+        1.1174893814241296
+      ],
+      "start_hex": "11514fc238af90c191e90043",
+      "end_hex": "2f4b4ac2e6d91142c45efbc1"
+    },
+    {
+      "current_hex": "714671be9cabadbfdf68ba3f62f69c407f8f3bc0c22123403cf175c00628c33f",
+      "previous_hex": "e25b3b3fcdfb6ec0538a29402f2da7be36eacb3f171a3240805fd43fc05c8740",
+      "local_point": [
+        -1.5281573341560324,
+        -0.4670607656966905,
+        -1.2750395967767392
+      ],
+      "start_hex": "d70ebdc2ab3863c25a79fbc1",
+      "end_hex": "3b5f8ac23ac43442534b48c2"
+    },
+    {
+      "current_hex": "50e66dbfad2979bff95d00406ba19840bd58833fd14c1a40ce1aaa3f909522c0",
+      "previous_hex": "a6e69e3f8ebf4abfd64c90406ec68fc06c24fb3e78505e3f11dd1640b7d81b40",
+      "local_point": [
+        -1.3244176326957167,
+        -0.9253082794741294,
+        0.8857524151548999
+      ],
+      "start_hex": "bee0ec3fd277d8c1c217a441",
+      "end_hex": "8ffe1ac2000921c1d44ea8c0"
+    },
+    {
+      "current_hex": "b4a23fbee8b28b406ea9ef3c9bf85b3f99b49440bba18fc02bf68cc098c81340",
+      "previous_hex": "dc2d05c049fd8bbfd311dbbff5d4703e8895fdbf3f939bc073840640552b3ec0",
+      "local_point": [
+        0.18455028558563447,
+        0.28885067940175846,
+        -1.1031002796905494
+      ],
+      "start_hex": "3f1f31c1de9d58421ed21cc2",
+      "end_hex": "d6d78e42e0ac49c13e331ec2"
+    },
+    {
+      "current_hex": "bec664bfb2ae6240702addbf007a4ec0830742409cf49f3e050e79404c319abf",
+      "previous_hex": "bdfee7be5e47a53e2bab67c01b9733c04344223f01c34440f8f12a3f0c6108c0",
+      "local_point": [
+        -1.6094028147703505,
+        -0.9806109070296851,
+        0.9237863715777768
+      ],
+      "start_hex": "17c002c20559acc1364299c1",
+      "end_hex": "34eabbc15527b441b2caccc0"
+    },
+    {
+      "current_hex": "6986c8beb6c67b40a17081c074bf4fc0217a6e405d7f8bc0c59325403b6fb9be",
+      "previous_hex": "e7da50bf8bf887be2d5974c0137e82c0169f933f37fb0c4072498340247263c0",
+      "local_point": [
+        0.9998704299222045,
+        1.0060031957500954,
+        -0.1889651845041267
+      ],
+      "start_hex": "72df76425b929b406053a241",
+      "end_hex": "246906c10a292d41308b7bc1"
+    },
+    {
+      "current_hex": "015911c0d8d873c0dca42dc0cf907940875e52403f4190c059746fbe385a8340",
+      "previous_hex": "3914c73e307dce3e65c8f2bfe494dfbff9f938404405d23e773f4b40392fb13f",
+      "local_point": [
+        -0.4818891305665334,
+        -0.44058034822863235,
+        -1.5558067101407618
+      ],
+      "start_hex": "341a12c2307f014021a14ac2",
+      "end_hex": "1cf52e42494a8e412755a7c2"
+    },
+    {
+      "current_hex": "4b3664bf34c10e40ffbf063f46cf9c403ee983c08aef9f3ff401ee3f0a0763c0",
+      "previous_hex": "57bc1ac001ee8abfb4dbcbbf3301e23fccba8fc05ae8963f692d39c0813d6340",
+      "local_point": [
+        1.6365627393610453,
+        -0.5214390293813427,
+        -0.25682149304559854
+      ],
+      "start_hex": "5373b242291e91c226a71342",
+      "end_hex": "28f8c5421e8530c2c1d60ec2"
+    },
+    {
+      "current_hex": "97d2853e765020be964cb5be62307b40ad8a57c01c95963f86d273c0bc35abbf",
+      "previous_hex": "17a287c055b3734074e66640bfd25e40b3cd6040b7f899c0cb75753ef084bd3f",
+      "local_point": [
+        1.1270253780174238,
+        0.016383527008986043,
+        -1.5827245796319374
+      ],
+      "start_hex": "e0d33a42c9f648c188438141",
+      "end_hex": "df4ce6c05c77f74121478fc1"
+    },
+    {
+      "current_hex": "8ce07740eacf61c024c59d409694bc3fdff8f1bf5cd73940534464c0d8ea803f",
+      "previous_hex": "5cd95ec0c8c074c0bd8d8a4058b229bfa31baebdc6ae80c021804040ee050040",
+      "local_point": [
+        1.0931445793637704,
+        -1.1222274882308252,
+        -0.9602583801317115
+      ],
+      "start_hex": "ac76034204c832c1b24cc641",
+      "end_hex": "d4a1bfbfb5d4d9c1fb077641"
+    },
+    {
+      "current_hex": "166f394008bb99c02c447f40d76275c01977074020e44e3f95e1b63ff7d505c0",
+      "previous_hex": "6da43a3ff1752b40d52f01bed02f084025839040efd1c93facba94bf53558340",
+      "local_point": [
+        0.45003906105980684,
+        -0.20093511688576982,
+        1.864086525639134
+      ],
+      "start_hex": "f652064222679dc275534242",
+      "end_hex": "26075841348c504162c5fc41"
+    },
+    {
+      "current_hex": "7442dcbfa7bc9ac0e68674c0ea6f9fbfaafbdb3f2a6e89c0838a4f4056a08d40",
+      "previous_hex": "55b9ba3fa95dd6bf393a26407b85c5bfb12d63c0a2d5cbbffbc11f409aab5dc0",
+      "local_point": [
+        -0.7290984079443206,
+        -0.21294996167958136,
+        -1.328894906346211
+      ],
+      "start_hex": "4506f7c1f4d11f420dcad8c1",
+      "end_hex": "809a314192f5d141664ee7c2"
+    },
+    {
+      "current_hex": "3898a83f460b9b40428b75409e6d2440234f1a40f0a3ed3f7c53dbbfae2387c0",
+      "previous_hex": "7d0d0fc06ec672405ad18ec0af829840cdf6883f56b287bf87e09cc0511bc63e",
+      "local_point": [
+        -0.31179189518361117,
+        -1.733049716232757,
+        1.6658377722570767
+      ],
+      "start_hex": "2abdc1c1798197419e086842",
+      "end_hex": "2ac02dc2f0a74cc280c1e642"
+    },
+    {
+      "current_hex": "6f6a6840e8942dc084e79740fe957440cbd629c0acdd81404cc339403e615bc0",
+      "previous_hex": "129a0f4074748ac0569196bfb5f58240d29f5c40e6b783c04a1e7740a3ff4bc0",
+      "local_point": [
+        -0.526493808006371,
+        1.828267112097262,
+        -1.2755371129334452
+      ],
+      "start_hex": "1f80bdc22c5d0543075922c3",
+      "end_hex": "f1081242b83ce342f8cfc241"
+    },
+    {
+      "current_hex": "47e3cabf07a5843d924b23c0d5bf9240a8f295c02dba92402812f1bfd42e6340",
+      "previous_hex": "1d6115c0e1078c40a98f67409c3b3d40614859404e268bc034c39140579b23bf",
+      "local_point": [
+        -0.9491741408510763,
+        0.22620812338650165,
+        1.8264223317782258
+      ],
+      "start_hex": "f7f31442e8e48fc136343442",
+      "end_hex": "9e0e9641737dc3424f476542"
+    },
+    {
+      "current_hex": "761f7b406e5b84409d6b11bf3632ee3fc465953f16198fc06cda40c06ce88bbf",
+      "previous_hex": "d5ad21c0d9578740c3e52e40e4513440e60ba9bcfa81b9bf20926d40d6200f40",
+      "local_point": [
+        1.9180176073289514,
+        0.649035756340965,
+        1.1567163336173913
+      ],
+      "start_hex": "45db6ac0dcad0142c07a4842",
+      "end_hex": "ced97b402fef66427c77b440"
+    },
+    {
+      "current_hex": "906765c0b662f0bf192a2d4058d953c02f73debfaf3f80c01ac4c2bfe85bc13d",
+      "previous_hex": "faee4fc02b5f89c0640e093e7fde93bf97a314407b6e4c409f039040464e0c40",
+      "local_point": [
+        0.6974925195279882,
+        -0.8076823194986797,
+        0.1880724386273358
+      ],
+      "start_hex": "196aa641c08201be3d198ac1",
+      "end_hex": "7dfe2ac1928e72c19a17fdbf"
+    },
+    {
+      "current_hex": "1dc91e3f72e02e4007bc9e3dfb6588c082228dc09c9989c0281b9140e3f761bf",
+      "previous_hex": "aa0e333f75c455c038165fbf587aa1be4fde36407f8592c04c628bc0a5ce90c0",
+      "local_point": [
+        -0.07152116229601946,
+        -1.7953995937951013,
+        0.7856593477028069
+      ],
+      "start_hex": "f9dcfe42264dc7c21b8f1f42",
+      "end_hex": "8845dcc2a61ecfc24988b842"
+    },
+    {
+      "current_hex": "00337c3f471c7bc0ce6336403c88923f4bf8abbfc1c8aa3f6a872ec0501f9ec0",
+      "previous_hex": "460747c06766f5bd06b698c0f8bab83f1d16aa3f908237c0511505c0787f6940",
+      "local_point": [
+        -1.5690042729035976,
+        0.9525054320200113,
+        1.9926944034667127
+      ],
+      "start_hex": "fab8bcc2b64da0421fd16f42",
+      "end_hex": "3afaf0c27a5b02c245abca42"
+    },
+    {
+      "current_hex": "712481c0a12298c0fdf9863ef8a22ebd162e8140c52e6e401597f23f8d5d86c0",
+      "previous_hex": "3e2c7640876b7540ebeb8bc08d2dd6bfe74c6d406f4b1ac02a39b43f2395fabf",
+      "local_point": [
+        0.2678560236246703,
+        -0.29259562477774326,
+        -0.25052140350634255
+      ],
+      "start_hex": "7c253a41e87d1bc13c7708bf",
+      "end_hex": "376b8d40f401f9c152470241"
+    },
+    {
+      "current_hex": "b97b764091569a40d6bbd7bf63c62240727174c080a49e408c92d3bf39b34440",
+      "previous_hex": "5e92c8bd88d1494093d2064039a112c0827c8a3f24b9883fa58b3f40f480eb3f",
+      "local_point": [
+        1.0058243019209994,
+        -0.38596693771000234,
+        -1.3797349421590424
+      ],
+      "start_hex": "bb1b3cc02ae72141e91000c2",
+      "end_hex": "a1031b40904a9ec271e611c2"
+    },
+    {
+      "current_hex": "3e4a07c0cfc68fc053f405bf30470040418354402c095e40038e9ebf69c48940",
+      "previous_hex": "192e26408d27b3bf3cfb30c077b348409ed612c0b0ae4640809cad3eb3260cbf",
+      "local_point": [
+        0.5453698578977146,
+        1.3590578825708168,
+        -0.25239198938845453
+      ],
+      "start_hex": "ccc217c1e40f8341ebdd9140",
+      "end_hex": "59db8b4245c1ba423a1c80c0"
+    },
+    {
+      "current_hex": "9ef1b03f3ec7b03f4b3f9f401faa6fbf2e410640ffec9fc049318d4064e987c0",
+      "previous_hex": "d89d9bc0d0c7213fb61ab9bedd2e6240c869613f71f331bf20ff2440e76b513f",
+      "local_point": [
+        1.0622354998540144,
+        -0.7977394365724324,
+        1.8128693036287498
+      ],
+      "start_hex": "32ecf440e7d0cac0275d0042",
+      "end_hex": "f9561143522f30c3db1e2343"
+    },
+    {
+      "current_hex": "ec338140b5e4784099d11840b67df13f6b4866c0c657823fc25792c06f1980c0",
+      "previous_hex": "a54a8ec07d1d26c06b5a9a3cb1a694c08abe8640343257c033d0edbe66f98ac0",
+      "local_point": [
+        -0.1892601512236327,
+        -0.8228899744534943,
+        1.8416327789311424
+      ],
+      "start_hex": "55625c42fd43d2411679cc42",
+      "end_hex": "70079642bb3bc6c26494e142"
+    },
+    {
+      "current_hex": "3b2784c0fea646c0acbcac3e11b0acbd07f493c05ddc8540c53370be517204c0",
+      "previous_hex": "cbf8e93fa75f8ac08996e1bf1095973f90a068c02e825040ad30c4bf6f89f43f",
+      "local_point": [
+        -0.8784750520096285,
+        1.3730114151154185,
+        -1.8395995899720514
+      ],
+      "start_hex": "2996bdc22afc5042918356c2",
+      "end_hex": "eed595c2228efe427f29eac0"
+    },
+    {
+      "current_hex": "5410973f99cb89c0acda92400c8e75bfa4cdd2bf5b0e0640c94998c0bd3996c0",
+      "previous_hex": "17bdf03f888542c0b031bf3e6d6cb8bf70fd8140146813c0dc280fc0aba149bf",
+      "local_point": [
+        1.3466147019064838,
+        -0.9384762540475573,
+        -0.8246057333201509
+      ],
+      "start_hex": "6a049f42aecb3dc2386624c2",
+      "end_hex": "3363ec4214d1d841aff383c1"
+    }
+  ],
+  "limits": [
+    "Stopped before query orientation construction.",
+    "No collision backend or hit publication executed.",
+    "Synthetic arbitrary quaternions include nonunit values; no claim these occur live."
+  ]
+}

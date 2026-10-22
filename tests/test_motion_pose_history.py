@@ -42,3 +42,24 @@ class MotionPoseHistoryTests(unittest.TestCase):
         with self.assertRaises(ValueError): advance_pose_history(state, 'valid')
         with self.assertRaises(ValueError): advance_pose_history(state, 'missing_key', bytes(32))
         with self.assertRaises(ValueError): advance_pose_history(state, 'invented')
+
+class MotionEndpointTests(unittest.TestCase):
+    def test_original_instruction_endpoints(self):
+        import struct
+        from engine.motion_pose_history import query_endpoints
+        receipt = json.loads((Path(__file__).resolve().parents[1] /
+            'native/snow_host/motion_endpoint_validation.json').read_text())
+        self.assertEqual(len(receipt['rows']), 32)
+        for row in receipt['rows']:
+            state = PoseHistory(bytes.fromhex(row['current_hex']),
+                                bytes.fromhex(row['previous_hex']), 2)
+            start, end = query_endpoints(state, row['local_point'])
+            self.assertEqual(struct.pack('<3f', *start).hex(), row['start_hex'])
+            self.assertEqual(struct.pack('<3f', *end).hex(), row['end_hex'])
+
+    def test_translation_and_stationary_history(self):
+        import struct
+        from engine.motion_pose_history import query_endpoints
+        pose = struct.pack('<8f', 1, 2, 3, 0, 0, 0, 0, 1)
+        endpoints = query_endpoints(PoseHistory(pose, pose, 0), (4, 5, 6))
+        self.assertEqual(endpoints, ((5, 7, 9), (5, 7, 9)))
