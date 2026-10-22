@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Preparation B contains a two-pose history whose missing-provider path preserves
+readiness, while missing-key resets it. Twelve original-instruction cases passed;
+an independent bit-preserving history API and receipt-backed tests now exist.
+No direct skip-byte store appears in the two preparation exports, but transitive
+callee effects remain open. Next: trace the downstream motion consumer and
+identify the provider/key before treating history readiness as fresh animation.
+See [pose-history evidence](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#preparation-b-pose-history).
+
 Motion ingestion gate branches validated in 192 original-instruction emulation
 cases with substituted helpers. Preparation precedes the skip read; callback
 entry and an entry-time skip snapshot cannot prove ingestion. Next capture must

@@ -181,3 +181,63 @@ without assuming a fixed counter offset. Record action payloads at ingestion and
 at the snow consumer separately. Equal payloads would establish observed reuse
 only; a writer/publication event is needed to establish freshness. None of these
 new correlated observations has yet been captured live.
+
+## Preparation B pose history
+
+Inspection of both preparation exports found no direct store to the actor skip
+byte. This does not establish that the callees leave it unchanged: preparation A
+can emit events and preparation B can call a further motion consumer. Those
+transitive effects remain unresolved. All 350 exported instruction spans across
+both functions matched the analyzed image.
+
+Preparation B (`0x1405659d0`) resolves a provider through the actor's entity,
+looks up key `0xa5661995`, and retrieves a two-vector pose from a provider-owned
+object. The meaning of that key and the active actor predicate remain open.
+Its local history logic is now executable in
+[`engine/motion_pose_history.py`](../../engine/motion_pose_history.py):
+
+```text
+provider = lookup_provider(actor.entity)
+if provider is not null:
+    key_index = lookup_key(provider, 0xa5661995)
+    if key_index == 0xffff:
+        sample_count = 0
+    else:
+        previous_pose = current_pose
+        if sample_count < 2:
+            sample_count += 1
+        current_pose = retrieve_pose(provider, key_index)
+        if provider_pose_flags.bit26 == 0:
+            current_pose = convert_using_provider_transform(current_pose)
+if sample_count >= 2:
+    blocked = false
+    evaluate_downstream_guard(actor.motion, &blocked)
+    if not blocked:
+        call_further_motion_consumer()
+```
+
+Current and previous poses occupy motion `+0x3d0..+0x40f`, each 32 bytes;
+the count byte is `+0x410`. The provider's pose object is at `+0x258` and its
+flags at `+0x8c`. The conversion branch contains rotation/translation arithmetic,
+but its exact convention is outside this validation. The independent API accepts
+an already resolved final pose and preserves its bits as opaque bytes.
+
+Twelve original-instruction emulation cases tested missing provider, missing key,
+and valid direct-pose lookup with initial counts 0, 1, 2 and 255. See the
+[receipt](../../native/snow_host/motion_history_validation.json). A missing
+provider preserves both poses and the count, and can still reach the downstream
+guard using old history. A missing key resets only the count, retaining the pose
+bytes. Valid lookup shifts history and increments only counts below two; values
+above two remain unchanged. Therefore this is not a guarantee of two consecutive
+fresh samples, nor a counter measured in physics substeps.
+
+Resource helper results were synthetic. Provider bit26 was set to select direct
+pose storage. The downstream guard was forced to reject, so the further consumer
+was not executed. This does not prove animation playback, physical actuation,
+input freshness, skip mutation, or live selection of this branch.
+
+The independent model's tests compare all 12 receipt outcomes, exercise a missing
+provider gap followed by key invalidation, and reject malformed API inputs. The
+model is an inspection kernel; it is not wired into every snow substep because
+that would invent an update cadence. A future capture should correlate this
+branch's invocation and count with motion requests before assigning it a clock.

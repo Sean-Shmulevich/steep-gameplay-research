@@ -1,0 +1,88 @@
+{
+  "evidence": "original_instruction_emulation_with_substituted_resource_helpers",
+  "passed": true,
+  "cases": 12,
+  "game_process": false,
+  "code_sha256": "9ceba22f96246035684bc90d32ab70e951ddd2c222f10dbc2e48d8ed0234d599",
+  "rows": [
+    {
+      "source": "missing_provider",
+      "initial_count": 0,
+      "final_count": 0,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "missing_provider",
+      "initial_count": 1,
+      "final_count": 1,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "missing_provider",
+      "initial_count": 2,
+      "final_count": 2,
+      "downstream_guard_called": true
+    },
+    {
+      "source": "missing_provider",
+      "initial_count": 255,
+      "final_count": 255,
+      "downstream_guard_called": true
+    },
+    {
+      "source": "missing_key",
+      "initial_count": 0,
+      "final_count": 0,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "missing_key",
+      "initial_count": 1,
+      "final_count": 0,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "missing_key",
+      "initial_count": 2,
+      "final_count": 0,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "missing_key",
+      "initial_count": 255,
+      "final_count": 0,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "valid",
+      "initial_count": 0,
+      "final_count": 1,
+      "downstream_guard_called": false
+    },
+    {
+      "source": "valid",
+      "initial_count": 1,
+      "final_count": 2,
+      "downstream_guard_called": true
+    },
+    {
+      "source": "valid",
+      "initial_count": 2,
+      "final_count": 2,
+      "downstream_guard_called": true
+    },
+    {
+      "source": "valid",
+      "initial_count": 255,
+      "final_count": 255,
+      "downstream_guard_called": true
+    }
+  ],
+  "limits": [
+    "Only provider flag bit26 set path tested; local-to-world transform arithmetic not tested.",
+    "Resource lookup and pose retrieval return synthetic objects.",
+    "Downstream guard forces rejection; final consumer body not executed.",
+    "No live actor predicate identity, animation selection, skip-write or sample freshness proof."
+  ],
+  "preparation_export_byte_spans_verified": 350
+}
