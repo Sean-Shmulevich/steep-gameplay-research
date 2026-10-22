@@ -15,6 +15,7 @@
 static const SnowHostApiV1 *host;
 static volatile LONG phase;
 static unsigned milliseconds;
+static int attribute_jobs;
 static char output[MAX_PATH];
 static void number(FILE *f,float v) { if(isfinite(v)) fprintf(f,"%.9g",v); else fputs("null",f); }
 static void floats(FILE *f,const float *v,unsigned n) {
@@ -70,7 +71,18 @@ static int paused(void *user) {
     if(snow_steep_probe_binding(&binding,&original,why,sizeof why)) {
         host->log(host->context,why); InterlockedExchange(&phase,0); return 0;
     }
-    if(!SnowProbe_Configure(&binding,original)) {
+    /* Build-specific route; binding acquisition already verifies the adapter build.
+     * Additional function-table joins are checked before opting into attribution. */
+    SnowEntryProfile profile={0x1413adbacull,0x142916ee0ull,0x142917108ull,binding.actor_table};
+    uint64_t visitor=0,dispatcher=0; SIZE_T got=0;
+    if(attribute_jobs &&
+       (!ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)(profile.job_table+0x80),&visitor,8,&got) || got!=8 || visitor!=0x1413adb70ull ||
+        !ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)(profile.callable_table+0x10),&dispatcher,8,&got) || got!=8 || dispatcher!=0x1413cd590ull)) {
+        host->log(host->context,"entry attribution route mismatch"); InterlockedExchange(&phase,3); return 0;
+    }
+    int configured=attribute_jobs ? SnowProbe_ConfigureAttributed(&binding,original,&profile) :
+                                   SnowProbe_Configure(&binding,original);
+    if(!configured) {
         host->log(host->context,"capture configuration refused"); InterlockedExchange(&phase,3); return 0;
     }
     host->log(host->context,"capture configured; resume starts bounded observation"); return 0;
@@ -89,6 +101,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     unsigned seconds=GetPrivateProfileIntA("capture","seconds",2,api->config_path);
     if(seconds<1 || seconds>5 || strlen(api->config_path)+12>=sizeof output) return 1;
     snprintf(output,sizeof output,"%s.trace.jsonl",api->config_path);
+    attribute_jobs=GetPrivateProfileIntA("capture","attribute_jobs",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
     plugin->name="update_capture"; plugin->version="experimental-3";

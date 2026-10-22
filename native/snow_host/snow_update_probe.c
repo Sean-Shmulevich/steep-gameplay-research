@@ -7,6 +7,8 @@ static SnowUpdateTrace trace;
 static SnowUpdateRecord records[CAPACITY];
 static SnowUpdateBinding binding;
 static LONG ready;
+static SnowEntryProfile entry_profile;
+static int attributed;
 static volatile LONG64 selected_calls,other_calls;
 static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
     (void)ctx; SIZE_T got=0;
@@ -17,11 +19,13 @@ static void snapshot(void *actor,SnowUpdateSnapshot *out) {
 }
 static uint64_t ticks(void) { LARGE_INTEGER q; QueryPerformanceCounter(&q); return (uint64_t)q.QuadPart; }
 static uint64_t thread_id(void) { return GetCurrentThreadId(); }
-int SnowProbe_Configure(const SnowUpdateBinding *b,SnowUpdateOriginal original) {
+static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,const SnowEntryProfile *profile) {
     HMODULE module; SnowUpdateSnapshot check;
     if(!b || !original) return 0;
     if(InterlockedCompareExchange(&ready,1,0)!=0) return 0;
     binding=*b;
+    attributed=profile!=NULL;
+    if(profile) entry_profile=*profile;
     if(!snow_update_snapshot(read_memory,NULL,&binding,&check) ||
        !GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,
                           (LPCSTR)(uintptr_t)&SnowProbe_Configure,&module) ||
@@ -29,6 +33,33 @@ int SnowProbe_Configure(const SnowUpdateBinding *b,SnowUpdateOriginal original) 
         InterlockedExchange(&ready,-1); return 0;
     }
     InterlockedExchange(&ready,2); return 1;
+}
+int SnowProbe_Configure(const SnowUpdateBinding *b,SnowUpdateOriginal original) {
+    return configure(b,original,NULL);
+}
+int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *b,SnowUpdateOriginal original,
+                                  const SnowEntryProfile *profile) {
+    if(!profile || !b || profile->actor_table!=b->actor_table || !profile->job_table ||
+       !profile->callable_table || !profile->return_address) return 0;
+    return configure(b,original,profile);
+}
+typedef struct { const SnowEntryRegisters *entry; uint64_t actor; } EntryContext;
+static int attribute_entry(void *context,SnowEntryAttribution *out) {
+    EntryContext *c=context;
+    return snow_entry_attribute(read_memory,NULL,&entry_profile,c->entry,c->actor,out);
+}
+void SnowProbe_EntryDispatch(void *actor,float elapsed,float derivative,const SnowEntryRegisters *entry) {
+    if(InterlockedCompareExchange(&ready,2,2)!=2) return;
+    if((uint64_t)(uintptr_t)actor!=binding.actor) {
+        InterlockedIncrement64(&other_calls);
+        trace.original(actor,elapsed,derivative); return;
+    }
+    InterlockedIncrement64(&selected_calls);
+    EntryContext context={entry,(uint64_t)(uintptr_t)actor};
+    snow_trace_call_attributed(&trace,actor,elapsed,derivative,attribute_entry,&context);
+}
+static void *dispatch_target(void) {
+    return attributed ? (void *)(uintptr_t)&SnowProbe_EntryThunk : (void *)(uintptr_t)&SnowProbe_Dispatch;
 }
 void SnowProbe_Dispatch(void *actor,float elapsed,float derivative) {
     /* Publishing before Configure succeeds violates the ABI. Never install until ready. */
@@ -72,7 +103,7 @@ static int restore_slot_locked(void) {
     void *seen=NULL; DWORD previous,ignored;
     if(!read_memory(NULL,(uintptr_t)slot,&seen,sizeof seen)) return 0;
     if(!VirtualProtect((void *)slot,sizeof(void *),PAGE_READWRITE,&previous)) return -1;
-    void *mine=(void *)(uintptr_t)&SnowProbe_Dispatch;
+    void *mine=dispatch_target();
     seen=InterlockedCompareExchangePointer(slot,(void *)(uintptr_t)trace.original,mine);
     int owned=seen==mine || seen==(void *)(uintptr_t)trace.original;
     /* Restore the recorded original protection even if pointer ownership was lost. */
@@ -101,7 +132,7 @@ int SnowProbe_InstallSlot(void) {
     slot=(void *volatile *)(uintptr_t)address;
     if(!VirtualProtect((void *)slot,8,PAGE_READWRITE,&slot_protection)) { result=-1; goto done; }
     protection_known=1;
-    seen=InterlockedCompareExchangePointer(slot,(void *)(uintptr_t)&SnowProbe_Dispatch,(void *)(uintptr_t)trace.original);
+    seen=InterlockedCompareExchangePointer(slot,dispatch_target(),(void *)(uintptr_t)trace.original);
     result=seen==(void *)(uintptr_t)trace.original;
     if(!VirtualProtect((void *)slot,8,slot_protection,&ignored)) {
         /* Best-effort rollback; RestoreSlot remains available if this fails. */

@@ -13,6 +13,9 @@
 #define SNOW_PROBE_API
 #endif
 SNOW_PROBE_API int SnowProbe_Configure(const SnowUpdateBinding *, SnowUpdateOriginal);
+/* Profile is immutable after configure. Caller verifies its build-specific route. */
+SNOW_PROBE_API int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *, SnowUpdateOriginal,
+                                               const SnowEntryProfile *);
 SNOW_PROBE_API void SnowProbe_Dispatch(void *, float, float);
 SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
 /* Diagnostic lifetime counters include late forwarding after Close. Each field

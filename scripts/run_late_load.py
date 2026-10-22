@@ -163,7 +163,7 @@ def main():
         if args.experiment == 'host' and args.plan == 'update-capture':
             commands.append([cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host),
                 '-o', str(build/'plugins/update_capture.dll'),
-                *[str(host/name) for name in ('examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c')]])
+                *[str(host/name) for name in ('examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_entry_thunk.S')]])
             (build/'plugins/update_capture.ini').write_text('[capture]\nenabled=1\nseconds=2\n')
         if args.load_at == 'startup':
             commands.append([cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'startup_launcher.exe'), str(host/'startup_launcher.c'), '-luser32'])

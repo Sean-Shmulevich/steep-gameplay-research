@@ -32,6 +32,9 @@ static void readonly_table(void) {
 }
 int main(int argc,char **argv) {
     assert(argc==2 || argc==3); HMODULE dll=LoadLibraryA(argv[1]); assert(dll);
+    int attributed=argc==3 && !strcmp(argv[2],"attributed");
+    int conflict=argc==3 && !attributed;
+    int (*configure_attributed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureAttributed");
     int (*configure)(const SnowUpdateBinding *,SnowUpdateOriginal)=(void *)GetProcAddress(dll,"SnowProbe_Configure");
     void (*dispatch)(void *,float,float)=(void *)GetProcAddress(dll,"SnowProbe_Dispatch");
     int (*close_probe)(size_t *,size_t *)=(void *)GetProcAddress(dll,"SnowProbe_Close");
@@ -42,31 +45,34 @@ int main(int argc,char **argv) {
     SnowProbeDispatchCounts c={99,99};
     assert(counts && !counts(&c) && c.selected_calls==0 && c.other_calls==0);
     assert(configure && dispatch && close_probe && get && install && restore);
-    q(table+0x2c0,argc==3 ? (void *)competitor : (void *)original);
+    q(table+0x2c0,conflict ? (void *)competitor : (void *)original);
     DWORD old; assert(VirtualProtect(table,sizeof table,PAGE_READONLY,&old));
     q(actor,table); q(actor+0x1050,actor); q(actor+0x10,entity); q(entity+0x60,world);
     q(actor+0x168,runtime); q(runtime+0x6e8,main_body); q(runtime+0xb90,rider);
     f(main_body+0x1a0,10); f(main_body+0x1ac,3); f(rider+0x1ac,9);
     SnowUpdateBinding b={(uintptr_t)actor,(uintptr_t)table,(uintptr_t)world,(uintptr_t)&request,(uintptr_t)&substep};
     SnowUpdateRecord r; size_t used=0,dropped=0;
-    assert(configure(&b,original)); assert(!configure(&b,original)); assert(!get(0,&r));
+    SnowEntryProfile profile={1,2,3,(uintptr_t)table}; /* intentionally wrong route */
+    assert(attributed ? configure_attributed(&b,original,&profile) : configure(&b,original)); assert(!configure(&b,original)); assert(!get(0,&r));
     assert(counts(&c) && c.selected_calls==0 && c.other_calls==0);
     assert(!counts(NULL));
-    if(argc==3) {
+    if(conflict) {
         assert(!install()); assert(read_slot()==competitor); assert(restore()); readonly_table();
         puts("PASS: mismatched original refused without slot mutation"); return 0;
     }
     assert(install()==1); assert(!install()); readonly_table();
-    assert(read_slot()==dispatch);
+    SnowUpdateOriginal installed_target=read_slot();
+    assert(attributed ? installed_target!=dispatch : installed_target==dispatch);
     read_slot()(actor,.125f,.5f); read_slot()(&other,.125f,.5f);
     change_identity=1; dispatch(actor,.125f,.5f); change_identity=0; q(actor+0x168,runtime);
     set_slot((void *)competitor); assert(restore()==0); assert(read_slot()==competitor); readonly_table();
-    set_slot((void *)dispatch); assert(restore()==1); assert(read_slot()==original); readonly_table();
+    set_slot((void *)installed_target); assert(restore()==1); assert(read_slot()==original); readonly_table();
     assert(restore()==1);
     assert(counts(&c) && c.selected_calls==2 && c.other_calls==1);
     assert(close_probe(&used,&dropped)); assert(used==2 && dropped==0 && calls==3);
     assert(get(1,&r) && r.before.valid==15 && r.after.valid==0);
     assert(get(0,&r) && !get(2,&r));
+    assert(r.attribution_attempted==(unsigned)attributed && !r.attribution_valid);
     assert(r.before.valid==15 && r.after.valid==15 && r.thread!=0);
     assert(r.before.preconsume_counter==0 && r.after.preconsume_counter==-1);
     assert(r.before.linear[0][0]==10 && r.after.linear[0][0]==12);

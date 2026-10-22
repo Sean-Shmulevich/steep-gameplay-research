@@ -252,3 +252,31 @@ The live dispatcher still uses the original no-attribution entry route. Wiring
 the assembly thunk, verified profile and guarded decoder into that dispatcher
 remains the next integration step; the new fields must not be reported as live
 job observations until that step and an actual capture pass.
+
+
+## Opt-in probe wiring
+
+The probe now offers `SnowProbe_ConfigureAttributed`, which copies an immutable
+entry profile during its one-time configuration. Installation selects the entry
+thunk for this mode, and restoration compares against that same target. Selected
+actor calls use the guarded attribution callback; unrelated actors forward
+without attribution. The regular configuration API retains its existing route.
+
+The optional capture plugin enables this with `[capture] attribute_jobs=1`.
+Default is zero. Its existing held-player acquisition verifies the adapter build;
+additional checks join the job visitor and callable dispatcher tables before
+configuration. All sources are included in both public build commands and the
+bounded session launcher. Configuration alone neither installs nor launches.
+
+Twenty-five focused tests passed, including the compiled entry adapter and
+native guarded-reader/recorder fixtures. The complete host, probe and optional
+capture plugin built with MinGW. A separate authored Wine fixture passed the
+existing normal capture and competing-slot cases with the rebuilt probe.
+The attributed-mode fixture also passed with a deliberately wrong return route:
+its record marks attribution attempted but invalid, the update forwards, and
+slot conflict/restoration plus late forwarding still work. These fixtures use
+synthetic objects, not a running game.
+
+Actual game attribution, successful integrated native attribution, and batch
+invocation generation remain separate validation gates. Do not treat a successful
+build or optional-mode installation as evidence that a game job was identified.

@@ -2,6 +2,11 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Opt-in attributed probe: assembly entry, guarded decoder and recorder are wired
+through ConfigureAttributed; capture plugin flag `attribute_jobs=1` enables it.
+Windows builds and normal/conflict/rejected-attribution Wine fixtures passed.
+Successful integrated attribution and original-game capture remain unvalidated.
+
 Recorder attribution channel: optional pre-call observation now preserves
 exactly-once forwarding on failed attribution, overflow and closed capture. Trace
 ABI v3 separates unattempted/invalid attribution; Windows host/probe/capture plugin
