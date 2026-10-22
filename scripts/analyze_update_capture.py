@@ -10,10 +10,13 @@ import json
 import math
 from pathlib import Path
 import struct
+import sys
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 try:
-    from scripts.analyze_motion_capture import analyze_motion
+    from scripts.analyze_motion_capture import analyze_motion, analyze_profile_smoothing
 except ImportError:
-    from analyze_motion_capture import analyze_motion
+    from analyze_motion_capture import analyze_motion, analyze_profile_smoothing
 
 
 def f32(x):
@@ -241,6 +244,7 @@ def analyze(rows):
     return {
         'direct_substeps': direct,
         'motion_observations': analyze_motion(records),
+        'profile_smoothing': analyze_profile_smoothing(records),
         'job_attribution': job_attribution(records),
         'wrapper_intervals': interval_order(records),
         'preconsume_counter': counter_changes(records),

@@ -61,3 +61,25 @@ class MotionAnalysisTests(unittest.TestCase):
         r = row();r.update(motion_attempted=0,motion_before_valid=0,motion_after_valid=0)
         result=analyze_motion([{},r])
         self.assertEqual(result['counts'], {'unavailable_records':1,'disabled_records':1})
+
+
+class ProfileSmoothingTests(unittest.TestCase):
+    def test_observed_coefficient_and_changed_profile(self):
+        from scripts.analyze_motion_capture import analyze_profile_smoothing
+        import struct
+        a, b = row(), row(1)
+        b['outer_completion_counter']=8;b['substep_ordinal']=0
+        for r in (a,b):
+            for s in (r['motion_before'],r['motion_after']):
+                s.update(profile_valid=1,profile='1000',profile_handle='2000',smoothing_alpha_bits=0x3f000000)
+        a['motion_after']['baseline_bits'][5]=0x3f800000
+        b['motion_before']['baseline_bits'][5]=0x3f000000
+        result=analyze_profile_smoothing([a,b])
+        self.assertEqual(result['counts']['exact_formula_matches'],1)
+        self.assertFalse(result['writer_identity_proved'])
+        b['motion_before']['profile']='3000'
+        result=analyze_profile_smoothing([a,b])
+        self.assertEqual(result['counts']['profile_changed_boundaries'],1)
+        self.assertNotIn('tested_boundaries',result['counts'])
+        b['motion_before']['profile_valid']=0
+        self.assertEqual(analyze_profile_smoothing([a,b])['counts']['profile_unavailable_pairs'],1)

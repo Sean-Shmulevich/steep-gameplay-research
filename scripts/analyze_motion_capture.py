@@ -105,3 +105,67 @@ def analyze_motion(records):
             'observed_boundary_changed_fields': dict(boundary),
             'ingestion_execution_proved': False, 'atomic_snapshot_proved': False,
             'producer_generation_established': False}
+
+
+def analyze_profile_smoothing(records):
+    """Test the known formula with observed alpha, without claiming writer identity.
+
+    Uses next-before current inputs. A hidden input change between the baseline
+    writer and observation is unresolved, even if the calculation matches.
+    """
+    import math
+    import struct
+    from engine.motion_input_latches import refresh_input_baselines
+    counts = Counter()
+    previous = None
+    for r in records:
+        before, after = r.get('motion_before'), r.get('motion_after')
+        valid = r.get('motion_before_valid') == 1 and r.get('motion_after_valid') == 1
+        valid = valid and valid_sample(before) and valid_sample(after)
+        if not valid:
+            previous = None
+            continue
+        profile_ok = True
+        for s in (before, after):
+            try:
+                ok = type(s.get('profile_valid')) is int and s['profile_valid'] == 1
+                ok = ok and uint(s.get('smoothing_alpha_bits'))
+                ok = ok and all(isinstance(s.get(k), str) and 0 < int(s[k], 16) < 1 << 64
+                                for k in ('profile', 'profile_handle'))
+                profile_ok = profile_ok and ok
+            except (ValueError, TypeError):
+                profile_ok = False
+        if not profile_ok:
+            counts['profile_unavailable_pairs'] += 1
+            previous = None
+            continue
+        counts['profile_available_pairs'] += 1
+        if previous is not None:
+            p = previous
+            # Reuse exactly the established qualified-neighbor rules.
+            relation = analyze_motion([p, r])['counts']
+            if relation.get('observed_boundary_pairs') == 1:
+                old = p['motion_after']
+                identity = all(int(old[k], 16) == int(before[k], 16) for k in ('profile', 'profile_handle'))
+                identity = identity and old['smoothing_alpha_bits'] == before['smoothing_alpha_bits']
+                if not identity:
+                    counts['profile_changed_boundaries'] += 1
+                else:
+                    alpha = struct.unpack('<f', struct.pack('<I', before['smoothing_alpha_bits']))[0]
+                    vectors = old['baseline_bits'][4:8] + before['current_input_bits'][:4] + before['baseline_bits'][4:8]
+                    finite = math.isfinite(alpha) and all(math.isfinite(struct.unpack('<f', struct.pack('<I', v))[0]) for v in vectors)
+                    if finite:
+                        pack = lambda v: struct.pack('<4I', *v)
+                        try:
+                            predicted = refresh_input_baselines(pack(before['ingested_bits'][:4]),
+                                pack(before['ingested_bits'][4:]), pack(before['current_input_bits'][:4]),
+                                pack(old['baseline_bits'][4:8]), alpha, 0)
+                            counts['tested_boundaries'] += 1
+                            counts['exact_formula_matches'] += predicted.smoothed == pack(before['baseline_bits'][4:8])
+                        except (ValueError, OverflowError):
+                            counts['unrepresentable_boundaries'] += 1
+                    else:
+                        counts['nonfinite_boundaries'] += 1
+        previous = r
+    return {'counts': dict(counts), 'writer_identity_proved': False,
+            'input_at_writer_time_observed': False, 'profile_lifetime_proved': False}

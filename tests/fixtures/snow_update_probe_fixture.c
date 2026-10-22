@@ -9,6 +9,7 @@ static __attribute__((section(".tracevt"),aligned(4096))) unsigned char table[40
 static uint32_t request=7,substep=2,calls;
 static unsigned char job[0x1c00],timing[0x1400],callable[16],records[80],job_table[16],callable_table[16];
 static uint64_t range_base;
+static unsigned char profile_handle[16],motion_profile[0x100];
 extern void fixture_entry_call(void *,float,float,const SnowEntryRegisters *,SnowUpdateOriginal);
 extern unsigned char fixture_entry_return[];
 static int other, change_identity, motion_case;
@@ -56,6 +57,11 @@ int main(int argc,char **argv) {
     assert(configure && dispatch && close_probe && get && install && restore);
     q(table+0x2c0,conflict ? (void *)competitor : (void *)original);
     DWORD old; assert(VirtualProtect(table,sizeof table,PAGE_READONLY,&old));
+    if(motion_case) {
+        q(actor+0x1060,profile_handle);q(profile_handle,motion_profile);
+        uint32_t signed_status=0x80000000u;memcpy(profile_handle+12,&signed_status,4);
+        f(motion_profile+0x64,.1f);
+    }
     q(actor,table); q(actor+0x1050,actor); q(actor+0x10,entity); q(entity+0x60,world);
     q(actor+0x168,runtime); q(runtime+0x6e8,main_body); q(runtime+0xb90,rider);
     f(main_body+0x1a0,10); f(main_body+0x1ac,3); f(rider+0x1ac,9);
@@ -104,6 +110,8 @@ int main(int argc,char **argv) {
     assert(r.motion_attempted==(unsigned)motion_case);
     if(motion_case) {
         assert(r.motion_before_valid && r.motion_after_valid);
+        assert(r.motion_before.profile_valid && r.motion_after.profile_valid);
+        assert(r.motion_before.smoothing_alpha_bits==0x3dcccccdu);
         assert(r.motion_before.motion==(uintptr_t)(actor+0x1010));
     }
     assert(r.attribution_attempted==(unsigned)attributed && r.attribution_valid==(unsigned)valid_attribution);

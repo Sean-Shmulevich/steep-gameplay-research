@@ -1,0 +1,46 @@
+{
+  "game_launched": false,
+  "synthetic_objects_only": true,
+  "cases": [
+    {
+      "mode": "normal",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "conflict",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "attributed",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "valid-attribution",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "invalid-frame",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "motion",
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "abi": 6,
+  "evidence": "Authored synthetic fixtures; no live profile read",
+  "focused_tests_passed": 32,
+  "source_sha256": {
+    "native/snow_host/snow_motion_observation.c": "de9e045b58f27b4d5d180948c910ac42069e5929252ab833e9c9a9cc2b552ae7",
+    "native/snow_host/snow_motion_observation.h": "1ea08ace2dbaefce83d6fede32418059ca3cf4dbdc4cfa857d5fafdb3e100fbe",
+    "tests/fixtures/snow_motion_observation_fixture.c": "68833fbc079ca872e80977501303dc0d245926d68f8dfdffa50360ad3afc76c1",
+    "scripts/analyze_motion_capture.py": "992f63601b78b8d2083cfcfc12241b2688574421032c180e51ba4a379d305787"
+  }
+}

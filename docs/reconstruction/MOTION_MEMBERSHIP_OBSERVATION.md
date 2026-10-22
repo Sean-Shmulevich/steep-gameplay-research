@@ -987,3 +987,34 @@ sampled substeps. It does not establish input-ingestion execution or timing.
 Next: capture the live profile coefficient and correlate a controlled nonzero
 input, checking whether changes appear before the first substep and whether
 the same baseline formula still predicts the observed values.
+
+### Observed profile coefficient channel
+
+Experimental ABI v6 adds an independently valid profile observation. The
+inspected smoothing block resolves motion `+0x50` to a handle, uses the sign
+bit of its 32-bit status at `+0x0c` to retain or mask its object pointer, and
+reads alpha from the resulting profile `+0x64`. The reader follows that exact
+sign gate and retains the raw coefficient bits without clamping or fitting.
+
+Two motion samples must still match. Profile reads may fail independently:
+a null/unsigned-status handle, inaccessible profile, overflow, changed handle,
+changed profile pointer or changed alpha clears only profile fields. Matching
+profile observations do not prove lifetime or exclude ABA reuse. The expanded
+reader attempts at most 24 exact memory reads per observation, or 48 per captured
+update. Rebuild DLL and consumers together for the new record layout.
+
+The analyzer now separately tests the existing `refresh_input_baselines`
+four-vector formula with the observed alpha on qualified outer-boundary pairs.
+It requires matching profile identities and alpha across the gap. It reports
+nonfinite/unrepresentable inputs separately and never exports the pointers or
+raw vectors. The next-before current vector is only a sampled input: it is not
+proved to equal the input at the writer's execution time. A formula match still
+does not establish writer identity or call count.
+
+Validation: 32 focused native/analysis tests, six synthetic Windows/Wine probe
+cases, and the capture-plugin build passed. The failure matrix covers each read,
+the status sign gate, pointer overflow, coefficient instability, and independent
+profile rejection. The Windows motion fixture verifies the actual reader returns
+the synthetic coefficient bits. The previous ABI-v5 live trace remains readable
+and is correctly treated as lacking a profile coefficient. No ABI-v6 game
+capture has run yet; controlled nonzero input remains the next live experiment.

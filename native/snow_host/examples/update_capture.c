@@ -40,6 +40,7 @@ static void motion_sample(FILE *f,const SnowMotionObservation *m) {
     fputc('{',f);
 #define U(name) fprintf(f,"\"" #name "\":%u,",m->name)
 #define P(name) fprintf(f,"\"" #name "\":\"%llx\",",(unsigned long long)m->name)
+    U(profile_valid);P(profile_handle);P(profile);U(smoothing_alpha_bits);
     P(motion);P(current);P(pending);P(state_current);P(state_pending);P(child_current);P(child_pending);
     U(current_mode);U(pending_mode);U(lock_word);U(lock_owner);U(lock_depth);U(query_depth);
     U(state_mode);U(state_pending_mode);U(child_mode);U(child_pending_mode);
@@ -129,7 +130,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     observe_motion=GetPrivateProfileIntA("capture","observe_motion",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-5";
+    plugin->name="update_capture"; plugin->version="experimental-6";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }
