@@ -299,3 +299,66 @@ consumers. They can establish what the query tests and how it affects motion.
 The lock-protected guard `0x14052c4a0` is also a state-machine query with possible
 deferred processing, so treating it as a side-effect-free boolean getter would
 be premature.
+
+## State guard and deferred work
+
+The guard called before the pose-history query, `0x14052c4a0`, is now validated
+through its ordinary pending-service path in 400 original-instruction emulation
+cases. See the [receipt](../../native/snow_host/motion_guard_validation.json)
+and independent [decision API](../../engine/motion_query_guard.py).
+
+Its decision portion is:
+
+```text
+result = true
+if motion.bypass_count == 0:
+    if parent.state == 3 and child.state == 2:
+        output_byte = 1
+        result = false
+    elif parent.state == 0 and child.state in {0, 3, 4}:
+        output_byte = 1
+        result = false
+# all other branches preserve output_byte
+return result
+```
+
+The states are numeric labels, not identified gameplay names. The second test's
+last value is 4: the instructions subtract 3 before comparing the remainder to
+1. An initial transcription interpreted that comparison as original state 1;
+the original-instruction matrix rejected it and the model was corrected before
+commit. Output preservation also means the return value is not generally the
+logical inverse of the caller's byte. Preparation B initializes that byte to
+zero and tests it after return; it does not use the function return value.
+
+The surrounding ordering is part of the finding:
+
+1. Acquire the recursive lock at motion `+0x20`, or reuse same-thread ownership;
+   increment lock depth at `+0x28`.
+2. Increment query nesting at `+0x30`, evaluate the predicate, then decrement it.
+3. Inspect flags `+0x34` and `+0x35`. With repeat processing disabled and pending
+   work set, call `0x1404eb310` once while the lock remains held. With repeat
+   processing enabled, the code additionally checks query nesting and may loop;
+   that branch is not covered by this validation.
+4. Decrement lock depth. At zero, clear the thread owner to `0xffffffff`, execute
+   the ordering instruction, and release the lock word. Return the saved result.
+
+The bypass count is `+8`; parent pointer is `+0x10`; each inspected state's
+numeric field is `+0x18`, with child pointer at parent `+0x20`. These are build
+anchors, not portable object layouts. The independent API implements only the
+predicate. It does not invent synchronization or deferred transition behavior.
+
+Validation crossed bypass 0/1, parent and child states 0..4, initial output 0/1,
+unowned versus same-thread nested lock, and absent versus present pending work.
+The real instructions restored query depth and lock depth; the nested case kept
+the existing lock owner. The service stub verified that query depth was already
+zero and the lock was still held, then cleared the pending flag. Thread identity
+was supplied; contention, repeat processing and actual deferred effects remain
+unverified.
+
+For input/scheduler observation, the important consequence is that this guard
+can process work after evaluating its predicate but before returning to the
+pose-query caller, all before the later action-ingestion call. Entry-time state
+snapshots therefore cannot stand in for observations at the actual consumption
+point. The next static target is the pending-work service and the writers of its
+flags; live correlation should retain this ordering rather than flattening the
+guard into a read-only boolean getter.
