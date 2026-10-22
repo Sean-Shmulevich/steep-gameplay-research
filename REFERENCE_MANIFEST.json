@@ -1084,6 +1084,17 @@
         "Finite input validation. Mandatory supplied decay lookup; original table excluded. 384 original-instruction cases with intercepted lookup."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.decay_table",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "970fe397ba0cdf4866074de0db3169e92aa9d94d2c8a604c316d87c1f54bad58",
+      "published": "reference/decay_table.py",
+      "published_sha256": "60a0ef3f24a5751e8107ed44661b7a2b5c600e0a9247e2f9e1b44ccc02e56c92",
+      "adaptations": [
+        "Caller supplies 257 samples. Four original builder cases and 1056 evaluator cases with intercepted exponential and floor helpers; no native exponential equivalence claimed."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

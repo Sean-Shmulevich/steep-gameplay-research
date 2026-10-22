@@ -10081,3 +10081,37 @@ This closes the tested local arithmetic, not the original lookup table, profile
 blend, hardware mapping or live input timing. The historical `reference.snow.cooker`
 remains a mathematical reference with its generated exponential approximation;
 use the explicit-lookup helper when preserving those distinctions matters.
+
+
+## Decay lookup construction
+
+`reference.decay_table` reconstructs the 256-segment builder from 257 supplied
+samples. Every operation below rounds to float32. The original initializer uses
+low = -10, high = 0 and padding = 0.0001.
+
+```text
+width = high - low
+step = width * (1 / 256)
+start = low - width * padding
+x[i] = (float32(i) * step) + low
+slope[i] = (sample[i+1] - sample[i]) / step
+intercept[i] = sample[i] - x[i] * slope[i]
+denominator = ((padding + 1) * width) + (low - start)
+index_scale = 256 / denominator
+```
+
+Preserve the parentheses and intermediate rounding. Padding scales with width;
+the generic curve compiler's padding cap does not apply. The resulting table
+uses `reference.runtime_curve.evaluate` for clamped segment selection and linear
+evaluation.
+
+The original builder and evaluator were emulated with supplied synthetic sample
+values. Four sample sets matched all 514 output floats per builder case, and
+1,056 evaluator cases matched exactly. All 257 sampling arguments were checked.
+See `native/snow_host/decay_table_validation.json` for the bounded receipt.
+
+The scalar and vector exponential routines were intercepted. Host exponential
+samples are authored fixtures, not recovered original samples. Their native
+implementations remain unresolved. The floor helper was also intercepted for
+finite nonnegative indices. This was offline instruction emulation, not a live
+game test; no initialized original table is included.

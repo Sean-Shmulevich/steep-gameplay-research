@@ -1,0 +1,20 @@
+{
+  "evidence": "original builder and evaluator with supplied synthetic sample values",
+  "game_process": false,
+  "builder_cases": 4,
+  "builder_exact_float_fields_per_case": 514,
+  "evaluator_exact_cases": 1056,
+  "sampling_arguments_verified": 257,
+  "sample_sets": [
+    "constant",
+    "linear",
+    "authored_host_exp",
+    "quadratic"
+  ],
+  "limitations": [
+    "Scalar and vector exponential calls intercepted; host exp is authored fixture data",
+    "Floor helper intercepted for finite nonnegative indices",
+    "No original initialized table copied into public repository"
+  ],
+  "source_sha256": "60a0ef3f24a5751e8107ed44661b7a2b5c600e0a9247e2f9e1b44ccc02e56c92"
+}

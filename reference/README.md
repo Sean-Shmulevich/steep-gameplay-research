@@ -31,3 +31,7 @@ earlier simplified ground-stick reference without replacing its provenance.
 caller-supplied owner matrix, explicitly clearing translation W. Its joined
 instruction receipt covers the actual quaternion conversion and bank writes;
 accessor freshness, locks and bank rotation remain supplied service boundaries.
+
+`decay_table.py` builds the cooker decay lookup from 257 caller-supplied samples.
+See [decay lookup construction](../docs/reconstruction/CENTRAL_IMPULSE.md#decay-lookup-construction)
+for exact float32 ordering and the unresolved exponential sample producer.
