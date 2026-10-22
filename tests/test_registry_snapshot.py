@@ -211,3 +211,20 @@ class TypeRegistrationDispatchTests(unittest.TestCase):
             dispatch(lambda:65536,lambda i:None,lambda *args:None)
         with self.assertRaisesRegex(ValueError,'uint64'):
             dispatch(lambda:1,lambda i:{'context':-1},lambda *args:None)
+
+
+class SlotIdentityTests(unittest.TestCase):
+    def test_single_and_compact_slot_mapping(self):
+        memory=bytearray(128)
+        def read(a,n):return bytes(memory[a-4096:a-4096+n])
+        import struct
+        struct.pack_into('<QQ',memory,8,77,44<<56|5)
+        seen=[]
+        def slot(raw,address):seen.append((raw,address));return address
+        snapshot=decode(read,4099,lambda raw:999,resolve_slot=slot)
+        self.assertEqual(lookup(snapshot,5),4104)
+        self.assertEqual(seen,[(77,4104)])
+        struct.pack_into('<QQQ',memory,0,0,5,88)
+        snapshot=decode(read,4097,int,resolve_slot=slot)
+        self.assertEqual(lookup(snapshot,5),4112)
+        self.assertEqual(seen[-1],(88,4112))

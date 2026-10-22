@@ -1311,3 +1311,43 @@ prefix rejection before dereference, unstable values, cycles and depth limits.
 Packed-array and bitmap leaves still require decoding. Until those and deep
 mixed traversal are validated, the observer is an explicitly partial inspection
 API and must not be used to declare an arbitrary live action absent.
+
+### Reuse of existing packed-leaf reconstruction
+
+The broader registry work already decoded the same lookup routine's packed and
+bitmap leaves. Its [branch and leaf study](CENTRAL_IMPULSE.md#radix-packed-and-bitmap-leaves)
+and `reference/registry_snapshot.py` are now reused by the action observer,
+superseding the unsupported-leaf boundary above. The earlier work was missed
+during the first action-specific branch pass; these leaf formulas are reused
+findings, not new discoveries.
+
+The shared decoder gains optional `resolve_slot(raw_value, slot_address)` identity
+mapping. Existing callers retain their original `resolve_value(raw_value)`
+behavior. This allows the action observer to carry the selected physical slot
+through the existing logical lookup without confusing duplicate stored values
+with slot identity. The observer then reads the selected action pointer from
+that slot. A null pointer remains a found value, not a missing map entry.
+
+The selected-path reader delegates one encountered leaf to the existing bounded
+snapshot decoder. That decoder handles 1..7-byte packed arrays, inline 1/2/3-byte
+keys and four 64-bit bitmap groups. Existing duplicate-key scan order and
+layout tables remain authoritative. Leaf snapshots include their inspected
+keys and value arrays; branch traversal still follows only the selected path.
+Both full traversal receipts must match. The existing 16-node, 128-read and
+8192-byte limits remain enforced by the outer reader.
+
+The [new adapter receipt](../../native/snow_host/action_map_all_leaves_validation.json)
+re-executes all 3,501 existing original-instruction leaf fixtures and compares
+exact native slot addresses, as well as values, against this observer. It
+includes 253 top-byte branch-to-leaf joins and every inspected multi-value leaf
+kind. The original fixture generator is reused unchanged; original receipts
+are preserved. Public integration tests exercise dense-to-bitmap-to-inline
+paths, seven-byte array layout boundaries, bitmap leaves and slot mapping.
+All 49 focused action-map/registry tests passed.
+
+All previously inspected compact and radix lookup encodings are represented.
+Unknown encodings, corrupt data and budget exhaustion remain explicit failures;
+this is not a claim of arbitrary map compatibility or stable live access. The
+next task is bounded live manager/bank ownership and action identity sampling,
+using the decoded search precedence. No live action selection or publication
+ordering was established by this integration pass.

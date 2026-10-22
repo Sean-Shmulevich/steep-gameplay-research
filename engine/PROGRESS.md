@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Action observer now reuses the existing registry packed/bitmap leaf decoder.
+Optional slot-address identity mapping preserves old decoder callers. All 3,501
+original leaf fixtures match exact action value slots, including 253 branch joins;
+49 focused tests pass. This closes the action observer's previously unsupported
+leaf formats using prior research, not new formula claims. Next: bounded live
+manager/bank ownership and action identity sampling. See
+[reuse and scope](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#reuse-of-existing-packed-leaf-reconstruction).
+
 Radix action-map branch traversal added: linear digits, bitmap rank and dense
 children, plus empty/single-entry leaves. 252 original-instruction comparisons
 pass across all three families. Bounded reader retains explicit unsupported and

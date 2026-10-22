@@ -1,0 +1,33 @@
+{
+  "evidence": "Reused original-instruction leaf fixtures, now validating bounded action-map slot observer",
+  "passed": true,
+  "cases": 3501,
+  "game_process": false,
+  "fixture_source_sha256": "68569253522866ef861c8966eced80020883a78cfe8a98ddad1eb44c2f2f8199",
+  "original_fixture_receipt": "radix_leaf_validation.json",
+  "leaf_kinds": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
+  ],
+  "branch_to_leaf_cases": 253,
+  "limits": [
+    "No live action identity or producer freshness",
+    "Budgets deliberately refuse oversized traversals",
+    "Selected paths only; matching sequential observations are not atomic"
+  ]
+}

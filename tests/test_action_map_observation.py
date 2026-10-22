@@ -53,7 +53,7 @@ class RadixTests(unittest.TestCase):
         r=observe_action_map(read,base|3,key)
         self.assertEqual((r.status,r.action),('found',123))
         self.assertEqual(observe_action_map(read,base|3,key+1).status,'missing')
-        mem[at+15]=0x24
+        mem[at+15]=0x3c
         self.assertEqual(observe_action_map(read,base|3,key).status,'unsupported')
     def test_cycle_and_failed_reads(self):
         from engine.action_map_observation import observe_action_map
@@ -78,3 +78,19 @@ class RadixTests(unittest.TestCase):
         from engine.action_map_observation import observe_action_map
         def chain(a,n):return struct.pack('<QQ',a+16,0x1d<<56)
         self.assertEqual(observe_action_map(chain,4099,0).status,'limit')
+
+
+class ExistingLeafIntegrationTests(unittest.TestCase):
+    def test_all_existing_snapshot_fixtures_through_observer(self):
+        # Existing fixtures include full dense->bitmap->packed leaves, seven-byte
+        # arrays and bitmap-leaf group boundaries. Use their actual byte storage.
+        from tests.test_registry_snapshot import RegistrySnapshotTests
+        from engine.action_map_observation import observe_action_map
+        cases=[('test_dense_to_bitmap_to_inline_packed_leaf',0x1103,(1<<56)|(63<<48)|0x030201,90),
+               ('test_packed_seven_byte_array_layout_boundary',0x1103,2**64-1,125),
+               ('test_bitmap_leaf_uses_64_bit_groups',0x1103,0x12ff,7)]
+        for method,root,key,value in cases:
+            fixture=RegistrySnapshotTests(method);fixture.setUp();getattr(fixture,method)()
+            result=observe_action_map(fixture.read,root,key)
+            self.assertEqual((result.status,result.action),('found',value))
+            self.assertEqual(int.from_bytes(fixture.read(result.value_slot,8),'little'),value)

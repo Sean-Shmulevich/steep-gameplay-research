@@ -165,11 +165,15 @@
       "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
       "published": "reference/registry_snapshot.py",
       "adaptations": [
-        "Independent bounded decoder using supplied reads and logical value mapping; recovered node layouts with authored inspection limits."
+        "Independent bounded decoder using supplied reads and logical value mapping; recovered node layouts with authored inspection limits.",
+        "Optional slot-address identity resolver added for action-map observation; default raw-value resolver behavior retained. See MOTION_MEMBERSHIP_OBSERVATION.md, Reuse of existing packed-leaf reconstruction."
       ],
       "game_payloads_included": false,
       "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
-      "published_sha256": "19685bef0d619301a702ea42b6327ebcdd265ce497815cea3d94f7fffda995e2"
+      "published_sha256": "8d662299496ff0d0f86bb2c5247c80a6322df3d7ca92b283d7bfc380f4c73852",
+      "prior_published_sha256": [
+        "19685bef0d619301a702ea42b6327ebcdd265ce497815cea3d94f7fffda995e2"
+      ]
     },
     {
       "module": "engine.skeleton_observation",

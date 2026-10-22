@@ -1,4 +1,4 @@
-"""Bounded read-only compact action-map observer, not the full radix decoder.
+"""Bounded read-only action-map observation over inspected compact/radix formats.
 
 Evidence: MOTION_MEMBERSHIP_OBSERVATION.md, Tagged action-map observation.
 Unsupported roots are never reported as missing keys. No game calls or writes.
@@ -61,10 +61,10 @@ def observe_compact_map(read, root: int, key: int) -> MapObservation:
 
 
 def observe_action_map(read, root: int, key: int) -> MapObservation:
-    """Compact roots or inspected radix branches and single-entry leaves.
+    """Compact roots and all inspected radix branch/leaf formats.
 
     Radix work is capped at 16 nodes per pass, 128 reads and 8192 bytes total.
-    Other leaf forms remain unsupported. Two complete traversal receipts must
+    Unknown node forms remain unsupported. Two complete traversal receipts must
     match, including bytes read along the selected path. Not an atomic snapshot.
     """
     if any(type(x) is not int or not 0 <= x < 1 << 64 for x in (root,key)):
@@ -97,6 +97,13 @@ def observe_action_map(read, root: int, key: int) -> MapObservation:
             if 0x2c<=tag<=0x32:
                 if (prefix^key)&0x00ffffffffffffff:return done('missing')
                 return done('found',node,pointer)
+            if 0x24<=tag<=0x2b or 0x33<=tag<=0x3b:
+                from reference.registry_snapshot import decode_type_registry, decoded_type_registry_lookup
+                snapshot=decode_type_registry(get,(node-8)|3,lambda value:value,
+                    max_nodes=1,max_bytes=8192,resolve_slot=lambda value,address:address)
+                slot=decoded_type_registry_lookup(snapshot,key)
+                if slot is None:return done('missing')
+                return done('found',slot,struct.unpack('<Q',get(slot,8))[0])
             if tag==0x23 and depth==0:
                 shift=56;family='dense'
             elif 0x0f<=tag<=0x15:

@@ -30,13 +30,15 @@ def _value_start(width, count):
 
 
 def decode_type_registry(read, tagged_root, resolve_value, *, max_nodes=4096,
-                         max_bytes=1048576):
+                         max_bytes=1048576, resolve_slot=None):
     """Decode compact/null/tree roots using read(address,size) and value mapping.
 
     resolve_value(raw_uint64) must return a uint64 logical identity. Both callbacks
     are caller supplied. Reads must belong to one stable snapshot; this routine
     does not make sequential live reads atomic or pin object lifetime. It never
     writes memory. Limits and malformed-data rejection are authored safeguards.
+    Optional resolve_slot(raw,address) replaces resolve_value and retains explicit
+    slot identity for inspection adapters; it does not pin or validate lifetime.
     """
     if type(tagged_root) is not int or not 0 <= tagged_root < 2**64:
         raise ValueError('uint64 tagged root required')
@@ -64,14 +66,14 @@ def decode_type_registry(read, tagged_root, resolve_value, *, max_nodes=4096,
     def words(data, width=8):
         return [int.from_bytes(data[i:i+width], 'little') for i in range(0,len(data),width)]
 
-    def value(raw):
-        logical = resolve_value(raw)
+    def value(raw, address):
+        logical = resolve_value(raw) if resolve_slot is None else resolve_slot(raw,address)
         if type(logical) is not int or not 0 <= logical < 2**64:
             raise ValueError('value resolver must return a uint64 logical identity')
         return logical
 
     def values(address, count):
-        return [value(raw) for raw in words(take(address,8*count))] if count else []
+        return [value(raw,address+8*i) for i,raw in enumerate(words(take(address,8*count)))] if count else []
 
     def keys(address, count, width):
         result = words(take(address,count*width), width)
@@ -115,7 +117,7 @@ def decode_type_registry(read, tagged_root, resolve_value, *, max_nodes=4096,
         if 8 <= kind <= 14:
             pass
         elif 44 <= kind <= 50:
-            node.update(prefix=prefix,value=value(pointer))
+            node.update(prefix=prefix,value=value(pointer,address))
         elif 15 <= kind <= 21:
             header = take(storage,8)
             count = header[0]
