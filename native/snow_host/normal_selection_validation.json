@@ -1,0 +1,14 @@
+{
+  "evidence": "original previous-contact candidate comparison and low-Z correction block",
+  "game_process": false,
+  "exact_selected_candidates": 324,
+  "fit_corrections": 81,
+  "fitted_selections": 120,
+  "limitations": [
+    "Candidates and prior-contact flag supplied; fitting and contact producer excluded",
+    "Reciprocal-square-root seeds captured from emulator for corrected fits",
+    "Candidate W lanes fixed at zero as in inspected producer",
+    "Subsequent temporal rotation smoothing excluded"
+  ],
+  "source_sha256": "4b09b44a28426f219ffc57fbeb9e6e5e554f06498a5939a660f878e5b36a9dd5"
+}

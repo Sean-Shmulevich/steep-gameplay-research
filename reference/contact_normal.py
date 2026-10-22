@@ -34,3 +34,32 @@ def normalize(weighted_normal, *, reciprocal_sqrt):
     correction=f32(f32(3)-f32(f32(seed*squared)*seed))
     scale=f32(correction*f32(f32(.5)*seed))
     return tuple(f32(x*scale) for x in v[:3])+(0.,)
+
+
+def select_candidate(weighted, fitted, previous, *, had_previous_contact, reciprocal_sqrt):
+    """Select between supplied normalized XYZ candidates; fitting is external.
+
+    A previous-contact gate controls comparison. Ties select the fitted candidate.
+    Low-Z poorly aligned fits have XYZ negated, Z replaced by .01, then normalize.
+    """
+    vectors=[]
+    for vector in (weighted,fitted,previous):
+        if len(vector)!=3:
+            raise ValueError('Three candidate components required')
+        vectors.append(tuple(map(f32,vector)))
+    weighted,fitted,previous=vectors
+    if not had_previous_contact:
+        return {'normal':weighted+(0.,),'source':'weighted','fit_corrected':False}
+    def dot(a,b):
+        products=[f32(x*y) for x,y in zip(a,b)]
+        return f32(products[0]+f32(products[1]+products[2]))
+    weighted_dot=dot(weighted,previous)
+    fit_dot=dot(fitted,previous)
+    corrected=fitted[2]<f32(.1) and fit_dot<f32(.9)
+    if corrected:
+        fitted=normalize((-fitted[0],-fitted[1],f32(.01),0.),
+                         reciprocal_sqrt=reciprocal_sqrt)[:3]
+        fit_dot=dot(fitted,previous)
+    use_fit=weighted_dot<=fit_dot
+    return {'normal':(fitted+(-0. if corrected else 0.,)) if use_fit else weighted+(0.,),
+            'source':'fitted' if use_fit else 'weighted','fit_corrected':corrected}

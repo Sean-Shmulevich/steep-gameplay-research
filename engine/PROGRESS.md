@@ -4294,3 +4294,7 @@ Contact normal research: 128 original-loop accumulation cases and 98 nondegenera
 normalization cases matched. Added a portable reference with explicit RSQRTPS
 seed dependency. Candidate fitting, selection and temporal smoothing still block
 replacing the runtime's labeled terrain-normal substitute with this intermediate.
+
+Contact candidate selection: 324 original-instruction comparisons match, including
+low-Z correction, prior-normal alignment and fitted-candidate tie precedence.
+Fitting and subsequent angular smoothing still remain before runtime integration.

@@ -10335,3 +10335,30 @@ fitting, hemisphere/candidate selection and optional angular smoothing before
 publishing the frame normal. Those stages and full contact-record producers
 remain unresolved. This module is therefore not yet substituted for the runtime's
 terrain candidate; doing so would omit known intervening behavior.
+
+
+### Contact normal candidate selection
+
+`reference.contact_normal.select_candidate` now reconstructs the comparison of
+the normalized weighted candidate with a supplied fitted candidate. If the
+previous-contact gate is false, retain the weighted candidate. Otherwise compute
+both dot products against the prior cached normal with float32 x + (y + z)
+reduction. Choose the fitted candidate when its dot is greater than or equal to
+the weighted candidate's dot; equality explicitly favors the fit.
+
+Before comparison, when fitted Z < float32(0.1) AND fitted-dot-prior <
+float32(0.9), negate its lanes, overwrite Z with float32(0.01), then normalize
+using the explicit reciprocal-square-root seed and the recovered refinement.
+Recompute its dot against the prior normal before choosing. Both comparisons
+are strict. The producer supplies zero W; correction negates it to negative
+zero, which the returned four-lane candidate preserves. This sign does not
+contribute to XYZ dot products but matters for exact stored bytes.
+
+The [instruction comparison](../../native/snow_host/normal_selection_validation.json)
+matched 324 four-lane selections, including 81 fit corrections and 120 fitted
+selections. Candidate generation, the previous-contact flag producer, and later
+angular smoothing remain outside this receipt. The correction uses a seed
+captured from emulated RSQRTPS, not an asserted physical-hardware result. Tests
+also cover no-history behavior, ties, strict low-Z boundaries and signed zero.
+The runtime's terrain candidate remains labeled approximate until fitting and
+smoothing are connected; this closes the intermediate selection boundary only.

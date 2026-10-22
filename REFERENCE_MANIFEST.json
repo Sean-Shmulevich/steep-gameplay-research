@@ -1134,9 +1134,9 @@
       "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
       "source_sha256": "081fca1bd99edfd951711aa6adf8f1d88c2b617523a28529324c39d5e7b072bf",
       "published": "reference/contact_normal.py",
-      "published_sha256": "e18f37216a1bd0361a0bea302df5ca3b3b773fa1204400029dccdda5b1dd3a4d",
+      "published_sha256": "4b09b44a28426f219ffc57fbeb9e6e5e554f06498a5939a660f878e5b36a9dd5",
       "adaptations": [
-        "Explicit reciprocal-square-root seed; zero-length normalization rejected as authored boundary. Contact candidate selection, fitting and smoothing excluded."
+        "Explicit reciprocal-square-root seed; zero-length normalization rejected as authored boundary. Candidate comparison and low-Z correction reconstructed; fitting, prior-contact producer and temporal smoothing excluded."
       ],
       "game_payloads_included": false
     }

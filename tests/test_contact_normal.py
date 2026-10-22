@@ -23,3 +23,31 @@ class ContactNormalTests(unittest.TestCase):
         self.assertEqual(accumulate([])['weighted_normal'],(0,0,0,0))
         with self.assertRaises(ValueError):normalize((0,0,0,1),reciprocal_sqrt=lambda x:0)
         with self.assertRaises(TypeError):normalize((1,0,0,0))
+
+    def test_no_history_keeps_weighted_and_tie_favors_fit(self):
+        from reference.contact_normal import select_candidate
+        seed=lambda x:1
+        r=select_candidate((0,0,1),(.6,0,.8),(0,0,1),
+                           had_previous_contact=False,reciprocal_sqrt=seed)
+        self.assertEqual(r['source'],'weighted')
+        r=select_candidate((0,.6,.8),(.6,0,.8),(0,0,1),
+                           had_previous_contact=True,reciprocal_sqrt=seed)
+        self.assertEqual(r['source'],'fitted')
+        self.assertFalse(r['fit_corrected'])
+
+    def test_low_fit_corrected_before_alignment_comparison(self):
+        from reference.contact_normal import select_candidate
+        import math
+        r=select_candidate((0,0,1),(1,0,0),(-1,0,0),
+                           had_previous_contact=True,reciprocal_sqrt=lambda x:1/math.sqrt(x))
+        self.assertTrue(r['fit_corrected'])
+        self.assertEqual(r['source'],'fitted')
+        self.assertLess(r['normal'][0],-.99)
+        self.assertGreater(r['normal'][2],0)
+        self.assertEqual(math.copysign(1,r['normal'][3]),-1)
+
+    def test_low_z_threshold_is_strict(self):
+        from reference.contact_normal import select_candidate
+        r=select_candidate((0,0,1),(1,0,.1),(-1,0,0),
+                           had_previous_contact=True,reciprocal_sqrt=lambda x:1)
+        self.assertFalse(r['fit_corrected'])
