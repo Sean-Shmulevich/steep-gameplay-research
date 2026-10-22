@@ -1,0 +1,15 @@
+{
+  "evidence": "Original cached boolean query with ownership, freshness, key mapping and special packet helpers",
+  "cases": 2560,
+  "passed": true,
+  "substitutions": [
+    "Lock/unlock helpers return immediately"
+  ],
+  "comparison": "Boolean return value",
+  "limits": [
+    "Synthetic tables and service cache",
+    "No device-event producer or timestamp-unit claim",
+    "No concurrent mutation or lock correctness proof"
+  ],
+  "game_process": false
+}

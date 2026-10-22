@@ -2381,3 +2381,55 @@ all processors. Omitting a seed in the public wrapper uses the existing labeled
 scalar-reciprocal substitute. The sample, magnitude and status comparisons do
 not use that seed. Device-query internals, composite arbitration, live tuning
 and scheduler generation remain outside this result.
+
+## Cached boolean source queries
+
+[`action_button_query.py`](../../engine/action_button_query.py) reconstructs the
+query path called by the directional source. Wrapper RVA `0x9775c0` ignores
+its incoming owner, obtains a global service through holder+0xd8, and returns
+false if that first lookup is null. It obtains the service again before
+forwarding to `0x116b460` with requested owner zero. The wrapper does not pin
+service lifetime between those reads.
+
+The cached query executes these gates in order:
+
+1. Under the ownership helper's lock, an empty owner list permits the query;
+   otherwise its last entry must equal requested owner. Earlier entries do
+   not determine this result. For the directional wrapper, last-null permits.
+2. The selected uint64 cached timestamp must be strictly greater than the
+   uint64 cutoff at service+0x13d0. Equality rejects the query. Timestamp units
+   and producers are not established here.
+3. Query ID 65535 rejects, then service enable byte +0x1328 must be nonzero.
+4. Ordinary queries resolve their ID to an index again. Index -1 returns
+   false; otherwise any nonzero byte at service+0x1c+index is true.
+
+The two ordinary mapping lookups are separate, not one cached result. The
+mapping helper scans 40-byte records, comparing ID at +4 and returning the
+index at +0. Signed ID comparison against 240 selects one of two table spans.
+An unmapped first lookup yields index -1; the timestamp helper still reads
+service+0x260, immediately before the timestamp array at +0x268. In particular,
+the 65535 sentinel check occurs after freshness testing. The portable query
+therefore requires explicit `timestamp(-1)` behavior; it does not invent a
+missing-key timestamp or bypass that dependency.
+
+IDs 240 through 249 use a separate packet at service+0x21c and timestamps
+beginning at +0x1268. IDs 240/241 use high bits of packet bytes 12/13, exchanged
+when service+0x13c0 is set. ID 242 uses byte 14's high bit. IDs 243/244 test the
+signed dword at packet+8 for positive/negative. IDs 245..249 use high bits of
+bytes 15..19. Their timestamp slots are respectively `[0,1,2,8,9,3,4,5,6,7]`,
+with slots 0/1 swapped under the same flag. These are packet semantics, not
+proved physical device labels.
+
+The [query receipt](../../native/snow_host/action_button_query_validation.json)
+records 2,560 original-code cases through ownership, timestamp lookup, ordinary
+ID mapping and special-packet helpers. Only lock/unlock functions are stubbed.
+Cases include mapped/unmapped IDs in both tables, 65535, uint32 all-ones,
+all ten special IDs, owner-list ordering, strict cutoff equality, unsigned
+large timestamps, service disablement, swapped packet fields and varied cache
+bytes. Boolean results match. The public mapping callback remains an explicit
+dependency; the actual live mapping tables have not been captured.
+
+This replaces supplied pressed-state assumptions with runnable cache-query
+semantics. It does not establish event ingestion timing, timestamp meaning,
+cache producer threads or synchronization. Next: identify writes to the cache
+and freshness cutoff before joining these queries to simulation generations.

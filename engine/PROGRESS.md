@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Boolean source-query gates reconstructed and matched in 2,560 original-code
+cases: last-owner permission, strict unsigned freshness cutoff, service enable,
+ordinary key bytes and special packet fields. Sentinel handling occurs after
+freshness lookup. Cache/timestamp producers and event ingestion timing remain
+open. See [cached boolean queries](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#cached-boolean-source-queries).
+
 Directional query outcomes through final action publication now compose in one
 API and match 1,080 complete original-callback updates. Query short-circuit
 order, raw/sample/direction/magnitude/status and ramp state match. Direction
