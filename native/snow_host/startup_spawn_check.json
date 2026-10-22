@@ -1,0 +1,33 @@
+{
+  "kind": "startup_spawn_check",
+  "date": "2026-10-22",
+  "command": "run_late_load.py --experiment host --load-at startup --navigator native --expect-spawn=-2312.95581,-4273.34521,2385.9326 --plan demo",
+  "ok": true,
+  "spawn_position": [
+    -2312.95581,
+    -4273.34521,
+    2385.93262
+  ],
+  "spawn_matches_expected": true,
+  "tolerance": 0.01,
+  "earlier_sessions_same_idle_entry_position": 9,
+  "note": "earlier sessions include forward pulses and speed changes after entry; the next startup still spawned identically",
+  "save_files": "two of four save files were rewritten by this session; spawn unchanged across all recorded sessions",
+  "navigation": {
+    "inputs": 3,
+    "title_t": 82.0,
+    "entered_t": 120.6
+  },
+  "demo": {
+    "ok": true,
+    "steps": 10,
+    "stable_20_seconds": true
+  },
+  "host_commands_failed": 4,
+  "failed_attempt_before_this": "navigator rejected a negative coordinate passed as a separate argument; fixed by --opt=value; that session cleaned up normally",
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  }
+}

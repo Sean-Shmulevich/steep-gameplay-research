@@ -4759,3 +4759,8 @@ Intro skip: pressing Enter on the pre-title videos and notices does not shorten
 them (45.9 s from first visible screen to title, against 46.5 and 44.6 s without
 presses). That run also passed demo, stability and cleanup, giving two native
 passes. See the [receipt](../native/snow_host/startup_intro_skip_attempt.json).
+
+Repeatable spawn: the idle player entered at the same position in ten sessions.
+`--expect-spawn=X,Y,Z` now enforces it, and a third native pass matched exactly.
+It is repeatable for this profile, not selectable; long-distance travel before an
+autosave is untested. See the [spawn receipt](../native/snow_host/startup_spawn_check.json).

@@ -98,11 +98,28 @@ stability and cleanup). Pressing Enter does not shorten the intros; Escape and
 other keys are untested. Deferring player reads cut the host's refused commands
 from 44 to 4.
 
+## Repeatable spawn, 2026-10-22 ([receipt](startup_spawn_check.json))
+
+The idle player's position at gameplay entry was bit-identical in nine earlier
+sessions: (-2312.956, -4273.345, 2385.933) in Aravis. Several of those sessions
+moved the rider and changed its speed after entry, and two save files are
+rewritten every session, yet the next startup still spawned there. The navigator
+now records `spawn_position`. `--expect-spawn=X,Y,Z` (tolerance 0.01) fails the
+run on any other spawn. A run with that check passed: exact match, demo,
+stability and cleanup. Use the `=` form, because a coordinate starting with `-`
+would otherwise be read as an option; an earlier run failed that way and cleaned
+up normally.
+
+This makes the spawn repeatable for this profile, not selectable. Sessions that
+travel elsewhere (helicopter, drop zone) before an autosave are untested and
+could move it. Other maps or spawns are not supported.
+
 ## Open
 
-- Reliability: two full passes and one earlier gate failure so far.
+- Reliability: three full passes, one gate failure and one argument failure so far.
 - Intro videos (about 45 s): Enter does not skip them. Escape is untested; the
   native-intro mode stays only as a recorded experiment.
-- A repeatable spawn through drop-zone selection. Untested.
+- Choosing a different map or spawn (drop zone or helicopter on the startup map),
+  and whether long-distance travel changes the startup spawn. Untested.
 - Native flow transitions (title, offline notice, map) without input. Not
   attempted.
