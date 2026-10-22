@@ -48,6 +48,7 @@ class PolicyTests(unittest.TestCase):
     def test_new_screen_is_not_delayed_by_previous_retry_window(self):
         p = se.Policy(retry=5)
         p.step('title', None, 0)
+        self.assertEqual(p.step('intro', None, 1), ('wait', 'intro'))
         self.assertEqual(p.step('offline_notice', None, 1), ('send', 28))
 
     def test_idle_spawn_without_in_world_is_accepted(self):
@@ -72,16 +73,17 @@ class PolicyTests(unittest.TestCase):
 
 class FakeGame:
     def __init__(self, frames):
-        self.frames = list(frames); self.sent = []; self.fail_send = False
+        self.frames = list(frames); self.sent = []; self.fail_send = False; self.player_reads = []
 
     def screen(self, i, timeout):
         state, native = self.frames[min(i, len(self.frames) - 1)]
         self.native_next = native
         if state == 'timeout':
             raise subprocess.TimeoutExpired('capture', timeout)
-        return state.upper(), state
+        return ('' if state == 'unknown' else state.upper()), ('unknown' if state == 'intro' else state)
 
-    def native(self):
+    def native(self, want_player=True):
+        self.player_reads.append(want_player)
         return self.native_next
 
     def send(self, i, scan):
@@ -96,9 +98,26 @@ class Clock:
 
 
 class NavigateTests(unittest.TestCase):
-    def run_frames(self, frames, budget=200, fail_send=False):
+    def run_frames(self, frames, budget=200, fail_send=False, policy=None):
         game = FakeGame(frames); game.fail_send = fail_send; clock = Clock()
-        return se.navigate(game, budget, clock=clock, sleep=clock.sleep), game
+        return se.navigate(game, budget, clock=clock, sleep=clock.sleep, policy=policy), game
+
+    def test_intro_key_presses_visible_pre_title_screens_only(self):
+        frames = [('unknown', None)] * 2 + [('intro', None)] * 12 + [('title', None), ('intro', NO_PLAYER),
+                  ('offline_notice', ACQUIRED), ('map', ACQUIRED), ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)]
+        result, game = self.run_frames(frames, policy=se.Policy(intro_key=28))
+        intro = [x for x in result['inputs'] if x['state'] == 'intro']
+        self.assertEqual(len(intro), se.MAX_INTRO_INPUTS)
+        self.assertTrue(all(b['t'] - a['t'] >= se.INTRO_INTERVAL_SECONDS for a, b in zip(intro, intro[1:])))
+        self.assertEqual([x['state'] for x in result['inputs'][len(intro):]], ['title', 'offline_notice', 'map'])
+        self.assertIsNotNone(result['title_first_t'])
+        self.assertEqual(result['outcome'], 'entered')
+
+    def test_no_intro_inputs_by_default_and_player_reads_deferred(self):
+        frames = [('intro', None)] * 3 + [('title', None), ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)]
+        result, game = self.run_frames(frames)
+        self.assertEqual([x['state'] for x in result['inputs']], ['title'])
+        self.assertEqual(game.player_reads, [False] * 4 + [True, True])
 
     def test_full_startup_sequence_enters_with_native_confirmation(self):
         frames = [('unknown', {'error': 'ConnectionRefusedError'}), ('unknown', {'ready': False}),

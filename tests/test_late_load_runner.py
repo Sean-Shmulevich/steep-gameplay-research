@@ -30,9 +30,10 @@ class LateLoadRunnerTests(unittest.TestCase):
                 runner.main()
 
     def test_native_navigator_requires_startup_load(self):
-        with patch.object(sys, 'argv', ['runner', '--experiment', 'host', '--navigator', 'native']):
-            with self.assertRaisesRegex(RuntimeError, 'requires --load-at startup'):
-                runner.main()
+        for navigator in ('native', 'native-intro'):
+            with patch.object(sys, 'argv', ['runner', '--experiment', 'host', '--navigator', navigator]):
+                with self.assertRaisesRegex(RuntimeError, 'require --load-at startup'):
+                    runner.main()
 
     def test_startup_missing_workspace_reports_prerequisites(self):
         with tempfile.TemporaryDirectory() as tmp:

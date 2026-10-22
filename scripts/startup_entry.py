@@ -15,6 +15,8 @@ when the player was first acquired.
 
 This skips menu interaction delay, not asset or world loading. Spawn location is
 whatever the profile's startup map closes onto; no map or spawn selection.
+--intro-key enter is an experiment: bounded Enter presses on visible pre-title
+screens, to measure whether the timed videos/notices can be skipped.
 
 Usage: startup_entry.py OUT_DIR [BUDGET_SECONDS] [--workspace W] [--port P]
 """
@@ -34,6 +36,9 @@ TRANSITIONS = {'title': ENTER, 'offline_notice': ENTER, 'tutorial': ENTER, 'map'
 RETRY_SECONDS = 5.0      # same screen still showing after an input
 MAX_INPUTS_PER_STATE = 4
 NATIVE_CONFIRMATIONS = 2  # consecutive native samples agreeing with the HUD
+# Opt-in experiment: Enter (the title's own key) while pre-title videos/notices show.
+INTRO_INTERVAL_SECONDS = 4.0
+MAX_INTRO_INPUTS = 6
 
 
 def classify(text, legacy):
@@ -51,8 +56,11 @@ def native_player_ready(sample):
 class Policy:
     """Pure decision state: which existing transition to send, and when gameplay is proven."""
 
-    def __init__(self, retry=RETRY_SECONDS, max_inputs=MAX_INPUTS_PER_STATE, confirmations=NATIVE_CONFIRMATIONS):
+    def __init__(self, retry=RETRY_SECONDS, max_inputs=MAX_INPUTS_PER_STATE, confirmations=NATIVE_CONFIRMATIONS,
+                 intro_key=None, intro_interval=INTRO_INTERVAL_SECONDS, max_intro=MAX_INTRO_INPUTS):
         self.retry, self.max_inputs, self.confirmations = retry, max_inputs, confirmations
+        self.intro_key, self.intro_interval, self.max_intro = intro_key, intro_interval, max_intro
+        self.intro_inputs = []
         self.inputs = {}
         self.last_input = None  # (state, time)
         self.native_streak = 0
@@ -71,6 +79,13 @@ class Policy:
                 return 'entered', None
             return 'wait', 'hud_without_native_confirmation'
         self.native_streak = 0
+        if state == 'intro':
+            # Only before any menu transition, bounded, and never a failure reason.
+            if (self.intro_key is None or self.inputs or len(self.intro_inputs) >= self.max_intro
+                    or (self.intro_inputs and now - self.intro_inputs[-1] < self.intro_interval)):
+                return 'wait', 'intro'
+            self.intro_inputs.append(now)
+            return 'send', self.intro_key
         scan = TRANSITIONS.get(state)
         if scan is None:
             return 'wait', 'unrecognized_screen'
@@ -108,7 +123,7 @@ class Game:
         text = ' '.join(rows[-1].get('recognized_text', [])) if rows else ''
         return text, classify(text, self.legacy)
 
-    def native(self):
+    def native(self, want_player=True):
         """Read-only host sample, or an error before the command service answers.
 
         The host serves one client at a time, so each sample uses its own short
@@ -116,11 +131,11 @@ class Game:
         """
         try:
             with SnowHostClient(port=self.port, timeout=3) as client:
-                return self._sample(client)
+                return self._sample(client, want_player)
         except (OSError, HostError) as exc:
             return {'error': type(exc).__name__}
 
-    def _sample(self, client):
+    def _sample(self, client, want_player):
         status = client.call('simulation.status')
         engine = status.get('engine') or {}
         step = engine.get('step')
@@ -128,7 +143,7 @@ class Game:
                   'advancing': step is not None and self.last_step is not None and step != self.last_step
                                and not engine.get('held')}
         self.last_step = step
-        if not sample['ready']:
+        if not sample['ready'] or not want_player:
             return sample
         try:
             sample['player_flags'] = client.call('player.get').get('flags', 0)
@@ -165,7 +180,8 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
     policy = policy or Policy()
     start = clock(); deadline = start + budget
     result = {'gameplay_hud_observed': False, 'gameplay_native_verified': False, 'gameplay_inputs_sent': False,
-              'inputs': [], 'screens': [], 'outcome': 'budget_exhausted'}
+              'inputs': [], 'screens': [], 'outcome': 'budget_exhausted', 'intro_key': policy.intro_key,
+              'title_first_t': None}
     for i in range(max_frames):
         remaining = deadline - clock()
         if remaining <= 0:
@@ -174,7 +190,12 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
             text, state = game.screen(i, min(30, remaining))
         except subprocess.TimeoutExpired:
             text, state = '', 'capture_timeout'
-        native = game.native()
+        if state == 'title' and result['title_first_t'] is None:
+            result['title_first_t'] = round(clock() - start, 1)
+        if state == 'unknown' and text.strip() and result['title_first_t'] is None and not policy.inputs:
+            state = 'intro'  # a visible pre-title screen (videos, notices)
+        # The player cannot exist before the title; skip refused reads until a menu transition.
+        native = game.native(want_player=bool(policy.inputs))
         t = round(clock() - start, 1)
         action, detail = policy.step(state, native, clock())
         row = {'frame': i, 't': t, 'state': state, 'native': native, 'action': action}
@@ -209,12 +230,13 @@ def main(argv=None):
     p.add_argument('budget', type=int, nargs='?', default=150)
     p.add_argument('--workspace', type=Path, default=Path(__file__).resolve().parents[2])
     p.add_argument('--port', type=int, default=47017)
+    p.add_argument('--intro-key', choices=['enter'], help='Experiment: press this key during pre-title videos/notices')
     a = p.parse_args(argv)
     if not 30 <= a.budget <= 210:
         p.error('Navigation budget must be 30..210 seconds')
     out = a.out.resolve(); out.mkdir(parents=True, exist_ok=False)
     game = Game(a.workspace.resolve(), out, a.port)
-    result = navigate(game, a.budget)
+    result = navigate(game, a.budget, policy=Policy(intro_key=ENTER if a.intro_key else None))
     (out / 'navigation-result.json').write_text(json.dumps(result, indent=2) + '\n')
     return 0 if result['gameplay_native_verified'] else 2
 
