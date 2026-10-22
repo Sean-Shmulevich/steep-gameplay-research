@@ -2238,3 +2238,53 @@ This narrows where to inspect clock state. It does not prove milliseconds,
 seconds, scheduler substeps, pause behavior or clock ownership by the player.
 Next: identify writes to the selected object's +0x1050 and verify how selection
 relates to the active player context before fitting timing constants.
+
+## Ramp clock producer joins the existing clock tree
+
+The selected object's +0x1048 record matches the ordinary world-clock record
+already reconstructed in [WORLD_CLOCK.md](WORLD_CLOCK.md) and
+[CLOCK_TREE.md](CLOCK_TREE.md). Its +8 uint64 field is `divided_ticks`, so the
+ramp's read at object+0x1050 consumes that field, not the accumulated-tick
+field at clock+0 and not the float interval at clock+0x18.
+
+The shared updater at RVA `0x11eca80` writes this field at `0x11ecb8b` when
+accumulation is enabled. Joining the previously validated arithmetic gives:
+
+```text
+processed = clock input after hold and scale rules
+ticks = low_u32(truncate_i64(f32(f32(processed*30) + f32(0.1))))
+accumulated_ticks = wrap_u64(accumulated_ticks + ticks)
+divided_ticks = accumulated_ticks // 30
+ramp_clock = unsigned_to_float32_with_native_signed_correction(divided_ticks)/1000
+elapsed = f32(ramp_clock - saved_ramp_clock)
+```
+
+The final division rounds to float32. Integer truncation and float rounding
+mean this is not interchangeable with summing the float interval. For example,
+an unscaled synthetic input of 16 advances total ticks by 480, divided ticks
+by 16, and the ramp clock by float32(0.016) from zero. When accumulation is
+disabled, divided_ticks is retained even if interval calculation changes.
+Positive hold count zeroes processed input, so ordinary non-wrapping totals
+remain unchanged. This describes clock arithmetic, not proof that all game
+work stops or that the same object is selected across updates.
+
+The existing driver derives its divisor from timer frequency divided by 1000.
+Together with this producer, milliseconds for divided_ticks and seconds for
+the ramp clock are now supported unit interpretations, rather than an inference
+from one isolated divisor. Imported timer API identity and live initialization
+remain unresolved. Scale modes, previous-parent-interval child behavior,
+selection changes and float32 precision still affect observed timing.
+
+The [composed receipt](../../native/snow_host/action_clock_producer_validation.json)
+records 480 exact scalar-bit comparisons across 160 three-node clock trees.
+It executes the original complete updater, with lock helpers stubbed, then the
+original ramp integer conversion and division on every resulting divided-tick
+field. Tests vary holds, scale gates, accumulation, negative inputs and wrapping
+states. This connects the two arithmetic kernels offline; it does not prove a
+live selected object's root membership or scheduler cadence.
+
+The passive [clock reader](../../engine/clock_observation.py) now exposes
+`divided_ticks` from bytes it already reads. No additional remote read or
+larger capture is required. Future captures can compare the actual ramp clock
+source against interval, total ticks and hold/scale state without conflating
+those quantities.

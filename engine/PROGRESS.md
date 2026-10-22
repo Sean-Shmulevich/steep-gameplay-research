@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Connected ramp time to the existing ordinary clock's divided_ticks field,
+with 480 original updater-to-ramp scalar comparisons across 160 trees.
+Passive clock decoding now exposes divided_ticks without extra reads.
+Milliseconds/seconds are supported by the producer and frequency-divisor chain;
+live selected-world identity and timer API initialization remain open. See
+[clock producer join](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#ramp-clock-producer-joins-the-existing-clock-tree).
+
 Ramp clock selection reconstructed and matched in 512 original-accessor cases:
 context override, ordered active candidates, registry exclusions and fallback.
 The accessor can select different objects; +0x1050 is not assumed global.

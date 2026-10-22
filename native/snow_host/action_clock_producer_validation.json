@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "trees": 160,
+  "clock_to_ramp_comparisons": 480,
+  "scope": "Original clock updater and original ramp uint64-to-float32/divide conversion; lock helpers stubbed; synthetic trees",
+  "comparison": "Exact float32 ramp clock scalar bits",
+  "limits": [
+    "No live selected-world provenance",
+    "Timer API units remain inferred",
+    "No scheduler cadence or pause-safety proof"
+  ]
+}

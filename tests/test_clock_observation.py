@@ -55,3 +55,16 @@ class ClockObservationTests(unittest.TestCase):
         self.assertEqual(r['interval'],dict(bits=0x7fc01234,value=None,finite=False))
         self.assertEqual(r['hold_count'],-1)
         with self.assertRaises(ValueError):decode_clock(b'')
+
+    def test_divided_ticks_are_distinct_from_total_and_interval(self):
+        from engine.clock_tree import ClockState, advance_clock
+        from engine.action_axis_ramp import clock_scalar
+        state = advance_clock(ClockState(), 16.)
+        data = bytearray(0x47)
+        struct.pack_into('<QQ',data,0,state.accumulated_ticks,state.divided_ticks)
+        decoded = decode_clock(bytes(data))
+        self.assertEqual(decoded['accumulated_ticks'],480)
+        self.assertEqual(decoded['divided_ticks'],16)
+        self.assertAlmostEqual(clock_scalar(decoded['divided_ticks']),.016,places=8)
+        held = advance_clock(ClockState(accumulated_ticks=480,divided_ticks=16,hold_count=1),16.)
+        self.assertEqual(held.divided_ticks,16)

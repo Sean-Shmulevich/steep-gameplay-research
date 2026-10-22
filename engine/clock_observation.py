@@ -19,7 +19,7 @@ def decode_clock(data):
         ('interval', 0x18), ('reciprocal', 0x1c), ('previous_interval', 0x20),
         ('scale', 0x24), ('secondary_scale', 0x28))}
     result.update({name: struct.unpack_from(fmt, data, offset)[0] for name, offset, fmt in (
-        ('accumulated_ticks', 0, '<Q'), ('counter', 0x2c, '<I'), ('ticks', 0x30, '<I'),
+        ('accumulated_ticks', 0, '<Q'), ('divided_ticks', 8, '<Q'), ('counter', 0x2c, '<I'), ('ticks', 0x30, '<I'),
         ('toggle', 0x34, '<I'), ('hold_count', 0x38, '<i'),
         ('previous_hold_count', 0x3c, '<i'), ('pending_holds', 0x40, '<i'))})
     result['flags'] = list(data[0x44:0x47])
