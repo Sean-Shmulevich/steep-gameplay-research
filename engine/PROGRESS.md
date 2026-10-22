@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Nested mode-zero requests now connect to the owner service and two child
+containers. Eight integrated original chains distinguish pending replacement
+from immediate sequential commits. Sentinels differ by level: 2/5/9. Added a
+symbolic request lifecycle API with receipt-backed tests. Next: identify concrete
+request caller/state labels and correlate consumption live; no generic action
+queue or native synchronization is claimed. See [nested requests](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#nested-requests-and-replacement).
+
 Disable/enable lifecycle traced through five original routines in eight
 integrated cycles. Disable cancels eligible pending work, parks current in the
 pending slot, and cleans up secondary; enable commits the parked object back.

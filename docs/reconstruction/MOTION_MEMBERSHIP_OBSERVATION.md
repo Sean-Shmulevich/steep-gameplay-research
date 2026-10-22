@@ -513,3 +513,82 @@ request routines near `0x1404fc720` write their own `+0x28`/`+0x1c` pair and the
 service an owner at `+0x10`; that is a separate ownership join to trace before
 calling them top-level transition requests. Generic request coalescing remains
 unresolved.
+
+## Nested requests and replacement
+
+The mode-zero request at `0x1404fc720` is now joined to the owner service through
+two nested state containers. Eight original-instruction chains validated this
+join with successful synthetic allocation and inert lifecycle callbacks. See
+[receipt](../../native/snow_host/motion_child_request_validation.json) and
+[independent symbolic request model](../../engine/motion_child_requests.py).
+
+The request cancels an eligible pending child through `0x1405363c0`, writes
+pending mode zero, allocates and initializes a 32-byte child, then stores it at
+container `+0x28`. The container's owner pointer at `+0x10` leads to the top-level
+motion object. If owner `+0x34` is nonzero, the request tail-calls its service;
+otherwise publication ends with a pending child. This identifies an immediate
+service-request role for that flag, in addition to its repeat-processing role
+in guarded callers.
+
+The chain is:
+
+```text
+request_mode_zero(child_container):
+    cancel_eligible_pending_child()        # sentinel for this family is 9
+    pending_mode = 0
+    pending = allocate_and_initialize_child()
+    if owner.immediate_service_flag:
+        service_owner(owner)
+
+service_owner(owner):
+    # enabled and query-depth gates described above
+    # no eligible top-level replacement in the tested chain
+    if owner.current_mode == 0:
+        service_state(owner.current)
+
+service_state(state):
+    # no eligible replacement at this level in the tested chain
+    if state.current_mode in {3, 4}:
+        service_leaf_container(state.current)
+
+service_leaf_container(container):
+    if pending != null and pending_mode != 9:
+        if current != null:
+            current.slot16()
+            if current != null: current.slot0(1)
+            current = null
+        current = pending
+        current_mode = pending_mode
+        pending = null
+        pending_mode = 9
+        current.slot8()
+```
+
+The intermediate state service is `0x1405159c0`; the leaf service is
+`0x140526a80`. The intermediate container uses sentinel 5, the leaf sentinel 9,
+and the top-level owner sentinel 2. These repeated layouts are distinct types
+of state container. Applying one sentinel to all levels would change which
+pending pointers get committed or canceled. The state labels 3 and 4 have not
+been mapped to sports or named gameplay states.
+
+The test crossed intermediate state 3/4, immediate flag 0/1, and owner query
+depth 0/1. Two successive requests produced different lifecycle traces:
+
+- Immediate and idle: old exit/dispose, first child enter, first child
+  exit/dispose, second child enter.
+- Deferred or busy: first pending child dispose, old exit/dispose, second child
+  enter when service was invoked later. The first child never entered.
+
+Thus repeated requests replace an uncommitted pending object on this path; they
+do not form a queue of actions to replay later. Immediate requests can commit
+before the requesting routine returns. In all cases the top-level current
+pointer and intermediate current-container pointer were unchanged. Only the
+leaf current pointer was replaced.
+
+The deferred test explicitly cleared query depth before invoking service; it did
+not prove which original scheduler boundary does that. No allocation failure,
+concurrent requests, callback mutation or live input was tested. The symbolic
+model reproduces successful request/callback ordering and is checked against
+all eight receipts. It does not implement native synchronization or invent the
+missing callbacks. Next targets are the caller of this concrete request and
+its resource/state labels, followed by an observation at actual ingestion.
