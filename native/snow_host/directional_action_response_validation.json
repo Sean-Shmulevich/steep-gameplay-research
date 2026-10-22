@@ -1,0 +1,22 @@
+{
+  "evidence": "Complete original directional source callback through shaping and publication",
+  "updates": 1080,
+  "passed": true,
+  "comparison": [
+    "Short-circuit query order",
+    "Raw/sample/direction/magnitude/status publication bytes",
+    "Processor stages and retained ramp state"
+  ],
+  "substitutions": [
+    "Directional query outcomes",
+    "Clock accessor tick pair",
+    "TLS availability zero"
+  ],
+  "normalization": "Original rsqrt seed observed and supplied to independent publication; seed generation not reconstructed",
+  "limits": [
+    "Synthetic configuration, not actual player tuning",
+    "Source processor assumed invoked",
+    "No device query internals, composite arbitration or scheduler placement"
+  ],
+  "game_process": false
+}

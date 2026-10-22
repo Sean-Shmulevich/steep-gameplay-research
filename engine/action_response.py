@@ -41,3 +41,20 @@ def directional_response(vector, states, *, previous_clock, duration, axis_mode,
     return dict(output=struct.unpack('<4f', chain.output), states=state,
                 clock=clock, curve_inputs=() if ramp is None else ramp['curve_inputs'],
                 stages=chain.stages)
+
+
+def directional_action_response(queries, *, rsqrt_estimate=None, **response_settings):
+    """Compose explicit directional query outcomes, shaping and publication.
+
+    Query pairs are supplied observations, not device reads. The source-level
+    processor is assumed invoked; child gates remain explicit in settings.
+    Normalization retains action_sample's labeled reciprocal-seed boundary.
+    """
+    from .action_sample import combine_directions, publish_vector
+    if not isinstance(queries, dict) or set(queries) != {'negative_x', 'positive_x', 'positive_y', 'negative_y'}:
+        raise ValueError('four named directional query pairs required')
+    raw = combine_directions(**queries)
+    response = directional_response(raw, **response_settings)
+    publication = publish_vector(list(response['output']), rsqrt_estimate=rsqrt_estimate)
+    return dict(raw_vector=raw, response=response, publication=publication,
+                source_processor_invoked=True)

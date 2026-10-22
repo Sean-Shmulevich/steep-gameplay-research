@@ -2344,3 +2344,40 @@ addresses remain valid. The actual collector always discovers identities
 again. Five requests of headroom in this fixture do not guarantee completion
 for larger graphs; exhaustion still fails closed. Runtime validation awaits
 availability of the game from the other agent.
+
+## Directional source through action publication
+
+`directional_action_response` in [action_response.py](../../engine/action_response.py)
+joins the existing directional query combiner, composed response chain and
+[action publication](ACTION_RESET_CALLBACK.md). Inputs are four named pairs of
+boolean query outcomes and explicit response settings. Each pair combines by
+OR; the vector is `(positive_x-negative_x, positive_y-negative_y, 0, 0)`.
+The native callback queries the primary first and queries its alternate only
+when the primary is false, in negative-X, positive-X, positive-Y, negative-Y
+order. The public wrapper accepts outcomes rather than invoking device APIs.
+
+The published sample retains the processed vector. Direction and magnitude
+are derived afterward; the sample itself is not normalized to unit length.
+Thus low-amplitude ramp output can have a near-unit direction while keeping
+its smaller sample and magnitude. The small-vector threshold retains direction
+unchanged, and the status threshold remains separate. These publication rules
+matter when comparing vector fields: a normalized direction is not evidence
+that upstream steering immediately reached full strength.
+
+The [complete callback receipt](../../native/snow_host/directional_action_response_validation.json)
+executes the original directional source callback at RVA `0x4b2680`, invoking
+the original chain, ramp, curve, root solver, math and diagonal stages, followed
+by original publication. All 1,080 updates match short-circuit query order,
+raw/sample/direction/magnitude/status bytes, processor stage fields and ramp
+state. Primary and alternate query outcomes are supplied, along with clock
+reads and the TLS availability helper. The configured source-level processor
+is invoked in these sequences; absent source configuration and its retained
+publication path are not covered by this composed API.
+
+For exact direction comparison, the validator observes the original RSQRTPS
+seed and passes it into the independent publication kernel. This validates
+the recovered refinement and publication arithmetic, not seed generation on
+all processors. Omitting a seed in the public wrapper uses the existing labeled
+scalar-reciprocal substitute. The sample, magnitude and status comparisons do
+not use that seed. Device-query internals, composite arbitration, live tuning
+and scheduler generation remain outside this result.

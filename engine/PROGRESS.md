@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Directional query outcomes through final action publication now compose in one
+API and match 1,080 complete original-callback updates. Query short-circuit
+order, raw/sample/direction/magnitude/status and ramp state match. Direction
+comparison supplies the original SIMD reciprocal seed; public default remains
+labeled approximate. Composite arbitration and device-query internals remain
+open. See [directional publication](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#directional-source-through-action-publication).
+
 Standalone JSON response inspector now runs explicit control sequences without
 binary or game access, emitting exact output/state/publication receipts.
 Synthetic fixture exercises buildup, release and reversal; CLI tests check
