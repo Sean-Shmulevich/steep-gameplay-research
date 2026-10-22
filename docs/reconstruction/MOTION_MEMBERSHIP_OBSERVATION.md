@@ -802,3 +802,56 @@ routine's callers gate its execution through actor `+0xff8` and the resolved
 object's byte `+0x64`; when the combined latch is true they call `0x1404f66f0`.
 That downstream arithmetic and its actor/body consumer are the next targets for
 connecting the input history to a physical effect.
+
+## Connected rotation proposal
+
+The combined latch's downstream routine `0x1404f66f0` is the already documented
+initial spin/flip proposal, acceptance and feedback path. See
+[body proposal guide](../systems/body/CLIENT_GUIDE.txt),
+[rotation stages](../systems/tricks/rotation/CLIENT_GUIDE.txt) and
+[motion lifecycle](../systems/tricks/motion-lifecycle/CLIENT_GUIDE.txt).
+The equations were previously explained there. This follow-up supplies the
+concrete ingestion/state-entry/latch connections and original-instruction
+validation; it should not be counted as discovering those formulas again.
+
+The independent engine now exposes
+[`initial_rotation_proposal`](../../engine/motion_rotation_proposal.py), with
+float32 operation order checked against 120 original prefix executions.
+The scalar square-root service was supplied; SIMD operations and branches ran
+as original instructions. The [receipt](../../native/snow_host/rotation_proposal_validation.json)
+records exact XYZ output bits for disabled/enabled latches, selected limits
+110/360/450, zero, single-axis, mixed-axis, signed and deadzone-boundary inputs.
+Those limit values are test inputs, not new evidence of live profile selection.
+
+```text
+x, y = primary input if first_latch else (0, 0)
+z = secondary Y if second_latch else 0
+if abs(y) < float32(0.3): y = 0
+if abs(z) < float32(0.4): z = 0
+q = (z, float32(1.414)*y, -float32(1.414)*x)
+if norm(q) <= float32(0.01): scale = 0
+else:
+    scale = max(sqrt(x*x+y*y), abs(z)) * limit * float32(pi) / 180 / norm(q)
+proposal = q * scale
+```
+
+The implementation preserves individual float32 operations rather than simply
+using the algebraically equivalent normalized-vector expression. There is no
+clamp on input magnitude in this prefix. Equipment remapping, stance inversion,
+proposal acceptance, mixed-axis boost and later magnitude feedback are outside
+this API and validation; calling it the final spin rate would be incorrect.
+Its returned vector is local radians per supplied time unit, not torque or a
+verified physical-body write. Nonfinite API inputs are rejected as an explicit
+inspection policy; native nonfinite behavior is not claimed by that policy.
+
+A composition test connects the latch API to this proposal. With the gates held
+clear, count four and squared-distance threshold .15, primary X .3 does not
+activate a proposal, while .4 does. This is a synthetic exercise of the two
+reconstructed local blocks, not a live or same-substep game observation.
+
+This connection explains why an apparent "input smoothing" issue can originate
+from state-entry history, persistent latches, the proposal's separate deadzones,
+or acceptance of the resulting direction. The scheduler investigation should
+record those stages separately. The next useful closure is their actual
+same-request ordering and the existing target-publication/body-consumer gap,
+rather than rederiving the documented proposal equations.

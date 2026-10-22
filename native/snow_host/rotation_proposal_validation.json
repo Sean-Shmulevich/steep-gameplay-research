@@ -1,0 +1,1335 @@
+{
+  "evidence": "original_initial_rotation_proposal_prefix",
+  "passed": true,
+  "cases": 120,
+  "game_process": false,
+  "code_sha256": "29a18e0ae870e2686d0da877e89b3af686ebb224f1f8353148a41a7a9b2f9e39",
+  "rows": [
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "0bbef53f0000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "0bbef53f0000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "0bbef5bf0000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "0a98443f0000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "0a98c43f0000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "db0fc9400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "db0fc9400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "db0fc9c00000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "7cd920400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "7cd9a0400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "d153fb400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "d153fb400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "d153fbc00000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "db0f49400000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": false,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "db0fc9400000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "00000000000000000bbef5bf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000bbef53f00000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "000000000dbef53f0dbef5bf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "000000000dbef5bf0dbef53f"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "000000000772133f00000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 110,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "000000000dbe75bf0b98c4be"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "0000000000000000db0fc9c0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "00000000db0fc94000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "00000000db0fc940db0fc9c0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "00000000db0fc9c0db0fc940"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "000000003c46f13f00000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 360,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "00000000db0f49c07cd9a0bf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "0000000000000000d253fbc0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "00000000d253fb4000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "00000000d353fb40d353fbc0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "00000000d353fbc0d353fb40"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "00000000e4cb164000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": false,
+      "limit": 450,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "00000000d3537bc0dd0fc9bf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "00000000000000000bbef5bf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "000000000bbef53f00000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "0bbef53f0000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "9d709b3fc2cadb3fc2cadbbf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "9d709bbfc2cadbbfc2cadb3f"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "83df063f6d080f3f00000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 110,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "83668e3f59b17bbfae5ac9be"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "0000000000000000db0fc9c0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "00000000db0fc94000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "db0fc9400000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "2f5b7e4070d4b34070d4b3c0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "2f5b7ec070d4b3c070d4b340"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "8fb3dc3fc90dea3f00000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 360,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "d504694031ee4dc08ebea4bf"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        1,
+        0,
+        0
+      ],
+      "proposal_hex": "0000000000000000d253fbc0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        1,
+        0
+      ],
+      "proposal_hex": "00000000d253fb4000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0,
+        1
+      ],
+      "proposal_hex": "d153fb400000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        1,
+        1,
+        1
+      ],
+      "proposal_hex": "fef89e408cc9e0408cc9e0c0"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        -1,
+        -1,
+        -1
+      ],
+      "proposal_hex": "fef89ec08cc9e0c08cc9e040"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      "proposal_hex": "3af009409e48124000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0,
+        0.29999998211860657,
+        0.3999999761581421
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0.001,
+        0,
+        0
+      ],
+      "proposal_hex": "000000000000000000000080"
+    },
+    {
+      "primary_active": true,
+      "secondary_active": true,
+      "limit": 450,
+      "inputs": [
+        0.2,
+        -0.5,
+        0.8
+      ],
+      "proposal_hex": "05a39140deb480c031eecdbf"
+    }
+  ],
+  "limits": [
+    "Scalar sqrt service supplied with float32 sqrt; other prefix arithmetic executes original instructions.",
+    "Finite inputs only, no overflow tests.",
+    "Stopped before equipment remap, stance inversion, acceptance, boost and magnitude feedback.",
+    "No body actuation or live timing proof."
+  ]
+}
