@@ -1,0 +1,1333 @@
+{
+  "evidence": "original_child_request_chain_including_real_entry_callback",
+  "cases": 32,
+  "passed": true,
+  "game_process": false,
+  "rows": [
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 3,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 0,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 0,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 0,
+      "committed_before_manual_service": true,
+      "events_before_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new1"
+        ],
+        [
+          "exit",
+          "new1"
+        ],
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 0,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 3,
+      "threshold": 3,
+      "entry_flag": 1,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    },
+    {
+      "active_count": 4294967295,
+      "threshold": 3,
+      "entry_flag": 0,
+      "cached_profile_bits": 1059061760,
+      "parent_state": 4,
+      "immediate": 1,
+      "busy": 1,
+      "committed_before_manual_service": false,
+      "events_before_service": [
+        [
+          "dispose",
+          "new1"
+        ]
+      ],
+      "events_after_service": [
+        [
+          "dispose",
+          "new1"
+        ],
+        [
+          "exit",
+          "old"
+        ],
+        [
+          "dispose",
+          "old"
+        ],
+        [
+          "enter",
+          "new2"
+        ]
+      ]
+    }
+  ],
+  "code_sha256": {
+    "0x1404fc720": "c50c167084c3165b3e4b4f9689889f0b9dfd9b2d162e7fa82fa0cf36fbb34c15",
+    "0x1405363c0": "3f76e6f511dc566cb15d4902908e221b94c66170c6206ee453e4ca49ecd5b3a9",
+    "0x1405159c0": "e1b31d6076f70c14297fe7a689282cdb2030d9fb5d0624b1b94703f354881b1d",
+    "0x140526a80": "3e170118073a9b171760bee008c76dd24d184e6916c01471e76d4873fb00ef40",
+    "0x140573900": "f18aeed91717c0d5e3903679c9997f15de4debb8ac556f3ee46e5036d47d4cb4"
+  },
+  "limits": [
+    "Allocator returns synthetic successful allocations; disposal and exit callbacks are inert, entry executes original instructions.",
+    "State labels 3 and 4 not mapped to named sports or gameplay states.",
+    "No contention, allocation failure, callback mutation or live input tested.",
+    "Busy depth is explicitly cleared between requests and manual service, not by an original scheduler event."
+  ]
+}

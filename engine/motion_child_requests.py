@@ -40,3 +40,24 @@ def service_child(slot: ChildSlot):
         events.extend([['exit', slot.current], ['dispose', slot.current]])
     events.append(['enter', slot.pending])
     return ChildSlot(slot.pending, slot.pending_mode), events
+
+
+@dataclass(frozen=True)
+class ChildEntrySnapshot:
+    cached_profile_bits: int
+    actor_flag: bool
+    within_input_count_threshold: bool
+
+
+def sample_child_entry(active_count: int, threshold: int,
+                       profile_value_bits: int) -> ChildEntrySnapshot:
+    """Local effects of mode-zero child entry with a valid profile/owner chain.
+
+    active_count is the ingestion-written consecutive-nonzero XY count, not
+    elapsed seconds. Profile value is copied as bits, without assigning units.
+    The original compares unsigned count <= threshold and sets the actor flag.
+    """
+    for value in (active_count, threshold, profile_value_bits):
+        if type(value) is not int or not 0 <= value <= 0xffffffff:
+            raise ValueError('entry fields must be unsigned 32-bit values')
+    return ChildEntrySnapshot(profile_value_bits, True, active_count <= threshold)

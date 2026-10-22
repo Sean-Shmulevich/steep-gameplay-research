@@ -592,3 +592,55 @@ model reproduces successful request/callback ordering and is checked against
 all eight receipts. It does not implement native synchronization or invent the
 missing callbacks. Next targets are the caller of this concrete request and
 its resource/state labels, followed by an observation at actual ingestion.
+
+## Child entry consumes ingestion history
+
+The mode-zero child's installed entry callback is `0x140573900`. Its table
+`0x141e7a1d0` was read directly from the request's constructor sequence. The
+callback now executes as original instructions inside the request/cancel/owner
+service/nested commit experiment, rather than being an inert substitute.
+Thirty-two cases passed; see the
+[receipt](../../native/snow_host/motion_child_input_entry_validation.json).
+
+```text
+entry(child):
+    # child -> container -> intermediate state -> motion owner
+    ancestor_motion.cached_value_bits = ancestor_profile.value_bits
+    child.motion.actor.flag = 1
+    child.within_threshold = unsigned(child.motion.active_xy_count) <=
+                             unsigned(child.motion.profile.threshold)
+```
+
+The copied profile word is `profile+0x30`, destination motion `+0x6bc`.
+The actor flag is `actor+0x1b74`. The comparison reads motion `+0x384` and profile
+`+0xe8`, writing the child's byte `+0x18`. Both profile accesses resolve the
+signed handle at motion `+0x50`. The ancestor chain for the copy is
+`child+8 -> container+8 -> intermediate+0x10`; the comparison instead uses the
+child's direct owner pointer `+0x10`. The test makes those resolve to the same
+motion object, but the routine itself does not check their equality.
+
+The counter at motion `+0x384` has an inspected writer in ingestion
+`0x140541da0`: it resets when both first-action X and Y compare equal to zero,
+and increments otherwise, including unordered comparisons. Consequently the
+entry flag samples a history of ingestion calls, not elapsed seconds or
+necessarily physics substeps. This joins a concrete state-entry consumer to the
+known ingestion writer. It does not establish the action payload's freshness,
+the ordering of a particular live entry relative to that writer, or what later
+behavior the child flag controls.
+
+The integrated matrix retained intermediate states 3/4, immediate/deferred
+service and busy/idle owner depth, and added counts 0, 3, 4 and `0xffffffff`
+against threshold 3. All entry flags matched unsigned less-than-or-equal, the
+profile word copied exactly, and the actor flag became one. Allocation,
+disposal and exit effects remained substituted; entry was real. The independent
+`sample_child_entry` API reproduces these local effects as an immutable result.
+Profile units and actor-flag meaning remain unnamed.
+
+The concrete caller `0x14055ddb0` constructs the intermediate mode-4 container,
+then conditionally requests its mode-zero child when owner flag `+0x34` is set.
+Its guarded caller `0x14055dc20` selects that path only under top-level mode 0,
+intermediate state 3, and next child state 3. A caller at `0x140532dbe` then
+reads actions `0x74` and `0x75`; those observations are static leads, not a
+license to name this transition jump, landing or recovery. The next useful
+consumer to trace is the child's `+0x18` flag, while preserving the ingestion
+counter as a candidate observation channel.
