@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Bounded native motion-state reader implemented, max 18 reads with actor/backlink
+checks and duplicate samples. Captures counters, inputs, baselines, independent
+latch bytes and bounded hierarchy ownership. Native fault/branch fixtures and
+MinGW compile passed. Next: optional recorder integration with independent
+validity, then bounded live correlation. No capture ABI change or game launch.
+See [reader contract](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#bounded-native-motion-state-reader).
+
 The latch consumer is the existing documented spin/flip proposal path. Added
 an executable float32 prefix and 120 exact original-instruction comparisons,
 plus a latch-to-proposal composition test. This validates/connects prior formulas

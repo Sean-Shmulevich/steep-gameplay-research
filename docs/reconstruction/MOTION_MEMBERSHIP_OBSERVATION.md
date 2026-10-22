@@ -855,3 +855,45 @@ or acceptance of the resulting direction. The scheduler investigation should
 record those stages separately. The next useful closure is their actual
 same-request ordering and the existing target-publication/body-consumer gap,
 rather than rederiving the documented proposal equations.
+
+## Bounded native motion-state reader
+
+[`snow_motion_observe`](../../native/snow_host/snow_motion_observation.h) now
+provides the observation needed to correlate this research with existing snow
+substep records. It is a standalone authored C reader, not an installed hook.
+It accepts a caller-verified actor/table identity and an exact bounded memory
+reader, checks the embedded motion object's actor backlink, and takes two
+matching observations with at most 18 reads total.
+
+Captured fields include current/pending top-level ownership, lock and query
+nesting, enable/immediate/pending flags, the ingested input vectors, distinct
+current-action vectors, both nonzero-input counters, all three latch bytes, and
+the primary/smoothed/secondary baseline vectors. Input words retain their raw
+bits, including NaN payloads and signed zero. It does not collapse the combined
+latch byte into the OR of the two underlying flags.
+
+For top-level mode zero it observes the current state's header. It follows that
+state's current child only on the inspected mode 0/3/4 branches. It never follows
+pending pointers or an unbounded state chain. A null current pointer produces
+an observation with that deeper level marked unavailable. Wrong actor identity,
+wrong backlink, failed reads, address overflow or changed captured values clear
+the entire output and return failure.
+
+The native fixture covers each of the 18 read failures, a changed counter across
+samples, owner/table rejection, excluded branches with deliberately invalid
+pointers, child-address overflow, distinct input counts, raw float-bit retention
+and stale combined-latch preservation. The focused five-fixture C suite passed,
+and MinGW compiled the reader with warnings treated as errors.
+
+This reader does not claim an atomic snapshot or detect address reuse. Matching
+lock/depth samples neither exclude another thread nor grant permission to mutate
+the object. Observed modes do not prove allocation type outside the verified
+actor route. Identical counters do not prove that ingestion did not run: a
+zero-input update can leave a counter at zero. Two matching samples do not
+establish action freshness, a producer generation or ingestion execution.
+
+The next implementation step is an optional channel in the native capture
+record, keeping motion-observation validity separate from job/substep validity.
+Only after integrated fixtures should a bounded live capture correlate these
+values against direct substep ordinals. The existing capture ABI and live probe
+were not changed in this pass.
