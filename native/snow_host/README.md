@@ -910,8 +910,9 @@ small experimental ABI declared in `snow_update_probe.h`:
   admitted captures have returned. It does not wait or unload the DLL.
 - `SnowProbe_ReadRecord(index, out)` copies one record only after close and drain.
 
-The module performs no hook installation, table replacement, game launch, physics
-mutation or code patch. The caller must verify the game build, original target,
+Configuration alone performs no hook installation. The explicit slot installer
+below replaces one vtable pointer; it does not launch the game, mutate physics
+state or patch executable instructions. The caller must verify the game build, original target,
 argument signature and counter ownership before configuration, then establish a
 safe publication mechanism. Calling Dispatch before successful configuration is
 an API violation. The DLL and immutable capture context remain pinned for late
@@ -938,3 +939,38 @@ On Windows, run `fixture.exe` with the absolute DLL path as its sole argument.
 Under Wine, give the fixture a Windows-mapped path to the DLL. This test needs no
 game files. Success verifies the probe assembly; it does not establish safety or
 correctness when installed in the original game's actor dispatch.
+
+
+### Explicit slot installation and restoration
+
+`SnowProbe_InstallSlot()` is a separate opt-in after successful configuration.
+It checks the selected actor snapshot again and verifies the aligned slot at
+`actor_table + 0x2c0` still contains the configured original. The slot must be in
+a nonexecutable committed image region, and both slot and original target must
+belong to the same loaded module. The module is pinned to retain its table and
+code. These checks do not establish player lifetime or supported game-build
+identity; the acquisition adapter must establish those independently.
+
+The installer makes the slot's page writable, replaces the pointer with an atomic
+compare/exchange, and restores the previous protection. Other instances using
+that shared vtable reach the wrapper too, but forward directly to the original.
+It permits only one installation attempt. There is no instruction detour or
+trampoline. Page permissions apply to a whole page, so concurrent external
+protection changes on that page are unsupported.
+
+`SnowProbe_RestoreSlot()` replaces the pointer only when it still equals this
+probe. An unexpected pointer is preserved and reported as a conflict. The
+recorded page protection is restored even on that conflict. Restoration is
+retryable and idempotent when the original already occupies the slot. Return
+values are 1 for success, 0 for refusal/conflict, and -1 for a page-protection
+failure. Call restoration after any attempted installation, even a failure;
+installation rollback is best-effort. Check restoration's result, then close
+capture and wait for drain before copying records. Never unload the pinned probe
+or treat drain as permission to free game objects or retained callback contexts.
+
+The updated Windows fixture runs through a read-only synthetic image vtable.
+Normal installation, argument forwarding, read-only protection restoration,
+conflicting-pointer preservation, retry restoration, and mismatched-original
+refusal pass under Wine. Windows API failure injection and live installation in
+the game have not run. The remaining integration work is fresh owner/counter
+acquisition, bounded session orchestration and trace export with QPC frequency.

@@ -57,8 +57,8 @@ spin-preserving impulse path is not installed in the native game yet.
 
 `snow_update_probe.dll` is a separate experimental observation component. Do not
 put it in `plugins`: it does not implement `SnowMod_Initialize`. Its synthetic
-Windows fixture passes under Wine, but it currently has no hook-installation
-entry point. Its README explains configuration, capture close/drain and lifetime
+Windows fixture passes under Wine, and it now has explicit guarded slot install/restore entry points. Those entry
+points have only been exercised against synthetic objects, not the live game. Its README explains configuration, capture close/drain and lifetime
 requirements. Source availability does not turn it into a finished live hook.
 
 Game assets, executable payloads, raw memory dumps, recordings, saves and local

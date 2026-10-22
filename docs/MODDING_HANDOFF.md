@@ -12,8 +12,8 @@ remain excluded.
 - Pause/step/resume, player reads, velocity/placement adapter, passive animation
   readers and Python command client.
 - Independent reconstruction, reference formulas, synthetic workbenches and tests.
-- Snow-update observation DLL with synthetic Windows/Wine validation. It has no
-  installation entry point yet and is not a normal host plugin.
+- Snow-update observation DLL with synthetic Windows/Wine validation. It includes a synthetic-tested slot installer/restorer and is not a normal
+  host plugin. Live installation remains untested.
 
 A clean export of the staged publication passed 1,635 tests and built both the
 fixture and game-adapter host variants with MinGW warnings treated as errors.
@@ -28,9 +28,9 @@ pending impulse and both bodies before/after eligible updates, and correlate the
 records to the same request/substep. Then test one bounded native impulse that
 preserves spin. Current velocity assignment resets angular velocity.
 
-The probe core and reader are implemented; safe slot installation/restoration,
-current owner/counter acquisition, exporting records with QPC frequency, and a
-bounded live runner remain. Drained capture does not permit unloading cached
+The probe core, reader and reversible slot installer are implemented and
+synthetic-tested. Live installation validation, current owner/counter acquisition,
+exporting records with QPC frequency, and a bounded live runner remain. Drained capture does not permit unloading cached
 callbacks. Keep DLL/context pinned, forward late calls, and never overwrite an
 unexpected callback on restoration. Captured body reads are sequential, and a
 wrapper interval includes other snow forces. Exact consumer observation remains

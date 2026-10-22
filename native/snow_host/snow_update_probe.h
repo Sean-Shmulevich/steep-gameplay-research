@@ -1,7 +1,7 @@
 #ifndef SNOW_UPDATE_PROBE_H
 #define SNOW_UPDATE_PROBE_H
 #include "snow_update_snapshot.h"
-/* Experimental ABI v1: caller must use this exact header/build. No hook is installed.
+/* Experimental ABI v1: caller must use this exact header/build. Configure alone installs no hook.
  * Configure once BEFORE publishing Dispatch; configuration is never retried.
  * Caller verifies executable identity, original target/signature and counter owners.
  * DLL pins itself. Close stops capture, not forwarding; never free supplied objects
@@ -16,4 +16,13 @@ SNOW_PROBE_API int SnowProbe_Configure(const SnowUpdateBinding *, SnowUpdateOrig
 SNOW_PROBE_API void SnowProbe_Dispatch(void *, float, float);
 SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
 SNOW_PROBE_API int SnowProbe_ReadRecord(size_t, SnowUpdateRecord *);
+/* Explicit opt-in pointer replacement at actor_table+0x2c0. One install attempt.
+ * Return 1 on success, 0 on refusal/conflict, -1 on page-protection failure.
+ * Restore is retryable, never overwrites a competing pointer, and must be called
+ * after ANY attempted install, including failure. Then close and drain capture.
+ * Only aligned nonexecutable MEM_IMAGE slots in the original target's module
+ * qualify. Module pinning retains the table/target, not the player objects.
+ */
+SNOW_PROBE_API int SnowProbe_InstallSlot(void);
+SNOW_PROBE_API int SnowProbe_RestoreSlot(void);
 #endif
