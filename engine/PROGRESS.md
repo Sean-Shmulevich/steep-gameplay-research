@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Original guard -> pending service -> state commit chain passed 16 integrated
+emulation cases. The guard can publish a new current state but return its saved
+old-state decision. New-state entry sees the pending slot cleared; lifecycle
+callbacks run under recursive lock depth three. Next: identify pending-state
+writers and capture current-state identity at ingestion, not guard entry.
+See [transition ordering](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#guard-can-return-a-decision-from-the-previous-state).
+
 Motion query guard validated in 400 original-instruction cases. It preserves
 caller output except on blocked branches and may process deferred work under
 its recursive lock before returning. Independent decision API added; actual

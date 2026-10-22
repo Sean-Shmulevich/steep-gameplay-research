@@ -1,0 +1,312 @@
+{
+  "evidence": "original_guard_service_commit_chain_emulation",
+  "passed": true,
+  "cases": 16,
+  "game_process": false,
+  "rows": [
+    {
+      "predicate_blocked": false,
+      "service_enabled": 0,
+      "pending_object": 0,
+      "pending_mode": 0,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 0,
+      "pending_object": 0,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 0,
+      "pending_object": 1,
+      "pending_mode": 0,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 0,
+      "pending_object": 1,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 1,
+      "pending_object": 0,
+      "pending_mode": 0,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "service_current",
+          "current": "old",
+          "pending": "none",
+          "mode": 0,
+          "pending_mode": 0,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 1,
+      "pending_object": 0,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "service_current",
+          "current": "old",
+          "pending": "none",
+          "mode": 0,
+          "pending_mode": 2,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 1,
+      "pending_object": 1,
+      "pending_mode": 0,
+      "committed": true,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "exit_old",
+          "current": "old",
+          "pending": "new",
+          "mode": 0,
+          "pending_mode": 0,
+          "lock_depth": 3,
+          "query_depth": 1
+        },
+        {
+          "event": "dispose_old",
+          "current": "old",
+          "pending": "new",
+          "mode": 0,
+          "pending_mode": 0,
+          "lock_depth": 3,
+          "query_depth": 1
+        },
+        {
+          "event": "enter_new",
+          "current": "new",
+          "pending": "none",
+          "mode": 0,
+          "pending_mode": 2,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": false,
+      "service_enabled": 1,
+      "pending_object": 1,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 1,
+      "output_byte": 0,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "service_current",
+          "current": "old",
+          "pending": "new",
+          "mode": 0,
+          "pending_mode": 2,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 0,
+      "pending_object": 0,
+      "pending_mode": 0,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 0,
+      "pending_object": 0,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 0,
+      "pending_object": 1,
+      "pending_mode": 0,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 0,
+      "pending_object": 1,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 1,
+      "events": []
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 1,
+      "pending_object": 0,
+      "pending_mode": 0,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "service_current",
+          "current": "old",
+          "pending": "none",
+          "mode": 0,
+          "pending_mode": 0,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 1,
+      "pending_object": 0,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "service_current",
+          "current": "old",
+          "pending": "none",
+          "mode": 0,
+          "pending_mode": 2,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 1,
+      "pending_object": 1,
+      "pending_mode": 0,
+      "committed": true,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "exit_old",
+          "current": "old",
+          "pending": "new",
+          "mode": 0,
+          "pending_mode": 0,
+          "lock_depth": 3,
+          "query_depth": 1
+        },
+        {
+          "event": "dispose_old",
+          "current": "old",
+          "pending": "new",
+          "mode": 0,
+          "pending_mode": 0,
+          "lock_depth": 3,
+          "query_depth": 1
+        },
+        {
+          "event": "enter_new",
+          "current": "new",
+          "pending": "none",
+          "mode": 0,
+          "pending_mode": 2,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    },
+    {
+      "predicate_blocked": true,
+      "service_enabled": 1,
+      "pending_object": 1,
+      "pending_mode": 2,
+      "committed": false,
+      "return_value": 0,
+      "output_byte": 1,
+      "pending_service_after": 0,
+      "events": [
+        {
+          "event": "service_current",
+          "current": "old",
+          "pending": "new",
+          "mode": 0,
+          "pending_mode": 2,
+          "lock_depth": 3,
+          "query_depth": 1
+        }
+      ]
+    }
+  ],
+  "code_sha256": {
+    "0x14052c4a0": "cf0b7b45adb4867c3e062f356b57c7be87ad880a89ec6a97b09457e0a8bf7f67",
+    "0x1404eb310": "70f53f59161a2f755cc13419d0ce1ff8e94ac0c89d20e642209e4c8498fddf00",
+    "0x140555700": "1cf416c34355922b28bf1a50e52b72fb1506b763488e211861600a497ea187b3"
+  },
+  "limits": [
+    "Thread ID supplied; no competing threads.",
+    "Lifecycle callbacks are inert substitutes; names describe call ordering, not proven semantics.",
+    "No secondary object at +0x38, no callback reentrancy or exception behavior.",
+    "Repeat processing disabled; only existing current mode zero tested.",
+    "Actual game state names, skip effects and input freshness remain unresolved."
+  ]
+}

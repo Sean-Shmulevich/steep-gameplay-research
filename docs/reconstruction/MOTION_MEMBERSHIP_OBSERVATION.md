@@ -362,3 +362,83 @@ snapshots therefore cannot stand in for observations at the actual consumption
 point. The next static target is the pending-work service and the writers of its
 flags; live correlation should retain this ordering rather than flattening the
 guard into a read-only boolean getter.
+
+## Guard can return a decision from the previous state
+
+The pending service is now connected to a concrete motion-state commit.
+Sixteen isolated cases executed the original guard `0x14052c4a0`, service
+`0x1404eb310` and commit routine `0x140555700` together. See the
+[integrated receipt](../../native/snow_host/motion_transition_validation.json).
+Only thread identity and leaf callbacks were substituted; the three routines'
+branches, pointer assignments, pending flags and recursive-lock operations ran
+as original instructions.
+
+The service performs:
+
+```text
+acquire_recursive_motion_lock()
+if query_depth == 0 and service_enabled_byte != 0:
+    query_depth = 1
+    pending_service_byte = 0
+    commit_or_service_current_state()
+    query_depth -= 1
+else:
+    pending_service_byte = 1
+release_recursive_motion_lock()
+```
+
+`service_enabled_byte` is motion `+0x2c`; its actual lifecycle meaning is not
+identified. Clearing the pending flag occurs before entering the commit routine.
+A request made during callbacks could set it again; this experiment used inert
+callbacks and does not establish the actual reentrant writers.
+
+The commit routine reacquires the same recursive lock and performs:
+
+```text
+if pending_object != null and pending_mode != 2:
+    if current_object != null:
+        current_object.callback_slot_0x10()
+        # Current is reread after that callback.
+        if current_object != null:
+            current_object.callback_slot_0x00(argument=1)
+    current_object = pending_object
+    current_mode = pending_mode
+    pending_object = null
+    pending_mode = 2
+    current_object.callback_slot_0x08()
+else:
+    if current_object != null and current_mode == 0:
+        service_current(current_object)
+if secondary_object != null:
+    service_secondary(secondary_object)
+```
+
+Build anchors are current mode `+8`, pending mode `+0xc`, current object `+0x10`,
+pending object `+0x18`, secondary object `+0x38`. Mode 2 suppresses commit even
+when a pending pointer exists. Names such as exit/dispose/enter in the receipt
+are role interpretations of callback ordering; their actual bodies were not
+executed. In particular, argument 1 to slot zero does not itself establish
+allocation ownership or complete destruction behavior.
+
+The guard saves its predicate result before calling this service. In tested
+commit cases it returned the old-state decision after publishing the new state.
+The caller's output byte likewise retained the result of the earlier predicate.
+The new state's slot-8 callback observed current=new, pending=null, pending
+mode=2. All three lifecycle callbacks ran at recursive lock depth 3 and query
+depth 1. The chain restored both depths to zero and released the lock afterward.
+
+The matrix crossed blocking/nonblocking old-state predicates, service enabled
+or disabled, pending object present or absent, and pending mode 0 or 2. Disabled
+service retained the pending-service byte. Enabled service cleared it in these
+inert-callback cases, including cases where no transition was eligible. Current
+mode was zero, the secondary pointer was null, and repeat processing was off.
+No contention, callback reentrancy, exceptions, concrete sport-state identities,
+or live original-game transition was tested.
+
+This narrows the recording requirement: a guard's return value cannot identify
+the state that will consume the subsequent actions. Capture current-state
+identity at ingestion itself and, when tracing transitions, capture publication
+before the new-state entry callback. Do not place an arbitrary mod callback in
+that publication window: lock ownership is known locally, but lifecycle and
+reentrancy contracts remain unresolved. The next useful join is the writer that
+requests a pending state and sets these mode/enable/pending fields.
