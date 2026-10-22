@@ -71,3 +71,25 @@ class ContactNormalTests(unittest.TestCase):
         from reference.contact_normal import smoothing_gain
         for old,new,expected in ((.15,1,60),(0,.3,60),(.1499,.3001,1)):
             self.assertEqual(smoothing_gain(old,new,.01,decay_lookup=lambda x:1)['base_rate'],expected)
+
+    def test_normal_rotation_identity_and_quarter_turn(self):
+        from reference.contact_normal import rotate_normal
+        import math
+        seed=lambda x:1/math.sqrt(x)
+        self.assertEqual(rotate_normal((1,0,0),(0,0,0,1),reciprocal_sqrt=seed),(1,0,0,0))
+        result=rotate_normal((0,0,1),(0,math.sqrt(.5),0,math.sqrt(.5)),reciprocal_sqrt=seed)
+        self.assertAlmostEqual(result[0],1,places=6)
+        self.assertAlmostEqual(result[2],0,places=6)
+        self.assertEqual(result[3],0)
+
+    def test_normal_rotation_preserves_signed_zero_w(self):
+        from reference.contact_normal import rotate_normal
+        import math
+        result=rotate_normal((1,0,0),(-.6,0,0,.8),reciprocal_sqrt=lambda x:1/math.sqrt(x))
+        self.assertEqual(result[3],0)
+        self.assertEqual(math.copysign(1,result[3]),-1)
+
+    def test_normal_rotation_rejects_degenerate_and_bad_shape(self):
+        from reference.contact_normal import rotate_normal
+        with self.assertRaises(ValueError):rotate_normal((0,0,0),(0,0,0,1),reciprocal_sqrt=lambda x:1)
+        with self.assertRaises(ValueError):rotate_normal((1,0),(0,0,0,1),reciprocal_sqrt=lambda x:1)

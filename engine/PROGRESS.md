@@ -4303,3 +4303,8 @@ Normal smoothing gain: 120 original coefficient/cooker/lookup cases match. The
 gain restarts from .0001 toward .75 each call, using base rate 60 or 1 depending
 on old/candidate Z. Full angular lookup, quaternion rotation and smoothing gate
 ownership remain before this can replace runtime normal substitution.
+
+Normal quaternion application: 514 original-instruction cases match all four
+lanes, including normalization and signed-zero W. The angle lookup and
+trigonometric quaternion construction remain to connect the smoothing gain to
+this block; runtime normal smoothing has not been replaced yet.

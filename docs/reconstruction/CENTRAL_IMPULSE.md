@@ -10392,3 +10392,33 @@ rotates the old normal, then normalizes it before writing the frame. The exact
 angle-table initialization, trigonometric routines, runtime gate producer and
 joined rotation remain unverified here. No complete smoother or runtime adoption
 is claimed by this gain receipt.
+
+
+### Normal quaternion application
+
+`reference.contact_normal.rotate_normal` reconstructs the four-lane application
+of a supplied XYZW quaternion to the old XYZ normal, followed by normalization.
+With quaternion vector q, scalar w and old normal v, the XYZ expression is:
+
+```text
+p = q * v
+d = p.x + (p.y + p.z)
+c = cross(q, v)
+r = ((c * w + d * q) + (w * w - 0.5) * v) * 2
+```
+
+Every product, subtraction and addition rounds separately to float32. The native
+SIMD final multiplier is (2, 2, 2, 0), so W becomes zero by multiplication and
+retains its arithmetic sign. The code then measures XYZ squared length using
+x + (y + z), refines a supplied RSQRTPS seed, and scales all four lanes. The
+reference preserves this order instead of using a generic quaternion helper.
+Degenerate rotated normals are rejected as an authored boundary.
+
+The [instruction receipt](../../native/snow_host/normal_rotation_validation.json)
+compares all four output lanes in 514 cases, including identity and a quarter
+turn. Other cases use synthetic unit normals and unit quaternions; not every
+combination is necessarily reachable from the native smoothing axis. The
+reciprocal-square-root seed comes from the emulated instruction. The receipt
+does not cover quaternion generation, angle lookup or scalar trigonometry.
+Those numerical services remain the missing connection between the recovered
+smoothing gain and this recovered rotation block.

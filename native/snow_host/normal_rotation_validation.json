@@ -1,0 +1,13 @@
+{
+  "evidence": "original quaternion application and final normal normalization block",
+  "game_process": false,
+  "exact_four_lane_cases": 514,
+  "nonzero_w_cases": 0,
+  "limitations": [
+    "Caller supplies quaternion; angle lookup and trigonometry excluded",
+    "RSQRTPS seed captured from emulator",
+    "Random quaternions test arithmetic, not only quaternions reachable from normal smoothing",
+    "Degenerate rotation excluded"
+  ],
+  "source_sha256": "f666abf4ae221d6d3a4c411cbffa1d1843c9b5fd96241c31b9535c0f9848ce2e"
+}

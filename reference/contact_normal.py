@@ -78,3 +78,31 @@ def smoothing_gain(previous_z, candidate_z, elapsed_dt, *, decay_lookup):
                  'baseDampFactorToOne':base_rate,'proportionalDampFactorToOne':0.},
                 decay_lookup=decay_lookup,epsilon=f32(.0001))
     return {'base_rate':base_rate,**result}
+
+
+def rotate_normal(previous, quaternion, *, reciprocal_sqrt):
+    """Recovered four-lane quaternion application and XYZ normalization.
+
+    Previous normal has XYZ components; quaternion is XYZW. The native multiply uses
+    (2, 2, 2, 0), preserving the sign of zero in W. Do not replace this with a
+    generic rotation helper that rearranges the float32 operations.
+    """
+    if len(previous)!=3 or len(quaternion)!=4:
+        raise ValueError('XYZ previous normal and XYZW quaternion required')
+    v=tuple(map(f32,previous))+(0.,)
+    q=tuple(map(f32,quaternion))
+    p=[f32(q[i]*v[i]) for i in range(3)]
+    dot=f32(p[0]+f32(p[1]+p[2]))
+    cross=tuple(f32(f32(q[j]*v[k])-f32(v[j]*q[k]))
+                for j,k in ((1,2),(2,0),(0,1)))+(0.,)
+    squared_w=f32(q[3]*q[3])
+    factor=f32(squared_w-f32(.5))
+    rotated=tuple(f32(f32(f32(f32(c*q[3])+f32(dot*qi))+f32(factor*vi))*multiplier)
+                  for c,qi,vi,multiplier in zip(cross,q,v,(2.,2.,2.,0.)))
+    squares=[f32(x*x) for x in rotated[:3]]
+    squared=f32(squares[0]+f32(squares[1]+squares[2]))
+    if squared<=0:
+        raise ValueError('Degenerate rotated normal requires caller handling')
+    seed=f32(reciprocal_sqrt(squared))
+    scale=f32(f32(f32(3)-f32(f32(seed*squared)*seed))*f32(seed*f32(.5)))
+    return tuple(f32(scale*x) for x in rotated)

@@ -1134,9 +1134,9 @@
       "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
       "source_sha256": "081fca1bd99edfd951711aa6adf8f1d88c2b617523a28529324c39d5e7b072bf",
       "published": "reference/contact_normal.py",
-      "published_sha256": "cb26cf0701600b625f57250377d4a260862423f5f6020dfbfb31fdc3d19790c3",
+      "published_sha256": "f666abf4ae221d6d3a4c411cbffa1d1843c9b5fd96241c31b9535c0f9848ce2e",
       "adaptations": [
-        "Explicit reciprocal-square-root and decay lookup dependencies. Aggregation, candidate selection and temporary smoothing gain reconstructed. Fitting, complete angular rotation and gate producer excluded."
+        "Explicit reciprocal-square-root and decay lookup dependencies. Aggregation, selection, temporary gain and quaternion application reconstructed. Fitting, angle lookup, trigonometry and gate producer excluded."
       ],
       "game_payloads_included": false
     }
