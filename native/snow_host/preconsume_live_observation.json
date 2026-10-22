@@ -1,0 +1,58 @@
+{
+  "preconsume_counter": {
+    "available_pairs": 228,
+    "unavailable_pairs": 0,
+    "invalid_pairs": 0,
+    "decrement_by_one_pairs": 228,
+    "unchanged_pairs": 0,
+    "unsigned_delta_histogram": {
+      "4294967295": 228
+    },
+    "consumer_execution_proved": false
+  },
+  "records": 228,
+  "rejected_timing_records": 0,
+  "observed_request_groups": 211,
+  "records_per_group": {
+    "1": 197,
+    "2": 13,
+    "5": 1
+  },
+  "float32_subdivision_matching_groups": 211,
+  "nonmatching_or_partial_groups": 0,
+  "loss_free_export": true,
+  "slot_lifecycle_passed": true,
+  "direct_native_substep_index_used": false,
+  "limits": [
+    "Groups at capture edges or gaps can be partial.",
+    "Matching duration arithmetic does not recover smoothing history or frequency selection.",
+    "Record order is reservation order; concurrent calls can complicate grouping.",
+    "No pointer or raw body payload is included in this summary."
+  ],
+  "evidence": "original-game moving-rider paired update capture",
+  "date": "2026-10-22",
+  "ok": true,
+  "summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 228,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 228,
+    "other_calls": 0
+  },
+  "stable_20_seconds": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "navigation": "Unattended using combined same-capture Vision-fast and Tesseract text; map recognized by three distinctive labels",
+  "pending_nonzero_before": 0,
+  "pending_nonzero_after": 0,
+  "timer_changed_pairs": 228
+}

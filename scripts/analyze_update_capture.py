@@ -16,6 +16,28 @@ def f32(x):
     return struct.unpack('<f', struct.pack('<f', x))[0]
 
 
+def counter_changes(records):
+    """Optional ABI-v2 marker; unsigned deltas preserve signed wrap semantics."""
+    deltas = Counter()
+    unavailable = invalid = 0
+    for record in records:
+        before, after = record['before'], record['after']
+        if 'preconsume_counter' not in before or 'preconsume_counter' not in after:
+            unavailable += 1
+            continue
+        values = (before['preconsume_counter'], after['preconsume_counter'])
+        if (not (before['valid'] & 1 and after['valid'] & 1)
+                or any(type(x) is not int or not -(1 << 31) <= x < (1 << 31) for x in values)
+                or any(before[k] != after[k] for k in ('runtime', 'main', 'rider'))):
+            invalid += 1
+            continue
+        deltas[(values[1] - values[0]) & 0xffffffff] += 1
+    return {'available_pairs': sum(deltas.values()), 'unavailable_pairs': unavailable,
+            'invalid_pairs': invalid, 'decrement_by_one_pairs': deltas[0xffffffff],
+            'unchanged_pairs': deltas[0], 'unsigned_delta_histogram': dict(sorted(deltas.items())),
+            'consumer_execution_proved': False}
+
+
 def analyze(rows):
     if not rows or rows[0].get('kind') != 'summary':
         raise ValueError('Missing capture summary')
@@ -60,6 +82,7 @@ def analyze(rows):
         exact += int(match)
         mismatched += int(not match)
     return {
+        'preconsume_counter': counter_changes(records),
         'records': len(records), 'rejected_timing_records': rejected,
         'observed_request_groups': len(groups),
         'records_per_group': dict(sorted(histogram.items())),

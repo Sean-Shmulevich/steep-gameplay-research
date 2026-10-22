@@ -1,0 +1,13 @@
+{
+  "evidence": "failed startup navigation before probe activation",
+  "date": "2026-10-22",
+  "ok": false,
+  "capture_plan_started": false,
+  "failure": "Map labels were visible but not recognized before navigation deadline. Attempted manual input stopped at failed fresh identity check; no key delivery occurred.",
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "followup": "Same-frame Vision-fast and Tesseract text combined; three distinctive map labels recognized. Subsequent live run reached gameplay unattended."
+}

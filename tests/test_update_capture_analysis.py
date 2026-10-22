@@ -41,3 +41,23 @@ class CaptureTimingAnalysisTests(unittest.TestCase):
         self.assertEqual(a.analyze(data)['rejected_timing_records'],1)
         data=rows(); data[2]['derivative']=.026
         self.assertEqual(a.analyze(data)['nonmatching_or_partial_groups'],1)
+
+    def test_counter_decrement_wrap_and_reset(self):
+        data=rows()
+        for r, before, after in zip(data[1:], (0,-2147483648,-10), (-1,2147483647,0)):
+            r['before']['preconsume_counter']=before
+            r['after']['preconsume_counter']=after
+        result=a.analyze(data)['preconsume_counter']
+        self.assertEqual(result['decrement_by_one_pairs'],2)
+        self.assertEqual(result['unsigned_delta_histogram'],{10:1,4294967295:2})
+        self.assertFalse(result['consumer_execution_proved'])
+
+    def test_counter_unavailable_and_invalid_are_distinct(self):
+        data=rows()
+        data[1]['before']['preconsume_counter']=0
+        data[1]['after']['preconsume_counter']=-1
+        data[1]['after']['valid']=0
+        result=a.analyze(data)['preconsume_counter']
+        self.assertEqual(result['unavailable_pairs'],2)
+        self.assertEqual(result['invalid_pairs'],1)
+        self.assertEqual(result['available_pairs'],0)

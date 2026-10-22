@@ -191,3 +191,15 @@ experimental exact-build ABI, not a compatible extension for old record buffers.
 The [marker contract](../../docs/reconstruction/CENTRAL_IMPULSE.md#non-mutating-pre-consumption-markers)
 and [synthetic validation](preconsume_snapshot_validation.json) distinguish
 static placement from the pending live check. No physics setter is added.
+
+ABI v2 has now [captured the marker live](preconsume_live_observation.json):
+228 valid pairs, each with exactly one signed-counter decrement interpreted
+modulo 2^32. All 211 timing groups matched float32 subdivision, including one
+five-call group. Pending impulse remained zero at both observation boundaries.
+Stability and cleanup passed. The earlier [map-recognition failure](preconsume_navigation_failure.json)
+is retained separately and contains no physics result.
+
+The analyzer reports counter availability, invalid pairs, unchanged pairs and
+unsigned delta counts. It deliberately does not label a decrement as proof of
+consumer execution. Old traces without the fields remain analyzable and are
+reported as unavailable, not as zero counters.

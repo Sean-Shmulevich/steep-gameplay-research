@@ -9888,3 +9888,18 @@ add is not atomic, and the consumer clears after releasing its lock. A future
 write API must establish an ordered owner and define one-shot completion before
 using the queue. This observation change provides evidence for that decision
 without publishing such a write API prematurely.
+
+### Live pre-consumption marker observation
+
+The [expanded moving-rider capture](../../native/snow_host/preconsume_live_observation.json)
+recorded 228 valid paired calls. Every pair decremented the counter by exactly
+one modulo 2^32. Slot installation/restoration/drain passed, the host remained
+ordinary and advancing for 20 seconds, and cleanup passed. The associated 211
+request groups all matched the reconstructed float32 elapsed/consumed relation,
+including one five-call group.
+
+This strengthens the link from the observed actor wrapper to the local
+pre-consumption region. It remains indirect evidence rather than an exact
+consumer entry/return probe. Both pending snapshots were zero in every pair, so
+this run supplies no nonzero pending-consumption result. It does not authorize
+arbitrary-thread queue access or establish protection of the post-unlock clear.
