@@ -1,0 +1,53 @@
+{
+  "kind": "startup_entry_live_pass",
+  "date": "2026-10-22",
+  "command": "run_late_load.py --experiment host --load-at startup --navigator native --plan demo",
+  "ok": true,
+  "host_startup_verified": true,
+  "host_started_without_visible_window": true,
+  "navigation": {
+    "outcome": "entered",
+    "gameplay_native_verified": true,
+    "gameplay_inputs_sent": false,
+    "inputs": [
+      {
+        "t": 68.7,
+        "state": "title",
+        "scan": 28,
+        "ok": true
+      },
+      {
+        "t": 85.1,
+        "state": "offline_notice",
+        "scan": 28,
+        "ok": true
+      },
+      {
+        "t": 98.4,
+        "state": "map",
+        "scan": 50,
+        "ok": true
+      }
+    ],
+    "player_acquired_t": 80.4,
+    "player_acquired_screen": "unknown",
+    "gameplay_hud_t": 107.4,
+    "entered_t": 109.8,
+    "in_world_observed_during_navigation": false
+  },
+  "demo": {
+    "ok": true,
+    "steps_requested": 10,
+    "exactly_one_each": true,
+    "max_release_ms": 17.83,
+    "resumed_ordinary": true,
+    "fallback_restore": false
+  },
+  "stable_20_seconds": true,
+  "host_commands_failed_during_startup_polling": 44,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  }
+}

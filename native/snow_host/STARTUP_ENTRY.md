@@ -72,9 +72,25 @@ separately. Replaying the recorded samples offline, the corrected gate accepts a
 126 s; this is not yet live proof. The host plan did not run. Cleanup passed:
 settings restored, bottle stopped, original DLL verified.
 
+## Live pass, 2026-10-22 ([receipt](startup_entry_live_pass.json))
+
+The second run, with the corrected gate, passed end to end. The navigator sent
+three inputs (69, 85 and 98 s). The player was acquired at about 85 s, during
+loading, and the HUD appeared at 107 s. Native agreement accepted gameplay at
+110 s; IN_WORLD stayed clear while the rider was idle. The demo plan then
+released 10 single world steps, each exactly one step (worst release 17.8 ms),
+and resumed to ordinary mode without the fallback restore. The game stayed
+stable for 20 seconds. Cleanup passed: settings restored, bottle stopped and
+original DLL verified.
+
+The host counted 44 failed commands. These are the navigator's read-only
+`player.get`/`player.bind` attempts made before the player existed; they are
+expected refusals, not faults.
+
 ## Open
 
-- A live run with the corrected gate, followed by the demo plan.
+- Repeat runs to measure reliability (one pass so far).
+- Fewer refused player reads while waiting: bind only after the title has passed.
 - Whether Enter or Escape skips the timed intro videos (about 45 s). Untested.
 - A repeatable spawn through drop-zone selection. Untested.
 - Native flow transitions (title, offline notice, map) without input. Not

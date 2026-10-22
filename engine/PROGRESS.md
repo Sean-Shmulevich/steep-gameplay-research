@@ -4697,3 +4697,8 @@ exposed flow command was found statically. Live: three inputs reached the HUD at
 124 s, and the player was acquired during loading, before the map. The first gate
 wrongly required IN_WORLD (idle spawn lacks it) and is corrected; that correction
 is replay-checked only. See [startup entry](../native/snow_host/STARTUP_ENTRY.md).
+
+Startup entry live pass (2026-10-22): with the corrected gate, `--navigator native
+--plan demo` reached gameplay in 110 s with three inputs, then made 10 exactly-one
+steps, resumed and stayed stable for 20 s; cleanup passed. One pass, so
+reliability is not yet measured. See the [receipt](../native/snow_host/startup_entry_live_pass.json).
