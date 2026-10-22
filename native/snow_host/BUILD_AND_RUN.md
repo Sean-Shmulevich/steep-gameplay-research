@@ -138,3 +138,30 @@ evidence that the hook ran for other actors. Both zero means no dispatch was
 observed through this installed hook during the interval. Neither result alone
 identifies an alternative scheduler route. Selected calls with zero records
 require checking capture closure and lifetime timing before blaming snapshots.
+
+### First paired original-game capture
+
+The [moving-rider run](update_capture_live_success.json) passed unattended
+startup navigation, a 700 ms normal forward-input preparation, player identity
+checks, pause/configure/resume, capture, and 20 seconds of advancing ordinary
+simulation. Cleanup restored settings and verified the original DLL. The rider
+changed from flags 1 to 3 and its position changed across the subsequent reads.
+
+The plugin installed/restored/drained successfully and recorded 235 selected
+actor calls with 235 valid before/after pairs, zero other calls and zero drops.
+All pairs showed changes in main-body linear and angular velocity. Ten threads
+executed calls. This establishes invocation of this actor route in this run,
+not deterministic execution or exhaustive state coverage.
+
+Grouping by the observed request counter produced 204 single-call groups,
+14 two-call groups and one three-call group. Within every group the second
+timing argument divided by the first matched that group's call count within
+1e-5. The request counter stayed unchanged across each pair. This supports
+the substep interpretation, but does not supply a directly read substep index.
+
+Pending impulse was zero before every call. Native impulse consumption and
+safe impulse submission remain open. The next useful controlled experiment
+is observation at the pending-consumer boundary, with an explicit thread/order
+contract before adding a write API. The earlier empty result remains evidence
+of an inactive-state capture; inactivity is a supported explanation, not proved
+as its sole cause.

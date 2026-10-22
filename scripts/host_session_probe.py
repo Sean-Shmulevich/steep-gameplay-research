@@ -229,20 +229,27 @@ try:
     result['hello'] = hello
     result['plugins_before'] = client.call('plugins.list')['plugins']
     assert hello.get('ready', True) and hello['bound'] and hello.get('ordinary'), 'Adapter not ready or engine not ordinary: ' + str(hello.get('bind_error') or hello.get('read_error'))
+    def preparation_pulse():
+        child=hold_forward(i,700)
+        text,_=child.communicate(timeout=20)
+        (out/'preparation-input.jsonl').write_text(text)
+        events=[json.loads(line) for line in text.splitlines() if line.startswith('{')]
+        return {'exit_code':child.returncode,'duration_ms':700,
+                'keys_released':any(e.get('kind')=='hold_complete' and
+                    e.get('all_injected_keys_released') for e in events)}
     if args.plan == 'update-capture':
         from update_capture_probe import capture_update
+        from host_acceptance import prepare_rider
+        result['preparation']=prepare_rider(client,preparation_pulse)
+        assert result['preparation']['ok'], 'Rider preparation failed; capture not armed'
+        result['player_before_capture']=client.call('player.get')
+        time.sleep(.5)
+        result['player_after_wait']=client.call('player.get')
+        assert result['player_before_capture']['identity']==result['player_after_wait']['identity'], 'Player changed before capture'
         result['update_capture']=capture_update(client,H)
         assert result['update_capture']['ok'], 'Update capture failed; inspect plugin trace and host log'
     elif args.plan == 'acceptance':
         from host_acceptance import run_acceptance, prepare_rider
-        def preparation_pulse():
-            child=hold_forward(i,700)
-            text,_=child.communicate(timeout=20)
-            (out/'acceptance-preparation-input.jsonl').write_text(text)
-            events=[json.loads(line) for line in text.splitlines() if line.startswith('{')]
-            return {'exit_code':child.returncode,'duration_ms':700,
-                    'keys_released':any(e.get('kind')=='hold_complete' and
-                        e.get('all_injected_keys_released') for e in events)}
         result['preparation']=prepare_rider(client,preparation_pulse)
         assert result['preparation']['ok'], 'Rider preparation failed; no acceptance mutations attempted'
         result['acceptance'] = run_acceptance(client, lambda: speed_test(client, i), steps=args.steps, ready_wait_seconds=20)

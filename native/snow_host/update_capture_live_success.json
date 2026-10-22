@@ -1,0 +1,86 @@
+{
+  "evidence": "original-game paired snow actor update observation",
+  "date": "2026-10-22",
+  "ok": true,
+  "summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 235,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 235,
+    "other_calls": 0
+  },
+  "navigation": "Unattended title, offline notice, map dismissal and gameplay recognition using Tesseract.",
+  "preparation": {
+    "forward_input_ms": 700,
+    "keys_released": true,
+    "same_player_identity": true,
+    "flags_before": 1,
+    "flags_after": 3,
+    "position_delta_over_half_second_read_interval": 1.343295742306969,
+    "game_input_ingestion_directly_observed": false
+  },
+  "capture": {
+    "valid_pairs": 235,
+    "gate_patterns": [
+      [
+        1,
+        0,
+        1,
+        1
+      ]
+    ],
+    "thread_count": 10,
+    "request_count": 219,
+    "records_per_request_histogram": {
+      "2": 14,
+      "1": 204,
+      "3": 1
+    },
+    "groups_with_ratio_matching_call_count": 219,
+    "request_unchanged_within_pair": 235,
+    "elapsed_argument": {
+      "min": 0.00634409999,
+      "median": 0.00972730014,
+      "max": 0.0124826999
+    },
+    "derivative_argument": {
+      "min": 0.00851429999,
+      "median": 0.00995239988,
+      "max": 0.0253775008
+    },
+    "instrumented_interval_microseconds": {
+      "min": 123.7,
+      "median": 264.20000000000005,
+      "max": 734.6
+    },
+    "main_linear_changed_pairs": 235,
+    "main_angular_changed_pairs": 235,
+    "nonzero_pending_before": 0,
+    "inverse_mass_pairs": [
+      [
+        0.175808728,
+        0.0500000007
+      ]
+    ]
+  },
+  "stable_20_seconds": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Sequential guarded snapshots are not atomic and do not pin object lifetime.",
+    "Instrumented interval includes snapshot overhead and is not isolated engine cost.",
+    "No native substep index was read; grouping by request is observational.",
+    "Pending impulse was zero; no impulse-consumer execution or write safety was established.",
+    "Changes span the whole actor wrapper, not one isolated force.",
+    "One active moving-rider run does not prove all sports, landing or animation states."
+  ]
+}
