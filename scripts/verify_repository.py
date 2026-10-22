@@ -11,6 +11,12 @@ from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 allowed = {'.md', '.txt', '.json', '.py'}
+# Independently authored source in these reviewed trees is publishable.
+# Raw disassembly, generated decompiler exports and game payloads remain excluded.
+def allowed_native_source(path):
+    rel = path.relative_to(ROOT)
+    return path.suffix in {'.c', '.h', '.def'} and (
+        rel.parts[0] == 'native' or rel.parts[:2] == ('tests', 'fixtures'))
 native_sources = {
     'native/mod_loader/proxy.c',
     'native/mod_loader/smoke.c',
@@ -25,8 +31,21 @@ native_sources = {
     'native/mod_loader/call-smoke.c',
     'native/snow_host/snow_host.c',
     'native/snow_host/snow_adapter.h',
+    'native/snow_host/snow_update_trace.h',
+    'native/snow_host/snow_update_snapshot.h',
+    'native/snow_host/snow_update_probe.h',
+    'native/snow_host/snow_update_probe.c',
+    'tests/fixtures/snow_update_probe_fixture.c',
+    'native/snow_host/snow_update_snapshot.c',
+    'tests/fixtures/snow_update_snapshot_fixture.c',
+    'native/snow_host/snow_update_trace.c',
+    'tests/fixtures/snow_update_trace_fixture.c',
+    'native/snow_host/snow_animation_reader.h',
+    'native/snow_host/snow_provider_transform.h',
+    'native/snow_host/animation_reader_fixture.c',
     'native/snow_host/fixture_adapter.c',
     'native/snow_host/host_loader.c',
+    'native/snow_host/startup_launcher.c',
     'native/snow_host/snow_plugin.h',
     'native/snow_host/snow_plugins.h',
     'native/snow_host/snow_plugins.c',
@@ -43,7 +62,7 @@ for path in ROOT.rglob('*'):
     if not path.is_file():
         continue
     files.append(path)
-    if path.name != '.gitignore' and path.suffix not in allowed and path.relative_to(ROOT).as_posix() != 'engine/view.html' and path.relative_to(ROOT).as_posix() not in native_sources:
+    if path.name != '.gitignore' and path.suffix not in allowed and path.relative_to(ROOT).as_posix() != 'engine/view.html' and path.relative_to(ROOT).as_posix() not in native_sources and not allowed_native_source(path):
         errors.append(f'Unapproved file type: {path.relative_to(ROOT)}')
     if path.stat().st_size > 1_000_000:
         errors.append(f'Unexpected large file: {path.relative_to(ROOT)}')
@@ -67,7 +86,7 @@ for path in ROOT.rglob('*'):
             candidate = (path.parent / local).resolve()
             if not candidate.is_relative_to(ROOT) or not candidate.exists():
                 errors.append(f'Broken/local external link: {path.relative_to(ROOT)} -> {target}')
-for manifest_name in ('REFERENCE_MANIFEST.json', 'RECONSTRUCTION_SOURCES.json'):
+for manifest_name in ('REFERENCE_MANIFEST.json', 'RECONSTRUCTION_SOURCES.json', 'STUDIO_MAP_SOURCES.json'):
     for item in json.loads((ROOT / manifest_name).read_text())['files']:
         path = ROOT / item['published']
         if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != item['published_sha256']:

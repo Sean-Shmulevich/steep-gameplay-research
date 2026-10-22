@@ -75,18 +75,28 @@ class SchedulerController:
         if not self._paused or not isinstance(token, PauseToken) or token != self._token():
             raise ValueError('a current paused-generation token is required')
 
-    def _snapshot(self):
-        return dict(state=self._engine.snapshot(), trace=self._engine.trace.snapshot(),
+    def _snapshot(self, include_trace=True):
+        if type(include_trace) is not bool:
+            raise ValueError('include_trace must be boolean')
+        result = dict(state=self._engine.snapshot(),
                     control=dict(paused=self._paused, submissions_excluded=self._paused,
                                  drained=not self._active, generation=self._generation,
                                  pause_serial=self._pause_serial,
                                  scope='owned Engine serial exclusion; not native game control'),
                     incidents=copy.deepcopy(self._incidents))
+        if include_trace:
+            result['trace'] = self._engine.trace.snapshot()
+        else:
+            trace = self._engine.trace
+            result['trace_summary'] = dict(capacity=trace.capacity, attempted=trace.attempted,
+                retained=len(trace.records), dropped=trace.dropped, complete=trace.dropped==0,
+                records_included=False)
+        return result
 
-    def snapshot(self):
+    def snapshot(self, *, include_trace=True):
         """Read a copy without advancing simulation, input, scheduler or replay."""
         with self._serial():
-            return self._snapshot()
+            return self._snapshot(include_trace)
 
     def checkpoint(self):
         """Complete owned Engine checkpoint plus replay/recovery bookkeeping.
@@ -126,7 +136,9 @@ class SchedulerController:
             self._generation += 1
             return self._snapshot()
 
-    def _execute(self, operation, actions, frame_dt=None):
+    def _execute(self, operation, actions, frame_dt=None, *, include_trace=True):
+        if type(include_trace) is not bool:
+            raise ValueError('include_trace must be boolean')
         # A failed frame must also undo a newly supplied input and its replay log.
         # Numerical Engine.advance has its own rollback, but controller ownership
         # requires a wider transaction including commands, events and trace.
@@ -164,16 +176,16 @@ class SchedulerController:
             raise
         finally:
             self._active = False
-        return self._snapshot()
+        return self._snapshot(include_trace)
 
-    def submit_frame(self, frame_dt, actions=None):
+    def submit_frame(self, frame_dt, actions=None, *, include_trace=True):
         """Submit one frame only while the gate is open; never silently queue it."""
         with self._serial():
             if self._paused:
                 raise RuntimeError('frame submission excluded while paused')
-            return self._execute('submit_frame', actions, frame_dt)
+            return self._execute('submit_frame', actions, frame_dt, include_trace=include_trace)
 
-    def step_once(self, token, actions=None):
+    def step_once(self, token, actions=None, *, include_trace=True):
         """Execute one configured fixed developer tick while excluding submissions.
 
         Uses Engine.step(1), not its frame subdivision planner. The temporary
@@ -182,9 +194,9 @@ class SchedulerController:
         """
         with self._serial():
             self._require_token(token)
-            return self._execute('step_once', actions)
+            return self._execute('step_once', actions, include_trace=include_trace)
 
-    def step_frame_once(self, token, frame_dt, actions=None):
+    def step_frame_once(self, token, frame_dt, actions=None, *, include_trace=True):
         """Plan and execute one outer frame, then remain paused.
 
         Unlike step_once, this uses Engine.advance and the configured scheduler,
@@ -193,7 +205,7 @@ class SchedulerController:
         """
         with self._serial():
             self._require_token(token)
-            return self._execute('step_frame_once', actions, frame_dt)
+            return self._execute('step_frame_once', actions, frame_dt, include_trace=include_trace)
 
     def reset(self, scenario=None):
         """Atomically replace the Engine with a validated scenario; remain paused."""
@@ -228,6 +240,16 @@ class SchedulerController:
         """
         with self._serial():
             return self._mutate_paused(token, 'tune', changes)
+
+    def apply_central_impulse(self, token, impulse):
+        """Paused, isolated impulse publication with a fresh mutation token."""
+        with self._serial():
+            return self._mutate_paused(token, 'apply_central_impulse', impulse)
+
+    def adjust_speed(self, token, delta_speed):
+        """Apply a bounded brake/boost while held; invalidate the old token."""
+        with self._serial():
+            return self._mutate_paused(token, 'adjust_speed', delta_speed)
 
     def replace_resources(self, token, bundle):
         """Replace validated rig/clips while paused; return a fresh token.

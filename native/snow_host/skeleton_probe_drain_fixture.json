@@ -1,0 +1,66 @@
+{
+  "evidence": "synthetic_native_fixture",
+  "game_process": false,
+  "recording_seconds": 2,
+  "drain_timeout_ms": 5000,
+  "delayed_callback_ms": {
+    "slow": 3000,
+    "timeout": 8000
+  },
+  "cases": [
+    {
+      "mode": "normal",
+      "status": "restored",
+      "outstanding_at_seal": 0,
+      "pairs": 6427,
+      "unmatched_entries": 0,
+      "pairing_complete": true,
+      "errors": [],
+      "dropped": 0,
+      "incomplete": 0,
+      "fixture_passed": true
+    },
+    {
+      "mode": "slow",
+      "status": "restored",
+      "outstanding_at_seal": 0,
+      "pairs": 4818,
+      "unmatched_entries": 0,
+      "pairing_complete": true,
+      "errors": [],
+      "dropped": 0,
+      "incomplete": 0,
+      "fixture_passed": true
+    },
+    {
+      "mode": "timeout",
+      "status": "restored_partial",
+      "outstanding_at_seal": 1,
+      "pairs": 4824,
+      "unmatched_entries": 1,
+      "pairing_complete": false,
+      "errors": [],
+      "dropped": 0,
+      "incomplete": 0,
+      "fixture_passed": true
+    },
+    {
+      "mode": "bad",
+      "status": "refused",
+      "outstanding_at_seal": 0,
+      "pairs": 0,
+      "unmatched_entries": 0,
+      "pairing_complete": true,
+      "errors": [],
+      "dropped": 0,
+      "incomplete": 0,
+      "fixture_passed": true
+    }
+  ],
+  "limits": [
+    "Admission closure bounds recorded calls, not all future calls through a previously loaded pointer.",
+    "Module remains pinned for late pass-through calls.",
+    "An abnormal exit can leave an outstanding count; timeout reports partial.",
+    "Synthetic ABI and recording lifecycle only; not live receiver lifetime or job completion."
+  ]
+}

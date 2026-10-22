@@ -1,0 +1,716 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 48,
+  "scope": "Complete cleanup routine; unlink, descriptor predicate, allocation metadata and deallocator intercepted. Original release arithmetic and owner-slot clear executed. Post-unlink list state supplied. Count=2 holders avoid retirement calls. Reader word varied with identical cleanup gates; caller synchronization and actual freeing excluded.",
+  "samples": [
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid",
+          "allocation_info",
+          "release_descriptor_second",
+          "release_descriptor_first",
+          "free_accessor"
+        ],
+        "owner_slot_cleared": true
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid",
+          "allocation_info",
+          "release_descriptor_second",
+          "release_descriptor_first",
+          "free_accessor"
+        ],
+        "owner_slot_cleared": true
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid",
+          "allocation_info",
+          "release_descriptor_second",
+          "release_descriptor_first",
+          "free_accessor"
+        ],
+        "owner_slot_cleared": true
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": false,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "children_present": true,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "calls": [
+          "unlink",
+          "descriptor_valid"
+        ],
+        "owner_slot_cleared": false
+      }
+    }
+  ]
+}

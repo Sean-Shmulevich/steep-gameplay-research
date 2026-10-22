@@ -1,0 +1,965 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "setup_sites": 3,
+  "cases": 64,
+  "scope": "Actual function-pointer setup stores and complete list adapter; skeleton lookup and component update stubbed. Job names statically checked. No full scheduler dispatch, update body, completion or live membership claim.",
+  "jobs": [
+    "Anim::SkeletonPostUpdate",
+    "Anim::UISkeletonPostUpdate"
+  ],
+  "rows": [
+    {
+      "world_mask": 0,
+      "skeleton_mask": 0,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 1,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 2,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 3,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 4,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 5,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 6,
+      "events": []
+    },
+    {
+      "world_mask": 0,
+      "skeleton_mask": 7,
+      "events": []
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 1,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 2,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 3,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 4,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 5,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 6,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 0,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 1,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 2,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 3,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 4,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 5,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 6,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    },
+    {
+      "world_mask": 7,
+      "skeleton_mask": 7,
+      "events": [
+        [
+          "lookup",
+          0
+        ],
+        [
+          "update",
+          0
+        ],
+        [
+          "lookup",
+          1
+        ],
+        [
+          "update",
+          1
+        ],
+        [
+          "lookup",
+          2
+        ],
+        [
+          "update",
+          2
+        ]
+      ]
+    }
+  ]
+}

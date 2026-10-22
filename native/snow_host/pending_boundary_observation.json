@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "evidence": "callback_boundary_observation",
+  "status": "restored",
+  "rows": 7920,
+  "incomplete_records": 0,
+  "dropped": 0,
+  "recording_complete": true,
+  "sampled_rows": 2160,
+  "request_groups": 720,
+  "main_speed_raw_units": {
+    "min": 0.0,
+    "max": 14.331964852733865
+  },
+  "main_angular_speed_raw_units": {
+    "min": 0.0,
+    "max": 5.941947354080002
+  },
+  "counts": {
+    "matched_requests": 720,
+    "entry_pending_nonzero": 11,
+    "return_pending_nonzero": 66,
+    "world_step_entry_pending_nonzero": 66,
+    "pending_changed_during_actor_callback": 56,
+    "pending_changed_before_world_step": 0,
+    "main_velocity_changed_during_actor_callback": 0,
+    "rider_velocity_changed_during_actor_callback": 0
+  },
+  "rejected_groups": {},
+  "state_variant_observations": {
+    "0:1": 1555,
+    "0:5": 134,
+    "3:1": 471
+  },
+  "pending_change_state_pairs": {
+    "3:1 -> 3:1": 56
+  },
+  "next_request_observations": {
+    "nonzero_step_with_next_actor_entry": 66,
+    "zero_by_next_actor_entry": 65,
+    "changed_nonzero_at_next_actor_entry": 1
+  },
+  "snapshot_cost_us": {
+    "median": 17.9,
+    "p95": 47.8,
+    "max": 361.3
+  },
+  "limits": [
+    "Sequential reads are not atomic or lifetime-pinned.",
+    "No direct queue-call or consumer-call interception.",
+    "Zero pending at boundaries does not prove no impulse occurred.",
+    "Object identity does not establish active body membership."
+  ],
+  "input_window_qualification": {
+    "source": "Private input log QPC timestamps aligned to first world-step record; final stop reported by user",
+    "recorded_duration_seconds": 9.9938758,
+    "first_hold_start_seconds": 7.0378447,
+    "first_hold_complete_seconds": 8.5493603,
+    "second_hold_start_seconds": 11.4266178,
+    "second_hold_complete_seconds": 12.9394283,
+    "last_recorded_main_speed": 14.331964852733865,
+    "final_stop_captured": false,
+    "revised_single_pulse_longer_window_live_tested": false
+  }
+}

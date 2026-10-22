@@ -106,3 +106,46 @@ class SnowHostClientTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class StepTransactionTests(unittest.TestCase):
+    def test_failed_step_cannot_be_hidden_by_successful_resume(self):
+        host=FakeHost([
+            accepted_then('completed', {'host_paused':False}),
+            accepted_then('completed', {}),
+            accepted_then('completed', {'exactly_one':0}),
+            accepted_then('completed', {}),
+            accepted_then('completed', {'host_paused':False}),
+        ])
+        with client_module.SnowHostClient(port=host.port) as client:
+            result=client_module.demo(client,5,5000)
+        host.close()
+        self.assertFalse(result['ok'])
+        self.assertEqual(len(result['steps']),1)
+        self.assertEqual([r['method'] for r in host.received].count('simulation.step_world'),1)
+        self.assertEqual(result['resume']['status'],'completed')
+
+    def test_existing_hold_is_not_touched(self):
+        host=FakeHost([accepted_then('completed', {'host_paused':True})])
+        with client_module.SnowHostClient(port=host.port) as client:
+            result=client_module.demo(client,1,5000)
+        host.close()
+        self.assertFalse(result['ok']);self.assertEqual(len(host.received),1)
+
+    def test_uncertain_pause_attempts_resume_without_retry(self):
+        class Client:
+            calls=[]
+            def call(self,method,**params):
+                self.calls.append(method)
+                if method=='simulation.pause':raise TimeoutError('lost pause result')
+                return {'host_paused':False}
+            def request(self,method,**params):
+                self.calls.append(method);raise ConnectionError('lost resume result')
+        client=Client();result=client_module.demo(client,1,5000)
+        self.assertFalse(result['ok']);self.assertIn('resume_error',result)
+        self.assertIn('lost pause',result['error'])
+        self.assertEqual(client.calls,['simulation.status','simulation.pause','simulation.resume','simulation.status'])
+
+    def test_invalid_count_does_not_contact_host(self):
+        for count in (0,61,True,1.5):
+            with self.assertRaises(ValueError):client_module.demo(None,count,5000)

@@ -95,6 +95,962 @@
       "published_sha256": "a542a5716ede06d50cb7a4f1a986726f7b2fa67d404f61c47e48f76025098582",
       "adaptations": [],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.central_impulse",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/central_impulse.py",
+      "published_sha256": "86a6d1df8b3a2c0a9b0e353b5a59fb50e525de169e6fcc55dd6fdedeacba8e40",
+      "adaptations": [
+        "New portable transcription of inspected central-impulse gates and float32 arithmetic; native wrapper and inner executed in 960 synthetic cases.",
+        "Finite-input validation and equal-delta-v paired-body impulse calculation are authored API policy and derived mathematics, respectively.",
+        "Pending-vector consumer call ordering, four-lane threshold and clear behavior checked in 48 original-byte cases with lock and dispatch implementations intercepted.",
+        "Unscaled queue and clear actor leaves validated in 256 original-byte cases; thread ordering remains unresolved.",
+        "Motion dispatch route predicate checked against 72 original-byte observations; handler calls intercepted, no live state selection claimed.",
+        "Local pre-consumption helper gates and signed counter decrement matched 432 original-instruction cases with helper effects intercepted.",
+        "Optional helper direct-impulse tail matched 192 original-instruction cases with upstream values supplied and external services intercepted.",
+        "Helper scalar assembly matched 280 original-instruction cases with curve outputs and upstream alignment supplied; original square-root path executed.",
+        "Helper geometry matched 112 original-instruction cases given captured RSQRT estimates; entry gate matched 144 cases with curve results supplied.",
+        "Helper history/filter matched 12 history cases, 675 filter cases and a 180-update original-instruction trajectory; published state copies checked."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.runtime_curve",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "published": "reference/runtime_curve.py",
+      "adaptations": [
+        "Authored portable module transcribing and composing recovered helper stages; synthetic original-instruction evidence and unresolved external dependencies are documented."
+      ],
+      "game_payloads_included": false,
+      "published_sha256": "a6d084f4ce6780993b16136ba4889c3ae588bb0690b042c06d8466f5cf6b78f3",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864"
+    },
+    {
+      "module": "reference.ground_response",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "published": "reference/ground_response.py",
+      "adaptations": [
+        "Authored portable module transcribing and composing recovered helper stages; synthetic original-instruction evidence and unresolved external dependencies are documented."
+      ],
+      "game_payloads_included": false,
+      "published_sha256": "b785cc2600e5f50fdcd3080cc58b626827595172a5afa863dbc20ce54cbb9e5d",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864"
+    },
+    {
+      "module": "reference.ground_response_pose",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "published": "reference/ground_response_pose.py",
+      "adaptations": [
+        "Independent scalar implementation from local instruction evidence; synthetic validation only, no skeleton payloads."
+      ],
+      "game_payloads_included": false,
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published_sha256": "ebaf92eeffc9eca9976032667e08262deab8be436ca5fa3af92552d986da7e60"
+    },
+    {
+      "module": "reference.type_registry",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "published": "reference/type_registry.py",
+      "adaptations": [
+        "Independent logical-node model of recovered radix branches; synthetic instruction validation, no native pointer API or game data."
+      ],
+      "game_payloads_included": false,
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published_sha256": "f109780b05c0b5ea519eb84565fa1c0dc2d03eaf0422c7b9409b37e7e2fa0129"
+    },
+    {
+      "module": "reference.registry_snapshot",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "published": "reference/registry_snapshot.py",
+      "adaptations": [
+        "Independent bounded decoder using supplied reads and logical value mapping; recovered node layouts with authored inspection limits."
+      ],
+      "game_payloads_included": false,
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published_sha256": "19685bef0d619301a702ea42b6327ebcdd265ce497815cea3d94f7fffda995e2"
+    },
+    {
+      "module": "engine.skeleton_observation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "engine/skeleton_observation.py",
+      "published_sha256": "ec1a26feff607e3ead4ca61eadb85c666d7eb8a5ce79bc80aae63169c988e409",
+      "adaptations": [
+        "Authored bounded read-only observer; synthetic validation only; caller verifies process and build identity."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.pose_channel_observation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "engine/pose_channel_observation.py",
+      "published_sha256": "93fe8a23eb49bbf1314d4ec96ba28994998155d053337c44fef922a8b561319f",
+      "adaptations": [
+        "Bounded passive reader with caller-verified identity and record bounds; offline fixtures only.",
+        "Optional bank-selection interval rejection guard; equal endpoints do not establish completion or exclude ABA."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_channels",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_channels.py",
+      "published_sha256": "1a31e56101b5b03668aee7e80cbfec11caf8b994227eea9f50b4abd606118f1d",
+      "adaptations": [
+        "Recovered ordered typed copy with authored immutable input, bounds and alignment policy; synthetic storage only."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_bank",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_bank.py",
+      "published_sha256": "1f85bd8c9b1ba33bbee6796ccffe46dcd0caa418c6d8201e75f00db1b1a7fa44",
+      "adaptations": [
+        "Logical bank IDs and authored validation; no lock emulation or lifetime guarantee."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_handle",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_handle.py",
+      "published_sha256": "6218eef9472f16cd468dfa89cfd471822561828f152d480f83b4bf8779abbf36",
+      "adaptations": [
+        "Supplied control bits, thread mask and channel table; no lifetime or concurrency emulation."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.record_retirement",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/record_retirement.py",
+      "published_sha256": "9865efb7c191f37e85de301cfb80961e3aa585fd519127285930b9e2930356a7",
+      "adaptations": [
+        "Pure effect plan for a popped record; opaque cleanup effects and lifetime acquisition remain unimplemented."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.object_identifier",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/object_identifier.py",
+      "published_sha256": "b74901d6c4242e5bbffb6c9de526362407e2df09e2cd414bb1d8f7328415cea5",
+      "adaptations": [
+        "Logical identifiers and caller-supplied overlay/map results; no retention or process access."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.control_record_pool",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/control_record_pool.py",
+      "published_sha256": "aad4e8bd334b5142e81de5ed30e27347c4cafe64fb5ad31e0c98511845500d33",
+      "adaptations": [
+        "Null-target reclamation plan and free-slot initialization; external map effects and locking remain explicit."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.record_publication",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/record_publication.py",
+      "published_sha256": "93f2c389d138ceaedfef81665b32c73fc687d710f9c74a05892262965960e935",
+      "adaptations": [
+        "Nonzero-target local publication planner; registry preparation and queue completion remain opaque."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.publication_callbacks",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/publication_callbacks.py",
+      "published_sha256": "e025f1f4edfb747a3903500a5d0b49e54ec2326126aa82dfb9cec1b6a5a1b7b6",
+      "adaptations": [
+        "Fixed-registry callback invocation planner; callback effects, dynamic registration and scratch allocation are not modeled."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.object_pointer_cache",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/object_pointer_cache.py",
+      "published_sha256": "7151d86c288315df96f4660dde87a8ab6150d925b8ee8717a30585599c1018a9",
+      "adaptations": [
+        "Logical raw-pointer cache; no retention, real allocator or concurrent initialization."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.handle_array_cleanup",
+      "source": "docs/reconstruction/ACTION_KIT_CACHE.md",
+      "source_sha256": "18540c473d458b13f4dfcd4ee21b551235d523408d5b72c5ed4344e365390191",
+      "published": "reference/handle_array_cleanup.py",
+      "published_sha256": "a14a181d0169c1f1ec5b809deb1bd22e5a2aed6d7431ccc1472267dc7f2bf4ff",
+      "adaptations": [
+        "Serial per-slot release/effect planner; retirement and storage deallocation are opaque."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_refresh",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/skeleton_refresh.py",
+      "published_sha256": "488300f2684409dcf9a045509bc9863f2bdb72549d4d74d65dec7c30fae797b8",
+      "adaptations": [
+        "Pure effect-order model; service results supplied; no synchronization or pose evaluation."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_event",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/transform_event.py",
+      "published_sha256": "d8ac4c2d943c8c8255e1e0cb0cb8c91a7603d63e92a080a2d388703412d5a854",
+      "adaptations": [
+        "Normal-path effect ordering with fixed component list and caller-owned initial recursion depth; external services opaque."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.skeleton_post_observation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "engine/skeleton_post_observation.py",
+      "published_sha256": "5c6871565e6aa809336e4fb0ca515e06be5f9d6740fc706d7fc6d04025080dfe",
+      "adaptations": [
+        "Bounded passive observer with exact type/owner/callback checks and sequential rechecks; no lifetime or execution proof."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.callback_trace",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "engine/callback_trace.py",
+      "published_sha256": "190cefc9b2bac555d403833982172b8393ce05476c4a0ef946365f18a38e4a02",
+      "adaptations": [
+        "Authored trace-analysis API; per-thread normal-return pairing, not recovered synchronization."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_cadence",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/skeleton_cadence.py",
+      "published_sha256": "f065ee83ca773619f8f188b0f88a70689f297bbeefe717ef646a987be5b22ab5",
+      "adaptations": [
+        "Pure uint8/float32 post-update cadence; time-group dt supplied, not a pose completion fence."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_links",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/skeleton_links.py",
+      "published_sha256": "dc1230d972b9e57bbbbfa0452a375e7b86d78b6caab8c14a9d63e0b2c75341b9",
+      "adaptations": [
+        "Independent pruning and eligible-child branch planners; external service effects excluded."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_preparation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/skeleton_preparation.py",
+      "published_sha256": "d9c67d7e0253d6a463212d1cde9b8552121470c7cb95c6ef8de154d6f99a340a",
+      "adaptations": [
+        "Deferred work branch model with externally supplied post-evaluation work count; opaque service math excluded."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_request",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_request.py",
+      "published_sha256": "e47f7d68696b2ca22d1abb4c453efe09aed8822dd05699e938252f9186695821",
+      "adaptations": [
+        "Single saved-request arbitration prefix; opaque context tokens, original evaluation excluded."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_context",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_context.py",
+      "published_sha256": "4ab22e5796b0fab4e574d633ad54c52d8e0ef0aaa87c341355f9d03cb242111f",
+      "adaptations": [
+        "Serialized reference-count operation model; no concurrent ownership or lifetime API."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_work",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_work.py",
+      "published_sha256": "662eab5b59bfc4e1e1cb02a1ea7a2ac15b6ef09e6e1cea0fa03cadb510230aaa",
+      "adaptations": [
+        "Bank gathering, raw context conversion/inversion and context-relative output; RSQRT seeds external; inspection bounds and finite-input checks explicit."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_access",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/transform_access.py",
+      "published_sha256": "ec5505117e2aa469fa6884d67de7a1b4a5d7735728069a7699934de9f0af41c2",
+      "adaptations": [
+        "Reader/writer admission attempts and normal publication state; simulated atomic observations, no live lock/lifetime API."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.transform_accessor_observation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "engine/transform_accessor_observation.py",
+      "published_sha256": "f846da14246ee599334c36f21855a7d2691e23a5174bac55c78b00f6b46f13f4",
+      "adaptations": [
+        "Authored passive metadata reader using recovered layout; guards do not establish lifetime, atomicity or native-call safety."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_workbench",
+      "source": "docs/reconstruction/ANIMATION_WORKBENCH.md",
+      "source_sha256": "3f9fe73b4fe6d4d50c15a3b276393062c2f1acd0bf9e20340767d069ab63c550",
+      "published": "engine/animation_workbench.py",
+      "published_sha256": "8712083c3dcb405828d134d864e9ab3ed5eb068e9264d315e23e50cd6316c07a",
+      "adaptations": [
+        "Authored offline JSON inspection adapter composing recovered kernels; normalization provenance and substitute modes explicit."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_work_timing",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_work_timing.py",
+      "published_sha256": "ffd6ccadae57f3e4e9d85f7af131a5fd110907ad0ddd98560072aed5b8284668",
+      "adaptations": [
+        "Work duration/elapsed prefix and saved-request handoff; world dt supplied; pose application excluded."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_work_rotation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_work_rotation.py",
+      "published_sha256": "72808623b8e6efeaec436c1ddd8f3f126aff8ff5d98d27d737c0fb66872fb2a6",
+      "adaptations": [
+        "Work-buffer rotation helper with explicit acos/sin/RSQRT services; distinct from graph polynomial blending."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_work_application",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_work_application.py",
+      "published_sha256": "bbc994eed17ecb9ebb01a21c91923602fe649d9676e9e163c88b945782f56f97",
+      "adaptations": [
+        "Independent context-free application loop; explicit numerical services; no native pointers or live writes."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_update_workbench",
+      "source": "docs/reconstruction/ANIMATION_WORKBENCH.md",
+      "source_sha256": "3f9fe73b4fe6d4d50c15a3b276393062c2f1acd0bf9e20340767d069ab63c550",
+      "published": "engine/animation_update_workbench.py",
+      "published_sha256": "126d9899f1c52863076e2c71306ffdf0742821772f9da0c14385f939b302e33c",
+      "adaptations": [
+        "Offline JSON adapter with explicit numerical substitutes, shape limits and deferred-evaluator boundary."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_evaluator",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_evaluator.py",
+      "published_sha256": "4415388f808e63e7bd58e754cf07d456954dab876499f2d0a554a0983c0637c3",
+      "adaptations": [
+        "Existing Python work storage; symbolic context resolver; finite-input policy; no native allocation or ownership claim."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_work_storage",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_work_storage.py",
+      "published_sha256": "5f64e463af2c199aef65d0e48af970bcb359c17d63d5aad110439b467cbf41cc",
+      "adaptations": [
+        "Creation decision model with explicit null-write path; no native allocation or initialized pose contents invented."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_work_session",
+      "source": "docs/reconstruction/ANIMATION_WORKBENCH.md",
+      "source_sha256": "3f9fe73b4fe6d4d50c15a3b276393062c2f1acd0bf9e20340767d069ab63c550",
+      "published": "engine/animation_work_session.py",
+      "published_sha256": "f8c158d12542f93bc6d9337e137603cbf0002d68200dacdb8ef7bfa98b9c118a",
+      "adaptations": [
+        "Stateful explicit-call adapter over recovered kernels; caller-supplied context and numerical services; no inferred scheduler."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_hierarchy",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_hierarchy.py",
+      "published_sha256": "1ab3a3622276e99442bf7bc46b262e15cfd050ba9edd36f1fd4ad269e3cc9676",
+      "adaptations": [
+        "Independent primary hierarchy numeric loop; explicit metadata and RSQRT; bounded-parent/skip inspection policy."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_preparation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "engine/animation_preparation.py",
+      "published_sha256": "1edcc8e0b2531d106369487bd9503c0d64eebfff6253ba16306562600f54e7c4",
+      "adaptations": [
+        "Independent preparation integration; symbolic lock order; supplied context/numeric services; equal processed and total counts."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_metadata",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_metadata.py",
+      "published_sha256": "a15e64b70ee08811c30aa2eb69e4a07e87697651d3cd6614196fb60d44bb73e9",
+      "adaptations": [
+        "Symbolic owner predicate and per-key override map; exact rank packing; semantic enum names remain unknown."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_capacity",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_capacity.py",
+      "published_sha256": "4ab4b198dc167fe002e1b0dbe1ff2da2ef3c657e81fdbf6845a2d91cf54cc0b0",
+      "adaptations": [
+        "Capacity effect plan; allocation/copy/release explicit services; bounded representable requests."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_skeleton",
+      "source": "docs/reconstruction/ANIMATION_SKELETON.md",
+      "source_sha256": "b68917eacf158b2955cdad5b0b5aaeff66d9a19ed5ae26af4af5845b78f94b83",
+      "published": "engine/animation_skeleton.py",
+      "published_sha256": "9cde70fcb6eb6221fb071bc638cc434fe770598d0c30c045afecafa214fe6657",
+      "adaptations": [
+        "Independent composition of recovered local metadata operations; full native assembly and live behavior unvalidated."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_context_retirement",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/animation_context_retirement.py",
+      "published_sha256": "84e67fb430ba13d2a22187560c382df09e32ff3c72b76ca7b33190f25581bace",
+      "adaptations": [
+        "Ordered effect plan; services, synchronization and descriptor resolution remain external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_target_retirement",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/animation_target_retirement.py",
+      "published_sha256": "aada7e98012cbc924925795f82195f0d2bf0874f4a35aa2c85386f4c044cdda9",
+      "adaptations": [
+        "Symbolic maps and ordered service effects; native map allocation, TLS and concurrency external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_target_resolution",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/animation_target_resolution.py",
+      "published_sha256": "9165667726cf1cdc3e98be075bf8c34be393f802596d483ad35dc7bc64102a8b",
+      "adaptations": [
+        "Caller-supplied lookup outcomes; service internals and lifetime external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_registry_pairs",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/animation_registry_pairs.py",
+      "published_sha256": "6c195cb77f12dbcb1144f7f034c6008041f84922318fa9ebda53ec85cdc9d3ff",
+      "adaptations": [
+        "Symbolic finalization effect model; registration service and synchronization external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_registry_construction",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "engine/animation_registry_construction.py",
+      "published_sha256": "3976ea5560ae6b2661161808c96c73085a817dcf81ce9a49971a6bd5fe178eab",
+      "adaptations": [
+        "Supplied-storage model with copied callback observation and caller-produced target word; native allocation and constructor external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.recursive_lock_trace",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "engine/recursive_lock_trace.py",
+      "published_sha256": "ef01e399bb841ad90a7a48a4e17858b7f4b7a83dfddfd08adb4967b9b02c3728",
+      "adaptations": [
+        "Authored completed-event consistency checker; does not emulate locking or prove trace completeness."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.animation_registry_observation",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "engine/animation_registry_observation.py",
+      "published_sha256": "e565a499f69ee39dc363529e9c8c8fcb8e9899e424bcfb3cc50b33686fc5fb9c",
+      "adaptations": [
+        "Bounded repeated-read inspector and capture-local identity labels; no atomicity, lifetime or live-validation claim."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_accessor_initialization",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/transform_accessor_initialization.py",
+      "published_sha256": "01f312721ace9c30b8a9d7fb01296a1266b01116ca0cfae40f4fd6586005085a",
+      "adaptations": [
+        "Explicit supplied backing, transform globals and fallback identity; unknown bytes preserved."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_accessor_attachment",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/transform_accessor_attachment.py",
+      "published_sha256": "b8d0bd3603420a5606ea31762f61b36eb2452783353b70eab5cdddeb8b4f17f8",
+      "adaptations": [
+        "Direct visible-descriptor branch over supplied storage; allocation, visibility and lifetime external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_accessor_unlink",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/transform_accessor_unlink.py",
+      "published_sha256": "b21a992bacbb36b5e2ed3cff042948239d2222b1d3dd5306368e724bd85938b4",
+      "adaptations": [
+        "Symbolic child topology and cleanup effect plan; invalid/cyclic walks rejected by adapter."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_parent_detach",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/transform_parent_detach.py",
+      "published_sha256": "2534e05b1ef28ca84582fe220eb38bf680a19bb6e9cf7b348a06b42b225cdd17",
+      "adaptations": [
+        "Independent mode-0/mode-1 effect and reference-count model; service callbacks are nonmutating, retirement and concurrency excluded."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.entity_deactivation",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/entity_deactivation.py",
+      "published_sha256": "25d9f09f8586a713b881b792baf795b22367472d1f488d81a139a4b8310b25e4",
+      "adaptations": [
+        "Independent local lifecycle order model; stable component arrays and nonmutating callbacks required; no scheduler exclusion claim."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.hierarchy_commands",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/hierarchy_commands.py",
+      "published_sha256": "2fa40683a542a5c75320c3966469a24928c20afbef3230695c019a27978e6301",
+      "adaptations": [
+        "Independent command-state model with supplied resolved targets; callbacks, lifetime, producer concurrency and scheduler phase remain external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.examples.begin_commands_probe",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "engine/examples/begin_commands_probe.py",
+      "published_sha256": "6a3ef842e20bfc108fbba411448395e8439598287fccf62dcc1db9f7d3623006",
+      "adaptations": [
+        "Partial recovered frame-entry topology, synthetic command and callback bodies, authored terminal; no native quiescence claim."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.entity_transform_update",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/entity_transform_update.py",
+      "published_sha256": "248dc3dcb24c22b661ea65b8559f4acbde4c4af6ec63bc9626d877332200f658",
+      "adaptations": [
+        "Recovered notification order; authored Python storage, logical lock and exception policy; supplied opaque services."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.examples.entity_transform_probe",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "engine/examples/entity_transform_probe.py",
+      "published_sha256": "f7f3ef2662ee7f45b7012fea92914a8c5b6a5646660ecd4001550dc87f11798a",
+      "adaptations": [
+        "Recovered notification order; authored Python storage, logical lock and exception policy; supplied opaque services."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_composition",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/transform_composition.py",
+      "published_sha256": "67509de95f6920c7cb11e6f1c72a3894ea44805ec694a83a9b15f70df0643f89",
+      "adaptations": [
+        "Pure row-storage adapter; float32 multiply/add order recovered; finite-input guards authored."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "engine.examples.hierarchy_transform_probe",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "engine/examples/hierarchy_transform_probe.py",
+      "published_sha256": "cc180359428617b618fb4eb86b527f2b6c974cc39f10e45fab4ef41870ad5d91",
+      "adaptations": [
+        "Synthetic scene wiring and exact-sqrt seed policy; recovered composition and notification APIs."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.transform_inverse",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/transform_inverse.py",
+      "published_sha256": "7fb2a9ef1dc7e578ac5aa15d9dfb09cf043b9e68270c95a91124187917dcabf9",
+      "adaptations": [
+        "Recovered float32 lane arithmetic; explicit reciprocal seed provider; authored finite/nonsingular guards."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.attachment_transform_setup",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/attachment_transform_setup.py",
+      "published_sha256": "cd9cf393fbf8114045a8f2ed85121c6fb5d9a7da904e015a28b3f6073f46486d",
+      "adaptations": [
+        "Recovered setup order and arithmetic; supplied identity/publication services; authored Python callback signatures."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_link_traversal",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/skeleton_link_traversal.py",
+      "published_sha256": "be6434f27404dc72f3dfdd59a45babd7ee32c77cde2dd95ea3a21586a1fb1648",
+      "adaptations": [
+        "Recovered traversal ordering over supplied resolved-target observations; authored validation and event schema; provider and target bodies external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_provider_pose",
+      "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
+      "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
+      "published": "reference/skeleton_provider_pose.py",
+      "published_sha256": "50610d5fdda89ab5ddfc3b402308dfb6f84f59e5103ad5e91478965cea75c217",
+      "adaptations": [
+        "Recovered float32 pose conversion with supplied records; authored input validation; native lookup and pose producer external."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.supplemental_pose_records",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/supplemental_pose_records.py",
+      "published_sha256": "4c2f568f2f85e6c2c01c476f65da82e818f491e81e39151636decffca9b3388d",
+      "adaptations": [
+        "Equal-source-count local update; explicit external rotation service; authored immutable output and bounds."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.skeleton_parent_transform",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/skeleton_parent_transform.py",
+      "published_sha256": "d185ac3d57057f268bb355b2ac7c21f4e8ef3e08345f03626875010fc298f2ec",
+      "adaptations": [
+        "Independent owner-matrix preparation wrapper; explicit unresolved accessor and synchronization boundaries"
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_bank_pool",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_bank_pool.py",
+      "published_sha256": "0a1d33d5f3d6390628dcbf64a2edbe41dc2b60a50413f8c5f49e1c3c58088ffc",
+      "adaptations": [
+        "Independent reuse-branch model; explicit miss leaves allocation unresolved."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_bank_copy",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_bank_copy.py",
+      "published_sha256": "f7ed242be667d24bb6adda2c72457f8c80f5e975f4240dbdaaac7dc0858ee734",
+      "adaptations": [
+        "Independent bounded masked and full-mask byte-copy reconstruction; partial overlap excluded."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_work_dispatch",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_work_dispatch.py",
+      "published_sha256": "80aa41a6161f6ea06f97704906f74643b9f7ad96c26c1846deebcc7021ea191c",
+      "adaptations": [
+        "Independent concrete interface dispatch; preparation/evaluation supplied and time transported as float32 bits."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_result_filter",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_result_filter.py",
+      "published_sha256": "a970d04d55ea25504afb3d40b6f99b77eab5454542382d68037b94a96d0f4e04",
+      "adaptations": [
+        "Independent bounded recursive 24-byte result-tree filter; vector allocation supplied."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_result_conversion",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_result_conversion.py",
+      "published_sha256": "8df0c193630a1f4519e210dc7ff2db8f88468bb9ff32552b1400f1788be2df53",
+      "adaptations": [
+        "Static-derived normal-path wrapper with explicit conversion and fallback dependencies; authored diagnostics and bounds checks."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_result_fallback",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_result_fallback.py",
+      "published_sha256": "425dfc3d28eb4ec7870ef59748de45987177cde1153967bbb797a99c886527c7",
+      "adaptations": [
+        "Independent fallback tree selection and token publication; provider dispatch supplied; authored bounds and cycle refusal."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_flat_conversion",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_flat_conversion.py",
+      "published_sha256": "841d80e62e4e822fdc813b9477864e27bf6112db2d48ce13ecb6c2a009b995db",
+      "adaptations": [
+        "Kind-zero conversion ordering and float32 weights; provider and pose blend supplied; group inputs refused."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_completion",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_completion.py",
+      "published_sha256": "f09b2273ddcb5e4817529620e6959449c949e03c255750937262e2629b4790c9",
+      "adaptations": [
+        "Pending flag and descriptor-group dispatcher; concrete provider services supplied; authored diagnostics."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_pending_copy",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_pending_copy.py",
+      "published_sha256": "8486460d82507e71ca9465381f08dd342fc1b8b68aa62c38a71b3de6a47ee13c",
+      "adaptations": [
+        "Pending side-state scalar copy and ordering; vector assignment supplied."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_temporary",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_temporary.py",
+      "published_sha256": "61ab246f650f023c74be9972d36c8be4504be5e7a0af75f689bfdcc86119d573",
+      "adaptations": [
+        "Lazy temporary-bank lifecycle with opaque owner identities and supplied backend services."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_selection_mask",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_selection_mask.py",
+      "published_sha256": "cb10d0fc34d5dc1fee3dfa2ae3f86685ebe82d6c76fde9a36378cbbbfc22e5cb",
+      "adaptations": [
+        "Concrete registered mask value services; opaque owner arguments retained for lifecycle adapter."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_pose_acquisition",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_pose_acquisition.py",
+      "published_sha256": "a23ffe1282dcb5700f544d2696643be51c94ec9d1c0119318007d843f48c227c",
+      "adaptations": [
+        "Registered pose acquisition and wrapper initialization; resolution/storage/bank services supplied."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_channel_blend",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_channel_blend.py",
+      "published_sha256": "a41710f41ebada7e927d80b83a59153c852c6873dfc44166bf370502f1f72058",
+      "adaptations": [
+        "Typed regular channel formulas; recovered quaternion kernel with explicit RSQRT seed policy; authored buffer bounds."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_bank_blend",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_bank_blend.py",
+      "published_sha256": "dd3ea5f62b2bd3082dc536de8fac26fa98646a7f8fdfadab2933b4604d681e49",
+      "adaptations": [
+        "Regular bank byte traversal with group masks; supplemental tail and RSQRT seeds explicit."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_pose_blend",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_pose_blend.py",
+      "published_sha256": "4353b7c6f24ff02c014d32c8860d2936d44a9c0b2b305546e151a5e48347e9c4",
+      "adaptations": [
+        "Regular outer pose blend orchestration; bank selection, scale removal and arithmetic supplied explicitly."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_bank_scale",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_bank_scale.py",
+      "published_sha256": "1bfa628b2d33b47d2d3f3a19b83bd638c41e45253c848eb1c219a0113ffb6a56",
+      "adaptations": [
+        "Write-through byte views for recovered reciprocal owner scaling; preserves primary/secondary partial aliases."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_bank_conversion",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_bank_conversion.py",
+      "published_sha256": "daaf0aa9fc16173c424aac7b3c65fbb029d205e8be37515d3caabf8ef5af58b6",
+      "adaptations": [
+        "Byte-bank adapter reusing recovered relative hierarchy math; whole-buffer aliasing and skipped-byte preservation."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_mask_preparation",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_mask_preparation.py",
+      "published_sha256": "6d3555200d8680de80b07e4dae46d9c22b10e193aad2ba470470a29c7a7b640c",
+      "adaptations": [
+        "Mode-selected descriptor byte scatter with ordered writes and value-buffer aliasing; stable metadata and explicit bounds."
+      ],
+      "game_payloads_included": false
+    },
+    {
+      "module": "reference.animation_mask_weights",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
+      "published": "reference/animation_mask_weights.py",
+      "published_sha256": "1ec5c8ac1a59fb9f2d54c98e552394ed64e215266a4327edc22d030374619fd6",
+      "adaptations": [
+        "Lazy keyed masked-weight routing with byte pairing, float32 operation order and sentinel cache."
+      ],
+      "game_payloads_included": false
     }
   ]
 }

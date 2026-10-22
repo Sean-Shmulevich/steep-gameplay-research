@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-15",
+  "kind": "live_observation",
+  "host_version": "0.7.0",
+  "environment": {
+    "wine_engine": "x64-sikarugir10.0_6-r21",
+    "renderer": "D3DMetal"
+  },
+  "startup": {
+    "created_ms": 61,
+    "load_begin_ms": 93,
+    "host_started_ms": 7754,
+    "visible_windows_at_load_begin": 0,
+    "visible_windows_at_host_started": 0,
+    "first_status": {
+      "bound": false,
+      "ready": false,
+      "plugins_initialized": false,
+      "plugins_active": 0,
+      "bind_error": "stop-mode routines differ from the analyzed build"
+    },
+    "initialization_stages": [
+      "routine signatures not ready",
+      "routine signatures verified",
+      "engine owner not ready",
+      "engine owner readable; plugins initialized"
+    ]
+  },
+  "experiment": {
+    "ok": true,
+    "load_at": "startup",
+    "original_dll_replaced": false,
+    "original_dll_verified": true,
+    "settings_restored": true,
+    "bottle_stopped": true
+  },
+  "gameplay": {
+    "host_preloaded": true,
+    "demo_passed": true,
+    "steps_requested": 5,
+    "steps_checked": 5,
+    "stable_20_seconds": true
+  },
+  "fixture": {
+    "passed": true,
+    "initial_bound": false,
+    "early_pause_refused": true,
+    "became_ready": true,
+    "demo_passed": true
+  },
+  "prior_attempt": {
+    "remote_wait_ms": 5000,
+    "result": "timed out before host log; closed and restored; no rejection inferred"
+  },
+  "limitations": [
+    "No pre-entrypoint guarantee; loading occurs through a custom launcher.",
+    "Window counts are observations at two instants; raw screenshots and traces remain private.",
+    "One successful startup session; not a stability or cross-build guarantee."
+  ],
+  "tests": {
+    "native_fixture_passed": 56,
+    "native_fixture_total": 56,
+    "python_tests_passed": 691,
+    "packaging_check_passed": true
+  }
+}

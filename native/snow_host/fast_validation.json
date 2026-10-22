@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-15",
+  "evidence": "live observation, one successful visual session after an earlier no-player refusal",
+  "ok": true,
+  "speed_before": 4.103546035693539,
+  "speed_immediate": 90.00000042148774,
+  "samples": [
+    {
+      "seconds": 1.0049991669948213,
+      "speed": 48.878465193746514,
+      "flags": 3
+    },
+    {
+      "seconds": 2.0084267500205897,
+      "speed": 41.00776202879213,
+      "flags": 3
+    },
+    {
+      "seconds": 3.015232958015986,
+      "speed": 37.598717607382355,
+      "flags": 3
+    },
+    {
+      "seconds": 4.017150542000309,
+      "speed": 36.2845738248465,
+      "flags": 3
+    },
+    {
+      "seconds": 5.023475416994188,
+      "speed": 29.884548428825973,
+      "flags": 3
+    },
+    {
+      "seconds": 6.032097749994136,
+      "speed": 25.768024907864238,
+      "flags": 3
+    },
+    {
+      "seconds": 7.04127020802116,
+      "speed": 26.27944098071097,
+      "flags": 3
+    },
+    {
+      "seconds": 8.048913292004727,
+      "speed": 29.181121149020935,
+      "flags": 3
+    },
+    {
+      "seconds": 9.054635000007693,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 10.05970908299787,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 11.066768124990631,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 12.074149332998786,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 13.078358000027947,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 14.083816167025361,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 15.091646416985895,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 16.09531549998792,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 17.103077957988717,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 18.11049487499986,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 19.113635333022103,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 20.12314600002719,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 21.12813837500289,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 22.13279116700869,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 23.14099983300548,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 24.157354167022277,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 25.17830212501576,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 26.184607332979795,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 27.191249417024665,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 28.197600417013746,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 29.20479304197943,
+      "speed": 27.585460596719198,
+      "flags": 1
+    },
+    {
+      "seconds": 30.209416583005805,
+      "speed": 27.585460596719198,
+      "flags": 1
+    }
+  ],
+  "stable_20_seconds": true,
+  "settings_restored": true,
+  "bottle_stopped": true,
+  "scope": "One engine velocity assignment, full 3D direction, angular velocity cleared. Running samples are non-atomic. No controlled terrain or comparison run."
+}

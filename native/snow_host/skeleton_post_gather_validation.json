@@ -1,0 +1,90 @@
+{
+  "evidence": "original_instruction_emulation",
+  "cases": 6,
+  "game_process": false,
+  "scope": "Original post-update gather segment with sufficient capacity. Lock and copy stubbed; stops before restoration/unlock. Allocation and dispatch not tested.",
+  "rows": [
+    {
+      "source_count": 0,
+      "prior_count": 0,
+      "final_count": 0,
+      "storage": [
+        99,
+        99,
+        99
+      ],
+      "events": [
+        "lock"
+      ]
+    },
+    {
+      "source_count": 0,
+      "prior_count": 2,
+      "final_count": 2,
+      "storage": [
+        99,
+        99,
+        99
+      ],
+      "events": [
+        "lock"
+      ]
+    },
+    {
+      "source_count": 1,
+      "prior_count": 0,
+      "final_count": 1,
+      "storage": [
+        11,
+        99,
+        99
+      ],
+      "events": [
+        "lock",
+        "copy"
+      ]
+    },
+    {
+      "source_count": 1,
+      "prior_count": 2,
+      "final_count": 1,
+      "storage": [
+        11,
+        99,
+        99
+      ],
+      "events": [
+        "lock",
+        "copy"
+      ]
+    },
+    {
+      "source_count": 3,
+      "prior_count": 0,
+      "final_count": 3,
+      "storage": [
+        11,
+        22,
+        33
+      ],
+      "events": [
+        "lock",
+        "copy"
+      ]
+    },
+    {
+      "source_count": 3,
+      "prior_count": 2,
+      "final_count": 3,
+      "storage": [
+        11,
+        22,
+        33
+      ],
+      "events": [
+        "lock",
+        "copy"
+      ]
+    }
+  ]
+}

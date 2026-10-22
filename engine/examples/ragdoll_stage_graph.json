@@ -1,0 +1,6 @@
+[
+  {"id":"SkelUpdateEndAnimateRagdoll","kind":"range","successors":["SkeletonUpdateForRagdoll","SkeletonUpdateForRagdollInteractions"]},
+  {"id":"SkeletonUpdateForRagdoll","kind":"range","successors":["PhysicForRagdollUpdate"]},
+  {"id":"SkeletonUpdateForRagdollInteractions","kind":"range","successors":["PhysicForRagdollUpdate"]},
+  {"id":"PhysicForRagdollUpdate","kind":"range"}
+]

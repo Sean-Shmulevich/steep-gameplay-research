@@ -1,0 +1,159 @@
+{
+  "schema": "pose-work-partial-live-observation-v1",
+  "evidence": "Original-game exact-player skeleton capture with debugger failure",
+  "experiment_passed": false,
+  "matched_pairs": 2,
+  "unmatched_before": 1,
+  "matched_pairs_distinct_threads": 2,
+  "observations": [
+    {
+      "before": {
+        "schema": "pose-work-packet-observation-v1",
+        "input": {
+          "primary_present": true,
+          "alternate_present": false,
+          "primary_matches_current": true,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 136
+        },
+        "output": {
+          "primary_present": false,
+          "alternate_present": false,
+          "primary_matches_current": false,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 72
+        },
+        "packet_time": 1.0,
+        "current_present": true,
+        "initialization_pattern_matches": true,
+        "guards_matched": true,
+        "atomic_snapshot": false,
+        "lifetime_pinned": false,
+        "callback_execution_verified": false,
+        "writer_attribution_established": false,
+        "safe_native_call_established": false
+      },
+      "after": {
+        "schema": "pose-work-packet-observation-v1",
+        "input": {
+          "primary_present": true,
+          "alternate_present": false,
+          "primary_matches_current": true,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 136
+        },
+        "output": {
+          "primary_present": true,
+          "alternate_present": true,
+          "primary_matches_current": false,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 78
+        },
+        "packet_time": 1.0,
+        "current_present": true,
+        "initialization_pattern_matches": false,
+        "guards_matched": true,
+        "atomic_snapshot": false,
+        "lifetime_pinned": false,
+        "callback_execution_verified": false,
+        "writer_attribution_established": false,
+        "safe_native_call_established": false
+      }
+    },
+    {
+      "before": {
+        "schema": "pose-work-packet-observation-v1",
+        "input": {
+          "primary_present": true,
+          "alternate_present": false,
+          "primary_matches_current": true,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 136
+        },
+        "output": {
+          "primary_present": false,
+          "alternate_present": false,
+          "primary_matches_current": false,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 120
+        },
+        "packet_time": 0.7204049229621887,
+        "current_present": true,
+        "initialization_pattern_matches": true,
+        "guards_matched": true,
+        "atomic_snapshot": false,
+        "lifetime_pinned": false,
+        "callback_execution_verified": false,
+        "writer_attribution_established": false,
+        "safe_native_call_established": false
+      },
+      "after": {
+        "schema": "pose-work-packet-observation-v1",
+        "input": {
+          "primary_present": true,
+          "alternate_present": false,
+          "primary_matches_current": true,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 136
+        },
+        "output": {
+          "primary_present": true,
+          "alternate_present": true,
+          "primary_matches_current": false,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 126
+        },
+        "packet_time": 0.7204049229621887,
+        "current_present": true,
+        "initialization_pattern_matches": false,
+        "guards_matched": true,
+        "atomic_snapshot": false,
+        "lifetime_pinned": false,
+        "callback_execution_verified": false,
+        "writer_attribution_established": false,
+        "safe_native_call_established": false
+      }
+    }
+  ],
+  "debugger_exit": -6,
+  "failure": "Resume request failed: process already running; subsequent code check failed; LLDB aborted.",
+  "breakpoint_removal_confirmed": false,
+  "detach_confirmed": false,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Two matching same-thread/component/stack boundary pairs precede the debugger failure.",
+    "No clean observation-window completion or safe reusable debugger workflow is established.",
+    "Output banks populated during the call; specific parent writer remains unattributed.",
+    "Packet time values are debugger-perturbed and are not ordinary timing measurements.",
+    "No raw addresses, poses, game files or stack payloads included."
+  ],
+  "raw_receipt_sha256": "b96c7ac9c93690a4613d9aff2b03d9caf00e6b6a95109b1bd172fa7bb36cb2c0"
+}

@@ -16,6 +16,31 @@ python3 -m unittest discover -s tests -v
 
 Open http://127.0.0.1:8770 for the diagnostic terrain/skeleton view. The server binds loopback only. All clients share one engine. Run/pause, individual steps, checkpoints, sport selection and replay export are available. A/D steer, W tucks or walks forward, S brakes, Space charges then releases a jump, Q/E control flips. Click outside the sport selector to return keyboard control. This is an inspector; visual fidelity is intentionally limited.
 
+For recovered bank/context transform math, run the separate [animation work-transform testbench](../docs/reconstruction/ANIMATION_WORKBENCH.md). It accepts JSON and requires no game process.
+
+## Animation bank JSON testbench
+
+Run the recovered mixed-channel and supplemental evaluator without a game process:
+
+```sh
+python3 -m engine.animation_bank_bench engine/examples/animation_bank_input.json
+```
+
+The example contains synthetic receipt inputs. Each case supplies `inputs` for
+`evaluate_numeric_pose_bank` and an explicit `seed_policy`. `recorded` requires
+ordered `normalization` entries with matching `length` and `seed`; missing, extra
+or mismatched entries fail. `authored_exact_sqrt` requires no observations and
+uses a labeled mathematical substitute, not native approximation equivalence.
+Output includes the input hash, route, channels, supplemental records, status
+and normalization trace. Use `--output result.json` to save it. Cases are
+independent, not consecutive game frames. Supported domain is selector 2,
+modes 0/4 and numeric kinds 1/5/6 with separate supplied storage. Optional
+`group_mask`, `groups` and `range_selector` select a descriptor subrange; output
+reports the range and absolute processed indices. Set case `entry` to
+`group_wrapper` and supply `group_count` to expand masks into sequential calls;
+the default `inner` entry retains its single-range semantics.
+See [the integration evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#mixed-channels-with-supplemental-evaluation).
+
 ## Python API
 
 ```python
@@ -339,3 +364,315 @@ The [animation-stage probe](../docs/reconstruction/ANIMATION_STAGE_DEPENDENCIES.
 [`kino_event_routes`](../docs/reconstruction/KINO_EVENT_ROUTES.md) exposes the constructor-installed KinoComponent slot-16 route and secondary slot-22/23 selection from owning-object mode bits. Context lookup and lifecycle invocation remain caller-supplied evidence.
 
 [`kino_activation`](../docs/reconstruction/KINO_ACTIVATION.md) produces the direct activation routine's ordered registry/helper effects and resulting flags. It distinguishes context-group coverage from slot-16 insertion and preserves active state on the inspected missing-world branch. External helper effects remain explicit and unimplemented by this planner.
+
+### Ordinary animation operation testbench
+
+Run the complete reconstructed ordinary operation against supplied synthetic data:
+
+```sh
+python3 -m engine.animation_operation_bench engine/examples/animation_operation_input.json --output /tmp/animation-operation-result.json
+```
+
+The `animation-operation-bench-v1` document contains 1..64 `cases`. Each case
+supplies `inputs` for `evaluate_ordinary_pose_operation`, an optional `label`, and
+an explicit `math_policy`. The example uses synthetic inputs and observations
+from the mixed-operation emulation receipt, not game assets or a live recording.
+
+- `recorded` requires ordered `services` entries with `service`, `input`, `output`
+  and `normalizations` entries with `length`, `seed`. Missing, mismatched and unused
+  entries fail. It reproduces supplied numerical observations without guessing.
+- `authored_host_math` uses host acos/sin and an exact reciprocal-square-root seed
+  rounded to float32. Both recording lists must be empty. This is an authored
+  numerical policy and does not establish original instruction equivalence.
+
+Inputs name banks by logical identities; each bank includes numeric `channels`,
+supplemental `records`, auxiliary `poses`/`weights`, `flags`, `supplemental_mask`
+and `supplemental_counter`. Source identities can coincide. Destination must be
+distinct. Operation routing and stable group metadata are supplied explicitly,
+as are component-derived flags and keyed lookup results. No binary addresses,
+assets, DLL, game launch or live process access are needed.
+
+Output includes an input SHA-256, selected math policy, consumed numerical trace,
+route, group calls, completion mask, updated banks, manager entry masks and reset
+effects. Reset effects describe reconstructed state changes; they do not free
+native storage. An ordinary entry rejects the special route; destination aliases fail explicitly. See
+[operation evidence and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#ordinary-pose-operation-composition).
+
+
+For the Hermite branch set a case's `entry` to `special`. Supply `descriptors`
+as key/type pairs, `total_end`, `groups`, `first_tangents`, `second_tangents` and
+`tangent_scale` instead of `kinds` and `group_count`. Each tangent record has
+four-lane `vector` and `rotation` fields. The operation must select the special
+route; tangent data is supplied, not generated from an assumed timestep.
+[Special-operation evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#complete-special-pose-operation)
+includes the zero-mask behavior that differs from an ordinary no-op expectation.
+
+### Composed player animation observation
+
+`engine.player_animation_observation.capture_player_animation(readv, entity,
+image_base, keys, guards, profile, record_count=None)` combines the existing
+skeleton binder and pose-interval reader. The caller supplies a freshly verified
+entity, build-specific profile, process-identity guards and bounded read transport.
+It does not acquire a player or access a process by itself.
+
+The function requires one exact SkeletonComponent with a matching owner backlink,
+retains component-array/slot/type/owner guards across the pose read, and rechecks
+binding facts afterward. Pose metadata bounds and bank-selection/epoch endpoints
+are checked by the existing reader. Output includes address-free binding facts,
+requested channel values, missing-key reports and explicit consistency limits.
+
+This is an adapter-facing Python API, not yet a native loader command. Matching
+reads do not pin object lifetime, exclude ABA changes or establish animation
+completion. `suitable_for_animation_writes` remains false. Captured pose values
+must stay private; public fixtures use synthetic memory only. A read-only loader
+binding still needs process transport integration and a bounded live validation.
+
+Spawn publication can be inspected offline with explicit parent snapshots and
+reciprocal-square-root estimates:
+
+```sh
+python3 -m engine.spawn_publication_bench --request engine/examples/spawn_publication_input.json
+```
+
+This carries supplied animation-bank state across frames and reports matrix
+outputs and reset order. It records entity publication without accessing the game.
+See the [input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#offline-spawn-sequence-inspection-command).
+
+
+## Inspect animation bank ownership sequences
+
+```sh
+python3 -m engine.animation_pool_session engine/examples/animation_pool_input.json
+```
+
+This offline runner reports reuse, allocation misses, release and wrapper cleanup
+with state after each operation. Pose copying and storage services are explicitly
+recorded without execution in JSON mode. Python callers may supply implementations.
+See the [session contract](../docs/reconstruction/ANIMATION_POOL_SESSION.md).
+
+
+## Regular byte-bank inspection
+
+The existing bank testbench also accepts `entry: "regular_bytes"`:
+
+```sh
+python3 -m engine.animation_bank_bench engine/examples/animation_byte_bank_input.json --output /tmp/animation-byte-bank.json
+```
+
+The example is a synthetic mixed-channel bank with a quaternion channel and a
+supplemental rotation. It uses recorded emulator normalization seeds, reproducing
+one public joined instruction case. No game assets or process are needed.
+
+Inputs include three separate banks (`destination`, `first`, `second`), each with
+integer-byte `data`, `profile` metadata and explicit `records`. The destination
+also supplies `flags`. Profile metadata contains channel descriptors, group count,
+channel count and group words. Operation fields are `weight`, `selector`,
+`request_mask`, and optional `exclusion_mask`. See the complete example for shape.
+
+Results contain output bytes, flags, supplemental records, selected ranges,
+normalization trace and input SHA-256. Each case retains its explicit seed-policy
+label. `recorded` checks every normalization input and consumes every supplied seed;
+`authored_exact_sqrt` is a mathematical inspection policy, not native RSQRT parity.
+Neither policy proves original clip selection or full engine equivalence. The JSON
+boundary clones inputs and supports separate banks only. Limits are 1 MiB per bank,
+4096 descriptors and 255 supplemental records. Partial aliasing, masked/additive
+wrapper variants and native allocation/scheduling remain outside this command.
+
+### Masked animation byte-bank bench
+
+Run the synthetic masked-bank example without the game or private analysis files:
+
+```sh
+python3 -m engine.animation_bank_bench engine/examples/animation_masked_bank_input.json --output /tmp/animation-masked-bank-result.json
+```
+
+The `masked_bytes` entry accepts the same three separate byte banks as
+`regular_bytes`, plus `weight_mode` (0 or 1) and `uniform_groups` (uint16).
+Descriptors also require uint32 `key` values for the recovered keyed weight
+walk. The example compares partial-mask uniform overrides with a full-mask
+request that ignores those overrides. Results include output bytes, flags,
+supplemental records, visited group modes and an input hash.
+
+Normalization policy remains explicit: `recorded` checks every supplied input
+and seed; `authored_exact_sqrt` is a labeled approximation substitute. The example
+has identity supplemental rotations and needs no normalization observations.
+The JSON boundary deep-copies inputs and represents separate banks only; it does
+not encode in-place aliases. This entry exercises bank kernels, not the outer
+pose wrapper or live animation selection. See the
+[masked output evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-bank-blend-output).
+
+For a nonidentity quaternion channel plus repeated supplemental rotation blending:
+
+```sh
+python3 -m engine.animation_bank_bench engine/examples/animation_masked_rotation_input.json --output /tmp/animation-masked-rotation-result.json
+```
+
+This fixture supplies recorded normalization inputs/seeds. Changing inputs may
+invalidate those observations; the bench refuses mismatched or unused records.
+See [masked rotation validation](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-rotation-output-validation).
+
+### Paused brake/boost mod
+
+Run the independent-engine example with no game installation:
+
+```sh
+python3 -m engine.examples.speed_mod_demo
+```
+
+It applies +2/-2 speed pulses at a held tick, single-steps, resumes, advances one
+second, and checks the exported replay's final state hash. Resources are synthetic.
+
+`SchedulerController.adjust_speed(token, delta_speed)` is also exposed by
+`python3 -m engine.control_server` at `POST /command`:
+
+```json
+{"op":"adjust_speed","token":{"controller_id":"<from pause response>","generation":0,"pause_serial":0},"delta_speed":2}
+```
+
+Use the complete token returned by `pause` or a preceding mutation; the numbers
+above are placeholders. Success returns a fresh token for the next mutation,
+step, or resume. Failed validation leaves state and the current token unchanged.
+
+This is an authored independent-engine mod policy, using the native host's
+bounded pulse convention: finite nonzero delta within -10..10, direction from
+current three-dimensional velocity, direction unresolved below speed 0.5,
+nonnegative brake target, boost capped at 60 and refused at/above 60. These are
+API limits, not recovered physical constants. Unlike the private game setter,
+this operation preserves angular velocity and therefore does not reject spinning
+bodies. It leaves positions, pose/animation clocks, scheduler state and tick
+unchanged. The ordinary next physics tick can change velocity through contact.
+
+Successful mutation appends an `adjust_speed` replay command and records a
+`mod_speed_adjusted` event with before/target speeds and evidence category.
+Replay executes speed pulses in their original command order, preserving preceding
+inputs and steps in the current replay segment. Explicit restore, tuning and
+resource replacement may still establish a checkpoint base. This does not prove
+original-game determinism.
+
+### Recovered byte-bank blending in the running pose graph
+
+```sh
+python3 -m engine.cli --scenario engine/examples/byte_pose_graph.json --ticks 120 --output /tmp/byte-pose-replay.json
+python3 -m engine.cli --replay /tmp/byte-pose-replay.json
+```
+
+The explicit `byte_blend` graph node accepts `base`, `overlay`, scalar `weight`,
+and required `normalization: "authored_exact_sqrt"`. Both children must have the
+same pose space. It packs their sampled poses into float32 banks and executes
+`reference.animation_bank_blend.blend_regular_pose_bank`, including its near-one
+copy branch, typed arithmetic and quaternion path. Model-pose composition then
+uses the resulting local pose in the normal engine animation phase.
+
+`engine/pose_bank_adapter.py` defines an authored 32-byte-per-bone layout: kind 5
+for translation padded with a zero fourth lane, kind 6 for XYZW rotation. It uses
+full-mask traversal, distinct bank storage and empty supplemental record lists.
+This mapping is not a decoded original-rider descriptor table. Normalization uses
+an explicitly selected exact-square-root seed, not a recovered hardware RSQRT
+seed. Inputs are limited to 2048 bones by the descriptor's uint16 offset range.
+Existing graph nodes retain their previous arithmetic. Diagnostics expose the
+bank branch visits, destination flags, mapping and normalization policy.
+
+The supplied scene uses synthetic clips. Tests cover float32 translation,
+nonidentity rotation, copy routing, input isolation, inactive-node validation,
+and runtime replay/checkpoint continuation. They establish integration of the
+recovered kernel under these choices, not original rider animation fidelity.
+
+The same scene now adds a `byte_additive` node above the regular blend. This node
+requires `base` in local space and `delta` in delta space, plus explicit `weight`
+and the same normalization policy. The adapter sets `swap=True` on the recovered
+bank router to put base first and delta second; native default ordering would
+reverse them. Kind-5 translations add weighted delta lanes. Quaternion and
+near-one unweighted-combine branches remain those of the recovered router.
+Diagnostics identify the operation, source ordering and branch visits. This
+connects the recovered arithmetic to synthetic lean layering; it does not identify
+original trick, landing or locomotion graph selection.
+
+`byte_mask` adds recovered keyed weight-byte traversal to this graph path. It
+requires local/delta space agreement between `base` and `overlay`, an explicit
+`weight`, normalization policy, and `bytes` mapping bone names to 0..255. Missing
+bone names receive zero; unknown names are reported in `unmatched_mask_bones`.
+Invalid bytes are rejected even in inactive nodes. No original bone mask is
+inferred from a name.
+
+Its authored layout uses 36 bytes per bone, with a weight byte after the eight
+float lanes. Descriptor order is translation, paired same-key weight byte, then
+same-key rotation. The recovered keyed walker consumes the byte and reuses its
+weight for rotation. Full-mask mode reads the overlay bank's bytes; no uniform
+group override is applied. The layout allows at most 1820 bones. Zero mask weight
+removes the overlay contribution but does not bypass the recovered rotation
+normalization path, so bitwise identity for arbitrary nonunit inputs is not
+promised. Tests cover 0/128/255 masks, rotation weight reuse, invalid bytes,
+unmatched names and complete engine replay. The sample scene combines all three
+byte-bank node types using synthetic clips and an authored partial-root/full-knee mask.
+
+### Combined control, physics and animation experiment
+
+```sh
+python3 -m engine.examples.gameplay_mod_experiment --output /tmp/gameplay-mod-experiment.json
+```
+
+This bounded headless experiment combines mixed job dispatch, unequal outer-frame
+intervals, steering, jump charge/release, flip input, braking and two paused speed
+pulses with all three recovered byte-bank graph nodes. Graph weights consume the
+jump and lean controls; the controls-to-graph selection remains authored. It
+records per-frame body/pose/input samples, events, scheduler trace and a complete
+replay, then verifies both final state and event equality by replaying it. Names
+such as `release` and `settle` label commanded segments, not proof that a specific
+original-game trick or landing occurred. The fixture uses synthetic rig/clips.
+
+The command exits nonzero for replay disagreement, trace truncation or incidents.
+It can be slower than a plain engine run because the controller snapshots and
+copies the accumulated trace at transaction boundaries. It does not run the game
+or claim native timing, collision, landing or animation parity.
+
+For per-frame scripted observation, `SchedulerController.snapshot`,
+`submit_frame`, `step_once` and `step_frame_once` accept keyword-only
+`include_trace=False`. Defaults retain the complete snapshot API. The lighter
+response omits `trace` and instead supplies `trace_summary` with attempted,
+retained and dropped counts, completeness, and `records_included:false`.
+Numerical state remains a detached copy. This option changes observation cost
+only: trace capture, rollback copies, pause exclusion and replay stay active.
+Invalid non-Boolean options fail before input or execution changes. Fetch one
+full snapshot or checkpoint when the accumulated records are needed. The combined
+experiment uses this path for samples and retains the full final trace.
+
+HTTP clients can request the same lighter response with
+`GET /state?trace=summary` or `"include_trace":false` on `POST /command`.
+The command option is Boolean and validated before dispatch, so malformed options
+cannot advance the simulation. Failed commands honor a valid summary selection.
+`GET /trace` and `/checkpoint` retain their complete-record interfaces; ordinary
+`GET /state` and commands without this option retain their existing response
+shape. The HTTP comparison experiment now requests summary responses during its
+frame loop and fetches complete traces at experiment boundaries.
+
+Use `--physics-mode rigid_cells --sport snowboard` (or `--sport ski`) on the
+combined experiment to exercise recovered tetrahedral pressure/contact kernels
+with the graph and speed-mod API. Each sample now includes physics diagnostics,
+so impulse activity, immersion and authored contact policies remain inspectable.
+The box hull, force weighting, steering/jump rules, substrate and integration are
+still synthetic policies documented in `engine/rigid.py`; this mode does not
+establish a reconstructed original constraint solver.
+
+A 444-tick snowboard run retained all 225 samples and the complete scheduler
+trace. Final state and events replayed exactly, with no incidents. It recorded
+184 contact-pressure samples, immersion from 0 to approximately 0.448, one jump
+and one landing event in this model. Short ski/snowboard tests also verify that
+a paused speed pulse preserves stored rigid angular momentum and the current
+pose before the next physics tick. These results establish system integration,
+not matching original ski/snowboard feel or landing classification.
+
+### Paused central impulse
+
+`SchedulerController.apply_central_impulse(token, [jx, jy, jz])` exposes the
+recovered float32 `velocity += inverse_mass * impulse` arithmetic on the independent
+engine's single body. HTTP `/command` accepts `op: "apply_central_impulse"`, the
+pause token, and `impulse`. Success returns a fresh token and records the command
+for replay; invalid input leaves the published state and token unchanged.
+
+The adapter uses the scenario body's positive mass, dynamic/unsuppressed descriptor
+policy and no backend dispatch. These are explicit independent-engine choices.
+It preserves angular velocity, rigid angular momentum, pose and clocks. It does
+not simulate a separate coupled rider, original runtime locking, or native callback
+scheduling. Impulse is applied once, with no extra timestep multiplier. This is
+separate from the live host's speed setter, which resets spin. Evidence:
+[central impulse contract](../docs/reconstruction/CENTRAL_IMPULSE.md#recovered-routine-contract).

@@ -1,0 +1,549 @@
+{
+  "schema": "debugger-resume-transition-fixture-v1",
+  "game_accessed": false,
+  "evidence": "synthetic Wine/LLDB work fixture with optional injected observer exception after successful Continue",
+  "runs": {
+    "forced_failure": {
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "no_hits": true,
+        "injected_failure": true,
+        "successful_resume_recorded": true,
+        "code_unchanged": true,
+        "cleanup_state_recorded": true
+      },
+      "receipt_sha256": "f8c77ca9d6f57dc841ce81696e998d0bd52cc1961a7ffe2abc815544b8ee2f03",
+      "transitions": [
+        {
+          "kind": "process_state",
+          "label": "initial_before",
+          "state": 5,
+          "stop_id": 1
+        },
+        {
+          "kind": "resume_result",
+          "label": "initial",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 1
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_stop_check",
+          "state": 6,
+          "stop_id": 1
+        },
+        {
+          "kind": "stop_request",
+          "success": true,
+          "error": "success"
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_stop_complete",
+          "state": 5,
+          "stop_id": 2
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_before_code_check",
+          "state": 5,
+          "stop_id": 2
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_before_removal",
+          "state": 5,
+          "stop_id": 2
+        }
+      ]
+    },
+    "normal_multithread": {
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "ordered": true,
+        "patterns": true,
+        "output_change": true,
+        "preserved_time": true,
+        "no_observer_error": true,
+        "code_unchanged": true,
+        "multiple_threads": true,
+        "requested_hits": true,
+        "capture_window_ended": true
+      },
+      "receipt_sha256": "6190b2c71e695096aebb4008b960ce6bc77a506e054088ee9326d0722795d502",
+      "transitions": [
+        {
+          "kind": "process_state",
+          "label": "initial_before",
+          "state": 5,
+          "stop_id": 1
+        },
+        {
+          "kind": "resume_result",
+          "label": "initial",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 1
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 2
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 2
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 6
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 6
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 10
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 10
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 12
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 12
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 16
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 16
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 19
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 19
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 21
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 21
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 23
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 23
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 26
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 26
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 29
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 29
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 31
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 31
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 33
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 33
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 36
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 36
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 39
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 39
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 41
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 41
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 43
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 43
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 45
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 45
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 47
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 47
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 49
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 49
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 51
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 51
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 53
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 53
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 55
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 55
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 57
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 5,
+          "stop_id": 57
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 59
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 59
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 61
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 61
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 63
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 63
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 65
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 65
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 67
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 67
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 69
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 69
+        },
+        {
+          "kind": "process_state",
+          "label": "next_before",
+          "state": 5,
+          "stop_id": 71
+        },
+        {
+          "kind": "resume_result",
+          "label": "next",
+          "success": true,
+          "error": "success",
+          "state": 6,
+          "stop_id": 71
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_stop_check",
+          "state": 5,
+          "stop_id": 73
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_before_code_check",
+          "state": 5,
+          "stop_id": 73
+        },
+        {
+          "kind": "process_state",
+          "label": "cleanup_before_removal",
+          "state": 5,
+          "stop_id": 73
+        }
+      ]
+    }
+  },
+  "limits": [
+    "The injected exception is not the original LLDB resume error.",
+    "Observed delayed process-state reporting is a race lead, not confirmed original-game root cause.",
+    "Normal multithread run and forced-failure cleanup passed; no new game attachment performed."
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "profiles": 12,
+  "curves": 36,
+  "evaluations": 180,
+  "checks": [
+    {
+      "profile": "alpine_downhill_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "alpine_downhill_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "alpine_downhill_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "alpine_giantslalom_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "alpine_giantslalom_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "alpine_giantslalom_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "alpine_slalom_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "alpine_slalom_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "alpine_slalom_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "alpine_superg_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "alpine_superg_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "alpine_superg_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "freestyle_bigair_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "freestyle_bigair_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "freestyle_bigair_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "freestyle_cross_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "freestyle_cross_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "freestyle_cross_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "freestyle_halfpipe_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "freestyle_halfpipe_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "freestyle_halfpipe_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "freestyle_slopestyle_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "freestyle_slopestyle_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "freestyle_slopestyle_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "parallel_slalom_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "parallel_slalom_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "parallel_slalom_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "sledge_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "sledge_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "sledge_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "speedriding_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "speedriding_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "speedriding_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    },
+    {
+      "profile": "surfboard_gameplay",
+      "field": "forceSpeedCurve",
+      "sample_count": 9
+    },
+    {
+      "profile": "surfboard_gameplay",
+      "field": "legCoilCurve",
+      "sample_count": 2
+    },
+    {
+      "profile": "surfboard_gameplay",
+      "field": "forceDepthCurve",
+      "sample_count": 21
+    }
+  ],
+  "coefficient_and_evaluation_match": "bit-exact against original instructions",
+  "game_process": false
+}

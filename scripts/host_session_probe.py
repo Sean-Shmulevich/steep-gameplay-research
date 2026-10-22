@@ -6,10 +6,10 @@ the loopback command channel: status, pause, single world steps, resume, and a
 guarded byte restore in the private workspace is the fallback. No game addresses
 appear in this script.
 """
-import argparse, json, subprocess, sys, time
+import argparse, json, math, subprocess, sys, time
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from snow_host_client import SnowHostClient, demo
+from snow_host_client import SnowHostClient, HostError, demo
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--workspace', type=Path, required=True)
@@ -17,7 +17,9 @@ parser.add_argument('--build', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--port', type=int, default=47017)
 parser.add_argument('--steps', type=int, default=10)
-parser.add_argument('--plan', choices=['demo', 'stress'], default='demo')
+parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet'], default='demo')
+parser.add_argument('--game-deadline', type=float)
+parser.add_argument('--preloaded', action='store_true', help='Host was already loaded by the startup launcher')
 args = parser.parse_args()
 H = args.build.resolve(); R = args.workspace.resolve(); TB = R/'runtime/testbench'
 out = args.output.resolve(); out.mkdir(exist_ok=False)
@@ -82,6 +84,30 @@ def hold_forward(ident, ms=1500):
     return subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 
 
+def animation_motion(client, ident):
+    """One OS-delivered forward pulse, with sequential pose/body observations."""
+    from animation_capture_probe import capture_animation
+    record={'game_input_ingestion_verified': False, 'atomic_snapshot': False}
+    record['before']=capture_animation(client,samples=8)
+    child=hold_forward(ident,700)
+    try:
+        record['pulse_window']=capture_animation(client,samples=24)
+    finally:
+        # Bounded helper performs key-up in its finally block. Retain its report.
+        text,_=child.communicate(timeout=20)
+        (out/'animation-input.jsonl').write_text(text)
+    events=[json.loads(line) for line in text.splitlines() if line.startswith('{')]
+    released=any(e.get('kind')=='hold_complete' and e.get('all_injected_keys_released') for e in events)
+    delivered=[e for e in events if e.get('kind')=='key_delivery']
+    record['input']={'exit_code':child.returncode,'released':released,
+                     'accepted_deliveries':sum(e.get('api_reported_sent')==1 for e in delivered),
+                     'requested_duration_ms':700,'scan_code':17}
+    record['after']=capture_animation(client,samples=8)
+    record['ok']=child.returncode==0 and released and record['input']['accepted_deliveries']==2 and all(
+        record[k]['ok'] for k in ('before','pulse_window','after'))
+    return record
+
+
 def stress(client, ident):
     """Long run, repeated toggles, then pause/step while moving. Every phase ends resumed."""
     s = {}
@@ -125,19 +151,128 @@ def stress(client, ident):
     return s
 
 
+def fast_demo(client, ident):
+    """Explicit high-speed visual experiment through the existing engine setter.
+
+    Does not change the bounded boost API. One assignment only, never retry an
+    uncertain setter response. Full 3D direction is preserved, including descent.
+    """
+    record = {'ok': False, 'target_speed': 90.0, 'eligibility': [], 'samples': []}
+    result['fast'] = record
+    # A recognized gameplay HUD can precede the actor. Wait while simulation is
+    # running; only missing/changing-player refusals are retryable here.
+    for _ in range(20):
+        try:
+            client.call('player.get')
+            break
+        except HostError as exc:
+            if exc.response.get('result', {}).get('error') not in ('no_player', 'player_changed'):
+                raise
+            time.sleep(1)
+    else:
+        raise RuntimeError('Player body did not appear within 20 seconds')
+    for attempt in range(6):
+        client.call('simulation.pause', lease_ms=30000)
+        try:
+            before = client.call('player.get')
+            record['eligibility'].append(before)
+            speed = math.sqrt(sum(x*x for x in before['linear_velocity']))
+            spin = math.sqrt(sum(x*x for x in before['angular_velocity']))
+            if before['flags'] & 3 == 3 and 3 <= speed < 90 and spin <= .25:
+                print('FAST_DEMO_READY: rider held; boost in 10 seconds', flush=True)
+                for _ in range(10):
+                    time.sleep(1)
+                    client.call('host.heartbeat')
+                v = [x * 90.0 / speed for x in before['linear_velocity']]
+                record['before'] = before
+                record['set'] = client.call('player.set_velocity', vx=v[0], vy=v[1], vz=v[2])
+                after = record['set']['after']
+                record['readback_matches'] = all(abs(a-b) < .001 for a,b in zip(after['linear_velocity'], v))
+                (out/'fast-assignment.json').write_text(json.dumps(record, indent=2))
+                break
+        finally:
+            client.call('simulation.resume')
+        hold_forward(ident, 700).wait(timeout=20)
+        time.sleep(.5)
+    if 'set' not in record:
+        raise RuntimeError('No eligible moving rider for fast demo')
+    print('FAST_DEMO_RUNNING: 90 units/s assigned; watching for 30 seconds', flush=True)
+    start = time.monotonic()
+    while time.monotonic() - start < 30:
+        time.sleep(1)
+        record['samples'].append({'seconds': time.monotonic()-start, 'player': client.call('player.get')})
+    record['ok'] = record['readback_matches'] and advancing(client, .5)
+    return record
+
+
+def speed_test(client, ident):
+    from speed_acceptance import run_speed_acceptance
+    def advance():
+        child=hold_forward(ident,700)
+        if child.wait(timeout=20):
+            raise RuntimeError('Forward-input helper failed')
+    return run_speed_acceptance(client,capture,advance)
+
+
 subprocess.run([sys.executable, str(TB/'run13/identify_game.py'), '--output', str(out/'identity.json')], check=True, timeout=35, capture_output=True)
 i = json.loads((out/'identity.json').read_text()); assert i['ok'] and int(i['base'], 16) == 0x140000000
 client = None
 try:
     dll = 'Z:' + str(H/'snow_host.dll').replace('/', '\\')
-    result['load'] = run('host_load', [H/'host_loader.exe', i['pid'], i['created'], dll, args.port])
+    result['load'] = {'ok': True, 'preloaded': True} if args.preloaded else run('host_load', [H/'host_loader.exe', i['pid'], i['created'], dll, args.port])
     assert result['load'].get('ok'), 'Host loader did not verify start'
     client = connect()
+    ready_deadline = time.monotonic() + 30
     hello = client.call('host.hello')
+    while not hello.get('ready', True) and time.monotonic() < ready_deadline:
+        time.sleep(.25); hello = client.call('host.hello')
     result['hello'] = hello
     result['plugins_before'] = client.call('plugins.list')['plugins']
-    assert hello['bound'] and hello['ordinary'], 'Adapter not bound or engine not ordinary: ' + str(hello.get('bind_error') or hello.get('read_error'))
-    if args.plan == 'stress':
+    assert hello.get('ready', True) and hello['bound'] and hello.get('ordinary'), 'Adapter not ready or engine not ordinary: ' + str(hello.get('bind_error') or hello.get('read_error'))
+    if args.plan == 'acceptance':
+        from host_acceptance import run_acceptance, prepare_rider
+        def preparation_pulse():
+            child=hold_forward(i,700)
+            text,_=child.communicate(timeout=20)
+            (out/'acceptance-preparation-input.jsonl').write_text(text)
+            events=[json.loads(line) for line in text.splitlines() if line.startswith('{')]
+            return {'exit_code':child.returncode,'duration_ms':700,
+                    'keys_released':any(e.get('kind')=='hold_complete' and
+                        e.get('all_injected_keys_released') for e in events)}
+        result['preparation']=prepare_rider(client,preparation_pulse)
+        assert result['preparation']['ok'], 'Rider preparation failed; no acceptance mutations attempted'
+        result['acceptance'] = run_acceptance(client, lambda: speed_test(client, i), steps=args.steps, ready_wait_seconds=20)
+        assert result['acceptance']['ok'], 'Acceptance stages incomplete; inspect individual results'
+    elif args.plan == 'work-packet':
+        if args.game_deadline is None:
+            raise ValueError('work-packet requires actual game watchdog deadline')
+        argv=[sys.executable,str(R/'analysis/animation-debugger/private/run_game_capture.py'),
+              str(out/'identity.json'),str(out/'work-capture'),'--work-packet',
+              '--game-deadline',str(args.game_deadline)]
+        with (out/'work-capture.log').open('w') as log:
+            subprocess.run(argv,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=125)
+        result['work_packet']=json.loads((out/'work-capture/result.json').read_text())
+        wr=result['work_packet']
+        assert (wr.get('debugger_exit')==0 and wr.get('detached') and wr.get('breakpoints_removed')
+                and wr.get('code_unchanged') and not wr.get('errors') and not wr.get('outer_timeout')), 'Work observer did not finish cleanly'
+    elif args.plan == 'cached-parent':
+        from cached_parent_capture_probe import capture_cached_parent
+        result['cached_parent'] = capture_cached_parent(client, samples=32)
+        assert result['cached_parent']['ok'], 'No accepted cached-parent identity brackets; inspect retained responses'
+    elif args.plan == 'animation-motion':
+        result['animation_motion'] = animation_motion(client,i)
+        assert result['animation_motion']['ok'], 'Animation/input trial incomplete; inspect retained evidence'
+    elif args.plan == 'animation':
+        from animation_capture_probe import capture_animation
+        result['animation'] = capture_animation(client)
+        assert result['animation']['ok'], 'No matching player/channel observations; inspect retained responses'
+    elif args.plan == 'fast':
+        result['fast'] = fast_demo(client, i)
+        assert result['fast']['ok'], 'Fast demo readback or resume failed'
+    elif args.plan == 'speed':
+        result['speed'] = speed_test(client, i)
+        assert result['speed']['ok'], 'Speed trial incomplete; inspect eligibility and readbacks'
+    elif args.plan == 'stress':
         result['stress'] = stress(client, i)
         assert result['stress']['ok'], 'Stress plan failed; see result.json'
     else:

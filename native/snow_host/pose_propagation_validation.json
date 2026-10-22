@@ -1,0 +1,1064 @@
+{
+  "evidence": "original_instruction_emulation",
+  "cases": 64,
+  "game_process": false,
+  "scope": "Original per-entry propagation tail; callback, virtual event, skeleton lookup and recursive refresh intercepted. No transform calculation, full loop, callback internals or synchronization claim.",
+  "rows": [
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": false,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": false,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 2,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 0
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": false,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 254
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 0,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 2,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 130,
+      "pending_after": 255
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 0
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 1
+    },
+    {
+      "inputs": {
+        "publish": true,
+        "callback_present": true,
+        "child_present": true,
+        "secondary": 255,
+        "dirty": 255,
+        "pending": 254
+      },
+      "events": [
+        "transform_callback",
+        "transform_event",
+        "find_skeleton",
+        "refresh_child"
+      ],
+      "dirty_after": 255,
+      "pending_after": 255
+    }
+  ]
+}

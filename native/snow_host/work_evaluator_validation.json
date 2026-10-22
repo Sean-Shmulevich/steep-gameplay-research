@@ -1,0 +1,9548 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 80,
+  "scope": "Entire evaluator with existing work storage, no-visible-target context holders, real request arbitration, refcount instructions, resize wrapper, gather and final clock writes. Capacity service intercepted with synthetic storage; no retirement triggered; no live ownership proof.",
+  "samples": [
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": []
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": []
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 3212836864,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 3212836864,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 3212836864,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 3212836864,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353388,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353388,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353388,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353388,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353498,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353498,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353498,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 925353498,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1056964608,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1056964608,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1056964608,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 0,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "deferred",
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1056964608,
+          "saved_context_token": 0,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": -1.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.0,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 0,
+          "saved_scalar_bits": 0,
+          "saved_context_token": 0,
+          "elapsed": 0.0,
+          "duration": 0.75,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 1
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "cleared",
+        "work": {
+          "count": 0,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "context_resolution_requested": false
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 1.00001e-05,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 1.0000099791795947e-05,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": false
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                3.0,
+                5.0,
+                7.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                9.0,
+                11.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": false,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    },
+    {
+      "inputs": {
+        "work": {
+          "count": 2,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.25,
+          "duration": 1.0,
+          "records": [
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                9.0,
+                9.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          ]
+        },
+        "scalar": 0.5,
+        "context_token": 0,
+        "records": [
+          [
+            [
+              2.0,
+              3.0,
+              4.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              6.0,
+              7.0,
+              8.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.6,
+              0.8
+            ]
+          ]
+        ],
+        "indices": [
+          1,
+          0,
+          1
+        ],
+        "parent_position": [
+          1.0,
+          2.0,
+          3.0,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "direct": true
+      },
+      "fallback_bank": true,
+      "result": {
+        "action": "replaced",
+        "work": {
+          "count": 3,
+          "saved_flag": 1,
+          "saved_scalar_bits": 1061158912,
+          "saved_context_token": 1,
+          "elapsed": 0.0,
+          "duration": 0.5,
+          "records": [
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ],
+            [
+              [
+                2.0,
+                3.0,
+                4.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                7.0,
+                8.0,
+                2.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.6000000238418579,
+                0.800000011920929
+              ]
+            ]
+          ],
+          "active_context_token": 0
+        },
+        "context_resolution_requested": true
+      }
+    }
+  ]
+}

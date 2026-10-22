@@ -9,6 +9,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <wchar.h>
+#ifndef SNOW_REMOTE_TIMEOUT_MS
+#define SNOW_REMOTE_TIMEOUT_MS 5000
+#endif
 static const WCHAR *base(const WCHAR *s){const WCHAR *p=wcsrchr(s,L'\\');return p?p+1:s;}
 static BOOL module(DWORD pid,const WCHAR *name,MODULEENTRY32W *m){
  HANDLE snap=CreateToolhelp32Snapshot(TH32CS_SNAPMODULE|TH32CS_SNAPMODULE32,pid);
@@ -22,7 +25,7 @@ static int remote_call(HANDLE p,uintptr_t entry,const BYTE *local,LPVOID param,D
  BYTE bytes[16];SIZE_T read=0;
  if(!ReadProcessMemory(p,(LPCVOID)entry,bytes,sizeof(bytes),&read)||read!=sizeof(bytes)||memcmp(bytes,local,16))return 0;
  HANDLE t=CreateRemoteThread(p,NULL,0,(LPTHREAD_START_ROUTINE)entry,param,0,NULL);if(!t)return 0;
- DWORD wait=WaitForSingleObject(t,5000);
+ DWORD wait=WaitForSingleObject(t,SNOW_REMOTE_TIMEOUT_MS);
  *completed=wait==WAIT_OBJECT_0;
  if(*completed)GetExitCodeThread(t,code);
  CloseHandle(t);return *completed;

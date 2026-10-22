@@ -1,0 +1,37 @@
+{
+  "evidence": "live_read_only_observation",
+  "game_process": true,
+  "gameplay_hud_observed": true,
+  "gameplay_input_sent": false,
+  "startup_navigation_inputs_sent": true,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "captures": 1,
+  "membership": {
+    "schema": "skeleton-post-membership-observation-v1",
+    "source_count": 2,
+    "storage_capacity": 2,
+    "remaining_to_claim": 0,
+    "player_skeleton_source_matches": [
+      {
+        "source_index": 1,
+        "storage_indices": [
+          1
+        ],
+        "unclaimed_prefix_indices": []
+      }
+    ],
+    "guards_matched": true,
+    "source_membership_observed": true,
+    "atomic_snapshot": false,
+    "callback_execution_established": false,
+    "safe_to_step_established": false,
+    "limits": [
+      "Storage capacity includes stale or inactive slots.",
+      "Zero remaining claims does not mean callbacks finished.",
+      "No source match does not establish absence from alternate update routes.",
+      "Repeated matching reads do not exclude intervening changes or object reuse."
+    ]
+  },
+  "game_payloads_included": false
+}

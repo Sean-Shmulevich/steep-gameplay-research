@@ -1,0 +1,3223 @@
+{
+  "cases": 96,
+  "game_process": false,
+  "scope": "Original registered callback thunk, full cache builder and TLS getter. Lock/reservation calls intercepted. Synthetic pointers, constant TLS mask per invocation, two invocations per case. No real allocation, concurrent initialization, object retention or resource payloads.",
+  "rows": [
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 9379458554305544153,
+            "status": 2663006367
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          9379458554305544153
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          9379458554305544153
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 156428450426760169,
+            "status": 1137869807
+          },
+          {
+            "pointer": 2855287652647473505,
+            "status": 3531143900
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          3430088704,
+          2855287652647473505
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          3430088704,
+          2855287652647473505
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 18428662380607348507,
+            "status": 855852271
+          },
+          {
+            "pointer": 1600146816658762995,
+            "status": 856797237
+          },
+          {
+            "pointer": 1009737381741439508,
+            "status": 2553201973
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          0,
+          0,
+          1009737381741439508
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          0,
+          1009737381741439508
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 9311056256051251289,
+            "status": 103876893
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 12760314407880393086,
+            "status": 2262299910
+          },
+          {
+            "pointer": 17174250840066393952,
+            "status": 3502810579
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 14031922203994708610,
+            "status": 558647593
+          },
+          {
+            "pointer": 11927960524294017475,
+            "status": 716399286
+          },
+          {
+            "pointer": 6413464527705236400,
+            "status": 2604776410
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 7166263292690787497,
+            "status": 2784538404
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          7166263292690787497
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          7166263292690787497
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 3501021226377038142,
+            "status": 4147272740
+          },
+          {
+            "pointer": 5926791325630552410,
+            "status": 3815662426
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          3501021226377038142,
+          5926791325630552410
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          3501021226377038142,
+          5926791325630552410
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 8061931863325517678,
+            "status": 1915207779
+          },
+          {
+            "pointer": 1796360459183504625,
+            "status": 4210234686
+          },
+          {
+            "pointer": 12248009768658937671,
+            "status": 89866058
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          3572170752,
+          1796360459183504625,
+          3933077504
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          3572170752,
+          1796360459183504625,
+          3933077504
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 11142217538625996297,
+            "status": 634406732
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 4548775202161311235,
+            "status": 3469471284
+          },
+          {
+            "pointer": 16101403603512833477,
+            "status": 2198199197
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 5495310085801395816,
+            "status": 2484058116
+          },
+          {
+            "pointer": 4634975036283181585,
+            "status": 1507858852
+          },
+          {
+            "pointer": 7244943954697234818,
+            "status": 125702915
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 1799804121541203754,
+            "status": 1071557051
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          297730048
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          297730048
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 5450155147896540494,
+            "status": 597527930
+          },
+          {
+            "pointer": 8810364676333223405,
+            "status": 2121306273
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          0,
+          0
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          0
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10434038508190101060,
+            "status": 2550771694
+          },
+          {
+            "pointer": 6608110451890574175,
+            "status": 1266712444
+          },
+          {
+            "pointer": 1750391505859706557,
+            "status": 878794591
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          10434038508190101060,
+          6608110451890574175,
+          1750391505859706557
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          10434038508190101060,
+          6608110451890574175,
+          1750391505859706557
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 11464479977435303717,
+            "status": 927762285
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10618539155163909675,
+            "status": 1895600683
+          },
+          {
+            "pointer": 10074062222510476935,
+            "status": 1378943208
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 1748326547022271531,
+            "status": 2888782911
+          },
+          {
+            "pointer": 13826951818837721096,
+            "status": 2679997015
+          },
+          {
+            "pointer": 11496456560695070124,
+            "status": 1107574280
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 13767996735294265587,
+            "status": 3671792655
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          13767996735294265587
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          13767996735294265587
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 647167832635679632,
+            "status": 3631620259
+          },
+          {
+            "pointer": 4081537706013950556,
+            "status": 2025936385
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          647167832635679632,
+          810745856
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          647167832635679632,
+          810745856
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 12930283282648935856,
+            "status": 3610384732
+          },
+          {
+            "pointer": 15092825743883940868,
+            "status": 2169318752
+          },
+          {
+            "pointer": 5667993925355841471,
+            "status": 4088110212
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          12930283282648935856,
+          15092825743883940868,
+          5667993925355841471
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          12930283282648935856,
+          15092825743883940868,
+          5667993925355841471
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 4979914293272688130,
+            "status": 3753651217
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 18129675694310293847,
+            "status": 230104579
+          },
+          {
+            "pointer": 9920264155320636880,
+            "status": 2007630573
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 2368998846468472667,
+            "status": 3921302226
+          },
+          {
+            "pointer": 1688045097644014126,
+            "status": 909462900
+          },
+          {
+            "pointer": 11539223402174386424,
+            "status": 1892157955
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15163426110383551749,
+            "status": 2006930960
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          0
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15960862857682164497,
+            "status": 1111216528
+          },
+          {
+            "pointer": 6934897455818297208,
+            "status": 2297418255
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          15960862857682164497,
+          6934897455818297208
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          15960862857682164497,
+          6934897455818297208
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 5877730217308604119,
+            "status": 2677283455
+          },
+          {
+            "pointer": 10153779392544742821,
+            "status": 3724982012
+          },
+          {
+            "pointer": 9083669708188243333,
+            "status": 25515846
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          5877730217308604119,
+          10153779392544742821,
+          3850960896
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          5877730217308604119,
+          10153779392544742821,
+          3850960896
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15646068836970625504,
+            "status": 1751762353
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 8376054408522220644,
+            "status": 1301229935
+          },
+          {
+            "pointer": 10471380662716554037,
+            "status": 2152201079
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 12395181543557408916,
+            "status": 4088111857
+          },
+          {
+            "pointer": 12628332972620299378,
+            "status": 58288838
+          },
+          {
+            "pointer": 7794624520078921144,
+            "status": 1826415200
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 5959258108340130656,
+            "status": 1065761522
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          276430848
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          276430848
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 11029252675000646699,
+            "status": 3598402206
+          },
+          {
+            "pointer": 2797984038813946929,
+            "status": 3907855310
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          11029252675000646699,
+          2797984038813946929
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          11029252675000646699,
+          2797984038813946929
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 12515340698790469476,
+            "status": 2466515774
+          },
+          {
+            "pointer": 15328075319247117406,
+            "status": 1478842883
+          },
+          {
+            "pointer": 8798343974165131754,
+            "status": 212894926
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          12515340698790469476,
+          15328075319247117406,
+          8798343974165131754
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          12515340698790469476,
+          15328075319247117406,
+          8798343974165131754
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 7028795211857992151,
+            "status": 440328134
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 9865654247738720844,
+            "status": 3152426282
+          },
+          {
+            "pointer": 5242001643242862440,
+            "status": 1320348980
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 13645149646169965067,
+            "status": 2362121270
+          },
+          {
+            "pointer": 14145304251385565862,
+            "status": 1328586313
+          },
+          {
+            "pointer": 15704319115118876866,
+            "status": 2775455769
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15305669726704219786,
+            "status": 1154286557
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          15305669726704219786
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          15305669726704219786
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 5921079651468099562,
+            "status": 1754054996
+          },
+          {
+            "pointer": 16031353094662670622,
+            "status": 1085080999
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          1619787776,
+          2889482240
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          1619787776,
+          2889482240
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 18121006106206667899,
+            "status": 2470650049
+          },
+          {
+            "pointer": 10429307010442506767,
+            "status": 1932747539
+          },
+          {
+            "pointer": 8664223273828315154,
+            "status": 320532785
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          18121006106206667899,
+          0,
+          0
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          18121006106206667899,
+          0,
+          0
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 16430505433947521280,
+            "status": 1091874540
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 2993208490775945746,
+            "status": 2068647206
+          },
+          {
+            "pointer": 16782040514189816070,
+            "status": 3380930363
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10610645986782307636,
+            "status": 3441411153
+          },
+          {
+            "pointer": 8059992007292874984,
+            "status": 1696186873
+          },
+          {
+            "pointer": 8286035669132717619,
+            "status": 2844914611
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 8319880124449510609,
+            "status": 545430544
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          0
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15270994783233063888,
+            "status": 551402465
+          },
+          {
+            "pointer": 10476812900487940185,
+            "status": 331792644
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          15270994783233063888,
+          10476812900487940185
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          15270994783233063888,
+          10476812900487940185
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 16793725942481301420,
+            "status": 3176341228
+          },
+          {
+            "pointer": 4369405927358314531,
+            "status": 626977640
+          },
+          {
+            "pointer": 16374486488631663386,
+            "status": 729539813
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          16793725942481301420,
+          1940717568,
+          2790391808
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          16793725942481301420,
+          1940717568,
+          2790391808
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 18079910346542232523,
+            "status": 1947041843
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 267273391395228104,
+            "status": 1553224311
+          },
+          {
+            "pointer": 202312785825892560,
+            "status": 2069936411
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 12928501526516334416,
+            "status": 603235338
+          },
+          {
+            "pointer": 13337666307128832624,
+            "status": 3271192917
+          },
+          {
+            "pointer": 11887144027609009341,
+            "status": 3226179653
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 163178622351608352,
+            "status": 4145371849
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          163178622351608352
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          163178622351608352
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 8862259243867887472,
+            "status": 2164088318
+          },
+          {
+            "pointer": 504943941913437507,
+            "status": 241196886
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          8862259243867887472,
+          0
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          8862259243867887472,
+          0
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 16069292979033929972,
+            "status": 1712608421
+          },
+          {
+            "pointer": 11618424034122572134,
+            "status": 1173868327
+          },
+          {
+            "pointer": 12046329597586545862,
+            "status": 3719105885
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          16069292979033929972,
+          11618424034122572134,
+          12046329597586545862
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          16069292979033929972,
+          11618424034122572134,
+          12046329597586545862
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 17803704167478444357,
+            "status": 3238161904
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10317223495862659754,
+            "status": 4007630471
+          },
+          {
+            "pointer": 14930581717133269131,
+            "status": 3871590611
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 340470444722202154,
+            "status": 3046030301
+          },
+          {
+            "pointer": 6687394557788978980,
+            "status": 4239345276
+          },
+          {
+            "pointer": 3470669232355993096,
+            "status": 3813031203
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 14271470793944911405,
+            "status": 2584101336
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          14271470793944911405
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          14271470793944911405
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 11660768098046321661,
+            "status": 3737354204
+          },
+          {
+            "pointer": 9874546930561778471,
+            "status": 1930677725
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          11660768098046321661,
+          2718892032
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          11660768098046321661,
+          2718892032
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15504988362520898610,
+            "status": 275367485
+          },
+          {
+            "pointer": 15787102944764998406,
+            "status": 1226579174
+          },
+          {
+            "pointer": 14230429519027018785,
+            "status": 2420779328
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          0,
+          0,
+          14230429519027018785
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          0,
+          14230429519027018785
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 11902425781450698358,
+            "status": 2755762577
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 12723049196576804363,
+            "status": 2522060837
+          },
+          {
+            "pointer": 14149932919445679784,
+            "status": 2581613769
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10515512282368050599,
+            "status": 1109775521
+          },
+          {
+            "pointer": 12811356233025638218,
+            "status": 986773837
+          },
+          {
+            "pointer": 5226648306434306309,
+            "status": 1854352982
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 5656323470370134955,
+            "status": 886891769
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          0
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 13432605370375442855,
+            "status": 2558839796
+          },
+          {
+            "pointer": 11764416777386620752,
+            "status": 290605694
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          13432605370375442855,
+          11764416777386620752
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          13432605370375442855,
+          11764416777386620752
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 16463755354996522577,
+            "status": 1023487234
+          },
+          {
+            "pointer": 8397246345415694403,
+            "status": 3535589818
+          },
+          {
+            "pointer": 13731775817986960032,
+            "status": 2906036781
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          1132462080,
+          8397246345415694403,
+          13731775817986960032
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          1132462080,
+          8397246345415694403,
+          13731775817986960032
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10163091233454044071,
+            "status": 1376356060
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 10129813864266489654,
+            "status": 1252184453
+          },
+          {
+            "pointer": 8162940436508595212,
+            "status": 3443240977
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 17658939705536331484,
+            "status": 2444202585
+          },
+          {
+            "pointer": 15841980646050335241,
+            "status": 2340546591
+          },
+          {
+            "pointer": 5540679613218709116,
+            "status": 2082059758
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 9540136228162860630,
+            "status": 2392027813
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          9540136228162860630
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          9540136228162860630
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 14059489780100314438,
+            "status": 3177515447
+          },
+          {
+            "pointer": 7907999432303767609,
+            "status": 3870619511
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          14059489780100314438,
+          7907999432303767609
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          14059489780100314438,
+          7907999432303767609
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 4668802876027416325,
+            "status": 1179831732
+          },
+          {
+            "pointer": 13660461843567455640,
+            "status": 284553926
+          },
+          {
+            "pointer": 5182229479020803789,
+            "status": 1680018399
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": []
+      },
+      "result": {
+        "values": [
+          4668802876027416325,
+          13660461843567455640,
+          5182229479020803789
+        ],
+        "rebuilt": true,
+        "lock_requested": true,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          4668802876027416325,
+          13660461843567455640,
+          5182229479020803789
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 1606517057781007285,
+            "status": 4981055
+          }
+        ],
+        "thread_mask": 0,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744073709551615,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 15927076812837935123,
+            "status": 824122235
+          },
+          {
+            "pointer": 1685654651723904625,
+            "status": 1026741601
+          }
+        ],
+        "thread_mask": 18446744073709551615,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 0,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    },
+    {
+      "inputs": {
+        "records": [
+          {
+            "pointer": 7779727181468729143,
+            "status": 4005487050
+          },
+          {
+            "pointer": 12378698067927813000,
+            "status": 392452311
+          },
+          {
+            "pointer": 16812955208568838124,
+            "status": 577524962
+          }
+        ],
+        "thread_mask": 4294901760,
+        "cached_values": [
+          0,
+          123
+        ]
+      },
+      "result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      },
+      "second_mask": 18446744069414649855,
+      "second_result": {
+        "values": [
+          0,
+          123
+        ],
+        "rebuilt": false,
+        "lock_requested": false,
+        "lifetime_retained": false
+      }
+    }
+  ]
+}

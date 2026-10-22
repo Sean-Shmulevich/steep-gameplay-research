@@ -113,6 +113,23 @@ def evaluate_pose(rig,clips,state,dt,definition,inputs):
                 if space!=other_space:raise ValueError('Pose space mismatch')
                 pose=pose_blend(pose,other,weight)
             contexts[key]={'left':left,'right':right,'weight':weight}
+        elif kind in ('byte_blend','byte_additive','byte_mask'):
+            from .pose_bank_adapter import blend_pose
+            first,space=visit(node['base'])
+            second,other_space=visit(node['delta' if kind=='byte_additive' else 'overlay'])
+            if kind=='byte_additive':
+                if space!='local' or other_space!='delta':
+                    raise ValueError('Byte additive expects local base and delta layer')
+            elif space!=other_space:raise ValueError('Pose space mismatch')
+            mask_bytes=None
+            if kind=='byte_mask':
+                unknown=set(node['bytes'])-{b['name'] for b in rig['bones']}
+                missing_masks.extend(sorted(unknown))
+                mask_bytes=[node['bytes'].get(b['name'],0) for b in rig['bones']]
+            pose,contexts[key]=blend_pose(first,second,float(scalar(node['weight'])),
+                                         normalization=node['normalization'],
+                                         operation={'byte_blend':'regular','byte_additive':'additive','byte_mask':'masked'}[kind],
+                                         mask_bytes=mask_bytes)
         elif kind=='additive':
             base,space=visit(node['base']);delta,delta_space=visit(node['delta']);weight=scalar(node.get('weight',1.))
             if space!='local' or delta_space!='delta':raise ValueError('Additive expects local base and delta layer')
@@ -164,6 +181,15 @@ def validate_definition(definition,clips):
             edges[name]=children
             values=node.get('weights' if kind=='blend' else 'knots')
             if not isinstance(values,list) or len(values)!=len(children):raise ValueError('Child parameter count mismatch')
+        elif kind in ('byte_blend','byte_additive','byte_mask'):
+            if node.get('normalization')!='authored_exact_sqrt':
+                raise ValueError('byte_blend requires explicit authored_exact_sqrt normalization')
+            if 'weight' not in node:raise ValueError('byte_blend requires explicit weight')
+            if kind=='byte_mask':
+                mask=node.get('bytes')
+                if not isinstance(mask,dict) or any(not isinstance(k,str) or type(v) is not int or not 0<=v<=255 for k,v in mask.items()):
+                    raise ValueError('byte_mask requires named byte weights')
+            edges[name]=[node.get('base'),node.get('delta' if kind=='byte_additive' else 'overlay')]
         elif kind=='additive':edges[name]=[node.get('base'),node.get('delta')]
         elif kind=='mask':edges[name]=[node.get('base'),node.get('overlay')]
         elif kind=='select':edges[name]=[node.get('if_true'),node.get('if_false')]

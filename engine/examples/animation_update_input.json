@@ -1,0 +1,17 @@
+{
+  "schema": "animation-update-input-v1",
+  "records": [[[8,0,0,1],[0,0,0,1]]],
+  "indices": [0,0],
+  "saved": [[[0,0,0,1],[0,0,0,1]],[[0,0,0,1],[0,0,0,1]]],
+  "parent_position": null,
+  "parent_rotation": null,
+  "direct": true,
+  "elapsed": 0,
+  "duration": 1,
+  "dt": 0.5,
+  "bank_flags": 67108864,
+  "saved_flag": 0,
+  "bank_present": true,
+  "context": null,
+  "numerics": {"rsqrt":"exact_rsqrt_substitute","trig":"host_math_substitute"}
+}

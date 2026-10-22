@@ -1,0 +1,8132 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "world_fold_cases": 128,
+  "step_registration_edges": 3,
+  "wrappers": {
+    "w0": [
+      "w0.entry",
+      "w0.end"
+    ],
+    "w1": [
+      "w1.entry",
+      "w1.end"
+    ],
+    "w2": [
+      "w2.entry",
+      "w2.end"
+    ]
+  },
+  "scope": "Complete skeleton world-fold span plus actual adapter/wrapper-link helper. Locks, clears and registration effects stubbed on inactive synthetic lists. Step registration slice separately checked with volatile clobbering. Full Step execution, active alternate release and concurrent world lifetime not validated.",
+  "rows": [
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          3839335574
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2828655251
+        ],
+        [
+          "w0",
+          1981050934
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1989870584
+        ],
+        [
+          "w0",
+          4146325907
+        ],
+        [
+          null,
+          1467510445
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          165169164
+        ],
+        [
+          "w1",
+          389042536
+        ],
+        [
+          "w1",
+          1062803010
+        ],
+        [
+          null,
+          1335773840
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1140579397
+        ],
+        [
+          "w0",
+          4268448052
+        ],
+        [
+          "w1",
+          63866989
+        ],
+        [
+          null,
+          2034079913
+        ],
+        [
+          "w0",
+          1927042073
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3782859645
+        ],
+        [
+          null,
+          3105190184
+        ],
+        [
+          "w1",
+          1101889442
+        ],
+        [
+          null,
+          3092303
+        ],
+        [
+          "w2",
+          3120434944
+        ],
+        [
+          "w0",
+          957923876
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1753171113
+        ],
+        [
+          "w0",
+          1932397644
+        ],
+        [
+          "w2",
+          1774208728
+        ],
+        [
+          "w2",
+          26828385
+        ],
+        [
+          "w1",
+          1606216216
+        ],
+        [
+          "w2",
+          2635372928
+        ],
+        [
+          "w1",
+          3321312921
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          1707717260
+        ],
+        [
+          "w0",
+          989269131
+        ],
+        [
+          "w1",
+          1620428347
+        ],
+        [
+          "w2",
+          607954396
+        ],
+        [
+          "w2",
+          2676864651
+        ],
+        [
+          "w2",
+          2289276285
+        ],
+        [
+          "w0",
+          1688933264
+        ],
+        [
+          "w1",
+          3453398272
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w2",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w2.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w2.entry",
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          2590438612
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          142518746
+        ],
+        [
+          "w2",
+          1662082705
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1269980071
+        ],
+        [
+          "w2",
+          2967336582
+        ],
+        [
+          "w0",
+          232661419
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1291438271
+        ],
+        [
+          "w2",
+          198324917
+        ],
+        [
+          "w1",
+          512895059
+        ],
+        [
+          "w2",
+          2722497355
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          622530898
+        ],
+        [
+          "w1",
+          1659788444
+        ],
+        [
+          "w1",
+          1836513267
+        ],
+        [
+          "w1",
+          1957135689
+        ],
+        [
+          null,
+          3126383610
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          883417134
+        ],
+        [
+          "w0",
+          3458150429
+        ],
+        [
+          "w0",
+          1904762979
+        ],
+        [
+          "w0",
+          2370786160
+        ],
+        [
+          "w1",
+          626370804
+        ],
+        [
+          "w2",
+          2074654181
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w0.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          1068103792
+        ],
+        [
+          null,
+          2176845463
+        ],
+        [
+          "w2",
+          1838603439
+        ],
+        [
+          null,
+          2333091490
+        ],
+        [
+          null,
+          2456596192
+        ],
+        [
+          "w0",
+          3936004653
+        ],
+        [
+          "w1",
+          3647176708
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w0",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w1.entry"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          729533281
+        ],
+        [
+          "w1",
+          3661002099
+        ],
+        [
+          null,
+          1466024168
+        ],
+        [
+          "w0",
+          3626808973
+        ],
+        [
+          "w2",
+          2382103884
+        ],
+        [
+          null,
+          3255536111
+        ],
+        [
+          "w1",
+          421032410
+        ],
+        [
+          "w2",
+          77423324
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w1",
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3875540203
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          807814727
+        ],
+        [
+          "w2",
+          1652817882
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          3299480738
+        ],
+        [
+          null,
+          2049935684
+        ],
+        [
+          null,
+          1117095662
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          1494660492
+        ],
+        [
+          null,
+          2481673788
+        ],
+        [
+          "w2",
+          2907471359
+        ],
+        [
+          "w0",
+          44990518
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1927524817
+        ],
+        [
+          "w0",
+          3613250665
+        ],
+        [
+          "w0",
+          127444353
+        ],
+        [
+          null,
+          3060807732
+        ],
+        [
+          null,
+          3334837726
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          4202200119
+        ],
+        [
+          "w0",
+          4127638244
+        ],
+        [
+          "w2",
+          1389735292
+        ],
+        [
+          "w1",
+          3078288800
+        ],
+        [
+          null,
+          3745361598
+        ],
+        [
+          "w2",
+          1778445225
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w0.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "w1.entry"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1275851462
+        ],
+        [
+          "w1",
+          3045045097
+        ],
+        [
+          "w2",
+          1227424770
+        ],
+        [
+          "w0",
+          2997864247
+        ],
+        [
+          null,
+          491942252
+        ],
+        [
+          "w0",
+          590214451
+        ],
+        [
+          "w2",
+          436726097
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w1",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2218502038
+        ],
+        [
+          "w2",
+          2926688632
+        ],
+        [
+          null,
+          1510564122
+        ],
+        [
+          "w2",
+          1635347329
+        ],
+        [
+          "w2",
+          2482058832
+        ],
+        [
+          "w0",
+          1691328113
+        ],
+        [
+          "w1",
+          3705326133
+        ],
+        [
+          "w0",
+          2856358009
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w2",
+          "w2",
+          "w1",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w2.end",
+          "w2.end",
+          "w1.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [
+            "w2.entry",
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1700073489
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          157494942
+        ],
+        [
+          "w0",
+          3398524132
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3617795794
+        ],
+        [
+          null,
+          2912067579
+        ],
+        [
+          "w1",
+          3182885184
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "w1.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          96440206
+        ],
+        [
+          "w2",
+          2115079704
+        ],
+        [
+          "w0",
+          561097248
+        ],
+        [
+          "w1",
+          343234308
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          2088173647
+        ],
+        [
+          "w1",
+          1642177562
+        ],
+        [
+          "w2",
+          1013257673
+        ],
+        [
+          "w1",
+          994806671
+        ],
+        [
+          "w2",
+          2623278200
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          667923952
+        ],
+        [
+          null,
+          4185313855
+        ],
+        [
+          "w2",
+          2206597750
+        ],
+        [
+          null,
+          4277803282
+        ],
+        [
+          null,
+          2597659455
+        ],
+        [
+          "w0",
+          3721189283
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          3482543157
+        ],
+        [
+          "w0",
+          2715800964
+        ],
+        [
+          "w2",
+          2133384487
+        ],
+        [
+          "w0",
+          764709726
+        ],
+        [
+          null,
+          3390009688
+        ],
+        [
+          null,
+          1328115522
+        ],
+        [
+          null,
+          4231385193
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          3030889237
+        ],
+        [
+          "w0",
+          3609940515
+        ],
+        [
+          "w1",
+          2431006816
+        ],
+        [
+          null,
+          4276068878
+        ],
+        [
+          "w2",
+          807213309
+        ],
+        [
+          "w0",
+          3868023472
+        ],
+        [
+          "w0",
+          3361514
+        ],
+        [
+          "w2",
+          2156464063
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2",
+          "w0",
+          "w1",
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end",
+          "w1.end",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          28230036
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          347891008
+        ],
+        [
+          "w2",
+          1312773755
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2171028388
+        ],
+        [
+          "w0",
+          2478997879
+        ],
+        [
+          "w2",
+          706003796
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3277279093
+        ],
+        [
+          "w0",
+          4044452994
+        ],
+        [
+          "w2",
+          1112390857
+        ],
+        [
+          "w1",
+          2104406552
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w1",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          4280557081
+        ],
+        [
+          "w1",
+          987557691
+        ],
+        [
+          "w2",
+          3433213448
+        ],
+        [
+          "w0",
+          1084750737
+        ],
+        [
+          "w0",
+          2950558908
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w1",
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w2.entry"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          3179697071
+        ],
+        [
+          "w2",
+          770126063
+        ],
+        [
+          "w0",
+          1017026210
+        ],
+        [
+          "w0",
+          3342347422
+        ],
+        [
+          "w2",
+          1078743393
+        ],
+        [
+          null,
+          1044833449
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          2677064511
+        ],
+        [
+          "w1",
+          522243429
+        ],
+        [
+          "w0",
+          2272244849
+        ],
+        [
+          "w1",
+          2514974304
+        ],
+        [
+          "w0",
+          1165527432
+        ],
+        [
+          "w2",
+          799006876
+        ],
+        [
+          "w0",
+          2152774293
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w1",
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w0.end",
+          "w1.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          2271552
+        ],
+        [
+          "w0",
+          1737310147
+        ],
+        [
+          "w0",
+          302120344
+        ],
+        [
+          null,
+          1358300516
+        ],
+        [
+          "w1",
+          1005918976
+        ],
+        [
+          "w2",
+          1136189141
+        ],
+        [
+          "w2",
+          3275586736
+        ],
+        [
+          null,
+          2006241051
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          588604553
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3627724392
+        ],
+        [
+          null,
+          120739045
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          1187806469
+        ],
+        [
+          "w0",
+          557726298
+        ],
+        [
+          "w0",
+          3965981935
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          2092304994
+        ],
+        [
+          "w0",
+          3494603077
+        ],
+        [
+          null,
+          1808474350
+        ],
+        [
+          "w1",
+          628988839
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3646328278
+        ],
+        [
+          "w1",
+          2305016817
+        ],
+        [
+          "w0",
+          3516128477
+        ],
+        [
+          null,
+          1560169615
+        ],
+        [
+          "w0",
+          19492555
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w1",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w1.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          852694411
+        ],
+        [
+          "w1",
+          2076822692
+        ],
+        [
+          null,
+          770522183
+        ],
+        [
+          "w2",
+          4191331109
+        ],
+        [
+          "w1",
+          3115953095
+        ],
+        [
+          "w2",
+          167273146
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          2416584808
+        ],
+        [
+          "w0",
+          186772210
+        ],
+        [
+          "w0",
+          318490752
+        ],
+        [
+          null,
+          3168168035
+        ],
+        [
+          "w0",
+          2455445336
+        ],
+        [
+          null,
+          3835572881
+        ],
+        [
+          null,
+          159694688
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2493296797
+        ],
+        [
+          "w2",
+          815816609
+        ],
+        [
+          "w1",
+          483850473
+        ],
+        [
+          "w2",
+          709086736
+        ],
+        [
+          null,
+          4154336296
+        ],
+        [
+          null,
+          1588129913
+        ],
+        [
+          null,
+          4151775031
+        ],
+        [
+          "w0",
+          2703452827
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          2535935492
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          4174997571
+        ],
+        [
+          "w0",
+          3794913189
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1472617384
+        ],
+        [
+          "w0",
+          1335168194
+        ],
+        [
+          "w2",
+          3190579910
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          3468303305
+        ],
+        [
+          "w2",
+          3677557621
+        ],
+        [
+          "w0",
+          3356734944
+        ],
+        [
+          null,
+          3507523716
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w2.entry",
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2776226707
+        ],
+        [
+          "w0",
+          1800631707
+        ],
+        [
+          "w2",
+          718900301
+        ],
+        [
+          null,
+          3806850353
+        ],
+        [
+          "w1",
+          4118253227
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          865843561
+        ],
+        [
+          null,
+          3390914055
+        ],
+        [
+          "w0",
+          3689826383
+        ],
+        [
+          "w2",
+          1142558101
+        ],
+        [
+          "w2",
+          2509907386
+        ],
+        [
+          "w0",
+          4087117269
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3233125676
+        ],
+        [
+          "w2",
+          3991555916
+        ],
+        [
+          null,
+          3239905551
+        ],
+        [
+          "w0",
+          3206313253
+        ],
+        [
+          "w0",
+          1140543515
+        ],
+        [
+          "w0",
+          1574135806
+        ],
+        [
+          "w1",
+          634850107
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1433191120
+        ],
+        [
+          null,
+          1499792529
+        ],
+        [
+          "w2",
+          128657353
+        ],
+        [
+          "w2",
+          3193195492
+        ],
+        [
+          null,
+          1600506068
+        ],
+        [
+          null,
+          3957473470
+        ],
+        [
+          "w1",
+          2633902098
+        ],
+        [
+          "w1",
+          535765680
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2152503285
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          3085582465
+        ],
+        [
+          "w0",
+          3031341820
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2070329571
+        ],
+        [
+          null,
+          1847505712
+        ],
+        [
+          null,
+          848890612
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          644574312
+        ],
+        [
+          "w2",
+          876576830
+        ],
+        [
+          "w2",
+          2016162879
+        ],
+        [
+          "w1",
+          4237610694
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          4165526447
+        ],
+        [
+          null,
+          1384003968
+        ],
+        [
+          "w2",
+          1556747248
+        ],
+        [
+          null,
+          3514801523
+        ],
+        [
+          "w0",
+          2253476112
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3303801860
+        ],
+        [
+          "w2",
+          703142824
+        ],
+        [
+          "w0",
+          4057013737
+        ],
+        [
+          "w2",
+          1457643962
+        ],
+        [
+          "w0",
+          549310278
+        ],
+        [
+          "w0",
+          74974309
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w0.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3865050189
+        ],
+        [
+          "w1",
+          2377793272
+        ],
+        [
+          "w2",
+          1188613190
+        ],
+        [
+          "w1",
+          3142085690
+        ],
+        [
+          "w2",
+          967138498
+        ],
+        [
+          "w0",
+          3137339101
+        ],
+        [
+          "w1",
+          3830629003
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w0",
+          "w1",
+          "w1",
+          "w0",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w1.end",
+          "w1.end",
+          "w0.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w1.entry"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3845307605
+        ],
+        [
+          null,
+          4006290162
+        ],
+        [
+          "w2",
+          3811296138
+        ],
+        [
+          "w2",
+          1729791595
+        ],
+        [
+          "w0",
+          2949841129
+        ],
+        [
+          "w2",
+          399150647
+        ],
+        [
+          "w0",
+          2988262163
+        ],
+        [
+          "w0",
+          3244931527
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w2",
+          "w0",
+          "w0",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end",
+          "w0.end",
+          "w0.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w0.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3859149623
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3172461534
+        ],
+        [
+          "w0",
+          2469182548
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w0.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1563512450
+        ],
+        [
+          "w0",
+          361735224
+        ],
+        [
+          null,
+          3106732342
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          1287526689
+        ],
+        [
+          "w2",
+          2577312421
+        ],
+        [
+          "w0",
+          3026864693
+        ],
+        [
+          null,
+          3102855727
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          360157830
+        ],
+        [
+          "w0",
+          2527175138
+        ],
+        [
+          "w0",
+          896431018
+        ],
+        [
+          "w2",
+          1049824148
+        ],
+        [
+          "w2",
+          3639929275
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          905477111
+        ],
+        [
+          "w0",
+          1515768219
+        ],
+        [
+          "w0",
+          3719757269
+        ],
+        [
+          "w2",
+          2116737434
+        ],
+        [
+          "w2",
+          3826401981
+        ],
+        [
+          "w2",
+          4258551304
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w0",
+          "w2",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w2.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1858207626
+        ],
+        [
+          null,
+          3810768834
+        ],
+        [
+          "w1",
+          176980121
+        ],
+        [
+          "w1",
+          2009622800
+        ],
+        [
+          "w0",
+          33827993
+        ],
+        [
+          "w0",
+          1275885978
+        ],
+        [
+          "w2",
+          887468183
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          849158587
+        ],
+        [
+          null,
+          1427580614
+        ],
+        [
+          "w2",
+          308067022
+        ],
+        [
+          "w1",
+          440855627
+        ],
+        [
+          "w0",
+          3292397373
+        ],
+        [
+          "w1",
+          902139285
+        ],
+        [
+          "w1",
+          1527027184
+        ],
+        [
+          null,
+          1402017862
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2614335466
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          3958188719
+        ],
+        [
+          "w1",
+          2298385208
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3584762269
+        ],
+        [
+          "w2",
+          2440555170
+        ],
+        [
+          "w1",
+          516486359
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3874864011
+        ],
+        [
+          null,
+          3164323016
+        ],
+        [
+          "w2",
+          2926788718
+        ],
+        [
+          "w0",
+          1940203931
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1532957396
+        ],
+        [
+          "w2",
+          929906340
+        ],
+        [
+          "w0",
+          2002223121
+        ],
+        [
+          null,
+          495364916
+        ],
+        [
+          "w0",
+          2396534065
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          277603997
+        ],
+        [
+          null,
+          482195714
+        ],
+        [
+          "w2",
+          319786953
+        ],
+        [
+          "w1",
+          894098282
+        ],
+        [
+          "w1",
+          3638594896
+        ],
+        [
+          "w1",
+          1317979208
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          3417677298
+        ],
+        [
+          "w1",
+          3845498853
+        ],
+        [
+          "w0",
+          3273040433
+        ],
+        [
+          "w0",
+          84118369
+        ],
+        [
+          null,
+          3251746239
+        ],
+        [
+          "w2",
+          3576095623
+        ],
+        [
+          null,
+          598100101
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2",
+          "w1",
+          "w0",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w1.end",
+          "w0.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "w2.entry"
+          ],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          1973819346
+        ],
+        [
+          null,
+          2006493661
+        ],
+        [
+          "w1",
+          1008866306
+        ],
+        [
+          null,
+          3338309289
+        ],
+        [
+          null,
+          4264314027
+        ],
+        [
+          "w1",
+          3122166640
+        ],
+        [
+          "w2",
+          4251142188
+        ],
+        [
+          null,
+          3802708604
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w1",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "w2.entry"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3008326144
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          788969082
+        ],
+        [
+          null,
+          1480190342
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1167281471
+        ],
+        [
+          null,
+          3854145645
+        ],
+        [
+          "w1",
+          3998367508
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          1925707280
+        ],
+        [
+          null,
+          3951687180
+        ],
+        [
+          "w0",
+          6178380
+        ],
+        [
+          null,
+          2613408124
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          629856136
+        ],
+        [
+          "w0",
+          4008363282
+        ],
+        [
+          null,
+          2612760400
+        ],
+        [
+          "w2",
+          1264027314
+        ],
+        [
+          null,
+          2838177836
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          2237768644
+        ],
+        [
+          "w1",
+          3434007191
+        ],
+        [
+          "w0",
+          958991019
+        ],
+        [
+          null,
+          2163441107
+        ],
+        [
+          "w0",
+          1862984141
+        ],
+        [
+          "w0",
+          1373790936
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "w1.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          2715736121
+        ],
+        [
+          "w0",
+          1617365251
+        ],
+        [
+          "w2",
+          2954186376
+        ],
+        [
+          "w2",
+          945389923
+        ],
+        [
+          "w2",
+          3973819129
+        ],
+        [
+          null,
+          2979500198
+        ],
+        [
+          null,
+          4011335056
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w2.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3196464842
+        ],
+        [
+          "w0",
+          4067578435
+        ],
+        [
+          "w0",
+          3239484896
+        ],
+        [
+          "w0",
+          2831865205
+        ],
+        [
+          "w0",
+          3370011090
+        ],
+        [
+          "w0",
+          2937906010
+        ],
+        [
+          "w0",
+          430542122
+        ],
+        [
+          "w0",
+          2840990155
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w0",
+          "w0",
+          "w0",
+          "w0",
+          "w0",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w0.end",
+          "w0.end",
+          "w0.end",
+          "w0.end",
+          "w0.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w0.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          3798697710
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          2859408660
+        ],
+        [
+          null,
+          3664112218
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2436262745
+        ],
+        [
+          null,
+          1774677002
+        ],
+        [
+          null,
+          2611841266
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          457734112
+        ],
+        [
+          "w0",
+          2624043405
+        ],
+        [
+          "w2",
+          17170608
+        ],
+        [
+          null,
+          1906172659
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          867005648
+        ],
+        [
+          "w0",
+          3785468461
+        ],
+        [
+          "w1",
+          1576237144
+        ],
+        [
+          null,
+          1460994152
+        ],
+        [
+          "w0",
+          103979378
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          2809552342
+        ],
+        [
+          "w0",
+          2719820220
+        ],
+        [
+          null,
+          1428274175
+        ],
+        [
+          "w0",
+          3125358284
+        ],
+        [
+          null,
+          3904110798
+        ],
+        [
+          "w0",
+          2749553237
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0",
+          "w0",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end",
+          "w0.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [
+            "w0.entry"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          3778071583
+        ],
+        [
+          "w1",
+          2090549106
+        ],
+        [
+          "w1",
+          305159799
+        ],
+        [
+          "w2",
+          2944581427
+        ],
+        [
+          "w2",
+          3986884624
+        ],
+        [
+          "w2",
+          2796203898
+        ],
+        [
+          "w0",
+          2250759612
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w2",
+          "w2",
+          "w2",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w2.end",
+          "w2.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w2.entry",
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          1278807803
+        ],
+        [
+          null,
+          2883296432
+        ],
+        [
+          "w1",
+          940585741
+        ],
+        [
+          "w2",
+          3765051544
+        ],
+        [
+          null,
+          1089283412
+        ],
+        [
+          "w2",
+          3455735435
+        ],
+        [
+          "w2",
+          2146184178
+        ],
+        [
+          null,
+          4290821512
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "w2.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          320741333
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1303813643
+        ],
+        [
+          "w0",
+          51282405
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          569240913
+        ],
+        [
+          null,
+          3503251443
+        ],
+        [
+          "w2",
+          3085769480
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          785216880
+        ],
+        [
+          null,
+          2280047314
+        ],
+        [
+          "w1",
+          2044202571
+        ],
+        [
+          "w0",
+          2928551878
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w0.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3181942292
+        ],
+        [
+          "w2",
+          1820507665
+        ],
+        [
+          "w2",
+          3642186365
+        ],
+        [
+          "w0",
+          182163969
+        ],
+        [
+          "w2",
+          133284012
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w1",
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "w2.entry"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          3925095675
+        ],
+        [
+          "w0",
+          1162956052
+        ],
+        [
+          "w1",
+          1717714533
+        ],
+        [
+          "w0",
+          1883232046
+        ],
+        [
+          "w2",
+          3161370126
+        ],
+        [
+          "w0",
+          1985469911
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          431501724
+        ],
+        [
+          "w2",
+          3194430159
+        ],
+        [
+          "w1",
+          760715841
+        ],
+        [
+          "w1",
+          233382693
+        ],
+        [
+          null,
+          1011765845
+        ],
+        [
+          "w0",
+          552304057
+        ],
+        [
+          "w1",
+          1776511889
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3468064353
+        ],
+        [
+          null,
+          3442958175
+        ],
+        [
+          null,
+          1656173779
+        ],
+        [
+          "w0",
+          676624855
+        ],
+        [
+          "w1",
+          1303908813
+        ],
+        [
+          "w2",
+          965627934
+        ],
+        [
+          null,
+          919341043
+        ],
+        [
+          "w0",
+          1533008325
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          1468202613
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          1622349575
+        ],
+        [
+          "w2",
+          64771486
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          1701625890
+        ],
+        [
+          "w1",
+          2674149732
+        ],
+        [
+          "w1",
+          2576080563
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "w1.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          4099358919
+        ],
+        [
+          "w2",
+          1238272060
+        ],
+        [
+          "w1",
+          390565827
+        ],
+        [
+          null,
+          2820767218
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w2.end",
+        "eligible_worlds": [
+          "w2"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          null,
+          743150330
+        ],
+        [
+          "w1",
+          613115952
+        ],
+        [
+          "w2",
+          513542675
+        ],
+        [
+          "w1",
+          1379090657
+        ],
+        [
+          "w1",
+          34775911
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          1430606308
+        ],
+        [
+          null,
+          462877653
+        ],
+        [
+          null,
+          1869543697
+        ],
+        [
+          "w2",
+          4225014023
+        ],
+        [
+          null,
+          2199944286
+        ],
+        [
+          "w1",
+          2201461487
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w1.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w2",
+          2986084547
+        ],
+        [
+          "w0",
+          1679107646
+        ],
+        [
+          "w0",
+          3912165363
+        ],
+        [
+          null,
+          3040419538
+        ],
+        [
+          "w1",
+          3681613187
+        ],
+        [
+          "w1",
+          1323389916
+        ],
+        [
+          "w2",
+          1762896423
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w2",
+          "w0",
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w2.end",
+          "w0.end",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w2.entry"
+          ],
+          "w0.end": [
+            "w1.entry"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "w0.entry"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w0",
+          549768936
+        ],
+        [
+          null,
+          2259911772
+        ],
+        [
+          "w1",
+          1657435315
+        ],
+        [
+          null,
+          13439242
+        ],
+        [
+          "w1",
+          3532372403
+        ],
+        [
+          "w1",
+          4581463
+        ],
+        [
+          "w0",
+          3112542291
+        ],
+        [
+          "w0",
+          467256764
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w0.end",
+        "eligible_worlds": [
+          "w1",
+          "w0"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end",
+          "w0.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [],
+          "w1.end": [
+            "w0.entry"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "seed",
+        "eligible_worlds": [],
+        "cleared": [
+          "seed"
+        ],
+        "outgoing": {
+          "seed": [],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [
+            "old-1"
+          ],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    },
+    {
+      "handles": [
+        [
+          "w1",
+          3289152876
+        ]
+      ],
+      "initial": {
+        "seed": [
+          "old-seed"
+        ],
+        "w0.end": [
+          "old-0"
+        ],
+        "w1.end": [
+          "old-1"
+        ],
+        "w2.end": [
+          "old-2"
+        ],
+        "unrelated": [
+          "keep"
+        ]
+      },
+      "result": {
+        "tail": "w1.end",
+        "eligible_worlds": [
+          "w1"
+        ],
+        "cleared": [
+          "seed",
+          "w1.end"
+        ],
+        "outgoing": {
+          "seed": [
+            "w1.entry"
+          ],
+          "w0.end": [
+            "old-0"
+          ],
+          "w1.end": [],
+          "w2.end": [
+            "old-2"
+          ],
+          "unrelated": [
+            "keep"
+          ]
+        },
+        "active_release_modeled": false
+      }
+    }
+  ]
+}

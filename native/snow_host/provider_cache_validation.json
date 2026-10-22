@@ -1,0 +1,2061 @@
+{
+  "evidence": "original_instruction_emulation",
+  "inputs": "synthetic",
+  "game_process": false,
+  "cases": 108,
+  "scope": "full getter, cache gate and refresh writeback; only virtual type-search callback supplied; no live component lifetime or lookup algorithm validation",
+  "rows": [
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 0,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 0,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 1,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 1,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": false,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": false,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": true,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 0,
+        "refreshed": true,
+        "component": "a"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65534,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 2,
+        "refreshed": true,
+        "component": "c"
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": null,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 0,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    },
+    {
+      "inputs": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "entity_tag": 255,
+        "components": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "lookup_result": 2,
+      "result": {
+        "cached_tag": 255,
+        "cached_index": 65535,
+        "refreshed": false,
+        "component": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "evidence": "hash-matched image type bindings and original-instruction emulation",
+  "bindings": [
+    {
+      "type_name": "SpawnPositionPlayerParams",
+      "constructor_table_getter_descriptor_cycle": true,
+      "publish_slot": 25
+    },
+    {
+      "type_name": "SpawnPositionVolumeParams",
+      "constructor_table_getter_descriptor_cycle": true,
+      "publish_slot": 25
+    }
+  ],
+  "cases": 4,
+  "rows": [
+    {
+      "initial_state": 0,
+      "events": [
+        "prepare",
+        "publish",
+        "publish_state_73"
+      ],
+      "final_state": 0
+    },
+    {
+      "initial_state": 1,
+      "events": [
+        "publish",
+        "publish_state_1"
+      ],
+      "final_state": 0
+    },
+    {
+      "initial_state": 2147483648,
+      "events": [
+        "publish",
+        "publish_state_2147483648"
+      ],
+      "final_state": 0
+    },
+    {
+      "initial_state": 4294967295,
+      "events": [
+        "publish",
+        "publish_state_4294967295"
+      ],
+      "final_state": 0
+    }
+  ],
+  "scope": "Volume publication wrapper only; preparation and transform publisher intercepted",
+  "live_dispatch_observed": false,
+  "physics_update_boundary_established": false
+}

@@ -1,0 +1,3824 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 192,
+  "scope": "Original writer admission, reader drain test, publication descriptor and normal release segment. Thread ID and entity virtual publication intercepted. Synthetic interleaving at atomic add; waits stop at pause. Some owner/depth combinations are arithmetic probes, not claimed reachable engine states.",
+  "samples": [
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918720,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918720,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918720,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918720,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918720,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918720,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 0,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918723,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918723,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918723,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918723,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918723,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 4293918723,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 3,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 3,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 3,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 3,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 3,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 3,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 3,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 0,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 1048576,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2148532224,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2148532224,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2146435072,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2146435072,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2146435072,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2146435072,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2146435072,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2146435072,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 7,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2147483648,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2148532224,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2148532224,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": false,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 1,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2147483648,
+        "owner_after": 4294967295,
+        "depth_after": 0,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 1,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 0,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 0,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2148532224,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 3,
+          "flags": 0
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 0,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "published",
+        "count_after": 2148532224,
+        "owner_after": 7,
+        "depth_after": 2,
+        "publication": {
+          "count": 2148532224,
+          "owner": 7,
+          "depth": 3,
+          "flags": 29
+        }
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_after": 1048576,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483648,
+        "owner": 8,
+        "current_thread": 7,
+        "owner_active": true,
+        "depth": 2,
+        "event_flags": 31,
+        "atomic_count": 3
+      },
+      "result": {
+        "outcome": "wait_readers",
+        "count_after": 1048579,
+        "owner_after": 8,
+        "depth_after": 2,
+        "publication": null
+      }
+    }
+  ]
+}

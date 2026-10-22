@@ -47,6 +47,8 @@ def make_server(port=8771, scenario=None):
         def do_GET(self):
             if self.path == '/state':
                 self.send(controller.snapshot())
+            elif self.path == '/state?trace=summary':
+                self.send(controller.snapshot(include_trace=False))
             elif self.path == '/checkpoint':
                 self.send(controller.checkpoint())
             elif self.path == '/replay':
@@ -66,6 +68,7 @@ def make_server(port=8771, scenario=None):
                                          f'http://localhost:{self.server.server_port}'):
                 self.send(dict(error='Cross-origin mutation rejected'), 403)
                 return
+            include_trace = True
             try:
                 length = int(self.headers.get('Content-Length', '0'))
                 if not 0 < length <= 2_000_000:
@@ -73,6 +76,10 @@ def make_server(port=8771, scenario=None):
                 request = json.loads(self.rfile.read(length))
                 if not isinstance(request, dict):
                     raise ValueError('command must be an object')
+                requested_trace = request.get('include_trace', True)
+                if type(requested_trace) is not bool:
+                    raise ValueError('include_trace must be boolean')
+                include_trace = requested_trace
                 op = request.get('op')
                 token = None
                 if op == 'pause':
@@ -82,26 +89,30 @@ def make_server(port=8771, scenario=None):
                 elif op == 'restore':
                     token = controller.restore(request['checkpoint'])
                 elif op == 'submit_frame':
-                    controller.submit_frame(_frame_dt(request['dt']), request.get('actions'))
-                elif op in ('resume', 'step_once', 'step_frame_once', 'tune', 'replace_resources'):
+                    controller.submit_frame(_frame_dt(request['dt']), request.get('actions'), include_trace=False)
+                elif op in ('resume', 'step_once', 'step_frame_once', 'tune', 'replace_resources', 'adjust_speed', 'apply_central_impulse'):
                     supplied = decode_token(request['token'])
                     if op == 'resume':
                         controller.resume(supplied)
                     elif op == 'step_once':
-                        controller.step_once(supplied, request.get('actions'))
+                        controller.step_once(supplied, request.get('actions'), include_trace=False)
                         token = supplied
                     elif op == 'step_frame_once':
-                        controller.step_frame_once(supplied, _frame_dt(request['dt']), request.get('actions'))
+                        controller.step_frame_once(supplied, _frame_dt(request['dt']), request.get('actions'), include_trace=False)
                         token = supplied
+                    elif op == 'apply_central_impulse':
+                        token = controller.apply_central_impulse(supplied, request['impulse'])
+                    elif op == 'adjust_speed':
+                        token = controller.adjust_speed(supplied, request['delta_speed'])
                     elif op == 'tune':
                         token = controller.tune(supplied, request['changes'])
                     else:
                         token = controller.replace_resources(supplied, request['bundle'])
                 else:
                     raise ValueError('unknown controller operation')
-                self.send(dict(snapshot=controller.snapshot(), token=asdict(token) if token else None))
+                self.send(dict(snapshot=controller.snapshot(include_trace=include_trace), token=asdict(token) if token else None))
             except (ValueError, KeyError, TypeError, ArithmeticError, RuntimeError) as exc:
-                self.send(dict(error=str(exc), snapshot=controller.snapshot()), 400)
+                self.send(dict(error=str(exc), snapshot=controller.snapshot(include_trace=include_trace)), 400)
 
     # Single request dispatch prevents a command's response snapshot being
     # interleaved with another HTTP command. No direct Engine handle is exposed.

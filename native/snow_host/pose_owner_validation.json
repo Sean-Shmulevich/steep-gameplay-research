@@ -1,0 +1,235 @@
+{
+  "evidence": "original_instruction_emulation",
+  "inputs": "synthetic",
+  "game_process": false,
+  "cases": 20,
+  "rows": [
+    {
+      "index": 0,
+      "handle_flags": 0,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 0,
+      "handle_flags": 1,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 0,
+      "handle_flags": 2147483648,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 0,
+      "handle_flags": 2147483655,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 1,
+      "handle_flags": 0,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 1,
+      "handle_flags": 1,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 1,
+      "handle_flags": 2147483648,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 1,
+      "handle_flags": 2147483655,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16383,
+      "handle_flags": 0,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16383,
+      "handle_flags": 1,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16383,
+      "handle_flags": 2147483648,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16383,
+      "handle_flags": 2147483655,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16384,
+      "handle_flags": 0,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16384,
+      "handle_flags": 1,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16384,
+      "handle_flags": 2147483648,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 16384,
+      "handle_flags": 2147483655,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 32766,
+      "handle_flags": 0,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 32766,
+      "handle_flags": 1,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": false,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 32766,
+      "handle_flags": 2147483648,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    },
+    {
+      "index": 32766,
+      "handle_flags": 2147483655,
+      "setup_passes_enclosing_actor": true,
+      "lookup_returns_existing_entry": true,
+      "embedded_handle_replaced": true,
+      "old_count_after": 2,
+      "new_count_after": 2,
+      "caller_decodes_owner": true,
+      "callback_after_exchange": true
+    }
+  ],
+  "scope": "existing-entry lookup, initializer retention/exchange and producer caller handle decode",
+  "limits": [
+    "Outer registry wrapper replaced by its prepared lookup result; locks, allocation and rebinding not executed.",
+    "Virtual callback intercepted after checking its receiver.",
+    "Invalid handle decodes zero; the full caller does not necessarily guard it safely.",
+    "No live identity, concurrency or scheduling guarantee."
+  ]
+}

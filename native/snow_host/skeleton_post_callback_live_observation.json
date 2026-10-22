@@ -1,0 +1,36 @@
+{
+  "status": "restored",
+  "records": 3245,
+  "pairs": 1298,
+  "target_pairs": 649,
+  "unique_target_request_pairs": 649,
+  "target_calls_per_request_histogram": {
+    "1": 649
+  },
+  "target_request_changes": 0,
+  "threads": 10,
+  "outstanding_at_seal": 0,
+  "pairing_complete": true,
+  "errors": [],
+  "unmatched_entries": 0,
+  "dropped": 0,
+  "incomplete": 0,
+  "evidence": "live_in_process_callback_trace",
+  "game_process": true,
+  "gameplay_hud_observed": true,
+  "gameplay_inputs_sent": false,
+  "callback_fields_modified": 2,
+  "callback_fields_restored": true,
+  "debugger_attached": false,
+  "settings_restored": true,
+  "bottle_restored": true,
+  "game_stopped": true,
+  "game_payloads_included": false,
+  "scope": "Normal entry/return trace of the freshly acquired player skeleton in SkeletonPostUpdate; no pose copy performed.",
+  "limits": [
+    "Callback instrumentation changes timing.",
+    "Observed normal returns do not prove downstream asynchronous work complete.",
+    "No receiver lifetime lease or safe pose-copy scope established.",
+    "Independent job request counters are not global frame IDs."
+  ]
+}

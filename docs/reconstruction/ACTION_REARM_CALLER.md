@@ -86,7 +86,10 @@ Names such as `engine_following_job` preserve unresolved semantics. The inspecte
 
 A separate preparation routine copies a byte from the world-stage owner into the engine's rebuild gate. If enabled, it clears outgoing dependency lists for several engine jobs and cached stage terminals, including the cached action tail. It then nulls the cached terminal pointers and reconstructs starter dependencies. It performs additional dependency preparation outside that gate as well.
 
-The clearing helper takes a job lock and delegates to a dependency-list helper. That helper may process an active list through the alternate release route, then clears its active flag and entry count. It does not poll execution count, outstanding dispatches or the receiver batch's remaining count. The alternate release route's recursive semantics are a separate audit.
+The clearing helper takes a job lock and delegates to a dependency-list helper.
+The [later clear audit](ALTERNATE_DEPENDENCY_RELEASE.md#destructive-list-clear-has-a-diagnostic-boundary)
+identifies an INT3 diagnostic before active-list processing; the active effects
+below require continuation past that boundary. That helper may process an active list through the alternate release route, then clears its active flag and entry count. It does not poll execution count, outstanding dispatches or the receiver batch's remaining count. The alternate release route's recursive semantics are a separate audit.
 
 A reviewed submission routine calls this preparation and then either submits the engine owner's root job through ordinary scheduler submission or takes another branch through an event-related helper. Therefore the ordering directly visible here is:
 

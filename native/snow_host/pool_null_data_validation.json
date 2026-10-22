@@ -1,0 +1,27 @@
+{
+  "evidence": "original_instruction_emulation",
+  "fault_kind": "data",
+  "null_allocation_reached_low_address_access": true,
+  "returned_normally": false,
+  "failed_access_size": 8,
+  "events": [
+    "resolve_component",
+    "stamp",
+    [
+      "reserve",
+      1
+    ],
+    "select_allocator",
+    "allocate_bank",
+    "constructor",
+    [
+      "allocate_data",
+      85
+    ],
+    [
+      "copy",
+      65535
+    ]
+  ],
+  "scope": "Successful reserve and synthetic initialized TLS; bank or data allocator forced to null. Emulation stops at invalid access. Does not execute OS exception dispatch, prove process termination or establish recovery behavior."
+}

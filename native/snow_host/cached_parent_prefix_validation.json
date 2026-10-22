@@ -1,0 +1,1332 @@
+{
+  "evidence": "original-instruction emulation with synthetic optional callback",
+  "cases": 24,
+  "scope": "Actual cached preparation and publication prefix through both parent stores; rotation/accessor/callback supplied; registration list empty; downstream animation work not run. Callback W mutation is synthetic, not recovered live behavior.",
+  "live_writer_attribution": false,
+  "rows": [
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          47.09876196961244,
+          -30.748396772077978,
+          18.729691846258746,
+          -5.894070773617152
+        ]
+      },
+      "indirect": false,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          47.09876251220703,
+          -30.748395919799805,
+          18.729692459106445,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rotation_branch": "trace"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          47.09876196961244,
+          -30.748396772077978,
+          18.729691846258746,
+          -5.894070773617152
+        ]
+      },
+      "indirect": false,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          47.09876251220703,
+          -30.748395919799805,
+          18.729692459106445,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rotation_branch": "trace"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          47.09876196961244,
+          -30.748396772077978,
+          18.729691846258746,
+          -5.894070773617152
+        ]
+      },
+      "indirect": false,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          47.09876251220703,
+          -30.748395919799805,
+          18.729692459106445,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rotation_branch": "trace"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          47.09876196961244,
+          -30.748396772077978,
+          18.729691846258746,
+          -5.894070773617152
+        ]
+      },
+      "indirect": true,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "accessor",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          47.09876251220703,
+          -30.748395919799805,
+          18.729692459106445,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rotation_branch": "trace"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          47.09876196961244,
+          -30.748396772077978,
+          18.729691846258746,
+          -5.894070773617152
+        ]
+      },
+      "indirect": true,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          47.09876251220703,
+          -30.748395919799805,
+          18.729692459106445,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rotation_branch": "trace"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          47.09876196961244,
+          -30.748396772077978,
+          18.729691846258746,
+          -5.894070773617152
+        ]
+      },
+      "indirect": true,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          47.09876251220703,
+          -30.748395919799805,
+          18.729692459106445,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rotation_branch": "trace"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -18.075555361281694,
+          35.60947536175067,
+          49.61860316391193,
+          26.451530866002727
+        ]
+      },
+      "indirect": false,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -18.0755558013916,
+          35.609474182128906,
+          49.61860275268555,
+          0.0
+        ],
+        "parent_rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "x"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -18.075555361281694,
+          35.60947536175067,
+          49.61860316391193,
+          26.451530866002727
+        ]
+      },
+      "indirect": false,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -18.0755558013916,
+          35.609474182128906,
+          49.61860275268555,
+          0.0
+        ],
+        "parent_rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "x"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -18.075555361281694,
+          35.60947536175067,
+          49.61860316391193,
+          26.451530866002727
+        ]
+      },
+      "indirect": false,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          -18.0755558013916,
+          35.609474182128906,
+          49.61860275268555,
+          0.0
+        ],
+        "parent_rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "x"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -18.075555361281694,
+          35.60947536175067,
+          49.61860316391193,
+          26.451530866002727
+        ]
+      },
+      "indirect": true,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "accessor",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -18.0755558013916,
+          35.609474182128906,
+          49.61860275268555,
+          0.0
+        ],
+        "parent_rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "x"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -18.075555361281694,
+          35.60947536175067,
+          49.61860316391193,
+          26.451530866002727
+        ]
+      },
+      "indirect": true,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -18.0755558013916,
+          35.609474182128906,
+          49.61860275268555,
+          0.0
+        ],
+        "parent_rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "x"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -18.075555361281694,
+          35.60947536175067,
+          49.61860316391193,
+          26.451530866002727
+        ]
+      },
+      "indirect": true,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          -18.0755558013916,
+          35.609474182128906,
+          49.61860275268555,
+          0.0
+        ],
+        "parent_rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "x"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -22.478933395243416,
+          -29.628638842031986,
+          -31.924894162885977,
+          41.262202125378536
+        ]
+      },
+      "indirect": false,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -22.478933334350586,
+          -29.628639221191406,
+          -31.924894332885742,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "y"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -22.478933395243416,
+          -29.628638842031986,
+          -31.924894162885977,
+          41.262202125378536
+        ]
+      },
+      "indirect": false,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -22.478933334350586,
+          -29.628639221191406,
+          -31.924894332885742,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "y"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -22.478933395243416,
+          -29.628638842031986,
+          -31.924894162885977,
+          41.262202125378536
+        ]
+      },
+      "indirect": false,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          -22.478933334350586,
+          -29.628639221191406,
+          -31.924894332885742,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "y"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -22.478933395243416,
+          -29.628638842031986,
+          -31.924894162885977,
+          41.262202125378536
+        ]
+      },
+      "indirect": true,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "accessor",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -22.478933334350586,
+          -29.628639221191406,
+          -31.924894332885742,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "y"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -22.478933395243416,
+          -29.628638842031986,
+          -31.924894162885977,
+          41.262202125378536
+        ]
+      },
+      "indirect": true,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -22.478933334350586,
+          -29.628639221191406,
+          -31.924894332885742,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "y"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -22.478933395243416,
+          -29.628638842031986,
+          -31.924894162885977,
+          41.262202125378536
+        ]
+      },
+      "indirect": true,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          -22.478933334350586,
+          -29.628639221191406,
+          -31.924894332885742,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "rotation_branch": "y"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -5.543584134409599,
+          -31.015294796588854,
+          13.595177890698409,
+          49.54205691296069
+        ]
+      },
+      "indirect": false,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -5.54358434677124,
+          -31.015295028686523,
+          13.59517765045166,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_branch": "z"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -5.543584134409599,
+          -31.015294796588854,
+          13.595177890698409,
+          49.54205691296069
+        ]
+      },
+      "indirect": false,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -5.54358434677124,
+          -31.015295028686523,
+          13.59517765045166,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_branch": "z"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -5.543584134409599,
+          -31.015294796588854,
+          13.595177890698409,
+          49.54205691296069
+        ]
+      },
+      "indirect": false,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          -5.54358434677124,
+          -31.015295028686523,
+          13.59517765045166,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_branch": "z"
+      },
+      "published_w": 1,
+      "current_index": 2
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -5.543584134409599,
+          -31.015294796588854,
+          13.595177890698409,
+          49.54205691296069
+        ]
+      },
+      "indirect": true,
+      "mode": "none",
+      "events": [
+        "rotate",
+        "accessor",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -5.54358434677124,
+          -31.015295028686523,
+          13.59517765045166,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_branch": "z"
+      },
+      "published_w": 0,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -5.543584134409599,
+          -31.015294796588854,
+          13.595177890698409,
+          49.54205691296069
+        ]
+      },
+      "indirect": true,
+      "mode": "callback",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_1"
+      ],
+      "prepared": {
+        "parent_position": [
+          -5.54358434677124,
+          -31.015295028686523,
+          13.59517765045166,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_branch": "z"
+      },
+      "published_w": 1,
+      "current_index": 1
+    },
+    {
+      "inputs": {
+        "basis_rows": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "position": [
+          -5.543584134409599,
+          -31.015294796588854,
+          13.595177890698409,
+          49.54205691296069
+        ]
+      },
+      "indirect": true,
+      "mode": "callback_swap",
+      "events": [
+        "rotate",
+        "accessor",
+        "callback",
+        "write_0",
+        "write_2"
+      ],
+      "prepared": {
+        "parent_position": [
+          -5.54358434677124,
+          -31.015295028686523,
+          13.59517765045166,
+          0.0
+        ],
+        "parent_rotation": [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "rotation_branch": "z"
+      },
+      "published_w": 1,
+      "current_index": 2
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "evidence": "original-instruction emulation with synthetic stack memory",
+  "cases": 512,
+  "prior_flag_bytes_checked": 256,
+  "current_bank_cases": [
+    "null",
+    "non-null"
+  ],
+  "exact_initialized_and_preserved_bytes": true,
+  "scope": "Actual stack wrapper construction and packet pointer assignments; covers all prior flag bytes, preserves unspecified bytes. Scratch contents, header semantics and live player identity remain unknown.",
+  "live_execution_verified": false
+}

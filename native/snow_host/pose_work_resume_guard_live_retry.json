@@ -1,0 +1,186 @@
+{
+  "schema": "pose-work-resume-guard-live-retry-v1",
+  "experiment_passed": false,
+  "matched_pairs": 1,
+  "unmatched_entries": 1,
+  "observations": [
+    {
+      "before": {
+        "schema": "pose-work-packet-observation-v1",
+        "input": {
+          "primary_present": true,
+          "alternate_present": false,
+          "primary_matches_current": true,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 48
+        },
+        "output": {
+          "primary_present": false,
+          "alternate_present": false,
+          "primary_matches_current": false,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 200
+        },
+        "packet_time": 0.011625499464571476,
+        "current_present": true,
+        "initialization_pattern_matches": true,
+        "guards_matched": true,
+        "atomic_snapshot": false,
+        "lifetime_pinned": false,
+        "callback_execution_verified": false,
+        "writer_attribution_established": false,
+        "safe_native_call_established": false
+      },
+      "after": {
+        "schema": "pose-work-packet-observation-v1",
+        "input": {
+          "primary_present": true,
+          "alternate_present": false,
+          "primary_matches_current": true,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 48
+        },
+        "output": {
+          "primary_present": true,
+          "alternate_present": true,
+          "primary_matches_current": false,
+          "banks_alias": false,
+          "own_inline_storage": true,
+          "header": 32772,
+          "index": 65535,
+          "flags": 206
+        },
+        "packet_time": 0.011625499464571476,
+        "current_present": true,
+        "initialization_pattern_matches": false,
+        "guards_matched": true,
+        "atomic_snapshot": false,
+        "lifetime_pinned": false,
+        "callback_execution_verified": false,
+        "writer_attribution_established": false,
+        "safe_native_call_established": false
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "kind": "process_state",
+      "label": "initial_before",
+      "state": 5,
+      "stop_id": 1
+    },
+    {
+      "kind": "resume_result",
+      "label": "initial",
+      "success": true,
+      "error": "success",
+      "state": 5,
+      "stop_id": 1
+    },
+    {
+      "kind": "process_state",
+      "label": "next_before",
+      "state": 5,
+      "stop_id": 2
+    },
+    {
+      "kind": "resume_result",
+      "label": "next",
+      "success": true,
+      "error": "success",
+      "state": 6,
+      "stop_id": 2
+    },
+    {
+      "kind": "process_state",
+      "label": "next_before",
+      "state": 5,
+      "stop_id": 4
+    },
+    {
+      "kind": "resume_result",
+      "label": "next",
+      "success": true,
+      "error": "success",
+      "state": 5,
+      "stop_id": 4
+    },
+    {
+      "kind": "process_state",
+      "label": "next_before",
+      "state": 5,
+      "stop_id": 7
+    },
+    {
+      "kind": "resume_result",
+      "label": "next",
+      "success": true,
+      "error": "success",
+      "state": 6,
+      "stop_id": 7
+    },
+    {
+      "kind": "process_state",
+      "label": "next_before",
+      "state": 5,
+      "stop_id": 8
+    },
+    {
+      "kind": "resume_result",
+      "label": "next",
+      "success": true,
+      "error": "success",
+      "state": 5,
+      "stop_id": 8
+    },
+    {
+      "kind": "process_state",
+      "label": "next_before",
+      "state": 5,
+      "stop_id": 9
+    },
+    {
+      "kind": "resume_result",
+      "label": "next",
+      "success": false,
+      "error": "error: resume request failed - process already running",
+      "state": 5,
+      "stop_id": 9
+    },
+    {
+      "kind": "error",
+      "message": "error: resume request failed - process already running"
+    },
+    {
+      "kind": "process_state",
+      "label": "cleanup_stop_check",
+      "state": 5,
+      "stop_id": 9
+    }
+  ],
+  "trace_stop_count": 2,
+  "debugger_exit": -6,
+  "breakpoints_removed": false,
+  "detached": false,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "receipt_sha256": "a54904fb545720a5b8e7de439184c421a63565dc66efa4301c0bddd356148f2b",
+  "limits": [
+    "Explicit stop-ID guard did not fix original-game resume failure.",
+    "Final rejected Continue followed stop ID 9 without a recorded hit or trace event for that stop.",
+    "Internal/transient stop hypothesis remains unproved; debugger trace stops occurred earlier.",
+    "Partial boundary evidence does not establish writer attribution or ordinary timing."
+  ]
+}

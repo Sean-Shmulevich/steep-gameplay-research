@@ -1,0 +1,4330 @@
+{
+  "cases": 432,
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "configuration_validity_byte": "nonzero; protected failure path not executed",
+  "optional_helper": "intercepted with no side effects; receiver arguments verified",
+  "scope": "local prepass reaches pending threshold; outer eligibility and helper effects not established",
+  "rows": [
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 0,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": true,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 0,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -2147483648,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 2147483647
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": -1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -2
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 0,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": -1
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": -1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 0,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": -1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 0,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": -1,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 0,
+      "helper_requested": false,
+      "counter_after": 0
+    },
+    {
+      "enabled_byte": 1,
+      "blocked_byte": 1,
+      "counter": 1,
+      "timer_a": 1,
+      "timer_b": 1,
+      "helper_gain": 1,
+      "helper_requested": false,
+      "counter_after": 0
+    }
+  ]
+}

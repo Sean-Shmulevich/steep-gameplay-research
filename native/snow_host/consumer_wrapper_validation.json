@@ -1,0 +1,656 @@
+{
+  "evidence": "original instruction emulation",
+  "cases": 64,
+  "game_process": false,
+  "player_vtable_slot_verified": true,
+  "slot": "0x2c0",
+  "all_cases_passed": true,
+  "scope": "Four wrapper flag gates, call order, actor/subobject receivers, unchanged low float32 timing lanes, and zero-extended prepare return byte forwarded to finish.",
+  "limitations": [
+    "All three callees intercepted; no physics executed.",
+    "Flag meanings and timing units remain unknown.",
+    "No live slot invocation or safe replacement/lifetime guarantee."
+  ],
+  "rows": [
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": true
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": true
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": true
+    },
+    {
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": true
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 0,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 1,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 384,
+      "called_snow_update": false
+    },
+    {
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "prepare_return": 511,
+      "called_snow_update": false
+    }
+  ]
+}

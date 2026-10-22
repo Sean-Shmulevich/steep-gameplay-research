@@ -1,0 +1,854 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 60,
+  "sequential_reuse": {
+    "calls": 2,
+    "same_return_storage": true,
+    "first_result_overwritten": true,
+    "reader_count_after": 0
+  },
+  "scope": "Original accessor with refresh and thread-ID services intercepted. Original atomic reader operations and 64-byte copy execute. Synthetic competing writer modeled by replacing word immediately before fetch-add; retry path stopped at pause. No real contention or lifetime proof.",
+  "samples": [
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1,
+        "count_after": 0,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1,
+        "count_after": 0,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1,
+        "count_after": 0,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1,
+        "count_after": 0,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1,
+        "count_after": 0,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 0,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1,
+        "count_after": 0,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 4,
+        "count_after": 3,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 4,
+        "count_after": 3,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 4,
+        "count_after": 3,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 4,
+        "count_after": 3,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 4,
+        "count_after": 3,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 3,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 4,
+        "count_after": 3,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048575,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048575,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048575,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1048576,
+        "count_after": 1048575,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1048576,
+        "count_after": 1048575,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048575,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1048576,
+        "count_after": 1048575,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "busy"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1048577,
+        "count_after": 1048576,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1048577,
+        "count_after": 1048576,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 1048576,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 1048577,
+        "count_after": 1048576,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 2147483652,
+        "count_after": 2147483651,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": false,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 2147483652,
+        "count_after": 2147483651,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": false,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 2147483652,
+        "count_after": 2147483651,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "retry",
+        "count_during": null,
+        "count_after": 1048576,
+        "path": "raced"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": true,
+        "owner_active": false,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 6,
+        "count_after": 5,
+        "path": "reader"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": null
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 2147483652,
+        "count_after": 2147483651,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 1048576
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 2147483652,
+        "count_after": 2147483651,
+        "path": "owner"
+      }
+    },
+    {
+      "inputs": {
+        "count": 2147483651,
+        "same_owner": true,
+        "owner_active": true,
+        "atomic_count": 5
+      },
+      "result": {
+        "outcome": "copy",
+        "count_during": 2147483652,
+        "count_after": 2147483651,
+        "path": "owner"
+      }
+    }
+  ]
+}

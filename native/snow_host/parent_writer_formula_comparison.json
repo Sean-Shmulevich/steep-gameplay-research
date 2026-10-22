@@ -1,0 +1,76 @@
+{
+  "schema": "parent-writer-formula-comparison-v1",
+  "evidence": "offline reanalysis of previously captured live owner/parent records",
+  "original_capture": "native/snow_host/owner_parent_live_observation.json",
+  "phases": {
+    "before": {
+      "schema": "animation-owner-parent-comparison-v1",
+      "compared": 8,
+      "bit_exact_parent_matches": 6,
+      "reset_parent_formula_matches": 2,
+      "bit_exact_translation_matches": 6,
+      "bit_exact_rotation_matches": 8,
+      "bit_exact_xyz_matches": 8,
+      "parent_w_little_endian_bit_patterns": {
+        "00000000": 6,
+        "0000803f": 2
+      },
+      "indirect_accessor_samples": 8,
+      "max_rotation_component_difference": 0.0,
+      "min_translation_difference": 0.0,
+      "max_translation_difference": 0.0,
+      "errors": [],
+      "comparison_completed": true,
+      "freshness_established": false,
+      "writer_attribution_established": false,
+      "world_space_established": false
+    },
+    "pulse_window": {
+      "schema": "animation-owner-parent-comparison-v1",
+      "compared": 24,
+      "bit_exact_parent_matches": 22,
+      "reset_parent_formula_matches": 2,
+      "bit_exact_translation_matches": 22,
+      "bit_exact_rotation_matches": 24,
+      "bit_exact_xyz_matches": 24,
+      "parent_w_little_endian_bit_patterns": {
+        "00000000": 22,
+        "0000803f": 2
+      },
+      "indirect_accessor_samples": 24,
+      "max_rotation_component_difference": 0.0,
+      "min_translation_difference": 0.0,
+      "max_translation_difference": 0.0,
+      "errors": [],
+      "comparison_completed": true,
+      "freshness_established": false,
+      "writer_attribution_established": false,
+      "world_space_established": false
+    },
+    "after": {
+      "schema": "animation-owner-parent-comparison-v1",
+      "compared": 8,
+      "bit_exact_parent_matches": 8,
+      "reset_parent_formula_matches": 0,
+      "bit_exact_translation_matches": 8,
+      "bit_exact_rotation_matches": 8,
+      "bit_exact_xyz_matches": 8,
+      "parent_w_little_endian_bit_patterns": {
+        "00000000": 8
+      },
+      "indirect_accessor_samples": 8,
+      "max_rotation_component_difference": 0.0,
+      "min_translation_difference": 0.0,
+      "max_translation_difference": 0.0,
+      "errors": [],
+      "comparison_completed": true,
+      "freshness_established": false,
+      "writer_attribution_established": false,
+      "world_space_established": false
+    }
+  },
+  "w_zero_formula_matches": 36,
+  "w_one_formula_matches": 4,
+  "live_writer_identity_established": false,
+  "new_game_session": false
+}

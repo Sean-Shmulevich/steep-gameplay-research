@@ -1,0 +1,58 @@
+{
+  "files": [
+    {
+      "source_repository": "studio:steep-wasm",
+      "source_commit": "1344bca03985eb1540236fb2ecd3cbbe8ecdcf14",
+      "source_path": "docs/specs/formats/tbf.md",
+      "source_sha256": "7a4730cfc7fe392b7d0e8840e04c2add65f740d4553c1670fc134f9d29dc9f92",
+      "published": "docs/reconstruction/studio-map/tbf.md",
+      "published_sha256": "e8aabb56d9bb9bc27d34bb2be9857b751fccb9c23f8e93772be18d4c08b1610b",
+      "transformation": "Provenance banner and local Markdown links converted to explicit external source references; no asset payloads. Machine-specific home prefixes replaced with <HOME>. Trailing whitespace normalized."
+    },
+    {
+      "source_repository": "studio:steep-wasm",
+      "source_commit": "1344bca03985eb1540236fb2ecd3cbbe8ecdcf14",
+      "source_path": "docs/specs/formats/tbf-heights.md",
+      "source_sha256": "8fd0b0190055b65650eeb5c7d63caa2380ce89523628cabdea6c6bfca66c10e6",
+      "published": "docs/reconstruction/studio-map/tbf-heights.md",
+      "published_sha256": "e4cb23f606ff4e7c31a5ca9a7b1b64e94234fb9219c8c986ae8eef496cd5c9ac",
+      "transformation": "Provenance banner and local Markdown links converted to explicit external source references; no asset payloads. Machine-specific home prefixes replaced with <HOME>. Trailing whitespace normalized."
+    },
+    {
+      "source_repository": "studio:steep-wasm",
+      "source_commit": "1344bca03985eb1540236fb2ecd3cbbe8ecdcf14",
+      "source_path": "docs/specs/formats/floor-height.md",
+      "source_sha256": "d655c8c5f3de55820e7f59e3c967d4e1a88f7d86976acfb2981b39c1eed5ba90",
+      "published": "docs/reconstruction/studio-map/floor-height.md",
+      "published_sha256": "c98e575c80d87aa3df5b4596ebcc4e365662379cb12a1cf93ced2e321a8b1338",
+      "transformation": "Provenance banner and local Markdown links converted to explicit external source references; no asset payloads. Machine-specific home prefixes replaced with <HOME>. Trailing whitespace normalized."
+    },
+    {
+      "source_repository": "studio:steep-wasm",
+      "source_commit": "1344bca03985eb1540236fb2ecd3cbbe8ecdcf14",
+      "source_path": "docs/specs/world/terrain-surfaces.md",
+      "source_sha256": "83b439855ca6db1dd1b4d870de5a24935d4937d04d425d0ebc72df9031a1666b",
+      "published": "docs/reconstruction/studio-map/terrain-surfaces.md",
+      "published_sha256": "98f3f2daad80ee4c4b359d2eef65f274bbf90aab2d0cb283a30c5ffca6ded7d5",
+      "transformation": "Provenance banner and local Markdown links converted to explicit external source references; no asset payloads. Machine-specific home prefixes replaced with <HOME>. Trailing whitespace normalized."
+    },
+    {
+      "source_repository": "studio:steep-wasm",
+      "source_commit": "1344bca03985eb1540236fb2ecd3cbbe8ecdcf14",
+      "source_path": "docs/specs/world/map.md",
+      "source_sha256": "34e24cc36d19f74793a4e1500662c2800ba4e034c261d38d1cbc2ca8a91f29fe",
+      "published": "docs/reconstruction/studio-map/map.md",
+      "published_sha256": "7374d96cb51735b26099f9f59c98f1d5b0565e40ed039c6a589e19726defc7dc",
+      "transformation": "Provenance banner and local Markdown links converted to explicit external source references; no asset payloads. Machine-specific home prefixes replaced with <HOME>. Trailing whitespace normalized."
+    },
+    {
+      "source_repository": "studio:steep-wasm",
+      "source_commit": "1344bca03985eb1540236fb2ecd3cbbe8ecdcf14",
+      "source_path": "docs/specs/world/terrain-harvest.md",
+      "source_sha256": "2289653f0c7e45e3187869cc02d902d7d60648d50493dade7ea05d4a234e5cef",
+      "published": "docs/reconstruction/studio-map/terrain-harvest.md",
+      "published_sha256": "07d171689e88c0e7de83a275509ef4b8079b725dd88e2c4957e08bbccaad580a",
+      "transformation": "Provenance banner and local Markdown links converted to explicit external source references; no asset payloads. Machine-specific home prefixes replaced with <HOME>. Trailing whitespace normalized."
+    }
+  ]
+}

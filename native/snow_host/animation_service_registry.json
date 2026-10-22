@@ -1,0 +1,438 @@
+{
+  "evidence": "static registration name association plus original setter instruction emulation",
+  "scope": "Names mapped to callback-table slots; each setter executed with synthetic table. Registration lookup/hash bodies not emulated; implementation providers unresolved. Image global was null, so no live service binding claim.",
+  "services": [
+    {
+      "name": "AcquireBlendMask",
+      "slot": 8,
+      "registration_anchor": "0x1412624c4",
+      "setter_anchor": "0x141250220",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd2ea0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "ReleaseBlendMask",
+      "slot": 16,
+      "registration_anchor": "0x141262550",
+      "setter_anchor": "0x1412504f0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dde710",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "TransferBoneWeights",
+      "slot": 32,
+      "registration_anchor": "0x1412625dd",
+      "setter_anchor": "0x14124fe90",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de0f40",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetActiveBlend",
+      "slot": 40,
+      "registration_anchor": "0x14126266d",
+      "setter_anchor": "0x141250590",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd8e00",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "CloneBlendMask",
+      "slot": 24,
+      "registration_anchor": "0x1412626fd",
+      "setter_anchor": "0x1412502e0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd5040",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetBoneChainsForBoneIDs",
+      "slot": 48,
+      "registration_anchor": "0x14126278d",
+      "setter_anchor": "0x14124fde0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd9100",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SetReferentialOverride",
+      "slot": 56,
+      "registration_anchor": "0x14126281d",
+      "setter_anchor": "0x14124ff90",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de0330",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireSelectionMask",
+      "slot": 64,
+      "registration_anchor": "0x1412628ad",
+      "setter_anchor": "0x141250680",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd3140",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "CopySelectionMask",
+      "slot": 72,
+      "registration_anchor": "0x14126293d",
+      "setter_anchor": "0x1412500a0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140d4b030",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "IntersectSelectionMasks",
+      "slot": 80,
+      "registration_anchor": "0x1412629cd",
+      "setter_anchor": "0x141250390",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddb960",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "UnionSelectionMasks",
+      "slot": 88,
+      "registration_anchor": "0x141262a5d",
+      "setter_anchor": "0x141250050",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddbd80",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "ReleaseSelectionMask",
+      "slot": 96,
+      "registration_anchor": "0x141262aed",
+      "setter_anchor": "0x141250210",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x14075e600",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "IsActiveSelectionMask",
+      "slot": 104,
+      "registration_anchor": "0x141262b7d",
+      "setter_anchor": "0x14124ffa0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddb9e0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireSkeletonPose",
+      "slot": 112,
+      "registration_anchor": "0x141262c0d",
+      "setter_anchor": "0x141250490",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd31e0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireSkeletonBindPose",
+      "slot": 120,
+      "registration_anchor": "0x141262c9d",
+      "setter_anchor": "0x1412502f0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd3150",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireSkeletonPoseSnapshot",
+      "slot": 128,
+      "registration_anchor": "0x141262d2d",
+      "setter_anchor": "0x141250700",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd32a0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "ReleaseSkeletonPose",
+      "slot": 136,
+      "registration_anchor": "0x141262dbd",
+      "setter_anchor": "0x1412502a0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddeb90",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "CloneSkeletonPose",
+      "slot": 144,
+      "registration_anchor": "0x141262e4d",
+      "setter_anchor": "0x141250330",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd5130",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SnapshotEffectorsBeforeBlend",
+      "slot": 152,
+      "registration_anchor": "0x141262edd",
+      "setter_anchor": "0x14124ffd0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de0550",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetFinalPoseForEditorSnapshot",
+      "slot": 160,
+      "registration_anchor": "0x141262f6d",
+      "setter_anchor": "0x1412502c0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd9db0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "RestoreEffectorsAfterBlend",
+      "slot": 168,
+      "registration_anchor": "0x141262ffd",
+      "setter_anchor": "0x1412503b0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddf300",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "CopySkeletonPose",
+      "slot": 176,
+      "registration_anchor": "0x14126308d",
+      "setter_anchor": "0x14124fee0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd5d00",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "BlendSkeletonPose",
+      "slot": 184,
+      "registration_anchor": "0x14126311d",
+      "setter_anchor": "0x1412500f0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd45a0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "MultiPassBlendSkeletonPose",
+      "slot": 192,
+      "registration_anchor": "0x1412631ad",
+      "setter_anchor": "0x141250430",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddc0d0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SolveIk",
+      "slot": 200,
+      "registration_anchor": "0x14126323d",
+      "setter_anchor": "0x141250180",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de0b30",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SetPropPosition",
+      "slot": 208,
+      "registration_anchor": "0x1412632cd",
+      "setter_anchor": "0x14124ff40",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddff00",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "StopAnimatingProp",
+      "slot": 216,
+      "registration_anchor": "0x14126335d",
+      "setter_anchor": "0x141250480",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de0df0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetGlobalBoneTransform",
+      "slot": 248,
+      "registration_anchor": "0x1412633ed",
+      "setter_anchor": "0x14124ffe0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd9f70",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetChainBoneIndices",
+      "slot": 224,
+      "registration_anchor": "0x14126347d",
+      "setter_anchor": "0x14124fca0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd93c0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetBindPoseLocalBoneTransform",
+      "slot": 232,
+      "registration_anchor": "0x14126350d",
+      "setter_anchor": "0x141250560",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd9060",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "GetLocalBoneTransform",
+      "slot": 240,
+      "registration_anchor": "0x14126359d",
+      "setter_anchor": "0x141250200",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dda230",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SetGlobalBoneTransform",
+      "slot": 264,
+      "registration_anchor": "0x14126362d",
+      "setter_anchor": "0x141250660",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddfb70",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SetLocalBoneTransform",
+      "slot": 256,
+      "registration_anchor": "0x1412636bd",
+      "setter_anchor": "0x1412506f0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140ddfdf0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "UpdateGlobalPoseFromLocal",
+      "slot": 272,
+      "registration_anchor": "0x14126374d",
+      "setter_anchor": "0x141250570",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de2460",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireBipedIkController",
+      "slot": 280,
+      "registration_anchor": "0x1412637dd",
+      "setter_anchor": "0x14124fe40",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dd2dc0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "ReleaseBipedIkController",
+      "slot": 288,
+      "registration_anchor": "0x14126386d",
+      "setter_anchor": "0x141250100",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140dde6f0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SolveBipedIk",
+      "slot": 296,
+      "registration_anchor": "0x1412638fd",
+      "setter_anchor": "0x1412502d0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140de0b10",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireQuadrupedIkController",
+      "slot": 304,
+      "registration_anchor": "0x14126398d",
+      "setter_anchor": "0x141250380",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140540120",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "ReleaseQuadrupedIkController",
+      "slot": 312,
+      "registration_anchor": "0x141263a1d",
+      "setter_anchor": "0x141250440",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x14075e600",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SolveQuadrupedIk",
+      "slot": 320,
+      "registration_anchor": "0x141263aad",
+      "setter_anchor": "0x141250240",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x1402aa0c0",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "AcquireClimbIkController",
+      "slot": 328,
+      "registration_anchor": "0x141263b3d",
+      "setter_anchor": "0x141250530",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x140540120",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "ReleaseClimbIkController",
+      "slot": 336,
+      "registration_anchor": "0x141263bcd",
+      "setter_anchor": "0x14124fd90",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x14075e600",
+      "implementation_registration_checked": true
+    },
+    {
+      "name": "SolveClimbIk",
+      "slot": 344,
+      "registration_anchor": "0x141263c5d",
+      "setter_anchor": "0x1412506a0",
+      "setter_checked": true,
+      "implementation_resolved": true,
+      "implementation_anchor": "0x14075e600",
+      "implementation_registration_checked": true
+    }
+  ],
+  "implementation_mapping_scope": "Actual engine registration sequence plus actual setters executed; registry name lookup supplied. Installed runtime bindings and callback body semantics are not proved.",
+  "registered_implementation_count": 43
+}

@@ -4,6 +4,7 @@ from pathlib import Path
 import signal
 import subprocess
 import tempfile
+import sys
 import unittest
 from unittest.mock import Mock, patch
 
@@ -13,6 +14,18 @@ spec.loader.exec_module(runner)
 
 
 class LateLoadRunnerTests(unittest.TestCase):
+    def test_startup_probe_combination_refused_before_launch(self):
+        with patch.object(sys, 'argv', ['runner', '--load-at', 'startup']):
+            with self.assertRaisesRegex(RuntimeError, 'requires --experiment host'):
+                runner.main()
+
+    def test_startup_missing_workspace_reports_prerequisites(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(sys, 'argv', ['runner', '--workspace', tmp, '--experiment', 'host', '--load-at', 'startup', '--check']):
+                with self.assertRaisesRegex(RuntimeError, 'Missing prerequisites'):
+                    runner.main()
+            self.assertEqual(list(Path(tmp).iterdir()), [])
+
     def test_missing_workspace_fails_without_creating_files(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -76,3 +89,19 @@ class LateLoadRunnerTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class IntelRuntimeTests(unittest.TestCase):
+    def test_broken_translation_fails_preflight(self):
+        with patch.object(runner.sys,'platform','darwin'), patch.object(runner.platform,'machine',return_value='arm64'), patch.object(runner.subprocess,'run',return_value=Mock(returncode=1,stderr='Bad CPU type')) as run:
+            with self.assertRaisesRegex(RuntimeError,'requires working Rosetta'):
+                runner.check_intel_runtime()
+            self.assertEqual(run.call_args.args[0],['/usr/bin/arch','-x86_64','/usr/bin/true'])
+
+    def test_working_translation_passes(self):
+        with patch.object(runner.sys,'platform','darwin'), patch.object(runner.platform,'machine',return_value='arm64'), patch.object(runner.subprocess,'run',return_value=Mock(returncode=0)):
+            runner.check_intel_runtime()
+
+    def test_intel_mac_does_not_need_translation(self):
+        with patch.object(runner.sys,'platform','darwin'), patch.object(runner.platform,'machine',return_value='x86_64'), patch.object(runner.subprocess,'run') as run:
+            runner.check_intel_runtime();run.assert_not_called()

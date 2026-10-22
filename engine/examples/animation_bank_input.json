@@ -1,0 +1,257 @@
+{
+  "schema": "animation-bank-bench-v1",
+  "cases": [
+    {
+      "label": "synthetic mode 0 weight 0.5",
+      "seed_policy": "recorded",
+      "inputs": {
+        "first": [
+          [
+            10.0
+          ],
+          [
+            1.0,
+            2.0,
+            3.0,
+            4.0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "second": [
+          [
+            20.0
+          ],
+          [
+            5.0,
+            6.0,
+            7.0,
+            8.0
+          ],
+          [
+            0.6,
+            0,
+            0,
+            0.8
+          ]
+        ],
+        "previous": [
+          [
+            -9.0
+          ],
+          [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          [
+            -2,
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "kinds": [
+          1,
+          5,
+          6
+        ],
+        "flags": 0,
+        "mode": 0,
+        "weight": 0.5,
+        "swap": false,
+        "exclusion_mask": 0,
+        "first_records": [
+          {
+            "id": 7,
+            "vector": [
+              1,
+              2,
+              3,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "second_records": [
+          {
+            "id": 7,
+            "vector": [
+              4,
+              5,
+              6,
+              0
+            ],
+            "rotation": [
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "previous_records": [
+          {
+            "id": 99,
+            "vector": [
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "rotation": [
+              -2,
+              -2,
+              -2,
+              -2
+            ]
+          }
+        ]
+      },
+      "normalization": [
+        {
+          "length": 0.8999999761581421,
+          "seed": 1.0540926456451416
+        },
+        {
+          "length": 0.4999999701976776,
+          "seed": 1.4142135381698608
+        }
+      ]
+    },
+    {
+      "label": "synthetic mode 0 weight 1.0",
+      "seed_policy": "recorded",
+      "inputs": {
+        "first": [
+          [
+            10.0
+          ],
+          [
+            1.0,
+            2.0,
+            3.0,
+            4.0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "second": [
+          [
+            20.0
+          ],
+          [
+            5.0,
+            6.0,
+            7.0,
+            8.0
+          ],
+          [
+            0.6,
+            0,
+            0,
+            0.8
+          ]
+        ],
+        "previous": [
+          [
+            -9.0
+          ],
+          [
+            -1.0,
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          [
+            -2,
+            -2,
+            -2,
+            -2
+          ]
+        ],
+        "kinds": [
+          1,
+          5,
+          6
+        ],
+        "flags": 0,
+        "mode": 0,
+        "weight": 1.0,
+        "swap": false,
+        "exclusion_mask": 0,
+        "first_records": [
+          {
+            "id": 7,
+            "vector": [
+              1,
+              2,
+              3,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "second_records": [
+          {
+            "id": 7,
+            "vector": [
+              4,
+              5,
+              6,
+              0
+            ],
+            "rotation": [
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "previous_records": [
+          {
+            "id": 99,
+            "vector": [
+              -1,
+              -1,
+              -1,
+              -1
+            ],
+            "rotation": [
+              -2,
+              -2,
+              -2,
+              -2
+            ]
+          }
+        ]
+      },
+      "normalization": [
+        {
+          "length": 1.0,
+          "seed": 1.0
+        }
+      ]
+    }
+  ]
+}

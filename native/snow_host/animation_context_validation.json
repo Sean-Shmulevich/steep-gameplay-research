@@ -1,0 +1,1304 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 90,
+  "scope": "Original context-holder increments, atomic exchange and decrements; retirement service intercepted. Valid positive synthetic counts, aliased and distinct holders. Single-thread execution does not establish concurrent acquisition safety or payload lifetime.",
+  "samples": [
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 3,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 0,
+        "retired": [
+          "old"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 0,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 1,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": false
+      },
+      "result": {
+        "new_count": 6,
+        "old_count": 4,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": true
+      },
+      "result": {
+        "new_count": 1,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": true
+      },
+      "result": {
+        "new_count": 1,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 1,
+        "old_count": 1,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": true
+      },
+      "result": {
+        "new_count": 1,
+        "old_count": 1,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": true
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 2,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": true
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 2,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 2,
+        "old_count": 2,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": true
+      },
+      "result": {
+        "new_count": 2,
+        "old_count": 2,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 0,
+        "old_status": 0,
+        "alias": true
+      },
+      "result": {
+        "new_count": 5,
+        "old_count": 5,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 1,
+        "old_status": 1,
+        "alias": true
+      },
+      "result": {
+        "new_count": 5,
+        "old_count": 5,
+        "retired": []
+      }
+    },
+    {
+      "inputs": {
+        "new_count": 5,
+        "old_count": 5,
+        "new_status": 2147483648,
+        "old_status": 2147483648,
+        "alias": true
+      },
+      "result": {
+        "new_count": 5,
+        "old_count": 5,
+        "retired": []
+      }
+    }
+  ]
+}

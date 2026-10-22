@@ -1,0 +1,64 @@
+[
+  {
+    "id": "SkeletonGatherComponents",
+    "kind": "callback",
+    "successors": [
+      "SkeletonUpdate",
+      "RagdollAfterCamera",
+      "SkeletonUpdateInteractions"
+    ]
+  },
+  {
+    "id": "SkeletonUpdate",
+    "kind": "range",
+    "successors": [
+      "KinoAfterSkeleton",
+      "KinoAfterSkeletonHiPriority",
+      "KinoAfterSkeletonWithInteractions"
+    ]
+  },
+  {
+    "id": "RagdollAfterCamera",
+    "kind": "range",
+    "successors": [
+      "KinoAfterSkeleton",
+      "KinoAfterSkeletonHiPriority",
+      "KinoAfterSkeletonWithInteractions"
+    ]
+  },
+  {
+    "id": "SkeletonUpdateInteractions",
+    "kind": "range",
+    "successors": [
+      "KinoAfterSkeleton",
+      "KinoAfterSkeletonHiPriority",
+      "KinoAfterSkeletonWithInteractions"
+    ]
+  },
+  {
+    "id": "KinoAfterSkeleton",
+    "kind": "range",
+    "successors": [
+      "LiteRagdollUpdate"
+    ]
+  },
+  {
+    "id": "KinoAfterSkeletonHiPriority",
+    "kind": "range",
+    "successors": [
+      "LiteRagdollUpdate"
+    ]
+  },
+  {
+    "id": "KinoAfterSkeletonWithInteractions",
+    "kind": "range",
+    "successors": [
+      "LiteRagdollUpdate"
+    ]
+  },
+  {
+    "id": "LiteRagdollUpdate",
+    "kind": "range",
+    "successors": []
+  }
+]

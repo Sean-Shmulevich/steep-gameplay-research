@@ -1,0 +1,593 @@
+{
+  "branch": "resolved_active_tail",
+  "input_origin": "synthetic observations; not original animation or contact data",
+  "initial_state": {
+    "correction": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "endpoints": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "frames": [
+    {
+      "reference": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "endpoints": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "stored_length": 0.8,
+      "blend": 0.1,
+      "above_directions": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "below_directions": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "velocity": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rest_lengths": [
+        1,
+        1
+      ],
+      "lower": 0.2,
+      "upper": 1.5,
+      "origins": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "rotations": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offsets": [
+        0,
+        0
+      ],
+      "contact_scalars": [
+        0,
+        0
+      ],
+      "decay_mode": false,
+      "provider_rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "reference": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "endpoints": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "stored_length": 0.6,
+      "blend": 0.1,
+      "above_directions": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "below_directions": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "velocity": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rest_lengths": [
+        1,
+        1
+      ],
+      "lower": 0.2,
+      "upper": 1.5,
+      "origins": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "rotations": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offsets": [
+        0,
+        0
+      ],
+      "contact_scalars": [
+        0,
+        0
+      ],
+      "decay_mode": false,
+      "provider_rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "reference": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "endpoints": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "stored_length": 0.6,
+      "blend": 0.1,
+      "above_directions": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "below_directions": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "velocity": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rest_lengths": [
+        1,
+        1
+      ],
+      "lower": 0.2,
+      "upper": 1.5,
+      "origins": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "rotations": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offsets": [
+        0,
+        0
+      ],
+      "contact_scalars": [
+        0,
+        0
+      ],
+      "decay_mode": false,
+      "provider_rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "reference": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "endpoints": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "stored_length": 0.8,
+      "blend": 0.1,
+      "above_directions": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "below_directions": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "velocity": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rest_lengths": [
+        1,
+        1
+      ],
+      "lower": 0.2,
+      "upper": 1.5,
+      "origins": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "rotations": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offsets": [
+        0,
+        0
+      ],
+      "contact_scalars": [
+        0,
+        0
+      ],
+      "decay_mode": false,
+      "provider_rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "reference": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "endpoints": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "stored_length": 1.0,
+      "blend": 0.1,
+      "above_directions": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "below_directions": [
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "velocity": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rest_lengths": [
+        1,
+        1
+      ],
+      "lower": 0.2,
+      "upper": 1.5,
+      "origins": [
+        [
+          -0.2,
+          0,
+          0,
+          0
+        ],
+        [
+          0.2,
+          0,
+          0,
+          0
+        ]
+      ],
+      "rotations": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offsets": [
+        0,
+        0
+      ],
+      "contact_scalars": [
+        0,
+        0
+      ],
+      "decay_mode": false,
+      "provider_rotation": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ]
+}

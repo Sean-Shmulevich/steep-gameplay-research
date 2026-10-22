@@ -1,0 +1,24 @@
+{
+  "schema": "animation-host-fixture-validation-v1",
+  "evidence": "synthetic Wine fixture protocol; not original game execution",
+  "build": {
+    "fixture_and_private_adapter": "passed",
+    "warnings_as_errors": true
+  },
+  "fixture_checks": {
+    "passed": 63,
+    "total": 63,
+    "public_probe_executed": true
+  },
+  "observation_unit_tests": {
+    "passed": 88
+  },
+  "game_launched": false,
+  "live_animation_adapter_implemented": false,
+  "limits": [
+    "No atomic snapshot or pinned lifetime",
+    "No animation completion or safe write boundary",
+    "Fixture channel values are invented"
+  ],
+  "public_probe": "scripts/animation_fixture_probe.py"
+}

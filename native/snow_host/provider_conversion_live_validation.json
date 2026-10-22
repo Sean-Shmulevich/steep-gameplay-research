@@ -1,0 +1,48 @@
+{
+  "schema": "provider-conversion-live-validation-v1",
+  "evidence": "live native-host reads plus offline original-instruction replay of captured inputs",
+  "resource_key": 743623600,
+  "accepted_queries": 12,
+  "matching_identity_brackets": 12,
+  "distinct_epochs": 12,
+  "reference_check": {
+    "schema": "provider-conversion-capture-check-v1",
+    "checked": 12,
+    "matched": 12,
+    "skipped": 0,
+    "direct_branch": 0,
+    "composed_branch": 12,
+    "errors": [],
+    "ok": true,
+    "original_accessor_independently_observed": false,
+    "coordinate_semantics_established": false
+  },
+  "original_instruction_replay": {
+    "evidence": "original-instruction emulation with captured live inputs; no live accessor invocation",
+    "checked": 12,
+    "matched": 12,
+    "instruction_slices": 36,
+    "ok": true,
+    "replaced_calls": 0,
+    "coordinate_semantics_established": false
+  },
+  "converted_to_sampled_body_origin_distance_range": [
+    0.9426314203866226,
+    0.9442687292290967
+  ],
+  "distance_units": "stored engine units; asynchronous body and pose reads",
+  "stable_20_seconds": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Only composed branch observed live",
+    "No live original-accessor call observed",
+    "Single resource key and player session",
+    "Bone identity and coordinate semantics unproved",
+    "No atomicity, lifetime pin or write safety"
+  ],
+  "payload_policy": "Aggregate validation only; raw input/output pose data remains private"
+}

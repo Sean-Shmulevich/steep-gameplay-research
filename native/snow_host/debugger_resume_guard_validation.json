@@ -1,0 +1,52 @@
+{
+  "schema": "debugger-resume-guard-validation-v1",
+  "evidence": "authored observer policy, deterministic state tests and native synthetic Wine/LLDB tests",
+  "game_accessed": false,
+  "policy_sha256": "a0180332e63888f4eb82156421fa615077f1ebc7e1f6d4fff87514db7860ab93",
+  "unit_tests": 3,
+  "runs": {
+    "forced_failure": {
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "no_hits": true,
+        "injected_failure": true,
+        "successful_resume_recorded": true,
+        "code_unchanged": true,
+        "cleanup_state_recorded": true
+      },
+      "receipt_sha256": "cc5d7788f4ee30f8006e3dc57ff9cb38a62fc0423213b44b5f11c80a3a715a58"
+    },
+    "normal_multithread": {
+      "passed": true,
+      "checks": {
+        "clean_fixture_exit": true,
+        "debugger_exit": true,
+        "no_outer_timeout": true,
+        "detached": true,
+        "removed": true,
+        "no_cleanup_error": true,
+        "ordered": true,
+        "patterns": true,
+        "output_change": true,
+        "preserved_time": true,
+        "no_observer_error": true,
+        "code_unchanged": true,
+        "multiple_threads": true,
+        "requested_hits": true,
+        "capture_window_ended": true
+      },
+      "receipt_sha256": "773a09db6ca5fa1d8ca0aec4247e652a885eaa2d00ee8d68eb665eb0c8031a73"
+    }
+  },
+  "limits": [
+    "No original-engine behavior reconstructed by this tooling policy.",
+    "The original-game resume failure has not been reproduced or proved fixed.",
+    "Separate debugger state queries are not an atomic lifetime guarantee."
+  ]
+}

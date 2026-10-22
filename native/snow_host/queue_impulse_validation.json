@@ -1,0 +1,9 @@
+{
+  "cases": 256,
+  "game_process": false,
+  "queue": "original actor leaf, four-lane float32 addition; bit-exact",
+  "clear": "original actor leaf clears all four lanes",
+  "missing_runtime": "queue and clear no-op, invalid input pointer not read",
+  "body_velocities": "not modified by enqueue or clear",
+  "synchronization": "no lock or dispatch called by these leaves; caller thread ordering unresolved"
+}

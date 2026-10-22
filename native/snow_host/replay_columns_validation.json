@@ -1,0 +1,16 @@
+{
+  "scope": "Isolated live-replay column decoder compared against native loop",
+  "cases": 100,
+  "input_provenance": "synthetic, deterministic seed 942070",
+  "record_widths": "1..9",
+  "record_counts": [1, 3, 255, 256, 257, 600],
+  "checks": ["row-major output bytes", "consumed compressed bytes"],
+  "all_matched": true,
+  "external_calls_stubbed": false,
+  "game_payloads_included": false,
+  "boundaries": [
+    "Only the version >=70 byte-column loop",
+    "Outer container and saved-ghost equivalence remain unresolved",
+    "Record field meanings and native playback not validated"
+  ]
+}

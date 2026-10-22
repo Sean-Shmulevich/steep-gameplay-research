@@ -109,3 +109,67 @@ This closes the local alternate-recursion question in the rearm audit. It does n
 The complete alternate dependency-list helper, the complete ordinary leaf callback, the complete conditional callback and the conditional begin routine were inspected directly. Five concrete table bindings connected receiver/gather/skeleton/terminal jobs to the ordinary callback and the conditional job to its two-list override. The normal release/request behavior was cross-referenced with the previously inspected scheduler sources.
 
 The analyzed image SHA-256 is `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. No raw exports or machine-specific paths are included. The pseudocode preserves the observed hold tests, recursion choice and active-byte ordering while abbreviating the platform lock implementation.
+
+
+## Destructive list clear has a diagnostic boundary
+
+The world-chain rebuild's list-clear helper differs from ordinary alternate
+release. At entry it checks whether the source list is active. If so it calls a
+short helper containing `NOP; INT3; RET` in the inspected image. The breakpoint
+precedes any successor hold decrement. The live exception handler, debugger
+interaction and whether this path is expected to resume are not established.
+It must not be silently treated as a harmless callback or normal supported clear.
+
+If execution continues past that helper, the clear routine walks successor
+entries, rechecks the source active byte for each entry, decrements holds and
+invokes the target's alternate callback when the prior hold was one. It then
+sets the source active byte and successor count to zero. It retains the backing
+storage. Inactive clear skips hold decrements and removes successor entries.
+Descendant alternate release deactivates lists but does not remove their entries.
+
+```python
+def clear_dependency_list_native_outline(source):
+    if source.active:
+        breakpoint_diagnostic()  # INT3 in the inspected image
+        # The following requires a handler to resume execution.
+    for target in source.successor_entries:
+        if source.active:
+            old = atomic_decrement(target.holds)
+            if old == 1:
+                with target.lock:
+                    target.alternate_callback()
+    source.active = False
+    source.successor_count = 0
+```
+
+This is a serial outline. The source-byte recheck and current-hold recheck inside
+callbacks are retained in the native path; concurrency and reentrant list mutation
+are not reproduced by the inspection API. No request acknowledgement, normal body
+execution, execution-count drain or thread cancellation follows from this clear.
+
+`engine.alternate_dependencies.clear_dependency_list` now models the operation.
+It accepts the same explicit graph/binding schema as `release_alternate`. An active
+list raises `ActiveDependencyClear` without mutation by default. Passing
+`continue_after_diagnostic=True` explicitly selects inspection of the continuation;
+it does not configure or bypass a live game handler. The operation commits only
+after validation and event-budget checks, preserving existing graph object
+identities. Transactions, cycle rejection and diagnostic policy are adapter choices.
+Only the selected source loses successor entries. Credit-recipient lists, request,
+started, deferred and lifecycle fields remain unchanged.
+
+[Validation receipt](../../native/snow_host/dependency_clear_validation.json):
+128 original-instruction completed cases cover inactive clear and explicit active
+continuation, varied hold counts, duplicate entries and active/inactive descendant
+lists. The original clear routine, diagnostic helper and ordinary recursive
+alternate callbacks execute; locks are stubbed. A Unicorn interrupt hook observes
+interrupt 3. An additional 64 cases stop at that interrupt and confirm the source
+and target memory blocks are unchanged. Continued cases explicitly resume after
+the interrupt; that is a test policy, not evidence of live exception handling.
+Five API tests cover receipt replay, stop-without-mutation, descendant preservation,
+no request acknowledgement and event-budget rollback.
+
+This qualifies earlier descriptions that an active clear may alternate-release
+its descendants: those describe the continuation instructions and must retain the
+diagnostic boundary. The inactive-only world-stage topology API remains restricted;
+this new operation is an explicit graph inspection tool, not authorization to
+rewire an active native scheduler.

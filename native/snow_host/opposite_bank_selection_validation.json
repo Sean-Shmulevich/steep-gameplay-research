@@ -1,0 +1,1336 @@
+{
+  "evidence": "original-instruction emulation with synthetic banks and supplied acquisition/conversion",
+  "cases": 64,
+  "scope": "Full selector gate and post-conversion flag writes; callback flag mutations are synthetic ordering tests, conversion math not executed.",
+  "live_execution_verified": false,
+  "rows": [
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 1110,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 1110,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 134218838,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 134218838,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 1110,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 1110,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          0
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 134218838,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 291,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "acquire",
+          37,
+          1
+        ],
+        [
+          "convert",
+          "primary",
+          "new",
+          5
+        ]
+      ],
+      "returned_bank": "new",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 134218838,
+        "new": 2748182290
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 291,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "primary",
+          "alternate",
+          5
+        ]
+      ],
+      "returned_bank": "alternate",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 134218838,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 160
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 201326883,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 161
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 162
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": false,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 67109155,
+        "alternate": 1110,
+        "new": 67110793
+      },
+      "wrapper_flags": 163
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "convert_mutates_flags": true,
+      "events": [
+        [
+          "convert",
+          "alternate",
+          "primary",
+          5
+        ]
+      ],
+      "returned_bank": "primary",
+      "flags": {
+        "primary": 2748182290,
+        "alternate": 2748182290,
+        "new": 67110793
+      },
+      "wrapper_flags": 243
+    }
+  ]
+}

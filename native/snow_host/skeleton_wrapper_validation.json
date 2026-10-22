@@ -1,0 +1,1051 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "setup_cases": 1,
+  "predicate_cases": 256,
+  "world_link_cases": 1,
+  "endpoint_registrations": 2,
+  "scope": "Setup callable copies and actual getters, full signed predicate, and full world adapter/wrapper-link helper. Link lock/unlock/clear/registration services stubbed. Constructor and branch alternate release rely on previously inspected common wrapper semantics; no native allocation, live scheduling or lifetime claim.",
+  "predicate_rows": [
+    {
+      "world_field": -2147483648,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1,
+      "primary_selected": true
+    },
+    {
+      "world_field": 0,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1,
+      "primary_selected": false
+    },
+    {
+      "world_field": 2147483647,
+      "primary_selected": false
+    },
+    {
+      "world_field": -575957862,
+      "primary_selected": true
+    },
+    {
+      "world_field": 97278311,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1078866884,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1264810032,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1308378586,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1354102654,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1066894002,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1909199902,
+      "primary_selected": false
+    },
+    {
+      "world_field": 389388392,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1317950645,
+      "primary_selected": true
+    },
+    {
+      "world_field": -88732044,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1934397004,
+      "primary_selected": false
+    },
+    {
+      "world_field": -95387427,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1573923850,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1753610034,
+      "primary_selected": true
+    },
+    {
+      "world_field": 78710033,
+      "primary_selected": false
+    },
+    {
+      "world_field": -131703954,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1049220254,
+      "primary_selected": true
+    },
+    {
+      "world_field": -945500186,
+      "primary_selected": true
+    },
+    {
+      "world_field": 674368079,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1208401500,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1218648049,
+      "primary_selected": false
+    },
+    {
+      "world_field": -281769054,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1496812450,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1404949450,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1834563831,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1336000771,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2045842084,
+      "primary_selected": true
+    },
+    {
+      "world_field": -698720068,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2120739047,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1309527758,
+      "primary_selected": false
+    },
+    {
+      "world_field": -750465355,
+      "primary_selected": true
+    },
+    {
+      "world_field": 2091466236,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1733014804,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1756661254,
+      "primary_selected": false
+    },
+    {
+      "world_field": 465295550,
+      "primary_selected": false
+    },
+    {
+      "world_field": 507056539,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1386173548,
+      "primary_selected": false
+    },
+    {
+      "world_field": 671802587,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1424376957,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1349840126,
+      "primary_selected": false
+    },
+    {
+      "world_field": -2002223865,
+      "primary_selected": true
+    },
+    {
+      "world_field": 472495499,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1183484074,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1119751198,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1539606530,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1823807173,
+      "primary_selected": true
+    },
+    {
+      "world_field": -950688804,
+      "primary_selected": true
+    },
+    {
+      "world_field": 2013855,
+      "primary_selected": false
+    },
+    {
+      "world_field": -551530285,
+      "primary_selected": true
+    },
+    {
+      "world_field": 552929422,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1685370960,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2062614804,
+      "primary_selected": true
+    },
+    {
+      "world_field": -325332504,
+      "primary_selected": true
+    },
+    {
+      "world_field": 867014534,
+      "primary_selected": false
+    },
+    {
+      "world_field": -214721242,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2050458348,
+      "primary_selected": true
+    },
+    {
+      "world_field": 909803136,
+      "primary_selected": false
+    },
+    {
+      "world_field": 2062574532,
+      "primary_selected": false
+    },
+    {
+      "world_field": -913109737,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1622154365,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1692706979,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1135213650,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1641331115,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1322481518,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1834576938,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1739361274,
+      "primary_selected": false
+    },
+    {
+      "world_field": 292522672,
+      "primary_selected": false
+    },
+    {
+      "world_field": -102040254,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1983396351,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1823440250,
+      "primary_selected": true
+    },
+    {
+      "world_field": 126328257,
+      "primary_selected": false
+    },
+    {
+      "world_field": -348089817,
+      "primary_selected": true
+    },
+    {
+      "world_field": -894439932,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1456224804,
+      "primary_selected": false
+    },
+    {
+      "world_field": -569426835,
+      "primary_selected": true
+    },
+    {
+      "world_field": 38360453,
+      "primary_selected": false
+    },
+    {
+      "world_field": -535327835,
+      "primary_selected": true
+    },
+    {
+      "world_field": 2129240962,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1035479399,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1485162436,
+      "primary_selected": false
+    },
+    {
+      "world_field": -306273792,
+      "primary_selected": true
+    },
+    {
+      "world_field": -641373269,
+      "primary_selected": true
+    },
+    {
+      "world_field": -264202932,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1737413069,
+      "primary_selected": false
+    },
+    {
+      "world_field": 345161869,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1065705977,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1630904815,
+      "primary_selected": true
+    },
+    {
+      "world_field": -550817306,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1667311952,
+      "primary_selected": true
+    },
+    {
+      "world_field": -950504873,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1445796105,
+      "primary_selected": true
+    },
+    {
+      "world_field": -53484450,
+      "primary_selected": true
+    },
+    {
+      "world_field": -767634998,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1644567237,
+      "primary_selected": true
+    },
+    {
+      "world_field": 760726034,
+      "primary_selected": false
+    },
+    {
+      "world_field": -760290164,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1205117118,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1688310224,
+      "primary_selected": true
+    },
+    {
+      "world_field": -174878831,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1606949055,
+      "primary_selected": true
+    },
+    {
+      "world_field": -842834932,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2034411397,
+      "primary_selected": true
+    },
+    {
+      "world_field": -730436459,
+      "primary_selected": true
+    },
+    {
+      "world_field": -85952174,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1118447631,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2057093536,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1408232758,
+      "primary_selected": false
+    },
+    {
+      "world_field": -51942140,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1346007400,
+      "primary_selected": true
+    },
+    {
+      "world_field": 178951944,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1525116737,
+      "primary_selected": false
+    },
+    {
+      "world_field": 510606410,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1336101343,
+      "primary_selected": true
+    },
+    {
+      "world_field": -343445306,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1311831702,
+      "primary_selected": true
+    },
+    {
+      "world_field": 113337800,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1514662407,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1270744380,
+      "primary_selected": false
+    },
+    {
+      "world_field": 414109445,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1527557619,
+      "primary_selected": false
+    },
+    {
+      "world_field": -779268084,
+      "primary_selected": true
+    },
+    {
+      "world_field": 622508959,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1808635270,
+      "primary_selected": true
+    },
+    {
+      "world_field": 2052200208,
+      "primary_selected": false
+    },
+    {
+      "world_field": -9929760,
+      "primary_selected": true
+    },
+    {
+      "world_field": 929635105,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1744395929,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1043094977,
+      "primary_selected": true
+    },
+    {
+      "world_field": -651002401,
+      "primary_selected": true
+    },
+    {
+      "world_field": -218180836,
+      "primary_selected": true
+    },
+    {
+      "world_field": -347139633,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1936041214,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1126718475,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1233058064,
+      "primary_selected": true
+    },
+    {
+      "world_field": 271767207,
+      "primary_selected": false
+    },
+    {
+      "world_field": 155956658,
+      "primary_selected": false
+    },
+    {
+      "world_field": 988808780,
+      "primary_selected": false
+    },
+    {
+      "world_field": 2053198569,
+      "primary_selected": false
+    },
+    {
+      "world_field": 672568284,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1615753276,
+      "primary_selected": false
+    },
+    {
+      "world_field": -362523906,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2013462031,
+      "primary_selected": true
+    },
+    {
+      "world_field": -444362538,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1920612124,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1300245636,
+      "primary_selected": true
+    },
+    {
+      "world_field": 127766604,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1741614636,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1845340899,
+      "primary_selected": true
+    },
+    {
+      "world_field": 591795654,
+      "primary_selected": false
+    },
+    {
+      "world_field": -454040020,
+      "primary_selected": true
+    },
+    {
+      "world_field": -867932851,
+      "primary_selected": true
+    },
+    {
+      "world_field": -156897701,
+      "primary_selected": true
+    },
+    {
+      "world_field": -277103417,
+      "primary_selected": true
+    },
+    {
+      "world_field": -466195439,
+      "primary_selected": true
+    },
+    {
+      "world_field": 839330476,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1726606831,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1176100952,
+      "primary_selected": true
+    },
+    {
+      "world_field": -779230937,
+      "primary_selected": true
+    },
+    {
+      "world_field": -406385749,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1635683487,
+      "primary_selected": false
+    },
+    {
+      "world_field": -2123775638,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1078505396,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1479970486,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1289775874,
+      "primary_selected": false
+    },
+    {
+      "world_field": 989180932,
+      "primary_selected": false
+    },
+    {
+      "world_field": 236874110,
+      "primary_selected": false
+    },
+    {
+      "world_field": 187210967,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1938144883,
+      "primary_selected": true
+    },
+    {
+      "world_field": -996180718,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1899999974,
+      "primary_selected": false
+    },
+    {
+      "world_field": 43744921,
+      "primary_selected": false
+    },
+    {
+      "world_field": -115239195,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1505177001,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1578884841,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1111136147,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1973141825,
+      "primary_selected": false
+    },
+    {
+      "world_field": -572406807,
+      "primary_selected": true
+    },
+    {
+      "world_field": -832690619,
+      "primary_selected": true
+    },
+    {
+      "world_field": -625531120,
+      "primary_selected": true
+    },
+    {
+      "world_field": 512331055,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1201787980,
+      "primary_selected": false
+    },
+    {
+      "world_field": -53470893,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1257625465,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1858641392,
+      "primary_selected": false
+    },
+    {
+      "world_field": -12723076,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1061395070,
+      "primary_selected": true
+    },
+    {
+      "world_field": 421505762,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1144421292,
+      "primary_selected": false
+    },
+    {
+      "world_field": -482096574,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1463226704,
+      "primary_selected": false
+    },
+    {
+      "world_field": -553951506,
+      "primary_selected": true
+    },
+    {
+      "world_field": 2002283575,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1942304317,
+      "primary_selected": true
+    },
+    {
+      "world_field": 692000101,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1892502653,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2098281151,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1493308351,
+      "primary_selected": false
+    },
+    {
+      "world_field": -413810227,
+      "primary_selected": true
+    },
+    {
+      "world_field": 604776518,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1032589013,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1941949074,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1148694629,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1495610418,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1481773,
+      "primary_selected": true
+    },
+    {
+      "world_field": 115715684,
+      "primary_selected": false
+    },
+    {
+      "world_field": -2002055421,
+      "primary_selected": true
+    },
+    {
+      "world_field": -206515541,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1800386126,
+      "primary_selected": false
+    },
+    {
+      "world_field": 958153961,
+      "primary_selected": false
+    },
+    {
+      "world_field": 51617101,
+      "primary_selected": false
+    },
+    {
+      "world_field": -71071857,
+      "primary_selected": true
+    },
+    {
+      "world_field": -944994364,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1068736208,
+      "primary_selected": true
+    },
+    {
+      "world_field": -2122276385,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1974308144,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1539886098,
+      "primary_selected": false
+    },
+    {
+      "world_field": -560389936,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1327759679,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1026918693,
+      "primary_selected": true
+    },
+    {
+      "world_field": -1065942054,
+      "primary_selected": true
+    },
+    {
+      "world_field": -778527502,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1340473159,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1512403703,
+      "primary_selected": false
+    },
+    {
+      "world_field": 130402333,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1811201852,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1110760250,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1232584438,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1186419965,
+      "primary_selected": true
+    },
+    {
+      "world_field": 240948878,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1913049416,
+      "primary_selected": false
+    },
+    {
+      "world_field": -863803076,
+      "primary_selected": true
+    },
+    {
+      "world_field": 12216264,
+      "primary_selected": false
+    },
+    {
+      "world_field": 607937454,
+      "primary_selected": false
+    },
+    {
+      "world_field": 224136989,
+      "primary_selected": false
+    },
+    {
+      "world_field": -571058986,
+      "primary_selected": true
+    },
+    {
+      "world_field": 935918838,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1459481884,
+      "primary_selected": false
+    },
+    {
+      "world_field": -94533449,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1038584048,
+      "primary_selected": false
+    },
+    {
+      "world_field": 766836750,
+      "primary_selected": false
+    },
+    {
+      "world_field": -676494745,
+      "primary_selected": true
+    },
+    {
+      "world_field": -757241372,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1735628779,
+      "primary_selected": false
+    },
+    {
+      "world_field": -1433314657,
+      "primary_selected": true
+    },
+    {
+      "world_field": 1839780452,
+      "primary_selected": false
+    },
+    {
+      "world_field": 596017691,
+      "primary_selected": false
+    },
+    {
+      "world_field": 980473848,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1869955902,
+      "primary_selected": false
+    },
+    {
+      "world_field": 253673515,
+      "primary_selected": false
+    },
+    {
+      "world_field": 1475508020,
+      "primary_selected": false
+    }
+  ],
+  "link_effects": [
+    "lock",
+    "clear_outgoing",
+    "unlock",
+    "register"
+  ],
+  "endpoint_edges": [
+    [
+      "conditional_primary",
+      "SkeletonGatherComponents"
+    ],
+    [
+      "LiteRagdollUpdate",
+      "UpdateSkeletonEndNode"
+    ]
+  ]
+}

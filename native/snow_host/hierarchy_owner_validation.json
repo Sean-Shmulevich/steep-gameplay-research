@@ -1,0 +1,64 @@
+{
+  "evidence": "static_metadata_and_original_constructor_emulation",
+  "game_process": false,
+  "type_name": "FXSpawnedEntity",
+  "object_size": 144,
+  "table_rva": "0x1ed1f98",
+  "metadata_rva": "0x2e06480",
+  "slots": {
+    "0x30": "0x936610",
+    "0x58": "0x9406e0",
+    "0x88": "0x93e400",
+    "0xa8": "0x923af0"
+  },
+  "cases": 4,
+  "samples": [
+    {
+      "initial_fill": 0,
+      "flags": 1,
+      "field_68": 4294967295,
+      "field_6c": 0
+    },
+    {
+      "initial_fill": 85,
+      "flags": 1,
+      "field_68": 4294967295,
+      "field_6c": 0
+    },
+    {
+      "initial_fill": 170,
+      "flags": 1,
+      "field_68": 4294967295,
+      "field_6c": 0
+    },
+    {
+      "initial_fill": 255,
+      "flags": 1,
+      "field_68": 4294967295,
+      "field_6c": 0
+    }
+  ],
+  "spans": [
+    {
+      "rva": "0x919350",
+      "size": 5,
+      "sha256": "3f9c31f9e0bacdff576aefa9883e04645de97a9b8cf4f6ac455064c8c3ccaece"
+    },
+    {
+      "rva": "0x91b990",
+      "size": 191,
+      "sha256": "41e756893e60104dfb67307212e2a9fa0bd1b30a5d62e242cc37b62387eac9e5"
+    },
+    {
+      "rva": "0x936610",
+      "size": 8,
+      "sha256": "cbcad4d42d9ec87147781f761f9ed08d8ce2b169ee1f0863cb7ffdf0bc95226e"
+    },
+    {
+      "rva": "0x93e400",
+      "size": 109,
+      "sha256": "bb53e77ff8555c13b2c878a3a8fb2d96dadf1bbd39596d265ab4699b7f32df13"
+    }
+  ],
+  "scope": "Mapped-image metadata links plus original constructor thunk/body. Base constructor and two container initializers intercepted. No spawned instance, method invocation phase, player relationship or runtime metadata observed."
+}

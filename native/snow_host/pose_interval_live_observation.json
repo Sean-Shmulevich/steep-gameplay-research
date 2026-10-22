@@ -1,0 +1,13 @@
+{
+  "evidence": "live_read_only_observation",
+  "captures": 1,
+  "accepted_pose_intervals": 0,
+  "binding_status": "unique_exact_type",
+  "error": "pose-channel identity or data changed",
+  "selection_boundary_compared": false,
+  "memory_writes": false,
+  "input_sent": false,
+  "debugger_attached": false,
+  "payloads_included": false,
+  "interpretation": "Inner pose guard rejected before final interval comparison. This does not isolate which field changed or prove the outer guard under live contention."
+}

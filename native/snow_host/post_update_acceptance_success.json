@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-22",
+  "os_version": "27.0.1",
+  "host_version": "0.7.0",
+  "startup_loading_verified": true,
+  "gameplay_hud_observed": true,
+  "preparation": {
+    "normal_forward_input_ms": 700,
+    "keys_released": true,
+    "flags_before": 1,
+    "flags_after": 3,
+    "identity_unchanged": true,
+    "position_displacement": 0.1695742887348518,
+    "input_ingestion_hooked": false
+  },
+  "stages": {
+    "player": true,
+    "pause_step_resume": true,
+    "brake_boost": true,
+    "player_after": true
+  },
+  "pause_step_resume": {
+    "single_world_step_requests": 10,
+    "all_reported_exactly_one": true,
+    "resumed": true,
+    "unit": "world_step_job; not deterministic full-engine frame replay"
+  },
+  "speed_trials": [
+    {
+      "delta_speed": -2.0,
+      "speed_before": 4.17635933,
+      "speed_target": 2.17635933,
+      "readback_matches": true,
+      "angular_velocity_reset": true,
+      "post_change_requested_steps": [
+        1,
+        4
+      ],
+      "ok": true
+    },
+    {
+      "delta_speed": 2.0,
+      "speed_before": 34.7476899,
+      "speed_target": 36.7476899,
+      "readback_matches": true,
+      "angular_velocity_reset": true,
+      "post_change_requested_steps": [
+        1,
+        4
+      ],
+      "ok": true
+    }
+  ],
+  "stable_20_seconds": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "acceptance_passed": true,
+  "scope": "One bounded offline snowboard session. Does not establish all sports, replay determinism, momentum-preserving impulse API, or full engine reconstruction."
+}

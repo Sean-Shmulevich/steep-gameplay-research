@@ -1,0 +1,616 @@
+{
+  "evidence": "live_read_only_export_resolution_and_original_instruction_validation",
+  "game_process": true,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "input_sent": false,
+  "target_apis_invoked": false,
+  "slots_and_module_headers_rechecked": true,
+  "component_layout": {
+    "wrapper_offset": 528,
+    "inline_storage_offset": 536
+  },
+  "initialize_arguments": {
+    "spin_count": 4096,
+    "flags": 33554432
+  },
+  "helpers": {
+    "skeleton_initialize": {
+      "module": "kernel32.dll",
+      "exact_export": "InitializeCriticalSectionEx",
+      "live_instruction_spans_verified": 82,
+      "synthetic_cases": 64,
+      "rows": [
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 0,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 1,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 3221225473,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        },
+        {
+          "service_return": 4294967295,
+          "wrapper_points_to_inline_storage": true,
+          "wrapper_returned": true
+        }
+      ]
+    },
+    "skeleton_destroy": {
+      "module": "ntdll.dll",
+      "exact_export": "RtlDeleteCriticalSection",
+      "live_instruction_spans_verified": 29,
+      "synthetic_cases": 64,
+      "rows": [
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        },
+        {
+          "argument_is_stored_pointer": true,
+          "wrapper_not_cleared_before_tail_transfer": true
+        }
+      ]
+    }
+  },
+  "limits": [
+    "API identity and wrapper arithmetic only; OS initialization/deletion were not executed by this check.",
+    "No player lock state, contention or retained component lifetime was established.",
+    "Constructor call and teardown call sites were inspected statically; full component constructor/destructor not emulated."
+  ]
+}

@@ -1,0 +1,9128 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 288,
+  "scope": "Complete cleanup and original unlink routine. Descriptor predicate, allocation metadata and deallocator intercepted. Original list writes, release arithmetic and owner-slot clear executed. Head/interior/missing child cases and nonmember next-link clearing included. Count=2 holders avoid retirement calls. Reader word varied with identical cleanup gates; caller synchronization and actual freeing excluded.",
+  "samples": [
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": false,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid",
+            "allocation_info",
+            "release_descriptor_second",
+            "release_descriptor_first",
+            "free_accessor"
+          ],
+          "owner_slot_cleared": true
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": false,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": null,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": null,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": null,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": false
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 0,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 3,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 1,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 2,
+        "next_links": {
+          "1": null,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 2,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 3,
+          "2": null,
+          "3": null,
+          "4": 1
+        },
+        "removed": true,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    },
+    {
+      "inputs": {
+        "accessor_present": true,
+        "descriptor_valid": true,
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": 1
+        },
+        "child": 4,
+        "sibling_present": true
+      },
+      "reader_word": 1048577,
+      "result": {
+        "head": 1,
+        "next_links": {
+          "1": 2,
+          "2": 3,
+          "3": null,
+          "4": null
+        },
+        "removed": false,
+        "cleanup": {
+          "calls": [
+            "unlink",
+            "descriptor_valid"
+          ],
+          "owner_slot_cleared": false
+        }
+      }
+    }
+  ]
+}

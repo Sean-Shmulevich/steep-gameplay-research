@@ -1,0 +1,16 @@
+{
+  "cases": 96,
+  "synthetic_inputs_only": true,
+  "interleavings": {
+    "before_consumer": 32,
+    "between_bodies": 32,
+    "after_unlock": 32
+  },
+  "producer_and_consumer_original_instructions": true,
+  "locks_and_dispatch": "intercepted; real concurrent reachability not established",
+  "before_consumer": "both bodies receive accumulated impulse",
+  "between_bodies": "main receives old impulse; rider receives accumulated impulse",
+  "after_unlock": "new queue addition is cleared without being applied to either body",
+  "angular_velocity": "unchanged in all cases",
+  "implication": "Do not infer arbitrary-thread queue safety from acquiring the consumer body lock alone."
+}

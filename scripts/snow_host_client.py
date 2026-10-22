@@ -18,6 +18,7 @@ connection closes, so a pause only lasts as long as the client is connected.
 """
 import argparse
 import json
+import math
 import socket
 import sys
 import time
@@ -90,23 +91,82 @@ class SnowHostClient:
 
 
 def demo(client, steps, lease_ms):
-    """Pause, step `steps` times recording status, then resume. Always attempts resume."""
-    record = {'ok': False, 'before': client.call('simulation.status'), 'steps': []}
+    """Bounded pause/step/resume transaction; never take over an existing hold.
+
+    A lost mutation response is not retried. Resume is attempted even when the
+    pause result is uncertain; disconnect/lease recovery remains the fallback.
+    """
+    if type(steps) is not int or not 1 <= steps <= 60:
+        raise ValueError('steps must be an integer from 1 to 60')
+    if type(lease_ms) is not int or not 1000 <= lease_ms <= 300000:
+        raise ValueError('lease_ms must be an integer from 1000 to 300000')
+    record = {'ok': False, 'steps': []}
     try:
-        record['pause'] = client.call('simulation.pause', lease_ms=lease_ms)
-        for _ in range(steps):
-            step = client.call('simulation.step_world', count=1)
-            status = client.call('simulation.status')
-            record['steps'].append({'step': step, 'status': status['engine']})
-        record['ok'] = all(s['step']['exactly_one'] == 1 for s in record['steps'])
+        record['before'] = client.call('simulation.status')
+        if record['before'].get('host_paused'):
+            raise RuntimeError('Already held; refusing to resume an existing pause')
+        try:
+            record['pause'] = client.call('simulation.pause', lease_ms=lease_ms)
+            for _ in range(steps):
+                step = client.call('simulation.step_world', count=1)
+                record['steps'].append({'step': step})
+                if step.get('exactly_one') != 1:
+                    raise RuntimeError('World-step result did not confirm exactly one execution')
+                status = client.call('simulation.status')
+                record['steps'][-1]['status'] = status['engine']
+            record['ok'] = True
+        finally:
+            try:
+                record['resume'] = client.request('simulation.resume')
+                if record['resume'].get('status') != 'completed':
+                    record['ok'] = False
+            except Exception as exc:
+                record['resume_error'] = str(exc)
+                record['ok'] = False
     except Exception as exc:
         record['error'] = str(exc)
-    finally:
-        response = client.request('simulation.resume')
-        record['resume'] = response
-        if response.get('status') != 'completed':
+    # Preserve partial evidence if recovery or the final read fails.
+    if 'pause' in record or 'resume' in record or 'resume_error' in record:
+        try:
+            record['after'] = client.call('simulation.status')
+            if record['after'].get('host_paused'):
+                record['ok'] = False
+                record['recovery_error'] = 'Host still reports a held simulation'
+        except Exception as exc:
+            record['after_error'] = str(exc)
             record['ok'] = False
-        record['after'] = client.call('simulation.status')
+    return record
+
+
+def speed_pulse(client, delta_speed):
+    """One engine-routine brake/boost pulse. Always attempt to release our hold.
+
+    Direction and speed are calculated inside the host, not from client reads.
+    No automatic retry: a lost response can follow a successful mutation.
+    """
+    if not math.isfinite(delta_speed) or not 0 < abs(delta_speed) <= 10:
+        raise ValueError('Speed change must be finite, nonzero, and at most 10 units/s')
+    record = {'ok': False, 'delta_speed': delta_speed}
+    try:
+        status = client.call('simulation.status')
+        if status.get('host_paused'):
+            raise RuntimeError('Already held; refusing to resume an existing pause')
+        # From here even a pause timeout needs a resume attempt; the host may
+        # have accepted it. Disconnect/lease recovery remains the fallback.
+        try:
+            record['pause'] = client.call('simulation.pause', lease_ms=10000)
+            record['adjust'] = client.call('player.adjust_speed', delta_speed=delta_speed)
+            record['ok'] = True
+        finally:
+            try:
+                record['resume'] = client.request('simulation.resume')
+                if record['resume'].get('status') != 'completed':
+                    record['ok'] = False
+            except Exception as exc:
+                record['resume_error'] = str(exc)
+                record['ok'] = False
+    except Exception as exc:
+        record['error'] = str(exc)
     return record
 
 
@@ -121,6 +181,9 @@ def main(argv=None):
     step = sub.add_parser('step', help='Pause, step N world steps, resume')
     step.add_argument('count', type=int, nargs='?', default=1)
     sub.add_parser('resume')
+    for action in ('boost', 'brake'):
+        pulse = sub.add_parser(action, help='One bounded speed pulse through the engine routine; pause then resume')
+        pulse.add_argument('--amount', type=float, default=5.0, help='Positive speed change, at most 10 world units/s')
     pl = sub.add_parser('player', help='Read the bound player (bind first with --bind HANDLE)')
     pl.add_argument('--bind', metavar='HANDLE', help='opaque handle from an external acquisition')
     d = sub.add_parser('demo', help='Pause, step and record status, resume')
@@ -128,6 +191,10 @@ def main(argv=None):
     d.add_argument('--lease-ms', type=int, default=30000)
     args = parser.parse_args(argv)
 
+    if args.command in ('step', 'demo'):
+        count = args.count if args.command == 'step' else args.steps
+        if not 1 <= count <= 60:
+            parser.error('step count must be from 1 to 60')
     with SnowHostClient(args.host, args.port) as client:
         if args.command == 'status':
             out = client.request('simulation.status')
@@ -146,23 +213,22 @@ def main(argv=None):
                 pass
             out = client.request('simulation.resume')
         elif args.command == 'step':
-            out = {'pause': client.request('simulation.pause')}
-            if out['pause'].get('status') == 'completed':
-                out['step'] = client.request('simulation.step_world', count=args.count)
-            out['resume'] = client.request('simulation.resume')
+            out = demo(client, args.count, 30000)
         elif args.command == 'player':
             out = {}
             if args.bind:
                 out['bind'] = client.request('player.bind', handle=args.bind)
             out['get'] = client.request('player.get')
+        elif args.command in ('boost', 'brake'):
+            if not math.isfinite(args.amount) or not 0 < args.amount <= 10:
+                parser.error('--amount must be finite, positive and at most 10')
+            out = speed_pulse(client, args.amount if args.command == 'boost' else -args.amount)
         elif args.command == 'resume':
             out = client.request('simulation.resume')
         else:
             out = demo(client, args.steps, args.lease_ms)
     print(json.dumps(out, indent=1))
-    if args.command == 'step':
-        ok = out['resume'].get('status') == 'completed'
-    elif args.command == 'player':
+    if args.command == 'player':
         ok = all(r.get('status') == 'completed' for r in out.values())
     else:
         ok = out.get('ok', out.get('status') == 'completed')

@@ -57,6 +57,9 @@ def make_server(port=8770,scenario=None):
                 elif op=='cell':
                     from .contact import evaluate_cell
                     self.send(evaluate_cell(engine.state['body'],req['vertices'],req['surface'],req['dt'],req['settings']));return
+                elif op=='ground_response':
+                    from .ground_response_bench import run
+                    self.send(run(req['request']));return
                 elif op=='limb':
                     from .procedural import limb_target
                     self.send(limb_target(req['request']));return

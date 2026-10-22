@@ -1,0 +1,4154 @@
+{
+  "cases": 112,
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "rsqrt": "original emulated RSQRTPS estimates captured and supplied to portable refinement; not a cross-hardware estimate-equivalence claim",
+  "external_calls": "body velocity read and lock calls intercepted",
+  "scope": "geometry and dot gate only; finite nondegenerate input directions",
+  "rows": [
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.2773500978946686,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.1856953352689743,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.19230768084526062,
+        1.2010295391082764
+      ],
+      "result": {
+        "direction": [
+          -0.25584059953689575,
+          0.49121391773223877,
+          0.8326189517974854
+        ],
+        "alignment": 0.5538461208343506,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.18306300044059753,
+        1.030539870262146
+      ],
+      "result": {
+        "direction": [
+          -0.22793443500995636,
+          0.08023291081190109,
+          0.9703652262687683
+        ],
+        "alignment": -0.24164317548274994,
+        "eligible": true,
+        "eligibility_dot": 0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.20000000298023224,
+        1.6666666269302368
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.800000011920929,
+          0.6000000238418579
+        ],
+        "alignment": 0.800000011920929,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.4472135901451111,
+        1.1180340051651
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.4472135901451111,
+          0.8944271802902222
+        ],
+        "alignment": -0.4472135901451111,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.22614482045173645,
+        1.2264269590377808
+      ],
+      "result": {
+        "direction": [
+          -0.32113295793533325,
+          0.4816994071006775,
+          0.8153766989707947
+        ],
+        "alignment": 0.578930675983429,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.18439768254756927,
+        1.0070372819900513
+      ],
+      "result": {
+        "direction": [
+          -0.10957372933626175,
+          0.04382948949933052,
+          0.9930119514465332
+        ],
+        "alignment": -0.11801451444625854,
+        "eligible": false,
+        "eligibility_dot": -0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.2773500978946686,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.1856953352689743,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -1.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.19230768084526062,
+        1.2010295391082764
+      ],
+      "result": {
+        "direction": [
+          -0.25584059953689575,
+          0.49121391773223877,
+          0.8326189517974854
+        ],
+        "alignment": -0.5538461208343506,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.18306300044059753,
+        1.030539870262146
+      ],
+      "result": {
+        "direction": [
+          -0.22793443500995636,
+          0.08023291081190109,
+          0.9703652262687683
+        ],
+        "alignment": 0.24164317548274994,
+        "eligible": false,
+        "eligibility_dot": -0.800000011920929,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.20000000298023224,
+        1.6666666269302368
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.800000011920929,
+          0.6000000238418579
+        ],
+        "alignment": -0.800000011920929,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.4472135901451111,
+        1.1180340051651
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.4472135901451111,
+          0.8944271802902222
+        ],
+        "alignment": 0.4472135901451111,
+        "eligible": true,
+        "eligibility_dot": 0.0,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.22614482045173645,
+        1.2264269590377808
+      ],
+      "result": {
+        "direction": [
+          -0.32113295793533325,
+          0.4816994071006775,
+          0.8153766989707947
+        ],
+        "alignment": -0.578930675983429,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        1.0,
+        0.18439768254756927,
+        1.0070372819900513
+      ],
+      "result": {
+        "direction": [
+          -0.10957372933626175,
+          0.04382948949933052,
+          0.9930119514465332
+        ],
+        "alignment": 0.11801451444625854,
+        "eligible": true,
+        "eligibility_dot": 0.6000000238418579,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.26726123690605164,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.26726123690605164,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.2773500978946686,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.29649972915649414,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.1856953352689743,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "alignment": -0.04962916672229767,
+        "eligible": true,
+        "eligibility_dot": 0.8017836809158325,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.26726123690605164,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.26726123690605164,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.19230768084526062,
+        1.2010295391082764
+      ],
+      "result": {
+        "direction": [
+          -0.25584059953689575,
+          0.49121391773223877,
+          0.8326189517974854
+        ],
+        "alignment": 0.1521332859992981,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.18306300044059753,
+        1.030539870262146
+      ],
+      "result": {
+        "direction": [
+          -0.22793443500995636,
+          0.08023291081190109,
+          0.9703652262687683
+        ],
+        "alignment": -0.26615551114082336,
+        "eligible": true,
+        "eligibility_dot": 0.9621404409408569,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.20000000298023224,
+        1.6666666269302368
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.800000011920929,
+          0.6000000238418579
+        ],
+        "alignment": 0.32071349024772644,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.4472135901451111,
+        1.1180340051651
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.4472135901451111,
+          0.8944271802902222
+        ],
+        "alignment": 0.11952286958694458,
+        "eligible": true,
+        "eligibility_dot": 0.26726123690605164,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.26726123690605164,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.26726123690605164,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.22614482045173645,
+        1.2264269590377808
+      ],
+      "result": {
+        "direction": [
+          -0.32113295793533325,
+          0.4816994071006775,
+          0.8153766989707947
+        ],
+        "alignment": 0.2224181890487671,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        1,
+        2,
+        3
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.26726123690605164,
+        0.18439768254756927,
+        1.0070372819900513
+      ],
+      "result": {
+        "direction": [
+          -0.10957372933626175,
+          0.04382948949933052,
+          0.9930119514465332
+        ],
+        "alignment": -0.14390447735786438,
+        "eligible": true,
+        "eligibility_dot": -0.48107022047042847,
+        "branch": "projected_direction",
+        "normalized_input": [
+          0.26726123690605164,
+          0.5345224738121033,
+          0.8017836809158325
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.8317303657531738,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.8317303657531738,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.2773500978946686,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.9227219820022583,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        1
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.1856953352689743,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "alignment": 0.9781734943389893,
+        "eligible": true,
+        "eligibility_dot": 0.02772434614598751,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.8317303657531738,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.8317303657531738,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.19230768084526062,
+        1.2010295391082764
+      ],
+      "result": {
+        "direction": [
+          -0.25584059953689575,
+          0.49121391773223877,
+          0.8326189517974854
+        ],
+        "alignment": -0.7140085101127625,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0.6,
+        0.8
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.18306300044059753,
+        1.030539870262146
+      ],
+      "result": {
+        "direction": [
+          -0.22793443500995636,
+          0.08023291081190109,
+          0.9703652262687683
+        ],
+        "alignment": 0.9332465529441833,
+        "eligible": true,
+        "eligibility_dot": 0.3548716604709625,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.20000000298023224,
+        1.6666666269302368
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.800000011920929,
+          0.6000000238418579
+        ],
+        "alignment": -0.3105126917362213,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        1,
+        0,
+        0
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.4472135901451111,
+        1.1180340051651
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.4472135901451111,
+          0.8944271802902222
+        ],
+        "alignment": 0.4835495054721832,
+        "eligible": false,
+        "eligibility_dot": -0.8317303657531738,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.01,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654
+      ],
+      "result": {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": 0.0,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "world_z_fallback",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        0.010001,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        99.98999786376953,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.8317303657531738,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        1,
+        0,
+        0
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        1.0,
+        1.0
+      ],
+      "result": {
+        "direction": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "alignment": -0.8317303657531738,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        2,
+        -3,
+        4
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.22614482045173645,
+        1.2264269590377808
+      ],
+      "result": {
+        "direction": [
+          -0.32113295793533325,
+          0.4816994071006775,
+          0.8153766989707947
+        ],
+        "alignment": -0.7363155484199524,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    },
+    {
+      "direction_input": [
+        -3,
+        2,
+        0.1
+      ],
+      "reference_axis": [
+        0,
+        0,
+        -0.6
+      ],
+      "source_vector": [
+        -5,
+        2,
+        -1
+      ],
+      "rsqrt_seeds": [
+        0.2772434651851654,
+        0.18439768254756927,
+        1.0070372819900513
+      ],
+      "result": {
+        "direction": [
+          -0.10957372933626175,
+          0.04382948949933052,
+          0.9930119514465332
+        ],
+        "alignment": 0.9680660963058472,
+        "eligible": true,
+        "eligibility_dot": -0.016634607687592506,
+        "branch": "projected_direction",
+        "normalized_input": [
+          -0.8317303657531738,
+          0.5544869303703308,
+          0.02772434614598751
+        ]
+      }
+    }
+  ]
+}

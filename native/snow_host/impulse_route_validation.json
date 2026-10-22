@@ -1,0 +1,370 @@
+{
+  "cases": 72,
+  "game_process": false,
+  "fragment": "original motion-state switch; first state-handler call intercepted",
+  "selected_rule": "outer state 3 and variant 1, 2, or unsigned variant greater than 8",
+  "argument": "selected state object passed unchanged to handler",
+  "scope": "does not execute producer thresholds, motion lock, caller actor gates or scheduling",
+  "rows": [
+    {
+      "state": 0,
+      "variant": -1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 0,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 2,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 3,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 4,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 5,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 6,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 7,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 8,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 9,
+      "producer_route_selected": false
+    },
+    {
+      "state": 0,
+      "variant": 10,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": -1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 0,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 2,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 3,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 4,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 5,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 6,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 7,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 8,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 9,
+      "producer_route_selected": false
+    },
+    {
+      "state": 1,
+      "variant": 10,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": -1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 0,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 2,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 3,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 4,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 5,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 6,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 7,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 8,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 9,
+      "producer_route_selected": false
+    },
+    {
+      "state": 2,
+      "variant": 10,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": -1,
+      "producer_route_selected": true
+    },
+    {
+      "state": 3,
+      "variant": 0,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 1,
+      "producer_route_selected": true
+    },
+    {
+      "state": 3,
+      "variant": 2,
+      "producer_route_selected": true
+    },
+    {
+      "state": 3,
+      "variant": 3,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 4,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 5,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 6,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 7,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 8,
+      "producer_route_selected": false
+    },
+    {
+      "state": 3,
+      "variant": 9,
+      "producer_route_selected": true
+    },
+    {
+      "state": 3,
+      "variant": 10,
+      "producer_route_selected": true
+    },
+    {
+      "state": 4,
+      "variant": -1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 0,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 2,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 3,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 4,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 5,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 6,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 7,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 8,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 9,
+      "producer_route_selected": false
+    },
+    {
+      "state": 4,
+      "variant": 10,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": -1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 0,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 1,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 2,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 3,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 4,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 5,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 6,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 7,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 8,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 9,
+      "producer_route_selected": false
+    },
+    {
+      "state": 5,
+      "variant": 10,
+      "producer_route_selected": false
+    }
+  ]
+}

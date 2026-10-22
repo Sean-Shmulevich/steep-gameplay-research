@@ -1,0 +1,2983 @@
+{
+  "cases": 144,
+  "game_process": false,
+  "scope": "Original queue pop/dispatch loop, one item per case, sufficient output capacity. Object cleanup, disposal scheduling and record reclaim intercepted. Cleanup stub optionally changes status bit 31. Outer locks, allocation, destructor and lifetime acquisition not executed.",
+  "rows": [
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483648,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "object_cleanup",
+          "append_object_to_disposal_list",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 0,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2147483649,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": false,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 0
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 1
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 0,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 0,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 1
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 0,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "object_present": true,
+        "pool_mode": 2
+      },
+      "record_count": 9,
+      "head": 3,
+      "callback_status_xor": 2147483648,
+      "result": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      },
+      "status_after_stubs": 2164260863,
+      "next_head": 0
+    }
+  ]
+}

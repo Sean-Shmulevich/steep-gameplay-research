@@ -1,0 +1,103 @@
+{
+  "schema": "cached-parent-live-observation-v1",
+  "evidence": "One original-game session; passive host reads after automated startup navigation; no riding input during capture",
+  "summary": {
+    "total_queries": 32,
+    "accepted_identity_brackets": 26,
+    "rejected_queries": 6,
+    "adjacent_same_identity_pairs": 20,
+    "callback_eligible_samples": 0,
+    "flag_change_counts": {
+      "primary_present": 0,
+      "current_present": 0,
+      "banks_alias": 0,
+      "callback_storage_nonempty": 0,
+      "forwarded_context_nonzero": 0,
+      "function_present": 0,
+      "holder_present": 0,
+      "holder_target_present": 0,
+      "holder_status_sign_bit": 0,
+      "callback_eligible": 0,
+      "context_tag": 0
+    },
+    "pose_change_counts": {
+      "cached_parent": 0,
+      "primary_parent": 3,
+      "current_parent": 3
+    },
+    "atomic_snapshot": false,
+    "lifetime_pinned": false,
+    "invocation_observed": false,
+    "writer_attribution_established": false,
+    "input_causality_established": false,
+    "safe_native_call_established": false,
+    "animation_writes": false
+  },
+  "accepted_flag_values": {
+    "context_tag": [
+      0
+    ],
+    "primary_present": [
+      true
+    ],
+    "current_present": [
+      true
+    ],
+    "banks_alias": [
+      false
+    ],
+    "callback_storage_nonempty": [
+      false
+    ],
+    "forwarded_context_nonzero": [
+      false
+    ],
+    "function_present": [
+      false
+    ],
+    "holder_present": [
+      true
+    ],
+    "holder_target_present": [
+      false
+    ],
+    "holder_status_sign_bit": [
+      true
+    ],
+    "callback_eligible": [
+      false
+    ]
+  },
+  "cached_w_values": [
+    0
+  ],
+  "bank_w_values": {
+    "primary_parent": [
+      0,
+      1
+    ],
+    "current_parent": [
+      0,
+      1
+    ]
+  },
+  "primary_current_equal_samples": 26,
+  "cached_primary_equal_samples": 24,
+  "capture_elapsed_seconds": 3.308352166961413,
+  "max_request_span_seconds": 0.008462875033728778,
+  "refusal_category": "identity, bounds, read or endpoint mismatch; exact cause not distinguished",
+  "stability_20_seconds": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true,
+    "original_dll_replaced": false
+  },
+  "limits": [
+    "Sequential observations are not atomic and do not pin object lifetime.",
+    "No callback registration at accepted sample times does not exclude registration between samples.",
+    "Bank changes do not attribute their writer or establish callback execution.",
+    "One session does not establish universal animation or sport behavior."
+  ],
+  "raw_game_data_included": false
+}

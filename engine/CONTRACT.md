@@ -15,3 +15,17 @@ domains.step_air(body,controls,dt,config) mutates only body, returns diagnostics
 animation.evaluate(rig, clips, state, dt, inputs) returns {state, local_pose, model_pose, diagnostics}. All JSON-compatible. Rig and clips are caller-provided, validated; synthetic default rig permitted. Physics input includes body orientation/grounded/speed but animation NEVER mutates body. State includes clip/time or crossfade fields as module documents. Expose palette optional helper and validate resources. animation.default_resources() returns synthetic rig/clips. Integrator can use module docs/signatures.
 
 Parent owns runtime.py, world.py, math3d.py, input.py, assets.py, replay.py, cli.py, browser demo and root README/progress. Workers own only assigned files and tests. All run from repository root with python3 -m unittest discover -s tests. Standard library only. No game launch/injection, no git publication by workers.
+
+Paused mod action: Engine.adjust_speed(delta_speed) uses the authored policy
+specified in engine/README.md, "Paused brake/boost mod". SchedulerController owns
+token validation, serial execution and isolated publication; HTTP exposes the
+same operation. No original-game setter equivalence is claimed. Success preserves
+angular velocity and clocks and appends a replayable speed command; failed
+validation publishes no mutation.
+
+Paused impulse action: Engine.apply_central_impulse consumes a finite float32 XYZ
+impulse once using reference.central_impulse. The single independent body is
+assumed dynamic and unsuppressed; inverse mass comes from its positive scenario
+mass. No dispatch/wake or paired rider behavior is implied. Spin, rigid angular
+momentum and clocks are untouched. Controller publication is isolated, tokened
+and replayable. Native host integration remains separate and unimplemented.

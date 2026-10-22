@@ -1,0 +1,7 @@
+{
+  "cases": 960,
+  "linear_result": "bit-exact float32",
+  "angular_and_other_body_bytes": "unchanged",
+  "dispatch": "arguments and gate checked; downstream implementation replaced by return",
+  "game_process": false
+}

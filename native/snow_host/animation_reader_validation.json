@@ -1,0 +1,25 @@
+{
+  "schema": "native-animation-reader-validation-v1",
+  "evidence": "compiled C executed against synthetic byte arrays; private Windows adapter compile only",
+  "native_reader_tests": 17,
+  "repository_suite_passed": 1352,
+  "post_suite_change": "pointer range hardening; all 17 affected tests rerun successfully",
+  "warnings_as_errors": true,
+  "game_launched": false,
+  "live_query_verified": false,
+  "transport": "caller supplied exact reads; private adapter uses ReadProcessMemory",
+  "scope": [
+    "unique exact skeleton type and ownership",
+    "unsigned lower-bound lookup with first duplicate",
+    "metadata capacity and finite values",
+    "retained span rechecks",
+    "Python local-record comparison"
+  ],
+  "unresolved": [
+    "live game applicability",
+    "ABA and object lifetime",
+    "animation completion",
+    "clip identity and coordinate semantics",
+    "animation write boundary"
+  ]
+}

@@ -1,0 +1,1210 @@
+{
+  "cases": 64,
+  "game_process": false,
+  "scope": "Complete original ready-publication drain, one queued item and ready count zero or one. Pool locks and object notification intercepted. Queued object differs from current object. No producer-to-ready transfer, notification effects, concurrent record reuse or invalid ready-count input tested.",
+  "rows": [
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 1
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 1
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 1
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 1
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 1
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 1
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 1
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 0,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 1
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 1
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 0,
+        "notify_object": 0
+      },
+      "status_after": 0,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 5,
+        "notify_object": 0
+      },
+      "status_after": 5,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 88,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": false,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 0
+      },
+      "status_after": 2147483648,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 0
+      },
+      "status_after": 2147483648,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 0
+      },
+      "status_after": 2147483653,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 0
+      },
+      "status_after": 2147483653,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 0
+      },
+      "status_after": 2164260869,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 0,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 0
+      },
+      "status_after": 4294967295,
+      "notifications": [],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 1
+      },
+      "status_after": 2147483648,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 0
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483648,
+        "notify_object": 1
+      },
+      "status_after": 2147483648,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 1
+      },
+      "status_after": 2147483653,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 5
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2147483653,
+        "notify_object": 1
+      },
+      "status_after": 2147483653,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 1
+      },
+      "status_after": 2164260869,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 2164260869
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 2164260869,
+        "notify_object": 1
+      },
+      "status_after": 2164260869,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 1
+      },
+      "status_after": 4294967295,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    },
+    {
+      "inputs": {
+        "queued_identifier": 77,
+        "current_identifier": 77,
+        "current_object": 1,
+        "status_word": 4294967295
+      },
+      "ready_count": 1,
+      "result": {
+        "identifier_matched": true,
+        "status_word": 4294967295,
+        "notify_object": 1
+      },
+      "status_after": 4294967295,
+      "notifications": [
+        1
+      ],
+      "queue_count_after": 0
+    }
+  ],
+  "transfer_cases": [
+    {
+      "submitted": 0,
+      "ready": 0,
+      "result": {
+        "submitted": 0,
+        "ready": 0
+      }
+    },
+    {
+      "submitted": 0,
+      "ready": 9,
+      "result": {
+        "submitted": 0,
+        "ready": 9
+      }
+    },
+    {
+      "submitted": 0,
+      "ready": 4294967295,
+      "result": {
+        "submitted": 0,
+        "ready": 4294967295
+      }
+    },
+    {
+      "submitted": 1,
+      "ready": 0,
+      "result": {
+        "submitted": 0,
+        "ready": 1
+      }
+    },
+    {
+      "submitted": 1,
+      "ready": 9,
+      "result": {
+        "submitted": 0,
+        "ready": 10
+      }
+    },
+    {
+      "submitted": 1,
+      "ready": 4294967295,
+      "result": {
+        "submitted": 0,
+        "ready": 0
+      }
+    },
+    {
+      "submitted": 7,
+      "ready": 0,
+      "result": {
+        "submitted": 0,
+        "ready": 7
+      }
+    },
+    {
+      "submitted": 7,
+      "ready": 9,
+      "result": {
+        "submitted": 0,
+        "ready": 16
+      }
+    },
+    {
+      "submitted": 7,
+      "ready": 4294967295,
+      "result": {
+        "submitted": 0,
+        "ready": 6
+      }
+    },
+    {
+      "submitted": 4294967295,
+      "ready": 0,
+      "result": {
+        "submitted": 0,
+        "ready": 4294967295
+      }
+    },
+    {
+      "submitted": 4294967295,
+      "ready": 9,
+      "result": {
+        "submitted": 0,
+        "ready": 8
+      }
+    },
+    {
+      "submitted": 4294967295,
+      "ready": 4294967295,
+      "result": {
+        "submitted": 0,
+        "ready": 4294967294
+      }
+    }
+  ],
+  "transfer_scope": "Original counter-transfer slice with R14 explicitly zero; preceding work services and full enclosing control flow not executed."
+}

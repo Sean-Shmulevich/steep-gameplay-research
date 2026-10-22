@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-15",
+  "evidence": "live observation, one game session",
+  "ok": true,
+  "trials": [
+    {
+      "delta": -2.0,
+      "before": 3.95798143,
+      "immediate": 1.9579813945831739,
+      "after_1_step": 2.2737392193950567,
+      "after_5_steps": 2.466174548292795,
+      "readback_matches": true,
+      "same_identity": true
+    },
+    {
+      "delta": 2.0,
+      "before": 39.3778472,
+      "immediate": 41.37784847822338,
+      "after_1_step": 41.40699705101513,
+      "after_5_steps": 41.563070451084016,
+      "readback_matches": true,
+      "same_identity": true
+    }
+  ],
+  "stable_20_seconds": true,
+  "scope": "One-shot full-3D velocity assignment using the engine routine; five world-step jobs after each pulse. No baseline control, grounded classification, or continuous tick hook. Angular velocity resets at assignment."
+}

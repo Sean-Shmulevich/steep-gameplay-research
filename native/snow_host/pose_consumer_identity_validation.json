@@ -1,0 +1,21 @@
+{
+  "evidence": "static_instruction_and_table_checks",
+  "game_process": false,
+  "checks": {
+    "candidate_class_constructor_assigns_table": true,
+    "player_constructor_assigns_known_player_table": true,
+    "candidate_class_slot_reaches_override": true,
+    "override_calls_base_thunk": true,
+    "base_thunk_forwards_without_this_adjustment": true,
+    "forwarded_routine_calls_transform_consumer": true,
+    "player_same_slot_selects_noop": true,
+    "noop_is_return_zero_stack_pop": true,
+    "producer_caller_calls_reference_pose_routine": true
+  },
+  "conclusion": "Candidate virtual dispatch is not the known player-table dispatch at the same slot. Shared offsets alone do not establish a producer-consumer connection.",
+  "limits": [
+    "Does not exclude a direct call or another object representation.",
+    "No native gameplay dispatch or scheduler timing observed.",
+    "Original image and instructions remain private."
+  ]
+}

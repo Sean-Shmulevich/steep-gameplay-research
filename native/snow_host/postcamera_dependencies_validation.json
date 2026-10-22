@@ -1,0 +1,69 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 2,
+  "registrations_per_case": 15,
+  "edges": [
+    [
+      "SkeletonGatherComponents",
+      "SkeletonUpdate"
+    ],
+    [
+      "SkeletonGatherComponents",
+      "RagdollAfterCamera"
+    ],
+    [
+      "SkeletonGatherComponents",
+      "SkeletonUpdateInteractions"
+    ],
+    [
+      "RagdollAfterCamera",
+      "KinoAfterSkeleton"
+    ],
+    [
+      "RagdollAfterCamera",
+      "KinoAfterSkeletonHiPriority"
+    ],
+    [
+      "RagdollAfterCamera",
+      "KinoAfterSkeletonWithInteractions"
+    ],
+    [
+      "SkeletonUpdate",
+      "KinoAfterSkeleton"
+    ],
+    [
+      "SkeletonUpdate",
+      "KinoAfterSkeletonHiPriority"
+    ],
+    [
+      "SkeletonUpdate",
+      "KinoAfterSkeletonWithInteractions"
+    ],
+    [
+      "SkeletonUpdateInteractions",
+      "KinoAfterSkeleton"
+    ],
+    [
+      "SkeletonUpdateInteractions",
+      "KinoAfterSkeletonHiPriority"
+    ],
+    [
+      "SkeletonUpdateInteractions",
+      "KinoAfterSkeletonWithInteractions"
+    ],
+    [
+      "KinoAfterSkeleton",
+      "LiteRagdollUpdate"
+    ],
+    [
+      "KinoAfterSkeletonHiPriority",
+      "LiteRagdollUpdate"
+    ],
+    [
+      "KinoAfterSkeletonWithInteractions",
+      "LiteRagdollUpdate"
+    ]
+  ],
+  "scope": "Original registration span with constructor-matched tables, synthetic owners, seeded entry registers and recording registration stub that clobbers volatile registers. Range predicate/worker and common begin/finalizer pointers verified. Gather uses ordinary callback table. Concrete visitors differ. No live membership, native dispatch, complete graph or universal capture fence claimed."
+}

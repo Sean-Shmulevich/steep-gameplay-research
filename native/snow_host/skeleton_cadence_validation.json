@@ -1,0 +1,419 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 6144,
+  "scope": "Original complete post-update cadence tail, no service stubs; both owner time-group branches. Stops before epilogue. Does not execute pose evaluation.",
+  "enumeration": "counter 0..255; interval [0,1,2,3,7,255]; forced [0,1]; alternate time group [0,1]",
+  "output_format": "little-endian float32 accumulator, uint8 counter, uint8 flags, uint8 dirty",
+  "sha256": "87c0bc23db852a8df8413fd331a1a7cd15bfcecf18707049992ba9856f47bfeb",
+  "samples": [
+    {
+      "inputs": {
+        "counter": 0,
+        "interval": 0,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 1,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 0,
+        "interval": 0,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 1,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 0,
+        "interval": 3,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 1,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 0,
+        "interval": 3,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 1,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 0,
+        "interval": 255,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 1,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 0,
+        "interval": 255,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 1,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 1,
+        "interval": 0,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 2,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 1,
+        "interval": 0,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 2,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 1,
+        "interval": 3,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 2,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.13500000536441803,
+        "accumulated_this_call": true
+      }
+    },
+    {
+      "inputs": {
+        "counter": 1,
+        "interval": 3,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 2,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 1,
+        "interval": 255,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 2,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.13500000536441803,
+        "accumulated_this_call": true
+      }
+    },
+    {
+      "inputs": {
+        "counter": 1,
+        "interval": 255,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 2,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 254,
+        "interval": 0,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 255,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 254,
+        "interval": 0,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 255,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 254,
+        "interval": 3,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 255,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.13500000536441803,
+        "accumulated_this_call": true
+      }
+    },
+    {
+      "inputs": {
+        "counter": 254,
+        "interval": 3,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 255,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 254,
+        "interval": 255,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 255,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.13500000536441803,
+        "accumulated_this_call": true
+      }
+    },
+    {
+      "inputs": {
+        "counter": 254,
+        "interval": 255,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 255,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 255,
+        "interval": 0,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 0,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 255,
+        "interval": 0,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 0,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 255,
+        "interval": 3,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 0,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 255,
+        "interval": 3,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 0,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 255,
+        "interval": 255,
+        "flags": 164,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 0,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    },
+    {
+      "inputs": {
+        "counter": 255,
+        "interval": 255,
+        "flags": 165,
+        "dirty": 255,
+        "accumulated": 0.125,
+        "dt": 0.01
+      },
+      "result": {
+        "counter": 0,
+        "flags": 164,
+        "dirty": 239,
+        "accumulated": 0.0,
+        "accumulated_this_call": false
+      }
+    }
+  ]
+}

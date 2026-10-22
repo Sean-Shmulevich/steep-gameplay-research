@@ -1,0 +1,96 @@
+{
+  "evidence": "original_instruction_emulation_and_static_call_join",
+  "game_process": false,
+  "cases": 8,
+  "samples": [
+    {
+      "receiver_is_setup_owner": true,
+      "input_tag": 0,
+      "retained_tag": 0,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": false,
+      "input_tag": 0,
+      "retained_tag": 0,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": true,
+      "input_tag": 1,
+      "retained_tag": 0,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": false,
+      "input_tag": 1,
+      "retained_tag": 0,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": true,
+      "input_tag": 2,
+      "retained_tag": 2,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": false,
+      "input_tag": 2,
+      "retained_tag": 2,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": true,
+      "input_tag": 3,
+      "retained_tag": 2,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    },
+    {
+      "receiver_is_setup_owner": false,
+      "input_tag": 3,
+      "retained_tag": 2,
+      "job_name": "BeginEngineFrame",
+      "profiler_name": "Engine::BeginEngineFrame"
+    }
+  ],
+  "edges": [
+    [
+      "BeginFrame",
+      "BeginEngineFrame"
+    ],
+    [
+      "BeginEngineFrame",
+      "CheckEngineStop"
+    ]
+  ],
+  "scope": "Original setup binding and registration spans; label and registration services intercepted. Static direct calls join bound BeginEngineFrame to ExecuteCommands and hierarchy queue flush. No frame execution or safe native callback claim.",
+  "spans": [
+    {
+      "rva": "0x6970d1",
+      "length": 149,
+      "sha256": "96b3ccb500db562d82befbf7634ec0927315511238a286b76f3c2dc25e52e9e9"
+    },
+    {
+      "rva": "0x696911",
+      "length": 114,
+      "sha256": "424c4bf6a2b875929687680f94395177f9173593c97795c6a1137491788e0af5"
+    },
+    {
+      "rva": "0x656977",
+      "length": 12,
+      "sha256": "fa88b0426474d4b681984f35f124797bf7239d6e728867bc4e7a7a9ed8ae34ce"
+    },
+    {
+      "rva": "0x664260",
+      "length": 25,
+      "sha256": "108f6ec21d926b0242fac034640ec6074e4b87f7bcb3ac65442f4d35263cd583"
+    }
+  ]
+}

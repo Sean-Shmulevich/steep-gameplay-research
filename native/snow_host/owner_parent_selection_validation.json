@@ -1,0 +1,1224 @@
+{
+  "evidence": "original-instruction emulation with synthetic bank state",
+  "cases": 64,
+  "scope": "Full wrapper control flow and real owner conversion/parent stores; acquisition, preparation and bank processing are supplied services. Preparation mode mutation is a synthetic ordering probe.",
+  "live_writer_attribution": false,
+  "rows": [
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          2
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          7
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          2
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          7
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          2
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          7
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          2
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": false,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "alternate"
+        ],
+        [
+          "parent",
+          "primary",
+          0
+        ],
+        [
+          "process",
+          "primary",
+          "alternate",
+          7
+        ]
+      ],
+      "returned_bank": "primary"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": false,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          0
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": false,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "acquire",
+          1
+        ],
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "new",
+          0
+        ],
+        [
+          "process",
+          "new",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "new"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": false,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 0,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": false,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          2
+        ]
+      ],
+      "returned_bank": "alternate"
+    },
+    {
+      "primary_bit26": true,
+      "primary_bit27": true,
+      "alternate_present": true,
+      "alternate_bit27": true,
+      "request_low_bit": 1,
+      "prepare_changes_mode": true,
+      "events": [
+        [
+          "prepare",
+          "primary"
+        ],
+        [
+          "parent",
+          "alternate",
+          0
+        ],
+        [
+          "process",
+          "alternate",
+          "primary",
+          7
+        ]
+      ],
+      "returned_bank": "alternate"
+    }
+  ]
+}

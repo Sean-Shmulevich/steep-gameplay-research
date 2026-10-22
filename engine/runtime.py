@@ -100,6 +100,64 @@ class Engine:
         self.scenario=scenario;self.last_good=copy.deepcopy(self.state)
         self.replay_base=self.checkpoint();self.commands=[]
         return self.snapshot()
+    def adjust_speed(self, delta_speed):
+        """Authored paused mod action; preserve direction and angular momentum.
+
+        Shares the host's bounded +/-10 pulse and 60-unit boost policy, not the
+        original engine setter semantics. No tick or animation clock advances.
+        Successful mutations are recorded in command order for full replay.
+        """
+        if not self.state['paused']:
+            raise ValueError('Speed adjustment requires a paused engine')
+        if (type(delta_speed) not in (int, float) or not math.isfinite(delta_speed)
+                or not 0 < abs(delta_speed) <= 10):
+            raise ValueError('Speed delta must be finite, nonzero and within -10..10')
+        before = vector(self.state['body']['velocity'])
+        speed = math.hypot(*before)
+        if not math.isfinite(speed) or speed < .5:
+            raise ValueError('Velocity direction is unresolved')
+        if delta_speed > 0 and speed >= 60:
+            raise ValueError('Boost speed cap reached')
+        target = max(0., speed + delta_speed)
+        if delta_speed > 0:
+            target = min(60., target)
+        velocity = vector([v * (target / speed) for v in before])
+        self.state['body']['velocity'] = velocity
+        self.events.append(dict(type='mod_speed_adjusted', tick=self.state['tick'],
+                                delta_speed=delta_speed, speed_before=speed,
+                                speed_target=target, angular_velocity_preserved=True,
+                                evidence='authored independent-engine mod policy'))
+        self.last_good = copy.deepcopy(self.state)
+        self.commands.append(dict(op='adjust_speed', delta_speed=delta_speed))
+        return self.snapshot()
+
+    def apply_central_impulse(self, impulse):
+        """Recovered float32 arithmetic, authored paused single-body adapter.
+
+        The independent body is treated as dynamic and unsuppressed. No native
+        backend dispatch, coupled rider, lock or callback is simulated here.
+        """
+        from reference.central_impulse import central_impulse, vector as impulse_vector
+        if not self.state['paused']:
+            raise ValueError('Central impulse requires a paused engine')
+        if not isinstance(impulse,(list,tuple)) or len(impulse)!=3 or any(
+                type(x) not in (int,float) for x in impulse):
+            raise ValueError('Impulse requires three numeric components')
+        impulse=list(impulse_vector(impulse))
+        body=self.state['body']
+        mass=body['mass']
+        if not math.isfinite(mass) or mass<=0:
+            raise ValueError('Positive finite body mass required')
+        result=central_impulse(body['velocity'],body['angular_velocity'],impulse,1/mass)
+        # Preserve the original spin representation, not its float32 conversion.
+        body['velocity']=list(result['linear'])
+        self.events.append(dict(type='mod_central_impulse',tick=self.state['tick'],
+                                impulse=impulse,angular_velocity_preserved=True,
+                                evidence='recovered arithmetic; authored single-body adapter'))
+        self.last_good=copy.deepcopy(self.state)
+        self.commands.append(dict(op='apply_central_impulse',impulse=impulse))
+        return self.snapshot()
+
     def set_input(self,actions):
         actions=validate(actions)
         self.state['controls']=actions;self.state['input_generation']+=1

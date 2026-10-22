@@ -1,0 +1,25 @@
+{
+  "scope": "Current worktree build and Python integration validation; not live-game acceptance",
+  "python_suite": {
+    "command": "python3 -m unittest discover -s tests",
+    "tests_run": 1591,
+    "result": "passed",
+    "environment": "Process-local SDKROOT selected the installed macOS 26.5 SDK",
+    "initial_failure": "Default macOS 27 SDK rejected by the selected linker: unknown architecture arm64e.x1-macos. Native reader setup failed; this was not skipped in the passing run."
+  },
+  "windows_cross_compile": {
+    "compiler": "x86_64-w64-mingw32-gcc",
+    "warnings": "-Wall -Wextra -Werror",
+    "passed": ["snow_host.dll with fixture_adapter.c", "host_loader.exe", "startup_launcher.exe", "step_logger.dll", "player_logger.dll"],
+    "executed": false
+  },
+  "socket_acceptance": "Synthetic loopback server; actual Python client, pause/step transaction, speed acceptance and JSON receipt path",
+  "live_acceptance": "Not run: Intel execution unavailable",
+  "game_payloads_included": false,
+  "limitations": [
+    "Uncommitted worktree snapshot; not a published release or immutable commit receipt",
+    "Fixture host compilation does not validate the private game adapter",
+    "Synthetic socket responses do not prove native host scheduling or gameplay effects",
+    "No original-engine equivalence or deterministic original-game replay established"
+  ]
+}

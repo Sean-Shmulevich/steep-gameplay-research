@@ -1,0 +1,8176 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 432,
+  "scope": "Full preparation helper plus actual clear-work tail. Evaluation, apply, process and critical-section services intercepted without mutation. Float ordered-compare branch tested including signed zeros, negative subnormal, infinities and quiet NaNs; hardware exception policy not established. Pending is checked before unlock.",
+  "samples": [
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 0,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483648,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 1048576000,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 3212836864,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2147483649,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2147483649,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_current",
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "clear_work"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2139095040,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "evaluate_primary",
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 3212836864,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4286578688,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4286578688,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 2143289345,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 2143289345,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": false,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_current",
+          "process_current",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": null,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": null,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 164
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 0,
+        "pending": 165
+      },
+      "result": {
+        "calls": [],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 0,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 164,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 1,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "clear_work"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 0,
+        "counters_cleared": true,
+        "mask": 0
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 8,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 1
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 164
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    },
+    {
+      "inputs": {
+        "scalar_bits": 4290772993,
+        "use_primary": true,
+        "component_flags": 56,
+        "work_count": 3,
+        "pending": 165
+      },
+      "result": {
+        "calls": [
+          "lock",
+          "apply_primary",
+          "process_primary",
+          "unlock"
+        ],
+        "scalar_bits": 4290772993,
+        "pending": 165,
+        "work_count": 3,
+        "counters_cleared": false,
+        "mask": 7
+      }
+    }
+  ]
+}

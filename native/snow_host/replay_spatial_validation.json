@@ -1,0 +1,8 @@
+{
+  "cases": 120,
+  "synthetic_inputs_only": true,
+  "native_spatial_fields_and_consumption_match": true,
+  "external_calls_stubbed": false,
+  "normalization_seed": "captured from emulated RSQRTPS; hardware seed equivalence not claimed",
+  "version": 94
+}

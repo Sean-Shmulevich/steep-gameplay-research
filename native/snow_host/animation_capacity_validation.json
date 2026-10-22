@@ -1,0 +1,1073 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 48,
+  "scope": "Complete capacity helper with allocation, memcpy, allocation-metadata and free services intercepted. Exact service order, copy length, old pointer during release, final header and pointer checked. No allocator internals, actual deallocation or concurrency proof.",
+  "samples": [
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 16392,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 16392,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 49160,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 49160,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 16392,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 8,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 49160,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 8,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 16392,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 12,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 49160,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 12,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 16392,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 16392,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 12,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 49160,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 49160,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 12,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 213000,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 213000,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 245768,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 245768,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 213000,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 196616,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 96
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 245768,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 196616,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 96
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 213000,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 196620,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 96
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 245768,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 196620,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 96
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 213000,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 213000,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 196620,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 96
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 245768,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 245768,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 196620,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 96
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 540680,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 540680,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 573448,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 8,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "unchanged",
+        "header": 573448,
+        "effects": []
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 540680,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 524296,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 256
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 573448,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 8,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 524296,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 8,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 256
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 540680,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 524300,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 256
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 573448,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 12,
+        "stride": 32,
+        "force": false,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 524300,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 256
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 540680,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 540680,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 524300,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 256
+          },
+          {
+            "kind": "release_old"
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": false
+      },
+      "result": {
+        "action": "allocation_failed",
+        "header": 573448,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          }
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "header": 573448,
+        "requested": 12,
+        "stride": 32,
+        "force": true,
+        "pointer_present": true,
+        "allocation_succeeds": true
+      },
+      "result": {
+        "action": "replaced",
+        "header": 524300,
+        "effects": [
+          {
+            "kind": "allocate",
+            "elements": 12,
+            "stride": 32
+          },
+          {
+            "kind": "copy",
+            "bytes": 256
+          },
+          {
+            "kind": "install"
+          }
+        ]
+      }
+    }
+  ]
+}

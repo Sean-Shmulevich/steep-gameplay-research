@@ -1,0 +1,8 @@
+{
+  "cases": 100,
+  "synthetic_inputs_only": true,
+  "distance_and_bounds_match": true,
+  "append_call_skipped": true,
+  "optional_callback_disabled": true,
+  "scope": "local arithmetic and gates, not record ownership or allocation"
+}

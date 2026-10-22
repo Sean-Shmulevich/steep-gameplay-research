@@ -1,0 +1,2751 @@
+{
+  "cases": 96,
+  "game_process": false,
+  "scope": "Complete original reader for tags 1,2,255. Original existing-record lookup and transfer/reset operations. Locks, map lookup, policy, retirement and follow-up request intercepted. Contiguous input; no refill, inline tag-zero object construction, allocation or full ActionKit reader tested.",
+  "rows": [
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          4,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483652,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          4,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483652,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          5,
+          2,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483650,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          5,
+          2,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": true,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483650,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 1,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "policy",
+        "lock",
+        "lookup",
+        "unlock",
+        "followup_request"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 2,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483654,
+          2147483651,
+          2147483648
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 0,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 0,
+      "lookup_record": 0,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 0,
+        "retirement_requests": []
+      },
+      "events": [],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 2,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483652,
+          2147483648
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": false,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 0,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        5,
+        3,
+        1
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          5,
+          3,
+          1
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    },
+    {
+      "tag": 255,
+      "flag": 255,
+      "identifier": 77,
+      "policy_accepted": true,
+      "initial_statuses": [
+        2147483653,
+        2147483651,
+        2147483649
+      ],
+      "old_record": 1,
+      "lookup_record": 1,
+      "rejected": false,
+      "result": {
+        "status_words": [
+          2147483653,
+          2147483651,
+          2147483649
+        ],
+        "slot_record": 1,
+        "retirement_requests": []
+      },
+      "events": [
+        "lock",
+        "lookup",
+        "unlock"
+      ],
+      "bytes_consumed": 10
+    }
+  ]
+}

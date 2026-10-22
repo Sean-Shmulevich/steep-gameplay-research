@@ -17,6 +17,10 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 
 ## Scheduler reconstruction
 
+- [ActionKit resource pointer cache](reconstruction/ACTION_KIT_CACHE.md)
+
+- [Central impulse and rotation-preserving boost](reconstruction/CENTRAL_IMPULSE.md)
+
 - [Release gates and current priorities](../engine/SCHEDULER_ROADMAP.md)
 - [Timing arithmetic and smoothing](reconstruction/SCHEDULER_SMOOTHING_AUDIT.md)
 - [Queue reservation, completion and request rearm](reconstruction/SCHEDULER_REARM.md)
@@ -204,3 +208,18 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 - [Range worker yield counters](reconstruction/RANGE_WORKER_YIELD.md)
 
 - [Worker TLS context and execution mode](reconstruction/WORKER_THREAD_CONTEXT.md)
+
+- [Ground-response helper testbench](reconstruction/GROUND_RESPONSE_TESTBENCH.md): JSON sequences, CLI and loopback inspection of the reconstructed helper, with explicit numerical policy and no live body writes.
+
+- [Ground-response displacement to pose](reconstruction/CENTRAL_IMPULSE.md#published-displacement-to-reference-pose-correction): buffer-swap linkage, actor decay and Reference-channel length correction; full skeleton application remains open.
+
+- [Resolved-input pose sequence runner](reconstruction/CENTRAL_IMPULSE.md#composed-active-pose-tail): composed local pose tail, carried filter states and CLI example; no skeleton or body commit.
+
+- [Supplied-provider pose sequence runner](reconstruction/CENTRAL_IMPULSE.md#runnable-supplied-provider-pose-sequence): offline entity/provider conversion through contact response and pose output, with explicit missing dependencies.
+
+- [Powder external research: matching build, readiness, replay storage and service protocols](reconstruction/POWDER_REVIEW.md)
+- [Live replay: partial prefix, reader stages and playback timing leads](reconstruction/LIVE_REPLAY_LEADS.md)
+
+## Studio map decoding update
+
+See [map decoding update](reconstruction/MAP_DECODING_UPDATE.md) for the pinned terrain container, height/class/material codec, floor-height and map-structure specifications.

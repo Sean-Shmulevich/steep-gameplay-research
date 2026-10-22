@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "name": "Recovered regular and additive bytes with authored pose mapping",
+  "animation": {
+    "graph": {
+      "schema_version": 1,
+      "root": "masked",
+      "nodes": {
+        "idle": {
+          "type": "clip",
+          "clip": "idle"
+        },
+        "bend": {
+          "type": "clip",
+          "clip": "bend"
+        },
+        "mix": {
+          "type": "byte_blend",
+          "base": "idle",
+          "overlay": "bend",
+          "weight": 0.5,
+          "normalization": "authored_exact_sqrt"
+        },
+        "lean": {
+          "type": "clip",
+          "clip": "lean",
+          "space": "delta"
+        },
+        "layer": {
+          "type": "byte_additive",
+          "base": "mix",
+          "delta": "lean",
+          "weight": 0.5,
+          "normalization": "authored_exact_sqrt"
+        },
+        "masked": {
+          "type": "byte_mask",
+          "base": "mix",
+          "overlay": "layer",
+          "weight": 1,
+          "bytes": {
+            "knee": 255,
+            "root": 128
+          },
+          "normalization": "authored_exact_sqrt"
+        }
+      }
+    }
+  }
+}

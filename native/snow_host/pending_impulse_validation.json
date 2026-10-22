@@ -1,0 +1,10 @@
+{
+  "cases": 48,
+  "game_process": false,
+  "original_consumer_and_impulse_arithmetic": true,
+  "locks": "entry/exit calls intercepted; matching lock argument and ordering checked; lock implementation not executed",
+  "dispatch": "intercepted; actual wake/island side effects not tested",
+  "linear_and_angular": "bit-exact",
+  "threshold": "inclusive float32 1e-5 across all four lanes; adjacent greater float tested",
+  "pending_clear": "after lock release on consumed branch, retained otherwise"
+}

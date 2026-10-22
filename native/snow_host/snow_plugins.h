@@ -6,7 +6,7 @@
 #include <wchar.h>
 #include "snow_plugin.h"
 
-#define SNOW_HOST_VERSION "0.6.0"
+#define SNOW_HOST_VERSION "0.7.0"
 
 /* Provided by snow_host.c. */
 void snow_host_log(const char *tag, const char *fmt, ...);

@@ -1,0 +1,32 @@
+{
+  "schema": "animation-host-live-observation-v1",
+  "evidence": "one bounded original-game session through native host; navigation recognized gameplay HUD",
+  "resource_key": 743623600,
+  "accepted_queries": 12,
+  "found_queries": 12,
+  "matching_player_identity_queries": 12,
+  "distinct_epochs": 12,
+  "distinct_local_vectors": 12,
+  "distinct_local_rotations": 12,
+  "capture_seconds": 1.1598382079973817,
+  "stable_20_seconds": true,
+  "steps_released": 0,
+  "animation_writes": false,
+  "capture_gameplay_input": false,
+  "startup_navigation_input": true,
+  "host_dll_loaded": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "One player/channel/session only",
+    "Sequential observations, not atomic",
+    "No object lifetime pin or ABA exclusion",
+    "No animation completion or safe write boundary",
+    "Clip identity and coordinate semantics unresolved",
+    "Changes were observed without a controlled gameplay action"
+  ],
+  "payload_policy": "No raw poses, game data or process addresses included"
+}

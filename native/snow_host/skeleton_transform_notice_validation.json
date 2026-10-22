@@ -1,0 +1,139 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 65536,
+  "scope": "Both exact SkeletonComponent vtable callbacks executed for every pair of uint8 dirty/pending inputs. No stubs. Null event pointer is not dereferenced. No scheduler, concurrency or lifetime claim.",
+  "enumeration": "dirty outer 0..255, pending inner 0..255; hash concatenated output byte pairs",
+  "before_sha256": "281f79f89f0121c31db2bea5d7151db246349b25f5901c114505c18bfaa50ba1",
+  "after_sha256": "91ed2171bcbfe7bffc71adf42ae02ed8ac7687dfe19cfc6ac0fdf683b28ba24c",
+  "samples": [
+    {
+      "dirty": 0,
+      "pending": 0,
+      "after": [
+        128,
+        1
+      ]
+    },
+    {
+      "dirty": 0,
+      "pending": 1,
+      "after": [
+        128,
+        1
+      ]
+    },
+    {
+      "dirty": 0,
+      "pending": 254,
+      "after": [
+        128,
+        255
+      ]
+    },
+    {
+      "dirty": 0,
+      "pending": 255,
+      "after": [
+        128,
+        255
+      ]
+    },
+    {
+      "dirty": 127,
+      "pending": 0,
+      "after": [
+        255,
+        1
+      ]
+    },
+    {
+      "dirty": 127,
+      "pending": 1,
+      "after": [
+        255,
+        1
+      ]
+    },
+    {
+      "dirty": 127,
+      "pending": 254,
+      "after": [
+        255,
+        255
+      ]
+    },
+    {
+      "dirty": 127,
+      "pending": 255,
+      "after": [
+        255,
+        255
+      ]
+    },
+    {
+      "dirty": 128,
+      "pending": 0,
+      "after": [
+        128,
+        1
+      ]
+    },
+    {
+      "dirty": 128,
+      "pending": 1,
+      "after": [
+        128,
+        1
+      ]
+    },
+    {
+      "dirty": 128,
+      "pending": 254,
+      "after": [
+        128,
+        255
+      ]
+    },
+    {
+      "dirty": 128,
+      "pending": 255,
+      "after": [
+        128,
+        255
+      ]
+    },
+    {
+      "dirty": 255,
+      "pending": 0,
+      "after": [
+        255,
+        1
+      ]
+    },
+    {
+      "dirty": 255,
+      "pending": 1,
+      "after": [
+        255,
+        1
+      ]
+    },
+    {
+      "dirty": 255,
+      "pending": 254,
+      "after": [
+        255,
+        255
+      ]
+    },
+    {
+      "dirty": 255,
+      "pending": 255,
+      "after": [
+        255,
+        255
+      ]
+    }
+  ]
+}

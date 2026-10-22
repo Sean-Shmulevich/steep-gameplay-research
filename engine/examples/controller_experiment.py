@@ -35,7 +35,7 @@ def run(base_url, *, frames=30):
     def advance(token, actions):
         samples = []
         for index in range(frames):
-            response = command(op='step_frame_once', token=token, dt=1/60, actions=actions)
+            response = command(op='step_frame_once', token=token, dt=1/60, actions=actions, include_trace=False)
             state = response['snapshot']['state']
             samples.append(dict(frame=index, tick=state['tick'], time=state['time'],
                                 input_generation=state['input_generation'], body=state['body']))
@@ -60,7 +60,7 @@ def run(base_url, *, frames=30):
         token = command(op='restore', checkpoint=checkpoint)['token']
         token = command(op='tune', token=token,
                         changes={'physics': {'brake_deceleration': deceleration}})['token']
-        start = get('/state')['state']
+        start = get('/state?trace=summary')['state']
         samples = advance(token, {'brake': True})
         branches.append(dict(name=name, brake_deceleration=deceleration,
                              start=start, samples=samples, **evidence()))

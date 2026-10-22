@@ -1,0 +1,361 @@
+{
+  "scope": "Resource identifiers and CRC-matched names only; no bone transforms or asset payloads.",
+  "presets": {
+    "standard": [
+      {
+        "key": 743623600,
+        "name": "Reference",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1393476043,
+        "name": "Spine",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2402941518,
+        "name": "Spine1",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 372288500,
+        "name": "Spine2",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2149808493,
+        "name": "Neck",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 130111906,
+        "name": "Head",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 392266736,
+        "name": "LeftUpLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 101577729,
+        "name": "LeftLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1486391408,
+        "name": "LeftFoot",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 759586984,
+        "name": "LeftShoulder",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 3951233754,
+        "name": "LeftArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2310617728,
+        "name": "LeftForeArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 3061183340,
+        "name": "LeftHand",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2434775759,
+        "name": "LeftHandMiddle1",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1971262097,
+        "name": "RightUpLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2252147196,
+        "name": "RightLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2601793068,
+        "name": "RightFoot",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 4127606757,
+        "name": "RightShoulder",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1806956327,
+        "name": "RightArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1918345642,
+        "name": "RightForeArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1979272496,
+        "name": "RightHand",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1162106738,
+        "name": "RightHandMiddle1",
+        "name_evidence": "crc32_match"
+      }
+    ],
+    "extended": [
+      {
+        "key": 743623600,
+        "name": "Reference",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1393476043,
+        "name": "Spine",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2402941518,
+        "name": "Spine1",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 372288500,
+        "name": "Spine2",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2149808493,
+        "name": "Neck",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 130111906,
+        "name": "Head",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 392266736,
+        "name": "LeftUpLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 101577729,
+        "name": "LeftLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1486391408,
+        "name": "LeftFoot",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 3109065953,
+        "name": "LeftToeBase",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 759586984,
+        "name": "LeftShoulder",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 3951233754,
+        "name": "LeftArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2310617728,
+        "name": "LeftForeArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 3061183340,
+        "name": "LeftHand",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2434775759,
+        "name": "LeftHandMiddle1",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2131876835,
+        "name": "LeftHandMiddle3",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1971262097,
+        "name": "RightUpLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2252147196,
+        "name": "RightLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2601793068,
+        "name": "RightFoot",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1119752139,
+        "name": "RightToeBase",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 4127606757,
+        "name": "RightShoulder",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1806956327,
+        "name": "RightArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1918345642,
+        "name": "RightForeArm",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1979272496,
+        "name": "RightHand",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1162106738,
+        "name": "RightHandMiddle1",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2873767518,
+        "name": "RightHandMiddle3",
+        "name_evidence": "crc32_match"
+      }
+    ],
+    "alternate": [
+      {
+        "key": 743623600,
+        "name": "Reference",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 130111906,
+        "name": "Head",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2272186218,
+        "name": "LeftHandIndex2",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 3061183340,
+        "name": "LeftHand",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2985589856,
+        "name": null,
+        "name_evidence": "unresolved"
+      },
+      {
+        "key": 759586984,
+        "name": "LeftShoulder",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1739821065,
+        "name": "RightHandIndex2",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1979272496,
+        "name": "RightHand",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1243277130,
+        "name": null,
+        "name_evidence": "unresolved"
+      },
+      {
+        "key": 4127606757,
+        "name": "RightShoulder",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1662577057,
+        "name": null,
+        "name_evidence": "unresolved"
+      },
+      {
+        "key": 1486391408,
+        "name": "LeftFoot",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2746855640,
+        "name": null,
+        "name_evidence": "unresolved"
+      },
+      {
+        "key": 392266736,
+        "name": "LeftUpLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2210772674,
+        "name": null,
+        "name_evidence": "unresolved"
+      },
+      {
+        "key": 2601793068,
+        "name": "RightFoot",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2869939666,
+        "name": null,
+        "name_evidence": "unresolved"
+      },
+      {
+        "key": 1971262097,
+        "name": "RightUpLeg",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 1393476043,
+        "name": "Spine",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2402941518,
+        "name": "Spine1",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 372288500,
+        "name": "Spine2",
+        "name_evidence": "crc32_match"
+      },
+      {
+        "key": 2149808493,
+        "name": "Neck",
+        "name_evidence": "crc32_match"
+      }
+    ]
+  }
+}

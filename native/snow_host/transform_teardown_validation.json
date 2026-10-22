@@ -1,0 +1,156 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 16,
+  "scope": "Full transform teardown wrapper and base invalidation dispatcher; detach and control-record invalidation services intercepted. Optional global-tracking bit disabled. Clear-on-detach simulated to show children dispatch still follows. Establishes local order, not scheduler exclusion or actual deallocation.",
+  "samples": [
+    {
+      "accessor_present": false,
+      "indexed": false,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": false,
+      "calls": []
+    },
+    {
+      "accessor_present": false,
+      "indexed": false,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": true,
+      "calls": []
+    },
+    {
+      "accessor_present": false,
+      "indexed": false,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": false,
+      "calls": []
+    },
+    {
+      "accessor_present": false,
+      "indexed": false,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": true,
+      "calls": []
+    },
+    {
+      "accessor_present": false,
+      "indexed": true,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": false,
+      "calls": [
+        "invalidate_regular"
+      ]
+    },
+    {
+      "accessor_present": false,
+      "indexed": true,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": true,
+      "calls": [
+        "invalidate_regular"
+      ]
+    },
+    {
+      "accessor_present": false,
+      "indexed": true,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": false,
+      "calls": [
+        "invalidate_alternate"
+      ]
+    },
+    {
+      "accessor_present": false,
+      "indexed": true,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": true,
+      "calls": [
+        "invalidate_alternate"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": false,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": false,
+      "calls": [
+        "detach_parent",
+        "detach_children"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": false,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": true,
+      "calls": [
+        "detach_parent",
+        "detach_children"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": false,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": false,
+      "calls": [
+        "detach_parent",
+        "detach_children"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": false,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": true,
+      "calls": [
+        "detach_parent",
+        "detach_children"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": true,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": false,
+      "calls": [
+        "detach_parent",
+        "detach_children",
+        "invalidate_regular"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": true,
+      "alternate_invalidation": false,
+      "detach_clears_accessor": true,
+      "calls": [
+        "detach_parent",
+        "detach_children",
+        "invalidate_regular"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": true,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": false,
+      "calls": [
+        "detach_parent",
+        "detach_children",
+        "invalidate_alternate"
+      ]
+    },
+    {
+      "accessor_present": true,
+      "indexed": true,
+      "alternate_invalidation": true,
+      "detach_clears_accessor": true,
+      "calls": [
+        "detach_parent",
+        "detach_children",
+        "invalidate_alternate"
+      ]
+    }
+  ]
+}

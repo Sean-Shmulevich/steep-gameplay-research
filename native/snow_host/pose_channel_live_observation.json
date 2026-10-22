@@ -1,0 +1,62 @@
+{
+  "evidence": "live_read_only_observation",
+  "game_process": true,
+  "game_state": "not_visually_confirmed",
+  "captures": 1,
+  "guard_accepted_pose_captures": 1,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "input_sent": false,
+  "binding": {
+    "component_count": 43,
+    "exact_type_indices": [
+      38
+    ],
+    "cached_index": 38,
+    "cached_tag": 27,
+    "entity_tag": 27,
+    "owner_backlink_matches": true,
+    "binding_status": "unique_exact_type",
+    "guards_matched": true
+  },
+  "pose": {
+    "requested_channels": [
+      {
+        "key": 743623600,
+        "index": 0,
+        "found": true
+      },
+      {
+        "key": 1959467492,
+        "index": 65535,
+        "found": false
+      },
+      {
+        "key": 2943539481,
+        "index": 65535,
+        "found": false
+      }
+    ],
+    "record_count": 485,
+    "record_count_source": "native_metadata",
+    "bank_layout": {
+      "allocation_bytes": 16758,
+      "transform_count": 485,
+      "transform_bytes": 15520,
+      "transforms_fit_allocation": true,
+      "alternate_allocation": false
+    },
+    "guards_matched": true,
+    "atomic_snapshot": false,
+    "lifetime_pinned": false,
+    "clip_identity_established": false,
+    "coordinate_space_semantics": "native_provider_conversion_only"
+  },
+  "payloads_included": false,
+  "limits": [
+    "One accepted sequential read does not establish a safe sampling phase.",
+    "No sport, landing state or clip was identified.",
+    "Absent keys do not establish absent bones.",
+    "Transforms, process addresses and raw capture data omitted."
+  ]
+}

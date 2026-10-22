@@ -1,0 +1,1520 @@
+{
+  "evidence": "original-instruction emulation with synthetic registration/holder",
+  "cases": 168,
+  "scope": "Callback gate prefix including missing-primary return; only selected callback supplied. No TLS mask getter is used by these instructions.",
+  "live_registration_identified": false,
+  "rows": [
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": false,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 4
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 4
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 0,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 18446744073709551612
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 0,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 0
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 1,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 0
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 2,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 0
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 3,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 0
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 4,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 4
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 7,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 4
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 0,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483647,
+      "holder_target": 256,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 0,
+      "invoked": false,
+      "forwarded_context": null
+    },
+    {
+      "primary_present": true,
+      "storage_word": 1,
+      "tagged_context": 18446744073709551615,
+      "holder_status": 2147483648,
+      "holder_target": 256,
+      "invoked": true,
+      "forwarded_context": 18446744073709551612
+    }
+  ]
+}

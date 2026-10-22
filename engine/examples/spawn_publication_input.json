@@ -1,0 +1,74 @@
+{
+  "branch": "supplied_spawn_publication",
+  "banks": {
+    "a": {
+      "parent": [
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "default_pose": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "records": [
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      ],
+      "count": 1,
+      "reset_word": 123
+    }
+  },
+  "frames": [
+    {
+      "position": [
+        1,
+        2,
+        3,
+        99
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        2
+      ],
+      "position_parent": null,
+      "rotation_parent": null,
+      "reciprocal_estimate": 0.5,
+      "slots": [
+        "a",
+        "a"
+      ]
+    }
+  ]
+}

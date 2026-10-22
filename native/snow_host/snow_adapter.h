@@ -30,9 +30,27 @@ typedef struct SnowPlayerRaw {
     uint32_t flags;                /* SNOW_PLAYER_* flags from snow_plugin.h, or 0 */
 } SnowPlayerRaw;
 
+/* One bounded, address-free channel observation. Not an atomic pose snapshot. */
+typedef struct SnowAnimationChannelRaw {
+    uint32_t found, guards_matched, epoch;
+    float vector[4], rotation[4]; /* local provider record; coordinate semantics unresolved */
+    float parent_vector[4], parent_rotation[4];
+    float provider_vector[4], provider_rotation[4]; /* recovered conversion, not claimed world space */
+    uint32_t record_index, bank_flags;
+    float owner_matrix[16]; /* stored owner matrix, no freshness/space claim */
+    uint32_t owner_accessor_present, owner_reader_word;
+} SnowAnimationChannelRaw;
+
+typedef struct SnowCachedParentRaw {
+    float cached[8], primary[8], current[8];
+    uint32_t guards_matched, primary_present, current_present, banks_alias;
+    uint32_t storage_nonempty, context_tag, context_nonzero, function_present;
+    uint32_t holder_present, target_present, status_sign, eligible;
+} SnowCachedParentRaw;
+
 typedef struct SnowAdapter {
     const char *name;
-    /* Verify process/image identity once. Returns 0 or writes a reason. */
+    /* Verify process/image identity; retryable during startup. Returns 0 or a reason. */
     int (*bind)(char *why, size_t n);
     /* Fresh owner lookup and counter read. Returns 0 or writes a reason. */
     int (*read)(SnowCounters *c, char *why, size_t n);
@@ -60,6 +78,11 @@ typedef struct SnowAdapter {
     /* Optional. Place the bound player through the engine's own routine. transform uses the SnowPlayerRaw
      * layout. Called only while held with validated values. 0 = ok, 1 = refused, 2 = identity changed. */
     int (*player_set_pose)(const float transform[16], const float lin[3], const float ang[3], char *why, size_t n);
+    /* Optional read-only observation for one uint32 resource key. Revalidate bound player,
+     * skeleton ownership and bank endpoints. 0 success, 1 refused, 2 identity lost.
+     * A simulation hold does not by itself prove animation completion. */
+    int (*animation_channel)(uint32_t key, SnowAnimationChannelRaw *out, char *why, size_t n);
+    int (*cached_parent)(SnowCachedParentRaw *out, char *why, size_t n);
 } SnowAdapter;
 
 extern const SnowAdapter snow_adapter;

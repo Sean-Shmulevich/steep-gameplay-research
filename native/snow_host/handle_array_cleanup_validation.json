@@ -1,0 +1,2335 @@
+{
+  "cases": 96,
+  "game_process": false,
+  "scope": "Complete original handle-array cleanup and release loop. Retirement, allocation-query and free services intercepted. Repeated aliases, flags, null/empty storage and nonfinal/final ownership releases. Descriptor unchanged; full ActionKit destructor, acquisition and live object lifetime not executed.",
+  "rows": [
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          0
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483648
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          2
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483650
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          1
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          3
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          1
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          3
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          4
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483652
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 0,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          0
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          1,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483648
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483649,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          2
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          3,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483650
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483651,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          1
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          1,
+          1
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483649,
+          2147483649
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          3
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          3,
+          3
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483651,
+          2147483651
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          1
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          1
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483649
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          3
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          4,
+          3
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483652,
+          2147483651
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          4
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          4,
+          4
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483652
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 16384,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483652,
+          2147483652
+        ],
+        "effects": [
+          {
+            "kind": "free_storage"
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          0
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483648
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          2
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483650
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          1
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "request_retirement",
+            "record": 1
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 0
+          },
+          {
+            "kind": "request_retirement",
+            "record": 1
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          3
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          1
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          3
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [
+          {
+            "kind": "request_retirement",
+            "record": 1
+          },
+          {
+            "kind": "request_retirement",
+            "record": 0
+          }
+        ],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          4
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483652
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 32768,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          0,
+          0
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          0,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483648,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": false
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          0
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          1,
+          0
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483648
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483649,
+          2147483648
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          2
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          3,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483650
+        ],
+        "slots": [
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483651,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          1,
+          1
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          1,
+          1
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483649,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483649,
+          2147483649
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          3,
+          3
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          3,
+          3
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483651,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483651,
+          2147483651
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          1
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          1
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483649
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483649
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          3
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          4,
+          3
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483651
+        ],
+        "slots": [
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483652,
+          2147483651
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2,
+          2
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2,
+          2
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483650,
+          2147483650
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          4,
+          4
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          4,
+          4
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    },
+    {
+      "inputs": {
+        "status_words": [
+          2147483652,
+          2147483652
+        ],
+        "slots": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "storage_flags": 49152,
+        "storage_present": true
+      },
+      "result": {
+        "status_words": [
+          2147483652,
+          2147483652
+        ],
+        "effects": [],
+        "descriptor_cleared": false
+      }
+    }
+  ]
+}

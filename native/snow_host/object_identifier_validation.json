@@ -1,0 +1,3137 @@
+{
+  "cases": 128,
+  "game_process": false,
+  "scope": "Complete original identifier resolver, ordered overlay helper and record-map helper. Lock calls and hash-table lookup intercepted; synthetic map results. No allocation, concurrency, ownership increment or stale-ID/lifetime proof.",
+  "rows": [
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map",
+          "fallback_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 33,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map",
+          "fallback_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 11,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 11,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 11,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 11,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map",
+          "fallback_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 33,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map",
+          "fallback_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            0
+          ],
+          [
+            77,
+            11
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": 1,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": 1,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": 1,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": 1,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            77,
+            0
+          ],
+          [
+            77,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": 0,
+        "lookups": [
+          "overlay"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": false,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 0,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [],
+        "lifetime_retained": false
+      },
+      "lock_events": []
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 0,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map",
+          "fallback_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 0,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 33,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map",
+          "fallback_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 0
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "enabled": true,
+        "overlay": [
+          [
+            88,
+            11
+          ],
+          [
+            99,
+            22
+          ]
+        ],
+        "record_target": 22,
+        "fallback_target": 33
+      },
+      "result": {
+        "object": 22,
+        "overlay_index": null,
+        "lookups": [
+          "overlay",
+          "record_map"
+        ],
+        "lifetime_retained": false
+      },
+      "lock_events": [
+        "enter",
+        "enter",
+        "leave",
+        "enter",
+        "leave",
+        "leave"
+      ]
+    }
+  ]
+}

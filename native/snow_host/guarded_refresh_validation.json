@@ -1,0 +1,8388 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 512,
+  "scope": "Complete guarded refresh entry/return with lock, preparation, parent setter, rotation, processing and evaluation stubbed. Lock stub changes dirty state to exercise post-lock reread. Does not execute transform processing or establish lifetime, completion of asynchronous work, or scheduler ownership.",
+  "rows": [
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 0,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 0
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": false,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 0,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 7,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": false,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 0,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": false,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": false,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 0
+      },
+      "events": [
+        {
+          "service": "lock"
+        },
+        {
+          "service": "prepare"
+        },
+        {
+          "service": "parent",
+          "bank": "primary"
+        },
+        {
+          "service": "rotate"
+        },
+        {
+          "service": "parent",
+          "bank": "current"
+        },
+        {
+          "service": "process",
+          "mask": 7
+        },
+        {
+          "service": "evaluate",
+          "secondary": 1,
+          "dirty_seen": 7
+        },
+        {
+          "service": "unlock"
+        }
+      ],
+      "dirty_after": 7
+    },
+    {
+      "inputs": {
+        "dirty": 128,
+        "force": true,
+        "pending": 1,
+        "locked_dirty": 135,
+        "rotated": true,
+        "bank_flags": 134217728,
+        "primary_present": true,
+        "current_present": true,
+        "disabled": 1
+      },
+      "events": [],
+      "dirty_after": 128
+    }
+  ]
+}

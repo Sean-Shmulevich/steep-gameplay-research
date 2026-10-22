@@ -1,0 +1,15 @@
+{
+  "schema": "animation-pool-session-v1",
+  "service_policy": "record_calls_without_pose_copy",
+  "banks": {"pose_a": {"flags": 0, "auxiliary_mask": 0, "auxiliary_count": 0}},
+  "entries": [{"bank": "pose_a", "occupied_mask": 0, "initialized_mask": 0, "representation_word": 0}],
+  "operations": [
+    {"op": "acquire", "request_mask": 1, "representation": 0, "mode": 0, "source": "synthetic_source"},
+    {"op": "acquire", "request_mask": 1, "representation": 0, "mode": 0, "source": "synthetic_source"},
+    {"op": "release", "bank": "pose_a", "request_mask": 1},
+    {"op": "acquire", "request_mask": 1, "representation": 0, "mode": 0, "source": "synthetic_source"},
+    {"op": "cleanup",
+     "output": {"primary": "pose_a", "alternate": null, "flags": 6, "index": 1, "header": 32772, "storage": "inline-output"},
+     "input": {"primary": null, "alternate": null, "flags": 2, "index": 65535, "header": 32772, "storage": "inline-input"}}
+  ]
+}

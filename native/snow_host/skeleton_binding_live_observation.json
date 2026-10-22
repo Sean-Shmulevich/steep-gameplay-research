@@ -1,0 +1,46 @@
+{
+  "evidence": "live_read_only_observation",
+  "game_process": true,
+  "game_state": "map_screen_observed_gameplay_not_confirmed",
+  "memory_writes": false,
+  "debugger_attached": false,
+  "gameplay_inputs_sent": false,
+  "startup_navigation_inputs_sent": true,
+  "captures": 3,
+  "successful_coherent_pose_captures": 0,
+  "binding": {
+    "component_count": 43,
+    "exact_skeleton_slot": 38,
+    "cached_slot": 38,
+    "cache_tag": 27,
+    "entity_tag": 27,
+    "type_range": [
+      3286,
+      3287
+    ],
+    "owner_backlink_matches": true,
+    "identity_guards_matched": true
+  },
+  "rejected_pose_observations": {
+    "transform_count": 485,
+    "lookup_entry_count": 485,
+    "primary_allocation_bytes": 16758,
+    "alternate_allocation_bytes": 16490,
+    "selected_allocation_bytes": 16758,
+    "requested_indices": [
+      0,
+      65535,
+      65535
+    ],
+    "changed_fields": [
+      "SkeletonComponent provider bank pointer at +0x258",
+      "selected bank flags at +0x8c"
+    ]
+  },
+  "limits": [
+    "Metadata observations came from a rejected sequential pose capture, not a coherent frame.",
+    "Two observed bank addresses suggest swapping; ownership, count of buffers and reuse are not established.",
+    "Endpoint absence is specific to the observed table; sport and rig selection were not established.",
+    "No animation clip or safe mutation boundary established."
+  ]
+}

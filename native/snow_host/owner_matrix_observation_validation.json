@@ -1,0 +1,22 @@
+{
+  "schema": "owner-matrix-observation-validation-v1",
+  "evidence": "synthetic exact-read C transport and Wine protocol fixture",
+  "native_reader_tests": 23,
+  "parent_comparison_tests": 3,
+  "wine_fixture_checks": 63,
+  "private_adapter_compiles": true,
+  "game_launched": false,
+  "new_fields_live_verified": false,
+  "new_fields": [
+    "owner_matrix",
+    "owner_accessor_present",
+    "owner_reader_word",
+    "owner_transform_freshness_established"
+  ],
+  "limits": [
+    "Does not invoke refreshing getter",
+    "Never uses returned scratch as fresh state",
+    "Matching spans do not pin lifetime or exclude ABA",
+    "Parent agreement does not prove producer or world-space meaning"
+  ]
+}

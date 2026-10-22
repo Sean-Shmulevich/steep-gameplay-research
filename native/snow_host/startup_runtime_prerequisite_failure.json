@@ -1,0 +1,19 @@
+{
+  "evidence": "live_launch_attempt",
+  "date": "2026-10-22",
+  "requested": {
+    "load_at": "startup",
+    "plan": "demo",
+    "steps": 3
+  },
+  "ok": false,
+  "stage": "before_game_start",
+  "failure": "Intel Wine process creation rejected; independent arch -x86_64 true probe also failed with Bad CPU type",
+  "host_built": true,
+  "gameplay_observed": false,
+  "steps_tested": 0,
+  "settings_restored": true,
+  "bottle_stopped": true,
+  "original_dll_verified": true,
+  "scope": "Runtime prerequisite failure, not a game crash or pause/step failure. Earlier live results are historical, not reconfirmed by this attempt."
+}

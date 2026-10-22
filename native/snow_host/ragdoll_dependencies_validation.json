@@ -1,0 +1,25 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 2,
+  "registrations_per_case": 4,
+  "edges": [
+    [
+      "SkelUpdateEndAnimateRagdoll",
+      "SkeletonUpdateForRagdoll"
+    ],
+    [
+      "SkelUpdateEndAnimateRagdoll",
+      "SkeletonUpdateForRagdollInteractions"
+    ],
+    [
+      "SkeletonUpdateForRagdoll",
+      "PhysicForRagdollUpdate"
+    ],
+    [
+      "SkeletonUpdateForRagdollInteractions",
+      "PhysicForRagdollUpdate"
+    ]
+  ],
+  "scope": "Original registration span with constructor-matched tables, synthetic owners, seeded entry registers and recording registration stub that clobbers volatile registers. Common range predicate, worker, begin and finalizer pointers verified. Concrete visitors differ. No live membership, native dispatch, complete graph or universal capture fence claimed."
+}

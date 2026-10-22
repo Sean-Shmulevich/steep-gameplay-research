@@ -1,0 +1,36 @@
+{
+  "schema": "pose-work-debugger-fixture-v1",
+  "evidence": "isolated synthetic Windows x64 fixture under Wine and LLDB",
+  "game_accessed": false,
+  "checks": {
+    "clean_fixture_exit": true,
+    "debugger_exit": true,
+    "no_outer_timeout": true,
+    "detached": true,
+    "removed": true,
+    "no_cleanup_error": true,
+    "six_hits": true,
+    "ordered": true,
+    "patterns": true,
+    "output_change": true,
+    "preserved_time": true,
+    "no_observer_error": true,
+    "code_unchanged": true,
+    "filtered": true
+  },
+  "passed": true,
+  "selected_pairs": 3,
+  "source_sha256": {
+    "work_packet_fixture.c": "880d40d54f2c80944335617121b5d54914567d85391d14f455eb16443fc95e60",
+    "work_packet_fixture.S": "5ece1386941a343b7d12245fc009e184f704b63693650d6d4796273d48391ecc",
+    "bounded_lldb.py": "e77146d8522380e2820bc94725da9d1c890e111f7c4626e0be58d7678549d0c1",
+    "test_fixture.py": "75b4403936c0bb43e3714473035ca81d3e5db19aa0138c40556676cd6022e784"
+  },
+  "raw_receipt_sha256": "8120b572e4d7e6ef4dc4d2480e5191cbc2aa16dac36baff06e881e2a37795474",
+  "limits": [
+    "Fixture uses invented component and bank data, not game payloads.",
+    "Debugger wall time is not uninstrumented callback duration.",
+    "Original-game packet acquisition and active-player attribution remain unverified."
+  ],
+  "earlier_attempt": "Fixture runner rejected an unprefixed hexadecimal identity before attaching; parser corrected before the successful run."
+}

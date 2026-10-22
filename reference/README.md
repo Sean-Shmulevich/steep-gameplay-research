@@ -7,6 +7,7 @@ Standard-library Python implementations of selected local rules. Provenance and 
 | ik | Limb intermediate target and weighted orientation kernels |
 | camera | Local camera springs, projection and selection helpers |
 | snow | Contact forces, clipping, pressure, stick, shaping, springs and point impulses |
+| central_impulse | Native-checked central momentum update; separately labeled equal-delta-v coupled-body policy |
 | response_delay | Delayed trick response and its domain guards |
 | animation_blending | Ordered weights, quaternion paths, masks and phase helpers |
 | animation_playback | Phase, markers, sampling and transition precedence |
@@ -16,3 +17,14 @@ Standard-library Python implementations of selected local rules. Provenance and 
 | animation_codec | New minimal decoder primitives from Studio documentation; synthetic tests only |
 
 Run `python3 -m unittest discover -s tests -v` from the repository root. Tests verify local rules and invariants, not original-game parity. All fixture poses and encoded test bytes are invented. Historical chapters' companion files remain outside this repository unless explicitly listed here.
+
+The composed ground-response helper is in `ground_response.py`; its compiled
+slope/intercept curve evaluator is in `runtime_curve.py`. See the
+[composed helper contract](../docs/reconstruction/CENTRAL_IMPULSE.md#composed-helper-contract)
+for supplied inputs, update order and native-validation limits. These refine the
+earlier simplified ground-stick reference without replacing its provenance.
+
+`skeleton_parent_transform.py` prepares guarded-refresh bank parents from a
+caller-supplied owner matrix, explicitly clearing translation W. Its joined
+instruction receipt covers the actual quaternion conversion and bank writes;
+accessor freshness, locks and bank rotation remain supplied service boundaries.

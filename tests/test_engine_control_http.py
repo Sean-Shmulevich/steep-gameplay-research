@@ -37,6 +37,16 @@ class ControlHTTPTests(unittest.TestCase):
         with response:
             return response.status, json.load(response)
 
+    def test_central_impulse_http_replays_and_invalidates_token(self):
+        _, start=self.request(dict(op='reset',scenario={'body':{'mass':4,'velocity':[0,0,0],'angular_velocity':[1,2,3]}}))
+        status,result=self.request(dict(op='apply_central_impulse',token=start['token'],impulse=[8,0,0]))
+        self.assertEqual(status,200)
+        self.assertEqual(result['snapshot']['state']['body']['velocity'],[2,0,0])
+        self.assertEqual(result['snapshot']['state']['body']['angular_velocity'],[1,2,3])
+        self.assertEqual(self.request(dict(op='apply_central_impulse',token=start['token'],impulse=[8,0,0]))[0],400)
+        _,recording=self.request(path='/replay')
+        self.assertEqual(replay(recording).state_hash(),recording['expected_hash'])
+
     def test_pause_step_tune_replay_and_stale_token_over_http(self):
         status, result = self.request(dict(op='reset', scenario={'execution_mode': 'mixed'}))
         self.assertEqual(status, 200)
@@ -94,3 +104,47 @@ class ControlHTTPTests(unittest.TestCase):
         self.assertEqual(self.request(dict(op='resume', token=token))[0], 400)
         self.assertEqual(self.request(dict(op='resume', token=replaced['token']))[0], 200)
         self.assertEqual(self.request(dict(op='submit_frame', dt=.01, actions={'steer': .1}))[0], 200)
+
+    def test_brake_boost_step_and_replay_over_http(self):
+        _, start = self.request(dict(op='reset', scenario={'body': {
+            'velocity': [10, 0, 0], 'angular_velocity': [0, 0, .1]}}))
+        first = start['token']
+        status, boosted = self.request(dict(op='adjust_speed', token=first, delta_speed=2))
+        self.assertEqual(status, 200)
+        self.assertEqual(boosted['snapshot']['state']['body']['velocity'], [12, 0, 0])
+        self.assertEqual(boosted['snapshot']['state']['body']['angular_velocity'], [0, 0, .1])
+        self.assertEqual(self.request(dict(op='adjust_speed', token=first, delta_speed=-2))[0], 400)
+        status, braked = self.request(dict(op='adjust_speed', token=boosted['token'], delta_speed=-2))
+        self.assertEqual(status, 200)
+        self.assertEqual(braked['snapshot']['state']['body']['velocity'], [10, 0, 0])
+        status, stepped = self.request(dict(op='step_once', token=braked['token']))
+        self.assertEqual(status, 200)
+        self.assertEqual(stepped['snapshot']['state']['tick'], 1)
+        _, recording = self.request(path='/replay')
+        self.assertEqual(replay(recording).state_hash(), recording['expected_hash'])
+        self.assertEqual(self.request(dict(op='resume', token=braked['token']))[0], 200)
+
+    def test_light_response_preserves_replay_and_complete_trace(self):
+        _, start = self.request(dict(op='reset', scenario={}, include_trace=False))
+        self.assertNotIn('trace',start['snapshot'])
+        token=start['token']
+        status, advanced=self.request(dict(op='step_frame_once',token=token,dt=.02,
+                                          actions={'steer':.3},include_trace=False))
+        self.assertEqual(status,200)
+        self.assertNotIn('trace',advanced['snapshot'])
+        self.assertFalse(advanced['snapshot']['trace_summary']['records_included'])
+        _,light=self.request(path='/state?trace=summary')
+        _,full=self.request(path='/state')
+        self.assertEqual(light['state'],full['state'])
+        self.assertEqual(light['trace_summary']['retained'],len(full['trace']['records']))
+        self.assertEqual(light['trace_summary']['attempted'],full['trace']['attempted'])
+        _,recording=self.request(path='/replay')
+        self.assertEqual(replay(recording).snapshot(),full['state'])
+        _,before=self.request(path='/checkpoint')
+        status,_=self.request(dict(op='step_once',token=token,include_trace='false'))
+        self.assertEqual(status,400)
+        self.assertEqual(self.request(path='/checkpoint')[1],before)
+        status,failed=self.request(dict(op='step_frame_once',token=token,dt=-1,include_trace=False))
+        self.assertEqual(status,400)
+        self.assertNotIn('trace',failed['snapshot'])
+        self.assertEqual(failed['snapshot']['state'],before['engine']['state'])

@@ -1,0 +1,5646 @@
+{
+  "evidence": "original_instruction_emulation",
+  "inputs": "synthetic",
+  "game_process": false,
+  "iteration_cases": 256,
+  "registration_cases": 2,
+  "scope": "One batch iteration with lock, unlock, prepare/rotate, update and supplemental effects stubbed. Update stub optionally removes primary bank. Original callback setup checked at registration boundary; callback copier and dispatch not executed. No completion fence or lifetime guarantee.",
+  "rows": [
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 10051,
+      "state": [
+        186,
+        105,
+        47
+      ],
+      "events": [],
+      "result_flags": 10051,
+      "result_state": [
+        186,
+        105,
+        47
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 49831,
+      "state": [
+        183,
+        88,
+        123
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 49831,
+      "result_state": [
+        183,
+        88,
+        123
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 63087,
+      "state": [
+        163,
+        107,
+        149
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 63085,
+      "result_state": [
+        39,
+        107,
+        149
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 30360,
+      "state": [
+        36,
+        238,
+        90
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 30363,
+      "result_state": [
+        36,
+        238,
+        88
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 15793,
+      "state": [
+        78,
+        0,
+        181
+      ],
+      "events": [],
+      "result_flags": 15793,
+      "result_state": [
+        78,
+        0,
+        181
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 12481,
+      "state": [
+        114,
+        249,
+        113
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 12481,
+      "result_state": [
+        114,
+        249,
+        113
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 45171,
+      "state": [
+        195,
+        181,
+        207
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 45174,
+      "result_state": [
+        71,
+        181,
+        205
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 51973,
+      "state": [
+        142,
+        147,
+        118
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 51968,
+      "result_state": [
+        14,
+        147,
+        116
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 2304,
+      "state": [
+        114,
+        99,
+        234
+      ],
+      "events": [],
+      "result_flags": 2304,
+      "result_state": [
+        114,
+        99,
+        234
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 50609,
+      "state": [
+        237,
+        142,
+        227
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 50609,
+      "result_state": [
+        237,
+        142,
+        227
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 41477,
+      "state": [
+        83,
+        2,
+        44
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 41472,
+      "result_state": [
+        87,
+        3,
+        44
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 10729,
+      "state": [
+        75,
+        221,
+        24
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 10733,
+      "result_state": [
+        79,
+        221,
+        24
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 60972,
+      "state": [
+        154,
+        32,
+        12
+      ],
+      "events": [],
+      "result_flags": 60972,
+      "result_state": [
+        154,
+        32,
+        12
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 42004,
+      "state": [
+        174,
+        60,
+        255
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 42004,
+      "result_state": [
+        174,
+        60,
+        255
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 59135,
+      "state": [
+        229,
+        2,
+        47
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 59135,
+      "result_state": [
+        101,
+        3,
+        45
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 56632,
+      "state": [
+        8,
+        29,
+        68
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 56639,
+      "result_state": [
+        12,
+        29,
+        68
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 34185,
+      "state": [
+        9,
+        88,
+        76
+      ],
+      "events": [],
+      "result_flags": 34185,
+      "result_state": [
+        9,
+        88,
+        76
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 2487,
+      "state": [
+        181,
+        41,
+        169
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 2487,
+      "result_state": [
+        181,
+        41,
+        169
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 64216,
+      "state": [
+        155,
+        23,
+        226
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 64219,
+      "result_state": [
+        31,
+        23,
+        224
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 17239,
+      "state": [
+        43,
+        82,
+        183
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 17234,
+      "result_state": [
+        47,
+        83,
+        181
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 50764,
+      "state": [
+        165,
+        21,
+        192
+      ],
+      "events": [],
+      "result_flags": 50764,
+      "result_state": [
+        165,
+        21,
+        192
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 38302,
+      "state": [
+        128,
+        245,
+        156
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 38302,
+      "result_state": [
+        128,
+        245,
+        156
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 49794,
+      "state": [
+        163,
+        88,
+        66
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 49792,
+      "result_state": [
+        39,
+        89,
+        64
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 57683,
+      "state": [
+        56,
+        129,
+        129
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 57682,
+      "result_state": [
+        60,
+        129,
+        129
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 4939,
+      "state": [
+        7,
+        164,
+        238
+      ],
+      "events": [],
+      "result_flags": 4939,
+      "result_state": [
+        7,
+        164,
+        238
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 17099,
+      "state": [
+        50,
+        174,
+        222
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 17099,
+      "result_state": [
+        50,
+        174,
+        222
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 46762,
+      "state": [
+        80,
+        232,
+        132
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 46765,
+      "result_state": [
+        84,
+        233,
+        132
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 43411,
+      "state": [
+        227,
+        13,
+        239
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 43410,
+      "result_state": [
+        103,
+        13,
+        237
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 35861,
+      "state": [
+        86,
+        24,
+        185
+      ],
+      "events": [],
+      "result_flags": 35861,
+      "result_state": [
+        86,
+        24,
+        185
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 30009,
+      "state": [
+        129,
+        221,
+        23
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 30009,
+      "result_state": [
+        129,
+        221,
+        23
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 41086,
+      "state": [
+        53,
+        52,
+        91
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 41087,
+      "result_state": [
+        53,
+        52,
+        89
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 14299,
+      "state": [
+        75,
+        76,
+        140
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 14299,
+      "result_state": [
+        79,
+        77,
+        140
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 58605,
+      "state": [
+        191,
+        216,
+        241
+      ],
+      "events": [],
+      "result_flags": 58605,
+      "result_state": [
+        191,
+        216,
+        241
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 3338,
+      "state": [
+        225,
+        146,
+        2
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 3338,
+      "result_state": [
+        225,
+        146,
+        2
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 9249,
+      "state": [
+        45,
+        6,
+        44
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 9252,
+      "result_state": [
+        45,
+        7,
+        44
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 22191,
+      "state": [
+        151,
+        48,
+        81
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 22189,
+      "result_state": [
+        23,
+        49,
+        81
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 55848,
+      "state": [
+        73,
+        166,
+        209
+      ],
+      "events": [],
+      "result_flags": 55848,
+      "result_state": [
+        73,
+        166,
+        209
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 55015,
+      "state": [
+        8,
+        181,
+        89
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 55015,
+      "result_state": [
+        8,
+        181,
+        89
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 17420,
+      "state": [
+        255,
+        11,
+        252
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 17417,
+      "result_state": [
+        127,
+        11,
+        252
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 64140,
+      "state": [
+        167,
+        27,
+        96
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 64137,
+      "result_state": [
+        39,
+        27,
+        96
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 9039,
+      "state": [
+        115,
+        155,
+        187
+      ],
+      "events": [],
+      "result_flags": 9039,
+      "result_state": [
+        115,
+        155,
+        187
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 63061,
+      "state": [
+        206,
+        120,
+        59
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 63061,
+      "result_state": [
+        206,
+        120,
+        59
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 34048,
+      "state": [
+        176,
+        103,
+        66
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 34048,
+      "result_state": [
+        52,
+        103,
+        64
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 8139,
+      "state": [
+        58,
+        216,
+        160
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 8137,
+      "result_state": [
+        62,
+        217,
+        160
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 25620,
+      "state": [
+        222,
+        112,
+        229
+      ],
+      "events": [],
+      "result_flags": 25620,
+      "result_state": [
+        222,
+        112,
+        229
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 26137,
+      "state": [
+        177,
+        57,
+        88
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 26137,
+      "result_state": [
+        177,
+        57,
+        88
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 63912,
+      "state": [
+        66,
+        242,
+        89
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 63917,
+      "result_state": [
+        70,
+        243,
+        89
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 13973,
+      "state": [
+        239,
+        212,
+        246
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 13970,
+      "result_state": [
+        111,
+        213,
+        244
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 47990,
+      "state": [
+        211,
+        251,
+        34
+      ],
+      "events": [],
+      "result_flags": 47990,
+      "result_state": [
+        211,
+        251,
+        34
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 35925,
+      "state": [
+        61,
+        102,
+        75
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 35925,
+      "result_state": [
+        61,
+        102,
+        75
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 63544,
+      "state": [
+        43,
+        185,
+        126
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 63551,
+      "result_state": [
+        47,
+        185,
+        124
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 64474,
+      "state": [
+        91,
+        85,
+        115
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 64475,
+      "result_state": [
+        95,
+        85,
+        113
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 7983,
+      "state": [
+        95,
+        134,
+        12
+      ],
+      "events": [],
+      "result_flags": 7983,
+      "result_state": [
+        95,
+        134,
+        12
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 9549,
+      "state": [
+        181,
+        150,
+        223
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 9549,
+      "result_state": [
+        181,
+        150,
+        223
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 34799,
+      "state": [
+        71,
+        56,
+        128
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 34797,
+      "result_state": [
+        71,
+        56,
+        128
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 22534,
+      "state": [
+        194,
+        48,
+        104
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 22528,
+      "result_state": [
+        70,
+        49,
+        104
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 16850,
+      "state": [
+        87,
+        206,
+        88
+      ],
+      "events": [],
+      "result_flags": 16850,
+      "result_state": [
+        87,
+        206,
+        88
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 14409,
+      "state": [
+        187,
+        1,
+        184
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 14409,
+      "result_state": [
+        187,
+        1,
+        184
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 63063,
+      "state": [
+        101,
+        200,
+        227
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 63058,
+      "result_state": [
+        101,
+        201,
+        225
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 33190,
+      "state": [
+        155,
+        183,
+        26
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 33188,
+      "result_state": [
+        31,
+        183,
+        24
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 10517,
+      "state": [
+        37,
+        3,
+        84
+      ],
+      "events": [],
+      "result_flags": 10517,
+      "result_state": [
+        37,
+        3,
+        84
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 11894,
+      "state": [
+        116,
+        128,
+        65
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 11894,
+      "result_state": [
+        116,
+        128,
+        65
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 33539,
+      "state": [
+        104,
+        126,
+        197
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 33536,
+      "result_state": [
+        108,
+        127,
+        197
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 16992,
+      "state": [
+        157,
+        167,
+        59
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 16996,
+      "result_state": [
+        29,
+        167,
+        57
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 40842,
+      "state": [
+        163,
+        67,
+        24
+      ],
+      "events": [],
+      "result_flags": 40842,
+      "result_state": [
+        163,
+        67,
+        24
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 32846,
+      "state": [
+        189,
+        167,
+        249
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 32846,
+      "result_state": [
+        189,
+        167,
+        249
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 6372,
+      "state": [
+        184,
+        210,
+        175
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 6372,
+      "result_state": [
+        60,
+        210,
+        173
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 39407,
+      "state": [
+        231,
+        171,
+        242
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 39405,
+      "result_state": [
+        103,
+        171,
+        240
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 36435,
+      "state": [
+        107,
+        12,
+        143
+      ],
+      "events": [],
+      "result_flags": 36435,
+      "result_state": [
+        107,
+        12,
+        143
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 33973,
+      "state": [
+        237,
+        18,
+        53
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 33973,
+      "result_state": [
+        237,
+        18,
+        53
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 26941,
+      "state": [
+        236,
+        2,
+        228
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 26943,
+      "result_state": [
+        108,
+        3,
+        228
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 13528,
+      "state": [
+        86,
+        172,
+        224
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 13531,
+      "result_state": [
+        86,
+        173,
+        224
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 29093,
+      "state": [
+        87,
+        137,
+        212
+      ],
+      "events": [],
+      "result_flags": 29093,
+      "result_state": [
+        87,
+        137,
+        212
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 27501,
+      "state": [
+        187,
+        124,
+        24
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 27501,
+      "result_state": [
+        187,
+        124,
+        24
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 60932,
+      "state": [
+        170,
+        244,
+        181
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 60928,
+      "result_state": [
+        46,
+        245,
+        181
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 7842,
+      "state": [
+        248,
+        106,
+        222
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 7844,
+      "result_state": [
+        124,
+        106,
+        220
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 25486,
+      "state": [
+        114,
+        245,
+        238
+      ],
+      "events": [],
+      "result_flags": 25486,
+      "result_state": [
+        114,
+        245,
+        238
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 6282,
+      "state": [
+        201,
+        136,
+        227
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 6282,
+      "result_state": [
+        201,
+        136,
+        227
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 40716,
+      "state": [
+        155,
+        215,
+        156
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 40713,
+      "result_state": [
+        31,
+        215,
+        156
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 39484,
+      "state": [
+        235,
+        171,
+        187
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 39487,
+      "result_state": [
+        111,
+        171,
+        185
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 22409,
+      "state": [
+        151,
+        150,
+        168
+      ],
+      "events": [],
+      "result_flags": 22409,
+      "result_state": [
+        151,
+        150,
+        168
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 10404,
+      "state": [
+        76,
+        12,
+        118
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 10404,
+      "result_state": [
+        76,
+        12,
+        118
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 38678,
+      "state": [
+        245,
+        7,
+        177
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 38674,
+      "result_state": [
+        117,
+        7,
+        177
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 17256,
+      "state": [
+        165,
+        248,
+        3
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 17261,
+      "result_state": [
+        37,
+        249,
+        1
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 24165,
+      "state": [
+        135,
+        132,
+        130
+      ],
+      "events": [],
+      "result_flags": 24165,
+      "result_state": [
+        135,
+        132,
+        130
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 54232,
+      "state": [
+        162,
+        218,
+        200
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 54232,
+      "result_state": [
+        162,
+        218,
+        200
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 52096,
+      "state": [
+        91,
+        115,
+        191
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 52096,
+      "result_state": [
+        95,
+        115,
+        189
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 44235,
+      "state": [
+        187,
+        45,
+        56
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 44233,
+      "result_state": [
+        63,
+        45,
+        56
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 37492,
+      "state": [
+        184,
+        218,
+        175
+      ],
+      "events": [],
+      "result_flags": 37492,
+      "result_state": [
+        184,
+        218,
+        175
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 2835,
+      "state": [
+        205,
+        4,
+        18
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 2835,
+      "result_state": [
+        205,
+        4,
+        18
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 60242,
+      "state": [
+        182,
+        225,
+        114
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 60242,
+      "result_state": [
+        54,
+        225,
+        112
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 4171,
+      "state": [
+        39,
+        194,
+        180
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 4169,
+      "result_state": [
+        39,
+        195,
+        180
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 12541,
+      "state": [
+        60,
+        98,
+        58
+      ],
+      "events": [],
+      "result_flags": 12541,
+      "result_state": [
+        60,
+        98,
+        58
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 27050,
+      "state": [
+        64,
+        127,
+        241
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 27050,
+      "result_state": [
+        64,
+        127,
+        241
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 30123,
+      "state": [
+        1,
+        142,
+        212
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 30125,
+      "result_state": [
+        5,
+        143,
+        212
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 36752,
+      "state": [
+        52,
+        7,
+        181
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 36754,
+      "result_state": [
+        52,
+        7,
+        181
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 34585,
+      "state": [
+        76,
+        114,
+        110
+      ],
+      "events": [],
+      "result_flags": 34585,
+      "result_state": [
+        76,
+        114,
+        110
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 36716,
+      "state": [
+        178,
+        98,
+        235
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 36716,
+      "result_state": [
+        178,
+        98,
+        235
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 11539,
+      "state": [
+        81,
+        183,
+        201
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 11538,
+      "result_state": [
+        85,
+        183,
+        201
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 20937,
+      "state": [
+        146,
+        224,
+        17
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 20937,
+      "result_state": [
+        22,
+        224,
+        17
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 39314,
+      "state": [
+        99,
+        189,
+        238
+      ],
+      "events": [],
+      "result_flags": 39314,
+      "result_state": [
+        99,
+        189,
+        238
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 16612,
+      "state": [
+        23,
+        197,
+        67
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 16612,
+      "result_state": [
+        23,
+        197,
+        67
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 49977,
+      "state": [
+        200,
+        210,
+        31
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 49983,
+      "result_state": [
+        76,
+        210,
+        29
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 8853,
+      "state": [
+        32,
+        97,
+        105
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 8850,
+      "result_state": [
+        36,
+        97,
+        105
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 1876,
+      "state": [
+        44,
+        64,
+        214
+      ],
+      "events": [],
+      "result_flags": 1876,
+      "result_state": [
+        44,
+        64,
+        214
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 36130,
+      "state": [
+        165,
+        169,
+        158
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 36130,
+      "result_state": [
+        165,
+        169,
+        158
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 58075,
+      "state": [
+        216,
+        165,
+        244
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 58075,
+      "result_state": [
+        92,
+        165,
+        244
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 24971,
+      "state": [
+        213,
+        192,
+        164
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 24969,
+      "result_state": [
+        85,
+        193,
+        164
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 32464,
+      "state": [
+        109,
+        195,
+        14
+      ],
+      "events": [],
+      "result_flags": 32464,
+      "result_state": [
+        109,
+        195,
+        14
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 22392,
+      "state": [
+        18,
+        102,
+        216
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 22392,
+      "result_state": [
+        18,
+        102,
+        216
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 21827,
+      "state": [
+        125,
+        178,
+        177
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 21824,
+      "result_state": [
+        125,
+        179,
+        177
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 62399,
+      "state": [
+        149,
+        168,
+        72
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 62399,
+      "result_state": [
+        21,
+        168,
+        72
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 27436,
+      "state": [
+        140,
+        94,
+        218
+      ],
+      "events": [],
+      "result_flags": 27436,
+      "result_state": [
+        140,
+        94,
+        218
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 31207,
+      "state": [
+        121,
+        91,
+        234
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 31207,
+      "result_state": [
+        121,
+        91,
+        234
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 55219,
+      "state": [
+        15,
+        27,
+        152
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 55222,
+      "result_state": [
+        15,
+        27,
+        152
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 57151,
+      "state": [
+        139,
+        191,
+        93
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 57151,
+      "result_state": [
+        15,
+        191,
+        93
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 51212,
+      "state": [
+        230,
+        50,
+        103
+      ],
+      "events": [],
+      "result_flags": 51212,
+      "result_state": [
+        230,
+        50,
+        103
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 2846,
+      "state": [
+        208,
+        215,
+        57
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 2846,
+      "result_state": [
+        208,
+        215,
+        57
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 3991,
+      "state": [
+        163,
+        251,
+        76
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 3986,
+      "result_state": [
+        39,
+        251,
+        76
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 41000,
+      "state": [
+        253,
+        240,
+        241
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 41005,
+      "result_state": [
+        125,
+        241,
+        241
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 34601,
+      "state": [
+        43,
+        90,
+        96
+      ],
+      "events": [],
+      "result_flags": 34601,
+      "result_state": [
+        43,
+        90,
+        96
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 51201,
+      "state": [
+        121,
+        239,
+        22
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 51201,
+      "result_state": [
+        121,
+        239,
+        22
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 11707,
+      "state": [
+        250,
+        149,
+        167
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 11711,
+      "result_state": [
+        126,
+        149,
+        165
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 28311,
+      "state": [
+        235,
+        220,
+        135
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 28306,
+      "result_state": [
+        111,
+        220,
+        133
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 3139,
+      "state": [
+        69,
+        104,
+        202
+      ],
+      "events": [],
+      "result_flags": 3139,
+      "result_state": [
+        69,
+        104,
+        202
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 14407,
+      "state": [
+        113,
+        138,
+        206
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 14407,
+      "result_state": [
+        113,
+        138,
+        206
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 65237,
+      "state": [
+        91,
+        137,
+        97
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 65234,
+      "result_state": [
+        95,
+        137,
+        97
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 30594,
+      "state": [
+        81,
+        41,
+        35
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 30592,
+      "result_state": [
+        85,
+        41,
+        33
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 49524,
+      "state": [
+        167,
+        231,
+        139
+      ],
+      "events": [],
+      "result_flags": 49524,
+      "result_state": [
+        167,
+        231,
+        139
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 12774,
+      "state": [
+        169,
+        234,
+        207
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 12774,
+      "result_state": [
+        169,
+        234,
+        207
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 37781,
+      "state": [
+        86,
+        2,
+        94
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 37778,
+      "result_state": [
+        86,
+        3,
+        92
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 63309,
+      "state": [
+        80,
+        150,
+        241
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 63305,
+      "result_state": [
+        84,
+        151,
+        241
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 43679,
+      "state": [
+        170,
+        77,
+        134
+      ],
+      "events": [],
+      "result_flags": 43679,
+      "result_state": [
+        170,
+        77,
+        134
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 115,
+      "state": [
+        14,
+        63,
+        47
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 115,
+      "result_state": [
+        14,
+        63,
+        47
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 8900,
+      "state": [
+        11,
+        41,
+        165
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 8896,
+      "result_state": [
+        15,
+        41,
+        165
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 17504,
+      "state": [
+        65,
+        24,
+        78
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 17508,
+      "result_state": [
+        69,
+        24,
+        76
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 15951,
+      "state": [
+        205,
+        71,
+        152
+      ],
+      "events": [],
+      "result_flags": 15951,
+      "result_state": [
+        205,
+        71,
+        152
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 41384,
+      "state": [
+        38,
+        173,
+        47
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 41384,
+      "result_state": [
+        38,
+        173,
+        47
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 55362,
+      "state": [
+        230,
+        234,
+        201
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 55360,
+      "result_state": [
+        102,
+        234,
+        201
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 26588,
+      "state": [
+        79,
+        211,
+        158
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 26587,
+      "result_state": [
+        79,
+        211,
+        156
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 40261,
+      "state": [
+        2,
+        222,
+        89
+      ],
+      "events": [],
+      "result_flags": 40261,
+      "result_state": [
+        2,
+        222,
+        89
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 34667,
+      "state": [
+        24,
+        115,
+        127
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 34667,
+      "result_state": [
+        24,
+        115,
+        127
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 21641,
+      "state": [
+        223,
+        153,
+        233
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 21641,
+      "result_state": [
+        95,
+        153,
+        233
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 57352,
+      "state": [
+        152,
+        53,
+        66
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 57353,
+      "result_state": [
+        28,
+        53,
+        64
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 2246,
+      "state": [
+        116,
+        95,
+        10
+      ],
+      "events": [],
+      "result_flags": 2246,
+      "result_state": [
+        116,
+        95,
+        10
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 27199,
+      "state": [
+        185,
+        126,
+        25
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 27199,
+      "result_state": [
+        185,
+        126,
+        25
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 1538,
+      "state": [
+        180,
+        189,
+        202
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 1536,
+      "result_state": [
+        52,
+        189,
+        200
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 46989,
+      "state": [
+        75,
+        93,
+        209
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 46985,
+      "result_state": [
+        79,
+        93,
+        209
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 61094,
+      "state": [
+        99,
+        116,
+        99
+      ],
+      "events": [],
+      "result_flags": 61094,
+      "result_state": [
+        99,
+        116,
+        99
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 46368,
+      "state": [
+        74,
+        249,
+        55
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 46368,
+      "result_state": [
+        74,
+        249,
+        55
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 26737,
+      "state": [
+        250,
+        187,
+        45
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 26742,
+      "result_state": [
+        126,
+        187,
+        45
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 37662,
+      "state": [
+        245,
+        137,
+        134
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 37659,
+      "result_state": [
+        117,
+        137,
+        132
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 14317,
+      "state": [
+        96,
+        165,
+        72
+      ],
+      "events": [],
+      "result_flags": 14317,
+      "result_state": [
+        96,
+        165,
+        72
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 63305,
+      "state": [
+        151,
+        27,
+        127
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 63305,
+      "result_state": [
+        151,
+        27,
+        127
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 41953,
+      "state": [
+        131,
+        70,
+        208
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 41956,
+      "result_state": [
+        7,
+        71,
+        208
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 5403,
+      "state": [
+        172,
+        157,
+        46
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 5403,
+      "result_state": [
+        44,
+        157,
+        44
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 24168,
+      "state": [
+        131,
+        139,
+        99
+      ],
+      "events": [],
+      "result_flags": 24168,
+      "result_state": [
+        131,
+        139,
+        99
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 63808,
+      "state": [
+        234,
+        77,
+        95
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 63808,
+      "result_state": [
+        234,
+        77,
+        95
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 12960,
+      "state": [
+        11,
+        101,
+        19
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 12964,
+      "result_state": [
+        15,
+        101,
+        17
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 63157,
+      "state": [
+        189,
+        130,
+        146
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 63158,
+      "result_state": [
+        61,
+        130,
+        144
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 55760,
+      "state": [
+        21,
+        182,
+        212
+      ],
+      "events": [],
+      "result_flags": 55760,
+      "result_state": [
+        21,
+        182,
+        212
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 15124,
+      "state": [
+        130,
+        129,
+        86
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 15124,
+      "result_state": [
+        130,
+        129,
+        86
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 49239,
+      "state": [
+        159,
+        80,
+        125
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 49234,
+      "result_state": [
+        31,
+        80,
+        125
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 33426,
+      "state": [
+        124,
+        16,
+        0
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 33426,
+      "result_state": [
+        124,
+        17,
+        0
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 13541,
+      "state": [
+        59,
+        188,
+        69
+      ],
+      "events": [],
+      "result_flags": 13541,
+      "result_state": [
+        59,
+        188,
+        69
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 61468,
+      "state": [
+        114,
+        175,
+        146
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 61468,
+      "result_state": [
+        114,
+        175,
+        146
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 14209,
+      "state": [
+        239,
+        153,
+        47
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 14208,
+      "result_state": [
+        111,
+        153,
+        45
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 11332,
+      "state": [
+        161,
+        109,
+        205
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 11328,
+      "result_state": [
+        37,
+        109,
+        205
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 45651,
+      "state": [
+        30,
+        78,
+        229
+      ],
+      "events": [],
+      "result_flags": 45651,
+      "result_state": [
+        30,
+        78,
+        229
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 15932,
+      "state": [
+        26,
+        94,
+        99
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 15932,
+      "result_state": [
+        26,
+        94,
+        99
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 46373,
+      "state": [
+        205,
+        123,
+        109
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 46372,
+      "result_state": [
+        77,
+        123,
+        109
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 29766,
+      "state": [
+        231,
+        228,
+        78
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 29760,
+      "result_state": [
+        103,
+        228,
+        76
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 20119,
+      "state": [
+        140,
+        133,
+        167
+      ],
+      "events": [],
+      "result_flags": 20119,
+      "result_state": [
+        140,
+        133,
+        167
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 35124,
+      "state": [
+        161,
+        203,
+        176
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 35124,
+      "result_state": [
+        161,
+        203,
+        176
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 2261,
+      "state": [
+        68,
+        215,
+        95
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 2258,
+      "result_state": [
+        68,
+        215,
+        93
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 21572,
+      "state": [
+        43,
+        34,
+        91
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 21568,
+      "result_state": [
+        47,
+        35,
+        89
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 7227,
+      "state": [
+        191,
+        189,
+        63
+      ],
+      "events": [],
+      "result_flags": 7227,
+      "result_state": [
+        191,
+        189,
+        63
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 10140,
+      "state": [
+        73,
+        227,
+        233
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 10140,
+      "result_state": [
+        73,
+        227,
+        233
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 62987,
+      "state": [
+        83,
+        189,
+        48
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 62985,
+      "result_state": [
+        87,
+        189,
+        48
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 3333,
+      "state": [
+        57,
+        87,
+        53
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 3328,
+      "result_state": [
+        61,
+        87,
+        53
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 61732,
+      "state": [
+        130,
+        168,
+        68
+      ],
+      "events": [],
+      "result_flags": 61732,
+      "result_state": [
+        130,
+        168,
+        68
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 28632,
+      "state": [
+        192,
+        71,
+        117
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 28632,
+      "result_state": [
+        192,
+        71,
+        117
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 45891,
+      "state": [
+        95,
+        16,
+        229
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 45888,
+      "result_state": [
+        95,
+        17,
+        229
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 33746,
+      "state": [
+        73,
+        89,
+        217
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 33746,
+      "result_state": [
+        77,
+        89,
+        217
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 16203,
+      "state": [
+        2,
+        60,
+        165
+      ],
+      "events": [],
+      "result_flags": 16203,
+      "result_state": [
+        2,
+        60,
+        165
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 58736,
+      "state": [
+        124,
+        98,
+        55
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 58736,
+      "result_state": [
+        124,
+        98,
+        55
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 64084,
+      "state": [
+        165,
+        75,
+        237
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 64082,
+      "result_state": [
+        37,
+        75,
+        237
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 4330,
+      "state": [
+        53,
+        36,
+        156
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 4333,
+      "result_state": [
+        53,
+        37,
+        156
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 8859,
+      "state": [
+        197,
+        131,
+        132
+      ],
+      "events": [],
+      "result_flags": 8859,
+      "result_state": [
+        197,
+        131,
+        132
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 29917,
+      "state": [
+        115,
+        199,
+        118
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 29917,
+      "result_state": [
+        115,
+        199,
+        118
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 14670,
+      "state": [
+        237,
+        7,
+        104
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 14665,
+      "result_state": [
+        109,
+        7,
+        104
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 10396,
+      "state": [
+        35,
+        208,
+        44
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 10395,
+      "result_state": [
+        39,
+        209,
+        44
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 34514,
+      "state": [
+        64,
+        160,
+        13
+      ],
+      "events": [],
+      "result_flags": 34514,
+      "result_state": [
+        64,
+        160,
+        13
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 5817,
+      "state": [
+        164,
+        186,
+        143
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 5817,
+      "result_state": [
+        164,
+        186,
+        143
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 16514,
+      "state": [
+        220,
+        25,
+        53
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 16512,
+      "result_state": [
+        92,
+        25,
+        53
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 51868,
+      "state": [
+        79,
+        52,
+        252
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 51867,
+      "result_state": [
+        79,
+        52,
+        252
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 42606,
+      "state": [
+        181,
+        1,
+        20
+      ],
+      "events": [],
+      "result_flags": 42606,
+      "result_state": [
+        181,
+        1,
+        20
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 27198,
+      "state": [
+        38,
+        116,
+        183
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 27198,
+      "result_state": [
+        38,
+        116,
+        183
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 13143,
+      "state": [
+        209,
+        47,
+        203
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 13138,
+      "result_state": [
+        85,
+        47,
+        201
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 4304,
+      "state": [
+        177,
+        122,
+        63
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 4306,
+      "result_state": [
+        53,
+        123,
+        61
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 655,
+      "state": [
+        76,
+        4,
+        155
+      ],
+      "events": [],
+      "result_flags": 655,
+      "result_state": [
+        76,
+        4,
+        155
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 6103,
+      "state": [
+        0,
+        242,
+        51
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 6103,
+      "result_state": [
+        0,
+        242,
+        51
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 23961,
+      "state": [
+        3,
+        252,
+        83
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 23963,
+      "result_state": [
+        7,
+        253,
+        81
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 37632,
+      "state": [
+        33,
+        15,
+        62
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 37632,
+      "result_state": [
+        37,
+        15,
+        60
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 14807,
+      "state": [
+        193,
+        181,
+        56
+      ],
+      "events": [],
+      "result_flags": 14807,
+      "result_state": [
+        193,
+        181,
+        56
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 45734,
+      "state": [
+        178,
+        92,
+        28
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 45734,
+      "result_state": [
+        178,
+        92,
+        28
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 246,
+      "state": [
+        198,
+        196,
+        157
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 246,
+      "result_state": [
+        70,
+        197,
+        157
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 23368,
+      "state": [
+        98,
+        114,
+        179
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 23369,
+      "result_state": [
+        102,
+        114,
+        177
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 3601,
+      "state": [
+        206,
+        134,
+        68
+      ],
+      "events": [],
+      "result_flags": 3601,
+      "result_state": [
+        206,
+        134,
+        68
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 29669,
+      "state": [
+        221,
+        64,
+        33
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 29669,
+      "result_state": [
+        221,
+        64,
+        33
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 25103,
+      "state": [
+        117,
+        93,
+        244
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 25097,
+      "result_state": [
+        117,
+        93,
+        244
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 52496,
+      "state": [
+        116,
+        28,
+        49
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 52498,
+      "result_state": [
+        116,
+        29,
+        49
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 1084,
+      "state": [
+        202,
+        15,
+        110
+      ],
+      "events": [],
+      "result_flags": 1084,
+      "result_state": [
+        202,
+        15,
+        110
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 19102,
+      "state": [
+        70,
+        251,
+        46
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 19102,
+      "result_state": [
+        70,
+        251,
+        46
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 39839,
+      "state": [
+        226,
+        220,
+        168
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 39835,
+      "result_state": [
+        102,
+        221,
+        168
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 59066,
+      "state": [
+        78,
+        218,
+        116
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 59071,
+      "result_state": [
+        78,
+        219,
+        116
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 18568,
+      "state": [
+        52,
+        205,
+        28
+      ],
+      "events": [],
+      "result_flags": 18568,
+      "result_state": [
+        52,
+        205,
+        28
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 13352,
+      "state": [
+        9,
+        34,
+        164
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 13352,
+      "result_state": [
+        9,
+        34,
+        164
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 984,
+      "state": [
+        138,
+        74,
+        53
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 987,
+      "result_state": [
+        14,
+        75,
+        53
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 8163,
+      "state": [
+        246,
+        164,
+        5
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 8164,
+      "result_state": [
+        118,
+        164,
+        5
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 59174,
+      "state": [
+        180,
+        177,
+        154
+      ],
+      "events": [],
+      "result_flags": 59174,
+      "result_state": [
+        180,
+        177,
+        154
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 11582,
+      "state": [
+        30,
+        38,
+        0
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 11582,
+      "result_state": [
+        30,
+        38,
+        0
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 57662,
+      "state": [
+        177,
+        153,
+        43
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 57663,
+      "result_state": [
+        53,
+        153,
+        41
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 11615,
+      "state": [
+        49,
+        153,
+        251
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 11611,
+      "result_state": [
+        53,
+        153,
+        249
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 20349,
+      "state": [
+        145,
+        153,
+        168
+      ],
+      "events": [],
+      "result_flags": 20349,
+      "result_state": [
+        145,
+        153,
+        168
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 15463,
+      "state": [
+        172,
+        136,
+        248
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 15463,
+      "result_state": [
+        172,
+        136,
+        248
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 11947,
+      "state": [
+        151,
+        50,
+        148
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 11949,
+      "result_state": [
+        23,
+        51,
+        148
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 60149,
+      "state": [
+        230,
+        40,
+        193
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 60150,
+      "result_state": [
+        102,
+        41,
+        193
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 59410,
+      "state": [
+        99,
+        179,
+        149
+      ],
+      "events": [],
+      "result_flags": 59410,
+      "result_state": [
+        99,
+        179,
+        149
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 62041,
+      "state": [
+        5,
+        195,
+        50
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 62041,
+      "result_state": [
+        5,
+        195,
+        50
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 51767,
+      "state": [
+        69,
+        71,
+        186
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 51766,
+      "result_state": [
+        69,
+        71,
+        184
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 50410,
+      "state": [
+        14,
+        11,
+        164
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 50413,
+      "result_state": [
+        14,
+        11,
+        164
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 24114,
+      "state": [
+        53,
+        121,
+        169
+      ],
+      "events": [],
+      "result_flags": 24114,
+      "result_state": [
+        53,
+        121,
+        169
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 27874,
+      "state": [
+        80,
+        132,
+        249
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 27874,
+      "result_state": [
+        80,
+        132,
+        249
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 65514,
+      "state": [
+        156,
+        223,
+        48
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 65517,
+      "result_state": [
+        28,
+        223,
+        48
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 11503,
+      "state": [
+        160,
+        213,
+        176
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 11501,
+      "result_state": [
+        36,
+        213,
+        176
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 54800,
+      "state": [
+        155,
+        31,
+        249
+      ],
+      "events": [],
+      "result_flags": 54800,
+      "result_state": [
+        155,
+        31,
+        249
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 13613,
+      "state": [
+        191,
+        154,
+        143
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 13613,
+      "result_state": [
+        191,
+        154,
+        143
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 62929,
+      "state": [
+        75,
+        118,
+        41
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 62930,
+      "result_state": [
+        79,
+        119,
+        41
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 58749,
+      "state": [
+        165,
+        133,
+        98
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 58751,
+      "result_state": [
+        37,
+        133,
+        96
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 3792,
+      "state": [
+        154,
+        38,
+        153
+      ],
+      "events": [],
+      "result_flags": 3792,
+      "result_state": [
+        154,
+        38,
+        153
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 56189,
+      "state": [
+        202,
+        42,
+        201
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 56189,
+      "result_state": [
+        202,
+        42,
+        201
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 44155,
+      "state": [
+        64,
+        226,
+        48
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 44159,
+      "result_state": [
+        68,
+        227,
+        48
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 25457,
+      "state": [
+        192,
+        144,
+        96
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 25462,
+      "result_state": [
+        68,
+        144,
+        96
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 12888,
+      "state": [
+        112,
+        185,
+        98
+      ],
+      "events": [],
+      "result_flags": 12888,
+      "result_state": [
+        112,
+        185,
+        98
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 2,
+      "flags": 33415,
+      "state": [
+        5,
+        18,
+        234
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 33415,
+      "result_state": [
+        5,
+        18,
+        234
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 58929,
+      "state": [
+        86,
+        90,
+        57
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 58934,
+      "result_state": [
+        86,
+        90,
+        57
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 1827,
+      "state": [
+        27,
+        219,
+        36
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 1828,
+      "result_state": [
+        31,
+        219,
+        36
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 35229,
+      "state": [
+        169,
+        53,
+        204
+      ],
+      "events": [],
+      "result_flags": 35229,
+      "result_state": [
+        169,
+        53,
+        204
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 0,
+      "flags": 55630,
+      "state": [
+        11,
+        90,
+        198
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 55630,
+      "result_state": [
+        11,
+        90,
+        198
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 1,
+      "flags": 46322,
+      "state": [
+        151,
+        66,
+        23
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "supplemental",
+        "unlock"
+      ],
+      "result_flags": 46326,
+      "result_state": [
+        23,
+        67,
+        21
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 1535,
+      "state": [
+        79,
+        118,
+        119
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 1535,
+      "result_state": [
+        79,
+        119,
+        117
+      ]
+    },
+    {
+      "primary_present": false,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 48501,
+      "state": [
+        74,
+        226,
+        170
+      ],
+      "events": [],
+      "result_flags": 48501,
+      "result_state": [
+        74,
+        226,
+        170
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": true,
+      "channel_count": 1,
+      "flags": 35322,
+      "state": [
+        170,
+        120,
+        225
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 35322,
+      "result_state": [
+        170,
+        120,
+        225
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 2,
+      "flags": 313,
+      "state": [
+        67,
+        99,
+        110
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 319,
+      "result_state": [
+        71,
+        99,
+        108
+      ]
+    },
+    {
+      "primary_present": true,
+      "primary_removed_by_update": false,
+      "channel_count": 0,
+      "flags": 37147,
+      "state": [
+        137,
+        74,
+        193
+      ],
+      "events": [
+        "lock",
+        "prepare_rotate",
+        "update",
+        "unlock"
+      ],
+      "result_flags": 37147,
+      "result_state": [
+        13,
+        74,
+        193
+      ]
+    }
+  ]
+}

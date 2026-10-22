@@ -1,0 +1,4234 @@
+{
+  "evidence": "original_instruction_emulation",
+  "inputs": "synthetic",
+  "game_process": false,
+  "scope": "128 full empty-list scope paths with original TLS getter/setter. Lock, unlock and work services stubbed. Three initialization slices with original setter. Nonempty callbacks, exceptional unwinding, actual locks and live thread identity not validated.",
+  "scope_cases": 128,
+  "initialization_cases": 3,
+  "rows": [
+    {
+      "initial_mask": 0,
+      "initial_context": 3542861718,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3542861718
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2690927902,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2690927902
+    },
+    {
+      "initial_mask": 6172155204552436815,
+      "initial_context": 3782118454,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 6172155204552436815,
+      "final_context": 3782118454
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 774596896,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 774596896
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 338502269,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 338502269
+    },
+    {
+      "initial_mask": 8213745581371139174,
+      "initial_context": 2735285632,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 8213745581371139174,
+      "final_context": 2735285632
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3180909994,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3180909994
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1762498428,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1762498428
+    },
+    {
+      "initial_mask": 3562942342365822495,
+      "initial_context": 3412012045,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 3562942342365822495,
+      "final_context": 3412012045
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1257430563,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1257430563
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1931955983,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1931955983
+    },
+    {
+      "initial_mask": 14597357289624440533,
+      "initial_context": 2986381630,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 14597357289624440533,
+      "final_context": 2986381630
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1617249315,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1617249315
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3985945762,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3985945762
+    },
+    {
+      "initial_mask": 3771512115663458087,
+      "initial_context": 879409931,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 3771512115663458087,
+      "final_context": 879409931
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1807736834,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1807736834
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2459219678,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2459219678
+    },
+    {
+      "initial_mask": 10918473780791245891,
+      "initial_context": 3111216142,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 10918473780791245891,
+      "final_context": 3111216142
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2524318184,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2524318184
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 39047359,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 39047359
+    },
+    {
+      "initial_mask": 17085465272956928965,
+      "initial_context": 3867312644,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 17085465272956928965,
+      "final_context": 3867312644
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3964325256,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3964325256
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1555935465,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1555935465
+    },
+    {
+      "initial_mask": 14813638443993446740,
+      "initial_context": 2002212598,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 14813638443993446740,
+      "final_context": 2002212598
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 976484633,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 976484633
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1331367387,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1331367387
+    },
+    {
+      "initial_mask": 5302196717916088553,
+      "initial_context": 223309965,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 5302196717916088553,
+      "final_context": 223309965
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 475270121,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 475270121
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 543359822,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 543359822
+    },
+    {
+      "initial_mask": 15835727608035128603,
+      "initial_context": 2486195668,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 15835727608035128603,
+      "final_context": 2486195668
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1812193785,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1812193785
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 994430676,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 994430676
+    },
+    {
+      "initial_mask": 7701120785305035617,
+      "initial_context": 1126524645,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 7701120785305035617,
+      "final_context": 1126524645
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1829765679,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1829765679
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 762237003,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 762237003
+    },
+    {
+      "initial_mask": 5351628792229675942,
+      "initial_context": 4031311066,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 5351628792229675942,
+      "final_context": 4031311066
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2539112178,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2539112178
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2848001808,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2848001808
+    },
+    {
+      "initial_mask": 13338072727557390124,
+      "initial_context": 1800015831,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 13338072727557390124,
+      "final_context": 1800015831
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1260621409,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1260621409
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3721680114,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3721680114
+    },
+    {
+      "initial_mask": 1551903491052820873,
+      "initial_context": 439303092,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 1551903491052820873,
+      "final_context": 439303092
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1030510845,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1030510845
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 102738848,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 102738848
+    },
+    {
+      "initial_mask": 17199441968933500158,
+      "initial_context": 3317045014,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 17199441968933500158,
+      "final_context": 3317045014
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 764202488,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 764202488
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3849624343,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3849624343
+    },
+    {
+      "initial_mask": 14759355032010622181,
+      "initial_context": 547486504,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 14759355032010622181,
+      "final_context": 547486504
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1698509822,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1698509822
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 388860190,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 388860190
+    },
+    {
+      "initial_mask": 6162245319174389227,
+      "initial_context": 116617095,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 6162245319174389227,
+      "final_context": 116617095
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2344782636,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2344782636
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3364757549,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3364757549
+    },
+    {
+      "initial_mask": 14487977950132921359,
+      "initial_context": 3899131018,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 14487977950132921359,
+      "final_context": 3899131018
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2683376288,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2683376288
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 203158899,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 203158899
+    },
+    {
+      "initial_mask": 3253241518417286522,
+      "initial_context": 1384382093,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 3253241518417286522,
+      "final_context": 1384382093
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2341498242,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2341498242
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3371099725,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3371099725
+    },
+    {
+      "initial_mask": 4276708932797363822,
+      "initial_context": 638410482,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 4276708932797363822,
+      "final_context": 638410482
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1227157542,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1227157542
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2030526184,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2030526184
+    },
+    {
+      "initial_mask": 10418663095873653339,
+      "initial_context": 2015019994,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 10418663095873653339,
+      "final_context": 2015019994
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 764401044,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 764401044
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1822508979,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1822508979
+    },
+    {
+      "initial_mask": 1909496116692906959,
+      "initial_context": 4240529827,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 1909496116692906959,
+      "final_context": 4240529827
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 4134047637,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 4134047637
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3354886307,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3354886307
+    },
+    {
+      "initial_mask": 17407914564879386515,
+      "initial_context": 3342115058,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 17407914564879386515,
+      "final_context": 3342115058
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3496393616,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3496393616
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 236639593,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 236639593
+    },
+    {
+      "initial_mask": 4239901491805964380,
+      "initial_context": 246017389,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 4239901491805964380,
+      "final_context": 246017389
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 754448917,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 754448917
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1537840706,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1537840706
+    },
+    {
+      "initial_mask": 10344901795633774771,
+      "initial_context": 3004061531,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 10344901795633774771,
+      "final_context": 3004061531
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1704213248,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1704213248
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1544422177,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1544422177
+    },
+    {
+      "initial_mask": 6072871266416104460,
+      "initial_context": 1830366449,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 6072871266416104460,
+      "final_context": 1830366449
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3243944852,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3243944852
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 389753562,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 389753562
+    },
+    {
+      "initial_mask": 1102122133887898650,
+      "initial_context": 3250447096,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 1102122133887898650,
+      "final_context": 3250447096
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2223862475,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2223862475
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2101494870,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2101494870
+    },
+    {
+      "initial_mask": 1858758508937873924,
+      "initial_context": 1827032480,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 1858758508937873924,
+      "final_context": 1827032480
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 981963063,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 981963063
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3618742582,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3618742582
+    },
+    {
+      "initial_mask": 3227832216345933658,
+      "initial_context": 826577421,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 3227832216345933658,
+      "final_context": 826577421
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3827581566,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3827581566
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2053232741,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2053232741
+    },
+    {
+      "initial_mask": 4350798951100051941,
+      "initial_context": 836001975,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 4350798951100051941,
+      "final_context": 836001975
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2886503734,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2886503734
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 49783029,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 49783029
+    },
+    {
+      "initial_mask": 9556580006489749746,
+      "initial_context": 1385810441,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 9556580006489749746,
+      "final_context": 1385810441
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1159796545,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1159796545
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1862307515,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1862307515
+    },
+    {
+      "initial_mask": 1137620101126226147,
+      "initial_context": 4089922912,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 1137620101126226147,
+      "final_context": 4089922912
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2305682397,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2305682397
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3499241427,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3499241427
+    },
+    {
+      "initial_mask": 1247104736493680600,
+      "initial_context": 573885693,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 1247104736493680600,
+      "final_context": 573885693
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3444864659,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3444864659
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1941513473,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1941513473
+    },
+    {
+      "initial_mask": 9560539346179050897,
+      "initial_context": 364722317,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 9560539346179050897,
+      "final_context": 364722317
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 370697900,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 370697900
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2770839708,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2770839708
+    },
+    {
+      "initial_mask": 17669045890537036396,
+      "initial_context": 1853005271,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 17669045890537036396,
+      "final_context": 1853005271
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2674691591,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2674691591
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 392181778,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 392181778
+    },
+    {
+      "initial_mask": 6113200196889414403,
+      "initial_context": 1890435667,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 6113200196889414403,
+      "final_context": 1890435667
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 834159935,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 834159935
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 421689089,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 421689089
+    },
+    {
+      "initial_mask": 11110200930213773533,
+      "initial_context": 1657921024,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 11110200930213773533,
+      "final_context": 1657921024
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3930312918,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3930312918
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1370439469,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1370439469
+    },
+    {
+      "initial_mask": 11370358845087190832,
+      "initial_context": 1231291985,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 11370358845087190832,
+      "final_context": 1231291985
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 119335074,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 119335074
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 1629179641,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 1629179641
+    },
+    {
+      "initial_mask": 5087217184935758980,
+      "initial_context": 3386348340,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 5087217184935758980,
+      "final_context": 3386348340
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 2398871939,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 2398871939
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 564452650,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 564452650
+    },
+    {
+      "initial_mask": 14102683344532630541,
+      "initial_context": 908602957,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 14102683344532630541,
+      "final_context": 908602957
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1176222067,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1176222067
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 3059866729,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 3059866729
+    },
+    {
+      "initial_mask": 12363774124400124666,
+      "initial_context": 170743495,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 12363774124400124666,
+      "final_context": 170743495
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 1445239248,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 1445239248
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 2468319373,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 2468319373
+    },
+    {
+      "initial_mask": 3262585109794859148,
+      "initial_context": 610298878,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 3262585109794859148,
+      "final_context": 610298878
+    },
+    {
+      "initial_mask": 0,
+      "initial_context": 3459009423,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 0,
+      "final_context": 3459009423
+    },
+    {
+      "initial_mask": 18446744073709551615,
+      "initial_context": 255899063,
+      "events": [
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "work",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "lock",
+          "mask": 0,
+          "context": 0
+        },
+        {
+          "service": "unlock",
+          "mask": 0,
+          "context": 0
+        }
+      ],
+      "final_mask": 18446744073709551615,
+      "final_context": 255899063
+    }
+  ]
+}

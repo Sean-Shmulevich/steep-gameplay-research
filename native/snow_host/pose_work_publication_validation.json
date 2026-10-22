@@ -1,0 +1,648 @@
+{
+  "evidence": "original-instruction emulation with synthetic work and copy services",
+  "cases": 32,
+  "scope": "Virtual work call through success-gated output selection and two ordered copy calls. Wrapper construction and copy internals excluded. Callback changes current bank and copy changes primary as synthetic reload probes.",
+  "live_execution_verified": false,
+  "rows": [
+    {
+      "mode": 0,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 0,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 0,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          0,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 0,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          0,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 1,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 1,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 1,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          1,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 1,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          1,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 2,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 2,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 2,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          2,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          2
+        ]
+      ]
+    },
+    {
+      "mode": 2,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          2,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          2
+        ]
+      ]
+    },
+    {
+      "mode": 3,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 3,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 3,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          3,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          3
+        ]
+      ]
+    },
+    {
+      "mode": 3,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          3,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          3
+        ]
+      ]
+    },
+    {
+      "mode": 4,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 4,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 4,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          4,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          4
+        ]
+      ]
+    },
+    {
+      "mode": 4,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          4,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          4
+        ]
+      ]
+    },
+    {
+      "mode": 5,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 5,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 5,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          5,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          5
+        ]
+      ]
+    },
+    {
+      "mode": 5,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          5,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          5
+        ]
+      ]
+    },
+    {
+      "mode": 6,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 6,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ]
+      ]
+    },
+    {
+      "mode": 6,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          6,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          6
+        ]
+      ]
+    },
+    {
+      "mode": 6,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 0,
+      "events": [
+        [
+          "work",
+          0
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          6,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          6
+        ]
+      ]
+    },
+    {
+      "mode": 7,
+      "success": false,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 7,
+      "success": false,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ]
+      ]
+    },
+    {
+      "mode": 7,
+      "success": true,
+      "replace_primary_during_copy": false,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          7,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "old_primary",
+          7
+        ]
+      ]
+    },
+    {
+      "mode": 7,
+      "success": true,
+      "replace_primary_during_copy": true,
+      "work_flag": 1,
+      "events": [
+        [
+          "work",
+          1
+        ],
+        [
+          "select"
+        ],
+        [
+          "copy_selected",
+          "captured_current",
+          "selected",
+          7,
+          65535
+        ],
+        [
+          "copy_primary",
+          "captured_current",
+          "new_primary",
+          7
+        ]
+      ]
+    }
+  ]
+}

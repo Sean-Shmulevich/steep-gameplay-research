@@ -1,0 +1,127 @@
+{
+  "evidence": "original-instruction emulation with synthetic remap and supplied selection/pose read",
+  "cases": 5,
+  "scope": "Remapped-query gates and output copies only; selected wrapper and bank read supplied. Fallback globals are values from the analyzed image, not verified live.",
+  "rows": [
+    {
+      "index": 65535,
+      "mapped_index": 0,
+      "events": [],
+      "output": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "index": 0,
+      "mapped_index": 65535,
+      "events": [],
+      "output": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "index": 0,
+      "mapped_index": 0,
+      "events": [
+        [
+          "select"
+        ],
+        [
+          "read",
+          0
+        ]
+      ],
+      "output": [
+        [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "mapped_index": 5,
+      "events": [
+        [
+          "select"
+        ],
+        [
+          "read",
+          5
+        ]
+      ],
+      "output": [
+        [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "mapped_index": 65534,
+      "events": [
+        [
+          "select"
+        ],
+        [
+          "read",
+          65534
+        ]
+      ],
+      "output": [
+        [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ]
+      ]
+    }
+  ],
+  "live_execution_verified": false
+}

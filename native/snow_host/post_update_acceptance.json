@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-22",
+  "os_version": "27.0.1",
+  "intel_execution_check_passed": true,
+  "host_version": "0.7.0",
+  "startup_host_loaded": true,
+  "host_loaded_before_visible_window": true,
+  "engine_identity_verified": true,
+  "engine_ready_logged": true,
+  "plugins_active_logged": 1,
+  "gameplay_verified": false,
+  "pause_step_test_executed": false,
+  "brake_boost_test_executed": false,
+  "acceptance_passed": false,
+  "failure": "navigation capture helper exceeded 15-second subprocess deadline",
+  "capture_file_existed": true,
+  "capture_visual": "Game window present with blank interior; no gameplay HUD",
+  "game_crash_established": false,
+  "settings_restored": true,
+  "bottle_stopped": true,
+  "original_dll_verified": true,
+  "followup": "Subsequent prepared-rider run passed; see post_update_acceptance_success.json. Earlier failed attempts retained as evidence.",
+  "retry": {
+    "startup_and_engine_ready": true,
+    "gameplay_hud_observed": true,
+    "player_bound": true,
+    "player_flags": 1,
+    "player_in_world": false,
+    "host_faulted": false,
+    "pause_step_attempted": false,
+    "speed_changes_attempted": false,
+    "acceptance_passed": false,
+    "failure": "Player eligibility gate rejected flags=1 before mutations",
+    "capture_timeouts_recovered": 2,
+    "cleanup": {
+      "settings_restored": true,
+      "bottle_stopped": true,
+      "original_dll_verified": true
+    }
+  },
+  "readiness_retry": {
+    "gameplay_verified": false,
+    "readiness_poll_executed": false,
+    "navigation_budget_seconds": 150,
+    "last_recognized_screen": "offline-mode confirmation after loading 3/3",
+    "termination_reason": "navigation deadline",
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "readiness_observation": {
+    "gameplay_hud_observed": true,
+    "visible_sport": "snowboard",
+    "samples": 41,
+    "flags_observed": [
+      1
+    ],
+    "position_changed": false,
+    "physics_mutations_attempted": false,
+    "cleanup": {
+      "settings_restored": true,
+      "bottle_stopped": true,
+      "original_dll_verified": true
+    }
+  }
+}

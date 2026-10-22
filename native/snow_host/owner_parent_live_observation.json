@@ -1,0 +1,170 @@
+{
+  "schema": "owner-parent-live-observation-v1",
+  "evidence": "one original-game forward-pulse session; passive native-host reads",
+  "resource_key": 743623600,
+  "phases": {
+    "before": {
+      "owner_parent": {
+        "schema": "animation-owner-parent-comparison-v1",
+        "compared": 8,
+        "bit_exact_parent_matches": 6,
+        "bit_exact_translation_matches": 6,
+        "bit_exact_rotation_matches": 8,
+        "bit_exact_xyz_matches": 8,
+        "parent_w_little_endian_bit_patterns": {
+          "00000000": 6,
+          "0000803f": 2
+        },
+        "indirect_accessor_samples": 8,
+        "max_rotation_component_difference": 0.0,
+        "min_translation_difference": 0.0,
+        "max_translation_difference": 0.0,
+        "errors": [],
+        "comparison_completed": true,
+        "freshness_established": false,
+        "writer_attribution_established": false,
+        "world_space_established": false
+      },
+      "owner_body": {
+        "compared_identity_brackets": 8,
+        "skipped": 0,
+        "min_translation_distance": 0.0,
+        "max_translation_distance": 0.0,
+        "max_stored_basis_lane_difference": 0.0,
+        "atomic_snapshot": false,
+        "coordinate_equivalence_established": false,
+        "units": "stored engine units; before and after body reads are sequential"
+      },
+      "conversion": {
+        "schema": "provider-conversion-capture-check-v1",
+        "checked": 8,
+        "matched": 8,
+        "skipped": 0,
+        "direct_branch": 0,
+        "composed_branch": 8,
+        "errors": [],
+        "ok": true,
+        "original_accessor_independently_observed": false,
+        "coordinate_semantics_established": false
+      }
+    },
+    "pulse_window": {
+      "owner_parent": {
+        "schema": "animation-owner-parent-comparison-v1",
+        "compared": 24,
+        "bit_exact_parent_matches": 22,
+        "bit_exact_translation_matches": 22,
+        "bit_exact_rotation_matches": 24,
+        "bit_exact_xyz_matches": 24,
+        "parent_w_little_endian_bit_patterns": {
+          "00000000": 22,
+          "0000803f": 2
+        },
+        "indirect_accessor_samples": 24,
+        "max_rotation_component_difference": 0.0,
+        "min_translation_difference": 0.0,
+        "max_translation_difference": 0.0,
+        "errors": [],
+        "comparison_completed": true,
+        "freshness_established": false,
+        "writer_attribution_established": false,
+        "world_space_established": false
+      },
+      "owner_body": {
+        "compared_identity_brackets": 24,
+        "skipped": 0,
+        "min_translation_distance": 0.0,
+        "max_translation_distance": 0.0,
+        "max_stored_basis_lane_difference": 0.0,
+        "atomic_snapshot": false,
+        "coordinate_equivalence_established": false,
+        "units": "stored engine units; before and after body reads are sequential"
+      },
+      "conversion": {
+        "schema": "provider-conversion-capture-check-v1",
+        "checked": 24,
+        "matched": 24,
+        "skipped": 0,
+        "direct_branch": 0,
+        "composed_branch": 24,
+        "errors": [],
+        "ok": true,
+        "original_accessor_independently_observed": false,
+        "coordinate_semantics_established": false
+      }
+    },
+    "after": {
+      "owner_parent": {
+        "schema": "animation-owner-parent-comparison-v1",
+        "compared": 8,
+        "bit_exact_parent_matches": 8,
+        "bit_exact_translation_matches": 8,
+        "bit_exact_rotation_matches": 8,
+        "bit_exact_xyz_matches": 8,
+        "parent_w_little_endian_bit_patterns": {
+          "00000000": 8
+        },
+        "indirect_accessor_samples": 8,
+        "max_rotation_component_difference": 0.0,
+        "min_translation_difference": 0.0,
+        "max_translation_difference": 0.0,
+        "errors": [],
+        "comparison_completed": true,
+        "freshness_established": false,
+        "writer_attribution_established": false,
+        "world_space_established": false
+      },
+      "owner_body": {
+        "compared_identity_brackets": 8,
+        "skipped": 0,
+        "min_translation_distance": 0.0,
+        "max_translation_distance": 0.02859366013654984,
+        "max_stored_basis_lane_difference": 0.16471621790000002,
+        "atomic_snapshot": false,
+        "coordinate_equivalence_established": false,
+        "units": "stored engine units; before and after body reads are sequential"
+      },
+      "conversion": {
+        "schema": "provider-conversion-capture-check-v1",
+        "checked": 8,
+        "matched": 8,
+        "skipped": 0,
+        "direct_branch": 0,
+        "composed_branch": 8,
+        "errors": [],
+        "ok": true,
+        "original_accessor_independently_observed": false,
+        "coordinate_semantics_established": false
+      }
+    }
+  },
+  "parent_w_counts": {
+    "0": 36,
+    "1": 4
+  },
+  "input": {
+    "exit_code": 0,
+    "released": true,
+    "accepted_deliveries": 2,
+    "requested_duration_ms": 700,
+    "scan_code": 17
+  },
+  "stable_20_seconds": true,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "findings": [
+    "All 40 owner-parent XYZ and quaternion comparisons match exactly at float32",
+    "Four parent W lanes are 1 rather than guarded-refresh preparation value 0",
+    "Stored owner and body transforms coincide in baseline/pulse samples; some follow-up bracketing reads differ"
+  ],
+  "unresolved": [
+    "Which path last wrote each parent record",
+    "Why W switches between zero and one",
+    "Freshness, ABA and atomicity",
+    "World-space and anatomical identity"
+  ],
+  "payload_policy": "Only aggregate metrics; no pose tracks or process addresses"
+}

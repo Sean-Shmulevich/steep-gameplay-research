@@ -1,0 +1,4671 @@
+{
+  "cases": 216,
+  "game_process": false,
+  "scope": "Complete original nonnull-target publication helper, actual TLS context getter, record-index lookup and sufficient-capacity ring append. Registry preparation intercepted. No null-target clearing, queue growth/consumer, concurrency, OS thread role or ownership acquisition tested.",
+  "rows": [
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 3,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 2,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294443011,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 5,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483648,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 0,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 1,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "registry_preparation_requested": false,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 0,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 3,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": true,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": [
+        "identifier",
+        "new_object",
+        "record"
+      ],
+      "queue_head_after": 0
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 0
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 1
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 0,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 16384,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 0,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 0,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    },
+    {
+      "inputs": {
+        "current_target": 2,
+        "new_target": 1,
+        "status_word": 2147483653,
+        "target_flags": 4294967295,
+        "record_index": 16383,
+        "thread_context": 9,
+        "pool_mode": 2
+      },
+      "result": {
+        "object_pointer": 2,
+        "status_word": 2147483653,
+        "target_flags": 4294459392,
+        "registry_preparation_requested": true,
+        "publication_queued": false,
+        "lifetime_acquisition_proven": false
+      },
+      "queue_item": null,
+      "queue_head_after": 3
+    }
+  ]
+}

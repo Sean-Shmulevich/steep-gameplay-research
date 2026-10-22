@@ -1,0 +1,6217 @@
+{
+  "cases": 320,
+  "game_process": false,
+  "original_helper_executed": true,
+  "intercepted_calls": [],
+  "scope": "Complete serial indexed-record invalidation helper with synthetic paged registry. Separate lookup and target objects. No concurrent CAS retries, full cleanup route, or live retention proof.",
+  "rows": [
+    {
+      "inputs": {
+        "indexed_object_flags": 1754267648,
+        "target_object_flags": 2233470993,
+        "raw_pointer": 0,
+        "status_word": 2327752056,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2327752056,
+        "record_count": 0,
+        "target_object_flags": 2233470993,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3013083136,
+        "target_object_flags": 3702419103,
+        "raw_pointer": 0,
+        "status_word": 501031174,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 501031174,
+        "record_count": 0,
+        "target_object_flags": 3702419103,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 758644736,
+        "target_object_flags": 1630235861,
+        "raw_pointer": 0,
+        "status_word": 967052798,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 967052798,
+        "record_count": 0,
+        "target_object_flags": 1630235861,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1243611136,
+        "target_object_flags": 124971754,
+        "raw_pointer": 0,
+        "status_word": 965020951,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 965020951,
+        "record_count": 0,
+        "target_object_flags": 124971754,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 500695040,
+        "target_object_flags": 2442501533,
+        "raw_pointer": 0,
+        "status_word": 37819876,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 37819876,
+        "record_count": 0,
+        "target_object_flags": 2442501533,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 429916160,
+        "target_object_flags": 672979859,
+        "raw_pointer": 0,
+        "status_word": 3326227947,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 3326227947,
+        "record_count": 0,
+        "target_object_flags": 672979859,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2206203904,
+        "target_object_flags": 2958456850,
+        "raw_pointer": 0,
+        "status_word": 4249839700,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 4249839700,
+        "record_count": 0,
+        "target_object_flags": 2958456850,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1301282816,
+        "target_object_flags": 2978603888,
+        "raw_pointer": 0,
+        "status_word": 2723067917,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2723067917,
+        "record_count": 0,
+        "target_object_flags": 2978603888,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1625292800,
+        "target_object_flags": 2538313555,
+        "raw_pointer": 0,
+        "status_word": 1739666769,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 1739666769,
+        "record_count": 1,
+        "target_object_flags": 2538313555,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3289907200,
+        "target_object_flags": 2969152252,
+        "raw_pointer": 0,
+        "status_word": 2877773253,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2877773253,
+        "record_count": 1,
+        "target_object_flags": 2969152252,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1400373248,
+        "target_object_flags": 1538819635,
+        "raw_pointer": 0,
+        "status_word": 315909594,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 315909594,
+        "record_count": 1,
+        "target_object_flags": 1538819635,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1454899200,
+        "target_object_flags": 3614313327,
+        "raw_pointer": 0,
+        "status_word": 1214314448,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 1214314448,
+        "record_count": 1,
+        "target_object_flags": 3614313327,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2650800128,
+        "target_object_flags": 683107736,
+        "raw_pointer": 0,
+        "status_word": 481078539,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 481078539,
+        "record_count": 1,
+        "target_object_flags": 683107736,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2194669568,
+        "target_object_flags": 300934141,
+        "raw_pointer": 0,
+        "status_word": 2528098404,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2528098404,
+        "record_count": 1,
+        "target_object_flags": 300934141,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 406323200,
+        "target_object_flags": 1159647799,
+        "raw_pointer": 0,
+        "status_word": 4118543995,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 4118543995,
+        "record_count": 1,
+        "target_object_flags": 1159647799,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1354235904,
+        "target_object_flags": 462640403,
+        "raw_pointer": 0,
+        "status_word": 4050660574,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 4050660574,
+        "record_count": 1,
+        "target_object_flags": 462640403,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2685403136,
+        "target_object_flags": 3529719149,
+        "raw_pointer": 0,
+        "status_word": 4164260628,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 4164260628,
+        "record_count": 9,
+        "target_object_flags": 3529719149,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1244135424,
+        "target_object_flags": 150338164,
+        "raw_pointer": 0,
+        "status_word": 1479835542,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 1479835542,
+        "record_count": 9,
+        "target_object_flags": 150338164,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1657274368,
+        "target_object_flags": 411513429,
+        "raw_pointer": 0,
+        "status_word": 2049906160,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2049906160,
+        "record_count": 9,
+        "target_object_flags": 411513429,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2044723200,
+        "target_object_flags": 3938010240,
+        "raw_pointer": 0,
+        "status_word": 818537735,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 818537735,
+        "record_count": 9,
+        "target_object_flags": 3938010240,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 809500672,
+        "target_object_flags": 558528770,
+        "raw_pointer": 0,
+        "status_word": 1109591355,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 1109591355,
+        "record_count": 9,
+        "target_object_flags": 558528770,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3208642560,
+        "target_object_flags": 1065000019,
+        "raw_pointer": 0,
+        "status_word": 3335302249,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 3335302249,
+        "record_count": 9,
+        "target_object_flags": 1065000019,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 211288064,
+        "target_object_flags": 186594075,
+        "raw_pointer": 0,
+        "status_word": 2893591689,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2893591689,
+        "record_count": 9,
+        "target_object_flags": 186594075,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4125622272,
+        "target_object_flags": 3507723162,
+        "raw_pointer": 0,
+        "status_word": 2919981309,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2919981309,
+        "record_count": 9,
+        "target_object_flags": 3507723162,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1873805312,
+        "target_object_flags": 3048833045,
+        "raw_pointer": 0,
+        "status_word": 162493744,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 162493744,
+        "record_count": 4294967295,
+        "target_object_flags": 3048833045,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3171942400,
+        "target_object_flags": 3064802675,
+        "raw_pointer": 0,
+        "status_word": 2983787463,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2983787463,
+        "record_count": 4294967295,
+        "target_object_flags": 3064802675,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3165126656,
+        "target_object_flags": 3626909398,
+        "raw_pointer": 0,
+        "status_word": 2806529395,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2806529395,
+        "record_count": 4294967295,
+        "target_object_flags": 3626909398,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3484942336,
+        "target_object_flags": 1411553211,
+        "raw_pointer": 0,
+        "status_word": 1587051007,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 1587051007,
+        "record_count": 4294967295,
+        "target_object_flags": 1411553211,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3566731264,
+        "target_object_flags": 2022406333,
+        "raw_pointer": 0,
+        "status_word": 2708226855,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 2708226855,
+        "record_count": 4294967295,
+        "target_object_flags": 2022406333,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1948254208,
+        "target_object_flags": 2533917374,
+        "raw_pointer": 0,
+        "status_word": 3444402018,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 3444402018,
+        "record_count": 4294967295,
+        "target_object_flags": 2533917374,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2321547264,
+        "target_object_flags": 646765666,
+        "raw_pointer": 0,
+        "status_word": 1001850473,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 1001850473,
+        "record_count": 4294967295,
+        "target_object_flags": 646765666,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2076180480,
+        "target_object_flags": 1956668965,
+        "raw_pointer": 0,
+        "status_word": 4267094501,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 0,
+        "status_word": 4267094501,
+        "record_count": 4294967295,
+        "target_object_flags": 1956668965,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3409969152,
+        "target_object_flags": 3163771152,
+        "raw_pointer": 1,
+        "status_word": 2936706760,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2936706760,
+        "record_count": 0,
+        "target_object_flags": 3163771152,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4273471488,
+        "target_object_flags": 1485660802,
+        "raw_pointer": 1,
+        "status_word": 2646783441,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2646783441,
+        "record_count": 0,
+        "target_object_flags": 1485660802,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3520069632,
+        "target_object_flags": 4180494091,
+        "raw_pointer": 1,
+        "status_word": 3605265103,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 3605265103,
+        "record_count": 0,
+        "target_object_flags": 4180494091,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3167748096,
+        "target_object_flags": 187360160,
+        "raw_pointer": 1,
+        "status_word": 1193870152,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1193870152,
+        "record_count": 0,
+        "target_object_flags": 187360160,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 675282944,
+        "target_object_flags": 39899852,
+        "raw_pointer": 1,
+        "status_word": 958406920,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 958406920,
+        "record_count": 0,
+        "target_object_flags": 39899852,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3792699392,
+        "target_object_flags": 62656856,
+        "raw_pointer": 1,
+        "status_word": 2491244627,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2491244627,
+        "record_count": 0,
+        "target_object_flags": 62656856,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3235905536,
+        "target_object_flags": 2593428295,
+        "raw_pointer": 1,
+        "status_word": 2777943571,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2777943571,
+        "record_count": 0,
+        "target_object_flags": 2593428295,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2387607552,
+        "target_object_flags": 2333033502,
+        "raw_pointer": 1,
+        "status_word": 1210055241,
+        "record_count": 0
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1210055241,
+        "record_count": 0,
+        "target_object_flags": 2333033502,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4271898624,
+        "target_object_flags": 4056158470,
+        "raw_pointer": 1,
+        "status_word": 1531920172,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1531920172,
+        "record_count": 1,
+        "target_object_flags": 4056158470,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2420113408,
+        "target_object_flags": 854900144,
+        "raw_pointer": 1,
+        "status_word": 1737448069,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1737448069,
+        "record_count": 1,
+        "target_object_flags": 854900144,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 478674944,
+        "target_object_flags": 1550238808,
+        "raw_pointer": 1,
+        "status_word": 1460849318,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1460849318,
+        "record_count": 1,
+        "target_object_flags": 1550238808,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 482344960,
+        "target_object_flags": 3599425325,
+        "raw_pointer": 1,
+        "status_word": 961192410,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 961192410,
+        "record_count": 1,
+        "target_object_flags": 3599425325,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2605711360,
+        "target_object_flags": 3078218219,
+        "raw_pointer": 1,
+        "status_word": 254573564,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 254573564,
+        "record_count": 1,
+        "target_object_flags": 3078218219,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4290248704,
+        "target_object_flags": 1860726959,
+        "raw_pointer": 1,
+        "status_word": 3267241851,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 3267241851,
+        "record_count": 1,
+        "target_object_flags": 1860726959,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 206045184,
+        "target_object_flags": 2902827016,
+        "raw_pointer": 1,
+        "status_word": 2676141831,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2676141831,
+        "record_count": 1,
+        "target_object_flags": 2902827016,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2035286016,
+        "target_object_flags": 526088730,
+        "raw_pointer": 1,
+        "status_word": 612816434,
+        "record_count": 1
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 612816434,
+        "record_count": 1,
+        "target_object_flags": 526088730,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 770179072,
+        "target_object_flags": 4005103397,
+        "raw_pointer": 1,
+        "status_word": 2759295444,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2759295444,
+        "record_count": 9,
+        "target_object_flags": 4005103397,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3157262336,
+        "target_object_flags": 3588680933,
+        "raw_pointer": 1,
+        "status_word": 23179224,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 23179224,
+        "record_count": 9,
+        "target_object_flags": 3588680933,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2661285888,
+        "target_object_flags": 2789279975,
+        "raw_pointer": 1,
+        "status_word": 1261425659,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1261425659,
+        "record_count": 9,
+        "target_object_flags": 2789279975,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3955752960,
+        "target_object_flags": 2771611267,
+        "raw_pointer": 1,
+        "status_word": 270841557,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 270841557,
+        "record_count": 9,
+        "target_object_flags": 2771611267,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1168113664,
+        "target_object_flags": 319690433,
+        "raw_pointer": 1,
+        "status_word": 28944850,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 28944850,
+        "record_count": 9,
+        "target_object_flags": 319690433,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1869086720,
+        "target_object_flags": 1176444736,
+        "raw_pointer": 1,
+        "status_word": 766204591,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 766204591,
+        "record_count": 9,
+        "target_object_flags": 1176444736,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2955935744,
+        "target_object_flags": 2249276723,
+        "raw_pointer": 1,
+        "status_word": 2690690949,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2690690949,
+        "record_count": 9,
+        "target_object_flags": 2249276723,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2912944128,
+        "target_object_flags": 827334277,
+        "raw_pointer": 1,
+        "status_word": 3685304267,
+        "record_count": 9
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 3685304267,
+        "record_count": 9,
+        "target_object_flags": 827334277,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3610247168,
+        "target_object_flags": 4204964994,
+        "raw_pointer": 1,
+        "status_word": 3567719995,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 3567719995,
+        "record_count": 4294967295,
+        "target_object_flags": 4204964994,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 260571136,
+        "target_object_flags": 1199901691,
+        "raw_pointer": 1,
+        "status_word": 2075091873,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2075091873,
+        "record_count": 4294967295,
+        "target_object_flags": 1199901691,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4126670848,
+        "target_object_flags": 4200843849,
+        "raw_pointer": 1,
+        "status_word": 1127704558,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1127704558,
+        "record_count": 4294967295,
+        "target_object_flags": 4200843849,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4181196800,
+        "target_object_flags": 278641640,
+        "raw_pointer": 1,
+        "status_word": 4280273530,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 4280273530,
+        "record_count": 4294967295,
+        "target_object_flags": 278641640,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2199912448,
+        "target_object_flags": 3225828249,
+        "raw_pointer": 1,
+        "status_word": 3714890709,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 3714890709,
+        "record_count": 4294967295,
+        "target_object_flags": 3225828249,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3385851904,
+        "target_object_flags": 2575672608,
+        "raw_pointer": 1,
+        "status_word": 1416924834,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 1416924834,
+        "record_count": 4294967295,
+        "target_object_flags": 2575672608,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2346188800,
+        "target_object_flags": 3425885089,
+        "raw_pointer": 1,
+        "status_word": 2094445525,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2094445525,
+        "record_count": 4294967295,
+        "target_object_flags": 3425885089,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 280494080,
+        "target_object_flags": 1220366175,
+        "raw_pointer": 1,
+        "status_word": 2109420229,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": null,
+        "pointer": 1,
+        "status_word": 2109420229,
+        "record_count": 4294967295,
+        "target_object_flags": 1220366175,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1287651329,
+        "target_object_flags": 1722977170,
+        "raw_pointer": 0,
+        "status_word": 1731242997,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1731242997,
+        "record_count": 0,
+        "target_object_flags": 1722977170,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1297612801,
+        "target_object_flags": 2349798237,
+        "raw_pointer": 0,
+        "status_word": 3790905109,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3790905109,
+        "record_count": 0,
+        "target_object_flags": 2349798237,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4049076225,
+        "target_object_flags": 1931805787,
+        "raw_pointer": 0,
+        "status_word": 312558791,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 312558791,
+        "record_count": 0,
+        "target_object_flags": 1931805787,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1363148801,
+        "target_object_flags": 1082965257,
+        "raw_pointer": 0,
+        "status_word": 565692037,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 565692037,
+        "record_count": 0,
+        "target_object_flags": 1082965257,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4052221953,
+        "target_object_flags": 568340518,
+        "raw_pointer": 0,
+        "status_word": 2823093359,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2823093359,
+        "record_count": 0,
+        "target_object_flags": 568340518,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 568328193,
+        "target_object_flags": 319374226,
+        "raw_pointer": 0,
+        "status_word": 3976081730,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3976081730,
+        "record_count": 0,
+        "target_object_flags": 319374226,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1896349697,
+        "target_object_flags": 1700583478,
+        "raw_pointer": 0,
+        "status_word": 2796011141,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2796011141,
+        "record_count": 0,
+        "target_object_flags": 1700583478,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1482162177,
+        "target_object_flags": 3916851585,
+        "raw_pointer": 0,
+        "status_word": 1904689427,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1904689427,
+        "record_count": 0,
+        "target_object_flags": 3916851585,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 361234433,
+        "target_object_flags": 1177007873,
+        "raw_pointer": 0,
+        "status_word": 3875319315,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3875319315,
+        "record_count": 1,
+        "target_object_flags": 1177007873,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2474115073,
+        "target_object_flags": 3310112335,
+        "raw_pointer": 0,
+        "status_word": 573312237,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 573312237,
+        "record_count": 1,
+        "target_object_flags": 3310112335,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1196425217,
+        "target_object_flags": 3202838961,
+        "raw_pointer": 0,
+        "status_word": 2290995172,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2290995172,
+        "record_count": 1,
+        "target_object_flags": 3202838961,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2160590849,
+        "target_object_flags": 3545177780,
+        "raw_pointer": 0,
+        "status_word": 1554784622,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1554784622,
+        "record_count": 1,
+        "target_object_flags": 3545177780,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1043857409,
+        "target_object_flags": 148881911,
+        "raw_pointer": 0,
+        "status_word": 3012240378,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3012240378,
+        "record_count": 1,
+        "target_object_flags": 148881911,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1005584385,
+        "target_object_flags": 2405423717,
+        "raw_pointer": 0,
+        "status_word": 2094754639,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2094754639,
+        "record_count": 1,
+        "target_object_flags": 2405423717,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 313524225,
+        "target_object_flags": 2166298312,
+        "raw_pointer": 0,
+        "status_word": 1167037136,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1167037136,
+        "record_count": 1,
+        "target_object_flags": 2166298312,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3711434753,
+        "target_object_flags": 1771422085,
+        "raw_pointer": 0,
+        "status_word": 2971862703,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2971862703,
+        "record_count": 1,
+        "target_object_flags": 1771422085,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 599261185,
+        "target_object_flags": 4248489801,
+        "raw_pointer": 0,
+        "status_word": 4053745300,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4053745300,
+        "record_count": 9,
+        "target_object_flags": 4248489801,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1943535617,
+        "target_object_flags": 1074093676,
+        "raw_pointer": 0,
+        "status_word": 565573683,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 565573683,
+        "record_count": 9,
+        "target_object_flags": 1074093676,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 995098625,
+        "target_object_flags": 3974984494,
+        "raw_pointer": 0,
+        "status_word": 2564855947,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2564855947,
+        "record_count": 9,
+        "target_object_flags": 3974984494,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1570766849,
+        "target_object_flags": 2265904386,
+        "raw_pointer": 0,
+        "status_word": 484724624,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 484724624,
+        "record_count": 9,
+        "target_object_flags": 2265904386,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1370488833,
+        "target_object_flags": 4154392322,
+        "raw_pointer": 0,
+        "status_word": 1397714213,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1397714213,
+        "record_count": 9,
+        "target_object_flags": 4154392322,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3922722817,
+        "target_object_flags": 2132597762,
+        "raw_pointer": 0,
+        "status_word": 624814723,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 624814723,
+        "record_count": 9,
+        "target_object_flags": 2132597762,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3904897025,
+        "target_object_flags": 20570708,
+        "raw_pointer": 0,
+        "status_word": 339178701,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 339178701,
+        "record_count": 9,
+        "target_object_flags": 20570708,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3929014273,
+        "target_object_flags": 3917203060,
+        "raw_pointer": 0,
+        "status_word": 1742564392,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1742564392,
+        "record_count": 9,
+        "target_object_flags": 3917203060,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4028628993,
+        "target_object_flags": 2727006102,
+        "raw_pointer": 0,
+        "status_word": 2934800221,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2934800221,
+        "record_count": 4294967295,
+        "target_object_flags": 2727006102,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2962751489,
+        "target_object_flags": 3447489755,
+        "raw_pointer": 0,
+        "status_word": 1728680668,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1728680668,
+        "record_count": 4294967295,
+        "target_object_flags": 3447489755,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1641021441,
+        "target_object_flags": 2470383954,
+        "raw_pointer": 0,
+        "status_word": 4134486354,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4134486354,
+        "record_count": 4294967295,
+        "target_object_flags": 2470383954,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2715811841,
+        "target_object_flags": 3188628067,
+        "raw_pointer": 0,
+        "status_word": 4089585328,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4089585328,
+        "record_count": 4294967295,
+        "target_object_flags": 3188628067,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2949120001,
+        "target_object_flags": 2180204501,
+        "raw_pointer": 0,
+        "status_word": 1928384571,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1928384571,
+        "record_count": 4294967295,
+        "target_object_flags": 2180204501,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 943194113,
+        "target_object_flags": 947811611,
+        "raw_pointer": 0,
+        "status_word": 671603483,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 671603483,
+        "record_count": 4294967295,
+        "target_object_flags": 947811611,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2969567233,
+        "target_object_flags": 633906082,
+        "raw_pointer": 0,
+        "status_word": 3160175644,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3160175644,
+        "record_count": 4294967295,
+        "target_object_flags": 633906082,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4283432961,
+        "target_object_flags": 21910624,
+        "raw_pointer": 0,
+        "status_word": 1433473539,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1433473539,
+        "record_count": 4294967295,
+        "target_object_flags": 21910624,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1336410113,
+        "target_object_flags": 59383466,
+        "raw_pointer": 1,
+        "status_word": 2300775493,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 153291845,
+        "record_count": 0,
+        "target_object_flags": 59244544,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2994208769,
+        "target_object_flags": 909971456,
+        "raw_pointer": 1,
+        "status_word": 2610494714,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 463011066,
+        "record_count": 0,
+        "target_object_flags": 909639680,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 555220993,
+        "target_object_flags": 715338659,
+        "raw_pointer": 1,
+        "status_word": 807260116,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 807260116,
+        "record_count": 0,
+        "target_object_flags": 715128832,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2334654465,
+        "target_object_flags": 67202881,
+        "raw_pointer": 1,
+        "status_word": 331622770,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 331622770,
+        "record_count": 0,
+        "target_object_flags": 67108864,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 517996545,
+        "target_object_flags": 408083966,
+        "raw_pointer": 1,
+        "status_word": 1680947895,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1680947895,
+        "record_count": 0,
+        "target_object_flags": 407896064,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2291138561,
+        "target_object_flags": 2153639348,
+        "raw_pointer": 1,
+        "status_word": 219716011,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 219716011,
+        "record_count": 0,
+        "target_object_flags": 2153250816,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2740977665,
+        "target_object_flags": 3783812721,
+        "raw_pointer": 1,
+        "status_word": 1323403348,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1323403348,
+        "record_count": 0,
+        "target_object_flags": 3783786496,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1729626113,
+        "target_object_flags": 550664451,
+        "raw_pointer": 1,
+        "status_word": 1206552698,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1206552698,
+        "record_count": 0,
+        "target_object_flags": 550502400,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3952082945,
+        "target_object_flags": 3490215001,
+        "raw_pointer": 1,
+        "status_word": 2713900366,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 566416718,
+        "record_count": 1,
+        "target_object_flags": 3490185216,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 694157313,
+        "target_object_flags": 2915708698,
+        "raw_pointer": 1,
+        "status_word": 2659423762,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 511940114,
+        "record_count": 1,
+        "target_object_flags": 2915565568,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2959081473,
+        "target_object_flags": 285940039,
+        "raw_pointer": 1,
+        "status_word": 1382252256,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1382252256,
+        "record_count": 1,
+        "target_object_flags": 285736960,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2327314433,
+        "target_object_flags": 2549982497,
+        "raw_pointer": 1,
+        "status_word": 4024763480,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1877279832,
+        "record_count": 1,
+        "target_object_flags": 2549612544,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1368915969,
+        "target_object_flags": 4199836082,
+        "raw_pointer": 1,
+        "status_word": 2804117686,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 656634038,
+        "record_count": 1,
+        "target_object_flags": 4199546880,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2668625921,
+        "target_object_flags": 3512662504,
+        "raw_pointer": 1,
+        "status_word": 1240023654,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1240023654,
+        "record_count": 1,
+        "target_object_flags": 3512205312,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 69730305,
+        "target_object_flags": 146835004,
+        "raw_pointer": 1,
+        "status_word": 3417423831,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1269940183,
+        "record_count": 1,
+        "target_object_flags": 146800640,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 882900993,
+        "target_object_flags": 503164648,
+        "raw_pointer": 1,
+        "status_word": 836764136,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 836764136,
+        "record_count": 1,
+        "target_object_flags": 502792192,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 68681729,
+        "target_object_flags": 712170966,
+        "raw_pointer": 1,
+        "status_word": 323283073,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 323283073,
+        "record_count": 9,
+        "target_object_flags": 711983104,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 744488961,
+        "target_object_flags": 2415455610,
+        "raw_pointer": 1,
+        "status_word": 496892727,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 496892727,
+        "record_count": 9,
+        "target_object_flags": 2415394816,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3683647489,
+        "target_object_flags": 3807803149,
+        "raw_pointer": 1,
+        "status_word": 3974442440,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1826958792,
+        "record_count": 9,
+        "target_object_flags": 3807379456,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3377987585,
+        "target_object_flags": 677259413,
+        "raw_pointer": 1,
+        "status_word": 3849003552,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1701519904,
+        "record_count": 9,
+        "target_object_flags": 676855808,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1842348033,
+        "target_object_flags": 2997889336,
+        "raw_pointer": 1,
+        "status_word": 4045421786,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1897938138,
+        "record_count": 9,
+        "target_object_flags": 2997878784,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1172307969,
+        "target_object_flags": 3811826141,
+        "raw_pointer": 1,
+        "status_word": 1622877853,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1622877853,
+        "record_count": 9,
+        "target_object_flags": 3811573760,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3548381185,
+        "target_object_flags": 1609057815,
+        "raw_pointer": 1,
+        "status_word": 1066337210,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1066337210,
+        "record_count": 9,
+        "target_object_flags": 1609039872,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2513436673,
+        "target_object_flags": 1179646044,
+        "raw_pointer": 1,
+        "status_word": 4136011750,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1988528102,
+        "record_count": 9,
+        "target_object_flags": 1179123712,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 639631361,
+        "target_object_flags": 1286636865,
+        "raw_pointer": 1,
+        "status_word": 1131154487,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1131154487,
+        "record_count": 4294967295,
+        "target_object_flags": 1286602752,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3320315905,
+        "target_object_flags": 1737711078,
+        "raw_pointer": 1,
+        "status_word": 3299880675,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1152397027,
+        "record_count": 4294967295,
+        "target_object_flags": 1737490432,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3422552065,
+        "target_object_flags": 701715017,
+        "raw_pointer": 1,
+        "status_word": 2834536952,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 687053304,
+        "record_count": 4294967295,
+        "target_object_flags": 701497344,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4070572033,
+        "target_object_flags": 738675266,
+        "raw_pointer": 1,
+        "status_word": 2062347393,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2062347393,
+        "record_count": 4294967295,
+        "target_object_flags": 738197504,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 767557633,
+        "target_object_flags": 1221400165,
+        "raw_pointer": 1,
+        "status_word": 1935185846,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1935185846,
+        "record_count": 4294967295,
+        "target_object_flags": 1221066752,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3923771393,
+        "target_object_flags": 3824508773,
+        "raw_pointer": 1,
+        "status_word": 2094038812,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2094038812,
+        "record_count": 4294967295,
+        "target_object_flags": 3824156672,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2028470273,
+        "target_object_flags": 1215043803,
+        "raw_pointer": 1,
+        "status_word": 3388714817,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1241231169,
+        "record_count": 4294967295,
+        "target_object_flags": 1214775296,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1275068417,
+        "target_object_flags": 2958116034,
+        "raw_pointer": 1,
+        "status_word": 2481277778,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 333794130,
+        "record_count": 4294967295,
+        "target_object_flags": 2958032896,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3770695680,
+        "target_object_flags": 1911193159,
+        "raw_pointer": 0,
+        "status_word": 2131710225,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2131710225,
+        "record_count": 0,
+        "target_object_flags": 1911193159,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4270342144,
+        "target_object_flags": 1623162581,
+        "raw_pointer": 0,
+        "status_word": 2063752294,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2063752294,
+        "record_count": 0,
+        "target_object_flags": 1623162581,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1965047808,
+        "target_object_flags": 481905926,
+        "raw_pointer": 0,
+        "status_word": 3444739166,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 3444739166,
+        "record_count": 0,
+        "target_object_flags": 481905926,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2964340736,
+        "target_object_flags": 1196629168,
+        "raw_pointer": 0,
+        "status_word": 2507400760,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2507400760,
+        "record_count": 0,
+        "target_object_flags": 1196629168,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 829964288,
+        "target_object_flags": 1081342670,
+        "raw_pointer": 0,
+        "status_word": 3594152845,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 3594152845,
+        "record_count": 0,
+        "target_object_flags": 1081342670,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 966279168,
+        "target_object_flags": 2063011577,
+        "raw_pointer": 0,
+        "status_word": 3835279399,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 3835279399,
+        "record_count": 0,
+        "target_object_flags": 2063011577,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2754625536,
+        "target_object_flags": 3327938785,
+        "raw_pointer": 0,
+        "status_word": 747993144,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 747993144,
+        "record_count": 0,
+        "target_object_flags": 3327938785,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1481129984,
+        "target_object_flags": 177844558,
+        "raw_pointer": 0,
+        "status_word": 1561941671,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1561941671,
+        "record_count": 0,
+        "target_object_flags": 177844558,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 966279168,
+        "target_object_flags": 1823555220,
+        "raw_pointer": 0,
+        "status_word": 1844214918,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1844214918,
+        "record_count": 1,
+        "target_object_flags": 1823555220,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1314406400,
+        "target_object_flags": 141744849,
+        "raw_pointer": 0,
+        "status_word": 4283613641,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 4283613641,
+        "record_count": 1,
+        "target_object_flags": 141744849,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1172324352,
+        "target_object_flags": 2314641895,
+        "raw_pointer": 0,
+        "status_word": 4050300722,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 4050300722,
+        "record_count": 1,
+        "target_object_flags": 2314641895,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3014672384,
+        "target_object_flags": 1877277797,
+        "raw_pointer": 0,
+        "status_word": 418055049,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 418055049,
+        "record_count": 1,
+        "target_object_flags": 1877277797,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 19415040,
+        "target_object_flags": 989500517,
+        "raw_pointer": 0,
+        "status_word": 3446758505,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 3446758505,
+        "record_count": 1,
+        "target_object_flags": 989500517,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2306883584,
+        "target_object_flags": 1295869344,
+        "raw_pointer": 0,
+        "status_word": 83505487,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 83505487,
+        "record_count": 1,
+        "target_object_flags": 1295869344,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 741883904,
+        "target_object_flags": 3321955994,
+        "raw_pointer": 0,
+        "status_word": 2739961576,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2739961576,
+        "record_count": 1,
+        "target_object_flags": 3321955994,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 905461760,
+        "target_object_flags": 2854398119,
+        "raw_pointer": 0,
+        "status_word": 2902785325,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2902785325,
+        "record_count": 1,
+        "target_object_flags": 2854398119,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1392525312,
+        "target_object_flags": 2827881322,
+        "raw_pointer": 0,
+        "status_word": 3051408195,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 3051408195,
+        "record_count": 9,
+        "target_object_flags": 2827881322,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2733129728,
+        "target_object_flags": 3760228977,
+        "raw_pointer": 0,
+        "status_word": 3974197697,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 3974197697,
+        "record_count": 9,
+        "target_object_flags": 3760228977,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1458585600,
+        "target_object_flags": 1905446757,
+        "raw_pointer": 0,
+        "status_word": 2134959886,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2134959886,
+        "record_count": 9,
+        "target_object_flags": 1905446757,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4067966976,
+        "target_object_flags": 23459293,
+        "raw_pointer": 0,
+        "status_word": 2460283716,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2460283716,
+        "record_count": 9,
+        "target_object_flags": 23459293,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2539667456,
+        "target_object_flags": 204632280,
+        "raw_pointer": 0,
+        "status_word": 1255418568,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1255418568,
+        "record_count": 9,
+        "target_object_flags": 204632280,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 721960960,
+        "target_object_flags": 2802015365,
+        "raw_pointer": 0,
+        "status_word": 955378432,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 955378432,
+        "record_count": 9,
+        "target_object_flags": 2802015365,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3255844864,
+        "target_object_flags": 2426396976,
+        "raw_pointer": 0,
+        "status_word": 1462566510,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1462566510,
+        "record_count": 9,
+        "target_object_flags": 2426396976,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3583000576,
+        "target_object_flags": 2865859457,
+        "raw_pointer": 0,
+        "status_word": 40176772,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 40176772,
+        "record_count": 9,
+        "target_object_flags": 2865859457,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4048568320,
+        "target_object_flags": 1494113038,
+        "raw_pointer": 0,
+        "status_word": 725958231,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 725958231,
+        "record_count": 4294967295,
+        "target_object_flags": 1494113038,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 255868928,
+        "target_object_flags": 3425447133,
+        "raw_pointer": 0,
+        "status_word": 2879024586,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2879024586,
+        "record_count": 4294967295,
+        "target_object_flags": 3425447133,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2049458176,
+        "target_object_flags": 208455342,
+        "raw_pointer": 0,
+        "status_word": 4052754310,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 4052754310,
+        "record_count": 4294967295,
+        "target_object_flags": 208455342,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2974302208,
+        "target_object_flags": 313564080,
+        "raw_pointer": 0,
+        "status_word": 1330605277,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1330605277,
+        "record_count": 4294967295,
+        "target_object_flags": 313564080,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1644707840,
+        "target_object_flags": 519611562,
+        "raw_pointer": 0,
+        "status_word": 696286471,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 696286471,
+        "record_count": 4294967295,
+        "target_object_flags": 519611562,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1891647488,
+        "target_object_flags": 1112390278,
+        "raw_pointer": 0,
+        "status_word": 266115809,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 266115809,
+        "record_count": 4294967295,
+        "target_object_flags": 1112390278,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3823124480,
+        "target_object_flags": 991445911,
+        "raw_pointer": 0,
+        "status_word": 2279810916,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2279810916,
+        "record_count": 4294967295,
+        "target_object_flags": 991445911,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 114835456,
+        "target_object_flags": 1536991758,
+        "raw_pointer": 0,
+        "status_word": 331579921,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 331579921,
+        "record_count": 4294967295,
+        "target_object_flags": 1536991758,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4135075840,
+        "target_object_flags": 3426690500,
+        "raw_pointer": 1,
+        "status_word": 225574326,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 225574326,
+        "record_count": 0,
+        "target_object_flags": 3426222080,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 234373120,
+        "target_object_flags": 79048330,
+        "raw_pointer": 1,
+        "status_word": 2370587876,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 223104228,
+        "record_count": 0,
+        "target_object_flags": 78643200,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3297787904,
+        "target_object_flags": 3061927005,
+        "raw_pointer": 1,
+        "status_word": 2395803754,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 248320106,
+        "record_count": 0,
+        "target_object_flags": 3061841920,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1458061312,
+        "target_object_flags": 3576686974,
+        "raw_pointer": 1,
+        "status_word": 2810597920,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 663114272,
+        "record_count": 0,
+        "target_object_flags": 3576168448,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2131247104,
+        "target_object_flags": 480411996,
+        "raw_pointer": 1,
+        "status_word": 4054511710,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1907028062,
+        "record_count": 0,
+        "target_object_flags": 480247808,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2317893632,
+        "target_object_flags": 1425517798,
+        "raw_pointer": 1,
+        "status_word": 1928486108,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1928486108,
+        "record_count": 0,
+        "target_object_flags": 1425014784,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 983056384,
+        "target_object_flags": 3717018307,
+        "raw_pointer": 1,
+        "status_word": 3795537469,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1648053821,
+        "record_count": 0,
+        "target_object_flags": 3716677632,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3023060992,
+        "target_object_flags": 2290487349,
+        "raw_pointer": 1,
+        "status_word": 2092809854,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 2092809854,
+        "record_count": 0,
+        "target_object_flags": 2290089984,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 128991232,
+        "target_object_flags": 190988425,
+        "raw_pointer": 1,
+        "status_word": 43961469,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 43961469,
+        "record_count": 1,
+        "target_object_flags": 190840832,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1677737984,
+        "target_object_flags": 67721470,
+        "raw_pointer": 1,
+        "status_word": 3557309181,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1409825533,
+        "record_count": 1,
+        "target_object_flags": 67633152,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3133161472,
+        "target_object_flags": 2396810556,
+        "raw_pointer": 1,
+        "status_word": 2743069874,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 595586226,
+        "record_count": 1,
+        "target_object_flags": 2396520448,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 385892352,
+        "target_object_flags": 485449905,
+        "raw_pointer": 1,
+        "status_word": 3819448397,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1671964749,
+        "record_count": 1,
+        "target_object_flags": 484966400,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3420995584,
+        "target_object_flags": 2594293442,
+        "raw_pointer": 1,
+        "status_word": 3333088638,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1185604990,
+        "record_count": 1,
+        "target_object_flags": 2594177024,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 942161920,
+        "target_object_flags": 2710112109,
+        "raw_pointer": 1,
+        "status_word": 2615883806,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 468400158,
+        "record_count": 1,
+        "target_object_flags": 2710044672,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2481995776,
+        "target_object_flags": 2369580486,
+        "raw_pointer": 1,
+        "status_word": 1864346859,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1864346859,
+        "record_count": 1,
+        "target_object_flags": 2369257472,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2398633984,
+        "target_object_flags": 2974157266,
+        "raw_pointer": 1,
+        "status_word": 230469754,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 230469754,
+        "record_count": 1,
+        "target_object_flags": 2973761536,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1669349376,
+        "target_object_flags": 2074416602,
+        "raw_pointer": 1,
+        "status_word": 3981440044,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1833956396,
+        "record_count": 9,
+        "target_object_flags": 2074083328,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3553640448,
+        "target_object_flags": 2537337375,
+        "raw_pointer": 1,
+        "status_word": 2237430654,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 89947006,
+        "record_count": 9,
+        "target_object_flags": 2537029632,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2889891840,
+        "target_object_flags": 4259701316,
+        "raw_pointer": 1,
+        "status_word": 3975779585,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1828295937,
+        "record_count": 9,
+        "target_object_flags": 4259315712,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 920141824,
+        "target_object_flags": 4223190929,
+        "raw_pointer": 1,
+        "status_word": 329331258,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 329331258,
+        "record_count": 9,
+        "target_object_flags": 4223139840,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2288533504,
+        "target_object_flags": 1627650791,
+        "raw_pointer": 1,
+        "status_word": 483943059,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 483943059,
+        "record_count": 9,
+        "target_object_flags": 1627389952,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2778742784,
+        "target_object_flags": 2255320580,
+        "raw_pointer": 1,
+        "status_word": 3322681253,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1175197605,
+        "record_count": 9,
+        "target_object_flags": 2254962688,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3945807872,
+        "target_object_flags": 573943812,
+        "raw_pointer": 1,
+        "status_word": 892219222,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 892219222,
+        "record_count": 9,
+        "target_object_flags": 573571072,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 410533888,
+        "target_object_flags": 1096956484,
+        "raw_pointer": 1,
+        "status_word": 3806395875,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1658912227,
+        "record_count": 9,
+        "target_object_flags": 1096810496,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1181237248,
+        "target_object_flags": 1199240219,
+        "raw_pointer": 1,
+        "status_word": 997888373,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 997888373,
+        "record_count": 4294967295,
+        "target_object_flags": 1199046656,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3465035776,
+        "target_object_flags": 3488598960,
+        "raw_pointer": 1,
+        "status_word": 3989597924,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1842114276,
+        "record_count": 4294967295,
+        "target_object_flags": 3488088064,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2300592128,
+        "target_object_flags": 1475685248,
+        "raw_pointer": 1,
+        "status_word": 366941821,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 366941821,
+        "record_count": 4294967295,
+        "target_object_flags": 1475346432,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2657632256,
+        "target_object_flags": 2195818290,
+        "raw_pointer": 1,
+        "status_word": 1639158771,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1639158771,
+        "record_count": 4294967295,
+        "target_object_flags": 2195718144,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2989506560,
+        "target_object_flags": 2356381570,
+        "raw_pointer": 1,
+        "status_word": 114035966,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 114035966,
+        "record_count": 4294967295,
+        "target_object_flags": 2356150272,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1426079744,
+        "target_object_flags": 842831458,
+        "raw_pointer": 1,
+        "status_word": 1810731438,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 1810731438,
+        "record_count": 4294967295,
+        "target_object_flags": 842530816,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 59785216,
+        "target_object_flags": 3008823048,
+        "raw_pointer": 1,
+        "status_word": 2989974567,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 842490919,
+        "record_count": 4294967295,
+        "target_object_flags": 3008364544,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1927299072,
+        "target_object_flags": 1718432857,
+        "raw_pointer": 1,
+        "status_word": 588703166,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          0,
+          16383
+        ],
+        "pointer": 0,
+        "status_word": 588703166,
+        "record_count": 4294967295,
+        "target_object_flags": 1718091776,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 58736641,
+        "target_object_flags": 1697770082,
+        "raw_pointer": 0,
+        "status_word": 1060822699,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1060822699,
+        "record_count": 0,
+        "target_object_flags": 1697770082,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 844644353,
+        "target_object_flags": 826784340,
+        "raw_pointer": 0,
+        "status_word": 3255781295,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3255781295,
+        "record_count": 0,
+        "target_object_flags": 826784340,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2442674177,
+        "target_object_flags": 1370418361,
+        "raw_pointer": 0,
+        "status_word": 1832967400,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1832967400,
+        "record_count": 0,
+        "target_object_flags": 1370418361,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1439711233,
+        "target_object_flags": 1807748686,
+        "raw_pointer": 0,
+        "status_word": 3643153435,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3643153435,
+        "record_count": 0,
+        "target_object_flags": 1807748686,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1414545409,
+        "target_object_flags": 3770188285,
+        "raw_pointer": 0,
+        "status_word": 168058217,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 168058217,
+        "record_count": 0,
+        "target_object_flags": 3770188285,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1677737985,
+        "target_object_flags": 1401735381,
+        "raw_pointer": 0,
+        "status_word": 2011478398,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2011478398,
+        "record_count": 0,
+        "target_object_flags": 1401735381,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2722643969,
+        "target_object_flags": 2377508150,
+        "raw_pointer": 0,
+        "status_word": 2308710879,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2308710879,
+        "record_count": 0,
+        "target_object_flags": 2377508150,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1117798401,
+        "target_object_flags": 2525062406,
+        "raw_pointer": 0,
+        "status_word": 1575394747,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1575394747,
+        "record_count": 0,
+        "target_object_flags": 2525062406,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 683163649,
+        "target_object_flags": 3614052229,
+        "raw_pointer": 0,
+        "status_word": 180520360,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 180520360,
+        "record_count": 1,
+        "target_object_flags": 3614052229,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2072002561,
+        "target_object_flags": 3275162010,
+        "raw_pointer": 0,
+        "status_word": 2097453243,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2097453243,
+        "record_count": 1,
+        "target_object_flags": 3275162010,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3064479745,
+        "target_object_flags": 2569298899,
+        "raw_pointer": 0,
+        "status_word": 2826940876,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2826940876,
+        "record_count": 1,
+        "target_object_flags": 2569298899,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 458244097,
+        "target_object_flags": 4133842514,
+        "raw_pointer": 0,
+        "status_word": 1194398721,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1194398721,
+        "record_count": 1,
+        "target_object_flags": 4133842514,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1315979265,
+        "target_object_flags": 1038979837,
+        "raw_pointer": 0,
+        "status_word": 3143208069,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3143208069,
+        "record_count": 1,
+        "target_object_flags": 1038979837,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3289399297,
+        "target_object_flags": 1238558053,
+        "raw_pointer": 0,
+        "status_word": 2436984451,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2436984451,
+        "record_count": 1,
+        "target_object_flags": 1238558053,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2572697601,
+        "target_object_flags": 2281665071,
+        "raw_pointer": 0,
+        "status_word": 3894476142,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3894476142,
+        "record_count": 1,
+        "target_object_flags": 2281665071,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 913850369,
+        "target_object_flags": 1956008743,
+        "raw_pointer": 0,
+        "status_word": 52963475,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 52963475,
+        "record_count": 1,
+        "target_object_flags": 1956008743,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2640855041,
+        "target_object_flags": 355834924,
+        "raw_pointer": 0,
+        "status_word": 4241137410,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4241137410,
+        "record_count": 9,
+        "target_object_flags": 355834924,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 805322753,
+        "target_object_flags": 2104176931,
+        "raw_pointer": 0,
+        "status_word": 1328502438,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1328502438,
+        "record_count": 9,
+        "target_object_flags": 2104176931,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1026572289,
+        "target_object_flags": 2267682524,
+        "raw_pointer": 0,
+        "status_word": 4099011871,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4099011871,
+        "record_count": 9,
+        "target_object_flags": 2267682524,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3771744257,
+        "target_object_flags": 2896082685,
+        "raw_pointer": 0,
+        "status_word": 973863857,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 973863857,
+        "record_count": 9,
+        "target_object_flags": 2896082685,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1398816769,
+        "target_object_flags": 676753179,
+        "raw_pointer": 0,
+        "status_word": 1180414413,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1180414413,
+        "record_count": 9,
+        "target_object_flags": 676753179,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 31997953,
+        "target_object_flags": 95404427,
+        "raw_pointer": 0,
+        "status_word": 2305119699,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2305119699,
+        "record_count": 9,
+        "target_object_flags": 95404427,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 370163713,
+        "target_object_flags": 1778664362,
+        "raw_pointer": 0,
+        "status_word": 4205465837,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4205465837,
+        "record_count": 9,
+        "target_object_flags": 1778664362,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2025865217,
+        "target_object_flags": 2400275384,
+        "raw_pointer": 0,
+        "status_word": 3984492897,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3984492897,
+        "record_count": 9,
+        "target_object_flags": 2400275384,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3342876673,
+        "target_object_flags": 2618361446,
+        "raw_pointer": 0,
+        "status_word": 1032568489,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1032568489,
+        "record_count": 4294967295,
+        "target_object_flags": 2618361446,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2602057729,
+        "target_object_flags": 3611108965,
+        "raw_pointer": 0,
+        "status_word": 1002161302,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1002161302,
+        "record_count": 4294967295,
+        "target_object_flags": 3611108965,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3033546753,
+        "target_object_flags": 2289778005,
+        "raw_pointer": 0,
+        "status_word": 3757960763,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3757960763,
+        "record_count": 4294967295,
+        "target_object_flags": 2289778005,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 867713025,
+        "target_object_flags": 2083834757,
+        "raw_pointer": 0,
+        "status_word": 4220310189,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4220310189,
+        "record_count": 4294967295,
+        "target_object_flags": 2083834757,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3941613569,
+        "target_object_flags": 1292074274,
+        "raw_pointer": 0,
+        "status_word": 2442017478,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2442017478,
+        "record_count": 4294967295,
+        "target_object_flags": 1292074274,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1394098177,
+        "target_object_flags": 619317677,
+        "raw_pointer": 0,
+        "status_word": 4251607715,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 4251607715,
+        "record_count": 4294967295,
+        "target_object_flags": 619317677,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3902816257,
+        "target_object_flags": 1700030809,
+        "raw_pointer": 0,
+        "status_word": 1293989661,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1293989661,
+        "record_count": 4294967295,
+        "target_object_flags": 1700030809,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2723692545,
+        "target_object_flags": 3966026805,
+        "raw_pointer": 0,
+        "status_word": 3756831658,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 3756831658,
+        "record_count": 4294967295,
+        "target_object_flags": 3966026805,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2359836673,
+        "target_object_flags": 2649796045,
+        "raw_pointer": 1,
+        "status_word": 1718198849,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1718198849,
+        "record_count": 0,
+        "target_object_flags": 2649751552,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1589657601,
+        "target_object_flags": 2232049978,
+        "raw_pointer": 1,
+        "status_word": 177086418,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 177086418,
+        "record_count": 0,
+        "target_object_flags": 2231894016,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1599619073,
+        "target_object_flags": 1173160867,
+        "raw_pointer": 1,
+        "status_word": 334969669,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 334969669,
+        "record_count": 0,
+        "target_object_flags": 1172832256,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4215816193,
+        "target_object_flags": 196690528,
+        "raw_pointer": 1,
+        "status_word": 3340502060,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1193018412,
+        "record_count": 0,
+        "target_object_flags": 196608000,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 362823681,
+        "target_object_flags": 4239445427,
+        "raw_pointer": 1,
+        "status_word": 3878463152,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1730979504,
+        "record_count": 0,
+        "target_object_flags": 4239392768,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2357215233,
+        "target_object_flags": 1496694341,
+        "raw_pointer": 1,
+        "status_word": 2238921963,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 91438315,
+        "record_count": 0,
+        "target_object_flags": 1496317952,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 97009665,
+        "target_object_flags": 3236108753,
+        "raw_pointer": 1,
+        "status_word": 1721075997,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1721075997,
+        "record_count": 0,
+        "target_object_flags": 3235905536,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2364030977,
+        "target_object_flags": 2726662096,
+        "raw_pointer": 1,
+        "status_word": 4256520313,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 2109036665,
+        "record_count": 0,
+        "target_object_flags": 2726297600,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2723692545,
+        "target_object_flags": 3842266114,
+        "raw_pointer": 1,
+        "status_word": 3925445997,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1777962349,
+        "record_count": 1,
+        "target_object_flags": 3841982464,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2142781441,
+        "target_object_flags": 1505459625,
+        "raw_pointer": 1,
+        "status_word": 2918236311,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 770752663,
+        "record_count": 1,
+        "target_object_flags": 1505230848,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4096802817,
+        "target_object_flags": 687397883,
+        "raw_pointer": 1,
+        "status_word": 50317546,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 50317546,
+        "record_count": 1,
+        "target_object_flags": 687341568,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3846717441,
+        "target_object_flags": 680103855,
+        "raw_pointer": 1,
+        "status_word": 1111998845,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1111998845,
+        "record_count": 1,
+        "target_object_flags": 680001536,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2106081281,
+        "target_object_flags": 3134765282,
+        "raw_pointer": 1,
+        "status_word": 2775962382,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 628478734,
+        "record_count": 1,
+        "target_object_flags": 3134717952,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3960487937,
+        "target_object_flags": 1793520470,
+        "raw_pointer": 1,
+        "status_word": 148063875,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 148063875,
+        "record_count": 1,
+        "target_object_flags": 1793064960,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3369615361,
+        "target_object_flags": 1134921330,
+        "raw_pointer": 1,
+        "status_word": 2345506704,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 198023056,
+        "record_count": 1,
+        "target_object_flags": 1134559232,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 293093377,
+        "target_object_flags": 205049,
+        "raw_pointer": 1,
+        "status_word": 1346185843,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1346185843,
+        "record_count": 1,
+        "target_object_flags": 0,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1675640833,
+        "target_object_flags": 4031921004,
+        "raw_pointer": 1,
+        "status_word": 2754318546,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 606834898,
+        "record_count": 9,
+        "target_object_flags": 4031774720,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3011526657,
+        "target_object_flags": 1108133050,
+        "raw_pointer": 1,
+        "status_word": 50091474,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 50091474,
+        "record_count": 9,
+        "target_object_flags": 1107820544,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 797982721,
+        "target_object_flags": 440024847,
+        "raw_pointer": 1,
+        "status_word": 2763825306,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 616341658,
+        "record_count": 9,
+        "target_object_flags": 439877632,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3102228481,
+        "target_object_flags": 1975959720,
+        "raw_pointer": 1,
+        "status_word": 2696887036,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 549403388,
+        "record_count": 9,
+        "target_object_flags": 1975517184,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4243603457,
+        "target_object_flags": 1100172887,
+        "raw_pointer": 1,
+        "status_word": 4087594803,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1940111155,
+        "record_count": 9,
+        "target_object_flags": 1099956224,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 816857089,
+        "target_object_flags": 1320696510,
+        "raw_pointer": 1,
+        "status_word": 129107793,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 129107793,
+        "record_count": 9,
+        "target_object_flags": 1320681472,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 140001281,
+        "target_object_flags": 3505438314,
+        "raw_pointer": 1,
+        "status_word": 764116509,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 764116509,
+        "record_count": 9,
+        "target_object_flags": 3505389568,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1506820097,
+        "target_object_flags": 1858288633,
+        "raw_pointer": 1,
+        "status_word": 3686198368,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1538714720,
+        "record_count": 9,
+        "target_object_flags": 1858076672,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1820344321,
+        "target_object_flags": 1223299025,
+        "raw_pointer": 1,
+        "status_word": 1856441663,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1856441663,
+        "record_count": 4294967295,
+        "target_object_flags": 1223163904,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2260746241,
+        "target_object_flags": 368960424,
+        "raw_pointer": 1,
+        "status_word": 3583379267,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1435895619,
+        "record_count": 4294967295,
+        "target_object_flags": 368574464,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1285570561,
+        "target_object_flags": 66803114,
+        "raw_pointer": 1,
+        "status_word": 1761653456,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1761653456,
+        "record_count": 4294967295,
+        "target_object_flags": 66584576,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3997712385,
+        "target_object_flags": 3239862751,
+        "raw_pointer": 1,
+        "status_word": 852440162,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 852440162,
+        "record_count": 4294967295,
+        "target_object_flags": 3239575552,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 497041409,
+        "target_object_flags": 4137083649,
+        "raw_pointer": 1,
+        "status_word": 2722344665,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 574861017,
+        "record_count": 4294967295,
+        "target_object_flags": 4136632320,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2010136577,
+        "target_object_flags": 1629612482,
+        "raw_pointer": 1,
+        "status_word": 1924752531,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1924752531,
+        "record_count": 4294967295,
+        "target_object_flags": 1629487104,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3327672321,
+        "target_object_flags": 2188117598,
+        "raw_pointer": 1,
+        "status_word": 2922394661,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 774911013,
+        "record_count": 4294967295,
+        "target_object_flags": 2187853824,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1042300929,
+        "target_object_flags": 822358490,
+        "raw_pointer": 1,
+        "status_word": 1362369548,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          1,
+          0
+        ],
+        "pointer": 0,
+        "status_word": 1362369548,
+        "record_count": 4294967295,
+        "target_object_flags": 822083584,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3031433215,
+        "target_object_flags": 3412169561,
+        "raw_pointer": 0,
+        "status_word": 1586709157,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1586709157,
+        "record_count": 0,
+        "target_object_flags": 3412169561,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1670381567,
+        "target_object_flags": 3577311713,
+        "raw_pointer": 0,
+        "status_word": 3334007578,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3334007578,
+        "record_count": 0,
+        "target_object_flags": 3577311713,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 89128959,
+        "target_object_flags": 655198022,
+        "raw_pointer": 0,
+        "status_word": 1345017860,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1345017860,
+        "record_count": 0,
+        "target_object_flags": 655198022,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3121610751,
+        "target_object_flags": 2222480738,
+        "raw_pointer": 0,
+        "status_word": 2067742112,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2067742112,
+        "record_count": 0,
+        "target_object_flags": 2222480738,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1261961215,
+        "target_object_flags": 2243495707,
+        "raw_pointer": 0,
+        "status_word": 1673059395,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1673059395,
+        "record_count": 0,
+        "target_object_flags": 2243495707,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 211812351,
+        "target_object_flags": 2477295839,
+        "raw_pointer": 0,
+        "status_word": 3417374397,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3417374397,
+        "record_count": 0,
+        "target_object_flags": 2477295839,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1024458751,
+        "target_object_flags": 2558387922,
+        "raw_pointer": 0,
+        "status_word": 3690959775,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3690959775,
+        "record_count": 0,
+        "target_object_flags": 2558387922,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1828716543,
+        "target_object_flags": 1223728186,
+        "raw_pointer": 0,
+        "status_word": 72800573,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 72800573,
+        "record_count": 0,
+        "target_object_flags": 1223728186,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2966421503,
+        "target_object_flags": 2203842706,
+        "raw_pointer": 0,
+        "status_word": 4123444380,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 4123444380,
+        "record_count": 1,
+        "target_object_flags": 2203842706,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1848639487,
+        "target_object_flags": 427275876,
+        "raw_pointer": 0,
+        "status_word": 1464261768,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1464261768,
+        "record_count": 1,
+        "target_object_flags": 427275876,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3765436415,
+        "target_object_flags": 3573250956,
+        "raw_pointer": 0,
+        "status_word": 754439843,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 754439843,
+        "record_count": 1,
+        "target_object_flags": 3573250956,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2667577343,
+        "target_object_flags": 1946961894,
+        "raw_pointer": 0,
+        "status_word": 2853430900,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2853430900,
+        "record_count": 1,
+        "target_object_flags": 1946961894,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 507510783,
+        "target_object_flags": 2890418425,
+        "raw_pointer": 0,
+        "status_word": 3984608464,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3984608464,
+        "record_count": 1,
+        "target_object_flags": 2890418425,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3996123135,
+        "target_object_flags": 1332897007,
+        "raw_pointer": 0,
+        "status_word": 519837869,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 519837869,
+        "record_count": 1,
+        "target_object_flags": 1332897007,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2209873919,
+        "target_object_flags": 3945154120,
+        "raw_pointer": 0,
+        "status_word": 4171670459,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 4171670459,
+        "record_count": 1,
+        "target_object_flags": 3945154120,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 220200959,
+        "target_object_flags": 629549167,
+        "raw_pointer": 0,
+        "status_word": 2623126268,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2623126268,
+        "record_count": 1,
+        "target_object_flags": 629549167,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 336068607,
+        "target_object_flags": 205520114,
+        "raw_pointer": 0,
+        "status_word": 2983220018,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2983220018,
+        "record_count": 9,
+        "target_object_flags": 205520114,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 390594559,
+        "target_object_flags": 195655824,
+        "raw_pointer": 0,
+        "status_word": 780289336,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 780289336,
+        "record_count": 9,
+        "target_object_flags": 195655824,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 543162367,
+        "target_object_flags": 555370304,
+        "raw_pointer": 0,
+        "status_word": 1093860472,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1093860472,
+        "record_count": 9,
+        "target_object_flags": 555370304,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2704801791,
+        "target_object_flags": 46093593,
+        "raw_pointer": 0,
+        "status_word": 1623297126,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1623297126,
+        "record_count": 9,
+        "target_object_flags": 46093593,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1473773567,
+        "target_object_flags": 3926531692,
+        "raw_pointer": 0,
+        "status_word": 243326627,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 243326627,
+        "record_count": 9,
+        "target_object_flags": 3926531692,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3064987647,
+        "target_object_flags": 4000534865,
+        "raw_pointer": 0,
+        "status_word": 851297692,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 851297692,
+        "record_count": 9,
+        "target_object_flags": 4000534865,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2192048127,
+        "target_object_flags": 2676833958,
+        "raw_pointer": 0,
+        "status_word": 133567453,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 133567453,
+        "record_count": 9,
+        "target_object_flags": 2676833958,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4269277183,
+        "target_object_flags": 3216182609,
+        "raw_pointer": 0,
+        "status_word": 2375434987,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2375434987,
+        "record_count": 9,
+        "target_object_flags": 3216182609,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1023410175,
+        "target_object_flags": 1849072392,
+        "raw_pointer": 0,
+        "status_word": 3784122990,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3784122990,
+        "record_count": 4294967295,
+        "target_object_flags": 1849072392,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 73924607,
+        "target_object_flags": 152982311,
+        "raw_pointer": 0,
+        "status_word": 736886640,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 736886640,
+        "record_count": 4294967295,
+        "target_object_flags": 152982311,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 521666559,
+        "target_object_flags": 1956816932,
+        "raw_pointer": 0,
+        "status_word": 1594652015,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1594652015,
+        "record_count": 4294967295,
+        "target_object_flags": 1956816932,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2004877311,
+        "target_object_flags": 3539002318,
+        "raw_pointer": 0,
+        "status_word": 2307403567,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2307403567,
+        "record_count": 4294967295,
+        "target_object_flags": 3539002318,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4007133183,
+        "target_object_flags": 3139344434,
+        "raw_pointer": 0,
+        "status_word": 4144192981,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 4144192981,
+        "record_count": 4294967295,
+        "target_object_flags": 3139344434,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3164078079,
+        "target_object_flags": 885968418,
+        "raw_pointer": 0,
+        "status_word": 1552445957,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1552445957,
+        "record_count": 4294967295,
+        "target_object_flags": 885968418,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1599078399,
+        "target_object_flags": 559041862,
+        "raw_pointer": 0,
+        "status_word": 3664885214,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3664885214,
+        "record_count": 4294967295,
+        "target_object_flags": 559041862,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3025666047,
+        "target_object_flags": 3488522034,
+        "raw_pointer": 0,
+        "status_word": 3866426080,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 3866426080,
+        "record_count": 4294967295,
+        "target_object_flags": 3488522034,
+        "invalidated": false
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 4038590463,
+        "target_object_flags": 2776110268,
+        "raw_pointer": 1,
+        "status_word": 349148244,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 349148244,
+        "record_count": 0,
+        "target_object_flags": 2776104960,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2124939263,
+        "target_object_flags": 163747925,
+        "raw_pointer": 1,
+        "status_word": 206203104,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 206203104,
+        "record_count": 0,
+        "target_object_flags": 163577856,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1727004671,
+        "target_object_flags": 1033646777,
+        "raw_pointer": 1,
+        "status_word": 3621962197,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1474478549,
+        "record_count": 0,
+        "target_object_flags": 1033371648,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1158152191,
+        "target_object_flags": 2956374567,
+        "raw_pointer": 1,
+        "status_word": 1576242617,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1576242617,
+        "record_count": 0,
+        "target_object_flags": 2955935744,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1783627775,
+        "target_object_flags": 1516024686,
+        "raw_pointer": 1,
+        "status_word": 2931597390,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 784113742,
+        "record_count": 0,
+        "target_object_flags": 1515716608,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3350200319,
+        "target_object_flags": 1907590075,
+        "raw_pointer": 1,
+        "status_word": 3165420679,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1017937031,
+        "record_count": 0,
+        "target_object_flags": 1907359744,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3583508479,
+        "target_object_flags": 2362566489,
+        "raw_pointer": 1,
+        "status_word": 1235273375,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1235273375,
+        "record_count": 0,
+        "target_object_flags": 2362441728,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 108527615,
+        "target_object_flags": 3229672968,
+        "raw_pointer": 1,
+        "status_word": 1997321881,
+        "record_count": 0
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1997321881,
+        "record_count": 0,
+        "target_object_flags": 3229614080,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 653787135,
+        "target_object_flags": 1569823282,
+        "raw_pointer": 1,
+        "status_word": 2531342786,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 383859138,
+        "record_count": 1,
+        "target_object_flags": 1569718272,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 726663167,
+        "target_object_flags": 1344150712,
+        "raw_pointer": 1,
+        "status_word": 619802770,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 619802770,
+        "record_count": 1,
+        "target_object_flags": 1343750144,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1449656319,
+        "target_object_flags": 3886887834,
+        "raw_pointer": 1,
+        "status_word": 1145853381,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1145853381,
+        "record_count": 1,
+        "target_object_flags": 3886546944,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3127902207,
+        "target_object_flags": 135418428,
+        "raw_pointer": 1,
+        "status_word": 900436356,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 900436356,
+        "record_count": 1,
+        "target_object_flags": 135266304,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 405798911,
+        "target_object_flags": 2386755528,
+        "raw_pointer": 1,
+        "status_word": 2882681305,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 735197657,
+        "record_count": 1,
+        "target_object_flags": 2386558976,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3047686143,
+        "target_object_flags": 2859572192,
+        "raw_pointer": 1,
+        "status_word": 112321425,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 112321425,
+        "record_count": 1,
+        "target_object_flags": 2859466752,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2827485183,
+        "target_object_flags": 3524039479,
+        "raw_pointer": 1,
+        "status_word": 1856750708,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1856750708,
+        "record_count": 1,
+        "target_object_flags": 3523739648,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1255669759,
+        "target_object_flags": 2532435512,
+        "raw_pointer": 1,
+        "status_word": 1744918391,
+        "record_count": 1
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1744918391,
+        "record_count": 1,
+        "target_object_flags": 2532311040,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3412590591,
+        "target_object_flags": 1865298678,
+        "raw_pointer": 1,
+        "status_word": 4229130219,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 2081646571,
+        "record_count": 9,
+        "target_object_flags": 1864892416,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 165150719,
+        "target_object_flags": 1679800823,
+        "raw_pointer": 1,
+        "status_word": 548862683,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 548862683,
+        "record_count": 9,
+        "target_object_flags": 1679294464,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3211788287,
+        "target_object_flags": 399450210,
+        "raw_pointer": 1,
+        "status_word": 3485368327,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1337884679,
+        "record_count": 9,
+        "target_object_flags": 398983168,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1905262591,
+        "target_object_flags": 3627353880,
+        "raw_pointer": 1,
+        "status_word": 4001896460,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1854412812,
+        "record_count": 9,
+        "target_object_flags": 3627024384,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2877292543,
+        "target_object_flags": 2794275757,
+        "raw_pointer": 1,
+        "status_word": 983961045,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 983961045,
+        "record_count": 9,
+        "target_object_flags": 2793930752,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3922722815,
+        "target_object_flags": 3487586668,
+        "raw_pointer": 1,
+        "status_word": 184679373,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 184679373,
+        "record_count": 9,
+        "target_object_flags": 3487563776,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2407006207,
+        "target_object_flags": 4144731176,
+        "raw_pointer": 1,
+        "status_word": 3183862816,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1036379168,
+        "record_count": 9,
+        "target_object_flags": 4144496640,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 372244479,
+        "target_object_flags": 3199666120,
+        "raw_pointer": 1,
+        "status_word": 680266439,
+        "record_count": 9
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 680266439,
+        "record_count": 9,
+        "target_object_flags": 3199205376,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 890241023,
+        "target_object_flags": 1600380564,
+        "raw_pointer": 1,
+        "status_word": 307295509,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 307295509,
+        "record_count": 4294967295,
+        "target_object_flags": 1600126976,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2602565631,
+        "target_object_flags": 3352892497,
+        "raw_pointer": 1,
+        "status_word": 3402085852,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1254602204,
+        "record_count": 4294967295,
+        "target_object_flags": 3352821760,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2864185343,
+        "target_object_flags": 3798607045,
+        "raw_pointer": 1,
+        "status_word": 72237885,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 72237885,
+        "record_count": 4294967295,
+        "target_object_flags": 3798466560,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1135607807,
+        "target_object_flags": 199617301,
+        "raw_pointer": 1,
+        "status_word": 2799982031,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 652498383,
+        "record_count": 4294967295,
+        "target_object_flags": 199229440,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 1815609343,
+        "target_object_flags": 4160397392,
+        "raw_pointer": 1,
+        "status_word": 2802700513,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 655216865,
+        "record_count": 4294967295,
+        "target_object_flags": 4160225280,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3715629055,
+        "target_object_flags": 528624330,
+        "raw_pointer": 1,
+        "status_word": 2590946392,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 443462744,
+        "record_count": 4294967295,
+        "target_object_flags": 528482304,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 2985295871,
+        "target_object_flags": 2769423020,
+        "raw_pointer": 1,
+        "status_word": 1477981494,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1477981494,
+        "record_count": 4294967295,
+        "target_object_flags": 2769289216,
+        "invalidated": true
+      }
+    },
+    {
+      "inputs": {
+        "indexed_object_flags": 3547856895,
+        "target_object_flags": 2783874089,
+        "raw_pointer": 1,
+        "status_word": 3860220720,
+        "record_count": 4294967295
+      },
+      "result": {
+        "slot": [
+          31,
+          16382
+        ],
+        "pointer": 0,
+        "status_word": 1712737072,
+        "record_count": 4294967295,
+        "target_object_flags": 2783444992,
+        "invalidated": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "evidence": "bounded static search; candidate offsets are not receiver identity",
+  "candidates": 402,
+  "search_scope": "Unwind-indexed functions: embedded-storage address construction and selected function-slot stores; supplemental raw immediate-add scan for leaf omissions. Excludes stack-base candidates for displacement search. Not exhaustive for aliases, copies or dynamically generated code.",
+  "confirmed_new_registration_writers": 0,
+  "rejected_as_proof": [
+    "Shared numeric field offsets without skeleton receiver provenance",
+    "Stack-frame uses of matching offsets",
+    "Destructor/embedded-member helpers without registration stores"
+  ],
+  "next_check": {
+    "read_only": true,
+    "launch_performed": false,
+    "fields": [
+      "cached parent pose",
+      "callback storage word",
+      "tagged context",
+      "function field",
+      "holder target/status",
+      "primary/current bank identities"
+    ],
+    "required_guards": [
+      "fresh player and skeleton identity",
+      "retain and reread callback record and holder contents",
+      "bounded pointer/range checks",
+      "compare against cached parent and bank W in same sequential capture"
+    ],
+    "interpretation": [
+      "Eligibility is not observed invocation",
+      "Endpoint equality is not atomicity or lifetime pinning",
+      "A nonzero function field requires executable/module provenance before disassembly",
+      "An empty record narrows only the captured interval, not all gameplay states"
+    ]
+  }
+}

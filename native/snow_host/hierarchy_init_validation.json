@@ -1,0 +1,148 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 8,
+  "scope": "Original queue startup initializer and ring allocation helper; allocator and lock initialization intercepted. Tests object/ring allocation failures and prior storage patterns. Successful ring requests 2048 records of 128 bytes. No live capacity or startup ordering proof.",
+  "samples": [
+    {
+      "inputs": {
+        "object_allocation_succeeds": false,
+        "ring_allocation_succeeds": false,
+        "backing_fill": 0
+      },
+      "result": {
+        "published": false,
+        "events": [
+          "object_allocate"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": false,
+        "ring_allocation_succeeds": false,
+        "backing_fill": 165
+      },
+      "result": {
+        "published": false,
+        "events": [
+          "object_allocate"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": false,
+        "ring_allocation_succeeds": true,
+        "backing_fill": 0
+      },
+      "result": {
+        "published": false,
+        "events": [
+          "object_allocate"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": false,
+        "ring_allocation_succeeds": true,
+        "backing_fill": 165
+      },
+      "result": {
+        "published": false,
+        "events": [
+          "object_allocate"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": true,
+        "ring_allocation_succeeds": false,
+        "backing_fill": 0
+      },
+      "result": {
+        "published": true,
+        "events": [
+          "object_allocate",
+          "lock_init",
+          "ring_allocate"
+        ],
+        "count": 0,
+        "write_index": 0,
+        "read_index": 0,
+        "capacity": 0,
+        "pending": 0,
+        "deferred": 0,
+        "storage_present": false
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": true,
+        "ring_allocation_succeeds": false,
+        "backing_fill": 165
+      },
+      "result": {
+        "published": true,
+        "events": [
+          "object_allocate",
+          "lock_init",
+          "ring_allocate"
+        ],
+        "count": 0,
+        "write_index": 0,
+        "read_index": 0,
+        "capacity": 0,
+        "pending": 0,
+        "deferred": 0,
+        "storage_present": false
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": true,
+        "ring_allocation_succeeds": true,
+        "backing_fill": 0
+      },
+      "result": {
+        "published": true,
+        "events": [
+          "object_allocate",
+          "lock_init",
+          "ring_allocate"
+        ],
+        "count": 0,
+        "write_index": 0,
+        "read_index": 0,
+        "capacity": 2048,
+        "pending": 0,
+        "deferred": 0,
+        "storage_present": true
+      }
+    },
+    {
+      "inputs": {
+        "object_allocation_succeeds": true,
+        "ring_allocation_succeeds": true,
+        "backing_fill": 165
+      },
+      "result": {
+        "published": true,
+        "events": [
+          "object_allocate",
+          "lock_init",
+          "ring_allocate"
+        ],
+        "count": 0,
+        "write_index": 0,
+        "read_index": 0,
+        "capacity": 2048,
+        "pending": 0,
+        "deferred": 0,
+        "storage_present": true
+      }
+    }
+  ]
+}

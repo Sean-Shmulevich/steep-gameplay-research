@@ -1,0 +1,235 @@
+{
+  "type_name": "ActionKit",
+  "object_size": 168,
+  "metadata_constructor_and_finalizer_join": true,
+  "constructor_vtable_reader_and_type_getter_join": true,
+  "cases": 32,
+  "game_process": false,
+  "scope": "Static type metadata/name, size, constructor/finalizer and vtable reader/type-getter joins. Original constructor thunk/body and array initializers execute from varied synthetic storage. Lock initialization intercepted. No full destructor, live receiver, cache reset or resource payload.",
+  "rows": [
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    },
+    {
+      "source_count": 0,
+      "cache_count": 0,
+      "source_pointer": 0,
+      "cache_pointer": 0,
+      "lock_initialization_requested": true
+    }
+  ]
+}

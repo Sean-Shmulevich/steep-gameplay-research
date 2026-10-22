@@ -1,0 +1,22 @@
+{
+  "evidence": "synthetic_native_fixture",
+  "game_process": false,
+  "installed_and_restored": true,
+  "entry_return_pairs": 6447,
+  "target_pairs": 3224,
+  "pairing_complete": true,
+  "request_changes": 0,
+  "dropped": 0,
+  "incomplete": 0,
+  "refusal_fixture_passed": true,
+  "abi_argument_register_counter_checks_passed": true,
+  "stack_walks_passed": 100,
+  "job_completion_established": false,
+  "lifetime_established": false,
+  "limits": [
+    "Synthetic callback and counters, not game scheduling.",
+    "Fixed 500ms grace is not an in-flight drain proof.",
+    "Pinned module protects wrapper code, not receiver lifetime.",
+    "Independent job counters are not a shared frame identity."
+  ]
+}

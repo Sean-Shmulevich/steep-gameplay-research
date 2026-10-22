@@ -1,0 +1,1939 @@
+{
+  "evidence": "original_instruction_emulation",
+  "cases": 120,
+  "scope": "Full release routine; auxiliary container clear supplied and arguments checked. No free/storage lifetime or live scheduler claim.",
+  "rows": [
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 0,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65534,
+      "clear_calls": [
+        "clear"
+      ]
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 4
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 1,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65534,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65532,
+      "clear_calls": [
+        "clear"
+      ]
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 4
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32768,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65532,
+      "clear_calls": [
+        "clear"
+      ]
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32768,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 3,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32768,
+        "auxiliary_count": 4
+      },
+      "occupied_mask": 65532,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 2,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": [
+        "clear"
+      ]
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 2,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 32768,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 2,
+        "auxiliary_count": 4
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 32768,
+      "clear_calls": [
+        "clear"
+      ]
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 1,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 4
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 1
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 0
+      },
+      "occupied_mask": 32768,
+      "clear_calls": [
+        "clear"
+      ]
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 2
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 1
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": false,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "occupied_mask": 65535,
+      "clear_calls": []
+    },
+    {
+      "request_mask": 65535,
+      "found": true,
+      "initial_bank": {
+        "flags": 2333226070,
+        "auxiliary_mask": 32770,
+        "auxiliary_count": 5
+      },
+      "result_bank": {
+        "flags": 2400334934,
+        "auxiliary_mask": 0,
+        "auxiliary_count": 4
+      },
+      "occupied_mask": 32768,
+      "clear_calls": []
+    }
+  ]
+}

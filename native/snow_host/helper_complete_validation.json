@@ -1,0 +1,1253 @@
+{
+  "cases": 32,
+  "evidence": "complete_helper_original_instruction_emulation",
+  "game_process": false,
+  "external_services": "locks, main-body read, mask query and backend dispatch intercepted",
+  "executed": "complete helper, runtime curve evaluator and floor, central impulse arithmetic, geometry, state filter and publication",
+  "inputs": "synthetic tables and objects; same captured RSQRT estimates supplied to portable model",
+  "rows": [
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 0,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          9,
+          9,
+          9
+        ],
+        "current_velocity": [
+          0,
+          0,
+          0
+        ],
+        "rate": 0,
+        "displacement": 0
+      },
+      "entered": false,
+      "submissions": [],
+      "publication": null
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry",
+        "a",
+        "b"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry",
+        "a",
+        "b"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            0.0,
+            -0.0,
+            -7.071068286895752
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            -21.213205337524414
+          ],
+          "force": true
+        }
+      ],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry",
+        "a",
+        "b"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            0.0,
+            -0.0,
+            -7.071068286895752
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            -21.213205337524414
+          ],
+          "force": true
+        }
+      ],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry",
+        "a",
+        "b"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            0.0,
+            -0.0,
+            -7.071068286895752
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            -21.213205337524414
+          ],
+          "force": true
+        }
+      ],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 15,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry",
+        "a",
+        "b"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            0.0,
+            -0.0,
+            -7.071068286895752
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            -21.213205337524414
+          ],
+          "force": true
+        }
+      ],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        1,
+        0,
+        1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        0.7071067690849304,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry",
+        "a",
+        "b"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            0.0,
+            -0.0,
+            -7.071068286895752
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            -21.213205337524414
+          ],
+          "force": true
+        }
+      ],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 0,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": false,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    },
+    {
+      "entry_curve": 1,
+      "speed_scalar": 31,
+      "direction_input": [
+        0,
+        0,
+        -1
+      ],
+      "override_a": 1,
+      "mask_eligible": true,
+      "rsqrt_seeds": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "curve_calls": [
+        "entry"
+      ],
+      "state": {
+        "previous_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_velocity": [
+          0.0,
+          0.0,
+          0.5
+        ],
+        "rate": 0.5,
+        "displacement": 0.008333333767950535
+      },
+      "entered": true,
+      "submissions": [],
+      "publication": [
+        0.5,
+        0.008333333767950535
+      ]
+    }
+  ]
+}

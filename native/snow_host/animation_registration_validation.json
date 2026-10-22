@@ -1,0 +1,46 @@
+{
+  "cases": 3,
+  "game_process": false,
+  "scope": "Three original registration call-site slices through complete stream adapter and registration helper, empty category list. Append/capacity service intercepted; original callback pointers checked privately and omitted. Resource readers, callback bodies, category bootstrap and runtime thread identity not executed.",
+  "rows": [
+    {
+      "route": "animation_resource_a",
+      "category_flags": 1,
+      "entry": {
+        "object": 1,
+        "tag": 0,
+        "secondary": false
+      },
+      "primary_registered": true,
+      "secondary_registered": false,
+      "before_handoff": true,
+      "after_handoff": false
+    },
+    {
+      "route": "animation_resource_b",
+      "category_flags": 1,
+      "entry": {
+        "object": 1,
+        "tag": 0,
+        "secondary": true
+      },
+      "primary_registered": true,
+      "secondary_registered": true,
+      "before_handoff": true,
+      "after_handoff": false
+    },
+    {
+      "route": "custom_resource_c",
+      "category_flags": 1,
+      "entry": {
+        "object": 1,
+        "tag": 0,
+        "secondary": false
+      },
+      "primary_registered": true,
+      "secondary_registered": false,
+      "before_handoff": true,
+      "after_handoff": false
+    }
+  ]
+}

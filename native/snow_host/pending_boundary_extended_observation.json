@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "evidence": "callback_boundary_observation",
+  "status": "restored",
+  "rows": 53607,
+  "incomplete_records": 0,
+  "dropped": 0,
+  "recording_complete": true,
+  "sampled_rows": 7221,
+  "request_groups": 2407,
+  "main_speed_raw_units": {
+    "min": 0.0,
+    "max": 54.68799598418741
+  },
+  "main_angular_speed_raw_units": {
+    "min": 0.0,
+    "max": 18.995826444119228
+  },
+  "counts": {
+    "matched_requests": 2407,
+    "entry_pending_nonzero": 12,
+    "return_pending_nonzero": 69,
+    "world_step_entry_pending_nonzero": 69,
+    "pending_changed_during_actor_callback": 58,
+    "pending_changed_before_world_step": 0,
+    "main_velocity_changed_during_actor_callback": 0,
+    "rider_velocity_changed_during_actor_callback": 0
+  },
+  "rejected_groups": {},
+  "state_variant_observations": {
+    "0:1": 697,
+    "0:5": 128,
+    "3:1": 5143,
+    "4:6": 1090,
+    "3:7": 163
+  },
+  "pending_change_state_pairs": {
+    "3:1 -> 3:1": 58
+  },
+  "next_request_observations": {
+    "nonzero_step_with_next_actor_entry": 69,
+    "zero_by_next_actor_entry": 68,
+    "changed_nonzero_at_next_actor_entry": 1
+  },
+  "snapshot_cost_us": {
+    "median": 17.3,
+    "p95": 41.6,
+    "max": 411.8
+  },
+  "limits": [
+    "Sequential reads are not atomic or lifetime-pinned.",
+    "No direct queue-call or consumer-call interception.",
+    "Zero pending at boundaries does not prove no impulse occurred.",
+    "Object identity does not establish active body membership."
+  ],
+  "input_window": {
+    "evidence": "os_input_and_callback_clock_alignment",
+    "recording_complete": true,
+    "recorded_seconds": 29.9901904,
+    "hold_starts": 1,
+    "hold_completions": 1,
+    "exactly_one_complete_pulse_covered": true,
+    "input_events": [
+      {
+        "kind": "hold_start",
+        "seconds_from_first_step": 3.4462352
+      },
+      {
+        "kind": "hold_complete",
+        "seconds_from_first_step": 4.9799149
+      }
+    ],
+    "post_release_recorded_seconds": 25.0102755,
+    "last_main_speed_raw_units": 32.349189870847006,
+    "limits": [
+      "OS input delivery does not prove game acceptance.",
+      "Final speed does not prove a lasting stop or identify its cause."
+    ]
+  },
+  "cleanup": {
+    "configuration_restored": true,
+    "watchdog_exit_code": 0,
+    "bottle_processes_after_test": 0,
+    "original_xinput_sha256": "756cad002e1553cfa1a91ebe8c1b9380ffabe0b4b1916c4a4db802396ddfbef8"
+  }
+}

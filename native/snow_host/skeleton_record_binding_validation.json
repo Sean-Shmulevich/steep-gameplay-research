@@ -1,0 +1,1488 @@
+{
+  "cases": 64,
+  "game_process": false,
+  "same_registry_verified": true,
+  "scope": "Original skeleton cache-assignment slice calls complete original lookup wrapper and existing-index lookup branch, followed by complete original invalidation helper. Synthetic records. Pool locks and record reclaim service intercepted. Profiling disabled. Missing-index allocation, mismatched target rebinding, concurrency and full skeleton cleanup not executed.",
+  "rows": [
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 1157627904,
+        "object_flags": 1793589249,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1157627904,
+        "object_flags": 1793589248,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 2080374787,
+        "object_flags": 1106247681,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 2080374787,
+        "object_flags": 1106247680,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 335544320,
+        "object_flags": 1301807105,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 335544320,
+        "object_flags": 1301807104,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 1442840579,
+        "object_flags": 92274689,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1442840579,
+        "object_flags": 92274688,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 301989888,
+        "object_flags": 2079850497,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 301989888,
+        "object_flags": 2079850496,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 33554435,
+        "object_flags": 492830721,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 33554435,
+        "object_flags": 492830720,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 1207959552,
+        "object_flags": 3468689409,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1207959552,
+        "object_flags": 3468689408,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 503316483,
+        "object_flags": 4107272193,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 503316483,
+        "object_flags": 4107272192,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 1325400064,
+        "object_flags": 3673686017,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1325400064,
+        "object_flags": 3673686016,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3187671043,
+        "object_flags": 2788687873,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1040187395,
+        "object_flags": 2788687872,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 150994944,
+        "object_flags": 3861381121,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 150994944,
+        "object_flags": 3861381120,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 2667577347,
+        "object_flags": 285736961,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 520093699,
+        "object_flags": 285736960,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 570425344,
+        "object_flags": 1166016513,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 570425344,
+        "object_flags": 1166016512,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 3405774851,
+        "object_flags": 3848273921,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1258291203,
+        "object_flags": 3848273920,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 3154116608,
+        "object_flags": 661651457,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 1006632960,
+        "object_flags": 661651456,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 1,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 905969667,
+        "object_flags": 4262985729,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 905969667,
+        "object_flags": 4262985728,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3640655872,
+        "object_flags": 3266854912,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1493172224,
+        "object_flags": 3266838528,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3070230531,
+        "object_flags": 1839742976,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 922746883,
+        "object_flags": 1839726592,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 318767104,
+        "object_flags": 2632466432,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 318767104,
+        "object_flags": 2632450048,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 1744830467,
+        "object_flags": 612909056,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1744830467,
+        "object_flags": 612892672,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 3003121664,
+        "object_flags": 245383168,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 855638016,
+        "object_flags": 245366784,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 3959422979,
+        "object_flags": 137904128,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1811939331,
+        "object_flags": 137887744,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 738197504,
+        "object_flags": 1376796672,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 738197504,
+        "object_flags": 1376780288,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 1073741827,
+        "object_flags": 1530937344,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1073741827,
+        "object_flags": 1530920960,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3321888768,
+        "object_flags": 3114287104,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1174405120,
+        "object_flags": 3114270720,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 4127195139,
+        "object_flags": 1374175232,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1979711491,
+        "object_flags": 1374158848,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 402653184,
+        "object_flags": 1766866944,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 402653184,
+        "object_flags": 1766850560,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 369098755,
+        "object_flags": 90718208,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 369098755,
+        "object_flags": 90701824,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 3221225472,
+        "object_flags": 1410875392,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1073741824,
+        "object_flags": 1410859008,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 1358954499,
+        "object_flags": 3366469632,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1358954499,
+        "object_flags": 3366453248,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 1660944384,
+        "object_flags": 3002613760,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 1660944384,
+        "object_flags": 3002597376,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16384,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 3758096387,
+        "object_flags": 4015013888,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 1610612739,
+        "object_flags": 4014997504,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3187671040,
+        "object_flags": 2279096321,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1040187392,
+        "object_flags": 2279079936,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 2835349507,
+        "object_flags": 2305835009,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 687865859,
+        "object_flags": 2305818624,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 3724541952,
+        "object_flags": 2714255361,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1577058304,
+        "object_flags": 2714238976,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 3137339395,
+        "object_flags": 2666545153,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 989855747,
+        "object_flags": 2666528768,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 3472883712,
+        "object_flags": 3015720961,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1325400064,
+        "object_flags": 3015704576,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 2751463427,
+        "object_flags": 1092108289,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 603979779,
+        "object_flags": 1092091904,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 2533359616,
+        "object_flags": 2848473089,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 385875968,
+        "object_flags": 2848456704,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 251658243,
+        "object_flags": 2116042753,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 251658243,
+        "object_flags": 2116026368,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3892314112,
+        "object_flags": 1604861953,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1744830464,
+        "object_flags": 1604845568,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3909091331,
+        "object_flags": 900218881,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1761607683,
+        "object_flags": 900202496,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 1493172224,
+        "object_flags": 669532161,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 1493172224,
+        "object_flags": 669515776,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 2684354563,
+        "object_flags": 3386916865,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 536870915,
+        "object_flags": 3386900480,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 67108864,
+        "object_flags": 1072185345,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 67108864,
+        "object_flags": 1072168960,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 2130706435,
+        "object_flags": 3055566849,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 2130706435,
+        "object_flags": 3055550464,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 2667577344,
+        "object_flags": 1820868609,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 520093696,
+        "object_flags": 1820852224,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 16385,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 1258291203,
+        "object_flags": 901267457,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 1258291203,
+        "object_flags": 901251072,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 1778384896,
+        "object_flags": 1654652927,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1778384896,
+        "object_flags": 1654128640,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3573547011,
+        "object_flags": 1632632831,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1426063363,
+        "object_flags": 1632108544,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 603979776,
+        "object_flags": 2510290943,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 603979776,
+        "object_flags": 2509766656,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 1946157059,
+        "object_flags": 2381316095,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 2,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1946157059,
+        "object_flags": 2380791808,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 369098752,
+        "object_flags": 2405957631,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 369098752,
+        "object_flags": 2405433344,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock",
+          "record_reclaim"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 1644167171,
+        "object_flags": 265814015,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 0,
+        "object_pointer": 0,
+        "status": 1644167171,
+        "object_flags": 265289728,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 3774873600,
+        "object_flags": 2213019647,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 1627389952,
+        "object_flags": 2212495360,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": false,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 2617245699,
+        "object_flags": 3877634047,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 10,
+        "old_record_count": 4,
+        "object_pointer": 0,
+        "status": 469762051,
+        "object_flags": 3877109760,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 117440512,
+        "object_flags": 2681208831,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 117440512,
+        "object_flags": 2680684544,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 1,
+        "status": 3674210307,
+        "object_flags": 2333605887,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1526726659,
+        "object_flags": 2333081600,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 2818572288,
+        "object_flags": 2707423231,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 671088640,
+        "object_flags": 2706898944,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 1,
+        "old_record_count": 5,
+        "status": 2231369731,
+        "object_flags": 3314548735,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 1,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 83886083,
+        "object_flags": 3314024448,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 1224736768,
+        "object_flags": 1367343103,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1224736768,
+        "object_flags": 1366818816,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 1,
+        "status": 1291845635,
+        "object_flags": 722468863,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 1,
+        "object_pointer": 0,
+        "status": 1291845635,
+        "object_flags": 721944576,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 771751936,
+        "object_flags": 43515903,
+        "old_status_low24": 0
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 771751936,
+        "object_flags": 42991616,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "encoded_index": 524287,
+        "same_cached_record": true,
+        "record_count": 9,
+        "old_record_count": 5,
+        "status": 2667577347,
+        "object_flags": 1200619519,
+        "old_status_low24": 3
+      },
+      "result": {
+        "record_count": 9,
+        "old_record_count": 5,
+        "object_pointer": 0,
+        "status": 520093699,
+        "object_flags": 1200095232,
+        "cached_record_unchanged_by_invalidation": true,
+        "events": [
+          "lock",
+          "unlock"
+        ]
+      }
+    }
+  ]
+}

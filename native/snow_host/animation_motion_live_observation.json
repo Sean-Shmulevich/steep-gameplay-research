@@ -1,0 +1,71 @@
+{
+  "schema": "animation-motion-live-observation-v1",
+  "evidence": "one original-game forward-pulse trial; aggregate sequential native-host observations",
+  "resource_key": 743623600,
+  "input": {
+    "exit_code": 0,
+    "released": true,
+    "accepted_deliveries": 2,
+    "requested_duration_ms": 700,
+    "scan_code": 17
+  },
+  "phases": {
+    "before": {
+      "valid_identity_brackets": 8,
+      "adjacent_same_identity_pairs": 7,
+      "distinct_epochs": 8,
+      "max_local_vector_delta": 0.002654370970508127,
+      "max_local_rotation_delta_radians": 0.012681443328594251,
+      "max_body_position_delta": 0.0,
+      "min_body_speed": 0.0,
+      "max_body_speed": 0.0,
+      "max_request_span_seconds": 0.0076394169591367245,
+      "units": "stored engine units; rotation delta derived from normalized quaternions",
+      "input_causality_established": false
+    },
+    "pulse_window": {
+      "valid_identity_brackets": 24,
+      "adjacent_same_identity_pairs": 23,
+      "distinct_epochs": 24,
+      "max_local_vector_delta": 0.2397607198882753,
+      "max_local_rotation_delta_radians": 0.21192083314692803,
+      "max_body_position_delta": 0.049934016461332165,
+      "min_body_speed": 0.0,
+      "max_body_speed": 0.6002691249317339,
+      "max_request_span_seconds": 0.01085237500956282,
+      "units": "stored engine units; rotation delta derived from normalized quaternions",
+      "input_causality_established": false
+    },
+    "after": {
+      "valid_identity_brackets": 8,
+      "adjacent_same_identity_pairs": 7,
+      "distinct_epochs": 8,
+      "max_local_vector_delta": 0.09042689209064553,
+      "max_local_rotation_delta_radians": 0.23249642445755878,
+      "max_body_position_delta": 0.462865227577014,
+      "min_body_speed": 1.3824076694282845,
+      "max_body_speed": 4.597128329985016,
+      "max_request_span_seconds": 0.007589624961838126,
+      "units": "stored engine units; rotation delta derived from normalized quaternions",
+      "input_causality_established": false
+    }
+  },
+  "stable_20_seconds": true,
+  "steps_released": 0,
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "game_input_ingestion_verified": false,
+  "atomic_snapshot": false,
+  "animation_writes": false,
+  "limitations": [
+    "One session and one channel",
+    "Sport and clip identity not established",
+    "Before/pulse/after are observer windows, not simulation phases",
+    "No exact device-to-animation latency or causal isolation",
+    "No ABA exclusion or safe animation-write boundary"
+  ],
+  "payload_policy": "Aggregate metrics only; no raw poses, body trajectories, input identities or local paths"
+}

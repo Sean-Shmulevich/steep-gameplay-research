@@ -1,0 +1,403 @@
+{
+  "schema": "animation-operation-bench-v1",
+  "cases": [
+    {
+      "label": "synthetic weight complement with mixed channels",
+      "math_policy": "recorded",
+      "inputs": {
+        "entry_masks": [
+          65535,
+          65535,
+          21845
+        ],
+        "entry_banks": [
+          "a",
+          "b",
+          "a"
+        ],
+        "banks": {
+          "a": {
+            "flags": 3,
+            "supplemental_mask": 3,
+            "supplemental_counter": 1,
+            "weights": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "poses": [
+              {
+                "vector": [
+                  0.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              {
+                "vector": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              {
+                "vector": [
+                  2.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              }
+            ],
+            "channels": [
+              [
+                10.0
+              ],
+              [
+                1.0,
+                2.0,
+                3.0,
+                4.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "records": [
+              {
+                "id": 7,
+                "vector": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  0.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              }
+            ]
+          },
+          "b": {
+            "flags": 3,
+            "supplemental_mask": 3,
+            "supplemental_counter": 1,
+            "weights": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "poses": [
+              {
+                "vector": [
+                  0.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.800000011920929,
+                  0.0,
+                  0.0,
+                  0.6000000238418579
+                ]
+              },
+              {
+                "vector": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.800000011920929,
+                  0.0,
+                  0.0,
+                  0.6000000238418579
+                ]
+              },
+              {
+                "vector": [
+                  2.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.800000011920929,
+                  0.0,
+                  0.0,
+                  0.6000000238418579
+                ]
+              }
+            ],
+            "channels": [
+              [
+                20.0
+              ],
+              [
+                5.0,
+                6.0,
+                7.0,
+                8.0
+              ],
+              [
+                0.6000000238418579,
+                0.0,
+                0.0,
+                0.800000011920929
+              ]
+            ],
+            "records": [
+              {
+                "id": 7,
+                "vector": [
+                  4.0,
+                  5.0,
+                  6.0,
+                  0.0
+                ],
+                "rotation": [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          },
+          "d": {
+            "flags": 3,
+            "supplemental_mask": 3,
+            "supplemental_counter": 1,
+            "weights": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "poses": [
+              {
+                "vector": [
+                  0.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              {
+                "vector": [
+                  1.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              },
+              {
+                "vector": [
+                  2.0,
+                  2.0,
+                  3.0,
+                  4.0
+                ],
+                "rotation": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              }
+            ],
+            "channels": [
+              [
+                20.0
+              ],
+              [
+                5.0,
+                6.0,
+                7.0,
+                8.0
+              ],
+              [
+                0.6000000238418579,
+                0.0,
+                0.0,
+                0.800000011920929
+              ]
+            ],
+            "records": [
+              {
+                "id": 99,
+                "vector": [
+                  4.0,
+                  5.0,
+                  6.0,
+                  0.0
+                ],
+                "rotation": [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            ]
+          }
+        },
+        "first": "a",
+        "second": "b",
+        "first_cached": false,
+        "second_cached": false,
+        "destination": "d",
+        "completed_mask": 256,
+        "resource_present": true,
+        "resource_index": 0,
+        "descriptor_group": 0,
+        "operation": {
+          "operation_kind": 0,
+          "special_ready": false,
+          "stored_mask": 3,
+          "requested_mask": 1,
+          "first_kind": 1,
+          "second_kind": 0,
+          "component_flags": 0,
+          "weight": 0.25
+        },
+        "kinds": [
+          1,
+          5,
+          6
+        ],
+        "groups": [
+          [
+            0,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "group_count": 1
+      },
+      "services": [
+        {
+          "service": "arccos",
+          "input": 0.6000000238418579,
+          "output": 0.9272952079772949
+        },
+        {
+          "service": "sine",
+          "input": 0.23182380199432373,
+          "output": 0.22975291311740875
+        },
+        {
+          "service": "sine",
+          "input": 0.6954714059829712,
+          "output": 0.6407474279403687
+        },
+        {
+          "service": "sine",
+          "input": 0.9272952079772949,
+          "output": 0.800000011920929
+        },
+        {
+          "service": "arccos",
+          "input": 0.6000000238418579,
+          "output": 0.9272952079772949
+        },
+        {
+          "service": "sine",
+          "input": 0.23182380199432373,
+          "output": 0.22975291311740875
+        },
+        {
+          "service": "sine",
+          "input": 0.6954714059829712,
+          "output": 0.6407474279403687
+        },
+        {
+          "service": "sine",
+          "input": 0.9272952079772949,
+          "output": 0.800000011920929
+        },
+        {
+          "service": "arccos",
+          "input": 0.6000000238418579,
+          "output": 0.9272952079772949
+        },
+        {
+          "service": "sine",
+          "input": 0.23182380199432373,
+          "output": 0.22975291311740875
+        },
+        {
+          "service": "sine",
+          "input": 0.6954714059829712,
+          "output": 0.6407474279403687
+        },
+        {
+          "service": "sine",
+          "input": 0.9272952079772949,
+          "output": 0.800000011920929
+        }
+      ],
+      "normalizations": [
+        {
+          "length": 1.0,
+          "seed": 1.0
+        },
+        {
+          "length": 1.0,
+          "seed": 1.0
+        },
+        {
+          "length": 1.0,
+          "seed": 1.0
+        },
+        {
+          "length": 1.0,
+          "seed": 1.0
+        }
+      ]
+    }
+  ]
+}

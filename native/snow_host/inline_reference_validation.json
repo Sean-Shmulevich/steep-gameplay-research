@@ -1,0 +1,3847 @@
+{
+  "cases": 80,
+  "game_process": false,
+  "scope": "Complete original tag-zero reader with contiguous synthetic input and existing identifier records. Original acquisition/assignment/context changes execute; locks, map lookup, retirement, factory, object reader and post-read service intercepted. Object reader consumes zero or four synthetic bytes. No actual inline object payload, refill, factory implementation, exceptions or concurrent mutation tested.",
+  "rows": [
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 0,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 65536,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 131072,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 196608,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 0,
+      "context_plan": {
+        "during_calls": 0,
+        "after_normal_return": 0
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 0,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 0,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "00000000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 0,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          6,
+          3,
+          0
+        ],
+        "slot_record": 0,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000000000000ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 0,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 0,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 14
+        }
+      ],
+      "final_cursor": 14,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    },
+    {
+      "prefix_hex": "004d0000000000000078563412ff",
+      "decoded": {
+        "kind": "inline_object",
+        "identifier": 77,
+        "type_key": 305419896,
+        "skipped_byte": 255,
+        "tag": 0,
+        "prefix_size": 14,
+        "next_offset": 14
+      },
+      "type_flags": 262144,
+      "saved_context": 123,
+      "context_plan": {
+        "during_calls": 123,
+        "after_normal_return": 123
+      },
+      "payload_bytes_consumed_by_stub": 4,
+      "events": [
+        {
+          "service": "factory",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "read_object",
+          "context": 123,
+          "cursor": 14
+        },
+        {
+          "service": "post_read",
+          "context": 123,
+          "cursor": 18
+        }
+      ],
+      "final_cursor": 18,
+      "ownership_result": {
+        "status_words": [
+          5,
+          4,
+          0
+        ],
+        "slot_record": 1,
+        "retirement_requests": [
+          2
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1095 @@
+{
+  "branch": "supplied_provider_active_pose",
+  "input_origin": "synthetic records and estimates; not captured game data",
+  "initial_state": {
+    "correction": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "endpoints": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "frames": [
+    {
+      "entity_transform": {
+        "basis_rows": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "stored_scalar": 1
+      },
+      "fallback_axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "contacts": [
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": []
+        },
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": []
+        }
+      ],
+      "rsqrt_estimates": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "tail": {
+        "stored_length": 0.8,
+        "blend": 0.1,
+        "velocity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rest_lengths": [
+          1,
+          1
+        ],
+        "lower": 0.2,
+        "upper": 1.5,
+        "offsets": [
+          0,
+          0
+        ],
+        "decay_mode": false
+      },
+      "endpoint_records": [
+        {
+          "position": [
+            -0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "position": [
+            0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "provider_bank": {
+        "entries": [
+          [
+            743623600,
+            0
+          ],
+          [
+            1959467492,
+            1
+          ],
+          [
+            2943539481,
+            2
+          ]
+        ],
+        "records": [
+          {
+            "position": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              -0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "parent_position": null,
+        "parent_rotation": null,
+        "direct": true
+      }
+    },
+    {
+      "entity_transform": {
+        "basis_rows": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "stored_scalar": 1
+      },
+      "fallback_axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "contacts": [
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                -0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 0,
+              "body_flags": 32768
+            }
+          ]
+        },
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 0,
+              "body_flags": 32768
+            }
+          ]
+        }
+      ],
+      "rsqrt_estimates": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "tail": {
+        "stored_length": 0.6,
+        "blend": 0.1,
+        "velocity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rest_lengths": [
+          1,
+          1
+        ],
+        "lower": 0.2,
+        "upper": 1.5,
+        "offsets": [
+          0,
+          0
+        ],
+        "decay_mode": false
+      },
+      "endpoint_records": [
+        {
+          "position": [
+            -0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "position": [
+            0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "provider_bank": {
+        "entries": [
+          [
+            743623600,
+            0
+          ],
+          [
+            1959467492,
+            1
+          ],
+          [
+            2943539481,
+            2
+          ]
+        ],
+        "records": [
+          {
+            "position": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              -0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "parent_position": null,
+        "parent_rotation": null,
+        "direct": true
+      }
+    },
+    {
+      "entity_transform": {
+        "basis_rows": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "stored_scalar": 1
+      },
+      "fallback_axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "contacts": [
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                -0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 32768,
+              "body_flags": 32768
+            }
+          ]
+        },
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 32768,
+              "body_flags": 32768
+            }
+          ]
+        }
+      ],
+      "rsqrt_estimates": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "tail": {
+        "stored_length": 0.6,
+        "blend": 0.1,
+        "velocity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rest_lengths": [
+          1,
+          1
+        ],
+        "lower": 0.2,
+        "upper": 1.5,
+        "offsets": [
+          0,
+          0
+        ],
+        "decay_mode": false
+      },
+      "endpoint_records": [
+        {
+          "position": [
+            -0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "position": [
+            0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "provider_bank": {
+        "entries": [
+          [
+            743623600,
+            0
+          ],
+          [
+            1959467492,
+            1
+          ],
+          [
+            2943539481,
+            2
+          ]
+        ],
+        "records": [
+          {
+            "position": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              -0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "parent_position": null,
+        "parent_rotation": null,
+        "direct": true
+      }
+    },
+    {
+      "entity_transform": {
+        "basis_rows": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "stored_scalar": 1
+      },
+      "fallback_axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "contacts": [
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                -0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 0,
+              "body_flags": 32768
+            }
+          ]
+        },
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 0,
+              "body_flags": 32768
+            }
+          ]
+        }
+      ],
+      "rsqrt_estimates": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "tail": {
+        "stored_length": 0.8,
+        "blend": 0.1,
+        "velocity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rest_lengths": [
+          1,
+          1
+        ],
+        "lower": 0.2,
+        "upper": 1.5,
+        "offsets": [
+          0,
+          0
+        ],
+        "decay_mode": false
+      },
+      "endpoint_records": [
+        {
+          "position": [
+            -0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "position": [
+            0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "provider_bank": {
+        "entries": [
+          [
+            743623600,
+            0
+          ],
+          [
+            1959467492,
+            1
+          ],
+          [
+            2943539481,
+            2
+          ]
+        ],
+        "records": [
+          {
+            "position": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              -0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "parent_position": null,
+        "parent_rotation": null,
+        "direct": true
+      }
+    },
+    {
+      "entity_transform": {
+        "basis_rows": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "stored_scalar": 1
+      },
+      "fallback_axis": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "contacts": [
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                -0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 0,
+              "body_flags": 32768
+            }
+          ]
+        },
+        {
+          "initial_normal": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "initial_scalar": 0.0,
+          "hits": [
+            {
+              "point": [
+                0.2,
+                0,
+                0,
+                0
+              ],
+              "normal": [
+                0,
+                1,
+                0,
+                0
+              ],
+              "hit_scalar": 0.1,
+              "override_allowed": true,
+              "hit_flags": 0,
+              "body_flags": 32768
+            }
+          ]
+        }
+      ],
+      "rsqrt_estimates": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "tail": {
+        "stored_length": 1.0,
+        "blend": 0.1,
+        "velocity": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rest_lengths": [
+          1,
+          1
+        ],
+        "lower": 0.2,
+        "upper": 1.5,
+        "offsets": [
+          0,
+          0
+        ],
+        "decay_mode": false
+      },
+      "endpoint_records": [
+        {
+          "position": [
+            -0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "position": [
+            0.2,
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "provider_bank": {
+        "entries": [
+          [
+            743623600,
+            0
+          ],
+          [
+            1959467492,
+            1
+          ],
+          [
+            2943539481,
+            2
+          ]
+        ],
+        "records": [
+          {
+            "position": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              -0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "position": [
+              0.2,
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "parent_position": null,
+        "parent_rotation": null,
+        "direct": true
+      }
+    }
+  ]
+}

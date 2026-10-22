@@ -4,11 +4,22 @@
 *.a
 *.log
 snow_host.json
-# Explicitly publish these independently authored sources. The game adapter
-# with build-specific addresses stays in the private research workspace.
+# Independently authored source is publishable, including build-specific adapters.
+# Keep compiled artifacts, logs and local configuration excluded.
 !snow_host.c
 !snow_adapter.h
 !fixture_adapter.c
 !host_loader.c
 !snow_plugins.c
 !examples/step_logger.c
+!startup_launcher.c
+
+!snow_update_trace.c
+
+!snow_update_snapshot.c
+
+!snow_update_probe.c
+
+!*.c
+!*.h
+!examples/*.c

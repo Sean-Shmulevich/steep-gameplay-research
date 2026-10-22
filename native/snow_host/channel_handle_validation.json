@@ -1,0 +1,8852 @@
+{
+  "evidence": "original_instruction_emulation",
+  "inputs": "synthetic",
+  "game_process": false,
+  "cases": 256,
+  "scope": "Complete resolver with original TLS getter and channel lookup; no intercepted calls. Published pointer/mask normalized to logical bit for address-free replay. No concurrent access, control-record binding or retention proof.",
+  "rows": [
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 1463270851,
+        "thread_mask": 0,
+        "cached_index": 46374,
+        "cached_generation": 34328,
+        "component_generation": 34328,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 46374,
+        "cached_generation": 34328,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2910396329,
+        "thread_mask": 0,
+        "cached_index": 46982,
+        "cached_generation": 7973,
+        "component_generation": 7972,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 7972,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 436704826,
+        "thread_mask": 1,
+        "cached_index": 24169,
+        "cached_generation": 3722,
+        "component_generation": 3721,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 3721,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2567268487,
+        "thread_mask": 1,
+        "cached_index": 61703,
+        "cached_generation": 64631,
+        "component_generation": 64631,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 61703,
+        "cached_generation": 64631,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1428560950,
+        "thread_mask": 1,
+        "cached_index": 43926,
+        "cached_generation": 60455,
+        "component_generation": 60454,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 60454,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2640650439,
+        "thread_mask": 1,
+        "cached_index": 43979,
+        "cached_generation": 36662,
+        "component_generation": 36661,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 36661,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1301596044,
+        "thread_mask": 1,
+        "cached_index": 37906,
+        "cached_generation": 35480,
+        "component_generation": 35480,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 37906,
+        "cached_generation": 35480,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3875522229,
+        "thread_mask": 1,
+        "cached_index": 45130,
+        "cached_generation": 17465,
+        "component_generation": 17464,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 17464,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1628300522,
+        "thread_mask": 0,
+        "cached_index": 56079,
+        "cached_generation": 57271,
+        "component_generation": 57270,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 56079,
+        "cached_generation": 57271,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2332748997,
+        "thread_mask": 0,
+        "cached_index": 43951,
+        "cached_generation": 783,
+        "component_generation": 783,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 43951,
+        "cached_generation": 783,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 523305506,
+        "thread_mask": 1,
+        "cached_index": 21251,
+        "cached_generation": 184,
+        "component_generation": 183,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 183,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 2710441415,
+        "thread_mask": 1,
+        "cached_index": 33485,
+        "cached_generation": 40025,
+        "component_generation": 40024,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 33485,
+        "cached_generation": 40025,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1776198025,
+        "thread_mask": 1,
+        "cached_index": 52471,
+        "cached_generation": 56967,
+        "component_generation": 56967,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 52471,
+        "cached_generation": 56967,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2839688627,
+        "thread_mask": 1,
+        "cached_index": 43894,
+        "cached_generation": 59037,
+        "component_generation": 59036,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 59036,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 50270500,
+        "thread_mask": 1,
+        "cached_index": 44018,
+        "cached_generation": 61035,
+        "component_generation": 61034,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 61034,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3237025698,
+        "thread_mask": 1,
+        "cached_index": 58417,
+        "cached_generation": 9277,
+        "component_generation": 9277,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 58417,
+        "cached_generation": 9277,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 125688613,
+        "thread_mask": 0,
+        "cached_index": 619,
+        "cached_generation": 24434,
+        "component_generation": 24433,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 619,
+        "cached_generation": 24434,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3889333147,
+        "thread_mask": 0,
+        "cached_index": 40434,
+        "cached_generation": 38568,
+        "component_generation": 38567,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 38567,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 96230376,
+        "thread_mask": 1,
+        "cached_index": 51723,
+        "cached_generation": 1013,
+        "component_generation": 1013,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 51723,
+        "cached_generation": 1013,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2785108241,
+        "thread_mask": 1,
+        "cached_index": 46638,
+        "cached_generation": 57221,
+        "component_generation": 57220,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 57220,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1282640111,
+        "thread_mask": 1,
+        "cached_index": 2435,
+        "cached_generation": 62658,
+        "component_generation": 62657,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 62657,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4250660153,
+        "thread_mask": 1,
+        "cached_index": 18643,
+        "cached_generation": 57386,
+        "component_generation": 57386,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 18643,
+        "cached_generation": 57386,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 156721433,
+        "thread_mask": 1,
+        "cached_index": 28128,
+        "cached_generation": 37830,
+        "component_generation": 37829,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 28128,
+        "cached_generation": 37830,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3210980720,
+        "thread_mask": 1,
+        "cached_index": 61754,
+        "cached_generation": 3197,
+        "component_generation": 3196,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 3196,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1808543744,
+        "thread_mask": 0,
+        "cached_index": 23497,
+        "cached_generation": 26830,
+        "component_generation": 26830,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 23497,
+        "cached_generation": 26830,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3252069008,
+        "thread_mask": 0,
+        "cached_index": 38970,
+        "cached_generation": 1132,
+        "component_generation": 1131,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 1131,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1257504209,
+        "thread_mask": 1,
+        "cached_index": 4636,
+        "cached_generation": 6831,
+        "component_generation": 6830,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 6830,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4233284975,
+        "thread_mask": 1,
+        "cached_index": 60655,
+        "cached_generation": 30559,
+        "component_generation": 30559,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 60655,
+        "cached_generation": 30559,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1151463383,
+        "thread_mask": 1,
+        "cached_index": 22829,
+        "cached_generation": 2250,
+        "component_generation": 2249,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 2249,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2813029901,
+        "thread_mask": 1,
+        "cached_index": 32778,
+        "cached_generation": 56040,
+        "component_generation": 56039,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 56039,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 472503455,
+        "thread_mask": 1,
+        "cached_index": 9044,
+        "cached_generation": 36485,
+        "component_generation": 36485,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 9044,
+        "cached_generation": 36485,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3175766084,
+        "thread_mask": 1,
+        "cached_index": 44702,
+        "cached_generation": 37691,
+        "component_generation": 37690,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 37690,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 366068549,
+        "thread_mask": 0,
+        "cached_index": 40418,
+        "cached_generation": 61031,
+        "component_generation": 61030,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 40418,
+        "cached_generation": 61031,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3587674138,
+        "thread_mask": 0,
+        "cached_index": 55084,
+        "cached_generation": 39045,
+        "component_generation": 39045,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 55084,
+        "cached_generation": 39045,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 71378652,
+        "thread_mask": 1,
+        "cached_index": 64365,
+        "cached_generation": 57357,
+        "component_generation": 57356,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 57356,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2709686571,
+        "thread_mask": 1,
+        "cached_index": 45261,
+        "cached_generation": 42911,
+        "component_generation": 42910,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 42910,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 405098709,
+        "thread_mask": 1,
+        "cached_index": 26366,
+        "cached_generation": 56221,
+        "component_generation": 56221,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 26366,
+        "cached_generation": 56221,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3255517696,
+        "thread_mask": 1,
+        "cached_index": 38061,
+        "cached_generation": 45260,
+        "component_generation": 45259,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 45259,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1980041584,
+        "thread_mask": 1,
+        "cached_index": 12675,
+        "cached_generation": 19167,
+        "component_generation": 19166,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 19166,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3348616643,
+        "thread_mask": 1,
+        "cached_index": 22685,
+        "cached_generation": 32800,
+        "component_generation": 32800,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 22685,
+        "cached_generation": 32800,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 234631439,
+        "thread_mask": 0,
+        "cached_index": 19357,
+        "cached_generation": 36608,
+        "component_generation": 36607,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 19357,
+        "cached_generation": 36608,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2215647081,
+        "thread_mask": 0,
+        "cached_index": 34681,
+        "cached_generation": 50032,
+        "component_generation": 50031,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 50031,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1564873858,
+        "thread_mask": 1,
+        "cached_index": 43914,
+        "cached_generation": 54537,
+        "component_generation": 54537,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 43914,
+        "cached_generation": 54537,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3059339780,
+        "thread_mask": 1,
+        "cached_index": 7625,
+        "cached_generation": 13506,
+        "component_generation": 13505,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 13505,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 793238499,
+        "thread_mask": 1,
+        "cached_index": 52240,
+        "cached_generation": 59169,
+        "component_generation": 59168,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 52240,
+        "cached_generation": 59169,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2396490797,
+        "thread_mask": 1,
+        "cached_index": 60215,
+        "cached_generation": 40797,
+        "component_generation": 40797,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 60215,
+        "cached_generation": 40797,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 850644548,
+        "thread_mask": 1,
+        "cached_index": 43699,
+        "cached_generation": 2854,
+        "component_generation": 2853,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 2853,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3697578360,
+        "thread_mask": 1,
+        "cached_index": 6203,
+        "cached_generation": 2779,
+        "component_generation": 2778,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 2778,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 384572770,
+        "thread_mask": 0,
+        "cached_index": 967,
+        "cached_generation": 39574,
+        "component_generation": 39574,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 967,
+        "cached_generation": 39574,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3022415735,
+        "thread_mask": 0,
+        "cached_index": 9512,
+        "cached_generation": 34150,
+        "component_generation": 34149,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 34149,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 457658525,
+        "thread_mask": 1,
+        "cached_index": 33580,
+        "cached_generation": 31525,
+        "component_generation": 31524,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 31524,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4158443360,
+        "thread_mask": 1,
+        "cached_index": 26674,
+        "cached_generation": 44327,
+        "component_generation": 44327,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 26674,
+        "cached_generation": 44327,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2128937768,
+        "thread_mask": 1,
+        "cached_index": 60465,
+        "cached_generation": 44948,
+        "component_generation": 44947,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 44947,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2158160230,
+        "thread_mask": 1,
+        "cached_index": 2009,
+        "cached_generation": 46873,
+        "component_generation": 46872,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 46872,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1530264443,
+        "thread_mask": 1,
+        "cached_index": 59588,
+        "cached_generation": 65359,
+        "component_generation": 65359,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 59588,
+        "cached_generation": 65359,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3070827567,
+        "thread_mask": 1,
+        "cached_index": 11279,
+        "cached_generation": 51329,
+        "component_generation": 51328,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 11279,
+        "cached_generation": 51329,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1779294683,
+        "thread_mask": 0,
+        "cached_index": 50952,
+        "cached_generation": 37985,
+        "component_generation": 37984,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 50952,
+        "cached_generation": 37985,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4272438282,
+        "thread_mask": 0,
+        "cached_index": 40275,
+        "cached_generation": 46768,
+        "component_generation": 46768,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 40275,
+        "cached_generation": 46768,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1441983641,
+        "thread_mask": 1,
+        "cached_index": 43509,
+        "cached_generation": 34809,
+        "component_generation": 34808,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 34808,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3006328580,
+        "thread_mask": 1,
+        "cached_index": 27716,
+        "cached_generation": 29048,
+        "component_generation": 29047,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 29047,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 744237949,
+        "thread_mask": 1,
+        "cached_index": 52269,
+        "cached_generation": 44375,
+        "component_generation": 44375,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 52269,
+        "cached_generation": 44375,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2658237935,
+        "thread_mask": 1,
+        "cached_index": 61962,
+        "cached_generation": 51899,
+        "component_generation": 51898,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 51898,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 846194120,
+        "thread_mask": 1,
+        "cached_index": 19734,
+        "cached_generation": 18131,
+        "component_generation": 18130,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 18130,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2940542486,
+        "thread_mask": 1,
+        "cached_index": 57547,
+        "cached_generation": 50371,
+        "component_generation": 50371,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 57547,
+        "cached_generation": 50371,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2066671453,
+        "thread_mask": 0,
+        "cached_index": 50345,
+        "cached_generation": 48553,
+        "component_generation": 48552,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 50345,
+        "cached_generation": 48553,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3773705931,
+        "thread_mask": 0,
+        "cached_index": 37249,
+        "cached_generation": 19408,
+        "component_generation": 19407,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 19407,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 612972624,
+        "thread_mask": 1,
+        "cached_index": 19922,
+        "cached_generation": 31707,
+        "component_generation": 31707,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 19922,
+        "cached_generation": 31707,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2440916074,
+        "thread_mask": 1,
+        "cached_index": 46288,
+        "cached_generation": 62519,
+        "component_generation": 62518,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 62518,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 234287911,
+        "thread_mask": 1,
+        "cached_index": 42200,
+        "cached_generation": 28890,
+        "component_generation": 28889,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 28889,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3757105660,
+        "thread_mask": 1,
+        "cached_index": 8946,
+        "cached_generation": 29439,
+        "component_generation": 29439,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 8946,
+        "cached_generation": 29439,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 388934120,
+        "thread_mask": 1,
+        "cached_index": 3842,
+        "cached_generation": 17300,
+        "component_generation": 17299,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 17299,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2220697178,
+        "thread_mask": 1,
+        "cached_index": 29478,
+        "cached_generation": 13607,
+        "component_generation": 13606,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 13606,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2039849699,
+        "thread_mask": 0,
+        "cached_index": 6264,
+        "cached_generation": 62924,
+        "component_generation": 62924,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 6264,
+        "cached_generation": 62924,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3947665509,
+        "thread_mask": 0,
+        "cached_index": 62745,
+        "cached_generation": 54561,
+        "component_generation": 54560,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 54560,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 68634511,
+        "thread_mask": 1,
+        "cached_index": 46842,
+        "cached_generation": 48565,
+        "component_generation": 48564,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 48564,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2614099492,
+        "thread_mask": 1,
+        "cached_index": 213,
+        "cached_generation": 28079,
+        "component_generation": 28079,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 213,
+        "cached_generation": 28079,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1669878101,
+        "thread_mask": 1,
+        "cached_index": 55518,
+        "cached_generation": 56811,
+        "component_generation": 56810,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 56810,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 2447182807,
+        "thread_mask": 1,
+        "cached_index": 18218,
+        "cached_generation": 25513,
+        "component_generation": 25512,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 18218,
+        "cached_generation": 25513,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1391185144,
+        "thread_mask": 1,
+        "cached_index": 28883,
+        "cached_generation": 65092,
+        "component_generation": 65092,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 28883,
+        "cached_generation": 65092,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3057617785,
+        "thread_mask": 1,
+        "cached_index": 53207,
+        "cached_generation": 52298,
+        "component_generation": 52297,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 52297,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2030472728,
+        "thread_mask": 0,
+        "cached_index": 56051,
+        "cached_generation": 56449,
+        "component_generation": 56448,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 56051,
+        "cached_generation": 56449,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3320827628,
+        "thread_mask": 0,
+        "cached_index": 12962,
+        "cached_generation": 12339,
+        "component_generation": 12339,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 12962,
+        "cached_generation": 12339,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1812704961,
+        "thread_mask": 1,
+        "cached_index": 40157,
+        "cached_generation": 53085,
+        "component_generation": 53084,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 53084,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3978076274,
+        "thread_mask": 1,
+        "cached_index": 2675,
+        "cached_generation": 22608,
+        "component_generation": 22607,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 22607,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1485704980,
+        "thread_mask": 1,
+        "cached_index": 43251,
+        "cached_generation": 38740,
+        "component_generation": 38740,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 43251,
+        "cached_generation": 38740,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3725869796,
+        "thread_mask": 1,
+        "cached_index": 18742,
+        "cached_generation": 42384,
+        "component_generation": 42383,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 42383,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2108135917,
+        "thread_mask": 1,
+        "cached_index": 9366,
+        "cached_generation": 30849,
+        "component_generation": 30848,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 30848,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2475680361,
+        "thread_mask": 1,
+        "cached_index": 3345,
+        "cached_generation": 14421,
+        "component_generation": 14421,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 3345,
+        "cached_generation": 14421,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 319018570,
+        "thread_mask": 0,
+        "cached_index": 5485,
+        "cached_generation": 57504,
+        "component_generation": 57503,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 5485,
+        "cached_generation": 57504,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3361387278,
+        "thread_mask": 0,
+        "cached_index": 63156,
+        "cached_generation": 36307,
+        "component_generation": 36306,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 36306,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1738899903,
+        "thread_mask": 1,
+        "cached_index": 50688,
+        "cached_generation": 42082,
+        "component_generation": 42082,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 50688,
+        "cached_generation": 42082,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3132088179,
+        "thread_mask": 1,
+        "cached_index": 13040,
+        "cached_generation": 54036,
+        "component_generation": 54035,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 54035,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 230942428,
+        "thread_mask": 1,
+        "cached_index": 32197,
+        "cached_generation": 17481,
+        "component_generation": 17480,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 17480,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2275489849,
+        "thread_mask": 1,
+        "cached_index": 65475,
+        "cached_generation": 61750,
+        "component_generation": 61750,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65475,
+        "cached_generation": 61750,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 455859165,
+        "thread_mask": 1,
+        "cached_index": 36826,
+        "cached_generation": 45352,
+        "component_generation": 45351,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 45351,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4134449207,
+        "thread_mask": 1,
+        "cached_index": 25573,
+        "cached_generation": 14973,
+        "component_generation": 14972,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 14972,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2090177049,
+        "thread_mask": 0,
+        "cached_index": 17455,
+        "cached_generation": 55165,
+        "component_generation": 55165,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 17455,
+        "cached_generation": 55165,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2616047881,
+        "thread_mask": 0,
+        "cached_index": 61849,
+        "cached_generation": 48444,
+        "component_generation": 48443,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 48443,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 325914557,
+        "thread_mask": 1,
+        "cached_index": 24261,
+        "cached_generation": 63344,
+        "component_generation": 63343,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 63343,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3177750923,
+        "thread_mask": 1,
+        "cached_index": 2917,
+        "cached_generation": 50013,
+        "component_generation": 50013,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 2917,
+        "cached_generation": 50013,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1156359936,
+        "thread_mask": 1,
+        "cached_index": 52078,
+        "cached_generation": 64591,
+        "component_generation": 64590,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 64590,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3681478084,
+        "thread_mask": 1,
+        "cached_index": 42698,
+        "cached_generation": 9067,
+        "component_generation": 9066,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 9066,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1220990968,
+        "thread_mask": 1,
+        "cached_index": 40378,
+        "cached_generation": 60625,
+        "component_generation": 60625,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 40378,
+        "cached_generation": 60625,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3276556189,
+        "thread_mask": 1,
+        "cached_index": 33700,
+        "cached_generation": 25731,
+        "component_generation": 25730,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 25730,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1669288471,
+        "thread_mask": 0,
+        "cached_index": 40763,
+        "cached_generation": 61612,
+        "component_generation": 61611,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 40763,
+        "cached_generation": 61612,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2613055001,
+        "thread_mask": 0,
+        "cached_index": 34718,
+        "cached_generation": 36255,
+        "component_generation": 36255,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 34718,
+        "cached_generation": 36255,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 765533931,
+        "thread_mask": 1,
+        "cached_index": 26905,
+        "cached_generation": 35083,
+        "component_generation": 35082,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 35082,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3231406540,
+        "thread_mask": 1,
+        "cached_index": 36643,
+        "cached_generation": 37151,
+        "component_generation": 37150,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 37150,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 636242567,
+        "thread_mask": 1,
+        "cached_index": 21934,
+        "cached_generation": 29358,
+        "component_generation": 29358,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 21934,
+        "cached_generation": 29358,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3499771523,
+        "thread_mask": 1,
+        "cached_index": 48147,
+        "cached_generation": 17044,
+        "component_generation": 17043,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 17043,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 1526561586,
+        "thread_mask": 1,
+        "cached_index": 51118,
+        "cached_generation": 9357,
+        "component_generation": 9356,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 51118,
+        "cached_generation": 9357,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4054358047,
+        "thread_mask": 1,
+        "cached_index": 59577,
+        "cached_generation": 15651,
+        "component_generation": 15651,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 59577,
+        "cached_generation": 15651,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1346671267,
+        "thread_mask": 0,
+        "cached_index": 15351,
+        "cached_generation": 19759,
+        "component_generation": 19758,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 15351,
+        "cached_generation": 19759,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2403764505,
+        "thread_mask": 0,
+        "cached_index": 12729,
+        "cached_generation": 32390,
+        "component_generation": 32389,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 32389,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 424795251,
+        "thread_mask": 1,
+        "cached_index": 12769,
+        "cached_generation": 46938,
+        "component_generation": 46938,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 12769,
+        "cached_generation": 46938,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3107295129,
+        "thread_mask": 1,
+        "cached_index": 26454,
+        "cached_generation": 17113,
+        "component_generation": 17112,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 17112,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 854203200,
+        "thread_mask": 1,
+        "cached_index": 28638,
+        "cached_generation": 50768,
+        "component_generation": 50767,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 50767,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3728948561,
+        "thread_mask": 1,
+        "cached_index": 24454,
+        "cached_generation": 41921,
+        "component_generation": 41921,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 24454,
+        "cached_generation": 41921,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1549955827,
+        "thread_mask": 1,
+        "cached_index": 26747,
+        "cached_generation": 40208,
+        "component_generation": 40207,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 40207,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3928374214,
+        "thread_mask": 1,
+        "cached_index": 3870,
+        "cached_generation": 6027,
+        "component_generation": 6026,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 6026,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1592870895,
+        "thread_mask": 0,
+        "cached_index": 65017,
+        "cached_generation": 31737,
+        "component_generation": 31737,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 65017,
+        "cached_generation": 31737,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3586417922,
+        "thread_mask": 0,
+        "cached_index": 57412,
+        "cached_generation": 38242,
+        "component_generation": 38241,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 57412,
+        "cached_generation": 38242,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1157076101,
+        "thread_mask": 1,
+        "cached_index": 45539,
+        "cached_generation": 46267,
+        "component_generation": 46266,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 46266,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3851894401,
+        "thread_mask": 1,
+        "cached_index": 50766,
+        "cached_generation": 23546,
+        "component_generation": 23546,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 50766,
+        "cached_generation": 23546,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 493441633,
+        "thread_mask": 1,
+        "cached_index": 622,
+        "cached_generation": 29455,
+        "component_generation": 29454,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 29454,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3670917988,
+        "thread_mask": 1,
+        "cached_index": 10943,
+        "cached_generation": 29864,
+        "component_generation": 29863,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 29863,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2124083976,
+        "thread_mask": 1,
+        "cached_index": 23832,
+        "cached_generation": 55658,
+        "component_generation": 55658,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 23832,
+        "cached_generation": 55658,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3123360266,
+        "thread_mask": 1,
+        "cached_index": 18409,
+        "cached_generation": 56154,
+        "component_generation": 56153,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 56153,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 841332687,
+        "thread_mask": 0,
+        "cached_index": 4955,
+        "cached_generation": 59220,
+        "component_generation": 59219,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 4955,
+        "cached_generation": 59220,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3864366669,
+        "thread_mask": 0,
+        "cached_index": 49043,
+        "cached_generation": 8725,
+        "component_generation": 8725,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 49043,
+        "cached_generation": 8725,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1110177166,
+        "thread_mask": 1,
+        "cached_index": 53284,
+        "cached_generation": 31862,
+        "component_generation": 31861,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 31861,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2539518880,
+        "thread_mask": 1,
+        "cached_index": 63957,
+        "cached_generation": 25299,
+        "component_generation": 25298,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 25298,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 428218233,
+        "thread_mask": 1,
+        "cached_index": 63187,
+        "cached_generation": 32254,
+        "component_generation": 32254,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 63187,
+        "cached_generation": 32254,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3283929382,
+        "thread_mask": 1,
+        "cached_index": 39849,
+        "cached_generation": 40080,
+        "component_generation": 40079,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 40079,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1827496067,
+        "thread_mask": 1,
+        "cached_index": 37004,
+        "cached_generation": 13436,
+        "component_generation": 13435,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 13435,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4143852441,
+        "thread_mask": 1,
+        "cached_index": 57594,
+        "cached_generation": 41976,
+        "component_generation": 41976,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 57594,
+        "cached_generation": 41976,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1712051195,
+        "thread_mask": 0,
+        "cached_index": 24669,
+        "cached_generation": 64199,
+        "component_generation": 64198,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 24669,
+        "cached_generation": 64199,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3694768975,
+        "thread_mask": 0,
+        "cached_index": 44974,
+        "cached_generation": 61382,
+        "component_generation": 61381,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 61381,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 113207980,
+        "thread_mask": 1,
+        "cached_index": 65445,
+        "cached_generation": 62927,
+        "component_generation": 62927,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65445,
+        "cached_generation": 62927,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4090283490,
+        "thread_mask": 1,
+        "cached_index": 55482,
+        "cached_generation": 39641,
+        "component_generation": 39640,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 39640,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1023420010,
+        "thread_mask": 1,
+        "cached_index": 4923,
+        "cached_generation": 22336,
+        "component_generation": 22335,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 22335,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4035409132,
+        "thread_mask": 1,
+        "cached_index": 37404,
+        "cached_generation": 891,
+        "component_generation": 891,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 37404,
+        "cached_generation": 891,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1515873689,
+        "thread_mask": 1,
+        "cached_index": 50272,
+        "cached_generation": 11857,
+        "component_generation": 11856,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 11856,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3403457465,
+        "thread_mask": 1,
+        "cached_index": 13880,
+        "cached_generation": 2567,
+        "component_generation": 2566,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 13880,
+        "cached_generation": 2567,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1531735231,
+        "thread_mask": 0,
+        "cached_index": 2461,
+        "cached_generation": 3361,
+        "component_generation": 3361,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 2461,
+        "cached_generation": 3361,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2171164092,
+        "thread_mask": 0,
+        "cached_index": 58333,
+        "cached_generation": 49721,
+        "component_generation": 49720,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 49720,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1224317603,
+        "thread_mask": 1,
+        "cached_index": 49666,
+        "cached_generation": 7042,
+        "component_generation": 7041,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 7041,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3431097865,
+        "thread_mask": 1,
+        "cached_index": 917,
+        "cached_generation": 61973,
+        "component_generation": 61973,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 917,
+        "cached_generation": 61973,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1813997139,
+        "thread_mask": 1,
+        "cached_index": 48603,
+        "cached_generation": 4026,
+        "component_generation": 4025,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 4025,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3035540642,
+        "thread_mask": 1,
+        "cached_index": 51936,
+        "cached_generation": 29517,
+        "component_generation": 29516,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 29516,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1956057642,
+        "thread_mask": 1,
+        "cached_index": 50425,
+        "cached_generation": 26182,
+        "component_generation": 26182,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 50425,
+        "cached_generation": 26182,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2947951194,
+        "thread_mask": 1,
+        "cached_index": 63169,
+        "cached_generation": 60175,
+        "component_generation": 60174,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 60174,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 470507675,
+        "thread_mask": 0,
+        "cached_index": 19172,
+        "cached_generation": 63447,
+        "component_generation": 63446,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 19172,
+        "cached_generation": 63447,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2716279995,
+        "thread_mask": 0,
+        "cached_index": 12747,
+        "cached_generation": 33870,
+        "component_generation": 33870,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 12747,
+        "cached_generation": 33870,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 1152863061,
+        "thread_mask": 1,
+        "cached_index": 8683,
+        "cached_generation": 40938,
+        "component_generation": 40937,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 8683,
+        "cached_generation": 40938,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3309255666,
+        "thread_mask": 1,
+        "cached_index": 11237,
+        "cached_generation": 50880,
+        "component_generation": 50879,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 50879,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 417311290,
+        "thread_mask": 1,
+        "cached_index": 60283,
+        "cached_generation": 42529,
+        "component_generation": 42529,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 60283,
+        "cached_generation": 42529,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2931588455,
+        "thread_mask": 1,
+        "cached_index": 50039,
+        "cached_generation": 7091,
+        "component_generation": 7090,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 7090,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 225694161,
+        "thread_mask": 1,
+        "cached_index": 39704,
+        "cached_generation": 13399,
+        "component_generation": 13398,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 13398,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3052454916,
+        "thread_mask": 1,
+        "cached_index": 11684,
+        "cached_generation": 57983,
+        "component_generation": 57983,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 11684,
+        "cached_generation": 57983,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 787120639,
+        "thread_mask": 0,
+        "cached_index": 3962,
+        "cached_generation": 39642,
+        "component_generation": 39641,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 3962,
+        "cached_generation": 39642,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3376622356,
+        "thread_mask": 0,
+        "cached_index": 43171,
+        "cached_generation": 8167,
+        "component_generation": 8166,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 8166,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1529834929,
+        "thread_mask": 1,
+        "cached_index": 11613,
+        "cached_generation": 62059,
+        "component_generation": 62059,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 11613,
+        "cached_generation": 62059,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3785000147,
+        "thread_mask": 1,
+        "cached_index": 43548,
+        "cached_generation": 22319,
+        "component_generation": 22318,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 22318,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1264662540,
+        "thread_mask": 1,
+        "cached_index": 3794,
+        "cached_generation": 20555,
+        "component_generation": 20554,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 20554,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 4158889310,
+        "thread_mask": 1,
+        "cached_index": 53604,
+        "cached_generation": 54771,
+        "component_generation": 54771,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 53604,
+        "cached_generation": 54771,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1628014152,
+        "thread_mask": 1,
+        "cached_index": 28746,
+        "cached_generation": 58713,
+        "component_generation": 58712,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 58712,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3431563420,
+        "thread_mask": 1,
+        "cached_index": 11535,
+        "cached_generation": 5893,
+        "component_generation": 5892,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 5892,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1434146881,
+        "thread_mask": 0,
+        "cached_index": 13477,
+        "cached_generation": 52142,
+        "component_generation": 52142,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 13477,
+        "cached_generation": 52142,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3403889432,
+        "thread_mask": 0,
+        "cached_index": 28877,
+        "cached_generation": 5048,
+        "component_generation": 5047,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 5047,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1038380608,
+        "thread_mask": 1,
+        "cached_index": 31388,
+        "cached_generation": 8437,
+        "component_generation": 8436,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 8436,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3092232656,
+        "thread_mask": 1,
+        "cached_index": 34134,
+        "cached_generation": 32038,
+        "component_generation": 32038,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 34134,
+        "cached_generation": 32038,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 502711133,
+        "thread_mask": 1,
+        "cached_index": 33753,
+        "cached_generation": 61856,
+        "component_generation": 61855,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 61855,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2496344729,
+        "thread_mask": 1,
+        "cached_index": 1262,
+        "cached_generation": 42524,
+        "component_generation": 42523,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 42523,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 242125913,
+        "thread_mask": 1,
+        "cached_index": 38937,
+        "cached_generation": 33814,
+        "component_generation": 33814,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 38937,
+        "cached_generation": 33814,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3002695698,
+        "thread_mask": 1,
+        "cached_index": 9236,
+        "cached_generation": 35043,
+        "component_generation": 35042,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 35042,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 740754355,
+        "thread_mask": 0,
+        "cached_index": 28299,
+        "cached_generation": 36487,
+        "component_generation": 36486,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 28299,
+        "cached_generation": 36487,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2703799784,
+        "thread_mask": 0,
+        "cached_index": 29351,
+        "cached_generation": 56329,
+        "component_generation": 56329,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 29351,
+        "cached_generation": 56329,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1985308215,
+        "thread_mask": 1,
+        "cached_index": 48956,
+        "cached_generation": 13844,
+        "component_generation": 13843,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 13843,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3330020745,
+        "thread_mask": 1,
+        "cached_index": 16121,
+        "cached_generation": 56875,
+        "component_generation": 56874,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 56874,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 416288592,
+        "thread_mask": 1,
+        "cached_index": 61857,
+        "cached_generation": 10311,
+        "component_generation": 10311,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 61857,
+        "cached_generation": 10311,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2304508224,
+        "thread_mask": 1,
+        "cached_index": 26280,
+        "cached_generation": 28436,
+        "component_generation": 28435,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 28435,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 781536379,
+        "thread_mask": 1,
+        "cached_index": 48501,
+        "cached_generation": 4148,
+        "component_generation": 4147,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 4147,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3766468471,
+        "thread_mask": 1,
+        "cached_index": 33275,
+        "cached_generation": 24438,
+        "component_generation": 24438,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 33275,
+        "cached_generation": 24438,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1166994357,
+        "thread_mask": 0,
+        "cached_index": 48609,
+        "cached_generation": 29009,
+        "component_generation": 29008,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 48609,
+        "cached_generation": 29009,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3412749883,
+        "thread_mask": 0,
+        "cached_index": 50065,
+        "cached_generation": 1804,
+        "component_generation": 1803,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 1803,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 798822315,
+        "thread_mask": 1,
+        "cached_index": 15297,
+        "cached_generation": 34408,
+        "component_generation": 34408,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 15297,
+        "cached_generation": 34408,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3872974177,
+        "thread_mask": 1,
+        "cached_index": 20205,
+        "cached_generation": 22731,
+        "component_generation": 22730,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 20205,
+        "cached_generation": 22731,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 954858364,
+        "thread_mask": 1,
+        "cached_index": 59361,
+        "cached_generation": 9826,
+        "component_generation": 9825,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 9825,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3724385015,
+        "thread_mask": 1,
+        "cached_index": 26683,
+        "cached_generation": 58725,
+        "component_generation": 58725,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 26683,
+        "cached_generation": 58725,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 279135792,
+        "thread_mask": 1,
+        "cached_index": 59058,
+        "cached_generation": 14750,
+        "component_generation": 14749,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 14749,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3470505747,
+        "thread_mask": 1,
+        "cached_index": 11505,
+        "cached_generation": 64115,
+        "component_generation": 64114,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 64114,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 221832390,
+        "thread_mask": 0,
+        "cached_index": 46442,
+        "cached_generation": 63247,
+        "component_generation": 63247,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 46442,
+        "cached_generation": 63247,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2467113543,
+        "thread_mask": 0,
+        "cached_index": 10641,
+        "cached_generation": 10809,
+        "component_generation": 10808,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 10808,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1361013031,
+        "thread_mask": 1,
+        "cached_index": 58840,
+        "cached_generation": 40727,
+        "component_generation": 40726,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 40726,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3941536158,
+        "thread_mask": 1,
+        "cached_index": 37314,
+        "cached_generation": 37232,
+        "component_generation": 37232,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 37314,
+        "cached_generation": 37232,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 13829453,
+        "thread_mask": 1,
+        "cached_index": 38438,
+        "cached_generation": 37055,
+        "component_generation": 37054,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 37054,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3174383464,
+        "thread_mask": 1,
+        "cached_index": 19199,
+        "cached_generation": 25124,
+        "component_generation": 25123,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 25123,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 1623900785,
+        "thread_mask": 1,
+        "cached_index": 65254,
+        "cached_generation": 12812,
+        "component_generation": 12812,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 65254,
+        "cached_generation": 12812,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2501945245,
+        "thread_mask": 1,
+        "cached_index": 23890,
+        "cached_generation": 65503,
+        "component_generation": 65502,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 65502,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 587876038,
+        "thread_mask": 0,
+        "cached_index": 33967,
+        "cached_generation": 56475,
+        "component_generation": 56474,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 33967,
+        "cached_generation": 56475,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2181533993,
+        "thread_mask": 0,
+        "cached_index": 8780,
+        "cached_generation": 63850,
+        "component_generation": 63850,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 8780,
+        "cached_generation": 63850,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2025900761,
+        "thread_mask": 1,
+        "cached_index": 30954,
+        "cached_generation": 19849,
+        "component_generation": 19848,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 19848,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3287730350,
+        "thread_mask": 1,
+        "cached_index": 34505,
+        "cached_generation": 18480,
+        "component_generation": 18479,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 18479,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1489784755,
+        "thread_mask": 1,
+        "cached_index": 3771,
+        "cached_generation": 53964,
+        "component_generation": 53964,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 3771,
+        "cached_generation": 53964,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3731028146,
+        "thread_mask": 1,
+        "cached_index": 9369,
+        "cached_generation": 43373,
+        "component_generation": 43372,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 43372,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1575747451,
+        "thread_mask": 1,
+        "cached_index": 61608,
+        "cached_generation": 23430,
+        "component_generation": 23429,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 23429,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3249203407,
+        "thread_mask": 1,
+        "cached_index": 4781,
+        "cached_generation": 8103,
+        "component_generation": 8103,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 4781,
+        "cached_generation": 8103,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 140491455,
+        "thread_mask": 0,
+        "cached_index": 7314,
+        "cached_generation": 35945,
+        "component_generation": 35944,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 7314,
+        "cached_generation": 35945,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 2984149315,
+        "thread_mask": 0,
+        "cached_index": 23526,
+        "cached_generation": 25287,
+        "component_generation": 25286,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 23526,
+        "cached_generation": 25287,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 452140842,
+        "thread_mask": 1,
+        "cached_index": 45720,
+        "cached_generation": 47333,
+        "component_generation": 47333,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 45720,
+        "cached_generation": 47333,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3023086218,
+        "thread_mask": 1,
+        "cached_index": 3527,
+        "cached_generation": 6933,
+        "component_generation": 6932,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 6932,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 713090522,
+        "thread_mask": 1,
+        "cached_index": 38252,
+        "cached_generation": 63453,
+        "component_generation": 63452,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 63452,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4096028799,
+        "thread_mask": 1,
+        "cached_index": 58871,
+        "cached_generation": 4286,
+        "component_generation": 4286,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 58871,
+        "cached_generation": 4286,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1937743549,
+        "thread_mask": 1,
+        "cached_index": 35690,
+        "cached_generation": 47903,
+        "component_generation": 47902,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 47902,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3098572081,
+        "thread_mask": 1,
+        "cached_index": 864,
+        "cached_generation": 16776,
+        "component_generation": 16775,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 16775,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 79577196,
+        "thread_mask": 0,
+        "cached_index": 3812,
+        "cached_generation": 10709,
+        "component_generation": 10709,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 3812,
+        "cached_generation": 10709,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2901663181,
+        "thread_mask": 0,
+        "cached_index": 6074,
+        "cached_generation": 33489,
+        "component_generation": 33488,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 33488,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2097313466,
+        "thread_mask": 1,
+        "cached_index": 12164,
+        "cached_generation": 1516,
+        "component_generation": 1515,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 1515,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2968432679,
+        "thread_mask": 1,
+        "cached_index": 26467,
+        "cached_generation": 41940,
+        "component_generation": 41940,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 26467,
+        "cached_generation": 41940,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 74529286,
+        "thread_mask": 1,
+        "cached_index": 20804,
+        "cached_generation": 49668,
+        "component_generation": 49667,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 20804,
+        "cached_generation": 49668,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3580592176,
+        "thread_mask": 1,
+        "cached_index": 47710,
+        "cached_generation": 34611,
+        "component_generation": 34610,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 34610,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1999972604,
+        "thread_mask": 1,
+        "cached_index": 28738,
+        "cached_generation": 22605,
+        "component_generation": 22605,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 28738,
+        "cached_generation": 22605,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3032281320,
+        "thread_mask": 1,
+        "cached_index": 10431,
+        "cached_generation": 12130,
+        "component_generation": 12129,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 12129,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1024043188,
+        "thread_mask": 0,
+        "cached_index": 7091,
+        "cached_generation": 64224,
+        "component_generation": 64223,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 7091,
+        "cached_generation": 64224,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2754087339,
+        "thread_mask": 0,
+        "cached_index": 48136,
+        "cached_generation": 63695,
+        "component_generation": 63695,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 48136,
+        "cached_generation": 63695,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1156617074,
+        "thread_mask": 1,
+        "cached_index": 17455,
+        "cached_generation": 38357,
+        "component_generation": 38356,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 38356,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3730058473,
+        "thread_mask": 1,
+        "cached_index": 42079,
+        "cached_generation": 9460,
+        "component_generation": 9459,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 9459,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1616358987,
+        "thread_mask": 1,
+        "cached_index": 36431,
+        "cached_generation": 579,
+        "component_generation": 579,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 36431,
+        "cached_generation": 579,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3338062926,
+        "thread_mask": 1,
+        "cached_index": 59575,
+        "cached_generation": 64631,
+        "component_generation": 64630,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 64630,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1558978465,
+        "thread_mask": 1,
+        "cached_index": 48486,
+        "cached_generation": 36710,
+        "component_generation": 36709,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 36709,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3315745320,
+        "thread_mask": 1,
+        "cached_index": 23968,
+        "cached_generation": 21291,
+        "component_generation": 21291,
+        "entries": null,
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 23968,
+        "cached_generation": 21291,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 16135886,
+        "thread_mask": 0,
+        "cached_index": 15015,
+        "cached_generation": 33300,
+        "component_generation": 33299,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 15015,
+        "cached_generation": 33300,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2740248592,
+        "thread_mask": 0,
+        "cached_index": 24272,
+        "cached_generation": 62305,
+        "component_generation": 62304,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 62304,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1697319922,
+        "thread_mask": 1,
+        "cached_index": 33492,
+        "cached_generation": 57187,
+        "component_generation": 57187,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 33492,
+        "cached_generation": 57187,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4222775509,
+        "thread_mask": 1,
+        "cached_index": 25312,
+        "cached_generation": 26644,
+        "component_generation": 26643,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 26643,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1741191316,
+        "thread_mask": 1,
+        "cached_index": 48848,
+        "cached_generation": 60720,
+        "component_generation": 60719,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 60719,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3799644543,
+        "thread_mask": 1,
+        "cached_index": 38979,
+        "cached_generation": 24414,
+        "component_generation": 24414,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 38979,
+        "cached_generation": 24414,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 287471766,
+        "thread_mask": 1,
+        "cached_index": 11830,
+        "cached_generation": 810,
+        "component_generation": 809,
+        "entries": null,
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 809,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2510485059,
+        "thread_mask": 1,
+        "cached_index": 38976,
+        "cached_generation": 9401,
+        "component_generation": 9400,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 9400,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 998277021,
+        "thread_mask": 0,
+        "cached_index": 12184,
+        "cached_generation": 39701,
+        "component_generation": 39701,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 12184,
+        "cached_generation": 39701,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4121767125,
+        "thread_mask": 0,
+        "cached_index": 3065,
+        "cached_generation": 63379,
+        "component_generation": 63378,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 2,
+        "cached_generation": 63378,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 287442543,
+        "thread_mask": 1,
+        "cached_index": 47034,
+        "cached_generation": 30832,
+        "component_generation": 30831,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 47034,
+        "cached_generation": 30832,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 3902882358,
+        "thread_mask": 1,
+        "cached_index": 35026,
+        "cached_generation": 50742,
+        "component_generation": 50742,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 35026,
+        "cached_generation": 50742,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1460787784,
+        "thread_mask": 1,
+        "cached_index": 26267,
+        "cached_generation": 51079,
+        "component_generation": 51078,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 1,
+        "cached_generation": 51078,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2464806846,
+        "thread_mask": 1,
+        "cached_index": 50273,
+        "cached_generation": 52871,
+        "component_generation": 52870,
+        "entries": null,
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 52870,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1000983982,
+        "thread_mask": 1,
+        "cached_index": 17970,
+        "cached_generation": 43679,
+        "component_generation": 43679,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 17970,
+        "cached_generation": 43679,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2799586604,
+        "thread_mask": 1,
+        "cached_index": 5646,
+        "cached_generation": 59987,
+        "component_generation": 59986,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 59986,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 353123354,
+        "thread_mask": 0,
+        "cached_index": 60569,
+        "cached_generation": 21567,
+        "component_generation": 21566,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 10
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 60569,
+        "cached_generation": 21567,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 2569074826,
+        "thread_mask": 0,
+        "cached_index": 50920,
+        "cached_generation": 62532,
+        "component_generation": 62532,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 50920,
+        "cached_generation": 62532,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1432054800,
+        "thread_mask": 1,
+        "cached_index": 60251,
+        "cached_generation": 39510,
+        "component_generation": 39509,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 39509,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4009377680,
+        "thread_mask": 1,
+        "cached_index": 7805,
+        "cached_generation": 44931,
+        "component_generation": 44930,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 44930,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 1341634783,
+        "thread_mask": 1,
+        "cached_index": 55053,
+        "cached_generation": 22169,
+        "component_generation": 22169,
+        "entries": null,
+        "key": 10
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 55053,
+        "cached_generation": 22169,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 0,
+        "status_word": 3837267119,
+        "thread_mask": 1,
+        "cached_index": 23156,
+        "cached_generation": 23501,
+        "component_generation": 23500,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 20
+      },
+      "result": {
+        "pointer": 0,
+        "cached_index": 23156,
+        "cached_generation": 23501,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 995827963,
+        "thread_mask": 1,
+        "cached_index": 60065,
+        "cached_generation": 45432,
+        "component_generation": 45431,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 30
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 65535,
+        "cached_generation": 45431,
+        "refreshed": true,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    },
+    {
+      "inputs": {
+        "raw_pointer": 1,
+        "status_word": 4267013990,
+        "thread_mask": 1,
+        "cached_index": 26490,
+        "cached_generation": 54457,
+        "component_generation": 54457,
+        "entries": [
+          [
+            10,
+            2882338817
+          ],
+          [
+            20,
+            2
+          ],
+          [
+            20,
+            3
+          ],
+          [
+            4294967295,
+            65535
+          ]
+        ],
+        "key": 4294967295
+      },
+      "result": {
+        "pointer": 1,
+        "cached_index": 26490,
+        "cached_generation": 54457,
+        "refreshed": false,
+        "lifetime_retained": false
+      },
+      "control_record_unchanged": true
+    }
+  ]
+}

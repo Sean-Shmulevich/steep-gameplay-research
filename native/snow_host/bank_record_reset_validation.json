@@ -1,0 +1,467 @@
+{
+  "evidence": "original-instruction emulation with synthetic bank records and TLS",
+  "cases": 16,
+  "scope": "Actual parent setter, default getter, GS/TLS reads and nonempty record loop; initialization synchronization header/footer supplied. No live thread-safety proof.",
+  "rows": [
+    {
+      "count": 0,
+      "reset": false,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 0,
+      "reset": false,
+      "cold": true,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 0,
+      "reset": true,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 0,
+      "reset": true,
+      "cold": true,
+      "events": [
+        "init_header",
+        "init_footer"
+      ],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 1,
+      "reset": false,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 1,
+      "reset": false,
+      "cold": true,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 1,
+      "reset": true,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 1,
+      "tail_unchanged": true
+    },
+    {
+      "count": 1,
+      "reset": true,
+      "cold": true,
+      "events": [
+        "init_header",
+        "init_footer"
+      ],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 1,
+      "tail_unchanged": true
+    },
+    {
+      "count": 3,
+      "reset": false,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 3,
+      "reset": false,
+      "cold": true,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 3,
+      "reset": true,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 3,
+      "tail_unchanged": true
+    },
+    {
+      "count": 3,
+      "reset": true,
+      "cold": true,
+      "events": [
+        "init_header",
+        "init_footer"
+      ],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 3,
+      "tail_unchanged": true
+    },
+    {
+      "count": 64,
+      "reset": false,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 64,
+      "reset": false,
+      "cold": true,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 0,
+      "tail_unchanged": true
+    },
+    {
+      "count": 64,
+      "reset": true,
+      "cold": false,
+      "events": [],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 64,
+      "tail_unchanged": true
+    },
+    {
+      "count": 64,
+      "reset": true,
+      "cold": true,
+      "events": [
+        "init_header",
+        "init_footer"
+      ],
+      "parent": [
+        1,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "default_pose": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "records_reset": 64,
+      "tail_unchanged": true
+    }
+  ]
+}

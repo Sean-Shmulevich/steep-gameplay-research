@@ -1,0 +1,36 @@
+{
+  "schema": "debugger-empty-stop-fixture-v1",
+  "evidence": "Three-thread synthetic Wine/LLDB fixture with one deliberately hidden stop-reason snapshot",
+  "game_accessed": false,
+  "passed": true,
+  "checks": {
+    "clean_fixture_exit": true,
+    "debugger_exit": true,
+    "no_outer_timeout": true,
+    "detached": true,
+    "removed": true,
+    "no_cleanup_error": true,
+    "ordered": true,
+    "patterns": true,
+    "output_change": true,
+    "preserved_time": true,
+    "no_observer_error": true,
+    "code_unchanged": true,
+    "multiple_threads": true,
+    "requested_hits": true,
+    "capture_window_ended": true,
+    "empty_stop_deferred": true,
+    "same_stop_later_observed": true,
+    "no_resume_before_reason": true
+  },
+  "observations": 24,
+  "matched_pairs": 12,
+  "unmatched_entries": 0,
+  "receipt_sha256": "f7b164bffbb97263304089cd404880effcd08f8039c26a93117a914d1c03d41d",
+  "observer_sha256": "640b93a931ee39cda6987fb5842c81a966da1bdbf79f50c93e3e78782687b295",
+  "limits": [
+    "Stop-reason hiding is an authored fault injection, not a reproduced Wine fault.",
+    "No original-game validation of the changed classification loop.",
+    "Trace-only stop handling and debugger cleanup under genuine unstable state remain unresolved."
+  ]
+}

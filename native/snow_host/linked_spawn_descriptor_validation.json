@@ -1,0 +1,2204 @@
+{
+  "evidence": "original-instruction emulation with synthetic holder references",
+  "cases": 96,
+  "scope": "Actual linked loop, descriptor acquisition/copy, mode predicate, increments/decrements and matrix composition. Visibility mask getter and final target dispatch intercepted; no retirement case.",
+  "live_game": false,
+  "rows": [
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 0,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 1,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": true,
+      "events": [
+        "acquire",
+        "predicate",
+        "release"
+      ],
+      "mask_calls": 2,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 2,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 0,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 0,
+        "second_status": 0,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 0
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 128
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 0,
+        "second_target": 0,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    },
+    {
+      "descriptor": {
+        "mode": 3,
+        "index": 65535,
+        "first_target": 256,
+        "second_target": 256,
+        "first_status": 2147483648,
+        "second_status": 2147483648,
+        "tls_mask": 256
+      },
+      "blocked": false,
+      "events": [
+        "acquire",
+        "predicate",
+        "release",
+        "dispatch"
+      ],
+      "mask_calls": 1,
+      "final_holder_counts": [
+        2,
+        2
+      ]
+    }
+  ]
+}

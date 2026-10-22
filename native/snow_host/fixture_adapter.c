@@ -16,6 +16,8 @@ static CRITICAL_SECTION player_lock;
 static float player_pos[3], player_vel[3];
 static int player_mode;              /* 0 none, 1 bound, 2 bound and expires after 5 reads */
 static int player_reads;
+static float player_spin = 0.5f;
+static uint32_t player_flags = 3;
 
 static DWORD WINAPI requests(LPVOID unused) {
     (void)unused;
@@ -35,6 +37,13 @@ static DWORD WINAPI requests(LPVOID unused) {
 }
 
 static int bind(char *why, size_t n) {
+#ifdef SNOW_FIXTURE_STARTUP_DELAY_MS
+    static ULONGLONG first;
+    if (!first) first = GetTickCount64();
+    if (GetTickCount64() - first < SNOW_FIXTURE_STARTUP_DELAY_MS) {
+        snprintf(why, n, "synthetic engine is not initialized yet"); return 1;
+    }
+#endif
     if (InterlockedCompareExchange(&running, 1, 0) == 0) {
         sim.group = 0x01000000; /* request_arg byte set, as in observed baselines */
         InitializeCriticalSection(&player_lock);
@@ -60,10 +69,13 @@ static int enter(void) { InterlockedExchange(&sim.group, (LONG)(((uint32_t)sim.g
 static int leave(void) { InterlockedExchange(&sim.group, (LONG)((uint32_t)sim.group & 0xff000000u)); return 0; }
 
 static int player_bind(const char *handle, char *why, size_t n) {
-    if (!strcmp(handle, "fixture-player")) player_mode = 1;
+    if (!strcmp(handle, "fixture-player") || !strcmp(handle, "fixture-player-straight") ||
+        !strcmp(handle, "fixture-player-inactive")) player_mode = 1;
     else if (!strcmp(handle, "fixture-player-expiring")) player_mode = 2;
     else { snprintf(why, n, "unknown fixture handle"); return 1; }
     player_reads = 0;
+    player_spin = !strcmp(handle, "fixture-player-straight") ? 0.0f : 0.5f;
+    player_flags = !strcmp(handle, "fixture-player-inactive") ? 1u : 3u;
     EnterCriticalSection(&player_lock);
     player_pos[0] = 0; player_pos[1] = 100.0f; player_pos[2] = 0;
     player_vel[0] = 15.0f; player_vel[1] = player_vel[2] = 0;
@@ -99,10 +111,35 @@ static int player_read(SnowPlayerRaw *out, char *why, size_t n) {
     EnterCriticalSection(&player_lock);
     for (int k = 0; k < 3; k++) { out->transform[12 + k] = player_pos[k]; out->linear_velocity[k] = player_vel[k]; }
     LeaveCriticalSection(&player_lock);
-    out->angular_velocity[1] = 0.5f;
-    out->flags = 0x1u | 0x2u;   /* valid, in world */
+    out->angular_velocity[1] = player_spin;
+    out->flags = player_flags;   /* synthetic active/inactive state */
+    return 0;
+}
+
+/* Synthetic protocol fixture only; no recovered animation behavior. */
+static int animation_channel(uint32_t key, SnowAnimationChannelRaw *out, char *why, size_t n) {
+    if (!player_mode) { snprintf(why, n, "no fixture player"); return 1; }
+    memset(out, 0, sizeof *out);
+    out->guards_matched = 1;
+    out->epoch = 7;
+    out->found = key == 10;
+    if (out->found) { out->vector[0] = 1; out->vector[1] = 2; out->vector[2] = 3; out->rotation[3] = 1;
+        out->parent_rotation[3] = 1;
+        memcpy(out->provider_vector,out->vector,16);
+        memcpy(out->provider_rotation,out->rotation,16);
+        out->bank_flags = 1u << 26;
+        for (int i=0;i<4;i++) out->owner_matrix[i*5]=1; }
+    return 0;
+}
+
+static int cached_parent(SnowCachedParentRaw *out, char *why, size_t n) {
+    if (!player_mode) { snprintf(why,n,"no fixture player"); return 1; }
+    memset(out,0,sizeof *out);
+    out->guards_matched=1; out->primary_present=1; out->current_present=1; out->banks_alias=1;
+    out->cached[7]=1; out->primary[7]=1; out->current[7]=1;
+    out->primary[3]=1; out->current[3]=1;
     return 0;
 }
 
 const SnowAdapter snow_adapter = {"fixture-simulated", bind, read, cas_group, enter, leave, player_bind, player_read,
-                                   player_set_velocity, player_acquire, player_check, player_set_pose};
+                                   player_set_velocity, player_acquire, player_check, player_set_pose, animation_channel, cached_parent};

@@ -1,0 +1,40 @@
+{
+  "evidence": "live_read_only_target_resolution_and_synthetic_transfer_validation",
+  "game_process": true,
+  "memory_writes": false,
+  "debugger_attached": false,
+  "input_sent": false,
+  "game_launched_by_this_check": false,
+  "foreign_session_lifecycle_changed": false,
+  "observations": 1,
+  "slots_and_module_headers_rechecked": true,
+  "targets": {
+    "skeleton_enter": {
+      "module": "ntdll.dll",
+      "exact_export": "RtlEnterCriticalSection",
+      "live_instruction_spans_verified": 54,
+      "target_in_executable_section": true
+    },
+    "skeleton_leave": {
+      "module": "ntdll.dll",
+      "exact_export": "RtlLeaveCriticalSection",
+      "live_instruction_spans_verified": 64,
+      "target_in_executable_section": true
+    }
+  },
+  "entry_transfer_validation": {
+    "cases": 40,
+    "image_data_reads_per_case": 1,
+    "lock_argument": "dereferenced_wrapper_pointer",
+    "tail_transfer": true,
+    "original_caller_stack_preserved": true,
+    "callee_saved_registers_preserved": true,
+    "target_api_executed": false
+  },
+  "limits": [
+    "Exact export resolution does not acquire the lock or prove its contention behavior.",
+    "No current player critical-section pointer or object lifetime was captured by this check.",
+    "Not all pose writers have been proved to participate in this lock.",
+    "Instruction matching used the cached image; no raw game bytes are included."
+  ]
+}

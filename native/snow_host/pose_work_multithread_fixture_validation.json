@@ -1,0 +1,37 @@
+{
+  "schema": "pose-work-multithread-fixture-v1",
+  "evidence": "isolated three-thread synthetic Wine/LLDB fixture",
+  "game_accessed": false,
+  "passed": true,
+  "checks": {
+    "clean_fixture_exit": true,
+    "debugger_exit": true,
+    "no_outer_timeout": true,
+    "detached": true,
+    "removed": true,
+    "no_cleanup_error": true,
+    "ordered": true,
+    "patterns": true,
+    "output_change": true,
+    "preserved_time": true,
+    "no_observer_error": true,
+    "code_unchanged": true,
+    "multiple_threads": true,
+    "requested_hits": true,
+    "capture_window_ended": true
+  },
+  "observed_hits": 24,
+  "observed_threads": 3,
+  "matched_thread_component_stack_pairs": 12,
+  "unmatched_entries": 0,
+  "resume_failure_reproduced": false,
+  "debugger_exit": 0,
+  "fixture_exit": 0,
+  "receipt_sha256": "0ca58f4ca6f8855442fbcd7637c94c12ee5583bd5c490204aa3ff679184c9093",
+  "limits": [
+    "This fixture did not reproduce the original-game resume failure.",
+    "Successful synthetic cleanup does not establish safe game attachment.",
+    "Three workers share immutable component identity with separate call stacks.",
+    "The earlier six-hit run also passed; this receipt describes the expanded 24-hit run."
+  ]
+}

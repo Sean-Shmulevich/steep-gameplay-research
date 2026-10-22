@@ -36,9 +36,11 @@
 typedef struct Request {
     long long id;
     char method[48];
-    long long count, lease_ms;
+    long long count, lease_ms, channel_key;
+    int has_channel_key;
     char handle[48];
-    double vel[3], pos[3];
+    double vel[3], pos[3], delta_speed;
+    int has_delta_speed;
     int has_id, has_count, has_lease, has_handle, has_vel, has_pos;
 } Request;
 
@@ -53,6 +55,7 @@ static char reply[MAX_REPLY];
 static int reply_ok;
 static char bind_why[160];
 static int bound;
+static int engine_ready, plugins_initialized;
 
 /* Executor-owned state. */
 static int host_paused, faulted;
@@ -160,6 +163,8 @@ static const char *parse_params(const char *s, Request *r) {
         s = ws(s); if (*s++ != ':') return NULL;
         s = ws(s);
         if (!strcmp(key, "count")) { if (!(s = parse_int(s, &r->count))) return NULL; r->has_count = 1; }
+        else if (!strcmp(key, "key")) { if (r->has_channel_key || !(s = parse_int(s, &r->channel_key))) return NULL; r->has_channel_key = 1; }
+        else if (!strcmp(key, "delta_speed")) { if (r->has_delta_speed || !(s = parse_num(s, &r->delta_speed))) return NULL; r->has_delta_speed = 1; }
         else if (!strcmp(key, "lease_ms")) { if (!(s = parse_int(s, &r->lease_ms))) return NULL; r->has_lease = 1; }
         else if (!strcmp(key, "vx") || !strcmp(key, "vy") || !strcmp(key, "vz")) {
             int k = key[1] - 'x';
@@ -398,6 +403,52 @@ static int do_player_set_velocity(const Request *r, Out *o) {
     return ok;
 }
 
+/* Authored one-shot mod policy, not a recovered gameplay rule. No per-tick hook.
+ * Resolve/read/adjust on the executor under a host hold, so clients never send a
+ * velocity calculated from a stale running snapshot. Scale the full 3D vector. */
+static int do_player_adjust_speed(const Request *r, Out *o) {
+    if (!r->has_delta_speed || !isfinite(r->delta_speed) || r->delta_speed == 0 ||
+        fabs(r->delta_speed) > 10 || r->has_vel || r->has_pos || r->has_handle || r->has_count || r->has_lease) {
+        put(o, "\"error\":\"bad_params\",\"detail\":\"delta_speed must be nonzero and within -10..10\""); return 0;
+    }
+    if (!host_paused) { put(o, "\"error\":\"not_paused_by_host\""); return 0; }
+    SnowPlayerStateV1 cur = {sizeof cur, 0, 0, {0}, {{0}}, {0}, {0}};
+    char why[160];
+    int rc = player_fill(&cur, why, sizeof why);
+    if (rc) { put(o, "\"error\":\"player_rejected\",\"detail\":"); put_str(o, why); return 0; }
+    if ((cur.flags & (SNOW_PLAYER_FLAGS_VALID | SNOW_PLAYER_IN_WORLD)) !=
+        (SNOW_PLAYER_FLAGS_VALID | SNOW_PLAYER_IN_WORLD)) {
+        put(o, "\"error\":\"player_not_in_world\""); return 0;
+    }
+    if (!finite3(cur.linear_velocity) || !finite3(cur.angular_velocity)) {
+        put(o, "\"error\":\"invalid_player_velocity\""); return 0;
+    }
+    double speed2 = 0, spin2 = 0;
+    for (int k = 0; k < 3; k++) {
+        speed2 += (double)cur.linear_velocity[k] * cur.linear_velocity[k];
+        spin2 += (double)cur.angular_velocity[k] * cur.angular_velocity[k];
+    }
+    /* The engine setter clears angular velocity. Refuse obvious spinning;
+     * this threshold is our conservative policy, not a grounded/trick detector. */
+    if (spin2 > 0.25 * 0.25) { put(o, "\"error\":\"player_rotating\""); return 0; }
+    double speed = sqrt(speed2);
+    if (speed < 0.5) { put(o, "\"error\":\"direction_unresolved\""); return 0; }
+    if (r->delta_speed > 0 && speed >= 60) { put(o, "\"error\":\"boost_speed_cap\""); return 0; }
+    double target = fmax(0, speed + r->delta_speed);
+    if (r->delta_speed > 0) target = fmin(60, target);
+    float v[3];
+    for (int k = 0; k < 3; k++) v[k] = (float)(cur.linear_velocity[k] * (target / speed));
+    rc = player_set(v, why, sizeof why);
+    if (rc) { put(o, "\"error\":\"adjust_refused\",\"detail\":"); put_str(o, why); return 0; }
+    put(o, "\"identity\":%llu,\"speed_before\":%.9g,\"speed_target\":%.9g",
+        (unsigned long long)cur.identity, speed, target);
+    put_vec(o, "velocity_before", cur.linear_velocity);
+    put(o, ",\"angular_velocity_reset\":true,\"after\":{");
+    int ok = do_player_get(o);
+    put(o, "}");
+    return ok;
+}
+
 static int do_player_set_position(const Request *r, Out *o) {
     if (r->has_pos != 7 || (r->has_vel && r->has_vel != 7)) {
         put(o, "\"error\":\"bad_params\",\"detail\":\"px, py and pz required; vx, vy, vz all or none\""); return 0;
@@ -440,6 +491,92 @@ static int do_player_get(Out *o) {
     return 1;
 }
 
+static int do_cached_parent(Out *o) {
+    if (!snow_adapter.cached_parent) { put(o,"\"error\":\"animation_unsupported\""); return 0; }
+    SnowPlayerStateV1 player={0}; player.struct_size=sizeof player;
+    char why[160]="";
+    if (player_fill(&player,why,sizeof why)) { put(o,"\"error\":\"no_player\",\"detail\":"); put_str(o,why); return 0; }
+    SnowCachedParentRaw result={0};
+    int rc=snow_adapter.cached_parent(&result,why,sizeof why);
+    if (rc==2) drop_binding(why);
+    if (rc || result.guards_matched!=1) { put(o,"\"error\":\"animation_observation_refused\",\"detail\":"); put_str(o,why); return 0; }
+    const float *poses[]={result.cached,result.primary,result.current};
+    for (unsigned i=0;i<3;i++) for(unsigned j=0;j<8;j++) if(!isfinite(poses[i][j])) {
+        put(o,"\"error\":\"invalid_animation_value\""); return 0;
+    }
+    const uint32_t flags[]={result.primary_present,result.current_present,result.banks_alias,
+        result.storage_nonempty,result.context_nonzero,result.function_present,result.holder_present,
+        result.target_present,result.status_sign,result.eligible};
+    const char *names[]={"primary_present","current_present","banks_alias","callback_storage_nonempty",
+        "forwarded_context_nonzero","function_present","holder_present","holder_target_present",
+        "holder_status_sign_bit","callback_eligible"};
+    for(unsigned i=0;i<10;i++) if(flags[i]>1) {put(o,"\"error\":\"invalid_animation_value\"");return 0;}
+    if(result.context_tag>3) {put(o,"\"error\":\"invalid_animation_value\"");return 0;}
+    put(o,"\"identity\":%llu,\"guards_matched\":true,\"context_tag\":%u,"
+        "\"atomic_snapshot\":false,\"lifetime_pinned\":false,\"invocation_observed\":false,"
+        "\"writer_attribution_established\":false,\"executable_memory_verified\":false,"
+        "\"safe_native_call_established\":false,\"adapter\":",(unsigned long long)player.identity,result.context_tag);
+    put_str(o,snow_adapter.name);
+    for(unsigned i=0;i<10;i++) put(o,",\"%s\":%s",names[i],flags[i]?"true":"false");
+    const char *pose_names[]={"cached_parent","primary_parent","current_parent"};
+    for(unsigned i=0;i<3;i++) {
+        put(o,",\"%s\":",pose_names[i]);
+        if ((i==1 && !result.primary_present)||(i==2 && !result.current_present)) {put(o,"null");continue;}
+        put(o,"[");for(unsigned j=0;j<8;j++)put(o,"%s%.9g",j?",":"",poses[i][j]);put(o,"]");
+    }
+    return 1;
+}
+
+static int do_animation_channel(const Request *r, Out *o) {
+    if (!r->has_channel_key || r->channel_key < 0 || r->channel_key > 4294967295LL) {
+        put(o, "\"error\":\"invalid_channel_key\""); return 0;
+    }
+    if (!snow_adapter.animation_channel) { put(o, "\"error\":\"animation_unsupported\""); return 0; }
+    SnowPlayerStateV1 player = {0}; player.struct_size = sizeof player;
+    char why[160] = "";
+    int rc = player_fill(&player, why, sizeof why);
+    if (rc) { put(o, "\"error\":\"no_player\",\"detail\":"); put_str(o, why); return 0; }
+    SnowAnimationChannelRaw channel = {0};
+    rc = snow_adapter.animation_channel((uint32_t)r->channel_key, &channel, why, sizeof why);
+    if (rc == 2) drop_binding(why);
+    if (rc || channel.guards_matched != 1 || channel.found > 1) {
+        put(o, "\"error\":\"animation_observation_refused\",\"detail\":"); put_str(o, why); return 0;
+    }
+    if (channel.found) for (int i = 0; i < 4; i++) {
+        if (!isfinite(channel.vector[i]) || !isfinite(channel.rotation[i]) ||
+            !isfinite(channel.parent_vector[i]) || !isfinite(channel.parent_rotation[i]) ||
+            !isfinite(channel.provider_vector[i]) || !isfinite(channel.provider_rotation[i])) {
+            put(o, "\"error\":\"invalid_animation_value\""); return 0;
+        }
+    }
+    if (channel.found) for (int i=0;i<16;i++) if (!isfinite(channel.owner_matrix[i])) {
+        put(o, "\"error\":\"invalid_animation_owner_value\""); return 0;
+    }
+    put(o, "\"identity\":%llu,\"key\":%llu,\"found\":%s,\"epoch\":%u,\"guards_matched\":true,"
+           "\"atomic_snapshot\":false,\"lifetime_pinned\":false,\"animation_completion_established\":false,"
+           "\"suitable_for_animation_writes\":false,\"adapter\":",
+        (unsigned long long)player.identity, (unsigned long long)r->channel_key,
+        channel.found ? "true" : "false", channel.epoch);
+    put_str(o, snow_adapter.name);
+    if (channel.found) put(o, ",\"vector\":[%.9g,%.9g,%.9g,%.9g],\"rotation\":[%.9g,%.9g,%.9g,%.9g]",
+        channel.vector[0],channel.vector[1],channel.vector[2],channel.vector[3],
+        channel.rotation[0],channel.rotation[1],channel.rotation[2],channel.rotation[3]);
+    if (channel.found) {
+        put(o, ",\"record_index\":%u,\"bank_flags\":%u,\"conversion_direct\":%s,"
+               "\"coordinate_space_semantics\":\"native_provider_conversion_only\"",
+            channel.record_index,channel.bank_flags,(channel.bank_flags&(1u<<26))?"true":"false");
+        put(o, ",\"owner_accessor_present\":%s,\"owner_reader_word\":%u,"
+               "\"owner_transform_freshness_established\":false,\"owner_matrix\":[",
+            channel.owner_accessor_present?"true":"false",channel.owner_reader_word);
+        for(int i=0;i<16;i++) put(o,"%s%.9g",i?",":"",channel.owner_matrix[i]);
+        put(o,"]");
+        const char *names[]={"parent_vector","parent_rotation","provider_vector","provider_rotation"};
+        const float *values[]={channel.parent_vector,channel.parent_rotation,channel.provider_vector,channel.provider_rotation};
+        for (int i=0;i<4;i++) put(o, ",\"%s\":[%.9g,%.9g,%.9g,%.9g]",names[i],values[i][0],values[i][1],values[i][2],values[i][3]);
+    }
+    return 1;
+}
+
 static double ms_since(LARGE_INTEGER t0) {
     LARGE_INTEGER t; QueryPerformanceCounter(&t);
     return (double)(t.QuadPart - t0.QuadPart) * 1000.0 / (double)qpf.QuadPart;
@@ -477,7 +614,9 @@ static int do_status(Out *o) {
     put(o, ",\"bound\":%s,\"uptime_ms\":%llu,\"host_paused\":%s,\"faulted\":%s,\"commands_completed\":%lld,\"commands_failed\":%lld",
         bound ? "true" : "false", GetTickCount64() - start_tick, host_paused ? "true" : "false",
         faulted ? "true" : "false", commands_completed, commands_failed);
-    put(o, ",\"plugins_active\":%d,\"steps_released\":%llu", snow_plugins_active(), (unsigned long long)steps_released);
+    put(o, ",\"ready\":%s,\"plugins_initialized\":%s,\"plugins_active\":%d,\"steps_released\":%llu",
+        engine_ready && plugins_initialized ? "true" : "false", plugins_initialized ? "true" : "false",
+        snow_plugins_active(), (unsigned long long)steps_released);
     put(o, ",\"player_bound\":%s", player_bound ? "true" : "false");
     if (host_paused) put(o, ",\"lease_ms\":%lu,\"lease_remaining_ms\":%lld", lease_ms, (long long)(lease_deadline - GetTickCount64()));
     if (last_recovery[0]) { put(o, ",\"last_recovery\":"); put_str(o, last_recovery); }
@@ -610,14 +749,17 @@ static void execute(const Request *r, Out *o) {
     } else if (!strcmp(r->method, "_disconnect")) {
         ok = 1;
         if (host_paused) { ok = release_hold(o, "client_disconnected"); host_log("recovery", "client disconnected while paused: %s", ok ? "resumed" : "FAILED"); }
-    } else if (!bound) put(o, "\"error\":\"adapter_unavailable\",\"detail\":"), put_str(o, bind_why);
+    } else if (!bound || !engine_ready || !plugins_initialized) put(o, "\"error\":\"adapter_unavailable\",\"detail\":"), put_str(o, bind_why);
     else if (faulted) put(o, "\"error\":\"host_faulted\"");
     else if (!strcmp(r->method, "simulation.pause")) ok = do_pause(r, o);
     else if (!strcmp(r->method, "simulation.resume")) ok = do_resume(o);
     else if (!strcmp(r->method, "simulation.step_world")) ok = do_step(r, o);
     else if (!strcmp(r->method, "player.bind")) ok = do_player_bind(r, o);
+    else if (!strcmp(r->method, "animation.get_cached_parent")) ok = do_cached_parent(o);
+    else if (!strcmp(r->method, "animation.get_channel")) ok = do_animation_channel(r, o);
     else if (!strcmp(r->method, "player.get")) ok = do_player_get(o);
     else if (!strcmp(r->method, "player.set_velocity")) ok = do_player_set_velocity(r, o);
+    else if (!strcmp(r->method, "player.adjust_speed")) ok = do_player_adjust_speed(r, o);
     else if (!strcmp(r->method, "player.set_position")) ok = do_player_set_position(r, o);
     put(o, "},\"status\":\"%s\"}\n", ok ? "completed" : "failed");
     if (ok) commands_completed++; else commands_failed++;
@@ -625,20 +767,46 @@ static void execute(const Request *r, Out *o) {
     reply_ok = ok;
 }
 
+/* Startup may precede engine initialization. Retry read-only identity/readiness
+ * checks on the executor; never weaken signatures or enable writes while waiting. */
+static void startup_tick(void) {
+    if (engine_ready && plugins_initialized) return;
+    char why[160] = "";
+    if (!bound) {
+        if (snow_adapter.bind(why, sizeof why)) goto waiting;
+        bound = 1;
+        host_log("host", "adapter identity verified; waiting for engine owner");
+    }
+    SnowCounters c;
+    if (snow_adapter.read(&c, why, sizeof why)) goto waiting;
+    engine_ready = 1;
+    bind_why[0] = 0;
+    host_log("host", "engine ready; initializing plugins");
+    host_log("host", "plugins: %d active", snow_plugins_init(dir));
+    plugins_initialized = 1;
+    write_marker("ready");
+    return;
+waiting:
+    if (strcmp(why, bind_why)) {
+        snprintf(bind_why, sizeof bind_why, "%s", why);
+        host_log("startup", "waiting: %s", bind_why);
+    }
+}
+
 static DWORD WINAPI executor(LPVOID unused) {
     (void)unused;
     /* Plugins load on the executor so every plugin call is serialized with commands. */
-    host_log("host", "plugins: %d active", snow_plugins_init(dir));
+    startup_tick();
     int watching = snow_adapter.player_check || snow_adapter.player_acquire;
     for (;;) {
-        DWORD wait = watching ? WATCH_MS : INFINITE;
+        DWORD wait = watching || !plugins_initialized ? WATCH_MS : INFINITE;
         if (host_paused) {
             ULONGLONG now = GetTickCount64();
             DWORD left = lease_deadline > now ? (DWORD)(lease_deadline - now) : 0;
             if (left < wait) wait = left;
         }
         if (WaitForSingleObject(work_ev, wait) == WAIT_TIMEOUT) {
-            if (!host_paused || GetTickCount64() < lease_deadline) { watch_tick(); continue; }
+            if (!host_paused || GetTickCount64() < lease_deadline) { startup_tick(); if (plugins_initialized) watch_tick(); continue; }
             char buf[1024]; Out o = {buf, sizeof buf, 0};
             int ok = release_hold(&o, "lease_expired");
             host_log("recovery", "lease expired; resume %s: %s", ok ? "ok" : "FAILED", buf);
@@ -646,6 +814,7 @@ static DWORD WINAPI executor(LPVOID unused) {
             continue;
         }
         Out o = {reply, sizeof reply, 0};
+        startup_tick();
         execute(&pending, &o);
         host_log("exec", "%.*s", (int)(o.len > 300 ? 300 : o.len - 1), reply);
         SetEvent(done_ev);
@@ -670,7 +839,7 @@ static int known(const char *m) {
     static const char *methods[] = {"host.hello", "host.heartbeat", "simulation.status", "simulation.pause",
                                     "simulation.resume", "simulation.step_world", "plugins.list",
                                     "player.bind", "player.get", "player.set_velocity",
-                                    "player.set_position"};
+                                    "player.set_position", "player.adjust_speed", "animation.get_channel", "animation.get_cached_parent"};
     for (size_t i = 0; i < sizeof methods / sizeof *methods; i++) if (!strcmp(m, methods[i])) return 1;
     return 0;
 }
@@ -759,9 +928,8 @@ __declspec(dllexport) DWORD WINAPI SnowHost_Start(LPVOID param) {
     InitializeCriticalSection(&log_lock);
     QueryPerformanceFrequency(&qpf);
     start_tick = GetTickCount64();
-    bound = snow_adapter.bind(bind_why, sizeof bind_why) == 0;
-    host_log("host", "v%s api %d adapter %s: %s %s", HOST_VERSION, API_VERSION, snow_adapter.name,
-             bound ? "bound" : "unavailable", bound ? "" : bind_why);
+    snprintf(bind_why, sizeof bind_why, "engine initialization pending");
+    host_log("host", "v%s api %d adapter %s: deferred binding", HOST_VERSION, API_VERSION, snow_adapter.name);
     work_ev = CreateEventW(NULL, FALSE, FALSE, NULL);
     done_ev = CreateEventW(NULL, FALSE, FALSE, NULL);
     if (!work_ev || !done_ev) return 3;

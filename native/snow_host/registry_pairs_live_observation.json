@@ -1,0 +1,116 @@
+{
+  "evidence": "live_read_only_observation",
+  "game_process": true,
+  "memory_writes": false,
+  "gameplay_input": false,
+  "debugger_attached": false,
+  "layout_checks": "Local analyzed-image hash and three live instruction spans; PID and creation time checked on each read request.",
+  "sessions": [
+    {
+      "elapsed_seconds": 20.88,
+      "observations": [
+        {
+          "schema": "construction-pairs-observation-v1",
+          "count": 0,
+          "capacity": 0,
+          "pairs": [],
+          "query": null,
+          "null_targets": 0,
+          "guards_matched": true,
+          "contents_rechecked": true,
+          "atomic_snapshot": false,
+          "lifetime_retained": false,
+          "safe_native_call_established": false,
+          "labels_scope": "this_capture_only"
+        },
+        {
+          "schema": "construction-pairs-observation-v1",
+          "count": 0,
+          "capacity": 0,
+          "pairs": [],
+          "query": null,
+          "null_targets": 0,
+          "guards_matched": true,
+          "contents_rechecked": true,
+          "atomic_snapshot": false,
+          "lifetime_retained": false,
+          "safe_native_call_established": false,
+          "labels_scope": "this_capture_only"
+        },
+        {
+          "schema": "construction-pairs-observation-v1",
+          "count": 0,
+          "capacity": 0,
+          "pairs": [],
+          "query": null,
+          "null_targets": 0,
+          "guards_matched": true,
+          "contents_rechecked": true,
+          "atomic_snapshot": false,
+          "lifetime_retained": false,
+          "safe_native_call_established": false,
+          "labels_scope": "this_capture_only"
+        }
+      ],
+      "configuration_restored": true,
+      "configuration_bytes_verified": true,
+      "gameplay_state_verified": false
+    },
+    {
+      "elapsed_seconds": 47.84,
+      "observations": [
+        {
+          "schema": "construction-pairs-observation-v1",
+          "count": 0,
+          "capacity": 4,
+          "pairs": [],
+          "query": null,
+          "null_targets": 0,
+          "guards_matched": true,
+          "contents_rechecked": true,
+          "atomic_snapshot": false,
+          "lifetime_retained": false,
+          "safe_native_call_established": false,
+          "labels_scope": "this_capture_only"
+        },
+        {
+          "schema": "construction-pairs-observation-v1",
+          "count": 0,
+          "capacity": 4,
+          "pairs": [],
+          "query": null,
+          "null_targets": 0,
+          "guards_matched": true,
+          "contents_rechecked": true,
+          "atomic_snapshot": false,
+          "lifetime_retained": false,
+          "safe_native_call_established": false,
+          "labels_scope": "this_capture_only"
+        },
+        {
+          "schema": "construction-pairs-observation-v1",
+          "count": 0,
+          "capacity": 4,
+          "pairs": [],
+          "query": null,
+          "null_targets": 0,
+          "guards_matched": true,
+          "contents_rechecked": true,
+          "atomic_snapshot": false,
+          "lifetime_retained": false,
+          "safe_native_call_established": false,
+          "labels_scope": "this_capture_only"
+        }
+      ],
+      "configuration_restored": true,
+      "configuration_bytes_verified": true,
+      "gameplay_state_verified": false
+    }
+  ],
+  "limits": [
+    "Only empty active arrays observed; no live row payload was read.",
+    "Capacity 4 in the delayed session is consistent with prior allocation, not a captured append/remove event.",
+    "No gameplay state or constructor execution confirmed.",
+    "No atomicity, lifetime or native-call safety established."
+  ]
+}

@@ -4,6 +4,8 @@
 --experiment probe (default) loads the attachment-only diagnostic DLL.
 --experiment host loads the Snow mod host and drives pause/step/resume through
 its command channel. The host build needs the private game adapter in the workspace.
+--load-at startup uses the native launcher to load the host during process startup;
+gameplay navigation and validation use that same preloaded instance.
 
 Only source is published. Highball, the owned game, and earlier private research
 helpers must already exist in --workspace. No game DLL is replaced.
@@ -14,6 +16,7 @@ import fcntl
 import hashlib
 import json
 import os
+import platform
 from pathlib import Path
 import shutil
 import signal
@@ -50,7 +53,23 @@ def preflight(root, experiment='probe'):
         raise RuntimeError('Original XINPUT1_3.dll hash differs; refusing to launch or replace it.')
     if not all(flag in (root / 'runtime/bounded-test.py').read_text() for flag in ['--native-xinput', '--result-dir']):
         raise RuntimeError('Local bounded launcher needs --native-xinput and --result-dir support.')
+    check_intel_runtime()
     return cc
+
+
+def check_intel_runtime():
+    """Check execution, not Rosetta package presence, for this Intel Wine setup."""
+    if sys.platform != 'darwin' or platform.machine() != 'arm64':
+        return
+    try:
+        probe = subprocess.run(['/usr/bin/arch', '-x86_64', '/usr/bin/true'],
+                               capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise RuntimeError('Could not verify Intel execution; no game launched: '+str(exc)) from exc
+    if probe.returncode:
+        raise RuntimeError('Intel execution is unavailable on this Mac. The configured Wine engine '
+                           'requires working Rosetta. Repair/install Rosetta before retrying; '
+                           'no game launched. Probe: '+probe.stderr.strip()[:300])
 
 
 def stop_child(child, interrupt=False, timeout=20):
@@ -81,13 +100,18 @@ def main():
     parser.add_argument('--workspace', type=Path, default=REPO.parent)
     parser.add_argument('--check', action='store_true', help='Check local prerequisites without launching Wine or the game')
     parser.add_argument('--experiment', choices=['probe', 'host'], default='probe')
+    parser.add_argument('--load-at', choices=['gameplay', 'startup'], default='gameplay', help='Load host automatically during process startup or after gameplay is verified')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
-    parser.add_argument('--plan', choices=['demo', 'stress'], default='demo', help='Host plan: demo, or stress (300-step run, 10 toggles, stepping while moving)')
+    parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
     args = parser.parse_args()
     if not 1 <= args.steps <= 60:
         raise RuntimeError('--steps must be 1..60')
+    if args.load_at == 'startup' and args.experiment != 'host':
+        raise RuntimeError('--load-at startup requires --experiment host')
     root = args.workspace.expanduser().resolve()
     cc = preflight(root, args.experiment)
+    if args.load_at == 'startup' and '--launcher' not in (root/'runtime/bounded-test.py').read_text():
+        raise RuntimeError('Local bounded launcher needs --launcher support')
     if args.check:
         print(f'Prerequisites OK: {root}\nOriginal DLL verified. No game launched.')
         return 0
@@ -108,7 +132,7 @@ def main():
     build = out / 'build'
     build.mkdir()
     (build / 'plugins').mkdir()
-    result = {'ok': False, 'session': str(out), 'experiment': args.experiment, 'original_dll_replaced': False}
+    result = {'ok': False, 'session': str(out), 'experiment': args.experiment, 'load_at': args.load_at, 'original_dll_replaced': False}
     children = []; handles = []; watchdog = None
 
     def start(argv, name):
@@ -136,24 +160,39 @@ def main():
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-nostdlib', '-Wl,--entry,LoaderEntry', '-o', str(build/'late_probe.dll'), str(src/'late_probe.c'), '-lkernel32'],
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'load_probe.exe'), str(src/'load_probe.c')],
             ]
+        if args.load_at == 'startup':
+            commands.append([cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'startup_launcher.exe'), str(host/'startup_launcher.c'), '-luser32'])
         with (out / 'build.log').open('w') as log:
             for command in commands:
                 subprocess.run(command, check=True, stdout=log, stderr=subprocess.STDOUT, timeout=60)
         print('Launching original game (five-minute maximum, memory watchdog active)...', flush=True)
-        watchdog = start([sys.executable, str(root/'runtime/bounded-test.py'), '--renderer', 'd3dmetal', '--seconds', '480' if args.plan == 'stress' else '300', '--direct', '--disable-d3d10', '--native-xinput', '--result-dir', str(out/'watchdog')], 'launch')
+        launch_args = [sys.executable, str(root/'runtime/bounded-test.py'), '--renderer', 'd3dmetal', '--seconds', '480' if args.plan == 'stress' else '300', '--direct', '--disable-d3d10', '--native-xinput', '--result-dir', str(out/'watchdog')]
+        if args.load_at == 'startup':
+            win = lambda p: 'Z:' + str(p).replace('/', '\\')
+            launch_args += ['--launcher', str(build/'startup_launcher.exe'), '--launcher-arg', win(root/'steep.exe'), '--launcher-arg', win(build/'snow_host.dll'), '--launcher-arg', '47017']
+        game_deadline = time.time() + (480 if args.plan == 'stress' else 300)
+        watchdog = start(launch_args, 'launch')
+        if args.load_at == 'startup':
+            print('Loading the host automatically during startup...', flush=True)
+            early = start([sys.executable, str(REPO/'scripts/startup_host_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'startup')], 'startup')
         print('Advancing recognized startup screens; please leave controls alone.', flush=True)
-        nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation')], 'navigation')
-        wait_stage(nav, watchdog, 170)
+        nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation'), '200'], 'navigation')
+        if args.load_at == 'startup':
+            wait_stage(early, watchdog, 90)
+            result['startup'] = json.loads((out/'startup/result.json').read_text())
+            if not result['startup']['ok']:
+                raise RuntimeError('Startup host loading was not verified')
+        wait_stage(nav, watchdog, 220)
         nav_result = json.loads((out/'navigation/navigation-result.json').read_text())
         if not nav_result.get('gameplay_hud_observed'):
             raise RuntimeError('Gameplay HUD was not verified; no pause or load attempted.')
         if args.experiment == 'host':
-            print(f'Gameplay verified. Loading the host, then pause, {args.steps} world steps, resume, and 20 seconds of observation...', flush=True)
-            probe = start([sys.executable, str(REPO/'scripts/host_session_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe'), '--steps', str(args.steps), '--plan', args.plan], 'probe')
+            print(f'Gameplay verified. Running host plan {args.plan}, then 20 seconds of observation...', flush=True)
+            probe = start([sys.executable, str(REPO/'scripts/host_session_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe'), '--steps', str(args.steps), '--plan', args.plan, '--game-deadline', str(game_deadline)] + (['--preloaded'] if args.load_at == 'startup' else []), 'probe')
         else:
             print('Gameplay verified. Pausing, loading, resuming, and observing for 20 seconds...', flush=True)
             probe = start([sys.executable, str(REPO/'scripts/late_load_probe.py'), '--workspace', str(root), '--build', str(build), '--output', str(out/'probe')], 'probe')
-        wait_stage(probe, watchdog, 300 if args.plan == 'stress' else 90 + (3 * args.steps if args.experiment == 'host' else 0))
+        wait_stage(probe, watchdog, 300 if args.plan == 'stress' else 160 if args.plan in ('work-packet', 'acceptance') else 90 + (3 * args.steps if args.experiment == 'host' else 0))
         result['probe'] = json.loads((out/'probe/result.json').read_text())
         if not result['probe'].get('ok'):
             raise RuntimeError('Probe did not pass all checks; see probe/result.json.')

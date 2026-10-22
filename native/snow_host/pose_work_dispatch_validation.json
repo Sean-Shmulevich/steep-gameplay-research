@@ -1,0 +1,535 @@
+{
+  "evidence": "original_instruction_emulation",
+  "cases": 32,
+  "scope": "Entire concrete interface wrapper; prepare and evaluator supplied. Synthetic owner/packet mutation, signed-zero and NaN float-bit transport; no downstream evaluator or live identity proof.",
+  "rows": [
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 0,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 0,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 1,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 1,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 2,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 2,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 255,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": false,
+      "evaluator_result": 255,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 0,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 0,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 1,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 1,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 2,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 2,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 255,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": false,
+      "replace_after_prepare": true,
+      "evaluator_result": 255,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [],
+      "result": 0
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 0,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          0
+        ]
+      ],
+      "result": 0
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 0,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          255
+        ]
+      ],
+      "result": 0
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 1,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          0
+        ]
+      ],
+      "result": 1
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 1,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          255
+        ]
+      ],
+      "result": 1
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 2,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          0
+        ]
+      ],
+      "result": 2
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 2,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          255
+        ]
+      ],
+      "result": 2
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 255,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          0
+        ]
+      ],
+      "result": 255
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": false,
+      "evaluator_result": 255,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "first",
+          11,
+          22,
+          2147483648,
+          255
+        ]
+      ],
+      "result": 255
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 0,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          0
+        ]
+      ],
+      "result": 0
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 0,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          255
+        ]
+      ],
+      "result": 0
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 1,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          0
+        ]
+      ],
+      "result": 1
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 1,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          255
+        ]
+      ],
+      "result": 1
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 2,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          0
+        ]
+      ],
+      "result": 2
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 2,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          255
+        ]
+      ],
+      "result": 2
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 255,
+      "extra_work": 0,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          0
+        ]
+      ],
+      "result": 255
+    },
+    {
+      "owner_present": true,
+      "replace_after_prepare": true,
+      "evaluator_result": 255,
+      "extra_work": 255,
+      "time_bits": 2147483648,
+      "replacement_time_bits": 2143363909,
+      "events": [
+        [
+          "prepare",
+          0
+        ],
+        [
+          "evaluate",
+          "second",
+          33,
+          44,
+          2143363909,
+          255
+        ]
+      ],
+      "result": 255
+    }
+  ]
+}

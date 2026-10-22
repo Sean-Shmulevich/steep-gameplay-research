@@ -1,0 +1,2570 @@
+{
+  "evidence": "original_instruction_emulation",
+  "inputs": "synthetic",
+  "game_process": false,
+  "cases": 512,
+  "unique_inputs": 256,
+  "scope": "Complete metadata count getter and focused size-selection block stopping before allocator call. No allocation, complete initialization, live binding or lifetime validation.",
+  "rows": [
+    {
+      "inputs": {
+        "flags": 2853222095,
+        "primary_bytes": 62355,
+        "alternate_bytes": 25464,
+        "transform_count": 0
+      },
+      "native_count": 0,
+      "native_allocation_bytes": 62355
+    },
+    {
+      "inputs": {
+        "flags": 1360160183,
+        "primary_bytes": 62319,
+        "alternate_bytes": 55322,
+        "transform_count": 1
+      },
+      "native_count": 1,
+      "native_allocation_bytes": 55322
+    },
+    {
+      "inputs": {
+        "flags": 1703470227,
+        "primary_bytes": 61098,
+        "alternate_bytes": 9868,
+        "transform_count": 2047
+      },
+      "native_count": 2047,
+      "native_allocation_bytes": 61098
+    },
+    {
+      "inputs": {
+        "flags": 3250013287,
+        "primary_bytes": 1985,
+        "alternate_bytes": 20228,
+        "transform_count": 2048
+      },
+      "native_count": 2048,
+      "native_allocation_bytes": 1985
+    },
+    {
+      "inputs": {
+        "flags": 886045061,
+        "primary_bytes": 42013,
+        "alternate_bytes": 5534,
+        "transform_count": 65535
+      },
+      "native_count": 65535,
+      "native_allocation_bytes": 5534
+    },
+    {
+      "inputs": {
+        "flags": 170970772,
+        "primary_bytes": 35415,
+        "alternate_bytes": 54036,
+        "transform_count": 0
+      },
+      "native_count": 0,
+      "native_allocation_bytes": 35415
+    },
+    {
+      "inputs": {
+        "flags": 2797818567,
+        "primary_bytes": 14544,
+        "alternate_bytes": 22885,
+        "transform_count": 1
+      },
+      "native_count": 1,
+      "native_allocation_bytes": 14544
+    },
+    {
+      "inputs": {
+        "flags": 991201526,
+        "primary_bytes": 16693,
+        "alternate_bytes": 63154,
+        "transform_count": 2047
+      },
+      "native_count": 2047,
+      "native_allocation_bytes": 63154
+    },
+    {
+      "inputs": {
+        "flags": 4182192756,
+        "primary_bytes": 19067,
+        "alternate_bytes": 57030,
+        "transform_count": 2048
+      },
+      "native_count": 2048,
+      "native_allocation_bytes": 57030
+    },
+    {
+      "inputs": {
+        "flags": 2453354905,
+        "primary_bytes": 39738,
+        "alternate_bytes": 21101,
+        "transform_count": 65535
+      },
+      "native_count": 65535,
+      "native_allocation_bytes": 21101
+    },
+    {
+      "inputs": {
+        "flags": 3112865655,
+        "primary_bytes": 24593,
+        "alternate_bytes": 7107,
+        "transform_count": 0
+      },
+      "native_count": 0,
+      "native_allocation_bytes": 7107
+    },
+    {
+      "inputs": {
+        "flags": 3395511334,
+        "primary_bytes": 9081,
+        "alternate_bytes": 16962,
+        "transform_count": 1
+      },
+      "native_count": 1,
+      "native_allocation_bytes": 9081
+    },
+    {
+      "inputs": {
+        "flags": 695147343,
+        "primary_bytes": 6129,
+        "alternate_bytes": 11003,
+        "transform_count": 2047
+      },
+      "native_count": 2047,
+      "native_allocation_bytes": 6129
+    },
+    {
+      "inputs": {
+        "flags": 2791101275,
+        "primary_bytes": 23613,
+        "alternate_bytes": 7671,
+        "transform_count": 2048
+      },
+      "native_count": 2048,
+      "native_allocation_bytes": 23613
+    },
+    {
+      "inputs": {
+        "flags": 2808458990,
+        "primary_bytes": 51736,
+        "alternate_bytes": 52968,
+        "transform_count": 65535
+      },
+      "native_count": 65535,
+      "native_allocation_bytes": 51736
+    },
+    {
+      "inputs": {
+        "flags": 2672845010,
+        "primary_bytes": 4240,
+        "alternate_bytes": 8255,
+        "transform_count": 0
+      },
+      "native_count": 0,
+      "native_allocation_bytes": 8255
+    },
+    {
+      "inputs": {
+        "flags": 803280350,
+        "primary_bytes": 44542,
+        "alternate_bytes": 9489,
+        "transform_count": 1
+      },
+      "native_count": 1,
+      "native_allocation_bytes": 44542
+    },
+    {
+      "inputs": {
+        "flags": 1831267634,
+        "primary_bytes": 58618,
+        "alternate_bytes": 37869,
+        "transform_count": 2047
+      },
+      "native_count": 2047,
+      "native_allocation_bytes": 58618
+    },
+    {
+      "inputs": {
+        "flags": 3074626252,
+        "primary_bytes": 46070,
+        "alternate_bytes": 61973,
+        "transform_count": 2048
+      },
+      "native_count": 2048,
+      "native_allocation_bytes": 61973
+    },
+    {
+      "inputs": {
+        "flags": 3304332690,
+        "primary_bytes": 51740,
+        "alternate_bytes": 38352,
+        "transform_count": 65535
+      },
+      "native_count": 65535,
+      "native_allocation_bytes": 51740
+    },
+    {
+      "inputs": {
+        "flags": 3613128501,
+        "primary_bytes": 239,
+        "alternate_bytes": 29384,
+        "transform_count": 0
+      },
+      "native_count": 0,
+      "native_allocation_bytes": 29384
+    },
+    {
+      "inputs": {
+        "flags": 947689784,
+        "primary_bytes": 55646,
+        "alternate_bytes": 63843,
+        "transform_count": 1
+      },
+      "native_count": 1,
+      "native_allocation_bytes": 63843
+    },
+    {
+      "inputs": {
+        "flags": 170641572,
+        "primary_bytes": 23346,
+        "alternate_bytes": 63754,
+        "transform_count": 2047
+      },
+      "native_count": 2047,
+      "native_allocation_bytes": 23346
+    },
+    {
+      "inputs": {
+        "flags": 3972066358,
+        "primary_bytes": 11619,
+        "alternate_bytes": 52008,
+        "transform_count": 2048
+      },
+      "native_count": 2048,
+      "native_allocation_bytes": 11619
+    },
+    {
+      "inputs": {
+        "flags": 3901113187,
+        "primary_bytes": 54045,
+        "alternate_bytes": 30737,
+        "transform_count": 65535
+      },
+      "native_count": 65535,
+      "native_allocation_bytes": 54045
+    },
+    {
+      "inputs": {
+        "flags": 1609197678,
+        "primary_bytes": 44801,
+        "alternate_bytes": 6,
+        "transform_count": 11521
+      },
+      "native_count": 11521,
+      "native_allocation_bytes": 6
+    },
+    {
+      "inputs": {
+        "flags": 2320676578,
+        "primary_bytes": 14701,
+        "alternate_bytes": 50908,
+        "transform_count": 64561
+      },
+      "native_count": 64561,
+      "native_allocation_bytes": 14701
+    },
+    {
+      "inputs": {
+        "flags": 1862014067,
+        "primary_bytes": 48664,
+        "alternate_bytes": 53326,
+        "transform_count": 9741
+      },
+      "native_count": 9741,
+      "native_allocation_bytes": 48664
+    },
+    {
+      "inputs": {
+        "flags": 3684719215,
+        "primary_bytes": 18617,
+        "alternate_bytes": 61537,
+        "transform_count": 27339
+      },
+      "native_count": 27339,
+      "native_allocation_bytes": 61537
+    },
+    {
+      "inputs": {
+        "flags": 1971661356,
+        "primary_bytes": 49374,
+        "alternate_bytes": 10118,
+        "transform_count": 51777
+      },
+      "native_count": 51777,
+      "native_allocation_bytes": 10118
+    },
+    {
+      "inputs": {
+        "flags": 2735724997,
+        "primary_bytes": 23522,
+        "alternate_bytes": 10304,
+        "transform_count": 60247
+      },
+      "native_count": 60247,
+      "native_allocation_bytes": 23522
+    },
+    {
+      "inputs": {
+        "flags": 937387219,
+        "primary_bytes": 45837,
+        "alternate_bytes": 19773,
+        "transform_count": 7537
+      },
+      "native_count": 7537,
+      "native_allocation_bytes": 19773
+    },
+    {
+      "inputs": {
+        "flags": 2698070709,
+        "primary_bytes": 12054,
+        "alternate_bytes": 11729,
+        "transform_count": 30465
+      },
+      "native_count": 30465,
+      "native_allocation_bytes": 12054
+    },
+    {
+      "inputs": {
+        "flags": 501687299,
+        "primary_bytes": 58878,
+        "alternate_bytes": 62466,
+        "transform_count": 31263
+      },
+      "native_count": 31263,
+      "native_allocation_bytes": 62466
+    },
+    {
+      "inputs": {
+        "flags": 3837355439,
+        "primary_bytes": 4427,
+        "alternate_bytes": 46697,
+        "transform_count": 63482
+      },
+      "native_count": 63482,
+      "native_allocation_bytes": 4427
+    },
+    {
+      "inputs": {
+        "flags": 699143847,
+        "primary_bytes": 36484,
+        "alternate_bytes": 20802,
+        "transform_count": 45859
+      },
+      "native_count": 45859,
+      "native_allocation_bytes": 36484
+    },
+    {
+      "inputs": {
+        "flags": 766598399,
+        "primary_bytes": 49515,
+        "alternate_bytes": 17859,
+        "transform_count": 17470
+      },
+      "native_count": 17470,
+      "native_allocation_bytes": 49515
+    },
+    {
+      "inputs": {
+        "flags": 363671754,
+        "primary_bytes": 31121,
+        "alternate_bytes": 1236,
+        "transform_count": 4802
+      },
+      "native_count": 4802,
+      "native_allocation_bytes": 1236
+    },
+    {
+      "inputs": {
+        "flags": 2141713452,
+        "primary_bytes": 18028,
+        "alternate_bytes": 61052,
+        "transform_count": 63150
+      },
+      "native_count": 63150,
+      "native_allocation_bytes": 61052
+    },
+    {
+      "inputs": {
+        "flags": 107488335,
+        "primary_bytes": 26046,
+        "alternate_bytes": 63903,
+        "transform_count": 9719
+      },
+      "native_count": 9719,
+      "native_allocation_bytes": 26046
+    },
+    {
+      "inputs": {
+        "flags": 3098373873,
+        "primary_bytes": 2734,
+        "alternate_bytes": 59673,
+        "transform_count": 33466
+      },
+      "native_count": 33466,
+      "native_allocation_bytes": 59673
+    },
+    {
+      "inputs": {
+        "flags": 4174345372,
+        "primary_bytes": 594,
+        "alternate_bytes": 50853,
+        "transform_count": 4380
+      },
+      "native_count": 4380,
+      "native_allocation_bytes": 50853
+    },
+    {
+      "inputs": {
+        "flags": 3571542234,
+        "primary_bytes": 58596,
+        "alternate_bytes": 39872,
+        "transform_count": 27787
+      },
+      "native_count": 27787,
+      "native_allocation_bytes": 39872
+    },
+    {
+      "inputs": {
+        "flags": 4071733964,
+        "primary_bytes": 46508,
+        "alternate_bytes": 35282,
+        "transform_count": 21263
+      },
+      "native_count": 21263,
+      "native_allocation_bytes": 35282
+    },
+    {
+      "inputs": {
+        "flags": 1571089660,
+        "primary_bytes": 16617,
+        "alternate_bytes": 29913,
+        "transform_count": 65029
+      },
+      "native_count": 65029,
+      "native_allocation_bytes": 29913
+    },
+    {
+      "inputs": {
+        "flags": 2640083022,
+        "primary_bytes": 28478,
+        "alternate_bytes": 62980,
+        "transform_count": 21277
+      },
+      "native_count": 21277,
+      "native_allocation_bytes": 62980
+    },
+    {
+      "inputs": {
+        "flags": 1891158735,
+        "primary_bytes": 20385,
+        "alternate_bytes": 36482,
+        "transform_count": 63729
+      },
+      "native_count": 63729,
+      "native_allocation_bytes": 36482
+    },
+    {
+      "inputs": {
+        "flags": 4167149060,
+        "primary_bytes": 8621,
+        "alternate_bytes": 32029,
+        "transform_count": 2496
+      },
+      "native_count": 2496,
+      "native_allocation_bytes": 32029
+    },
+    {
+      "inputs": {
+        "flags": 1846888742,
+        "primary_bytes": 19418,
+        "alternate_bytes": 10746,
+        "transform_count": 19344
+      },
+      "native_count": 19344,
+      "native_allocation_bytes": 19418
+    },
+    {
+      "inputs": {
+        "flags": 3422592182,
+        "primary_bytes": 27797,
+        "alternate_bytes": 54273,
+        "transform_count": 39467
+      },
+      "native_count": 39467,
+      "native_allocation_bytes": 27797
+    },
+    {
+      "inputs": {
+        "flags": 3950068665,
+        "primary_bytes": 17563,
+        "alternate_bytes": 26269,
+        "transform_count": 11995
+      },
+      "native_count": 11995,
+      "native_allocation_bytes": 17563
+    },
+    {
+      "inputs": {
+        "flags": 1485047646,
+        "primary_bytes": 39973,
+        "alternate_bytes": 29012,
+        "transform_count": 21413
+      },
+      "native_count": 21413,
+      "native_allocation_bytes": 29012
+    },
+    {
+      "inputs": {
+        "flags": 1631921911,
+        "primary_bytes": 47641,
+        "alternate_bytes": 50348,
+        "transform_count": 62681
+      },
+      "native_count": 62681,
+      "native_allocation_bytes": 47641
+    },
+    {
+      "inputs": {
+        "flags": 645038231,
+        "primary_bytes": 48857,
+        "alternate_bytes": 35153,
+        "transform_count": 312
+      },
+      "native_count": 312,
+      "native_allocation_bytes": 48857
+    },
+    {
+      "inputs": {
+        "flags": 2443550963,
+        "primary_bytes": 19234,
+        "alternate_bytes": 55239,
+        "transform_count": 33855
+      },
+      "native_count": 33855,
+      "native_allocation_bytes": 55239
+    },
+    {
+      "inputs": {
+        "flags": 1736246550,
+        "primary_bytes": 55246,
+        "alternate_bytes": 12390,
+        "transform_count": 47498
+      },
+      "native_count": 47498,
+      "native_allocation_bytes": 55246
+    },
+    {
+      "inputs": {
+        "flags": 1922248829,
+        "primary_bytes": 46633,
+        "alternate_bytes": 23413,
+        "transform_count": 27326
+      },
+      "native_count": 27326,
+      "native_allocation_bytes": 23413
+    },
+    {
+      "inputs": {
+        "flags": 2516420674,
+        "primary_bytes": 11,
+        "alternate_bytes": 49254,
+        "transform_count": 10170
+      },
+      "native_count": 10170,
+      "native_allocation_bytes": 49254
+    },
+    {
+      "inputs": {
+        "flags": 963640324,
+        "primary_bytes": 24584,
+        "alternate_bytes": 4428,
+        "transform_count": 28444
+      },
+      "native_count": 28444,
+      "native_allocation_bytes": 4428
+    },
+    {
+      "inputs": {
+        "flags": 1545870392,
+        "primary_bytes": 10996,
+        "alternate_bytes": 43494,
+        "transform_count": 34667
+      },
+      "native_count": 34667,
+      "native_allocation_bytes": 43494
+    },
+    {
+      "inputs": {
+        "flags": 1165636401,
+        "primary_bytes": 16715,
+        "alternate_bytes": 38668,
+        "transform_count": 23743
+      },
+      "native_count": 23743,
+      "native_allocation_bytes": 16715
+    },
+    {
+      "inputs": {
+        "flags": 554588193,
+        "primary_bytes": 8641,
+        "alternate_bytes": 59803,
+        "transform_count": 32506
+      },
+      "native_count": 32506,
+      "native_allocation_bytes": 8641
+    },
+    {
+      "inputs": {
+        "flags": 302971292,
+        "primary_bytes": 16690,
+        "alternate_bytes": 3665,
+        "transform_count": 453
+      },
+      "native_count": 453,
+      "native_allocation_bytes": 3665
+    },
+    {
+      "inputs": {
+        "flags": 3410276774,
+        "primary_bytes": 2162,
+        "alternate_bytes": 54624,
+        "transform_count": 56094
+      },
+      "native_count": 56094,
+      "native_allocation_bytes": 2162
+    },
+    {
+      "inputs": {
+        "flags": 2989647075,
+        "primary_bytes": 34136,
+        "alternate_bytes": 3475,
+        "transform_count": 17310
+      },
+      "native_count": 17310,
+      "native_allocation_bytes": 3475
+    },
+    {
+      "inputs": {
+        "flags": 2957001968,
+        "primary_bytes": 63059,
+        "alternate_bytes": 2468,
+        "transform_count": 62631
+      },
+      "native_count": 62631,
+      "native_allocation_bytes": 2468
+    },
+    {
+      "inputs": {
+        "flags": 1769498697,
+        "primary_bytes": 45192,
+        "alternate_bytes": 29420,
+        "transform_count": 3293
+      },
+      "native_count": 3293,
+      "native_allocation_bytes": 45192
+    },
+    {
+      "inputs": {
+        "flags": 2121643677,
+        "primary_bytes": 56586,
+        "alternate_bytes": 49826,
+        "transform_count": 28210
+      },
+      "native_count": 28210,
+      "native_allocation_bytes": 49826
+    },
+    {
+      "inputs": {
+        "flags": 23988434,
+        "primary_bytes": 16859,
+        "alternate_bytes": 23060,
+        "transform_count": 47496
+      },
+      "native_count": 47496,
+      "native_allocation_bytes": 16859
+    },
+    {
+      "inputs": {
+        "flags": 87183390,
+        "primary_bytes": 61041,
+        "alternate_bytes": 14617,
+        "transform_count": 26253
+      },
+      "native_count": 26253,
+      "native_allocation_bytes": 61041
+    },
+    {
+      "inputs": {
+        "flags": 2030522639,
+        "primary_bytes": 23724,
+        "alternate_bytes": 65391,
+        "transform_count": 58186
+      },
+      "native_count": 58186,
+      "native_allocation_bytes": 65391
+    },
+    {
+      "inputs": {
+        "flags": 1662305728,
+        "primary_bytes": 22204,
+        "alternate_bytes": 7260,
+        "transform_count": 15547
+      },
+      "native_count": 15547,
+      "native_allocation_bytes": 22204
+    },
+    {
+      "inputs": {
+        "flags": 869639010,
+        "primary_bytes": 1357,
+        "alternate_bytes": 33946,
+        "transform_count": 49463
+      },
+      "native_count": 49463,
+      "native_allocation_bytes": 33946
+    },
+    {
+      "inputs": {
+        "flags": 3057205800,
+        "primary_bytes": 57027,
+        "alternate_bytes": 26441,
+        "transform_count": 28852
+      },
+      "native_count": 28852,
+      "native_allocation_bytes": 26441
+    },
+    {
+      "inputs": {
+        "flags": 178068094,
+        "primary_bytes": 58619,
+        "alternate_bytes": 4879,
+        "transform_count": 15685
+      },
+      "native_count": 15685,
+      "native_allocation_bytes": 58619
+    },
+    {
+      "inputs": {
+        "flags": 365912425,
+        "primary_bytes": 19444,
+        "alternate_bytes": 30979,
+        "transform_count": 24967
+      },
+      "native_count": 24967,
+      "native_allocation_bytes": 30979
+    },
+    {
+      "inputs": {
+        "flags": 3793819440,
+        "primary_bytes": 34343,
+        "alternate_bytes": 46529,
+        "transform_count": 56714
+      },
+      "native_count": 56714,
+      "native_allocation_bytes": 34343
+    },
+    {
+      "inputs": {
+        "flags": 2726209652,
+        "primary_bytes": 27468,
+        "alternate_bytes": 6714,
+        "transform_count": 14017
+      },
+      "native_count": 14017,
+      "native_allocation_bytes": 27468
+    },
+    {
+      "inputs": {
+        "flags": 3272762822,
+        "primary_bytes": 47775,
+        "alternate_bytes": 49668,
+        "transform_count": 12851
+      },
+      "native_count": 12851,
+      "native_allocation_bytes": 47775
+    },
+    {
+      "inputs": {
+        "flags": 2812182682,
+        "primary_bytes": 48819,
+        "alternate_bytes": 14741,
+        "transform_count": 56355
+      },
+      "native_count": 56355,
+      "native_allocation_bytes": 48819
+    },
+    {
+      "inputs": {
+        "flags": 2965281962,
+        "primary_bytes": 33160,
+        "alternate_bytes": 59502,
+        "transform_count": 28316
+      },
+      "native_count": 28316,
+      "native_allocation_bytes": 59502
+    },
+    {
+      "inputs": {
+        "flags": 2234196811,
+        "primary_bytes": 34817,
+        "alternate_bytes": 11949,
+        "transform_count": 48744
+      },
+      "native_count": 48744,
+      "native_allocation_bytes": 34817
+    },
+    {
+      "inputs": {
+        "flags": 1105863931,
+        "primary_bytes": 20258,
+        "alternate_bytes": 47342,
+        "transform_count": 12468
+      },
+      "native_count": 12468,
+      "native_allocation_bytes": 20258
+    },
+    {
+      "inputs": {
+        "flags": 3066030278,
+        "primary_bytes": 60075,
+        "alternate_bytes": 15509,
+        "transform_count": 57111
+      },
+      "native_count": 57111,
+      "native_allocation_bytes": 15509
+    },
+    {
+      "inputs": {
+        "flags": 2611268055,
+        "primary_bytes": 3846,
+        "alternate_bytes": 63110,
+        "transform_count": 27216
+      },
+      "native_count": 27216,
+      "native_allocation_bytes": 63110
+    },
+    {
+      "inputs": {
+        "flags": 2428271970,
+        "primary_bytes": 64354,
+        "alternate_bytes": 62709,
+        "transform_count": 23886
+      },
+      "native_count": 23886,
+      "native_allocation_bytes": 62709
+    },
+    {
+      "inputs": {
+        "flags": 2880813879,
+        "primary_bytes": 12595,
+        "alternate_bytes": 64147,
+        "transform_count": 52632
+      },
+      "native_count": 52632,
+      "native_allocation_bytes": 12595
+    },
+    {
+      "inputs": {
+        "flags": 3871532240,
+        "primary_bytes": 21138,
+        "alternate_bytes": 4551,
+        "transform_count": 25078
+      },
+      "native_count": 25078,
+      "native_allocation_bytes": 21138
+    },
+    {
+      "inputs": {
+        "flags": 2918734508,
+        "primary_bytes": 35902,
+        "alternate_bytes": 6192,
+        "transform_count": 3535
+      },
+      "native_count": 3535,
+      "native_allocation_bytes": 35902
+    },
+    {
+      "inputs": {
+        "flags": 203982092,
+        "primary_bytes": 14458,
+        "alternate_bytes": 60600,
+        "transform_count": 48691
+      },
+      "native_count": 48691,
+      "native_allocation_bytes": 14458
+    },
+    {
+      "inputs": {
+        "flags": 2188198820,
+        "primary_bytes": 99,
+        "alternate_bytes": 49079,
+        "transform_count": 36615
+      },
+      "native_count": 36615,
+      "native_allocation_bytes": 99
+    },
+    {
+      "inputs": {
+        "flags": 619282182,
+        "primary_bytes": 48853,
+        "alternate_bytes": 57521,
+        "transform_count": 64958
+      },
+      "native_count": 64958,
+      "native_allocation_bytes": 48853
+    },
+    {
+      "inputs": {
+        "flags": 665621984,
+        "primary_bytes": 51127,
+        "alternate_bytes": 48830,
+        "transform_count": 58283
+      },
+      "native_count": 58283,
+      "native_allocation_bytes": 51127
+    },
+    {
+      "inputs": {
+        "flags": 2982136950,
+        "primary_bytes": 44392,
+        "alternate_bytes": 50412,
+        "transform_count": 43049
+      },
+      "native_count": 43049,
+      "native_allocation_bytes": 50412
+    },
+    {
+      "inputs": {
+        "flags": 3054445536,
+        "primary_bytes": 34856,
+        "alternate_bytes": 57762,
+        "transform_count": 25305
+      },
+      "native_count": 25305,
+      "native_allocation_bytes": 57762
+    },
+    {
+      "inputs": {
+        "flags": 1690842041,
+        "primary_bytes": 23046,
+        "alternate_bytes": 42273,
+        "transform_count": 34475
+      },
+      "native_count": 34475,
+      "native_allocation_bytes": 23046
+    },
+    {
+      "inputs": {
+        "flags": 6469100,
+        "primary_bytes": 11892,
+        "alternate_bytes": 16751,
+        "transform_count": 22445
+      },
+      "native_count": 22445,
+      "native_allocation_bytes": 11892
+    },
+    {
+      "inputs": {
+        "flags": 759430407,
+        "primary_bytes": 6410,
+        "alternate_bytes": 58794,
+        "transform_count": 63450
+      },
+      "native_count": 63450,
+      "native_allocation_bytes": 6410
+    },
+    {
+      "inputs": {
+        "flags": 2623655132,
+        "primary_bytes": 55414,
+        "alternate_bytes": 35230,
+        "transform_count": 52420
+      },
+      "native_count": 52420,
+      "native_allocation_bytes": 35230
+    },
+    {
+      "inputs": {
+        "flags": 2617975349,
+        "primary_bytes": 54077,
+        "alternate_bytes": 61292,
+        "transform_count": 31954
+      },
+      "native_count": 31954,
+      "native_allocation_bytes": 61292
+    },
+    {
+      "inputs": {
+        "flags": 569870266,
+        "primary_bytes": 34659,
+        "alternate_bytes": 57426,
+        "transform_count": 9967
+      },
+      "native_count": 9967,
+      "native_allocation_bytes": 34659
+    },
+    {
+      "inputs": {
+        "flags": 3403701563,
+        "primary_bytes": 36910,
+        "alternate_bytes": 13626,
+        "transform_count": 28961
+      },
+      "native_count": 28961,
+      "native_allocation_bytes": 36910
+    },
+    {
+      "inputs": {
+        "flags": 4045711351,
+        "primary_bytes": 31905,
+        "alternate_bytes": 13026,
+        "transform_count": 17668
+      },
+      "native_count": 17668,
+      "native_allocation_bytes": 13026
+    },
+    {
+      "inputs": {
+        "flags": 1925050185,
+        "primary_bytes": 307,
+        "alternate_bytes": 3145,
+        "transform_count": 44913
+      },
+      "native_count": 44913,
+      "native_allocation_bytes": 3145
+    },
+    {
+      "inputs": {
+        "flags": 749020677,
+        "primary_bytes": 59308,
+        "alternate_bytes": 53396,
+        "transform_count": 11938
+      },
+      "native_count": 11938,
+      "native_allocation_bytes": 59308
+    },
+    {
+      "inputs": {
+        "flags": 4177763344,
+        "primary_bytes": 42124,
+        "alternate_bytes": 6939,
+        "transform_count": 49678
+      },
+      "native_count": 49678,
+      "native_allocation_bytes": 6939
+    },
+    {
+      "inputs": {
+        "flags": 1512989788,
+        "primary_bytes": 55599,
+        "alternate_bytes": 38295,
+        "transform_count": 27741
+      },
+      "native_count": 27741,
+      "native_allocation_bytes": 38295
+    },
+    {
+      "inputs": {
+        "flags": 226181969,
+        "primary_bytes": 31306,
+        "alternate_bytes": 48429,
+        "transform_count": 39249
+      },
+      "native_count": 39249,
+      "native_allocation_bytes": 31306
+    },
+    {
+      "inputs": {
+        "flags": 2326315746,
+        "primary_bytes": 13864,
+        "alternate_bytes": 13991,
+        "transform_count": 16104
+      },
+      "native_count": 16104,
+      "native_allocation_bytes": 13864
+    },
+    {
+      "inputs": {
+        "flags": 1732223521,
+        "primary_bytes": 43555,
+        "alternate_bytes": 17207,
+        "transform_count": 13637
+      },
+      "native_count": 13637,
+      "native_allocation_bytes": 43555
+    },
+    {
+      "inputs": {
+        "flags": 2260172666,
+        "primary_bytes": 29484,
+        "alternate_bytes": 42594,
+        "transform_count": 5432
+      },
+      "native_count": 5432,
+      "native_allocation_bytes": 29484
+    },
+    {
+      "inputs": {
+        "flags": 395254549,
+        "primary_bytes": 12958,
+        "alternate_bytes": 42985,
+        "transform_count": 14108
+      },
+      "native_count": 14108,
+      "native_allocation_bytes": 42985
+    },
+    {
+      "inputs": {
+        "flags": 1723915257,
+        "primary_bytes": 51483,
+        "alternate_bytes": 30732,
+        "transform_count": 30908
+      },
+      "native_count": 30908,
+      "native_allocation_bytes": 51483
+    },
+    {
+      "inputs": {
+        "flags": 3057343139,
+        "primary_bytes": 29493,
+        "alternate_bytes": 51377,
+        "transform_count": 41744
+      },
+      "native_count": 41744,
+      "native_allocation_bytes": 51377
+    },
+    {
+      "inputs": {
+        "flags": 2314033464,
+        "primary_bytes": 31764,
+        "alternate_bytes": 20754,
+        "transform_count": 49936
+      },
+      "native_count": 49936,
+      "native_allocation_bytes": 31764
+    },
+    {
+      "inputs": {
+        "flags": 1227283230,
+        "primary_bytes": 55728,
+        "alternate_bytes": 55682,
+        "transform_count": 52790
+      },
+      "native_count": 52790,
+      "native_allocation_bytes": 55728
+    },
+    {
+      "inputs": {
+        "flags": 2312661395,
+        "primary_bytes": 22333,
+        "alternate_bytes": 35808,
+        "transform_count": 4007
+      },
+      "native_count": 4007,
+      "native_allocation_bytes": 22333
+    },
+    {
+      "inputs": {
+        "flags": 3629592484,
+        "primary_bytes": 41940,
+        "alternate_bytes": 62972,
+        "transform_count": 39718
+      },
+      "native_count": 39718,
+      "native_allocation_bytes": 62972
+    },
+    {
+      "inputs": {
+        "flags": 4205568780,
+        "primary_bytes": 21511,
+        "alternate_bytes": 61102,
+        "transform_count": 14359
+      },
+      "native_count": 14359,
+      "native_allocation_bytes": 61102
+    },
+    {
+      "inputs": {
+        "flags": 897786842,
+        "primary_bytes": 56182,
+        "alternate_bytes": 58610,
+        "transform_count": 32344
+      },
+      "native_count": 32344,
+      "native_allocation_bytes": 58610
+    },
+    {
+      "inputs": {
+        "flags": 4218959012,
+        "primary_bytes": 25734,
+        "alternate_bytes": 51065,
+        "transform_count": 544
+      },
+      "native_count": 544,
+      "native_allocation_bytes": 51065
+    },
+    {
+      "inputs": {
+        "flags": 3104771290,
+        "primary_bytes": 48722,
+        "alternate_bytes": 4832,
+        "transform_count": 26275
+      },
+      "native_count": 26275,
+      "native_allocation_bytes": 4832
+    },
+    {
+      "inputs": {
+        "flags": 3962444547,
+        "primary_bytes": 36926,
+        "alternate_bytes": 30613,
+        "transform_count": 45678
+      },
+      "native_count": 45678,
+      "native_allocation_bytes": 36926
+    },
+    {
+      "inputs": {
+        "flags": 2486131369,
+        "primary_bytes": 43410,
+        "alternate_bytes": 13146,
+        "transform_count": 22663
+      },
+      "native_count": 22663,
+      "native_allocation_bytes": 13146
+    },
+    {
+      "inputs": {
+        "flags": 3512935088,
+        "primary_bytes": 43204,
+        "alternate_bytes": 21191,
+        "transform_count": 52529
+      },
+      "native_count": 52529,
+      "native_allocation_bytes": 21191
+    },
+    {
+      "inputs": {
+        "flags": 1893464303,
+        "primary_bytes": 61914,
+        "alternate_bytes": 7249,
+        "transform_count": 17539
+      },
+      "native_count": 17539,
+      "native_allocation_bytes": 7249
+    },
+    {
+      "inputs": {
+        "flags": 1608093861,
+        "primary_bytes": 53428,
+        "alternate_bytes": 5890,
+        "transform_count": 15334
+      },
+      "native_count": 15334,
+      "native_allocation_bytes": 5890
+    },
+    {
+      "inputs": {
+        "flags": 3918301061,
+        "primary_bytes": 17979,
+        "alternate_bytes": 15855,
+        "transform_count": 6702
+      },
+      "native_count": 6702,
+      "native_allocation_bytes": 17979
+    },
+    {
+      "inputs": {
+        "flags": 1477171880,
+        "primary_bytes": 58735,
+        "alternate_bytes": 14262,
+        "transform_count": 55632
+      },
+      "native_count": 55632,
+      "native_allocation_bytes": 14262
+    },
+    {
+      "inputs": {
+        "flags": 1821687060,
+        "primary_bytes": 36777,
+        "alternate_bytes": 29192,
+        "transform_count": 47163
+      },
+      "native_count": 47163,
+      "native_allocation_bytes": 36777
+    },
+    {
+      "inputs": {
+        "flags": 1712348792,
+        "primary_bytes": 11790,
+        "alternate_bytes": 39182,
+        "transform_count": 22960
+      },
+      "native_count": 22960,
+      "native_allocation_bytes": 11790
+    },
+    {
+      "inputs": {
+        "flags": 2933319078,
+        "primary_bytes": 22207,
+        "alternate_bytes": 31814,
+        "transform_count": 25419
+      },
+      "native_count": 25419,
+      "native_allocation_bytes": 22207
+    },
+    {
+      "inputs": {
+        "flags": 1961722202,
+        "primary_bytes": 7363,
+        "alternate_bytes": 36515,
+        "transform_count": 23905
+      },
+      "native_count": 23905,
+      "native_allocation_bytes": 36515
+    },
+    {
+      "inputs": {
+        "flags": 3373793058,
+        "primary_bytes": 41715,
+        "alternate_bytes": 56691,
+        "transform_count": 17097
+      },
+      "native_count": 17097,
+      "native_allocation_bytes": 41715
+    },
+    {
+      "inputs": {
+        "flags": 2620822071,
+        "primary_bytes": 23176,
+        "alternate_bytes": 50083,
+        "transform_count": 3250
+      },
+      "native_count": 3250,
+      "native_allocation_bytes": 50083
+    },
+    {
+      "inputs": {
+        "flags": 3559703609,
+        "primary_bytes": 59998,
+        "alternate_bytes": 43492,
+        "transform_count": 103
+      },
+      "native_count": 103,
+      "native_allocation_bytes": 43492
+    },
+    {
+      "inputs": {
+        "flags": 1417647526,
+        "primary_bytes": 10452,
+        "alternate_bytes": 31054,
+        "transform_count": 43281
+      },
+      "native_count": 43281,
+      "native_allocation_bytes": 31054
+    },
+    {
+      "inputs": {
+        "flags": 3720877171,
+        "primary_bytes": 33264,
+        "alternate_bytes": 30057,
+        "transform_count": 40721
+      },
+      "native_count": 40721,
+      "native_allocation_bytes": 30057
+    },
+    {
+      "inputs": {
+        "flags": 4002830977,
+        "primary_bytes": 33659,
+        "alternate_bytes": 6396,
+        "transform_count": 55367
+      },
+      "native_count": 55367,
+      "native_allocation_bytes": 33659
+    },
+    {
+      "inputs": {
+        "flags": 3353564599,
+        "primary_bytes": 61391,
+        "alternate_bytes": 64003,
+        "transform_count": 44432
+      },
+      "native_count": 44432,
+      "native_allocation_bytes": 61391
+    },
+    {
+      "inputs": {
+        "flags": 2136654346,
+        "primary_bytes": 9082,
+        "alternate_bytes": 64557,
+        "transform_count": 31871
+      },
+      "native_count": 31871,
+      "native_allocation_bytes": 64557
+    },
+    {
+      "inputs": {
+        "flags": 345631164,
+        "primary_bytes": 54682,
+        "alternate_bytes": 50431,
+        "transform_count": 51834
+      },
+      "native_count": 51834,
+      "native_allocation_bytes": 50431
+    },
+    {
+      "inputs": {
+        "flags": 417322834,
+        "primary_bytes": 58109,
+        "alternate_bytes": 51557,
+        "transform_count": 64743
+      },
+      "native_count": 64743,
+      "native_allocation_bytes": 51557
+    },
+    {
+      "inputs": {
+        "flags": 4011057998,
+        "primary_bytes": 48615,
+        "alternate_bytes": 16104,
+        "transform_count": 36482
+      },
+      "native_count": 36482,
+      "native_allocation_bytes": 48615
+    },
+    {
+      "inputs": {
+        "flags": 4046255302,
+        "primary_bytes": 23901,
+        "alternate_bytes": 10951,
+        "transform_count": 3696
+      },
+      "native_count": 3696,
+      "native_allocation_bytes": 10951
+    },
+    {
+      "inputs": {
+        "flags": 3336203202,
+        "primary_bytes": 41008,
+        "alternate_bytes": 27087,
+        "transform_count": 3509
+      },
+      "native_count": 3509,
+      "native_allocation_bytes": 41008
+    },
+    {
+      "inputs": {
+        "flags": 1208298957,
+        "primary_bytes": 21445,
+        "alternate_bytes": 57930,
+        "transform_count": 1527
+      },
+      "native_count": 1527,
+      "native_allocation_bytes": 21445
+    },
+    {
+      "inputs": {
+        "flags": 2830013458,
+        "primary_bytes": 6544,
+        "alternate_bytes": 52366,
+        "transform_count": 28422
+      },
+      "native_count": 28422,
+      "native_allocation_bytes": 6544
+    },
+    {
+      "inputs": {
+        "flags": 3780258691,
+        "primary_bytes": 7963,
+        "alternate_bytes": 2696,
+        "transform_count": 42408
+      },
+      "native_count": 42408,
+      "native_allocation_bytes": 7963
+    },
+    {
+      "inputs": {
+        "flags": 2183822051,
+        "primary_bytes": 1515,
+        "alternate_bytes": 57599,
+        "transform_count": 57373
+      },
+      "native_count": 57373,
+      "native_allocation_bytes": 1515
+    },
+    {
+      "inputs": {
+        "flags": 903504435,
+        "primary_bytes": 62285,
+        "alternate_bytes": 45353,
+        "transform_count": 26658
+      },
+      "native_count": 26658,
+      "native_allocation_bytes": 45353
+    },
+    {
+      "inputs": {
+        "flags": 3343491431,
+        "primary_bytes": 35749,
+        "alternate_bytes": 41792,
+        "transform_count": 42615
+      },
+      "native_count": 42615,
+      "native_allocation_bytes": 35749
+    },
+    {
+      "inputs": {
+        "flags": 26274443,
+        "primary_bytes": 61389,
+        "alternate_bytes": 64668,
+        "transform_count": 9669
+      },
+      "native_count": 9669,
+      "native_allocation_bytes": 61389
+    },
+    {
+      "inputs": {
+        "flags": 4160531068,
+        "primary_bytes": 33529,
+        "alternate_bytes": 48445,
+        "transform_count": 14529
+      },
+      "native_count": 14529,
+      "native_allocation_bytes": 48445
+    },
+    {
+      "inputs": {
+        "flags": 2730905164,
+        "primary_bytes": 17254,
+        "alternate_bytes": 30360,
+        "transform_count": 6774
+      },
+      "native_count": 6774,
+      "native_allocation_bytes": 17254
+    },
+    {
+      "inputs": {
+        "flags": 2389959156,
+        "primary_bytes": 35210,
+        "alternate_bytes": 31018,
+        "transform_count": 40529
+      },
+      "native_count": 40529,
+      "native_allocation_bytes": 35210
+    },
+    {
+      "inputs": {
+        "flags": 3458516054,
+        "primary_bytes": 32697,
+        "alternate_bytes": 10048,
+        "transform_count": 28504
+      },
+      "native_count": 28504,
+      "native_allocation_bytes": 32697
+    },
+    {
+      "inputs": {
+        "flags": 4036370193,
+        "primary_bytes": 55135,
+        "alternate_bytes": 14573,
+        "transform_count": 45951
+      },
+      "native_count": 45951,
+      "native_allocation_bytes": 14573
+    },
+    {
+      "inputs": {
+        "flags": 4277440843,
+        "primary_bytes": 22540,
+        "alternate_bytes": 43341,
+        "transform_count": 21209
+      },
+      "native_count": 21209,
+      "native_allocation_bytes": 43341
+    },
+    {
+      "inputs": {
+        "flags": 2361218925,
+        "primary_bytes": 36895,
+        "alternate_bytes": 57489,
+        "transform_count": 59007
+      },
+      "native_count": 59007,
+      "native_allocation_bytes": 36895
+    },
+    {
+      "inputs": {
+        "flags": 2361434481,
+        "primary_bytes": 45478,
+        "alternate_bytes": 30752,
+        "transform_count": 17882
+      },
+      "native_count": 17882,
+      "native_allocation_bytes": 45478
+    },
+    {
+      "inputs": {
+        "flags": 857807263,
+        "primary_bytes": 19868,
+        "alternate_bytes": 57347,
+        "transform_count": 4765
+      },
+      "native_count": 4765,
+      "native_allocation_bytes": 57347
+    },
+    {
+      "inputs": {
+        "flags": 2947483454,
+        "primary_bytes": 14501,
+        "alternate_bytes": 16494,
+        "transform_count": 42723
+      },
+      "native_count": 42723,
+      "native_allocation_bytes": 14501
+    },
+    {
+      "inputs": {
+        "flags": 2097462084,
+        "primary_bytes": 4228,
+        "alternate_bytes": 4965,
+        "transform_count": 29988
+      },
+      "native_count": 29988,
+      "native_allocation_bytes": 4965
+    },
+    {
+      "inputs": {
+        "flags": 152185843,
+        "primary_bytes": 12440,
+        "alternate_bytes": 7613,
+        "transform_count": 53188
+      },
+      "native_count": 53188,
+      "native_allocation_bytes": 12440
+    },
+    {
+      "inputs": {
+        "flags": 1920254006,
+        "primary_bytes": 41050,
+        "alternate_bytes": 53038,
+        "transform_count": 40769
+      },
+      "native_count": 40769,
+      "native_allocation_bytes": 53038
+    },
+    {
+      "inputs": {
+        "flags": 613761845,
+        "primary_bytes": 57718,
+        "alternate_bytes": 13796,
+        "transform_count": 2145
+      },
+      "native_count": 2145,
+      "native_allocation_bytes": 57718
+    },
+    {
+      "inputs": {
+        "flags": 1673301863,
+        "primary_bytes": 36113,
+        "alternate_bytes": 31031,
+        "transform_count": 26889
+      },
+      "native_count": 26889,
+      "native_allocation_bytes": 36113
+    },
+    {
+      "inputs": {
+        "flags": 3931948088,
+        "primary_bytes": 1701,
+        "alternate_bytes": 38472,
+        "transform_count": 58100
+      },
+      "native_count": 58100,
+      "native_allocation_bytes": 1701
+    },
+    {
+      "inputs": {
+        "flags": 2623784334,
+        "primary_bytes": 54143,
+        "alternate_bytes": 29785,
+        "transform_count": 19398
+      },
+      "native_count": 19398,
+      "native_allocation_bytes": 29785
+    },
+    {
+      "inputs": {
+        "flags": 4033444095,
+        "primary_bytes": 17595,
+        "alternate_bytes": 34831,
+        "transform_count": 31679
+      },
+      "native_count": 31679,
+      "native_allocation_bytes": 34831
+    },
+    {
+      "inputs": {
+        "flags": 2720581084,
+        "primary_bytes": 15525,
+        "alternate_bytes": 15364,
+        "transform_count": 54390
+      },
+      "native_count": 54390,
+      "native_allocation_bytes": 15525
+    },
+    {
+      "inputs": {
+        "flags": 1420897040,
+        "primary_bytes": 4880,
+        "alternate_bytes": 52382,
+        "transform_count": 11667
+      },
+      "native_count": 11667,
+      "native_allocation_bytes": 52382
+    },
+    {
+      "inputs": {
+        "flags": 3521733548,
+        "primary_bytes": 9554,
+        "alternate_bytes": 41827,
+        "transform_count": 2233
+      },
+      "native_count": 2233,
+      "native_allocation_bytes": 41827
+    },
+    {
+      "inputs": {
+        "flags": 198076217,
+        "primary_bytes": 10040,
+        "alternate_bytes": 34203,
+        "transform_count": 46806
+      },
+      "native_count": 46806,
+      "native_allocation_bytes": 10040
+    },
+    {
+      "inputs": {
+        "flags": 2762804568,
+        "primary_bytes": 29830,
+        "alternate_bytes": 52099,
+        "transform_count": 43208
+      },
+      "native_count": 43208,
+      "native_allocation_bytes": 29830
+    },
+    {
+      "inputs": {
+        "flags": 2614727518,
+        "primary_bytes": 38597,
+        "alternate_bytes": 51200,
+        "transform_count": 29150
+      },
+      "native_count": 29150,
+      "native_allocation_bytes": 51200
+    },
+    {
+      "inputs": {
+        "flags": 1334222562,
+        "primary_bytes": 13941,
+        "alternate_bytes": 63856,
+        "transform_count": 54685
+      },
+      "native_count": 54685,
+      "native_allocation_bytes": 13941
+    },
+    {
+      "inputs": {
+        "flags": 178523641,
+        "primary_bytes": 41509,
+        "alternate_bytes": 34695,
+        "transform_count": 49172
+      },
+      "native_count": 49172,
+      "native_allocation_bytes": 41509
+    },
+    {
+      "inputs": {
+        "flags": 2177813311,
+        "primary_bytes": 36160,
+        "alternate_bytes": 7234,
+        "transform_count": 46677
+      },
+      "native_count": 46677,
+      "native_allocation_bytes": 36160
+    },
+    {
+      "inputs": {
+        "flags": 3424958803,
+        "primary_bytes": 20897,
+        "alternate_bytes": 65180,
+        "transform_count": 42287
+      },
+      "native_count": 42287,
+      "native_allocation_bytes": 20897
+    },
+    {
+      "inputs": {
+        "flags": 226345643,
+        "primary_bytes": 43436,
+        "alternate_bytes": 25036,
+        "transform_count": 4135
+      },
+      "native_count": 4135,
+      "native_allocation_bytes": 43436
+    },
+    {
+      "inputs": {
+        "flags": 2484964550,
+        "primary_bytes": 19668,
+        "alternate_bytes": 60398,
+        "transform_count": 8426
+      },
+      "native_count": 8426,
+      "native_allocation_bytes": 60398
+    },
+    {
+      "inputs": {
+        "flags": 1861209147,
+        "primary_bytes": 44729,
+        "alternate_bytes": 20517,
+        "transform_count": 35990
+      },
+      "native_count": 35990,
+      "native_allocation_bytes": 44729
+    },
+    {
+      "inputs": {
+        "flags": 3571231868,
+        "primary_bytes": 45620,
+        "alternate_bytes": 22146,
+        "transform_count": 30677
+      },
+      "native_count": 30677,
+      "native_allocation_bytes": 22146
+    },
+    {
+      "inputs": {
+        "flags": 4004304312,
+        "primary_bytes": 52091,
+        "alternate_bytes": 49931,
+        "transform_count": 42336
+      },
+      "native_count": 42336,
+      "native_allocation_bytes": 52091
+    },
+    {
+      "inputs": {
+        "flags": 4278207528,
+        "primary_bytes": 13298,
+        "alternate_bytes": 39364,
+        "transform_count": 8172
+      },
+      "native_count": 8172,
+      "native_allocation_bytes": 39364
+    },
+    {
+      "inputs": {
+        "flags": 854970965,
+        "primary_bytes": 44164,
+        "alternate_bytes": 12233,
+        "transform_count": 14916
+      },
+      "native_count": 14916,
+      "native_allocation_bytes": 12233
+    },
+    {
+      "inputs": {
+        "flags": 726321430,
+        "primary_bytes": 50015,
+        "alternate_bytes": 56450,
+        "transform_count": 14895
+      },
+      "native_count": 14895,
+      "native_allocation_bytes": 50015
+    },
+    {
+      "inputs": {
+        "flags": 4101656018,
+        "primary_bytes": 29592,
+        "alternate_bytes": 47428,
+        "transform_count": 40352
+      },
+      "native_count": 40352,
+      "native_allocation_bytes": 47428
+    },
+    {
+      "inputs": {
+        "flags": 1279998898,
+        "primary_bytes": 8143,
+        "alternate_bytes": 45145,
+        "transform_count": 30458
+      },
+      "native_count": 30458,
+      "native_allocation_bytes": 8143
+    },
+    {
+      "inputs": {
+        "flags": 1548378117,
+        "primary_bytes": 49277,
+        "alternate_bytes": 49592,
+        "transform_count": 2451
+      },
+      "native_count": 2451,
+      "native_allocation_bytes": 49592
+    },
+    {
+      "inputs": {
+        "flags": 2071713379,
+        "primary_bytes": 63918,
+        "alternate_bytes": 29500,
+        "transform_count": 41111
+      },
+      "native_count": 41111,
+      "native_allocation_bytes": 29500
+    },
+    {
+      "inputs": {
+        "flags": 678258718,
+        "primary_bytes": 56066,
+        "alternate_bytes": 5169,
+        "transform_count": 24573
+      },
+      "native_count": 24573,
+      "native_allocation_bytes": 56066
+    },
+    {
+      "inputs": {
+        "flags": 2974479645,
+        "primary_bytes": 64973,
+        "alternate_bytes": 15988,
+        "transform_count": 42541
+      },
+      "native_count": 42541,
+      "native_allocation_bytes": 15988
+    },
+    {
+      "inputs": {
+        "flags": 3508246756,
+        "primary_bytes": 63541,
+        "alternate_bytes": 15154,
+        "transform_count": 14943
+      },
+      "native_count": 14943,
+      "native_allocation_bytes": 15154
+    },
+    {
+      "inputs": {
+        "flags": 2022941246,
+        "primary_bytes": 23026,
+        "alternate_bytes": 41210,
+        "transform_count": 32790
+      },
+      "native_count": 32790,
+      "native_allocation_bytes": 41210
+    },
+    {
+      "inputs": {
+        "flags": 1771788848,
+        "primary_bytes": 27781,
+        "alternate_bytes": 7561,
+        "transform_count": 34264
+      },
+      "native_count": 34264,
+      "native_allocation_bytes": 27781
+    },
+    {
+      "inputs": {
+        "flags": 631679260,
+        "primary_bytes": 23204,
+        "alternate_bytes": 54071,
+        "transform_count": 63203
+      },
+      "native_count": 63203,
+      "native_allocation_bytes": 23204
+    },
+    {
+      "inputs": {
+        "flags": 808617131,
+        "primary_bytes": 16252,
+        "alternate_bytes": 19976,
+        "transform_count": 45891
+      },
+      "native_count": 45891,
+      "native_allocation_bytes": 19976
+    },
+    {
+      "inputs": {
+        "flags": 591750144,
+        "primary_bytes": 37881,
+        "alternate_bytes": 20054,
+        "transform_count": 35134
+      },
+      "native_count": 35134,
+      "native_allocation_bytes": 37881
+    },
+    {
+      "inputs": {
+        "flags": 3044867645,
+        "primary_bytes": 63175,
+        "alternate_bytes": 9365,
+        "transform_count": 46718
+      },
+      "native_count": 46718,
+      "native_allocation_bytes": 9365
+    },
+    {
+      "inputs": {
+        "flags": 4246131190,
+        "primary_bytes": 64969,
+        "alternate_bytes": 27835,
+        "transform_count": 16632
+      },
+      "native_count": 16632,
+      "native_allocation_bytes": 27835
+    },
+    {
+      "inputs": {
+        "flags": 2652474704,
+        "primary_bytes": 47086,
+        "alternate_bytes": 17193,
+        "transform_count": 38118
+      },
+      "native_count": 38118,
+      "native_allocation_bytes": 17193
+    },
+    {
+      "inputs": {
+        "flags": 3617355019,
+        "primary_bytes": 25847,
+        "alternate_bytes": 40507,
+        "transform_count": 54994
+      },
+      "native_count": 54994,
+      "native_allocation_bytes": 40507
+    },
+    {
+      "inputs": {
+        "flags": 2402145484,
+        "primary_bytes": 20064,
+        "alternate_bytes": 29384,
+        "transform_count": 43825
+      },
+      "native_count": 43825,
+      "native_allocation_bytes": 20064
+    },
+    {
+      "inputs": {
+        "flags": 409365845,
+        "primary_bytes": 7251,
+        "alternate_bytes": 771,
+        "transform_count": 48536
+      },
+      "native_count": 48536,
+      "native_allocation_bytes": 771
+    },
+    {
+      "inputs": {
+        "flags": 998063551,
+        "primary_bytes": 33204,
+        "alternate_bytes": 62179,
+        "transform_count": 13290
+      },
+      "native_count": 13290,
+      "native_allocation_bytes": 62179
+    },
+    {
+      "inputs": {
+        "flags": 2715047579,
+        "primary_bytes": 13058,
+        "alternate_bytes": 16359,
+        "transform_count": 23319
+      },
+      "native_count": 23319,
+      "native_allocation_bytes": 13058
+    },
+    {
+      "inputs": {
+        "flags": 3931216837,
+        "primary_bytes": 39565,
+        "alternate_bytes": 24995,
+        "transform_count": 1142
+      },
+      "native_count": 1142,
+      "native_allocation_bytes": 39565
+    },
+    {
+      "inputs": {
+        "flags": 1503311433,
+        "primary_bytes": 38918,
+        "alternate_bytes": 64527,
+        "transform_count": 39294
+      },
+      "native_count": 39294,
+      "native_allocation_bytes": 64527
+    },
+    {
+      "inputs": {
+        "flags": 3726906132,
+        "primary_bytes": 50480,
+        "alternate_bytes": 25308,
+        "transform_count": 16733
+      },
+      "native_count": 16733,
+      "native_allocation_bytes": 25308
+    },
+    {
+      "inputs": {
+        "flags": 289514733,
+        "primary_bytes": 37691,
+        "alternate_bytes": 24837,
+        "transform_count": 21616
+      },
+      "native_count": 21616,
+      "native_allocation_bytes": 24837
+    },
+    {
+      "inputs": {
+        "flags": 2591250398,
+        "primary_bytes": 18193,
+        "alternate_bytes": 33451,
+        "transform_count": 4519
+      },
+      "native_count": 4519,
+      "native_allocation_bytes": 33451
+    },
+    {
+      "inputs": {
+        "flags": 1337165739,
+        "primary_bytes": 48188,
+        "alternate_bytes": 63311,
+        "transform_count": 14978
+      },
+      "native_count": 14978,
+      "native_allocation_bytes": 48188
+    },
+    {
+      "inputs": {
+        "flags": 2844645361,
+        "primary_bytes": 60845,
+        "alternate_bytes": 46516,
+        "transform_count": 49996
+      },
+      "native_count": 49996,
+      "native_allocation_bytes": 60845
+    },
+    {
+      "inputs": {
+        "flags": 1493329364,
+        "primary_bytes": 32928,
+        "alternate_bytes": 57194,
+        "transform_count": 55249
+      },
+      "native_count": 55249,
+      "native_allocation_bytes": 57194
+    },
+    {
+      "inputs": {
+        "flags": 374478834,
+        "primary_bytes": 9479,
+        "alternate_bytes": 24306,
+        "transform_count": 32842
+      },
+      "native_count": 32842,
+      "native_allocation_bytes": 24306
+    },
+    {
+      "inputs": {
+        "flags": 1663376442,
+        "primary_bytes": 61343,
+        "alternate_bytes": 14007,
+        "transform_count": 33068
+      },
+      "native_count": 33068,
+      "native_allocation_bytes": 61343
+    },
+    {
+      "inputs": {
+        "flags": 2945793374,
+        "primary_bytes": 43820,
+        "alternate_bytes": 39196,
+        "transform_count": 60700
+      },
+      "native_count": 60700,
+      "native_allocation_bytes": 43820
+    },
+    {
+      "inputs": {
+        "flags": 2817862809,
+        "primary_bytes": 28539,
+        "alternate_bytes": 16979,
+        "transform_count": 22333
+      },
+      "native_count": 22333,
+      "native_allocation_bytes": 28539
+    },
+    {
+      "inputs": {
+        "flags": 1445446135,
+        "primary_bytes": 20080,
+        "alternate_bytes": 31021,
+        "transform_count": 55265
+      },
+      "native_count": 55265,
+      "native_allocation_bytes": 31021
+    },
+    {
+      "inputs": {
+        "flags": 2711342105,
+        "primary_bytes": 59218,
+        "alternate_bytes": 47993,
+        "transform_count": 44838
+      },
+      "native_count": 44838,
+      "native_allocation_bytes": 59218
+    },
+    {
+      "inputs": {
+        "flags": 3144813556,
+        "primary_bytes": 58118,
+        "alternate_bytes": 43261,
+        "transform_count": 45598
+      },
+      "native_count": 45598,
+      "native_allocation_bytes": 43261
+    },
+    {
+      "inputs": {
+        "flags": 3802375222,
+        "primary_bytes": 55760,
+        "alternate_bytes": 1405,
+        "transform_count": 44100
+      },
+      "native_count": 44100,
+      "native_allocation_bytes": 55760
+    },
+    {
+      "inputs": {
+        "flags": 56065933,
+        "primary_bytes": 44584,
+        "alternate_bytes": 56582,
+        "transform_count": 40480
+      },
+      "native_count": 40480,
+      "native_allocation_bytes": 44584
+    },
+    {
+      "inputs": {
+        "flags": 1895911897,
+        "primary_bytes": 29488,
+        "alternate_bytes": 38143,
+        "transform_count": 31132
+      },
+      "native_count": 31132,
+      "native_allocation_bytes": 38143
+    },
+    {
+      "inputs": {
+        "flags": 2115610344,
+        "primary_bytes": 50471,
+        "alternate_bytes": 60222,
+        "transform_count": 57449
+      },
+      "native_count": 57449,
+      "native_allocation_bytes": 60222
+    },
+    {
+      "inputs": {
+        "flags": 500965449,
+        "primary_bytes": 58229,
+        "alternate_bytes": 64364,
+        "transform_count": 461
+      },
+      "native_count": 461,
+      "native_allocation_bytes": 64364
+    },
+    {
+      "inputs": {
+        "flags": 293542649,
+        "primary_bytes": 20971,
+        "alternate_bytes": 61646,
+        "transform_count": 54757
+      },
+      "native_count": 54757,
+      "native_allocation_bytes": 61646
+    },
+    {
+      "inputs": {
+        "flags": 3030152355,
+        "primary_bytes": 10966,
+        "alternate_bytes": 49768,
+        "transform_count": 47935
+      },
+      "native_count": 47935,
+      "native_allocation_bytes": 49768
+    },
+    {
+      "inputs": {
+        "flags": 318554419,
+        "primary_bytes": 15969,
+        "alternate_bytes": 59328,
+        "transform_count": 31976
+      },
+      "native_count": 31976,
+      "native_allocation_bytes": 59328
+    },
+    {
+      "inputs": {
+        "flags": 3300399968,
+        "primary_bytes": 5563,
+        "alternate_bytes": 35265,
+        "transform_count": 39338
+      },
+      "native_count": 39338,
+      "native_allocation_bytes": 5563
+    },
+    {
+      "inputs": {
+        "flags": 3417600221,
+        "primary_bytes": 34349,
+        "alternate_bytes": 44160,
+        "transform_count": 65514
+      },
+      "native_count": 65514,
+      "native_allocation_bytes": 34349
+    },
+    {
+      "inputs": {
+        "flags": 3712577132,
+        "primary_bytes": 2031,
+        "alternate_bytes": 33124,
+        "transform_count": 25895
+      },
+      "native_count": 25895,
+      "native_allocation_bytes": 33124
+    },
+    {
+      "inputs": {
+        "flags": 3123355711,
+        "primary_bytes": 29375,
+        "alternate_bytes": 52140,
+        "transform_count": 22325
+      },
+      "native_count": 22325,
+      "native_allocation_bytes": 52140
+    },
+    {
+      "inputs": {
+        "flags": 1426584217,
+        "primary_bytes": 32946,
+        "alternate_bytes": 13661,
+        "transform_count": 50954
+      },
+      "native_count": 50954,
+      "native_allocation_bytes": 13661
+    },
+    {
+      "inputs": {
+        "flags": 3779300099,
+        "primary_bytes": 59367,
+        "alternate_bytes": 47754,
+        "transform_count": 57743
+      },
+      "native_count": 57743,
+      "native_allocation_bytes": 59367
+    },
+    {
+      "inputs": {
+        "flags": 229859590,
+        "primary_bytes": 56060,
+        "alternate_bytes": 14466,
+        "transform_count": 3140
+      },
+      "native_count": 3140,
+      "native_allocation_bytes": 56060
+    },
+    {
+      "inputs": {
+        "flags": 690657617,
+        "primary_bytes": 41115,
+        "alternate_bytes": 4316,
+        "transform_count": 59379
+      },
+      "native_count": 59379,
+      "native_allocation_bytes": 41115
+    },
+    {
+      "inputs": {
+        "flags": 2074892100,
+        "primary_bytes": 40549,
+        "alternate_bytes": 33067,
+        "transform_count": 22441
+      },
+      "native_count": 22441,
+      "native_allocation_bytes": 33067
+    },
+    {
+      "inputs": {
+        "flags": 3532254557,
+        "primary_bytes": 18759,
+        "alternate_bytes": 36401,
+        "transform_count": 10795
+      },
+      "native_count": 10795,
+      "native_allocation_bytes": 36401
+    },
+    {
+      "inputs": {
+        "flags": 3395646578,
+        "primary_bytes": 63062,
+        "alternate_bytes": 33887,
+        "transform_count": 20118
+      },
+      "native_count": 20118,
+      "native_allocation_bytes": 63062
+    },
+    {
+      "inputs": {
+        "flags": 156161764,
+        "primary_bytes": 11306,
+        "alternate_bytes": 13480,
+        "transform_count": 47249
+      },
+      "native_count": 47249,
+      "native_allocation_bytes": 11306
+    },
+    {
+      "inputs": {
+        "flags": 1044846122,
+        "primary_bytes": 40336,
+        "alternate_bytes": 42548,
+        "transform_count": 35231
+      },
+      "native_count": 35231,
+      "native_allocation_bytes": 42548
+    },
+    {
+      "inputs": {
+        "flags": 1019653733,
+        "primary_bytes": 16747,
+        "alternate_bytes": 57169,
+        "transform_count": 34962
+      },
+      "native_count": 34962,
+      "native_allocation_bytes": 57169
+    },
+    {
+      "inputs": {
+        "flags": 3253719521,
+        "primary_bytes": 20698,
+        "alternate_bytes": 10163,
+        "transform_count": 25730
+      },
+      "native_count": 25730,
+      "native_allocation_bytes": 20698
+    },
+    {
+      "inputs": {
+        "flags": 1874015920,
+        "primary_bytes": 50502,
+        "alternate_bytes": 39421,
+        "transform_count": 11949
+      },
+      "native_count": 11949,
+      "native_allocation_bytes": 50502
+    },
+    {
+      "inputs": {
+        "flags": 152007804,
+        "primary_bytes": 15714,
+        "alternate_bytes": 35269,
+        "transform_count": 3979
+      },
+      "native_count": 3979,
+      "native_allocation_bytes": 15714
+    },
+    {
+      "inputs": {
+        "flags": 1767629403,
+        "primary_bytes": 28538,
+        "alternate_bytes": 1603,
+        "transform_count": 21336
+      },
+      "native_count": 21336,
+      "native_allocation_bytes": 28538
+    },
+    {
+      "inputs": {
+        "flags": 1843792376,
+        "primary_bytes": 28688,
+        "alternate_bytes": 54433,
+        "transform_count": 33725
+      },
+      "native_count": 33725,
+      "native_allocation_bytes": 28688
+    },
+    {
+      "inputs": {
+        "flags": 2238434050,
+        "primary_bytes": 29481,
+        "alternate_bytes": 29578,
+        "transform_count": 52073
+      },
+      "native_count": 52073,
+      "native_allocation_bytes": 29481
+    },
+    {
+      "inputs": {
+        "flags": 948579037,
+        "primary_bytes": 50098,
+        "alternate_bytes": 61005,
+        "transform_count": 2236
+      },
+      "native_count": 2236,
+      "native_allocation_bytes": 61005
+    },
+    {
+      "inputs": {
+        "flags": 1415564964,
+        "primary_bytes": 9680,
+        "alternate_bytes": 29195,
+        "transform_count": 25728
+      },
+      "native_count": 25728,
+      "native_allocation_bytes": 29195
+    },
+    {
+      "inputs": {
+        "flags": 1483975900,
+        "primary_bytes": 42054,
+        "alternate_bytes": 60838,
+        "transform_count": 4549
+      },
+      "native_count": 4549,
+      "native_allocation_bytes": 60838
+    },
+    {
+      "inputs": {
+        "flags": 3207943080,
+        "primary_bytes": 38367,
+        "alternate_bytes": 45956,
+        "transform_count": 29235
+      },
+      "native_count": 29235,
+      "native_allocation_bytes": 45956
+    }
+  ]
+}

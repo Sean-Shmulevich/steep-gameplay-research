@@ -1,0 +1,4482 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 128,
+  "scope": "Original owner-dependent default selection and entire per-key rank assignment loop. Visibility helper returns zero; map lookup supplied synthetic hit/miss. Exact key arguments and byte writes checked. Map internals and metadata semantic labels not established.",
+  "samples": [
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          53
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          85
+        ],
+        "ranks": [
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          233,
+          134
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          153,
+          150
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          33,
+          41,
+          178
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 925742811
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          49,
+          89,
+          210
+        ],
+        "ranks": [
+          3,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          45,
+          251,
+          254,
+          197
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 1855323610
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          29,
+          171,
+          158,
+          149
+        ],
+        "ranks": [
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          186,
+          68,
+          135,
+          210,
+          195
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 3045852889
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          154,
+          20,
+          151,
+          146,
+          147
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          168,
+          144,
+          74,
+          216,
+          55,
+          237
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1352008178,
+          "3221225475": 4103548201
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          168,
+          144,
+          26,
+          152,
+          23,
+          157
+        ],
+        "ranks": [
+          2,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          107,
+          50,
+          252,
+          109,
+          109,
+          147,
+          100
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 799863836,
+          "4": 2578845405
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          27,
+          66,
+          156,
+          29,
+          93,
+          147,
+          20
+        ],
+        "ranks": [
+          1,
+          4,
+          1,
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          110,
+          14,
+          32,
+          115,
+          232,
+          103,
+          217,
+          81
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 576995001,
+          "1073741829": 1389428950
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          30,
+          30,
+          16,
+          19,
+          152,
+          103,
+          153,
+          17
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          123
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          27
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          148,
+          159
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          212,
+          223
+        ],
+        "ranks": [
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          42,
+          111,
+          221
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 4253966621
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          90,
+          31,
+          157
+        ],
+        "ranks": [
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          157,
+          183,
+          203,
+          192
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 2024663963
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          157,
+          183,
+          155,
+          144
+        ],
+        "ranks": [
+          1,
+          3,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          151,
+          238,
+          155,
+          184,
+          48
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 3857719249
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          151,
+          158,
+          155,
+          152,
+          16
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          184,
+          96,
+          59,
+          188,
+          172,
+          242
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1053578671,
+          "3221225475": 16442824
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          248,
+          16,
+          27,
+          140,
+          156,
+          146
+        ],
+        "ranks": [
+          7,
+          1,
+          1,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          75,
+          11,
+          253,
+          164,
+          65,
+          79,
+          248
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 2456528376,
+          "4": 1052067108
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          27,
+          11,
+          157,
+          148,
+          65,
+          31,
+          152
+        ],
+        "ranks": [
+          1,
+          0,
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          209,
+          230,
+          101,
+          89,
+          195,
+          149,
+          242,
+          181
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 3933175543,
+          "1073741829": 3824373271
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          209,
+          214,
+          117,
+          89,
+          211,
+          245,
+          210,
+          213
+        ],
+        "ranks": [
+          5,
+          5,
+          7,
+          5,
+          5,
+          7,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          114
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          82
+        ],
+        "ranks": [
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          120,
+          109
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          24,
+          29
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          98,
+          192,
+          236
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 2854647483
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          50,
+          144,
+          156
+        ],
+        "ranks": [
+          3,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          253,
+          125,
+          96,
+          182
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 3607515136
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          157,
+          13,
+          16,
+          150
+        ],
+        "ranks": [
+          1,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          84,
+          45,
+          73,
+          172,
+          209
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 1011401036
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          20,
+          29,
+          73,
+          156,
+          145
+        ],
+        "ranks": [
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          234,
+          66,
+          47,
+          234,
+          207,
+          179
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1548897882,
+          "3221225475": 2056616178
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          170,
+          18,
+          31,
+          170,
+          159,
+          147
+        ],
+        "ranks": [
+          2,
+          1,
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          30,
+          231,
+          125,
+          200,
+          42,
+          102,
+          255
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 4125710218,
+          "4": 611496725
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          94,
+          167,
+          93,
+          216,
+          90,
+          86,
+          223
+        ],
+        "ranks": [
+          5,
+          2,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          136,
+          167,
+          33,
+          143,
+          212,
+          148,
+          35,
+          75
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 1102545507,
+          "1073741829": 2156305410
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          152,
+          151,
+          49,
+          159,
+          148,
+          164,
+          19,
+          27
+        ],
+        "ranks": [
+          1,
+          1,
+          3,
+          1,
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          167
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          151
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          7,
+          123
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          23,
+          27
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          6,
+          154,
+          152
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 4163572110
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          102,
+          154,
+          152
+        ],
+        "ranks": [
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          151,
+          162,
+          56,
+          0
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 2481034060
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          151,
+          194,
+          24,
+          16
+        ],
+        "ranks": [
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          18,
+          203,
+          141,
+          33,
+          175
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 2625632271
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          18,
+          155,
+          253,
+          17,
+          159
+        ],
+        "ranks": [
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          86,
+          160,
+          8,
+          60,
+          107,
+          101
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1792671703,
+          "3221225475": 2952879889
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          118,
+          208,
+          88,
+          28,
+          91,
+          85
+        ],
+        "ranks": [
+          7,
+          5,
+          5,
+          1,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          224,
+          190,
+          15,
+          167,
+          144,
+          66,
+          125
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 2874701285,
+          "4": 2121079735
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          144,
+          222,
+          31,
+          151,
+          240,
+          18,
+          29
+        ],
+        "ranks": [
+          1,
+          5,
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          193,
+          237,
+          251,
+          192,
+          229,
+          55,
+          15,
+          254
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 3950841243,
+          "1073741829": 2683504157
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          209,
+          221,
+          187,
+          208,
+          213,
+          87,
+          95,
+          222
+        ],
+        "ranks": [
+          5,
+          5,
+          3,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          172
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          156
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          111,
+          126
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          31,
+          30
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          89,
+          123,
+          250
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 1023996134
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          105,
+          27,
+          154
+        ],
+        "ranks": [
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          15,
+          236,
+          192,
+          76
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 1526877637
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          31,
+          220,
+          144,
+          28
+        ],
+        "ranks": [
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          156,
+          4,
+          70,
+          140,
+          97
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 3476449564
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          220,
+          84,
+          70,
+          220,
+          81
+        ],
+        "ranks": [
+          5,
+          5,
+          4,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          133,
+          92,
+          58,
+          181,
+          43,
+          251
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 348004573,
+          "3221225475": 1620288923
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          213,
+          28,
+          26,
+          181,
+          27,
+          155
+        ],
+        "ranks": [
+          5,
+          1,
+          1,
+          3,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          76,
+          95,
+          27,
+          30,
+          20,
+          78,
+          80
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 1469479699,
+          "4": 134643607
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          92,
+          63,
+          91,
+          94,
+          116,
+          94,
+          80
+        ],
+        "ranks": [
+          5,
+          3,
+          5,
+          5,
+          7,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          249,
+          43,
+          131,
+          16,
+          100,
+          16,
+          14,
+          76
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 4083693179,
+          "1073741829": 4086255705
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          153,
+          27,
+          179,
+          16,
+          20,
+          16,
+          30,
+          28
+        ],
+        "ranks": [
+          1,
+          1,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          59
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          27
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          21,
+          74
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          21,
+          26
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          74,
+          202,
+          251
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 2386436852
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          74,
+          154,
+          155
+        ],
+        "ranks": [
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          81,
+          3,
+          120,
+          46
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 3604293960
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          81,
+          3,
+          88,
+          94
+        ],
+        "ranks": [
+          5,
+          0,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          200,
+          156,
+          24,
+          110,
+          186
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 3795156221
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          152,
+          156,
+          88,
+          30,
+          154
+        ],
+        "ranks": [
+          1,
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          253,
+          215,
+          187,
+          29,
+          111,
+          1
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 2551182016,
+          "3221225475": 3326541134
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          141,
+          215,
+          219,
+          109,
+          95,
+          81
+        ],
+        "ranks": [
+          0,
+          5,
+          5,
+          6,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          66,
+          163,
+          41,
+          247,
+          23,
+          255,
+          213
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 1995300594,
+          "4": 1577762033
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          18,
+          163,
+          25,
+          151,
+          23,
+          159,
+          149
+        ],
+        "ranks": [
+          1,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          43,
+          67,
+          51,
+          231,
+          186,
+          91,
+          42,
+          136
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 3231436856,
+          "1073741829": 692412982
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          27,
+          19,
+          3,
+          151,
+          154,
+          107,
+          26,
+          152
+        ],
+        "ranks": [
+          1,
+          1,
+          0,
+          1,
+          1,
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          133
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          149
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          102,
+          216
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          22,
+          152
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          213,
+          189,
+          159
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 3889845543
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          245,
+          221,
+          223
+        ],
+        "ranks": [
+          7,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          42,
+          167,
+          81,
+          149
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 242321770
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          26,
+          167,
+          17,
+          149
+        ],
+        "ranks": [
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          197,
+          97,
+          208,
+          113,
+          211
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 3973121807
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          213,
+          81,
+          240,
+          81,
+          211
+        ],
+        "ranks": [
+          5,
+          5,
+          7,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          32,
+          140,
+          129,
+          39,
+          254,
+          94
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1485216905,
+          "3221225475": 3620557187
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          16,
+          156,
+          145,
+          55,
+          158,
+          30
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          3,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          245,
+          36,
+          73,
+          93,
+          35,
+          93,
+          142
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 892003967,
+          "4": 3379906505
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          149,
+          116,
+          25,
+          29,
+          19,
+          29,
+          158
+        ],
+        "ranks": [
+          1,
+          7,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          82,
+          232,
+          43,
+          51,
+          29,
+          42,
+          61,
+          59
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 3248534061,
+          "1073741829": 4132057746
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          18,
+          152,
+          91,
+          19,
+          29,
+          42,
+          29,
+          27
+        ],
+        "ranks": [
+          1,
+          1,
+          5,
+          1,
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          242
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          146
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          4,
+          152
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          84,
+          216
+        ],
+        "ranks": [
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          18,
+          70,
+          199
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 3610217175
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          114,
+          22,
+          151
+        ],
+        "ranks": [
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          146,
+          7,
+          2,
+          120
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 3163584483
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          210,
+          55,
+          82,
+          88
+        ],
+        "ranks": [
+          5,
+          3,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          164,
+          7,
+          166,
+          142,
+          5
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 16202321
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          148,
+          23,
+          150,
+          158,
+          21
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          86,
+          78,
+          185,
+          212,
+          61,
+          255
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 3114967085,
+          "3221225475": 2093303998
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          86,
+          30,
+          153,
+          228,
+          29,
+          159
+        ],
+        "ranks": [
+          5,
+          1,
+          1,
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          101,
+          50,
+          180,
+          217,
+          208,
+          244,
+          226
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 2352267758,
+          "4": 323748423
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          21,
+          98,
+          148,
+          153,
+          240,
+          148,
+          146
+        ],
+        "ranks": [
+          1,
+          6,
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          159,
+          171,
+          0,
+          60,
+          85,
+          188,
+          204,
+          25
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 428878649,
+          "1073741829": 2065482340
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          159,
+          155,
+          16,
+          28,
+          21,
+          204,
+          156,
+          25
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          239
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          223
+        ],
+        "ranks": [
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          159,
+          28
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          159,
+          28
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          31,
+          72,
+          190
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 443192147
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          63,
+          88,
+          222
+        ],
+        "ranks": [
+          3,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          244,
+          68,
+          162,
+          197
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 3322555211
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          148,
+          52,
+          146,
+          149
+        ],
+        "ranks": [
+          1,
+          3,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          177,
+          154,
+          245,
+          67,
+          168
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 1453199204
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          145,
+          154,
+          197,
+          19,
+          152
+        ],
+        "ranks": [
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          213,
+          254,
+          237,
+          120,
+          210,
+          112
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1224708470,
+          "3221225475": 863752618
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          229,
+          158,
+          157,
+          40,
+          146,
+          16
+        ],
+        "ranks": [
+          6,
+          1,
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          121,
+          194,
+          252,
+          67,
+          218,
+          90,
+          136
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 1761940029,
+          "4": 4023116852
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          25,
+          210,
+          156,
+          19,
+          202,
+          26,
+          152
+        ],
+        "ranks": [
+          1,
+          5,
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          21,
+          92,
+          55,
+          124,
+          176,
+          128,
+          75,
+          189
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 122703659,
+          "1073741829": 1324919551
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          21,
+          28,
+          55,
+          28,
+          144,
+          240,
+          27,
+          157
+        ],
+        "ranks": [
+          1,
+          1,
+          3,
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          51
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          19
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          41,
+          89
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          89,
+          89
+        ],
+        "ranks": [
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          104,
+          99,
+          168
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 3774795096
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          8,
+          19,
+          152
+        ],
+        "ranks": [
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          240,
+          69,
+          168,
+          182
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 3546865597
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          144,
+          85,
+          152,
+          150
+        ],
+        "ranks": [
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          238,
+          119,
+          249,
+          199,
+          44
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 635061704
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          158,
+          23,
+          137,
+          151,
+          28
+        ],
+        "ranks": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          200,
+          241,
+          1,
+          137,
+          255,
+          32
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1083264385,
+          "3221225475": 4145961103
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          152,
+          145,
+          17,
+          249,
+          159,
+          16
+        ],
+        "ranks": [
+          1,
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          158,
+          43,
+          203,
+          211,
+          222,
+          71,
+          235
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 2260964710,
+          "4": 3944610562
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          158,
+          107,
+          155,
+          147,
+          174,
+          23,
+          155
+        ],
+        "ranks": [
+          1,
+          6,
+          1,
+          1,
+          2,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          141,
+          207,
+          64,
+          7,
+          79,
+          44,
+          6,
+          197
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 1731520225,
+          "1073741829": 2498514015
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          221,
+          223,
+          16,
+          87,
+          95,
+          124,
+          86,
+          213
+        ],
+        "ranks": [
+          5,
+          5,
+          1,
+          5,
+          5,
+          7,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          255
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          223
+        ],
+        "ranks": [
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          182,
+          194
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          150,
+          146
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          149,
+          84,
+          18
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 3978357480
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          133,
+          20,
+          18
+        ],
+        "ranks": [
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          186,
+          149,
+          56,
+          226
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 3472557285
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          154,
+          213,
+          24,
+          146
+        ],
+        "ranks": [
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          253,
+          254,
+          5,
+          241,
+          19
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 2502329245
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          157,
+          158,
+          85,
+          145,
+          19
+        ],
+        "ranks": [
+          1,
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          6,
+          244,
+          82,
+          92,
+          171,
+          74
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 2683878797,
+          "3221225475": 1968520287
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          86,
+          148,
+          18,
+          124,
+          155,
+          26
+        ],
+        "ranks": [
+          5,
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          20,
+          148,
+          148,
+          20,
+          42,
+          247,
+          253
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 51864125,
+          "4": 52554809
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          84,
+          212,
+          212,
+          84,
+          26,
+          215,
+          221
+        ],
+        "ranks": [
+          5,
+          5,
+          5,
+          5,
+          1,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          74,
+          235,
+          75,
+          117,
+          174,
+          238,
+          242,
+          33
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 3582394498,
+          "1073741829": 1884204804
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          26,
+          155,
+          43,
+          21,
+          158,
+          206,
+          146,
+          17
+        ],
+        "ranks": [
+          1,
+          1,
+          2,
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          200
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          152
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          48,
+          144
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          16,
+          144
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          254,
+          156,
+          122
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 204345670
+        },
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          238,
+          156,
+          26
+        ],
+        "ranks": [
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          34,
+          136,
+          110,
+          118
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 2561809183
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          18,
+          248,
+          30,
+          22
+        ],
+        "ranks": [
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          33,
+          213,
+          137,
+          46,
+          229
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 1783196365
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          17,
+          149,
+          217,
+          30,
+          149
+        ],
+        "ranks": [
+          1,
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          7,
+          4,
+          190,
+          36,
+          74,
+          229
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 1538039558,
+          "3221225475": 2678667947
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          103,
+          84,
+          222,
+          52,
+          90,
+          213
+        ],
+        "ranks": [
+          6,
+          5,
+          5,
+          3,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          40,
+          200,
+          29,
+          168,
+          155,
+          96,
+          96
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 2295692375,
+          "4": 3436525228
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          24,
+          248,
+          29,
+          152,
+          203,
+          16,
+          16
+        ],
+        "ranks": [
+          1,
+          7,
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          72,
+          239,
+          233,
+          8,
+          190,
+          213,
+          77,
+          229
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 171207276,
+          "1073741829": 230458921
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          88,
+          223,
+          201,
+          88,
+          222,
+          149,
+          93,
+          213
+        ],
+        "ranks": [
+          5,
+          5,
+          4,
+          5,
+          5,
+          1,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          162
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          146
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          234,
+          65
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          154,
+          17
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          217,
+          218,
+          159
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 3350497000
+        },
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          137,
+          154,
+          159
+        ],
+        "ranks": [
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          206,
+          130,
+          182,
+          181
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 822219272
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          158,
+          130,
+          150,
+          149
+        ],
+        "ranks": [
+          1,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          3,
+          155,
+          216,
+          111,
+          6
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 2392377659
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          83,
+          219,
+          184,
+          95,
+          86
+        ],
+        "ranks": [
+          5,
+          5,
+          3,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          251,
+          16,
+          136,
+          2,
+          209,
+          163
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 2279218239,
+          "3221225475": 3774570052
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          251,
+          16,
+          152,
+          66,
+          145,
+          147
+        ],
+        "ranks": [
+          7,
+          1,
+          1,
+          4,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          63,
+          242,
+          175,
+          233,
+          184,
+          240,
+          254
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 1989888654,
+          "4": 3988121679
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          95,
+          226,
+          223,
+          217,
+          248,
+          208,
+          222
+        ],
+        "ranks": [
+          5,
+          6,
+          5,
+          5,
+          7,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          188,
+          56,
+          40,
+          152,
+          26,
+          50,
+          177,
+          25
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 2289599842,
+          "1073741829": 707729029
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          156,
+          24,
+          40,
+          152,
+          26,
+          82,
+          145,
+          25
+        ],
+        "ranks": [
+          1,
+          1,
+          2,
+          1,
+          1,
+          5,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          81
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          17
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          245,
+          252
+        ],
+        "keys": [
+          0,
+          1073741825
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          149,
+          156
+        ],
+        "ranks": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          189,
+          40,
+          222
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650
+        ],
+        "overrides": {
+          "0": 3958008151
+        },
+        "owner_visible": false,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          253,
+          24,
+          158
+        ],
+        "ranks": [
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          68,
+          173,
+          117,
+          100
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475
+        ],
+        "overrides": {
+          "1073741825": 229352812
+        },
+        "owner_visible": true,
+        "owner_value": 0
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          84,
+          205,
+          85,
+          84
+        ],
+        "ranks": [
+          5,
+          4,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          68,
+          75,
+          213,
+          97,
+          142
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4
+        ],
+        "overrides": {
+          "2147483650": 1587926311
+        },
+        "owner_visible": false,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          20,
+          27,
+          245,
+          17,
+          158
+        ],
+        "ranks": [
+          1,
+          1,
+          7,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          144,
+          154,
+          97,
+          151,
+          106,
+          38
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829
+        ],
+        "overrides": {
+          "0": 3259827001,
+          "3221225475": 1107243680
+        },
+        "owner_visible": true,
+        "owner_value": 1
+      },
+      "result": {
+        "default": 5,
+        "flags": [
+          144,
+          218,
+          81,
+          135,
+          90,
+          86
+        ],
+        "ranks": [
+          1,
+          5,
+          5,
+          0,
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          92,
+          239,
+          15,
+          169,
+          48,
+          17,
+          65
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654
+        ],
+        "overrides": {
+          "1073741825": 4110128396,
+          "4": 1078883800
+        },
+        "owner_visible": false,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          28,
+          207,
+          31,
+          153,
+          0,
+          17,
+          17
+        ],
+        "ranks": [
+          1,
+          4,
+          1,
+          1,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          219,
+          85,
+          77,
+          184,
+          96,
+          151,
+          222,
+          108
+        ],
+        "keys": [
+          0,
+          1073741825,
+          2147483650,
+          3221225475,
+          4,
+          1073741829,
+          2147483654,
+          3221225479
+        ],
+        "overrides": {
+          "2147483650": 4205256555,
+          "1073741829": 983158390
+        },
+        "owner_visible": true,
+        "owner_value": 2
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          155,
+          21,
+          61,
+          152,
+          16,
+          231,
+          158,
+          28
+        ],
+        "ranks": [
+          1,
+          1,
+          3,
+          1,
+          1,
+          6,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "inputs": {
+        "flags": [],
+        "keys": [],
+        "overrides": {},
+        "owner_visible": false,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [],
+        "ranks": []
+      }
+    },
+    {
+      "inputs": {
+        "flags": [
+          122
+        ],
+        "keys": [
+          0
+        ],
+        "overrides": {},
+        "owner_visible": true,
+        "owner_value": 4294967295
+      },
+      "result": {
+        "default": 1,
+        "flags": [
+          26
+        ],
+        "ranks": [
+          1
+        ]
+      }
+    }
+  ]
+}

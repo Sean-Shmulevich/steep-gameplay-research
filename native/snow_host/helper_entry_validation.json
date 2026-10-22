@@ -1,0 +1,1160 @@
+{
+  "cases": 144,
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "scope": "entry branches only, curve result supplied; outer caller gates remain separate",
+  "rows": [
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000149011612,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 0.10000000894069672,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": -1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": false
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 0,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.0,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.05000000074505806,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 0,
+      "override_b": 1,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 0,
+      "eligible": true
+    },
+    {
+      "curve_result": 1.0,
+      "contact_fraction": 1,
+      "auxiliary_scalar": 0.10000000149011612,
+      "override_a": 1,
+      "override_b": 1,
+      "eligible": true
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "provider-conversion-api-validation-v1",
+  "evidence": "compiled C vs existing recovered float32 reference; synthetic Wine protocol fixture",
+  "reference": "reference/ground_response_pose.py:provider_pose_transform",
+  "compiled_native_reader_tests": 20,
+  "conversion_cases": 128,
+  "conversion_seed": 917,
+  "wine_fixture_checks": {
+    "passed": 63,
+    "total": 63
+  },
+  "optimized_c_test_build": true,
+  "windows_adapters_compile": true,
+  "game_launched": false,
+  "new_fields_live_verified": false,
+  "new_fields": [
+    "parent_vector",
+    "parent_rotation",
+    "provider_vector",
+    "provider_rotation",
+    "record_index",
+    "bank_flags",
+    "conversion_direct",
+    "coordinate_space_semantics"
+  ],
+  "limits": [
+    "No quaternion normalization",
+    "No named bone or world-space claim",
+    "Sequential guarded reads are not atomic",
+    "Earlier live receipts predate new fields"
+  ]
+}

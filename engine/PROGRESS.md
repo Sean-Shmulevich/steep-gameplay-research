@@ -2,7 +2,15 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
-Latest: Snow mod host 0.6 adds player events and liveness. A binding is valid only while the engine's live registries still hold that exact actor, checked before every read and setter and every 250 ms; on change plugins get `on_player` lost/acquired and the host re-binds. A new `IN_WORLD` flag reports whether the body is being simulated: live, it cleared exactly while the player was frozen after a crash and during respawn staging (same actor, no event), and setters refuse then. Plugins built against older headers still load. Fixture 56/56 ([details](../native/snow_host/README.md#player-events-host-06)).
+Latest: the unscaled queue producer now has a static route from the BeforeSimulation actor receiver through input ingestion, carrier preparation and selected motion states. A 72-case original-byte dispatch check establishes the numeric route predicate. Existing live ordering covers actor-return-before-world-step, not execution of this newly identified producer or its consumer. Next is an actor/request-correlated live queue/consume trace. See [route and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#producer-route-reaches-beforesimulation).
+
+Previous: the queue producer and clear method were found in leaf-function gaps omitted by the earlier unwind-table scan. The actor queue accumulates all four float32 lanes, without a lock, mass factor or timestep factor. Both original leaves passed 256 synthetic cases. The nonzero writer is now identified; its caller-to-consumer scheduling remains open, so a live queue API is not yet exposed. See [producer contract](../docs/reconstruction/CENTRAL_IMPULSE.md#queue-producer-recovered-from-leaf-function-gaps).
+
+Previous: the pending-impulse consumer now has a 48-case native-byte check of lock-call ordering, main/optional-rider submission, four-lane threshold and clear-after-unlock behavior. It submits equal impulses, not equal velocity changes. Lock implementation and the nonzero queue producer remain unresolved; no live queue writer was added. See the [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pending-impulse-consumer-and-lock-scope).
+
+Previous: the [central-impulse primitive](../docs/reconstruction/CENTRAL_IMPULSE.md) now has a portable API and 960-case native-byte validation. It adds linear momentum without clearing spin; wrapper gates and dispatch arguments were checked offline. Equal-delta-velocity impulses for unequal main/rider masses are a separately labeled derived mod policy. Live lock/thread context, paired-body acquisition, dt ownership and a per-step callback remain open. The current actor velocity setter has passed a live 90-unit/s visual demo but clears spin. Startup loading and one-shot boost evidence are in the [host guide](../native/snow_host/README.md).
+
+Previous: Snow mod host 0.6 adds player events and liveness. A binding is valid only while the engine's live registries still hold that exact actor, checked before every read and setter and every 250 ms; on change plugins get `on_player` lost/acquired and the host re-binds. A new `IN_WORLD` flag reports whether the body is being simulated: live, it cleared exactly while the player was frozen after a crash and during respawn staging (same actor, no event), and setters refuse then. Plugins built against older headers still load. Fixture 56/56 ([details](../native/snow_host/README.md#player-events-host-06)).
 
 Previous step: Snow mod host 0.5 adds player placement through the engine's own routine (`set_player_pose` for plugins, `player.set_position` for clients; held only, at most 100 units per move). Live while riding: a 3-unit lift with velocity kept read back exactly and the player carried on from there; the same lift with zero velocity was undone in the first step, cause not yet known. A sideways move uphill put the player inside the slope and the physics ejected them: the host has no ground check ([details](../native/snow_host/README.md#player-state-host-03)). Fixture 52/52.
 
@@ -55,6 +63,2882 @@ Begin-path follow-up: [90 isolated instruction cases](../docs/reconstruction/SCH
 Live follow-up: [three fresh acquisitions succeeded](../docs/reconstruction/NATIVE_SCHEDULER_OBSERVATION.md) in one bounded Highball session. The selected world's graph and all seven job tables matched; 44 ordinary sweeps and 283 complete burst groups showed advancing request counts and changing holds. All sampled execution counters were zero, so no worker interval or safe pause point was established. Next investigate animation receiver membership and immediate/ordinary dispatch paths before interpreting further zero samples. The session ended at its time limit, restored configuration and left no game/Wine processes running.
 
 Latest observation work: a [guarded scheduler collector](../docs/reconstruction/SCHEDULER_OBSERVATION.md) decodes seven animation/action job headers and the animation claim count through a caller-supplied read transport. Nine synthetic tests check its failure and reporting contracts. The action graph is now resolved through world+`0x1038`, with a graph-to-world backlink guard, separately from the earlier physics scheduling state. A private command connects fresh player/world acquisition to this collector; the live follow-up above validates this path for one session. The constructor verifier passed 32 instruction slices and five table bindings, and four world/graph instruction spans were checked against the hash-matched image. Next: resolve the receiver-membership and dispatch questions identified by the live capture. Equal counters never establish safe stepping.
+
+
+### Animation result conversion wrapper
+
+Static-derived filter/attempt/fallback orchestration is executable in
+`reference.animation_result_conversion`. Failed attempts receive an unfiltered
+fallback without rolling back output mutations. Threshold MAXSS handling and
+low-byte status tests are preserved. Five focused tests pass including the
+existing filter receipt test. Joined instruction validation and the two actual
+pose conversion routines remain open; no live animation claim is added.
+
+
+### Animation fallback selection and publication
+
+Recovered the fallback root/candidate scans and token-publication order. Original
+instructions passed 76 synthetic cases with direct/relative storage; only final
+provider dispatch was supplied. Reference tests compose it with failed filtered
+conversion. The final provider's pose production and multi-result conversion
+remain unresolved. See CENTRAL_IMPULSE.md, Fallback result selection.
+
+
+### Flat animation result accumulation
+
+Kind-zero result conversion now preserves sequential provider dispatch and
+float32 weight accumulation, with 80 original-instruction cases. Provider,
+temporary, blend and cleanup implementations remain explicit dependencies.
+Group conversion and final joint blending are still open; no pose parity claim.
+
+
+### Pending animation completion dispatch
+
+Completion now has a reference API for flag consumption and kind-8 descriptor
+group dispatch, checked against 96 original-instruction cases. Readiness and
+completion providers remain supplied; this does not yet produce joint poses.
+Next: identify concrete completion providers and the pending-flag producer.
+
+
+### Pending animation flag propagation
+
+Recovered side-state copy now preserves provider/auxiliary copy ordering and
+transfers only pending flag bit zero. Thirty-two instruction cases validate scalar
+stores and alias gates with vector services supplied. Copy-to-completion integration
+is tested. Initial flag production and temporary-bank initialization remain open.
+
+
+### Lazy temporary animation banks
+
+Temporary preparation now has a lifecycle adapter checked against 64 instruction
+cases, including reuse, absent bindings and null allocation. Backend services
+remain explicit. Pending state is preserved and failed acquisition can retry.
+Next: connect concrete bank services and provider sampling to this lifecycle.
+
+
+### Temporary animation cleanup and integration
+
+The temporary lifecycle now includes pending-reference recycling, binding release
+and owned-bank release, with 48 instruction cases. A three-result conversion test
+reuses one temporary bank and releases it once. Concrete provider/pose-blend service
+implementations remain unresolved; no runtime pose-fidelity claim is added.
+
+
+### Animation service names recovered
+
+Mapped 43 registration names to checked callback setters. This identifies the
+selection-mask copy/release and skeleton-pose acquire/release/blend services used
+by the reconstructed lifecycle. Corrected the generic retain callback name to
+copy_selection_mask. Runtime implementations remain unresolved; the image table
+is null, so no live binding or mod API availability is claimed.
+
+
+### Concrete animation callback registration
+
+All 43 registered names now map to concrete callback functions via an executed
+registration sequence with supplied registry lookup. Six selection-mask services
+are implemented and checked in 36 original-instruction cases, then composed with
+temporary pose lifecycle. Some named IK callbacks are stubs; no capability is
+inferred from names alone. Next: concrete pose acquire/release/blend bodies.
+
+
+### Registered pose acquisition joins the bank pool
+
+Registered acquisition and wrapper initialization now have an API and 48 joined
+instruction cases. The eager branch reaches the reconstructed bank allocator;
+temporary acquisition is lazy. Mask and mode truncation, preserved flag bits and
+scratch initialization boundaries are explicit. Wrapper pool concurrency and
+release storage management remain open.
+
+
+### Typed regular pose-blend channels
+
+Regular channel interpolation now has an executable helper with 90 original-byte
+cases for scalar/vector/integer/no-op kinds. The unusual kind-4 first-source
+behavior and unsigned integer wrap are preserved. Quaternion evaluation remains
+an explicit dependency; bank traversal and masked variants remain open.
+
+
+### Quaternion kernel connected to byte channels
+
+The byte-buffer blend adapter now invokes the existing reconstructed rotation
+kernel with explicit RSQRT seeds. All 80 regular quaternion instruction-receipt
+cases match output bytes and normalization inputs. This closes an integration gap;
+it does not add new original-engine formula coverage or CPU parity evidence.
+
+
+### Regular blend over bank byte storage
+
+Regular bank traversal now joins group masks, descriptor selection, typed arithmetic
+and near-one copy/status effects. Twenty original-instruction cases match the
+composed byte-buffer adapter. Supplemental tails remain explicit; outer pose-wrapper
+transform/mask variants and active clip selection remain open.
+
+
+### Regular bank supplemental tail connected
+
+The regular byte-bank API now evaluates explicit supplemental records by default.
+Twenty joined instruction cases execute router through supplemental completion
+without replacements, using equal-ID identity-rotation records. General pose/clip
+selection and aliasing remain unresolved; separate nontrivial-rotation receipts
+are not relabeled as full joined evidence.
+
+
+### Nontrivial rotations validated in joined bank blending
+
+Ninety instruction cases now execute quaternion channels and supplemental rotations
+in the same regular blend with no replacements. Reference bytes, flags, group
+visits and ordered RSQRT inputs/seeds match. Separate storage and equal-ID/count
+records remain the joined domain; active game pose selection remains open.
+
+
+### Runnable regular byte-bank inspection
+
+The existing animation-bank JSON testbench now accepts regular_bytes cases. Its
+synthetic example reproduces a joined receipt and reports byte output, flags,
+records, ranges and normalization trace. CLI output, input immutability, strict
+recorded-seed consumption and authored-policy labeling are tested. No game access.
+
+
+Regular pose wrapper: mode-zero inactive-mask orchestration now preserves allocation, source-before-destination preparation, cached mask/selector and final primary-bank ready publication. A 64-case original-instruction check supplies the inner services; their storage integration remains open. See [contract and evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#regular-pose-wrapper-orchestration).
+
+
+Byte-bank reciprocal scaling now shares channel storage through write-through record views and preserves partial aliases. All 96 original-instruction cases match whole buffers and wrapper flags without supplied native calls. See [storage bridge](../docs/reconstruction/CENTRAL_IMPULSE.md#byte-bank-scale-storage-bridge).
+
+
+Regular blending now supports destination/input whole-bank aliasing. 220 original-instruction cases cover identity and nontrivial rotations, repeated group tails and copy/exclusion branches. Arbitrary record-memory overlap remains unmodeled. See [in-place evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#in-place-regular-bank-blending).
+
+
+Joined regular byte pose API now composes bank selection, reciprocal scale removal, in-place channel blending and ready publication. All 24 full-helper original-instruction cases match with no substituted native calls on the existing-primary, empty-supplemental branch. See [joined scope](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-regular-byte-pose-path).
+
+
+Relative conversion now has a byte-bank adapter and is the joined pose API default. It replays 192 existing original-instruction cases and has a synthetic new-alternate integration test. Allocation remains supplied. See [adapter evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#relative-conversion-byte-adapter).
+
+
+Full regular blend with alternate conversion now matches 64 original-instruction cases. Only allocation is supplied; selection, conversion, scaling and blending execute their actual instructions. Four bank buffers/headers/flags and wrapper identities match. See [joined conversion evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-conversion-and-blend-instruction-validation).
+
+
+Blend-mask byte preparation is reconstructed and matches 96 complete original-instruction cases, including repeated destination offsets and overlapping value/output storage. Masked arithmetic consumer integration remains open. See [preparation contract](../docs/reconstruction/CENTRAL_IMPULSE.md#blend-mask-byte-preparation).
+
+
+Masked channel weight routing now matches 24 original-instruction observations. It preserves key caching, paired byte consumption, defaults and unclamped float32 scaling. Complete masked output and group override integration remain open. See [weight contract](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-channel-weight-selection).
+
+
+Masked bank output now matches 80 original-instruction cases with no supplied calls, covering keyed weights, group overrides, distinct copy behavior and supplemental tails. The outer active-mask pose wrapper remains open. See [masked bank output](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-bank-blend-output).
+
+
+Active-mask pose orchestration now joins source preparation to masked/uniform bank blending. All 96 full-helper instruction cases match without supplied calls, including zero-selection source mutations. See [joined mask path](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-active-mask-pose-wrapper).
+
+
+The JSON animation bank bench now exposes `masked_bytes`, with a runnable synthetic comparison of partial/full masks. All 80 existing masked output receipt cases pass through the JSON boundary; CLI and malformed-control tests pass. Alias identities and outer pose orchestration are not encoded by this bench entry.
+
+
+Masked quaternion output now matches 432 original-instruction cases with nonidentity channel and supplemental rotations. The same cases pass through the public JSON bench with observed normalization seeds. A runnable rotation fixture is included; separate-bank scope remains explicit. See [rotation evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-rotation-output-validation).
+
+
+Active masks and alternate conversion now match 64 joined original-instruction cases, with allocation alone supplied. Paired weight bytes survive the second source selection and drive the final masked blend. See [combined evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#active-masks-with-alternate-conversion).
+
+
+The additive typed byte leaf now matches 90 new non-quaternion instruction cases and replays 80 existing mode-four quaternion cases. Type-specific interpolation/addition/no-op distinctions are preserved. Additive bank/outer wrapper integration remains open. See [typed contract](../docs/reconstruction/CENTRAL_IMPULSE.md#additive-byte-channels).
+
+
+Near-one additive byte combination now matches 96 original-instruction cases, including unnormalized quaternion multiplication. The scalar/byte switch from interpolation to addition is preserved and regression-tested. See [near-one behavior](../docs/reconstruction/CENTRAL_IMPULSE.md#unweighted-additive-byte-leaf).
+
+
+Uniform additive byte-bank traversal now matches 180 original-instruction cases including both source orders, quaternion weighting and near-one composition. Supplemental records and bank flags remain unchanged, matching the original path. See [additive traversal](../docs/reconstruction/CENTRAL_IMPULSE.md#additive-byte-bank-traversal).
+
+
+Masked additive byte banks now match 432 original-instruction cases, preserving independent weight-source selection and arithmetic source order. Integer-weight-255 dispatch differs from uniform near-one routing. See [masked additive scope](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-additive-byte-banks).
+
+
+Delivery reassessment: startup loading, player reads, pause/step/resume and
+engine-routine brake/boost already exist in the native host. The current local
+startup preflight passes. Client step/demo now share failure-aware recovery,
+refuse existing holds and cannot report a failed step as successful merely
+because resume succeeded. This is client/protocol validation, not a new live
+session. Further research should address a concrete integration blocker; the
+larger engine reconstruction remains incomplete.
+
+
+2026-10-22 acceptance attempt: host/launcher built, but Intel process execution
+failed before gameplay. Direct Rosetta execution probe also failed. Cleanup
+verified restored settings, stopped bottle and original DLL hash. Preflight now
+rejects this state before launch. No stepping regression can be inferred from
+this prerequisite failure; live acceptance awaits restored Intel execution.
+
+
+Delivery path: `run_late_load.py --experiment host --load-at startup --plan
+acceptance --steps 3` now combines player reads, verified stepping/recovery and
+the existing bounded brake/boost trial, retaining independent stage results.
+The runner still separately requires startup verification, post-test stability
+and cleanup. Scripted tests validate sequencing/failure propagation; live
+acceptance remains pending the Intel execution prerequisite.
+
+
+Speed acceptance recovery is now testable independently of the live launcher.
+Uncertain pause results trigger resume, existing holds are preserved, and partial
+mutation evidence survives recovery errors. Intel execution remains unavailable;
+Rosetta installation approval has been requested separately.
+
+Integration update: recovered regular, additive and keyed masked byte-bank
+arithmetic now runs through explicit pose-graph nodes, using an authored
+pose-to-descriptor layout and an explicitly selected exact-square-root seed.
+The independent controller exposes paused brake/boost commands with preserved
+angular velocity and complete command replay. The combined experiment is
+`python3 -m engine.examples.gameplay_mod_experiment --output report.json`;
+it records control, body and pose samples plus events and scheduler trace.
+These are independent-engine integration results, not original-game fidelity.
+Native live acceptance remains unavailable while Intel execution fails; the
+portable already-running-host acceptance command and bounded startup route are
+implemented but have not been reconfirmed live in this environment.
+
+## Recursive result-tree filter reconstructed
+
+Forty-eight instruction cases validate strict weight filtering over 24-byte records,
+recursive group types 1/3/5/7, closing-record retention and rewritten spans. Empty
+groups are removed; equality and unordered NaN comparisons reject records. Vector
+append/truncate services are supplied. Thirty-six focused tests pass. See the
+[filter contract](../docs/reconstruction/CENTRAL_IMPULSE.md#result-tree-weight-filtering).
+
+Next: join the wrapper's threshold clamp, filtered conversion and unfiltered
+fallback. Actual output conversion, clip selection and IK remain unresolved.
+No game session was launched or attached.
+
+## Pose evaluator output gates and producer leads isolated
+
+Ninety original-instruction gate cases establish extra-work/owner gating, an
+unresolved graph predicate and low-29-bit result count greater than one before
+output publication. The evaluator still performs parameter/cleanup work when
+output is skipped. Concrete graph evaluation and output conversion/completion
+calls are now identified as next targets. Thirty-three focused tests pass.
+See [output gates](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-evaluator-output-gates).
+
+The gate receipt supplies intermediate results and does not execute the whole
+evaluator. Active clip selection, IK and downstream pose math remain unproved.
+No game session was launched or attached.
+
+## Concrete pose-work receiver identified and dispatch reconstructed
+
+The existing Kino factory chain resolves the work interface to a concrete wrapper.
+Thirty-two instruction cases validate its absent-owner gate, zero-interval prepare,
+post-prepare owner/packet reload and low-byte result forwarding. The downstream
+preparation and evaluator remain supplied services but now have precise static
+targets. Thirty-one focused tests pass. See [work dispatch](../docs/reconstruction/CENTRAL_IMPULSE.md#concrete-pose-work-interface-dispatch).
+
+Next: trace the concrete evaluator's output-producing branches, connecting them to
+the reconstructed bank lifecycle. No game session was launched or attached.
+
+## Constructed banks now support profile-driven partial reuse
+
+An integration test found that the copy helper required flat metadata while bank
+construction attached a profile. Copy now resolves attached source/destination
+profiles, with flat compatibility only when no profile exists. Create/release/
+partial-reuse/copy-as-source tests pass, including current-profile precedence over
+stale flat fields. The runnable allocation demo exercises partial reuse.
+Twenty-nine focused tests pass. See [integration correction](../docs/reconstruction/CENTRAL_IMPULSE.md#attached-profile-copy-integration).
+
+This is an API composition fix backed by the existing profile-pointer findings,
+not new live or instruction evidence. No game session was launched.
+
+## Explicit-service allocation API and runnable lifecycle demo
+
+`acquire_pose_bank` now composes reuse and miss construction with explicit reserve,
+bank-allocation and data-allocation callbacks. Replay against 80 fixed/relocated
+miss cases passes through the API. A runnable synthetic demo allocates once,
+releases and reuses the same identity with matching data. Failure tests preserve
+partial publication rather than claiming rollback. Twenty-seven focused tests
+pass. See [API and example](../docs/reconstruction/CENTRAL_IMPULSE.md#explicit-service-acquisition-api).
+
+JSON sessions still report allocation misses. Heap policy, native concurrency,
+first-time TLS and live lifetime remain separate unresolved boundaries. No game
+session was launched or attached.
+
+## Pool relocation verified; local null recovery not observed
+
+Forty joined instruction cases pass with reserve moving the table and poisoning
+old storage. Subsequent initialization/publication uses the new table. Separate
+bank/data null-allocation injections reach invalid low-address accesses before
+return; OS exception handling is outside emulation. Twenty-three focused tests
+pass, including composition replay of both fixed and moved table receipts.
+See [relocation and failures](../docs/reconstruction/CENTRAL_IMPULSE.md#pool-relocation-and-null-allocation-boundaries).
+
+The reference's allocation rejection remains an authored safeguard. No claim of
+original crash recovery or live concurrency is made, and no game was launched.
+
+## Successful pool miss path validated end to end with heap services supplied
+
+Forty original-instruction cases execute scan miss, slot initialization, constructor,
+post-construction setup and actual full copy together. Lookup/reserve/heap services
+remain supplied. New entry masks retain the request while new-bank data always
+uses full-copy seeding. Twenty-three focused pool/copy/session tests pass. See
+[joined miss evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-successful-pool-allocation-miss).
+
+Remaining boundaries include reserve relocation, allocation failure, first-time
+TLS initialization and live concurrency/lifetime. The public session still reports
+allocation misses rather than supplying a silent allocator substitute. No game
+session was launched or attached.
+
+## Post-construction setup and full-copy seeding joined
+
+Twenty-four original-instruction cases execute profile/data attachment, default
+transforms, empty secondary reset and full-copy seeding, with data allocation
+supplied. The default parent header survives while source data bytes are copied.
+Pointer publication/attachment, returned identity and final flags match. Twenty-
+two focused pool/copy/session tests pass. See the [seeding contract](../docs/reconstruction/CENTRAL_IMPULSE.md#post-construction-bank-seeding).
+
+Heap allocation, failure handling, first-time TLS and the complete miss path still
+need joined evidence. No game session was launched or attached.
+
+## Pose-bank constructor fields reconstructed
+
+Ninety-six original-instruction cases execute the full constructor and its actual
+initialized-TLS/default, empty resize and auxiliary initialization paths without
+call stubs. All object bytes are checked, including preserved fields. The symbolic
+reference explicitly omits the uninitialized main parent header and inline record
+contents. Twenty-one focused pool/copy/session tests pass. See the [constructor contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-bank-constructor-initialization).
+
+Next: allocator post-construction profile/data setup and full-copy seeding.
+First-time TLS setup, allocation failure and live lifetime are still unproved.
+No game session was launched or attached.
+
+## New pool slot initialization recovered; broad regression suite passes
+
+The growth-initialization slice passed 60 instruction cases with reserve supplied.
+It preserves selected backing bits and reserved bytes while installing request
+masks and a null bank pointer. Static continuation seeds newly allocated banks
+through full-mask copy, regardless of the initial request mask. Allocation and
+constructor services remain unresolved, so the session still reports misses.
+See [new-slot contract](../docs/reconstruction/CENTRAL_IMPULSE.md#new-pool-entry-initialization).
+
+The broader suite passed 1,476 tests before the new slot test was added; the
+subsequent pool/copy/session selection passed 20 tests including that new test.
+No game session was launched or attached.
+
+## Pool reuse and copying joined; offline byte copying enabled
+
+Ninety-six original-instruction cases now execute reuse with actual partial/full
+copying. Only component/stamp lookups are supplied. The joined tests establish
+header preservation and readiness clearing around copy. The session's explicit
+`copy_supplied_pose_bytes` policy executes these rules on supplied synthetic JSON
+byte arrays. Thirty-six focused tests pass and the new CLI example runs.
+See [joined evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#pool-reuse-with-actual-bank-copy)
+and [session API](../docs/reconstruction/ANIMATION_POOL_SESSION.md#execute-copying-on-supplied-pose-bytes).
+
+Allocation growth, auxiliary container effects, full job execution and live
+lifetime/concurrency guarantees remain open. No game session was launched.
+
+## Full-mask pose-bank copy reconstructed
+
+The full-mask branch passed 192 original-instruction cases with its real trailing-
+byte copy routine and no service stubs. The dispatcher now handles partial masks
+and full storage copy, with explicit aligned-layout bounds and untouched trailing
+bytes. Thirty-four focused tests pass. See the [full-copy contract](../docs/reconstruction/CENTRAL_IMPULSE.md#full-mask-pose-bank-copy).
+
+Next: join pool reuse with actual copy semantics and connect the offline session
+through an explicit copy policy. Partial overlap, allocation misses and live
+lifetime guarantees remain open. No game session was launched.
+
+## Masked bank copy now has executable byte semantics
+
+The selected-record copy service's partial-mask branch passed 128 original-
+instruction cases with no service stubs. It selects descriptor ranges by mask and
+mode, copies kind-dependent 1/4/12/16-byte values, conditionally copies the parent
+header and sets readiness even for empty selection. The reference preserves the
+flat group-table indexing. Thirty-two focused tests pass. See the [copy contract](../docs/reconstruction/CENTRAL_IMPULSE.md#masked-pose-bank-record-copy).
+
+Full-mask bulk copy, overlapping buffers and a joined pool-reuse/copy validation
+remain open. No game session was launched or attached.
+
+## Runnable animation pool lifecycle inspection
+
+`engine.animation_pool_session` exposes acquire/release/cleanup sequences with
+named identities, detached snapshots, explicit allocation misses and service-call
+traces. The synthetic example runs through acquisition, miss, release, reuse and
+wrapper cleanup. JSON mode requires an explicit policy that records pose copy and
+storage services without performing them; Python callbacks can supply effects.
+Twenty-nine focused tests pass, and the CLI example executes successfully.
+See the [API contract](../docs/reconstruction/ANIMATION_POOL_SESSION.md).
+
+The adapter makes recovered ownership rules inspectable across operations; it does
+not provide native allocation, scheduling, game access or live lifetime guarantees.
+
+## Pose-work cleanup and release ordering joined
+
+The output/input wrapper cleanup slice now executes together with native pool
+release in 128 instruction cases. Primary ownership gates, unconditional
+alternate release, flag-dependent masks, alias-sensitive ordering and scratch
+ownership all match the reference. Twenty-four focused tests pass. See the
+[cleanup contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-work-wrapper-cleanup).
+
+Allocator lookup/free services remain supplied, and auxiliary counts are zero in
+this joined check. Full work execution, allocation misses and live lifetime still
+need evidence. No game session was launched or attached.
+
+## Animation bank release reconstructed
+
+The release routine clears requested occupied bits while preserving bit 15 and
+the pool entry; it gates auxiliary cleanup by a separate mask/count. All 120
+original-instruction cases match with only auxiliary container clearing supplied.
+Static calls connect it to temporary-wrapper cleanup in the studied pose-work
+caller. Twenty-three focused tests pass, including a synthetic release/reuse
+identity cycle. See [release contract](../docs/reconstruction/CENTRAL_IMPULSE.md#animation-bank-release).
+
+Next: validate the work caller's ownership gates and release ordering. Growth,
+allocation, live concurrency and lifetime guarantees remain unresolved. No game
+session was launched or attached.
+
+## Animation bank pool reuse recovered
+
+The allocator consumes the wrapper's so-called index as a low-15-bit request
+mask. It reuses the first entry with no occupied-mask overlap and matching
+representation, then updates masks and conditionally copies selected records.
+The complete reuse branch passed 96 original-instruction cases with lookup,
+stamp and copy services supplied. Four public tests cover receipt replay and
+explicit first-match/miss/mutation boundaries. Twenty-one focused tests pass.
+See [pool reuse](../docs/reconstruction/CENTRAL_IMPULSE.md#animation-bank-pool-reuse).
+
+Growth/allocation, mask release, synchronization and live lifetime remain open.
+The reference returns an explicit miss instead of inventing allocation behavior.
+No game session was launched.
+
+## Selection, conversion and owner scaling joined
+
+The scale-on-selection helper now has a reference composition and 192 joined
+original-instruction cases with only allocation supplied. Conversion sets the
+wrapper bit that suppresses subsequent scalar access; skipped conversion can
+still lead to explicit scaling. Records, headers, flags and identities match.
+Twenty focused tests pass. Secondary arrays are empty in this joined receipt;
+separate scaling tests cover them. See the [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#selection-followed-by-owner-scaling).
+
+No game session was launched. Live allocation/lifetime, scalar semantics and
+active animation cadence remain unresolved, as does debugger resume reliability.
+
+## Relative selector and converter validated together
+
+A 192-case original-instruction run now executes both the selector and relative
+converter with only allocation supplied. All bank records, headers, readiness
+flags, wrapper flags and returned/installed identities match the reference
+composition. Empty-bank conversion still triggers the caller's flag consumption.
+The whole-bank adapter is `convert_relative_pose_bank`; 19 focused tests pass.
+See the [joined contract](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-relative-bank-selection).
+
+Remaining boundaries are allocation/lifetime, active call cadence and reliable
+live debugger cleanup. No game session was launched. A useful next join is the
+scale-on-selection helper, where wrapper bit 1 can suppress explicit scaling.
+
+## Parent-relative animation conversion reconstructed
+
+The opposite selector's conversion service now has executable math with 192
+original-instruction cases, including separate and aliased banks, rank skips,
+empty banks, parent-header copying and flags. Four new public tests replay the
+receipt and preserve the in-place parent-read distinction. Eighteen focused
+hierarchy and owner-bank tests pass. See the [conversion contract](../docs/reconstruction/CENTRAL_IMPULSE.md#parent-relative-bank-conversion).
+
+This is static instruction evidence using synthetic records and emulator RSQRT
+seeds. It does not establish active rig semantics or a safe live animation setter.
+Next: join selection and conversion without the conversion stub. Live debugger
+resume/cleanup remains unresolved; this pass did not launch or attach to the game.
+
+## Opposite bank selector and readiness-flag consumption reconstructed
+
+Sixty-four instruction cases establish reversed bit-26 selection, indexed
+alternate acquisition and post-conversion updates: wrapper bit 1 set, both bank
+bit-27 flags cleared. Conversion remains a supplied service. This shows that the
+preparation bit does not uniquely prove explicit scalar preparation occurred.
+Eleven focused wrapper tests pass. No game launched.
+[Lifecycle contract](../docs/reconstruction/CENTRAL_IMPULSE.md#opposite-bank-selection-and-flag-lifecycle).
+
+## Reciprocal preparation and joined rounding behavior reconstructed
+
+Added reciprocal removal with 192 native comparisons plus 192 forward/removal
+comparisons. Of 96 initially unprepared joined cases, 14 do not restore exact
+values under float32 arithmetic. The helper rereads current owner scale and clears
+the preparation bit; it does not remember the original scale. Ten focused tests
+cover the accumulated reference. Live lifecycle and zero/nonfinite reciprocal
+validation remain open. No game launched.
+[Arithmetic and modding implications](../docs/reconstruction/CENTRAL_IMPULSE.md#reciprocal-bank-preparation-and-round-trips).
+
+## Owner-scalar animation-bank preparation reconstructed
+
+The wrapper preparation now has executable float32 arithmetic matched by 192
+joined instruction cases with no substituted services. It scales four lanes per
+record, preserves the other four, skips both arrays when primary count is zero,
+and preserves double application under aliasing. The wrapper preparation bit
+prevents repeated work. Owner-scalar gameplay meaning/live activation remain open.
+Eight focused tests cover the accumulated wrapper reference. No game launched.
+[Formula and boundaries](../docs/reconstruction/CENTRAL_IMPULSE.md#owner-scalar-bank-preparation).
+
+## Trace-stop auto-resume removed; refusal path fixture-tested
+
+Trace stops now end observation with an explicit error and cleanup, superseding
+the previous bounded auto-resume policy. All 11 synthetic classification-injection
+checks pass, including no subsequent Continue and clean detach. This does not
+reproduce genuine Wine trace behavior or establish safe cleanup during the game
+failure. The game stayed closed.
+[Policy and limitations](../docs/reconstruction/CENTRAL_IMPULSE.md#trace-stops-terminate-observation-rather-than-automatically-resuming).
+
+## Reasonless stops deferred and reobserved in native fixture
+
+The observer no longer consumes/resumes a stop whose thread reasons are all None.
+It rechecks the same ID later and checks state/ID stability before reading. A
+fixture-only hidden-reason snapshot passed all 18 checks, including no premature
+resume, 24 observations/12 matched pairs and clean detach. This tests an authored
+fault injection, not the original Wine failure. Trace-only handling and genuine
+unstable cleanup remain open; no game launched.
+[Classification contract](../docs/reconstruction/CENTRAL_IMPULSE.md#reasonless-stopped-reports-are-deferred).
+
+## Live retry rejects stop-ID guard as a sufficient fix
+
+The same resume failure recurred despite a newer stop ID. One matched player
+work-call pair and one unmatched entry were captured. The rejected Continue
+followed ID 9 with no recorded hit/trace for that stop; earlier trace stops are
+retained. LLDB aborted without cleanup confirmation. Outer session containment
+restored settings and verified the original DLL. Next investigate stop-reason/
+event delivery in fixtures; no further live attachment is justified by the
+current synthetic successes alone.
+[Retry evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#guarded-live-retry-still-fails-at-a-newer-stop).
+
+## Explicit resume-stop generation guard validated in fixtures
+
+The observer invalidates the prior stop ID before every Continue attempt and
+requires a newer stopped report for observation/resume/cleanup. Ambiguous cleanup
+times out without removing breakpoints. Three policy tests pass; native forced
+failure and normal multithread fixtures pass all 11 and 15 checks respectively.
+This is a targeted tooling improvement, not proof the game failure is fixed.
+No game launched.
+[Guard contract](../docs/reconstruction/CENTRAL_IMPULSE.md#explicit-resume-stop-generation-guard).
+
+## Resume-state lag observed; forced-failure cleanup passes
+
+Added bounded state/stop-ID logging and fixture-only exception injection after
+successful Continue. The forced-failure run passes 11 checks and confirms a
+running-to-new-stop cleanup transition. Continue initially reported the old stopped
+state, then cleanup saw running. A normal 24-hit three-thread run also passes all
+15 checks. This supplies a concrete asynchronous-state lead, not a reproduced game
+failure or a proven fix. No game launched.
+[Transition evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#resume-transitions-and-forced-failure-cleanup).
+
+## Three-thread observer fixture passes; live resume failure not reproduced
+
+A six-hit trial and expanded 24-hit trial completed with clean debugger cleanup.
+The expanded run captured 12 matched pairs across three threads, no unmatched
+entries, and all 15 checks passed. This does not repair or explain the original
+game failure. The retained LLDB diagnostic contains no abort backtrace. Next add
+state/resume transition instrumentation and explicit failure-path cleanup tests
+before considering another game attachment.
+[Evidence and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#multithreaded-fixture-did-not-reproduce-the-resume-failure).
+
+## Live player work-call pairs observed; debugger cleanup failed
+
+Fresh skeleton acquisition succeeded. Two same-thread/component/stack pairs on
+different task threads showed empty output wrappers becoming populated; one entry
+remained unmatched. LLDB then failed to resume and aborted without confirmed
+breakpoint removal or detach. The bounded outer runner stopped the game, restored
+settings and verified the original DLL. The experiment remains failed and partial
+evidence is preserved. Acceptance now requires explicit debugger exit/code/removal/
+detach checks. Next reproduce with a multithreaded synthetic fixture, not another
+game attachment.
+[Evidence and failure boundary](../docs/reconstruction/CENTRAL_IMPULSE.md#partial-live-work-call-evidence-and-debugger-failure).
+
+## Original-game work capture now acquires the exact skeleton
+
+The private runner's work-packet mode uses fresh exact-type skeleton acquisition,
+retained binding checks and six session-specific guards. It preserves host-PID and
+watchdog-budget gates and selects the verified work-call signatures. Both scripts
+compile and both signatures match the hash-verified image. This preparation did
+not launch or attach to the original game; the live capture is still pending.
+[Acquisition contract](../docs/reconstruction/CENTRAL_IMPULSE.md#fresh-exact-skeleton-acquisition-for-the-debugger-capture).
+
+## Work-packet observer passed native Wine/LLDB fixture
+
+All 14 fixture checks passed: three selected before/after pairs, expected output
+bank population, stable packet time, unrelated-component filtering, unchanged
+code, breakpoint removal, detach and normal exits. The game was not launched.
+An initial runner-format error was fixed before the successful attachment.
+Original-game call-time capture and player attribution remain pending.
+[Receipt and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#work-packet-debugger-fixture-validation).
+
+## Work-packet reader connected to private debugger boundary
+
+The boundary adapter filters by RDI and reads the packet at caller RSP+48. The
+private bounded observer invokes it only after signature and identity checks;
+legacy packet mode remains separate. Seven synthetic reader/adapter tests pass,
+and the observer compiles. New-mode native Wine/LLDB fixture validation is pending;
+no game launch or debugger attachment occurred in this pass.
+[Boundary contract and fixture gate](../docs/reconstruction/CENTRAL_IMPULSE.md#debugger-boundary-adapter-for-work-packets).
+
+## Bounded work-packet reader implemented
+
+The supplied-transport reader verifies component/table/owner and both wrapper
+links, retains/rechecks spans, and emits address-free observations. It separates
+initialization-pattern matching from callback execution and accepts populated
+output as a distinct observation. Five synthetic tests pass. No process attachment
+or live packet acquisition is implemented by this reader; that remains the next
+integration boundary.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#bounded-work-packet-observation).
+
+## Work-wrapper initialization validated byte-for-byte
+
+All 512 instruction cases match the initialization contract, including untouched
+stack bytes and all prior flag-byte values. The reference preserves high flag
+bits, leaves scratch contents unspecified, and distinguishes input-current from
+empty output. Seven focused tests now cover the growing wrapper/publication
+reference. This is synthetic initialization evidence, not live packet capture.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#work-wrapper-initialization-contract).
+
+## Work-wrapper ownership and publication order narrowed
+
+A caller builds two stack work wrappers from its supplied component: input starts
+at the current bank, output starts empty. A virtual work callback must populate
+output before successful publication. Thirty-two instruction cases validate the
+success gate, captured-current destination and primary reload between copy calls.
+The executable reference exposes these service boundaries. Live player membership,
+work-service internals and copy semantics remain unresolved.
+[Ownership and observation plan](../docs/reconstruction/CENTRAL_IMPULSE.md#stack-work-wrappers-and-output-publication).
+
+## Remapped pose query invokes the parent-publication wrapper
+
+Five instruction cases establish invalid-index fallback and valid remap ordering:
+select/prepare/publish the bank first, then read the pose. The executable reference
+keeps services and defaults explicit. This query can mutate animation state;
+the passive host memory reader remains distinct. Four focused tests cover the
+query, selection receipts, arithmetic receipts and service failure.
+Active-player ownership and observed execution remain open.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#remapped-pose-queries-can-publish-parent-state).
+
+## Alternate-bank writer selection reconstructed
+
+The complete non-reset writer wrapper matches 64 original-instruction cases.
+The reference preserves bit-26 destination selection, bit-27 source gating,
+alternate acquisition, W=1 publication, and mode read after preparation.
+Acquisition/preparation/processing remain supplied services, and live ownership
+is not established. Three focused tests replay the 32 arithmetic and 64 wrapper
+cases plus service failure propagation.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#alternate-bank-selection-and-publication-gates).
+
+## Non-reset parent writer explains another possible W-one source
+
+A direct caller writes owner-derived XYZ/W=1 with `reset=false`. The executable
+reference matches 32 original-instruction cases across inline/accessor matrices;
+the actual setter leaves all remaining synthetic bank storage unchanged. W=1
+therefore does not identify a reset or spawn. Destination selection, surrounding
+processing, and live writer attribution remain open.
+[Contract and gate leads](../docs/reconstruction/CENTRAL_IMPULSE.md#non-reset-writer-also-publishes-w-one).
+
+## Cached-parent endpoint validated in one original-game session
+
+The bounded `cached-parent` session plan accepted 26/32 passive observations.
+Six refused reads remain explicit. All accepted callback registrations were
+empty/ineligible, while bank parent poses changed across three adjacent accepted
+pairs and contained both W=0 and W=1. Cached W remained zero. No callback writer
+or invocation is established. The game passed 20 seconds of ordinary advancement;
+cleanup restored settings, stopped the owned bottle and verified the original DLL.
+Ten runner tests and repository packaging checks pass. Raw rows remain private.
+[Findings and next writer lead](../docs/reconstruction/CENTRAL_IMPULSE.md#live-cached-parent-observation).
+
+## Cached-parent host endpoint and capture collector validated in fixtures
+
+The adapter and host now expose `animation.get_cached_parent`. Both Windows
+adapters build, and the compiled reader suite passes 28 tests. A read-only
+collector brackets each observation with player identity reads, preserves
+refusals, and counts changes only between consecutive accepted samples with the
+same identity. Seven collector tests cover replacement, gaps, malformed output,
+and eligibility without execution; the existing seven animation collector tests
+also pass. The Wine host fixture passes all 66 checks, including a three-sample
+capture through the actual host protocol. These are synthetic fixture results;
+original-game validation of this endpoint remains pending. No game launched.
+[API and capture contract](../native/snow_host/README.md#cached-parent-and-callback-inspection).
+
+## Portable native callback reader implemented
+
+Shared skeleton binding now feeds both native channel and callback observations.
+The new callback reader retains/rechecks spans, rejects unsafe reads and returns
+zeroed output on refusal. All 28 compiled reader tests pass, and the fixture
+cross-compiles for Windows x64 with warnings as errors. Adapter/host command/live
+wiring remain pending. No game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#portable-native-cached-parent-reader).
+
+
+## Callback observation joined to exact player skeleton binding
+
+Added capture_player_cached_parent using shared before/after exact-type and owner
+verification. Selected slot/header and external guards span callback reads. Five
+new and five existing player-observation tests pass; 23 native reader regression
+tests also pass. Native-host/live wiring remains pending. No game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#player-bound-cached-parent-observation).
+
+
+## Passive callback reader implemented with synthetic guards
+
+Added a bounded supplied-transport reader for cached/bank parent poses and callback
+eligibility. It verifies owner/table, retains and rereads all spans, and returns
+address-free observations with explicit non-atomic/lifetime/invocation limits.
+Six synthetic tests pass. Native host integration and live capture remain pending;
+caller-supplied code-range labels do not verify executable memory. No game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#passive-cached-parent-callback-reader).
+
+
+## Callback registration search narrowed next probe
+
+A broader static offset/address-construction search found no additional writer
+with established skeleton receiver identity. Saved scope, rejected evidence and
+limits rather than labeling candidates as callbacks. Next evidence needed is a
+bounded passive callback-record/holder capture alongside cached parent and banks.
+This capture is planned, not implemented or executed. No game launched.
+[Search and observation contract](../docs/reconstruction/CENTRAL_IMPULSE.md#callback-registration-search-and-next-observation).
+
+
+## Cached parent callback gate decoded
+
+168 original-instruction cases validate callback storage/tag tests, holder sign
+bit and target presence, without TLS visibility lookup. Added numeric eligibility
+inspection preserving zero forwarded contexts. Constructor/destructor storage
+sites are identified; the registration writer/live callback is not. Twenty-eight
+focused tests pass. No game launched and no live W=1 attribution added.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#cached-parent-callback-gate).
+
+
+## Cached parent preparation and callback publication distinguished
+
+24 original-instruction cases show owner-derived cached preparation clears W,
+then an optional callback precedes two non-reset bank writes. Synthetic callback
+changes to W/current-bank selection are honored; no live callback behavior is
+claimed. Added a runnable publication prefix. Twenty-seven focused tests pass.
+Live W=1 writer attribution and callback identity remain open. No game launched.
+[Evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#cached-parent-callback-publication-boundary).
+
+
+## Offline spawn sequence bench exposed
+
+Added a JSON/CLI inspection runner with explicit parent snapshots, reciprocal
+estimates and bounded caller-supplied banks. It carries bank state across frames,
+reports ordered resets and preserves input provenance through a canonical hash.
+Four tests cover native-receipt replay, alias/tail behavior, state carry and invalid
+inputs. Entity publication is recorded only; native/live integration is not implied.
+[Usage](../docs/reconstruction/CENTRAL_IMPULSE.md#offline-spawn-sequence-inspection-command).
+
+
+## Full spawn publisher joined through nonempty bank resets
+
+12 original-instruction cases now include actual ready-default/TLS reads and
+three active records per bank. Selected/unselected banks, tail sentinels and
+repeated resets through aliased slots match the composed reference. The runnable
+example now performs record resets. Twenty-five focused tests and the full
+1,400-test repository suite pass. Engine services and live invocation remain
+explicit boundaries. Packaging verification passes. No game launched.
+[Evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-publication-with-nonempty-record-banks).
+
+
+## Nonempty animation bank reset validated
+
+16 original-instruction cases execute parent/default stores, actual GS/TLS lookup,
+cold default initialization and record resets for counts 0, 1, 3 and 64. Reset-off
+and untouched tail records are checked. Added a runnable byte-record reset model;
+24 focused tests pass. Initialization synchronization remains supplied, and live
+reset safety/allocation capacity are unproven. No game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#nonempty-animation-bank-reset).
+
+
+## Joined spawn publication pipeline and runnable example
+
+12 original-instruction cases connect separate parent reads, complete publication
+math, entity publication, later skeleton lookup and configured bank resets.
+Added a callable pipeline and standalone synthetic example using the reconstructed
+base entity update. Twenty-three focused tests pass. Engine services, native
+scheduling, holder retirement and nonempty reset records remain explicit limits.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-spawn-publication-service-pipeline).
+
+
+## Linked spawn descriptor predicate connected to recovered visibility
+
+96 original-instruction cases join actual descriptor acquisition/copy, validity,
+reference increments/decrements and linked dispatch gating. Valid descriptors
+skip this pass. Both holders return to incoming counts before dispatch. Added a
+lazy-mask adapter reusing the existing descriptor model; 21 focused tests pass.
+Actual target types, live masks, retirement and concurrency remain open.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#linked-descriptor-visibility-and-ownership-join).
+
+
+## Linked spawn transform propagation loop reconstructed
+
+24 original-instruction cases cover skip gates, descriptor cleanup, both matrix
+compositions, inherited flags and callback-driven list shrink/growth/replacement.
+Added a runnable service-based loop preserving per-iteration collection reloads.
+Twenty focused tests pass. Target identities, descriptor internals, concurrent
+lifetime safety and live dispatch remain open. No game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#linked-spawn-transform-propagation-loop).
+
+
+## Spawn publication joined to base and derived entity dispatch
+
+36 original-instruction cases cover packet aliases/flags and all three supported
+entity table dispatches. Two variants add a linked-transform pass after the base
+update restores its incoming lock depth. Added an explicit reconstructed join;
+linked propagation is required for derived variants, not silently omitted.
+Eighteen focused tests pass. The linked routine's full semantics and live-safe
+invocation remain open. No game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#spawn-entity-publication-dispatch-variants).
+
+
+## Spawn publication matrix reconstructed through final stores
+
+80 original-instruction cases match quaternion estimate refinement, basis
+construction and translation W=1. The reference requires an explicit reciprocal
+square-root estimate; emulator estimates validate downstream arithmetic without
+claiming live hardware equivalence. Sixteen focused tests pass. Entity setter
+side effects, safe live invocation and zero-norm native behavior remain outside
+the validated scope. No live game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#spawn-publication-matrix-normalization).
+
+
+## Spawn matrix template initializer recovered
+
+A leaf initializer omitted from the unwind-function scan writes a full identity
+matrix. Its function-pointer table entry is verified. Thirty coordinate cases
+now run the original initializer after poisoning the globals, then the original
+resolver; thirty retain synthetic altered templates. The reference defaults to
+the recovered initialized state with an explicit override. Thirteen focused tests
+pass. Live initializer dispatch and runtime immutability remain unproven.
+[Evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#spawn-matrix-template-identity-initializer).
+
+
+## Spawn parent coordinate arithmetic reconstructed
+
+60 original-instruction cases match position and rotation helpers across absent,
+inline and indirect parents. Preserved float32 operation order, W differences,
+raw parentless quaternion copy and matrix-based parent composition. Runtime matrix
+template initialization is unresolved and required explicitly; synthetic templates
+are labeled. Parent reads for position and rotation occur separately. Twelve
+focused tests pass; no live call boundary or world-space claim was added.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#spawn-parent-coordinate-conversion).
+
+
+## Player spawn pose refresh reconstructed
+
+34 original-wrapper cases validate provider absence, ordered configuration and
+position/rotation reads, returned-storage selection, XYZ/W-zero packing and raw
+rotation copy. Added a callable reconstruction with explicit services. Missing
+providers retain the existing pose and still publish; this matters for reset
+behavior. Ten focused tests pass. Actual provider semantics, coordinate frames
+and live dispatch remain unresolved. No live game launched.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#player-spawn-provider-refresh-ordering).
+
+
+## Skeleton reset callers identified as spawn-position variants
+
+Constructor/table/type-descriptor chains identify SpawnPositionPlayerParams and
+SpawnPositionVolumeParams as the two shared transform-publisher callers. This
+narrows the reset path to spawn-position handling, not a proven physics tick.
+Four original-wrapper cases validate the volume preparation gate and post-publish
+state clear. Added a runnable service-based reference and regression checks.
+Live invocation and the observed W=1 writers remain unassigned. No game launched.
+[Contract and evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#spawn-position-caller-identity-and-gate).
+
+
+## Supplied-matrix skeleton slot reset validated
+
+80 original-instruction cases validate ordered reset of two optional bank slots,
+including null slots and aliases. Added a callable reference wrapper with an
+explicit reset-service boundary. Static caller inspection connects entity
+transform publication to skeleton lookup and the same-matrix slot reset.
+Runtime caller identity, scheduling trigger, nonempty record reset and attribution
+of live W=1 samples remain open. No live game launched in this pass.
+See [slot reset contract](../docs/reconstruction/CENTRAL_IMPULSE.md#supplied-matrix-slot-reset-and-caller-order).
+
+
+## Reset-parent paths account for both observed W formulas
+
+Found an owner-based reset wrapper and a supplied-matrix slot writer that explicitly
+set parent W=1. The owner wrapper's actual matrix conversion and parent setters
+pass 64 instruction-emulation cases; accessor, locks, rotation, default supplier
+and mode-5 copy remain intercepted services. Added a separate W=1 reference API.
+Reanalysis of the existing live capture yields 36 W=0 and four W=1 formula matches,
+with matching XYZ/quaternion throughout. This identifies candidate writers, not
+live reset events or caller attribution. Four parent-reference tests and six
+comparison tests pass. No game launched this pass.
+[Contracts and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#reset-parent-writers-explicitly-use-w-one).
+
+
+## Live owner-parent comparison isolates a fourth-lane discrepancy
+
+Forty identity-bracketed observations across one forward pulse matched the
+owner-derived parent XYZ and quaternion exactly. Only 36 matched all eight lanes:
+four had parent W=1, whereas the guarded-refresh preparation clears W=0. Retained
+that discrepancy and located additional parent-setter call sites for follow-up.
+All forty provider conversions still match the reference. The stored owner and
+bracketing body matrices coincided during baseline/pulse observations; some moving
+follow-up reads differed. No synchronization or world-space claim follows.
+The full suite passed 1375 tests before the final analyzer additions; six focused
+comparison tests pass afterward. Fixed JSON round-trip noise in reported deltas.
+OS key release, twenty-second advancement and all session cleanup checks passed.
+[Aggregate live evidence](../native/snow_host/owner_parent_live_observation.json).
+
+
+## Passive owner matrix added for bank-parent comparison
+
+The native animation reader now retains the owner's inline matrix, accessor slot,
+accessor backlink and synchronization metadata. It never invokes the refreshing
+getter or trusts its reused scratch buffer. Added mutation/backlink rejection
+tests and a comparison tool using the recovered owner-parent preparation.
+Twenty-three reader tests, three comparison tests and 63 Wine fixture checks pass;
+both Windows adapters build with warnings as errors. No game launched this pass.
+New owner fields remain live-unverified; equality cannot establish freshness,
+writer attribution or world-space semantics. Disagreement is retained as evidence.
+[Comparison command](../native/snow_host/README.md#experimental-animation-observation-command).
+
+
+## Guarded refresh parent source joined through actual arithmetic and stores
+
+64 original-instruction cases connect inline/indirect owner transform selection
+to matrix-to-quaternion conversion, W-cleared translation and both bank-parent
+writes. Rotation is supplied as a service and can replace current; the second
+write uses the replacement, leaving the old bank's sentinel untouched. Locks,
+accessor and processing remain explicit intercepted boundaries.
+Added a runnable parent-preparation reference and three tests covering receipt
+replay, all rotation branches and W semantics. The public guide now connects the
+live channel to its existing CRC-matched Reference spelling without claiming an
+anatomical bone or world-space identity. No game launched in this pass.
+[Source and contract](../docs/reconstruction/CENTRAL_IMPULSE.md#owner-transform-supplies-guarded-refresh-bank-parents).
+
+
+## Live provider conversion matches original-instruction replay
+
+Twelve guarded native-host samples with matching player identity exercised the
+composed branch. Every output matched the float32 reference and three original
+instruction slices per sample: 36/36 offline slice comparisons, with no calls
+replaced. This does not observe the accessor being called in the running game.
+The converted point stayed about 0.943 stored units from the sequentially sampled
+body origin, a coordinate-frame lead rather than a bone/world-space proof.
+Twenty-second advancement, settings restoration, bottle shutdown and original-DLL
+checks passed. Four validator tests pass. No raw pose tracks are published.
+[Aggregate evidence](../native/snow_host/provider_conversion_live_validation.json).
+
+
+## Native animation API distinguishes local and provider-converted transforms
+
+Added the recovered provider conversion to the portable reader, preserving
+float32 operation order, direct-copy selection and lack of quaternion normalization.
+The command retains its original local fields and adds guarded parent inputs,
+converted outputs, record index and bank flags. Twenty compiled-C tests pass,
+including 128 random direct/composed comparisons with the reference formula,
+parent mutation and non-finite/overflow rejection. Both Windows adapters compile
+with warnings as errors; 63 Wine fixture checks pass with the extended public
+probe. No game launched during this pass. Prior live receipts cover the local
+fields only; coordinate-space semantics and clip identity remain unresolved.
+[Conversion validation](../native/snow_host/provider_conversion_api_validation.json).
+
+
+## Forward pulse connects live pose changes with body observations
+
+Capture v2 brackets each pose read with player identities and request timing.
+One bounded live trial accepted all 40 brackets: eight before, twenty-four around
+one 700 ms forward pulse and eight afterward. Before input the body was stationary
+while the pose changed; movement and larger pose deltas appeared during/following
+the pulse. OS key-down/up acceptance and release were confirmed. All launch cleanup
+checks passed and the game continued advancing for twenty seconds afterward.
+The full suite passes 1359 tests, including seven probe and ten launcher tests.
+Quaternion delta analysis treats
+opposite signs as the same rotation and skips identity discontinuities. This is
+association, not exact input ingestion, a recovered clip label or causal isolation.
+[Aggregate trial](../native/snow_host/animation_motion_live_observation.json).
+
+
+## Native animation query verified in one original-game session
+
+The bounded animation plan returned twelve found-channel queries with matching
+player identity in about 1.16 seconds. All twelve epochs, local vectors and
+rotations differed. No capture-phase gameplay input, pause, stepping or animation
+write occurred. The game continued advancing for twenty seconds afterward;
+settings restoration, bottle shutdown and original DLL hash checks passed.
+The launcher performed startup navigation and loaded the host DLL.
+Four capture-probe tests and ten launcher tests pass. The public receipt contains
+aggregate counts, no raw pose tracks. Clip identity, coordinate semantics,
+controlled-action correlation, lifetime pinning and safe writes remain open.
+[Live receipt](../native/snow_host/animation_host_live_observation.json).
+
+
+## Bounded native animation reader connected to private adapter
+
+Added a portable C reader for exact SkeletonComponent ownership, keyed local
+provider records and metadata bounds. Retained spans cover component membership,
+type descriptor, lookup table, bank selection/epoch and selected record. The
+private adapter adds exact ReadProcessMemory transport and player identity
+bracketing. Both reader and adapter compile with warnings as errors.
+Seventeen native-reader synthetic tests pass; the full suite passed 1352 tests,
+followed by a successful reader rerun after pointer-range hardening. No game was
+launched. A successful live query and observation during actual bank rotation
+remain unverified; guards do not pin lifetime or establish animation completion.
+See [native command contract](../native/snow_host/README.md#experimental-animation-observation-command).
+
+
+## Native host animation command passes synthetic protocol checks
+
+Added optional `animation.get_channel` adapter boundary and a read-only public
+fixture probe. Both fixture and private-adapter DLLs compile with warnings as
+errors. The Wine fixture suite passes 63/63 checks, including the public probe;
+88 observation tests pass. Game adapter support remains absent. Replies explicitly
+deny atomicity, pinned lifetime, animation completion and write suitability.
+No game was launched or attached. Next: implement guarded native observation,
+then validate bounded live reads. See the [command contract](../native/snow_host/README.md#experimental-animation-observation-command).
+
+
+## Player animation observation API composes existing guarded readers
+
+Added an address-free skeleton/pose observation wrapper with retained binding
+guards and bank epoch checks. Five synthetic tests cover success, identity swaps,
+owner mismatch, epoch mutation and incomplete reads. No native loader command or
+live capture was added; final poses are not complete blend-operation inputs.
+[Observation contract](../docs/reconstruction/CENTRAL_IMPULSE.md#composed-player-animation-observation-api).
+
+
+## Embedded-operation clone gate links scale to a progress bound
+
+384 original predicate cases validate kind/flag ordering and float32 bound checks.
+Static callers locate the operation inside an enclosing record; its clone caps
+one scalar at the same field used as Hermite tangent scale. Duration semantics
+remain an inference, and the original tangent producer is still unresolved.
+[Gate and leads](../docs/reconstruction/CENTRAL_IMPULSE.md#clone-callers-tie-hermite-scale-to-progress-bound).
+
+
+## Tangent storage copy path identified and bounded
+
+32 original clone-slice cases verify independent allocation gates, destination
+count writes and ordered 32-byte-record copy arguments. Allocator/memcpy calls
+are supplied and intervening work skipped. This locates a storage copier, not
+the tangent formula producer; existing destination capacity remains unknown.
+[Clone contract](../docs/reconstruction/CENTRAL_IMPULSE.md#tangent-storage-cloning-and-record-count).
+
+
+## Full special operation and JSON entry validated
+
+96 original special-operation executions run without replaced calls, including
+provider acquisition, Hermite bank update and common tail. Zero masks can still
+change numeric channels. Added separate special evaluator and bench entry;
+tangent inputs/scale remain supplied rather than inferred.
+[Full special contract](../docs/reconstruction/CENTRAL_IMPULSE.md#complete-special-pose-operation).
+
+
+## Special bank evaluator joins descriptor walk and Hermite arithmetic
+
+48 complete original-helper cases compare every output channel and store order
+with nonzero, varying tangent records. No calls are replaced. The API preserves
+unselected channels and vector-only writes; original offsets/aliases, tangent
+production and higher special-operation composition remain open.
+[Joined bank](../docs/reconstruction/CENTRAL_IMPULSE.md#special-bank-traversal-and-arithmetic-composed).
+
+
+## Special-helper group traversal and tangent advancement recovered
+
+48 complete helper cases validate selected range, lookahead past the exclusive
+loop end, key gates and tangent indices at actual store sites. Ordinary group
+iteration is not reused: tangent advances only after a quaternion write. Native
+asset layout validity and tangent production remain unknown.
+[Traversal contract](../docs/reconstruction/CENTRAL_IMPULSE.md#special-helper-traversal-and-tangent-indexing).
+
+
+## Special-route pair arithmetic recovered as cubic Hermite interpolation
+
+40 complete original special-helper executions validate a contiguous vector and
+quaternion pair, supplied tangent arrays, key gates, sign handling and normalized
+output. No calls are replaced. Tangent production/units, group traversal and the
+full special-operation integration remain open; ordinary API rejection remains.
+[Pair formula](../docs/reconstruction/CENTRAL_IMPULSE.md#special-pose-route-uses-cubic-hermite-terms).
+
+
+## Full ordinary operation runs with no replaced callees
+
+96 emulated operations now include actual SkeletonComponent acquisition, cached
+hits and forced type-search refresh, plus original resource lookup and all blend
+and release routines. No calls or instructions are replaced. Synthetic object
+arrays, descriptors and storage remain explicit; this is not live scheduling or
+resource-loading proof. Output matches the earlier supplied-lookup receipt.
+[Acquisition join](../docs/reconstruction/CENTRAL_IMPULSE.md#ordinary-operation-executes-without-intercepted-services).
+
+
+## Resource lookup decoded and executed in the full operation
+
+78 original lookup cases establish unsigned lower-bound search and first-duplicate
+selection. Another 96 complete mixed-operation executions use the original
+resource lookup, leaving only component lookup intercepted. Portable table lookup
+added; key meaning, real resource construction and component acquisition remain
+open.
+[Lookup contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-resource-lookup-is-an-unsigned-lower-bound).
+
+
+## Full ordinary operation available through offline JSON CLI
+
+Added `engine.animation_operation_bench` and a synthetic example. Recorded
+math/normalization arguments must match and be fully consumed; authored host
+math is separately labeled. CLI tests reproduce all 96 mixed-operation receipts
+and reject missing/extra/mismatched observations and the special route. No live
+game or private payload is required. This exposes the existing reconstruction;
+it does not add new native behavior evidence.
+
+
+## Mixed numeric and supplemental poses validated through full operation
+
+96 additional complete operation executions join numeric quaternion channels,
+nonempty equal-count supplemental poses, auxiliary spherical rotations and
+source reset. Only component/resource lookups are supplied. All compared values
+match with recorded math outputs and normalization seeds. Unequal counts and
+multigroup full-operation coverage remain open.
+[Expanded evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#full-ordinary-operation-with-mixed-channels-and-supplemental-poses).
+
+
+## Ordinary pose operation reconstructed through return
+
+96 full original operation executions join ordinary routing, scalar/vector
+blending, auxiliary poses and source releases. Component/resource lookups are
+supplied; all downstream routines execute. Weight mutation propagates through
+both blends. Nonempty supplemental and numeric quaternion integration remain
+open, alongside the distinct special route and live scheduling.
+[Operation evaluator](../docs/reconstruction/CENTRAL_IMPULSE.md#ordinary-pose-operation-composition).
+
+
+## Keyed blend and source releases integrated
+
+48 original tail cases now execute auxiliary rotations and manager/reset effects
+together. Only resource lookup is supplied. The evaluator carries shared-source
+state and returns explicit reset effects; destination aliases are rejected.
+General-blend prefix and special-route integration remain open.
+[Composed tail](../docs/reconstruction/CENTRAL_IMPULSE.md#keyed-blend-and-releases-composed).
+
+
+## Shared-source release composition validated
+
+72 original tail executions with actual manager/reset routines verify ordered
+shared/distinct source effects. Repeated release of one bank decrements at most
+once for the same mask because the first clears its bits. Borrowed storage and
+absent keyed resource bound this evidence; no calls were replaced.
+[Stateful contract](../docs/reconstruction/CENTRAL_IMPULSE.md#shared-source-releases-consume-the-mask-once).
+
+
+## Pose operation tail dispatch and release ordering validated
+
+192 original tail slices verify keyed-helper gating, completion-mask writes and
+ordered independently cached source releases. Services are intercepted; their
+composition and same-source lifetime effects remain open. Added a portable
+planner and receipt regression tests.
+[Tail contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-operation-tail-orders-keyed-blend-and-releases).
+
+
+## Complete auxiliary triplet and rotations joined
+
+160 original helper executions match all three records, weights and flags with
+actual rotation and math routines executed. No calls were replaced; recorded
+math results and rsqrt seeds bound portable equivalence. Higher operation-tail
+composition and resource meaning remain open.
+[Joined evaluator](../docs/reconstruction/CENTRAL_IMPULSE.md#complete-auxiliary-triplet-evaluation).
+
+
+## Auxiliary spherical rotation fallback recovered and validated
+
+70 complete original fallback executions, including native math routines, match
+the reconstructed spherical formula with recorded service results and rsqrt
+seeds. No calls were replaced. Direct-second returns and extrapolation are
+preserved; outer-dispatcher and triplet composition remain next.
+[Formula](../docs/reconstruction/CENTRAL_IMPULSE.md#auxiliary-rotation-uses-a-spherical-fallback).
+
+
+## Auxiliary pose triplet integrated with explicit rotation dependency
+
+32 original helper cases validate three-record vector blending, single-source
+copy and scalar clamps, flag gates and rotation call ordering. Reference tests
+compare packed outputs and preserve caller inputs. Rotation was intercepted;
+its distinct fallback and the records' gameplay meaning remain unresolved.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#keyed-helper-blends-three-auxiliary-poses).
+
+
+## Manager group transition validated through supplemental reset
+
+72 complete original routine cases prove first-match selection, bit-26 setting,
+entry-mask clearing, gated single counter decrement and storage reset. Borrowed
+storage avoids external allocator services; no calls were replaced. Provider
+conversion is now linked to a validated writer, without claiming frame semantics.
+[Transition](../docs/reconstruction/CENTRAL_IMPULSE.md#manager-group-release-sets-provider-conversion-flag).
+
+## Command flags connected to pose-operation source kinds
+
+256 original dispatch cases verify type-1 record argument wiring and bit-0/1
+source kinds. Static tail tracing identifies a manager-side writer of provider
+bit 26, connecting a new lead to the decoded conversion bypass. Command production,
+manager transition semantics and publication timing remain open.
+[Command connection](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-command-record-reaches-blend-routing).
+
+## Higher pose operation selects blend family and mutates weight
+
+80 original prefix cases connect source-kind comparison to mode 0/4 wrappers,
+mask intersection and component-derived range selector. One direction writes
+1-weight back into operation state. Special-service and keyed-tail semantics
+remain unresolved; source-kind gameplay names are not inferred.
+[Caller contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-operation-selects-blend-family).
+
+## Group wrappers integrated with stateful destination updates
+
+64 complete original wrapper executions match sequential mixed-bank updates,
+including repeated supplemental work and status propagation. No calls were
+replaced. JSON testbench now distinguishes inner entry from group_wrapper.
+Stable metadata and separate source storage remain explicit assumptions.
+[Wrapper evaluator](../docs/reconstruction/CENTRAL_IMPULSE.md#complete-grouped-wrapper-evaluation).
+
+## Outer animation wrappers expand multibit masks into ordered calls
+
+80 original-wrapper cases validate per-bit calls, sentinel full-table calls,
+zero-mask no-op and fixed arithmetic selector/mode arguments. This qualifies
+the inner evaluator's highest-bit rule: wrapper mask 3 processes groups 1 and 2
+separately. Inner calls were intercepted; full wrapper composition remains next.
+[Layer distinction](../docs/reconstruction/CENTRAL_IMPULSE.md#outer-wrappers-expand-group-masks).
+
+## Shared-storage numeric writes preserve descriptor ordering
+
+16 complete original entry cases validate scalar/vector bank aliasing and
+forward overlap, including status writes. Added a shared-byte-storage evaluator;
+prior channel writes feed later reads. Quaternion and cross-region aliases remain
+outside this proof.
+[Alias contract](../docs/reconstruction/CENTRAL_IMPULSE.md#aliased-float-bank-storage).
+
+## Group selection connected to mixed pose-bank evaluation
+
+48 complete grouped-entry cases validate preserved out-of-range channels,
+highest-bit group selection, empty ranges, exclusions and supplemental updates.
+The JSON testbench accepts group metadata through the evaluator. Group resource
+names, mismatched schemas and live ownership remain unresolved.
+[Grouped contract](../docs/reconstruction/CENTRAL_IMPULSE.md#grouped-numeric-bank-evaluation).
+
+## Runnable JSON bank testbench exposes reconstructed animation operations
+
+Added `python3 -m engine.animation_bank_bench` with a synthetic example, explicit
+recorded/authored normalization policies, input hashes and per-case diagnostics.
+Recorded normalization gaps or mismatches fail rather than silently substituting
+values. CLI output is compared against native-emulation receipts; this is an
+offline evaluator, not a live recorder or original animation graph.
+
+## Numeric bank status joined to the evaluator
+
+48 complete-entry cases validate initial-status preservation and path-specific
+bit-27 writes, including empty/excluded numeric ranges with nonempty supplemental
+updates. The flag cannot be used as a universal changed-pose indicator. Other
+selectors and the status consumer remain unresolved.
+[Status rule](../docs/reconstruction/CENTRAL_IMPULSE.md#numeric-bank-status-is-path-dependent).
+
+## Nonempty supplemental records joined to mixed numeric bank updates
+
+100 complete native-entry fixtures validate numeric processing followed by
+mode-0 supplemental evaluation, with mode-4 records retained. Excluding numeric
+kinds does not suppress the supplemental tail. Composed inspection API added;
+no original calls/instructions were replaced in the receipt.
+[Integrated evaluator](../docs/reconstruction/CENTRAL_IMPULSE.md#mixed-channels-with-supplemental-evaluation).
+
+## Mixed numeric animation bank update validated end to end locally
+
+100 complete original bank-entry cases join scalar/vector/quaternion arithmetic,
+source swapping, exclusions and near-one routing. No calls were replaced; emulator
+normalization seeds are explicit. Nonempty supplemental integration, aliases and
+other channel types remain open.
+[Joined API](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-mixed-numeric-bank-update).
+
+## Weighted quaternion channel formulas connected
+
+160 complete original helper executions match mode-0 rotation dispatch and
+mode-4 first-times-weighted-second composition. No calls were replaced; captured
+normalization seeds preserve approximation boundaries. Mixed bank integration
+and aliases remain unproved.
+[Formula](../docs/reconstruction/CENTRAL_IMPULSE.md#weighted-quaternion-bank-channels).
+
+## Growing supplemental copy validated across reserve and append
+
+48 complete chain cases confirm count reset before allocation, discarded old
+records, source-byte append, ownership-sensitive release and retained mask/tail
+storage. Allocator success and release are supplied services; runtime heap and
+failure paths remain outside the proof.
+[Integrated evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#growing-supplemental-copy-integration).
+
+## Supplemental reserve and replacement policy recovered
+
+64 instruction cases validate capacity/force selection, actual relocation,
+release gating by old bit 15 and replacement metadata. Allocator and release
+services are supplied; native heap behavior and failure paths remain unproved.
+[Ownership boundary](../docs/reconstruction/CENTRAL_IMPULSE.md#supplemental-reserve-ownership-and-relocation).
+
+## Supplemental copy bytes validated with overlapping storage
+
+32 complete copy/reserve/append executions match the retained-capacity reference,
+including shared and overlapping buffers. Ordered 16-byte transfers preserve
+native overwrite effects; count changes while destination mask stays unchanged.
+Allocating reserve and storage-replacement paths remain unvalidated.
+[Copy contract](../docs/reconstruction/CENTRAL_IMPULSE.md#supplemental-copy-with-retained-capacity).
+
+## Supplemental copy modes have validated source and mask gates
+
+162 original-tail cases validate half-weight selection, empty-source retention,
+mask intersection and same-object suppression. Added an inspection planner.
+Static tracing identifies reset/reserve/append copy structure; allocation and
+actual copy effects remain outside this intercepted-service receipt.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#supplemental-copy-gating).
+
+## Unequal supplemental source selection reconstructed
+
+48 complete original-tail cases match count gates, first-nonempty source
+selection, fade-to-zero/identity and retained trailing destination records.
+No calls or instructions were replaced; observed normalization seeds drive the
+portable comparison. Copy-mode tail behavior and native aliases remain open.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#unequal-count-supplemental-source-selection).
+
+## Supplemental record evaluation validated without rotation stubs
+
+36 complete original-tail executions, including both rotation helpers, match
+the composed equal-count evaluator with observed normalization seeds. No native
+calls or instructions were replaced. Unequal-source paths, aliasing and live
+record semantics remain open.
+[Joined proof](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-supplemental-record-evaluation).
+
+## Polynomial quaternion fallback reconstructed
+
+160 complete helper executions match a polynomial-adjusted normalized blend
+with recorded reciprocal-square-root seeds. Dispatcher threshold coverage grows
+to 69 cases. Exact trigonometric SLERP would not preserve this formula. Joined
+record evaluation and cross-hardware seed behavior remain unproved.
+[Formula](../docs/reconstruction/CENTRAL_IMPULSE.md#polynomial-rotation-fallback).
+
+## Supplemental rotation dispatcher and normalized-linear branch recovered
+
+29 original-instruction cases match retain-first, sign-adjusted fallback dispatch
+and normalized-linear output with captured emulator seeds. Fallback arithmetic
+remains external. Zero-length normalization is explicitly rejected by authored
+policy, not claimed native behavior.
+[Branch contract](../docs/reconstruction/CENTRAL_IMPULSE.md#supplemental-rotation-branch-selection).
+
+## Supplemental records have validated count and identifier gates
+
+36 original mode-0 tail cases validate equal-source-count updates, destination
+count rejection, index-paired source IDs and vector interpolation. Destination
+metadata remains unchanged. Rotation is an explicit external service; unequal
+counts and native counter-wrap reachability remain unproved.
+[Evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#equal-count-supplemental-pose-records).
+
+## Float channel routing and arithmetic validated together
+
+80 complete original entry executions, without intercepted calls, match the
+composed batch API for scalar/vector channels and empty supplemental arrays.
+Recorded destination flags vary by path; the value API does not model them.
+Identified a separate supplemental-record tail that needs nonempty validation.
+[Joined evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#joined-float-bank-update).
+
+## Unweighted channel helper reconstructed across all type branches
+
+320 complete original-helper cases match byte wrapping, scalar/vector addition,
+ordered quaternion composition and no-write defaults. Added executable API and
+boundary tests. Quaternion normalization is absent. Joined bank update and
+weighted quaternion arithmetic remain open.
+[Contract](../docs/reconstruction/CENTRAL_IMPULSE.md#unweighted-typed-channel-combination).
+
+## Arithmetic routing distinguishes near-one helper families
+
+112 original routing cases validate selector-2 mode 0/4 source ordering,
+exclusion masks and the float32 near-one threshold. Added an inspection planner.
+Mode 4 changes helper families near one; treating it as a single lerp would be
+incorrect. Helper execution and common-tail effects are outside this receipt.
+[Routing contract](../docs/reconstruction/CENTRAL_IMPULSE.md#arithmetic-near-one-routing).
+
+## Float arithmetic recovered for two bank-combination channel kinds
+
+160 original helper cases match scalar interpolation in modes 0/4 and the
+distinct four-lane interpolation/addition behavior. Added a numerical API,
+regression receipt and tests. Outer routing, source swapping, near-one shortcut,
+other kinds and aliasing remain outside this proof.
+[Formulas](../docs/reconstruction/CENTRAL_IMPULSE.md#float-channel-arithmetic-in-bank-combination).
+
+## Linked-object provider joined to existing pose observation evidence
+
+Reconciled the new conversion notes with earlier channel lookup, bank metadata,
+typed copying and passive reader work. Added reciprocal receipt coverage: 240
+older cases through the linked consumer API and 120 new cases through synthetic
+passive reads. Count/allocation decoding is already implemented; full producer
+scheduling and authored bone-name mapping remain unresolved. These are fixture
+cross-checks, not new live observations.
+[Reconciliation](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#provider-evidence-reconciliation-and-inspection-path).
+
+## Skeleton provider conversion recovered and compared byte for byte
+
+120 original-instruction cases validate direct indexed pose lookup and the
+flag-controlled base quaternion/translation conversion. Added a portable API
+preserving float32 order, without implicit quaternion normalization. Upstream
+pose generation, selector-to-bone mapping and matrix conversion remain open.
+[Formula and evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#skeleton-provider-pose-conversion).
+
+## Skeleton selector traversal exposed as an inspection plan
+
+108 original-instruction cases validate filtering, last-selector cache ordering,
+holder resolution and pending-bit clearing. Added an API and regression tests.
+Provider work precedes target resolution, while filtered entries do not alter
+cache state. A synthetic sentinel case reports missing provider initialization
+without claiming a live defect. Provider arithmetic and target updates were
+intercepted and remain outside this receipt.
+[Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#skeleton-selector-traversal-ordering).
+
+## Skeleton-linked transform modes differ from hierarchy propagation
+
+Eighty-four original-switch cases validate skeleton-linked modes 0/1/2/3 and
+nonpublishing defaults. Mode 5 does not enable publication here, unlike ordinary
+hierarchy propagation; a modifier can still enable it using the precomputed matrix.
+Added a separate numerical API. Provider acquisition, list production and live
+player membership remain unresolved.
+[Mode distinction](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#skeleton-linked-propagation-has-a-distinct-mode-switch).
+
+## Attachment flag setter reaches SkeletonComponent-linked entities
+
+Thirty-two recursive original-setter cases verify hierarchy-first traversal,
+then skeleton-linked entity traversal, even when the current flag is unchanged.
+Duplicate links revisit entities without a second cache refresh when already set.
+Added a stable-graph effect planner with an authored visit budget. The bit's
+meaning, actual component lookup/cache effects and cyclic lifetime remain open.
+[Structural link](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#attachment-flag-propagation-reaches-skeleton-linked-entities).
+
+## Concrete attachment permission adds group exclusion and flag effects
+
+Thirty-two complete permission-callback cases validate EntityGroup selection,
+selected collection membership rejection and conditional child flag-setter calls.
+When both receivers are groups only the child collection is inspected. Added an
+effect planner and corrected the read-only interpretation of permission. Actual
+group recursion and bit-35 setter semantics remain outside this receipt.
+[Callback contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#concrete-entity-permission-checks-groups-and-requests-flag-propagation).
+
+## Attachment acceptance and reparent rollback boundary
+
+Forty-eight original-prefix cases validate self/link/owner/permission rejection
+order and permission-call gating. Added an inspection planner. These local checks
+precede inner mutation, but the outer wrapper detaches first, so rejected reparent
+must not be represented as preserving the old relationship. Complete ancestor
+cycle detection and rollback remain unproved.
+[Acceptance contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#inner-attachment-acceptance-is-not-a-transactional-reparent).
+
+## Attachment transform setup connected to portable inverse
+
+A new executable setup adapter matches 64 original cases with supplied reciprocal
+seeds. Failed validity skips storage/child publication after inversion; successful
+null-offset setup stores a local matrix from the first parent read then publishes
+the second parent read, including synthetic parent changes. Explicit offsets use
+one read. Outer binding/lifecycle and live atomicity remain unproved.
+[API and evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#attachment-setup-readvalidity-order).
+
+## Attachment inverse has portable lane arithmetic
+
+Transcribed the distinct inverse helper's float32 cofactor and two reciprocal
+refinement sequences. Eighty complete original-helper cases match byte for byte
+with observed emulator seeds, across affine and general well-conditioned matrices.
+Singular refusal is authored; hardware seed equivalence and ill-conditioned inputs
+remain outside the proof. The attachment setup can now use this numerical API.
+[Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#attachment-inverse-arithmetic).
+
+## Attachment-time inverse differs from ongoing propagation
+
+Sixteen original setup cases distinguish explicit offset publication from null
+input deriving a local candidate from current entity placement. The null branch
+uses a distinct inverse helper, handling tested parent scale/shear by recomposition
+within 1e-4; it must not reuse the rigid transpose helper. Final child mode can
+still alter publication. Singular behavior and portable inverse transcription
+remain open.
+[Setup contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#attachment-transform-setup-uses-a-distinct-inverse).
+
+## Queued argument identified as child attachment mode
+
+Twenty-eight joined original-instruction cases follow record +0x74 through
+completion and reattachment to accessor +0x58, including default/explicit
+transform selection and an out-of-range mode. Descriptor mode and attachment
+mode are now explicitly distinguished. Constructor and three inspected callers
+select mode 0; live player attachment selection remains unknown.
+[Mode producer join](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#queue-argument-supplies-the-child-transform-mode).
+
+## Normalized child routes validated and composed in a runnable example
+
+Sixty-four complete original mode-0/2 routes match outgoing matrices/flags with
+observed emulator rsqrt seeds; modifier edits, packet alias and restored writer
+state are checked. Added a synthetic parent/two-child example joining entity
+notifications and child packet preparation. Scene wiring and exact-sqrt seed
+policy are authored; native hierarchy locks/lifetimes are not simulated.
+[Evidence and command](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#normalized-child-routes-and-runnable-hierarchy-example).
+
+## Basis normalization reconstructed with explicit rsqrt seeds
+
+The complete normalization helper matches 64 original-instruction cases given
+observed emulator seeds. It rebuilds x/y/z from normalized row1 and cross products,
+discards old row0, and preserves translation xyz. Child modes 0/2 now accept an
+explicit seed provider. Degenerate input and cross-CPU rsqrt equivalence remain
+unclaimed; full normalized-mode route comparison is the next validation step.
+[Arithmetic contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#basis-rebuild-for-normalized-child-modes).
+
+## Child modifier-to-entity dispatch connected
+
+Validated 160 complete child routes with supplied modifier/entity callbacks.
+Modifier edits reach the entity; noncandidate modes dispatch only with a modifier.
+The modifier precedes this writer acquisition, entity dispatch runs one depth
+higher, and normal return restores depth. Outgoing transform slots alias and
+flags clear bit 1. Added a portable packet-preparation API; native callback
+implementations and normalized modes 0/2 remain open.
+[Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#child-modifier-and-entity-dispatch-validated).
+
+## Child transform modes 1, 3 and 5 reconstructed
+
+Seventy-two original-instruction cases validate full composition, cached-basis
+with composed translation, and cached-basis with offset translation. Added a
+numerical child-candidate API with exact float32 order. Modes 0/2 require the
+unmodeled normalization helper; optional modifier and final entity dispatch are
+static leads, not included in these numerical checks.
+[Mode table](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#child-transform-candidate-modes).
+
+## Accessor local transform arithmetic completed for the validated domain
+
+Recovered the inclusive float32 0.001 translation preservation rule. All three
+old translation coordinates survive together only when every coordinate is
+within threshold; basis rows still update. Added the combined numerical API.
+Seventy-six complete original-accessor cases verify actual arithmetic and writer
+release, including adjacent threshold values; parent getter/validity are supplied
+and children absent. Live lifetime and child propagation remain unresolved.
+[Formula and receipt](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#local-translation-preservation-threshold).
+
+## Transform composition convention recovered and executable
+
+Two complete arithmetic helpers match 240 original-instruction cases byte for
+byte, including source/destination aliasing. Four memory rows compose as source
+multiplied by destination. The companion helper transposes the linear part and
+uses negative translation dot products, without general scale inversion.
+Accessor local recomputation is incoming * transpose_affine(parent), followed
+by a still-unmodeled translation tolerance rule. Added portable numerical APIs.
+[Formula and domain](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#transform-multiplication-convention).
+
+## Accessor propagation releases its writer depth before children
+
+Eighty-four original-instruction cases verify child traversal even when local
+transform recomputation is skipped. Writer state returns to incoming depth before
+child calls; initial depth zero fully releases the claim. The next link is read
+after each callback, and clearing it terminates traversal. Local composition,
+child-service internals and concurrent lifetime remain unproved. The outer entity
+lock is separate and must not be confused with the accessor writer claim.
+[Phase boundary](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#accessor-writer-release-precedes-child-traversal).
+
+## Optional accessor gate joins executable transform update
+
+Validated 1,036 original copy/gate cases. Accessor presence and packet bit 0
+admit the branch; bit 2 forces propagation without the preliminary validity query,
+otherwise only an invalid descriptor propagates. The adapter now invokes explicit
+accessor services after copy and before cache/post notifications. Internal
+accessor composition, locking and lifetime remain separate unresolved work.
+[Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#optional-accessor-propagation-gate).
+
+## Runnable entity transform notification adapter
+
+Added an executable no-accessor transform-update adapter and synthetic inspection
+example. Independent pre/post collection capture matches all 18 native receipt
+cases. Logical lock contention and optional accessors explicitly refuse; authored
+exception cleanup preserves completed side effects. Targeted tests pass. This is
+an independent reconstruction API, not a native game mutation API.
+[Contract and usage](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#executable-notification-adapter).
+
+## Entity transform notifications recapture the component collection
+
+Eighteen original-instruction cases connect the existing entity recursive-lock
+wrapper to both notification loops and the actual matrix copy. A synthetic pre
+callback replaces the collection: pre traversal finishes the old extent, while
+post traversal sees the replacement. Callback pairing cannot be assumed. Lock
+depth and old/new transform visibility were checked; live entity identity,
+accessor propagation and arbitrary callback mutation remain outside the proof.
+[Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#entity-transform-notification-lists-are-captured-separately).
+
+## Queue caller tables identified as FXSpawnedEntity
+
+Joined both submission callers and a third transform-route caller to one primary
+table, its metadata getter and constructor. Metadata names FXSpawnedEntity;
+four original-constructor checks establish initial flags 1. This redirects the
+lead toward spawned effects and does not establish a player animation path.
+Invocation phase and outer serialization remain unresolved. Prioritize other
+queue callers and the selected player's transform implementation next.
+[Ownership evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#submission-caller-ownership-is-fxspawnedentity).
+
+## Hierarchy caller also dispatches transforms outside the queue
+
+Validated 512 original-instruction branch cases and added a portable route model.
+The same caller queues only one flag/validity combination class; other branches
+call a transform virtual interface directly, optionally after composition.
+Corrected an interior unwind-fragment entry and located two function-pointer
+references. Their ownership and scheduler phase remain open. The next live trace
+must include direct transform dispatch, not just queue events.
+[Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#caller-can-bypass-hierarchy-queue).
+
+## Submission byte and observable ordering requirement
+
+All 512 byte/descriptor-validity combinations matched the original post-producer
+update. Added the exact model and an ordering counterexample: producer-first and
+consumer-first can end at the same byte while differing in reattachment calls.
+This is a synthetic composition, not a live race claim. It identifies why the
+next observation must correlate events rather than only final state.
+[Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#entity-byte-publication-and-ordering-sensitivity).
+
+## Successful hierarchy publication validated
+
+Ninety-six original-instruction cases verify record field copies, three holder
+retentions, preserved padding, ring-index wrap and deferred-counter publication
+for both producers. Added a common successful/full bookkeeping model. Outer
+entity-byte publication and concurrent serialization remain open.
+[Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#successful-hierarchy-record-publication).
+
+## Hierarchy queue initializes 2048 slots
+
+Original startup and allocation-helper instructions passed eight allocation/fill
+cases. Successful initialization requests 2048 x 128-byte records; ring allocation
+failure publishes an empty zero-capacity object, while object failure publishes
+null. Added an initializer effect model. Live occupancy and producer backpressure
+remain open. [Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#hierarchy-queue-startup-capacity).
+
+## Full hierarchy rings still increment processing budget
+
+Both producer full-ring branch slices passed 36 original-instruction cases:
+record/count/index stay unchanged while deferred budget increments and wraps.
+This supplies a concrete conditional source for consumer budget/occupancy
+mismatch. Added a branch model and composed overflow/drain test. Live overflow,
+capacity, backpressure and producer concurrency remain unproven.
+[Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#full-ring-publication-can-exceed-occupancy).
+
+## Command execution bound to BeginEngineFrame before mode selection
+
+Original setup spans now verify the command-executing callback's BeginEngineFrame
+binding and incoming/outgoing edges. Hierarchy commands run before CheckEngineStop
+selects normal or paused-engine work. Added a runnable partial scheduler probe
+showing commands execute in both modes, while downstream mode selection waits for
+dispatch finalization. Direct callers, graphics/loading work and complete pose
+write exclusion remain open. [Evidence and probe](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#beginengineframe-command-binding).
+
+## Reattachment connects to engine command execution
+
+Recovered deferred hierarchy-command consumption and its seven-bit completion
+gate. A 360-case original-instruction check proves record processing and final
+reattachment dispatch occur after queue unlock, including counter wrap and
+cached-record behavior for inconsistent budgets. The flush connects directly to
+the profiler-labelled `ExecuteCommands` executor. Added a runnable command-state
+model. Producer invariants and ordering against animation workers remain open.
+[Contract and evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#hierarchy-command-execution-boundary).
+
+## Broader collection lock brackets entity lifecycle dispatch
+
+Found a collection drain that enters the shared control manager's `+0x60` lock
+before slot-`0x48` dispatch. Thirty original-instruction cases connect that drain
+to the original base-entity lifecycle and transform teardown with absent accessors.
+The source count clears before entry, duplicates remain, and temporary release
+follows exit. Production player membership, reattachment coverage and scheduler
+phase remain open. [Evidence and candidate scope](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#collection-drain-provides-a-broader-lock-scope).
+
+## Entity lifecycle caller and registry-lock boundary
+
+Located the entity primary-table lifecycle method above transform teardown and
+validated 192 original-instruction ordering cases. Its registry lock acquisition
+follows transform teardown, and its registry link is cleared afterward. Neither
+that acquisition nor a populated link proves accessor lifetime during cleanup.
+Added a lifecycle effect model; outer caller/phase provenance remains the next
+scheduler join. [Contract and evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#entity-lifecycle-ordering).
+
+## Outer detach confirms holder retention does not pin accessors
+
+Validated 288 original-instruction outer-detach chains, including descriptor copy,
+TLS visibility, direct parent cleanup, descriptor reset and child cleanup.
+Accessor free callbacks run while temporary descriptor holder references remain;
+reader-word variation does not change cleanup. Added an executable effect/count
+model. Callback effects, actual deallocation and scheduler exclusion remain open.
+[Evidence and API consequence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#parent-detach-ownership-experiment).
+
+## Detach dispatcher and outer ownership lead
+
+Validated 128 original-instruction dispatch cases with the actual TLS getter.
+Dispatch preserves masked target bits and does not repeat the caller's validity
+or index-sentinel gate. Static outer callers retain temporary descriptor holders
+before callbacks; accessor lifetime and callback effects remain open.
+[Contract, receipt and next experiment](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#descriptor-detach-dispatch).
+
+## Descriptor visibility connected to accessor cleanup
+
+Validated 320 original-instruction chains through unlink, the actual descriptor
+predicate and its TLS getter, and cleanup. Mode/index selection and target-mask
+intersection now replace the supplied validity predicate. Allocation/free remain
+intercepted; visibility is not lifetime protection. [Contract and receipt](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#descriptor-visibility-connected-to-cleanup).
+
+## Connected unlink and cleanup
+
+Executed original unlink inside cleanup in 288 cases. Head/interior removal and missing-child link clearing now feed the real cleanup gates. Reader counts still do not gate cleanup in these cases. [Contract and service boundaries](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#child-unlink-and-cleanup).
+
+## Connected direct accessor attachment
+
+Validated 64 complete direct-attachment cases with the real constructor. Owner publication precedes backlink installation; existing backlink is preserved; child insertion carries the previous head into child-next. Allocation and visibility remain supplied services. [Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#direct-accessor-attachment).
+
+## Accessor shared transform default
+
+Found the shared initializer writing a 4x4 identity transform and validated 64 initializer-to-accessor chains without service stubs. The static zero globals are pre-initialization storage, not a justified live default. Live execution order and indirect later writers remain unproven. [Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#shared-transform-default-initializer).
+
+## Concrete accessor constructor
+
+Connected Hierarchy metadata to the real accessor initializer and validated 128 direct/wrapper cases without service stubs. Attachment callers use null identity and bypass the construction-pair registry. The getter scratch remains uninitialized by this constructor; transform globals stay explicit inputs. [Evidence and corrected probe target](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#accessor-construction-bypasses-pairs).
+
+## Live construction-registry preflight
+
+Two bounded sessions produced six guarded passive captures: early count/capacity 0/0, delayed 0/4. No active pair payload or gameplay state was observed. Settings were byte-verified restored and the bottle stopped. [Evidence and next boundary](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#bounded-live-empty-array-observations).
+
+## Registry capture entry points
+
+Added a runnable public synthetic observation demo and prepared the private process-identity-checked capture command. No game/Wine process was running when checked, so no live capture was attempted. Private command syntax/help pass; the synthetic demo verifies null-row precedence. [Usage and limits](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#run-the-synthetic-observation-demo).
+
+## Passive construction registry inspector
+
+Added a bounded repeated-read pair inspector with external identity guards, header/content rechecks and capture-local labels. Seven synthetic transport tests cover changes, bounds and query semantics. No target dereference or native call; live capture remains unperformed. [Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#passive-construction-pair-inspector).
+
+## Protected registry lock adapter chain
+
+Executed original lock adapters inside 56 construction chains against synthetic API services. Maximum nesting is two or three and all calls balance; constructor callback observes depth zero. Added a completed-event ownership/depth checker. [Scope](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#recursive-lock-adapter-integration). Native contention and lifetime remain unproven.
+
+## Supplied-storage construction API
+
+Added a callback inspection adapter and 56 complete original-wrapper cases covering temporary publication, pre-callback unlock, finalization and registration. Constructor target-word production is explicitly supplied; actual constructor behavior and allocation remain open. [Evidence](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#supplied-storage-construction-chain).
+
+## Connected construction registration
+
+Removed the registration stub in 56 finalization cases, executing original resolution and paired value writes. A resolved different target suppresses new registration; lookup observes swap-removal order. [Contract and exclusions](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#registration-connected-after-pair-finalization).
+
+## Construction pair lifecycle
+
+Located a static construction-time append before a callback and validated its post-callback pair finalizer in 28 instruction cases. Removal swaps in the last row, so lookup precedence can change. Identity registration remains an explicit service boundary. [Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#construction-pair-finalization).
+
+## Paired-map removal
+
+Recovered and checked 48 removal cases. Nonzero low target bits prevent map erasure while enabled removal still clears bit 28. The local routine does not acquire a lock. [Contract](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#association-removal-gate). Primary ordered-pair mutations remain unresolved and are not conflated with these maps.
+
+## Connected registry resolution
+
+Executed the original pair search and secondary holder lookup inside the resolver in 192 cases. An earlier unrelated null-payload row can suppress a later key match; secondary holder reads do not locally test visibility. Nested lock calls use the same global lock in this configuration. [Evidence and limits](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#original-primary-and-secondary-searches-connected).
+
+## Paired-map target resolution
+
+Located a paired-map reader in a statically connected transform-accessor path. Added a 64-case original-wrapper check of primary/secondary/fallback precedence, including present-but-null primary entries. Successful fallback is not a lifetime lease. [Contract and remaining joins](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#paired-map-resolution-fallback).
+
+## Retirement target association service
+
+Recovered the target service as paired target/backing map writes under a second lock, with a post-lock flag recheck and TLS context bracketing. Sixteen instruction cases validate local writes and gates. No direct destructor call appears in this body; later map consumers remain the ownership lead. [Evidence and adapter](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#target-service-records-paired-associations).
+
+## Context holder retirement protocol
+
+Recovered and validated local retirement gates, target detachment, retired-state publication and slot free-list insertion in 108 original-instruction cases. The reference-count field becomes a free-list link on recycling; it cannot alone establish liveness. [Contract and service boundaries](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md). Actual allocator, target service and concurrent lifetime remain open.
+
+## Context replacement through preparation
+
+Added 128 original-instruction preparation cases with a second visible request context. Fifty-three switch holders; old/new reference counts and saved request fields match, along with both banks and work state. No retirement occurs. See [validation scope](../docs/reconstruction/ANIMATION_WORKBENCH.md#context-replacement-through-preparation). Live lifecycle and synchronization remain open.
+
+## Visible-context preparation validation
+
+Added 128 original-instruction preparation cases with a visible inline active context, including 22 that reach context math. Both banks, work timing/records, flags and event order match the reconstruction. Gate cases retain their distinct outcomes. See [scope and exclusions](../docs/reconstruction/ANIMATION_WORKBENCH.md#preparation-with-a-visible-context). No live game or synchronization claim; new request contexts remain null in this receipt.
+
+## Initial skeleton assembly API
+
+Added [an explicit metadata assembly adapter](../docs/reconstruction/ANIMATION_SKELETON.md) connecting initialization, source projection, rank assignment and authority selection to hierarchy/preparation inputs. Synthetic integration checks exercise mixed direction, rank skipping, duplicate selected indices and distinct owner/runtime tables. Local operations have instruction receipts; the complete adapter has no full-native or live parity claim. Merge/reindex and mapping-table construction remain external.
+
+## Capacity replacement protocol
+
+Recovered allocate/copy/conditional-release/install ordering and packed-header updates in 48 original-helper cases. Null allocation leaves this helper unchanged, but caller wrappers can still proceed, so no native graceful-failure claim is made. Allocator internals remain external. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#animation-array-capacity-replacement).
+
+## Metadata initialization and resize
+
+Recovered exact metadata defaults and untouched bytes. Initial rank is 1, direction is cleared, and bit 7 survives. Existing-capacity growth initializes only newly active records; shrink preserves backing storage. All 81 original old/new-count cases match with no service stubs. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#runtime-metadata-initialization-and-in-capacity-resize).
+
+## Source-bone to runtime metadata
+
+The initial metadata projection matches 128 original-instruction cases, including parent/span fields, independent source and linked indices, conditional low-bit mode and parallel keys. Unlinked fallback uses output index. Allocation/default initialization and merge/reindex paths remain outside this receipt. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#initial-source-bone-metadata-builder).
+
+## Connected authority-key lookup
+
+Removed synthetic bone lookup and alternate-selector services from 128 authority-selection cases. Both original unsigned searches and append helper execute. Owner toe-existence and runtime channel mapping use distinct tables; alternate selection reads the same owner value with hidden fallback 8. Semantic enum labels remain unknown. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#authority-selection-with-original-lookup-routines).
+
+## Named direction-bit and work-channel selection
+
+Recovered fixed 22/26/22-key selection presets, including a LeftToeBase existence gate. Successful skeleton lookups set direction bit 3 and append work indices; duplicates survive. All 128 original selection/append cases match. Public catalog contains identifiers and CRC-matched names only. Numeric owner/sport meanings remain unknown. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#direction-bit-producer-selects-named-channels).
+
+## Hierarchy rank assignment producer
+
+Recovered owner-dependent default rank 1/5 and per-key override packing, matching 128 original-instruction cases. Static joins connect metadata parents/spans/keys to source bone fields and distinguish metadata count from mapping count. Semantic table names and direction-bit production remain unresolved. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#hierarchy-rank-producer).
+
+## Independent hierarchy prefix counts
+
+Removed the equal-count assumption. Alternate processing still converts root zero when total count is nonzero and prefix is zero, while preserving unprocessed tails. The model matches 384 hierarchy cases and 128 complete preparation cases with independent prefixes. Metadata producer meaning remains unknown. See [boundary](../docs/reconstruction/CENTRAL_IMPULSE.md#zero-prefix-hierarchy-boundary).
+
+## Integrated preparation call chain
+
+Preparation now connects request evaluation, pose application, deferred work and both hierarchy passes. All 128 complete original call-chain cases match both banks, work state and pending/service ordering. Lock and capacity services remain intercepted. A no-op-path float32 timing discrepancy was corrected in the session adapter. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#integrated-skeleton-preparation).
+
+## Alternate preparation bank reconciliation
+
+Recovered per-bone conversion direction in the current-processing path: metadata bit 3 selects current-to-local or local-to-current conversion. Both banks match 192 complete wrapper/helper cases. Empty dispatch preserves flags, unlike primary processing. Distinct prefix-count metadata and complete preparation integration remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#alternate-preparation-reconciles-both-pose-banks).
+
+## Preparation hierarchy conversion
+
+Recovered the primary-processing hierarchy loop following animation work application. Parent-order composition, normalized rotations, rank-threshold skips and root handling match 192 original-wrapper cases, including both dirty-bit clears. Alternate processing and full preparation integration remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#preparation-hierarchy-conversion).
+
+## Consecutive native-instruction animation sequences
+
+The stateful runner now matches 160 original update calls across 32 five-step sequences without resetting bank/work/holder state. Synthetic context translation changes between calls exercise continued conversion and blending. This is instruction-level continuity evidence, not live frame replay. See [scope](../docs/reconstruction/ANIMATION_WORKBENCH.md#consecutive-original-instruction-validation).
+
+## Stateful animation work runner
+
+An explicit request/advance/snapshot API now maintains work, bank and active context state across calls. It reproduces all 512 connected-cycle receipts and has a separate request/defer/replace/expire sequence test. A runnable synthetic demo is included. Scheduler timing and native ownership remain external. See [usage](../docs/reconstruction/ANIMATION_WORKBENCH.md#stateful-work-sessions).
+
+## Work storage creation
+
+Forty original-instruction cases recover work creation gates, 1120-byte aligned allocation, inline capacity 32, reserve threshold and initialized fields. Pose bytes remain untouched. Synthetic null allocation reaches a null-relative write; real allocator failure policy remains unknown. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#animation-work-storage-initialization).
+
+## Connected visible-context switch
+
+A further 256 original-instruction cycles validate context-bearing application followed by replacement gathering under a different visible context. Final records and holder exchange/reference counts match. The reconstructed work state records a symbolic active context token for subsequent updates. Allocation and concurrent lifetime remain external. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#connected-cycle-switching-visible-contexts).
+
+## Connected update and evaluator
+
+The original context-free update now runs through its real evaluator in 256 synthetic cases, matching final bank and work-state changes. The independent finish_work_update adapter reproduces the transition using the post-update bank. Capacity remains synthetic; visible replacement context and live ownership remain open. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#connected-update-and-deferred-evaluation).
+
+## Context-bearing evaluator integration
+
+Eighty additional full original-routine cases validate visible inline context conversion and relative-pose gathering within the evaluator. Both evaluator paths now have integrated evidence. Storage allocation remains intercepted; indirect access and live ownership are unproved. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#evaluator-with-a-visible-context).
+
+## Deferred evaluator replacement
+
+The evaluator now connects request arbitration, duration gating, pose gathering and clock reset. Eighty complete original-routine cases match for preexisting work and no visible context target, with capacity service intercepted. Allocation, visible-context integration and live ownership remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#evaluator-work-replacement).
+
+## Runnable animation update inspection
+
+The existing animation workbench now accepts complete update requests for both context paths. All 768 synthetic update receipts replay through its JSON API. The CLI example demonstrates ordered duplicate-index writes. Numerical policies are explicit; deferred evaluation and live pose publication are not performed. See [usage](../docs/reconstruction/ANIMATION_WORKBENCH.md#inspect-a-complete-animation-update).
+
+## Complete inline-context animation update
+
+The complete context-bearing update matches 512 synthetic original-instruction cases from entry to return. Includes timing, context conversion, per-record normalization, blending, writeback and deferred-dispatch arguments. Deferred evaluator effects, indirect accessor acquisition and live safety remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#complete-inline-context-update).
+
+## Context application scale distinction
+
+The context-bearing application caller preserves zero scale after masking W, unlike gathering which invokes a zero-to-one inverse fallback. Original caller plus composition helper matched 128 synthetic cases, confirming intermediate saved position becomes context translation. This is local arithmetic evidence, not a gameplay claim; full context-bearing loop remains open. See [evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#application-context-has-literal-zero-scale).
+
+## Context-free update integration
+
+The full context-free update now matches 256 synthetic original-instruction cases through deferred-evaluator dispatch. This covers expiry, missing bank, dirty flags, count mismatch, ordered pose writes and handoff arguments. Deferred evaluator effects and context-bearing work remain outside the validated operation. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#context-free-update-timing-and-dispatch).
+
+## Context-free animation application
+
+Combined provider reads, rotation blending, position interpolation and bank writeback now match 128 original-instruction synthetic cases. Repeated indices read preceding writes in the same loop. Clock and deferred-request integration, context-bearing application and safe live execution remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#context-free-work-application-loop).
+
+## Work rotation interpolation and bank writeback
+
+Recovered the work rotation helper's keep-saved, spherical and normalized-linear
+branches, distinct from graph polynomial blending. Original helper/callee match
+192 cases with explicit transcendental services and observed RSQRT seeds. The
+complete bank setter separately matches 192 cases without stubs; composed storage
+converts to bank-local space and clears position W, direct storage copies lanes.
+Next: join clock, rotation, writeback and deferred request in the original work
+application loop. See CENTRAL_IMPULSE.md, Work rotation interpolation branches.
+
+## Animation work duration and deferred-request handoff
+
+Resolved the stored scalar as a blend duration in the work-application path.
+Elapsed accumulates selected world dt; equality expires work before pose writes.
+The nonexpired tail invokes a zero/null evaluator request when saved work is
+pending. Original instructions match 384 clock cases plus four handoff cases.
+Quaternion interpolation and bank writeback remain to reconstruct; live lifetime
+is still separate. See CENTRAL_IMPULSE.md, Animation work duration and saved-request
+handoff.
+
+## Runnable animation work-transform JSON testbench
+
+Composed bank gathering, raw/converted context processing and explicit RSQRT
+policies into `python -m engine.animation_workbench`. A synthetic example and API
+guide make the recovered kernels usable without the binary. Outputs report the
+normalization calls and evidence boundaries; missing/extra seeds and implicit
+substitutes are rejected. CLI and native-receipt replay tests added. The other
+agent's terrain process remains live, so no game operations were performed.
+See docs/reconstruction/ANIMATION_WORKBENCH.md.
+
+## Passive accessor preflight ready for a later live session
+
+Added a bounded metadata-only reader with external identity guards, entity
+backlink verification and rereads of linkage/reader state. Six synthetic tests
+reject changes, mismatches and short reads; reports never claim lifetime or safe
+native invocation. A private fresh-acquisition adapter is syntax-checked but
+not live-tested. Another agent currently owns the game in a terrain-scan session,
+so no launch, attachment or input was performed. See CENTRAL_IMPULSE.md, Passive
+accessor preflight observations.
+
+## Cleanup caller routes and late invalidation
+
+Traced descriptor detach and child traversal into cleanup, and identified a
+second accessor-free site inside parent detach. A 16-case original wrapper check
+establishes detach-parent then detach-children before indexed control-record
+invalidation. Valid control-record observations alone therefore do not pin the
+accessor. Attachment can detach/replace relationships; a destruction-only phase
+is unproven. Added local order planner and an instrumentation target list; no live
+probe launched. See CENTRAL_IMPULSE.md, Cleanup callers and invalidation order.
+
+## Accessor cleanup lifetime boundary
+
+Traced attachment topology and validated cleanup in 48 original-instruction
+cases. Cleanup can release descriptor holders, deallocate the accessor and only
+then clear the entity slot; this routine does not inspect the reader word.
+Unlink/descriptor/allocator services remain intercepted. This establishes that
+reader admission alone is not an accessor lifetime pin, without claiming a live
+race. Next: caller mutation-phase exclusion versus the player post-update scope.
+See CENTRAL_IMPULSE.md, Accessor attachment and cleanup lifetime boundary.
+
+## Caller-owned transform copy candidate
+
+Found a separate copy-out helper that uses reader admission but writes into a
+caller-owned matrix and does not refresh. Sixty original cases pass; two distinct
+destinations preserve the first copy. The complete initializer proves bypass is
+initially enabled with no active owner, correcting the provisional owner-active
+name. This leaf was missing from the unwind inventory. Added default-state model
+and API contract. Live identity/lifetime and allowed invocation scope remain open;
+no new live API enabled. See CENTRAL_IMPULSE.md, Caller-owned transform copy and
+bypass initialization.
+
+## Transform writer and reader exclusion
+
+Recovered writer claim, reader drain, owner/depth publication and outermost
+release. The original segment matches 192 synthetic cases with thread-ID and
+entity publication intercepted. A waiting writer retains its claim and blocks
+new ordinary readers. Event flags clear bit 1; callback receives duplicate matrix
+pointers. Owner-active production, abnormal exits, shared scratch serialization
+and lifetime remain unresolved. See CENTRAL_IMPULSE.md, Transform writer admission
+and publication.
+
+## Indirect transform accessor storage and reader protocol
+
+Recovered reader admission/retry and owner-thread bypass. Sixty original accessor
+cases validate counter operations and 64-byte copying with refresh/thread-ID
+services intercepted. A two-call test proves shared return storage is overwritten;
+the reader count is released before return. Added a one-attempt inspection model.
+The getter alone is not a retained snapshot API. Refresh publication, writer
+protocol and caller serialization/lifetime remain open. See CENTRAL_IMPULSE.md,
+Indirect transform copy and shared return storage.
+
+## Raw animation context conversion
+
+Closed the numerical raw-context-to-gather input path. The caller masks raw W
+to zero, so inversion supplies unit scale despite the general gather kernel's
+scale support. Complete inverse helper matches 280 original-instruction cases;
+raw extraction/normalization/inversion chain matches 128 with scalar sqrt supplied
+and observed RSQRT seeds. Added a composed raw-context gather API. Live transform
+acquisition, concurrency and buffer lifetime remain open. See CENTRAL_IMPULSE.md,
+Raw context conversion and unit-scale constraint.
+
+## Context-present animation work conversion
+
+Implemented context scaling, transform composition and final quaternion
+normalization. The original gather loop matches byte-for-byte in 192 synthetic
+cases with observed RSQRT seeds supplied to the model. Both bank modes are
+covered. Converted context acquisition/inversion remains external; hardware
+seed portability, pose lifetime and concurrent publication remain open.
+See CENTRAL_IMPULSE.md, Context-present work transform kernel.
+
+## Animation work gathering and context role
+
+Recovered the complete no-visible-context-target channel gather loop and reused
+the provider transform kernel. All 256 original-instruction cases match output
+bytes, including direct/composed branches and repeated selections. Added a
+bounded executable gatherer. The retained holder's target supplies a reference
+transform in the other branch; it is not yet established as a pose-buffer pin.
+Visible-context conversion and target lifecycle remain open. See CENTRAL_IMPULSE.md,
+Context-free animation work transforms.
+
+## Evaluator context-holder ownership
+
+Found the later context-holder retention boundary and implemented its exchange
+arithmetic. Ninety original-instruction cases cover distinct and aliased holders,
+reference counts and retirement predicates; only retirement is intercepted.
+The new holder gains one net reference and the old loses one; self-replacement
+is balanced. This does not retain the earlier saved raw context or establish
+pose-bank lifetime. Next ownership lead is the retained holder's payload and
+its destruction path. See CENTRAL_IMPULSE.md, Evaluator context retention boundary.
+
+## Saved animation request arbitration
+
+Implemented the evaluator's single saved scalar/context slot, verified against
+504 original-instruction prefix cases without service stubs. Existing work with
+an empty slot defers the request; an occupied slot clears the work count. Only
+zero-scalar/null-context input consumes the saved request. Nonzero requests can
+continue while leaving it saved. Sequence tests cover bypass and one-time
+consumption. Context retention and downstream evaluation remain unresolved.
+See CENTRAL_IMPULSE.md, Saved animation request arbitration.
+
+## Child preparation and pending-work mutation
+
+Recovered the one-shot scalar dispatch, bank-selected work application, pending
+write before unlock, and zero-mask work clearing. Added the preparation planner
+and 432 original-instruction checks. Preparation can create pending even when
+parent advancement is disabled, closing one mutation gap in the linked-child
+orchestration. Evaluation/application math and lifetime are still open. The
+scalar units remain unknown. A saved-request path inside evaluation is the next
+static lead. See CENTRAL_IMPULSE.md, Child preparation consumes deferred work.
+
+## Eligible linked-child advance and refresh
+
+Added the eligible-child call-order model and 768 original-instruction cases.
+Child entity flags select its world time group; parent flags gate advance;
+advance sets pending, and dirty or pending triggers the child locked refresh.
+The parent list spinlock spans all of these services. Internal service mutations,
+pose evaluation, scratch heap cleanup and lifetime remain unresolved. Validation
+uses inline scratch and non-mutating service intercepts; no live game test.
+See CENTRAL_IMPULSE.md, Eligible linked-child update order.
+
+## Linked-skeleton pruning and registration lifecycle
+
+Recovered unstable removal order and the empty-list unregister predicate under
+the linked-list spinlock. The original helper matched 484 synthetic ineligible-child
+cases; every service ran while locked and every normal return released the lock.
+Added `reference.skeleton_links` and boundary tests. Assignment, destruction and
+registration service internals remain opaque; eligible-child evaluation and
+safe pose retention are still open. See CENTRAL_IMPULSE.md, Linked-skeleton
+pruning and unregister scope. No game launched during this pass.
+
+## Post-update cadence tail recovered
+
+Added exact uint8 modulo/wrap and float32 elapsed accumulation from the post-update
+tail, checked in 6144 original-instruction cases without service stubs. Four tests
+cover the receipt digest, zero interval, flag preservation and adjacent resets at
+255/0 for interval three. Static inspection also identifies a separate locked
+linked-skeleton traversal before this tail. Full mode cadence, linked helper
+internals and a lifetime-safe snapshot scope remain unresolved.
+
+## Live player post-update entry/return trace
+
+Eight seconds produced 649 player-skeleton calls, one per observed request pair,
+with matched normal returns on ten worker threads. No target request changed
+across a call; no drops, incomplete records or outstanding calls remained. Both
+callback fields restored, session stopped and settings restoration verified.
+This closes observed callback execution; safe pose copy and receiver lifetime
+remain open. No pose data was copied by the wrapper.
+
+## Callback recorder admission and drain
+
+Replaced fixed settling grace with explicit admission, outstanding-call accounting
+and immutable sealing. Concurrent, delayed, timeout and refusal Wine fixtures pass.
+The 8-second callback exceeds the 5-second drain and produces a partial trace with
+one unmatched entry, correctly rejected by the pairing analyzer. Module pinning
+still protects late wrapper code only, not receiver lifetime or job completion.
+No game was launched or instrumented in this pass.
+
+## Skeleton callback tracer fixture and analysis
+
+Adapted the private callback wrapper to post-update layout and passed concurrent
+Wine fixture checks: 6,447 matched entry/return pairs, restored fields, intact ABI,
+100 stack walks and identity-refusal behavior. Added record-ready publication and
+a public per-thread trace-pairing API with four boundary tests. No live insertion
+was made. Fixed settling grace still needs outstanding-call accounting; fixture
+pairing is not job completion or receiver lifetime proof.
+
+## Live SkeletonPostUpdate player membership
+
+A bounded session reached the gameplay HUD and the passive reader found the
+player's exact owned skeleton at source/destination index 1 of two receivers.
+Identity, callback and storage guards passed. Added a payload-free receipt.
+Remaining claims were zero, which does not prove completion. Live callback
+entry/return correlation and owner/pose lifetime remain the next boundaries.
+
+## Skeleton post-update source/storage observer
+
+Located the separate post-update source registry and checked six original gather
+segment cases. Empty source preserves destination count/storage; the observer
+therefore separates source membership from stale capacity/prefix matches. Added a
+bounded exact-skeleton/owner/callback reader and four synthetic tests. Live
+membership and callback completion are not yet established.
+
+## SkeletonPostUpdate scheduler-to-refresh route
+
+Joined named world/UI skeleton post-update setup to the component update that
+calls guarded refresh with force enabled and child recursion disabled. Verified
+three original setup stores and 64 complete list-adapter cases; lookup/update
+services are stubbed. Added a list-selection planner and two tests. This narrows
+the live snapshot target to a named job; player membership, completion and lifetime
+remain unverified, and additional work follows the guarded call.
+
+## Skeleton transform-event invalidation proved
+
+Executed both exact skeleton before/after callbacks for all 65,536 byte pairs
+without service stubs. Before is a no-op; after sets dirty bit 7 and pending bit 0,
+preserving other bits. Added the exact flag API and exhaustive receipt-digest test.
+This joins entity transform notification to later guarded refresh, and rules out
+treating generic event return as a ready-pose boundary. Later caller/scheduler
+identity and lifetime exclusion remain unresolved. No live mutations occurred.
+
+## Entity transform-event callback scope
+
+Resolved three known entity vtable routes and emulated 27 cases covering component
+counts and recursive entity-lock depths. The base event calls before/apply/refresh/
+after under its acquisition; derived variants propagate further after releasing
+that acquisition, which can leave an outer recursive hold intact. Added an ordering
+planner and two tests. Transform application and callback internals remain opaque;
+this is not a completed-animation or skeleton-lifetime guarantee.
+
+## Linked-object pose propagation and recursive refresh
+
+The outer refresh's optional evaluation call traverses linked objects and
+propagates transforms; its role is narrower than a general animation evaluator.
+Validated the original per-entry tail in 64 cases with external services stubbed.
+A callback forces transform-event dispatch, a found skeleton is marked dirty and
+pending, and the secondary byte controls immediate recursive refresh. Added an
+effect planner and two tests. Pending is cleared before the traversal, so neither
+clean flag establishes completion. Callback internals, scheduling and lifetime
+remain unresolved; this pass used no live game mutations.
+
+## Guarded skeleton refresh return ordering
+
+Executed the original outer refresh through normal return for 512 synthetic
+branch cases with external services stubbed. Added an effect-order model and
+three tests. The dirty byte is reread after locking and cleared before optional
+evaluation, so clean state cannot establish completed evaluation. All entered-lock
+normal paths tested unlock before return. Evaluation's downstream work, exception
+paths and scheduler ownership remain unresolved; no live mutation was attempted.
+
+## Pose bank selection interval guard
+
+Added a passive pose API that brackets the existing reader with current, previous,
+configured-slot and stored-epoch reads. Any change rejects the sample. Logical
+slot matches preserve aliases and external banks; no bank addresses are returned.
+This adds observation rejection, not a completion fence: same-epoch writes and
+ABA changes remain possible. Four synthetic boundary tests pass. A fresh live
+attempt found the skeleton but the inner pose guard rejected changing data before
+the final interval comparison; no interval acceptance is claimed.
+
+## Guard-accepted live pose observation
+
+The passive reader acquired the player skeleton and read one requested channel;
+two keys were absent. Metadata bounded 485 records and identity/pose guards
+passed. Added a payload-free receipt and a jump/landing recording contract.
+Sequential reads do not establish atomicity, lifetime retention, clip identity
+or a safe callback. No writes, debugger attachment or gameplay input occurred.
+
+## ActionKit source reference acquisition
+
+The generic source-slot reader passed 96 full original-instruction cases for
+non-inline tags 1, 2 and 255. Assignment acquires a temporary and slot ownership,
+releases the old slot and drops the temporary; aliases preserve counts. Policy
+rejection in tag 1 resets to sentinel yet still issues a follow-up request. Added
+assignment model and tagged-prefix notes. Locks/map/policy/retirement/follow-up
+services were intercepted. Source acquisition, cache build and array cleanup now
+have a connected local lifecycle. Inline construction, refill, live mutation and
+cache invalidation remain open. No live session ran.
+
+
+## ActionKit source-array ownership cleanup
+
+Ninety-six original-instruction cases validate the source-array cleanup and release
+loop. Each owned slot decrements low-24 ownership, including repeated aliases;
+record-only counts remain untouched. Storage flags independently suppress element
+release or backing-storage free. The helper leaves its descriptor unchanged and
+is not an idempotent reset. Added effect planner and tests. Retirement/allocator
+services were intercepted. Source-array acquisition, live storage flags and external
+mutation still need validation before using this as a lifetime guarantee. No live
+session ran.
+
+
+## ActionKit cache receiver identified
+
+Type metadata joins the inspected constructor, finalizer, reader, vtable and size
+under the name ActionKit. Thirty-two original constructor cases verify empty
+source/cache descriptors; lock initialization is intercepted. Added the dedicated
+ActionKit cache guide and index link. This is action-resource storage, not player
+skeleton pose storage. Static destructor evidence frees cache storage and delegates
+source-handle cleanup; full ownership and in-place reset remain open. Next: source
+handle lifetime and cache consumer/mutation protocol. No live session ran.
+
+
+## Animation-side raw-pointer cache finalizer
+
+The registered route A callback builds a raw-pointer cache from handle records
+using TLS visibility and status bit 31. Ninety-six original-instruction cases run
+two invocations each. Nonzero cache count suppresses rebuilding even when entries
+are null and visibility later changes; empty sources repeat initialization. Neither
+reference count changes. Count is stored before entries are filled, and the count
+gate is outside the lock. Added model and regression cases. Lock/reservation services
+were intercepted. Next: receiver type, count-reset/consumer paths and lifetime owner;
+this cache is not yet a safe snapshot source. No live session ran.
+
+
+## Concrete animation-side finalization registrations
+
+Three original call-site slices now execute through the reader adapter and registry
+append helper, verifying receiver/callback/tag routing into flag-1 categories.
+One route includes a secondary callback. The append/capacity service is stubbed;
+callback bodies and receiver types are not yet verified. These stream-reader
+registrations support resource/object finalization, not a universal frame callback.
+The runtime category index is required; an uninitialized descriptor skips append.
+Next: identify receiver types, finalization callback effects and worker ownership.
+Per-frame skeleton/ragdoll scheduling remains a separate path. No live session ran.
+
+
+## Callback passes around publication readiness
+
+The work service surrounding the counter handoff is a category-filtered callback
+dispatcher. Its full original instructions passed 256 cases. Skip mask 2 precedes
+the handoff, mask 1 follows; flag-zero categories run in both passes. Included
+entries run in reverse order, primary then optional secondary, with their stored
+tag and category-context slot. Added a fixed-registry planner and phase tests.
+Scratch capacity and callbacks were intercepted; full enclosing execution and
+registry mutation remain open. This is not an all-jobs/frame completion barrier.
+Next: identify concrete category descriptors and registrations, queued-record
+retention and the execution thread. No live session ran.
+
+
+## Publication visibility completion
+
+The ready-publication drain passed 64 original-instruction cases. It validates the
+queued identifier against the current record, sets visibility bit 31 and notifies
+the current object, without installing the queued object. A zero ready count leaves
+queued submissions untouched. Twelve instruction-slice cases validate transfer from
+submitted to ready counters. Locks and notification were intercepted; the complete
+preceding work is unresolved. Static outer ordering drains visibility before
+retirement. Next: recover the work surrounding the counter handoff and establish
+queued-record retention before exposing a live callback. No live session ran.
+
+
+## Thread context and record publication
+
+The nonnull record-binding helper passed 216 original-instruction cases including
+the actual TLS getter, page-index calculation and queue append. Context 3 with pool
+mode other than 1 queues identifier/object/record publication; an empty binding
+clears status bit 31 so TLS visibility applies. Other tested contexts bind empty
+records with bit 31 set. Different existing targets are not overwritten locally.
+Added planner and tests. Registry preparation was intercepted; queue consumer,
+caller synchronization and OS thread roles remain open. No live session ran.
+Next: follow publication queue completion to establish a usable callback context.
+
+
+## Record slot reclamation and reuse
+
+Fifty-four original-instruction cases validate null-target record reclamation,
+free-list linking and missing-record allocation from an existing page. The same
+slot returns under a new identifier with reset counters/status and ownership one.
+No in-record generation increments. The count field doubles as a free-list link
+when recycled. Added portable pool operations and tests. Lock/map/context services
+were intercepted; no live session ran. Durable API tokens cannot rely on record
+addresses alone. Next: verify a retained-record identity/acquisition scope and
+thread context; page growth and identifier uniqueness rules remain open.
+
+
+## Null-target ownership and paired release
+
+Forty original-instruction cases confirm that an identifier record with no object
+still receives an ownership reference. The paired release restores its status and
+requests retirement only when the resulting low-24 count is zero. Original request
+and reclaim gates execute; positive record-only counts preserve the empty record.
+Only locks and map lookup are intercepted. Added release arithmetic with whole-word
+underflow behavior. The eventual API must release acquired records even if object
+validation fails. Missing-record allocation, reuse/generation guards and live thread
+scope remain open. No live game session ran.
+
+
+## Layered identifier lookup recovered
+
+The resolver's ordered overlay, record map and fallback map passed 128 original-
+instruction cases. Null overlay objects suppress fallback even with a different
+identifier. The resolver and overlay helper request the same lock recursively;
+the record lookup also requests the pool lock. The portable resolver preserves
+selection without claiming retention. Hash lookup and lock services were stubbed.
+Static outer-helper inspection shows missing objects can still yield owned records.
+Next: validate that missing-object ownership path and pair it with release, then
+trace overlay producers and lifetime restrictions. No live session ran.
+
+
+## Ownership acquisition shares the pool lock
+
+The original ownership lookup increments status under the same pool lock used
+by cleanup dispatch. Ninety-six native-instruction cases validate existing-index
+lookup, increment-before-unlock and subsequent queue rejection of nonzero counts.
+The native increment is whole-word and unchecked; low-24 count overflow changes
+flags and leaves a zero count. The reference model preserves that boundary.
+Lock implementations and cleanup services were intercepted. Arbitrary-pointer
+safety, identifier lookup and release pairing remain open. No live game session
+ran. Next: trace stable-identifier or retained-record acquisition and paired release.
+
+
+## Retirement queue ownership gate
+
+A 144-case original-instruction check validates the cleanup queue's low-24-bit
+ownership recheck. Nonzero ownership drops the queued attempt and clears its flag;
+zero ownership invokes cleanup and disposal before record reclamation. Record +8
+count does not gate dispatch. The new effect planner preserves opaque callback
+changes by describing a clear mask instead of inventing a final status. Tests cover
+ring wrap, mode routing, null targets and callback status changes. Effect services
+were intercepted; no live session ran. Next: acquisition/release and their locking
+scope, plus retirement-request enqueue validation.
+
+
+## Skeleton cached-record producer connected
+
+The setup/rebuild assignment obtains its record from the same paged registry
+used by cleanup. Sixty-four original-instruction cases validate existing-index
+lookup, temporary-reference transfer, same-record rebinding and subsequent
+invalidation. The cached record and positive record count survive while the
+object pointer is cleared. Pool lock/reclaim services were intercepted; no live
+session ran. Missing-record allocation and concurrent lifetime acquisition remain
+open. Next: trace low-24-bit ownership into the cleanup queue, rather than treating
+the channel record count as an object lease.
+
+
+## Control-record lifetime boundary
+
+The complete indexed invalidation helper passed 320 original-instruction cases.
+It clears the object pointer even with a positive record `+8` count, preserving
+that count and the status low 24 bits. Static skeleton cleanup reaches this
+helper (or its locked variant). Channel binding's record increment is therefore
+not sufficient evidence of component retention. The portable model and receipt
+contain synthetic values only. Next: verify the cached-record producer and the
+owner/scheduler scope that excludes destruction before offering pose snapshots.
+No new live game session was used for this check.
+
+
+## Active dependency clear diagnostic and continuation modeled
+
+The clear helper calls an INT3 shim before active-list effects in the inspected
+image. Added an explicit clear API that stops active inputs by default; optional
+inspection continuation performs alternate release and removes only the source's
+successor entries. 128 completed native cases and 64 breakpoint-stop cases validate
+the distinction with locks stubbed. Tests preserve requests, descendant entries and
+transactional rollback. Earlier active-clear prose now qualifies the diagnostic.
+Live exception handling and active native rewiring remain unverified.
+
+## Skeleton runtime world-chain rewiring modeled
+
+Validated 128 complete native skeleton world-fold cases with actual adapter/link
+helper and stubbed inactive-list effects. Added engine.world_stage_chain to model
+ordered clears, eligibility, skipped-world preservation and duplicate handles
+without mutating inputs. Three original Step registrations connect the skeleton
+stage after UIAfterCamUpdate and before UIAfterPhysicsUpdate / AfterPhysic.
+Step rebuilds first, then adds these links: selected terminals do not retain their
+old setup edge. Active-list release and live world lifetime remain out of scope.
+Six tests cover the new API and native receipt. See RAGDOLL_STAGE_DEPENDENCIES.md.
+
+## Skeleton conditional wrapper and world-stage fold
+
+Resolved the post-camera endpoints as UpdateSkeletonWorldIsPausedBranch and
+UpdateSkeletonEndNode. Original setup/predicate validation establishes signed
+world +0x1080 <= 0 selects the primary route. The alternate route can reach the
+terminal with no pose job executed; a new runnable wrapper probe and signed-boundary
+tests preserve that distinction. Validated the world adapter and common link helper,
+which clears terminal outgoing links, attaches the conditional entry and returns
+the terminal. The outer eligible-world fold is statically joined. Runtime selection,
+rebuild ordering and retention still prevent a native fresh-pose API claim.
+
+## Post-camera skeleton and Kino joins reconstructed
+
+Validated 15 original registrations at two synthetic owner bases. Skeleton gather
+fans out to ordinary, interaction and post-camera ragdoll updates; every one of
+three Kino follow-ups waits for all three; LiteRagdollUpdate joins those follow-ups.
+Added an executable partial graph and nine delayed-branch/follower scenarios.
+Neither zero remaining work nor body return releases an unfinished dispatch's
+holds. The upstream/downstream endpoint objects, connection to the earlier ragdoll
+branch and live retention remain open. See RAGDOLL_STAGE_DEPENDENCIES.md.
+
+## Ragdoll dependency join and executable completion probe
+
+Recovered four edges: ragdoll end-animation splits into ordinary and interaction
+skeleton updates; both join at PhysicForRagdollUpdate. Constructor/table inspection
+identifies the interaction branch as a range job with a different visitor.
+Two original setup executions matched all four edges. Added a runnable partial
+graph and tests showing either unfinished dispatch retains the join even when all
+its ranges are claimed. Post-camera writer topology, live membership and lifetime
+remain open; no native snapshot API is claimed. See RAGDOLL_STAGE_DEPENDENCIES.md.
+
+## Skeleton pose writer joined to named ragdoll jobs
+
+Resolved the batch registration to Anim::SkeletonUpdateForRagdoll /
+SkeletonUpdateForRagdollInteractions and found a separate locked update route in
+RagdollAfterCamera. 256 original single-iteration cases verify ordering, primary
+bank recheck, flag transitions and unlock with effect services stubbed; two
+callback setup slices verify the batch target. Entity collection and the second
+route are static only. Animation-time completion alone is insufficient evidence
+for a pose fence. Next join ragdoll dependencies and membership to a retained
+snapshot scope. TLS-zero scope also has a confirmed caller in a four-queue scan;
+its thread identity remains unresolved.
+
+## Handle TLS mask writers and restoration verified
+
+Identified an all-ones initialization path and a scoped zero-mask work routine.
+128 full empty-list native paths restore arbitrary prior mask/context values;
+three setup slices verify all-ones mask plus a separate TLS flag. Lock/work
+services are stubbed, native TLS accessors execute. Status-bit-31 records bypass
+this mask, so null resolution can reflect context rather than object destruction.
+Thread roles, nonempty callbacks, retention and the pose completion boundary remain
+open. No live TLS writer or snapshot API was added. See CENTRAL_IMPULSE.md and
+handle_thread_scope_validation.json for scope and limits.
+
+## Channel-handle resolver reconstructed with its TLS dependency
+
+Added `reference/animation_handle.py` and 256 complete native resolver cases,
+including the actual TLS getter and channel lookup with no service stubs. Pointer
+resolution depends on status bit 31 and a thread-local mask; cache generation
+controls lookup. The control record stays unchanged, so resolving does not retain.
+Static binding code adjusts a separate record counter, whose component-lifetime
+meaning remains open. Six tests cover receipt replay and cache/mask boundaries.
+Next: follow record ownership and thread-context setup before retaining a skeleton
+from an arbitrary mod worker.
+
+## Skeleton lock lifecycle joined to construction and teardown
+
+Constructor inspection places the wrapper at component +0x210 and initialized
+inline storage at +0x218. Teardown calls its deletion wrapper. Live resolution
+verified InitializeCriticalSectionEx and RtlDeleteCriticalSection, with stable
+slots/headers and 82/29 matching instruction spans. 128 synthetic wrapper cases
+verify transfer/return behavior: initialization status is ignored and the wrapper
+pointer is not cleared before deletion. No lock API was invoked live. Component
+retention remains necessary; a non-null pointer is not a lifetime guarantee.
+
+## Skeleton critical-section API pair identified live
+
+Resolved the protected entry and exit adapters to `ntdll!RtlEnterCriticalSection`
+and `ntdll!RtlLeaveCriticalSection` in one existing Wine process. Verified 54/64
+instruction spans and stable slots/module headers. Forty synthetic entry-transfer
+cases preserve the caller stack and tested callee-saved registers. The component
+field is a wrapper containing the actual lock pointer. No lock acquisition, game
+input, memory write or debugger attachment occurred. Player-lock lifetime, writer
+coverage and contention remain open before an in-process snapshot is justified.
+
+## Lazy channel getters can trigger the bank writer
+
+Traced the outer guarded refresh into channel accessors. Added explicit
+`refresh_then_read_rotation` service composition and 256 native accessor cases
+with a bank-changing refresh stub. The accessor selects its bank after refresh;
+it is not passive. Documented the outer refresh gates, transform processing and
+lock scope. The final quaternion read follows lock release, so getter return is
+not a lifetime or concurrent-snapshot guarantee. Next: resolve the lock and outer
+update's scheduler ownership before choosing an in-process capture boundary.
+
+## Skeleton bank rotation reconstructed; completion boundary still open
+
+Added `reference/animation_bank.py` and 256 native-instruction cases for the full
+rotation routine plus epoch getter. Lock/unlock and publication lookup are stubs.
+The routine retains previous, alternates two configured banks once per changed
+epoch, updates bits 29/31 and conditionally publishes through the owner. Seven tests
+cover the model. Caller inspection shows parent-transform writes after rotation,
+so a pointer/epoch change is not a completed-pose fence. Next: join the outer
+update completion to animation scheduling and verify slot identities live.
+
+## Live skeleton identity verified; pose snapshot rejected correctly
+
+A bounded live map-screen session verified exact SkeletonComponent slot 38 among
+43 components, cache/tag agreement and owner backlink. Its provider pointer changed
+between two addresses. Added identity-only binding mode while retaining all pose
+reader guards. The pose reader observed 485 transforms and a fitting allocation;
+reference key resolved, snow-endpoint keys were absent. Pointer and flag changes
+rejected the capture, so coherent pose sampling remains open. Next: trace bank
+publication and establish a valid read boundary, then confirm a snow-riding rig.
+
+## Bank-combination copy routing recovered
+
+Added copy-mode and descriptor-group selection with 192 complete native entry-to-
+copy cases and six additional tests. Mode 1 switches inputs at float32 weight 0.5;
+modes 2 and 3 force the first and second inputs. Group masks select the highest set
+bit, not a union. Arithmetic modes and higher-level scheduling remain open.
+The user has now lifted the live-probe hold; the next check is read-only skeleton
+identity, metadata bounds and requested pose records.
+
+## Typed animation channel copy reconstructed
+
+Added `reference/animation_channels.py`. The full native copy routine matches 256
+synthetic cases across all 16 type codes, overlapping storage, empty ranges and
+subranges. Type 4 preserves three ordered four-byte copies, including aliasing;
+bit 27 is set even for an empty range. Seven tests cover receipt replay and API
+bounds. Semantic type names and call scheduling remain open. No live probing.
+
+## Provider record bounds recovered from metadata
+
+The bank's metadata link supplies a uint16 transform count and two allocation byte
+sizes selected by flag bit 28. Added `pose_bank_layout`, 512 focused original-byte
+checks over 256 synthetic inputs, and metadata-bound mode in the passive channel
+reader. It rejects inconsistent count/size or out-of-range indices before reading
+records. Nineteen observer tests cover the resulting API. Allocator execution,
+live identity, lifetime and coherent pose-frame capture remain unproven. The live
+probe hold is unchanged; this pass used cached instructions and synthetic fixtures.
+
+## Pose-channel reader connects lookup and transform conversion
+
+Added `engine/pose_channel_observation.py` with thirteen offline tests, including
+240 transform inputs from the existing native-instruction receipt. The reader
+returns requested local and converted pose records after bounded reads and guard
+rechecks. It requires a caller-verified component and record count. Native bank
+length, lifetime and clip identity remain open. Live probing remains on hold;
+this pass used only cached binary instructions and synthetic memory fixtures.
+
+## Passive skeleton observer prepared offline
+
+Added `engine/skeleton_observation.py` and eleven synthetic tests. The adapter checks
+component membership, cache state and the recovered SkeletonComponent descriptor
+binding, then rechecks retained identity spans. It returns address-free facts.
+Owner semantics, derived types and provider-bank contents remain unresolved;
+equal reads do not establish atomicity or lifetime. Live probing is on hold while
+another agent tests the game. No launch, attachment, input or game-memory access
+was performed for this implementation. Next: use the adapter with the existing
+identity-checked reader only after that hold is lifted.
+
+## Concrete skeleton provider binding
+
+Identified the cached pose provider as `SkeletonComponent` through matching type
+metadata, getter, virtual slot and constructor assignment. The base constructor
+binds `Component`. 256 full provider-acquisition cases now execute actual type
+getters with no intercepted calls, replacing the last descriptor-getter stub in
+that path. Synthetic ranges/arrays remain supplied; live player identity and
+lifetime are still unverified. See [binding and cache limits](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-provider-identified-as-skeletoncomponent).
+
+## Dynamic registration callback dispatch
+
+Recovered the callback list's live count and array refresh, entry order and low-two-
+bit context mask. 192 native-loop cases matched supplied callback mutations of the
+synthetic list. Actual callback bodies remain supplied and unresolved; the pass does
+not assume registration is read-only. Sort keys must still be captured after these
+callbacks. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#registration-callback-dispatch-observes-list-changes).
+
+## Decoded registry parent-link pass
+
+Joined enumeration and parent lookup against one decoded registry. 143 complete
+native radix parent-loop cases matched final links, visitation order, uint32 lookup
+arguments and final cursor without service stubs. The general API also replays 160
+prior compact cases. It preserves aliases and unregistered descriptors, returns
+inspection results only, and does not mutate the game. Registration callbacks,
+key producers and live ownership remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#complete-parent-linking-from-a-decoded-registry).
+
+## Radix traversal and decoded cursor API
+
+Joined branch descent, leaf search and ancestor sibling continuation. The decoded
+snapshot API now supports first/next for null, compact and radix registries.
+3,836 native first/next operations matched cursor writes and logical values, with
+the same memory decoded and checked through the public adapter. The next boundary
+is full parent linking against radix enumeration; live ownership and snapshot
+consistency remain unproved. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#radix-branch-iteration-and-sibling-continuation).
+
+## Radix leaf iteration
+
+Recovered first/next transitions for every radix leaf kind, including prefix jumps,
+packed duplicate selection, suffix-only singleton writes and exhaustion. 768
+original-instruction cases matched exact cursor writes and value slots. This is a
+local iterator stage; ancestor-stack descent and sibling continuation remain open.
+See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#radix-leaf-cursor-transitions).
+
+## Bounded native-layout registry decoding
+
+Added a caller-supplied byte-reader and explicit value-identity mapper that decode
+compact and radix registries into the validated logical model. 4,885 synthetic
+memory checks matched original native lookup results. Read and node budgets,
+short-read errors and key-layout checks fail closed. This removes raw decoding as
+a missing piece; live ownership, consistent snapshot acquisition, tree iteration
+and the player-component join remain open. See [API and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#bounded-registry-snapshot-decoder).
+
+## Radix registry multi-value leaves
+
+Added packed arrays, inline keys and bitmap leaves, completing logical models for
+the normal lookup dispatch families. Exact helper scan order is preserved for
+synthetic duplicate keys. 3,501 original-instruction checks cover leaf sizes and
+branch-to-leaf joins. This supersedes the unsupported packed-leaf boundary below;
+raw decoding, tree iteration, construction and live ownership remain open. See
+[contract](../docs/reconstruction/CENTRAL_IMPULSE.md#radix-packed-and-bitmap-leaves).
+
+## Radix registry branches
+
+Recovered linear-label, bitmap-ranked and direct-array tree traversal, including
+compressed-prefix masks and root-only dispatch. The logical inspection API in
+`reference.type_registry` matched 1,128 complete original-instruction runs on
+synthetic branch trees. Packed multi-value leaves explicitly raise as unsupported.
+Full tree iteration, construction and live provider identity are still open. See
+[contract and evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#radix-registry-branch-traversal).
+
+## Compact registry enumeration joined to parent linking
+
+The registry cursor now has a recovered first/next implementation, including
+key-based iteration, duplicate skipping and exhaustion writes. 512 original-
+instruction checks validate cursor behavior. Another 160 cases execute the full
+parent-link loop against the same compact table with no call interception. This
+removes the iterator and lookup stubs for compact/null roots. Tree-root traversal,
+construction and live provider identity remain open. See [contract](../docs/reconstruction/CENTRAL_IMPULSE.md#compact-registry-iteration-and-complete-parent-linking).
+
+## Compact type registry lookup
+
+Recovered the compact/null root lookup used by parent linking. The portable API
+returns a logical value-slot index with unsigned 64-bit comparison and first-match
+behavior. 256 original-instruction cases verify slot offsets and values. Another
+128 cases join the original lookup to the parent-link pass, replacing its lookup
+stub while retaining a supplied iterator. Tree roots and actual enumeration remain
+open. See [contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#compact-registry-lookup).
+No game process was launched or accessed for these checks.
+
+## Parent-key resolution before numbering
+
+Identified the first sort field as the key used by the preceding registry parent-link pass. Successful lookup replaces the parent; misses preserve prior links. The pass matches 128 original-instruction runs with supplied iterator/lookup services. This explains sibling grouping while leaving key production, map internals and registration callback effects open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#parent-key-resolution-before-type-preparation).
+
+## Continuous descriptor preparation
+
+Combined the recovered sort and range assignment and matched 128 uninterrupted native executions through both stages. Checks cover descriptor order, child indices, every range and final counter, with duplicate keys and noncontiguous parent groups. Registration inputs and live registry acquisition remain unresolved. See [the combined evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#continuous-descriptor-preparation-validation).
+
+## Descriptor heap fallback
+
+Recovered bottom-up heap construction and pop ordering, including right-child tie selection. Exact permutations match 160 new original-sort runs with forced and mixed heap branches; the previous partition fixtures remain green. The local sorter now handles exhausted budget. Registry key producers, callbacks and live contents remain open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#heap-fallback-and-complete-local-sort-control-flow).
+
+## Exact descriptor partition ordering
+
+Recovered median sampling, equal-key region swaps, budget reduction and recursive side choice. All 192 earlier permutations now match, plus 160 new native cases up to 1,024 entries. Large duplicate-key input is supported on this path; native heap fallback still rejects explicitly. See [the updated boundary](../docs/reconstruction/CENTRAL_IMPULSE.md#exact-partition-ordering-including-duplicate-keys).
+
+## Descriptor comparator and sort boundary
+
+Recovered the unsigned three-field comparison. Full native sorting ran on 192 synthetic arrays: the model matches 166 small/unique-key cases; all 26 large duplicate-key cases reorder ties relative to stable sorting. Exact unresolved permutations are retained. Parent grouping still depends on upstream fields, and large tie behavior is explicitly rejected by the model. See [the evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#descriptor-sort-keys-and-equal-key-boundary).
+
+## Post-sort type assignment
+
+Recovered first-child indexing, fixed root numbering and the nonrecursive fallback for unvisited types. All outputs match 160 uninterrupted original-instruction runs, including recursive calls and ordering-sensitive synthetic cases. Registry enumeration, callbacks and sorting remain external inputs. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#post-sort-type-assignment-and-disconnected-fallback).
+
+## Type-range numbering writer
+
+Recovered recursive entry/exit numbering and matched 128 synthetic trees through the full original recursive routine without intercepted calls. This explains descendant containment before uint16 wrap. Ordered child-table construction, registry callbacks, outer root/fallback policy and live contents remain outside the model. See [the numbering contract](../docs/reconstruction/CENTRAL_IMPULSE.md#type-range-entry-and-exit-numbering).
+
+## Constructor-bound provider search
+
+Eight checks bind the type-range search to three constructor-assigned tables in one entity chain and verify cache initialization. Another 480 original-instruction checks cover local search and full getter/cache/refresh/search dispatch, with only descriptor getters supplied. Added a composed offline acquisition API. Live player subtype, descriptor population, ordering and lifetime remain unverified. See [the binding evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#constructor-bound-provider-search).
+
+## Candidate component type search
+
+Recovered a descriptor-range lower-bound search with 240 original-instruction cases. It returns component-array slots and matches the acquisition callback shape, but its active entity virtual-table binding remains unproved. Kept separate from the cache and runner until that identity check is established. See [the evidence boundary](../docs/reconstruction/CENTRAL_IMPULSE.md#candidate-virtual-component-type-search).
+
+## Provider-acquisition cache protocol
+
+Recovered byte-tag invalidation, forced-refresh and cached-missing sentinels, lookup writeback and component-array selection. The getter/cache/refresh chain matches 108 original-instruction runs with only virtual type search supplied. Active type-search internals, component-array construction and lifetime remain open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#entity-provider-acquisition-cache).
+
+## Supplied channel-bank selection
+
+Implemented the previously documented unsigned lower-bound lookup and linked it to the provider runner. Complete lookup and raw 32-byte record indexing pass 512 original-instruction checks. The runner rejects missing/out-of-range supplied records and preserves explicit-record mode. Active provider acquisition, rig/table construction and freshness remain open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#supplied-channel-table-lookup-and-record-selection).
+
+## Endpoint-record origins integrated
+
+Recovered xyz0(position) minus .13 times the endpoint rotation Y basis. Both origins match 192 uninterrupted original-instruction runs. The supplied-provider runner now derives query centers, initial contact points and tail origins/rotations from two endpoint records; duplicate overrides are rejected. Provider records remain separate. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#endpoint-record-origin-preparation).
+
+## Supplied-provider pose sequence runner
+
+Added a runnable provider-to-pose sequence with intermediate diagnostics and explicit RSQRT estimates, contact observations and filter-state carry. Five synthetic frames exercise empty, accepted and skipped contacts. Repeat/resume, rejection and CLI checks pass. This connects separately recovered math; provider lookup, collision services and skeleton commit remain outside. See [usage and input contract](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-supplied-provider-pose-sequence).
+
+## Provider coordinate conversion
+
+Recovered provider direct/composed selection, Reference position rotation/translation and parent-child quaternion multiplication. Reference and both endpoint paths match 720 original-instruction checks. No implicit normalization or XYZ scale from parent W is added. Provider lookup, missing channels, freshness and skeleton ownership remain open. See [the formula](../docs/reconstruction/CENTRAL_IMPULSE.md#provider-coordinate-conversion).
+
+## Entity origin conversion
+
+Recovered the entity-record origin producer, including all matrix-to-quaternion branches and the separately copied position W scalar. Both output vectors match 240 full original-instruction executions without intercepted callees. Entity freshness, indirect-accessor refresh and provider coordinate conversion remain open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#entity-origin-and-rotation-record).
+
+## Pose-axis arithmetic and fallback
+
+Recovered the masked Reference-to-origin delta, length reduction and inclusive .01 fallback gate. Axis, length and Reference-position stores match 224 original-instruction cases spanning inline and supplied-accessor transform routes. Fallback magnitude and W are preserved. Provider conversion, origin acquisition and the indirect accessor remain open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-contact-axis-and-fallback).
+
+## Endpoint direction generation
+
+Recovered the quaternion X basis, two cross products, tiny-vector preservation and RSQRT refinement used by both endpoint paths. Both direction stores match 384 original-instruction cases with captured estimates. The below-limit direction precedes the normal-dependent flip. Provider rotations, pose-axis construction and collision services remain explicit dependencies. See [the formula](../docs/reconstruction/CENTRAL_IMPULSE.md#endpoint-adjustment-direction-generation).
+
+## Contact normals connected to the pose tail
+
+Both endpoint sign blocks match 384 original-instruction checks. Accepted positive dot4 flips only the above-limit direction; below-limit direction remains unchanged. New offline interfaces compose supplied hits with query geometry and feed endpoint points, scalars and oriented directions into the recovered pose tail. This is tested composition of separately recovered blocks, not uninterrupted collision/provider execution. Direction generation and collision selection remain open. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#contact-normal-orientation-and-pose-integration).
+
+## Pose contact segment arithmetic
+
+Recovered the endpoint plus/minus axis probe, XYZ range reduction, conditional normalization and forced zero direction W. Original instructions match 192 synthetic cases, including collapsed probes caused by coordinate rounding. Collision dispatch and provider selection remain outside this local implementation. No game process was accessed. See [the contract](../docs/reconstruction/CENTRAL_IMPULSE.md#pose-contact-query-segment).
+
+## Ordered endpoint contact response
+
+Recovered and implemented the endpoint query's ordered hit response. Point and
+scalar writes precede the skip decision, so false can retain changes from skipped
+hits; normal changes only on acceptance. 240 instruction cases matched all four
+outputs, with the iterator and capability callback supplied. Query generation,
+collision ordering and provider preparation remain outside the model. This is
+separate from the older landing-alignment reference. See the
+[contact contract](../docs/reconstruction/CENTRAL_IMPULSE.md#ordered-contact-hit-response).
+
+## Composed active pose tail and offline runner
+
+Connected the signed-length filter, remeasured reaches, bounds, rotation-only
+reference correction and endpoint output stage. 96 uninterrupted original-code
+cases match all six vector stores. The intermediate inverse helper's translation
+and scale are unused by this caller. `python3 -m engine.pose_bench` runs explicit
+resolved-input sequences with carried filter state, a synthetic example and
+checkpoint/resume tests. Provider/contact preparation, branch selection and
+final record consumption remain open. No game access occurred. The user has now
+lifted the temporary live-game hold. See the
+[composed contract](../docs/reconstruction/CENTRAL_IMPULSE.md#composed-active-pose-tail).
+
+## Endpoint smoothing and output records
+
+Implemented the final local smoothing/output stage with the native quaternion
+Y-axis helper, contact/mode-conditioned offset and separate reference Z update.
+216 original-instruction cases matched all five stores and preserved rotation
+bytes. These are supplied endpoint records, not a proven skeleton/body commit.
+The transforms between reach limiting and output, plus provider/contact inputs,
+remain to connect. No live game access. See the
+[output contract](../docs/reconstruction/CENTRAL_IMPULSE.md#endpoint-smoothing-and-output-writes).
+
+## Endpoint reach limits
+
+Implemented both endpoint reach branches, the strict squared-speed threshold,
+and low-speed rest-length bound expansion. 192 original-instruction cases match
+both adjusted endpoint registers. Directional caps and the lower-branch gain
+are preserved as local pose arithmetic with unknown physical units. Distances
+must be measured again from the corrected reference before applying this stage.
+Later endpoint smoothing/output and provider selection remain open. No live game
+access. See the [reach contract](../docs/reconstruction/CENTRAL_IMPULSE.md#endpoint-reach-bounds).
+
+## Stored-length positional correction
+
+Implemented the stored Reference-length consumer's signed-distance filter.
+144 original-instruction cases matched its persistent correction store and
+corrected-reference register. Its caller uses the same component type lookup key
+as the pose producer, strengthening type linkage without claiming live identity.
+The blend's source time units, endpoint/contact production and later reach bounds
+remain explicit gaps. No game access. See the
+[filter contract](../docs/reconstruction/CENTRAL_IMPULSE.md#stored-length-signed-reach-filter).
+
+## Embedded pose-helper owner route
+
+Established the setup route that passes the enclosing actor into its embedded
+pose helper's registered handle, then resolves that handle at the pose caller.
+Twenty original-instruction cases cover setup arguments, existing registry-entry
+lookup across a block boundary, reference exchange and validity-bit decoding.
+Outer registry locks/allocation and the virtual initialization callback remain
+stubbed. This strengthens local ownership without claiming live lifetime or
+joining the rejected transform consumer. The readable-buffer swap precedes the
+displacement reader in one static caller, with intervening calls still explicit.
+See the [owner contract](../docs/reconstruction/CENTRAL_IMPULSE.md#embedded-pose-helper-owner-handle).
+
+## Pose consumer identity audit
+
+The candidate transform/body consumer is reached through a different class's
+virtual slot. The known player table selects a no-op in that same slot. Nine
+static instruction/table checks confirm this mismatch; it prevents promoting an
+offset match into player actuation. Keep the validated pose arithmetic separate
+from body application. Next trace the producer's embedded owner handle and
+stored-length consumers under a proven actor identity. The user's live-game hold
+is in effect; this pass used only static files. See the
+[dispatch audit](../docs/reconstruction/CENTRAL_IMPULSE.md#candidate-consumer-dispatch-audit).
+
+## Ground-response Reference vector calculation
+
+Extended the pose scalar component through provider-vector/rotation arithmetic,
+reciprocal-square-root refinement and actor correction-vector publication.
+160 synthetic cases matched the original local instructions and both output
+stores bit-for-bit with captured RSQRT estimates. The short-length path now has
+instruction evidence for zero correction and retained length. A transform/body
+consumer candidate remains unjoined by object identity; full skeleton actuation
+and live cadence remain open. See the [vector contract](../docs/reconstruction/CENTRAL_IMPULSE.md#reference-transform-and-correction-vector-publication).
+
+## Ground response to pose scalar
+
+Traced published response displacement through the read/write buffer swap into
+an actor copy-or-0.9-decay consumer and a Reference-channel pose length correction.
+`reference.ground_response_pose` exposes the local arithmetic with explicit mode,
+bounds and factor inputs. Original-instruction checks cover 24 reader cases,
+108 scalar cases and six swap-to-reader compositions using synthetic inputs.
+The short-length branch preserves the prior stored length. Full vector correction,
+skeleton application, factor units and live scheduling remain open; see the
+[contract and evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#published-displacement-to-reference-pose-correction).
+
+## Ground-response sequence inspection API
+
+Added a JSON sequence runner and loopback `ground_response` operation for the
+composed helper. Requests supply sampled/compiled curves, observations, initial
+state and an explicit reciprocal-square-root policy. Outputs expose per-update
+state, intermediate results and impulse plans without mutating prototype bodies.
+The bundled example is synthetic. CLI/HTTP and sequence tests cover repeatability,
+limits, estimate accounting and prototype nonmutation. See the
+[testbench guide](../docs/reconstruction/GROUND_RESPONSE_TESTBENCH.md).
+
+## Native sampled-curve builder and profile binding
+
+Added the recovered float32 sampled-curve builder and a selected-profile adapter
+for the helper's speed/coil/depth curves. Both builder modes matched 18 synthetic
+native cases and 90 native evaluations. Privately, all 36 curves from 12 extracted
+profiles matched compiled coefficients and 180 evaluation queries; public evidence
+contains only names/counts. Live sport/profile ownership remains open. See the
+[builder and adapter contract](../docs/reconstruction/CENTRAL_IMPULSE.md#sampled-data-builder-and-selected-profile-adapter).
+
+## Integrated helper and compiled curves
+
+Added a callable composition of helper entry, history, geometry, force, submission
+and publication, plus the finite float32 runtime curve evaluator. The evaluator
+matched 180 original-instruction cases. The complete original helper matched the
+composition in 32 synthetic cases, including curve call ordering, history/filter
+state, both body velocities and untouched pending data. External services were
+intercepted; runtime tuning selection and scheduler integration are not claimed.
+This refines the existing simplified ground-stick model, whose provenance remains
+preserved. See the [composed contract](../docs/reconstruction/CENTRAL_IMPULSE.md#composed-helper-contract).
+
+## Helper history and persistent response
+
+Added the velocity-history/acceleration stage and asymmetric two-state filter,
+including projection threshold, semi-implicit update, strict clamp/reset and
+published scalar copies. Original instructions matched 675 isolated cases,
+a 180-update pulse/recovery trajectory and 12 history cases. The filter's output
+consumer is still unknown; this is not proof of landing animation or absorption.
+Next: integrate the helper stages with actual curve evaluation and trace the
+published-state consumers. See the
+[history/filter contract](../docs/reconstruction/CENTRAL_IMPULSE.md#helper-velocity-history-and-response-filter).
+
+## Helper geometry and entry gates
+
+Recovered the projection/cross-product direction, alignment, horizontal fallback
+and dot eligibility gate, plus the initial curve/contact/override entry gate.
+Original instructions matched 112 geometry cases with captured RSQRT estimates
+and 144 entry cases with supplied curve results. The API keeps the estimate
+provider explicit and labels degenerate-input rejection as authored policy.
+This joins the previous scalar and impulse stages without claiming live input
+ownership or complete helper history/filter reconstruction. See the
+[geometry contract](../docs/reconstruction/CENTRAL_IMPULSE.md#helper-direction-alignment-and-entry-gates).
+
+## Helper scalar force assembly
+
+Added executable speed-factor, contact-ramp, square-root response and override
+composition ahead of the direct impulse tail. Default pivot/gain 15/2 reproduce
+the inspected image settings without assigning unproved physical units. Original
+instructions matched 280 cases; curve evaluation was supplied, while the original
+square-root path executed. Composition tests now connect this scale to the
+rider/main impulse plan. Upstream direction/alignment, curve selection and complete
+helper eligibility remain open. See the
+[scalar contract](../docs/reconstruction/CENTRAL_IMPULSE.md#helper-scalar-force-assembly).
+
+## Helper direct impulses separated from the pending consumer
+
+Recovered the optional helper's submission tail: strict negative-scale threshold,
+mask/override gate, timestep and descriptor scaling, rider-first/main-second mass
+split, and force-enabled central impulses. The main share is unclamped and the
+threshold precedes dt scaling. Added a runnable reference plus 192 original-byte
+cases with external services intercepted. The tail preserves angular velocity
+and pending data; upstream force/direction/history logic remains unresolved.
+This prevents attributing all substep momentum changes to the later queue consumer.
+See [helper direct-impulse tail](../docs/reconstruction/CENTRAL_IMPULSE.md#optional-helper-direct-impulse-tail).
+
+## Pending consumer local gates
+
+Recovered the branch immediately before pending consumption. Nearby flags,
+counter and timers gate an optional helper, then the counter decrements and the
+pending threshold is reached on normal return. The portable prepass preserves
+signed counter wrap and reports the helper without inventing its effects.
+Original instructions matched 432 synthetic cases with the helper intercepted;
+three tests cover that evidence, threshold independence and validation/wrap.
+Outer eligibility, helper effects and exact live consumption remain unresolved.
+See [local pre-consumption branch](../docs/reconstruction/CENTRAL_IMPULSE.md#local-pre-consumption-branch).
+
+## Pending impulse observed across physics callbacks
+
+A bounded live capture matched 720 actor-entry/return/world-step-entry requests.
+Pending impulse changed inside the actor callback 56 times, all in state 3:1,
+and stayed unchanged until world-step entry. Neither body velocity changed inside
+that callback. Of 66 nonzero world-step-entry observations, 65 were zero by the
+next consecutive actor entry; one changed to another nonzero value. This supports
+the conditional queued producer path but does not isolate the consumer or prove
+its impulse contribution to velocity. Both callback pointers restored, no records
+were lost, settings restored, and the bottle stopped. See the
+[central impulse guide](../docs/reconstruction/CENTRAL_IMPULSE.md#live-pending-vector-observation).
+
+Added a pointer-free aggregate analyzer with seven boundary/identity/loss tests.
+Timing qualification: the trace captured movement onset but ended while moving;
+the user-observed final stop was not recorded. The runner now schedules one pulse
+and a longer capture. The follow-up recorded 2,407 matched requests over 30 seconds,
+including the entire single input pulse and 25 seconds after release. It repeated
+the pending-change pattern in 58 requests, all state 3:1. The final speed remained
+nonzero; no full stopping behavior is claimed. All 719 tests pass. Next: observe
+the exact consumer boundary before enabling concurrent boost/brake.
 
 ## Implemented and integrated
 
@@ -1317,3 +4201,31 @@ post-unregister calls remain visible. Original routine and context lookup matche
 and event-registry composition. Higher-level callers and live identity remain open.
 
 Validation: 596 tests pass; packaging, hashes and local links pass.
+
+Replay inspection addition: the version-94 second-stage reader now has an
+integrated command, `python3 -m engine.replay_inspect`, connecting column
+compression to a 23-byte metadata prefix and 259-byte state decoder. Spatial and
+state layers have separate 120-case synthetic native-emulation comparisons;
+state initialization is excluded and reciprocal-square-root seeds are explicit.
+Ten focused tests and a synthetic command-line run pass. Channel semantics,
+outer ghost framing and live payload validation remain open. See
+[replay layout and invocation](../docs/reconstruction/LIVE_REPLAY_LEADS.md#integrated-second-stage-inspection).
+
+
+Live acceptance milestone, 2026-10-22: startup-loaded host 0.7.0 completed the
+bounded offline snowboard plan after a normal 700 ms forward pulse activated the
+selected body. Player binding, ten single-world-step requests, resume, -2/+2 speed
+adjustments, post-change samples and 20 seconds of stability passed; cleanup passed.
+The native speed setter resets angular velocity, unlike the independent engine's
+spin-preserving authored policy. This is not impulse-API or deterministic-replay
+validation. See the [receipt](../native/snow_host/post_update_acceptance_success.json)
+and [run instructions](../native/snow_host/README.md#post-update-end-to-end-acceptance-passed).
+
+Independent impulse API: paused `apply_central_impulse` now connects the recovered
+float32 central-impulse kernel to runtime, tokened controller, HTTP and replay.
+Single-body dynamic/unsuppressed semantics are authored adapter policy; native
+host callback/lock and coupled-rider integration remain open. Tests cover preserved
+spin and rigid angular momentum, failed-publication atomicity, stale tokens and
+HTTP/command replay. Full suite: 1,633 tests passed in 18.322 seconds with the
+scoped macOS 26.5 SDK workaround. Packaging verification passed. No live impulse
+submission was attempted by this change.

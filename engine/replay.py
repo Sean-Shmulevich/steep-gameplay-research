@@ -18,6 +18,8 @@ def replay(recording):
         elif op=='step':engine.step(command['count'])
         elif op=='advance':engine.advance(command['frame_dt'])
         elif op=='pause':engine.pause(command['value'])
+        elif op=='apply_central_impulse':engine.apply_central_impulse(command['impulse'])
+        elif op=='adjust_speed':engine.adjust_speed(command['delta_speed'])
         else:raise ValueError('Unknown replay operation')
     if engine.state['tick']!=recording['final_tick'] or engine.state_hash()!=recording['expected_hash']:raise ValueError('Replay state hash mismatch')
     return engine

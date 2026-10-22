@@ -1,0 +1,1867 @@
+{
+  "cases": 54,
+  "game_process": false,
+  "scope": "Complete original null-record reclaim and page search, then complete ownership acquisition/lookup using existing free page and null target. Locks, hash lookup/erase/insert and map-context service intercepted. No page growth, object rebinding, concurrent reuse or identifier uniqueness proof.",
+  "rows": [
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 1,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 1,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 3,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 3,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 77,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": true
+      },
+      "new_identifier": 78,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 78,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [
+        "erase_identifier"
+      ],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4026531841,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4026531842,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4026531842,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 0,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 67108864,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 268435456,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 335544320,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": -1
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 4294967295,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": -1
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    },
+    {
+      "inputs": {
+        "identifier": 4160749567,
+        "status_word": 2147483648,
+        "record_count": 0,
+        "slot": 16383,
+        "free_head": 7
+      },
+      "recycled": {
+        "status_word": 2214592512,
+        "count_or_link": 7,
+        "free_head": 16383,
+        "recycled": true,
+        "erase_identifier": false
+      },
+      "new_identifier": 4160749568,
+      "initialized": {
+        "object_pointer": 0,
+        "record_count": 0,
+        "status_word": 0,
+        "identifier": 4160749568,
+        "free_head": 7
+      },
+      "ownership_after_acquire": 1,
+      "same_slot_reused": true,
+      "reclaim_events": [],
+      "acquisition_events": [
+        "lock",
+        "lookup_miss",
+        "map_context",
+        "insert_identifier",
+        "map_context",
+        "unlock"
+      ]
+    }
+  ]
+}

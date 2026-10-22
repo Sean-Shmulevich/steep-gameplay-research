@@ -1,0 +1,2479 @@
+{
+  "cases": 96,
+  "game_process": false,
+  "scope": "Complete original acquisition wrapper and existing-index matching-object lookup branch. Pool lock calls intercepted, increment observed before unlock. Followed by original queue-consumer loop with cleanup/disposal/reclaim stubs. No concurrency, arbitrary-pointer safety, allocation, or complete cleanup validation.",
+  "rows": [
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 1,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 1,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 16384,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 16384,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 16385,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 16385,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        0,
+        1
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260864,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260864,
+        2164260865
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190080,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190081,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190080,
+        4278190081
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 1,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        1,
+        2
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2164260865,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2164260866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2164260865,
+        2164260866
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4278190081,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4278190082,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4278190081,
+        4278190082
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 2,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777214,
+        16777215
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038078,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038078,
+        2181038079
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967294,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 4294967295,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967294,
+        4294967295
+      ],
+      "retirement": {
+        "effects": [
+          "clear_queued_bit"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 16777215,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        16777215,
+        16777216
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 2181038079,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 2181038080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        2181038079,
+        2181038080
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 524287,
+        "record_count": 0
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    },
+    {
+      "inputs": {
+        "status_word": 4294967295,
+        "encoded_index": 524287,
+        "record_count": 9
+      },
+      "increment": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "lock_observations": [
+        4294967295,
+        0
+      ],
+      "retirement": {
+        "effects": [
+          "object_cleanup",
+          "schedule_object_disposal",
+          "clear_queued_bit",
+          "record_reclaim"
+        ],
+        "clear_status_mask": 4278190079,
+        "ownership_count": 0,
+        "lifetime_acquisition_proven": false
+      }
+    }
+  ]
+}

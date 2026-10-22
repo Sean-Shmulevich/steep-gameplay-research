@@ -1,0 +1,283 @@
+{
+  "input_source": "synthetic supplied observations; not an integrated ride",
+  "rsqrt_policy": "sqrt_seed",
+  "curve_format": "sampled",
+  "curves": {
+    "forceSpeedCurve": {
+      "domain": [
+        0,
+        1
+      ],
+      "$array": [
+        1,
+        1
+      ]
+    },
+    "legCoilCurve": {
+      "domain": [
+        0,
+        1
+      ],
+      "$array": [
+        1,
+        1
+      ]
+    },
+    "forceDepthCurve": {
+      "domain": [
+        0,
+        1
+      ],
+      "$array": [
+        1,
+        1
+      ]
+    }
+  },
+  "initial_state": {
+    "previous_velocity": [
+      0,
+      0,
+      0
+    ],
+    "current_velocity": [
+      0,
+      0,
+      0
+    ],
+    "rate": 0,
+    "displacement": 0
+  },
+  "frames": [
+    {
+      "observation": {
+        "current_velocity": [
+          0,
+          0,
+          0.5
+        ],
+        "dt": 0.016666666666666666,
+        "contact_fraction": 1,
+        "auxiliary_scalar": 0,
+        "direction_input": [
+          1,
+          0,
+          1
+        ],
+        "reference_axis": [
+          0,
+          0,
+          1
+        ],
+        "source_vector": [
+          1,
+          0,
+          0
+        ],
+        "curve_a_input": 0.4,
+        "curve_b_input": 0.5
+      },
+      "force": {
+        "speed_scalar": 15,
+        "measure": 0,
+        "measure_limit": 2,
+        "response_strength": 3,
+        "activity_scalar": 0,
+        "contact_time": 1,
+        "override_a": 0,
+        "override_b": 0,
+        "override_gain": 1
+      },
+      "submission": {
+        "descriptor_scale": 1,
+        "combined_mass": 80,
+        "rider_mass": 20,
+        "mask_eligible": true
+      }
+    },
+    {
+      "observation": {
+        "current_velocity": [
+          0,
+          0,
+          1
+        ],
+        "dt": 0.016666666666666666,
+        "contact_fraction": 1,
+        "auxiliary_scalar": 0,
+        "direction_input": [
+          1,
+          0,
+          1
+        ],
+        "reference_axis": [
+          0,
+          0,
+          1
+        ],
+        "source_vector": [
+          1,
+          0,
+          0
+        ],
+        "curve_a_input": 0.4,
+        "curve_b_input": 0.5
+      },
+      "force": {
+        "speed_scalar": 15,
+        "measure": 0,
+        "measure_limit": 2,
+        "response_strength": 3,
+        "activity_scalar": 0,
+        "contact_time": 1,
+        "override_a": 0,
+        "override_b": 0,
+        "override_gain": 1
+      },
+      "submission": {
+        "descriptor_scale": 1,
+        "combined_mass": 80,
+        "rider_mass": 20,
+        "mask_eligible": true
+      }
+    },
+    {
+      "observation": {
+        "current_velocity": [
+          0,
+          0,
+          1
+        ],
+        "dt": 0.016666666666666666,
+        "contact_fraction": 1,
+        "auxiliary_scalar": 0,
+        "direction_input": [
+          1,
+          0,
+          1
+        ],
+        "reference_axis": [
+          0,
+          0,
+          1
+        ],
+        "source_vector": [
+          1,
+          0,
+          0
+        ],
+        "curve_a_input": 0.4,
+        "curve_b_input": 0.5
+      },
+      "force": {
+        "speed_scalar": 15,
+        "measure": 0,
+        "measure_limit": 2,
+        "response_strength": 3,
+        "activity_scalar": 0,
+        "contact_time": 1,
+        "override_a": 0,
+        "override_b": 0,
+        "override_gain": 1
+      },
+      "submission": {
+        "descriptor_scale": 1,
+        "combined_mass": 80,
+        "rider_mass": 20,
+        "mask_eligible": true
+      }
+    },
+    {
+      "observation": {
+        "current_velocity": [
+          0,
+          0,
+          1
+        ],
+        "dt": 0.016666666666666666,
+        "contact_fraction": 1,
+        "auxiliary_scalar": 0,
+        "direction_input": [
+          1,
+          0,
+          1
+        ],
+        "reference_axis": [
+          0,
+          0,
+          1
+        ],
+        "source_vector": [
+          1,
+          0,
+          0
+        ],
+        "curve_a_input": 0.4,
+        "curve_b_input": 0.5
+      },
+      "force": {
+        "speed_scalar": 15,
+        "measure": 0,
+        "measure_limit": 2,
+        "response_strength": 3,
+        "activity_scalar": 0,
+        "contact_time": 1,
+        "override_a": 0,
+        "override_b": 0,
+        "override_gain": 1
+      },
+      "submission": {
+        "descriptor_scale": 1,
+        "combined_mass": 80,
+        "rider_mass": 20,
+        "mask_eligible": true
+      }
+    },
+    {
+      "observation": {
+        "current_velocity": [
+          0,
+          0,
+          1
+        ],
+        "dt": 0.016666666666666666,
+        "contact_fraction": 1,
+        "auxiliary_scalar": 0,
+        "direction_input": [
+          1,
+          0,
+          1
+        ],
+        "reference_axis": [
+          0,
+          0,
+          1
+        ],
+        "source_vector": [
+          1,
+          0,
+          0
+        ],
+        "curve_a_input": 0.4,
+        "curve_b_input": 0.5
+      },
+      "force": {
+        "speed_scalar": 15,
+        "measure": 0,
+        "measure_limit": 2,
+        "response_strength": 3,
+        "activity_scalar": 0,
+        "contact_time": 1,
+        "override_a": 0,
+        "override_b": 0,
+        "override_gain": 1
+      },
+      "submission": {
+        "descriptor_scale": 1,
+        "combined_mass": 80,
+        "rider_mass": 20,
+        "mask_eligible": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,1095 @@
+{
+  "cases": 40,
+  "game_process": false,
+  "scope": "Complete original ownership wrapper and lookup with object resolver disabled, existing identifier map hit returning a null-target record. Original single-field release slice calls original retirement request and original record-reclaim gate. Positive record-only count prevents reclamation. Pool locks and hash lookup intercepted. Missing-record allocation, zero record-only count reclamation, concurrency and full holder destructor not executed.",
+  "rows": [
+    {
+      "inputs": {
+        "status_word": 0,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 0,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 0,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 1,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 2,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 1,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777214,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777214,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777214,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777215,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777215,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777216,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 16777217,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777216,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 16777217,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777216,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777217,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 16777218,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777217,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 16777217,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 16777218,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 16777217,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 33554430,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 33554431,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 33554430,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 33554430,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 33554431,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 33554430,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 33554431,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 33554432,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 33554431,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 33554431,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 33554432,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 33554431,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 67108864,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 67108865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 67108864,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 67108864,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 67108865,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 67108864,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 67108865,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 67108866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 67108865,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 67108865,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 67108866,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 67108865,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 83886078,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 83886079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 83886078,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 83886078,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 83886079,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 83886078,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 83886079,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 83886080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 83886079,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 83886079,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 83886080,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 83886079,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 134217728,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 134217729,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 134217728,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 134217728,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 134217729,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 134217728,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 134217729,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 134217730,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 134217729,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 134217729,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 134217730,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 134217729,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 150994942,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 150994943,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 150994942,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 150994942,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 150994943,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 150994942,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 150994943,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 150994944,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 150994943,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 150994943,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 150994944,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 150994943,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2147483648,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 2147483649,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2147483648,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2147483648,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 2147483649,
+        "ownership_count": 1,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2147483648,
+        "ownership_count": 0,
+        "ownership_underflow": false,
+        "request_retirement": true
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [
+        "retirement_request",
+        "lock",
+        "record_reclaim_gate",
+        "unlock"
+      ],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2147483649,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 2147483650,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2147483649,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2147483649,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 2147483650,
+        "ownership_count": 2,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2147483649,
+        "ownership_count": 1,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2164260862,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 2164260863,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2164260862,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2164260862,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 2164260863,
+        "ownership_count": 16777215,
+        "ownership_overflow": false,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2164260862,
+        "ownership_count": 16777214,
+        "ownership_underflow": false,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2164260863,
+        "record_count": 1
+      },
+      "acquired": {
+        "status_word": 2164260864,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2164260863,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    },
+    {
+      "inputs": {
+        "status_word": 2164260863,
+        "record_count": 9
+      },
+      "acquired": {
+        "status_word": 2164260864,
+        "ownership_count": 0,
+        "ownership_overflow": true,
+        "lifetime_acquisition_proven": false
+      },
+      "released": {
+        "status_word": 2164260863,
+        "ownership_count": 16777215,
+        "ownership_underflow": true,
+        "request_retirement": false
+      },
+      "acquisition_events": [
+        "lock",
+        "record_map_lookup",
+        "unlock"
+      ],
+      "release_events": [],
+      "object_pointer": 0,
+      "record_preserved": true
+    }
+  ]
+}

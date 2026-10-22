@@ -1,0 +1,33 @@
+{
+  "evidence": "authored Windows DLL and synthetic fixture executed under Wine",
+  "game_process": false,
+  "returncode": 0,
+  "passed": [
+    "configure once",
+    "selected actor capture",
+    "unselected actor forwarding",
+    "two timing arguments",
+    "both body angular values",
+    "before/after values",
+    "changed runtime invalidates after snapshot",
+    "read only after close and drain",
+    "late forwarding preserves records",
+    "module pin survives FreeLibrary"
+  ],
+  "not_tested": [
+    "live installation",
+    "game callback lifetime",
+    "native consumer execution",
+    "atomic body snapshots",
+    "physics fidelity"
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_update_probe.c": "258c9918ff6c847044c5bb4e182e661409161c978bf591b5b2eeffdf4fb802b1",
+    "native/snow_host/snow_update_probe.h": "1dbcd74091dbd5f22e069db3dcd7654016923abc1753368dcc998454be51b8cf",
+    "native/snow_host/snow_update_trace.c": "6e1a6ff7ae02fba9b688284817bdd77552ae39c59df89b5962fadb9b7dd3624a",
+    "native/snow_host/snow_update_trace.h": "0aaf176229586f4bfabdbd2341a61fb9ce94e7a66da9571024bc5b9b2766f690",
+    "native/snow_host/snow_update_snapshot.c": "467c7d680bd42a51c61a4b2e1f2bbf6961fffdf456a77c64d24f83628ba3e873",
+    "native/snow_host/snow_update_snapshot.h": "f44d2ac6e8d1a7f91367f6205954eab23ef31a11586a6f7a166ba7bca5335e02",
+    "tests/fixtures/snow_update_probe_fixture.c": "7e0508aa720154ea3e42ff3b308a7e44dd1bfc86481c88dd159698f2c6117025"
+  }
+}

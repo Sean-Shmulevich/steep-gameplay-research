@@ -1,0 +1,1556 @@
+{
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "cases": 27,
+  "scope": "Original three vtable routes, base recursive spin-lock acquisition/release and pre/post component loops. Thread identity, transform apply, entity refresh, component callbacks and derived propagation stubbed. No contention or exception/lifetime proof.",
+  "rows": [
+    {
+      "variant": "base",
+      "initial_depth": 0,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 0,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 0,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 2
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 1,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 1,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 1,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 2
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 3,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 3,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "base",
+      "initial_depth": 3,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 2
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 0,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            0,
+            4294967295,
+            0
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 0,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            0,
+            4294967295,
+            0
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 0,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 2
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            0,
+            4294967295,
+            0
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 1,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 1,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 1,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 2
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 3,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            3
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 3,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            3
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "derived_a",
+      "initial_depth": 3,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 2
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            3
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 0,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            0,
+            4294967295,
+            0
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 0,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            0,
+            4294967295,
+            0
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 0,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            1
+          ],
+          "component": 2
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            0,
+            4294967295,
+            0
+          ]
+        }
+      ],
+      "final_lock": [
+        0,
+        4294967295,
+        0
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 1,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 1,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 1,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            2
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            2
+          ],
+          "component": 2
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            1
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        1
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 3,
+      "component_count": 0,
+      "events": [
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            3
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 3,
+      "component_count": 1,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            3
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    },
+    {
+      "variant": "derived_b",
+      "initial_depth": 3,
+      "component_count": 3,
+      "events": [
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_before",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 2
+        },
+        {
+          "service": "apply_transform",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "refresh_entity",
+          "lock": [
+            1,
+            42,
+            4
+          ]
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 0
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 1
+        },
+        {
+          "service": "component_after",
+          "lock": [
+            1,
+            42,
+            4
+          ],
+          "component": 2
+        },
+        {
+          "service": "derived_propagation",
+          "lock": [
+            1,
+            42,
+            3
+          ]
+        }
+      ],
+      "final_lock": [
+        1,
+        42,
+        3
+      ]
+    }
+  ]
+}

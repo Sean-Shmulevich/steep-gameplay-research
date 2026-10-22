@@ -154,3 +154,49 @@ def release_alternate(graph, list_id, *, max_events=4096):
 def on_alternate_last_hold(graph, job_id, *, max_events=4096):
     """Invoke the selected callback with its independent current-hold recheck."""
     return _transaction(graph, job_id, 'callback', max_events)
+
+
+class ActiveDependencyClear(RuntimeError):
+    """The inspected image enters an INT3 helper before clearing an active list."""
+
+
+def clear_dependency_list(graph, list_id, *, continue_after_diagnostic=False,
+                          max_events=4096):
+    """Remove successor entries, preserving observed active-clear diagnostics.
+
+    Default active input raises without mutation. Explicit continuation models
+    instructions after the breakpoint returns; it is not a live handler claim.
+    Descendant lists lose activation through alternate release, but retain their
+    entries. Only the cleared source loses successor entries; credits stay intact.
+    Transactional errors and event/cycle bounds are inspection-adapter policy.
+    """
+    _validate(graph)
+    if type(continue_after_diagnostic) is not bool:
+        raise ValueError('explicit boolean diagnostic continuation required')
+    if type(max_events) is not int or not 1 <= max_events <= 100000:
+        raise ValueError('max_events must be in 1..100000')
+    if not isinstance(list_id, str) or list_id not in graph['lists']:
+        raise ValueError('unknown dependency list')
+    active = graph['lists'][list_id]['active']
+    if active and not continue_after_diagnostic:
+        raise ActiveDependencyClear('active list enters breakpoint helper; continuation unverified')
+    work = copy.deepcopy(graph)
+    events = []
+    if active:
+        events.append(dict(kind='active_clear_diagnostic', list=list_id,
+                           continued_by_inspection_policy=True))
+        events.extend(release_alternate(work, list_id, max_events=max_events))
+    removed = len(work['lists'][list_id]['successors'])
+    work['lists'][list_id]['active'] = False
+    work['lists'][list_id]['successors'] = []
+    events.append(dict(kind='dependency_entries_removed', list=list_id, count=removed))
+    if len(events) > max_events:
+        raise ValueError('dependency clear event limit exceeded')
+    for index, event in enumerate(events):
+        event['sequence'] = index
+    for name, job in work['jobs'].items():
+        graph['jobs'][name]['holds'] = job['holds']
+    for name, dependencies in work['lists'].items():
+        graph['lists'][name]['active'] = dependencies['active']
+    graph['lists'][list_id]['successors'][:] = []
+    return events

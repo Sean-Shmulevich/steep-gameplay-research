@@ -10,6 +10,19 @@ This repository contains findings, selected executable reference math, synthetic
 
 Current priority: [scheduler reconstruction and modding release gates](engine/SCHEDULER_ROADMAP.md). The reconstructed scheduler now exposes smoothing decisions, frame plans and bounded execution traces. The optional [recovered queue policy](docs/reconstruction/QUEUE_POLICY_MODEL.md) adds category ordering, affinity and occupancy selection. Original-game pause/step safety remains unresolved.
 
+## Build the mod loader
+
+The [standalone native build](native/snow_host/BUILD_AND_RUN.md) includes the
+build-specific game adapter, startup launcher, plugin API, sample plugins and
+observation sources. It builds without the private research workspace. Running
+against the game requires your own compatible installation and runtime setup.
+Reviewed authored C/C++ headers and C sources are publishable; game payloads and
+raw decompiler exports remain excluded.
+
+The [map decoding update](docs/reconstruction/MAP_DECODING_UPDATE.md) summarizes
+Studio's terrain height/class/material results and separates measured asset
+behavior from authored browser collision and placement policies.
+
 ## Start here
 
 The [native module loader experiment](native/mod_loader/README.md) now has a
@@ -17,8 +30,9 @@ single command for the configured local research workspace: launch the original
 game, pause, load an attachment-only DLL, resume, verify, and clean up. It needs
 the existing private runtime tools and game installation; the public repository
 contains source and findings only. The [Snow mod host](native/snow_host/README.md)
-builds on it: a late-loaded host with a local command channel for pause,
-single world steps and resume, passed one live session.
+builds on it: a host with a local command channel, native plugins, player APIs,
+and pause/step/resume. Its v0.7 startup launcher has loaded the host before any
+observed game window, then passed controlled stepping after reaching gameplay.
 
 - [Current findings and open questions](docs/STATUS.md)
 - [Full research index](docs/INDEX.md)

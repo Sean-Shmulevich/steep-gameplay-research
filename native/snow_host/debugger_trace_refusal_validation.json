@@ -1,0 +1,25 @@
+{
+  "schema": "debugger-trace-refusal-fixture-v1",
+  "evidence": "Synthetic Wine/LLDB fixture with substituted trace stop classification",
+  "game_accessed": false,
+  "passed": true,
+  "checks": {
+    "clean_fixture_exit": true,
+    "debugger_exit": true,
+    "no_outer_timeout": true,
+    "detached": true,
+    "removed": true,
+    "no_cleanup_error": true,
+    "no_hits": true,
+    "trace_observed": true,
+    "explicit_refusal": true,
+    "no_resume_after_trace": true,
+    "code_unchanged": true
+  },
+  "receipt_sha256": "a5aac7c0a4c7ad37ce685968bf06037921eeeb8978d37c191f342d13ee10173a",
+  "limits": [
+    "Actual hardware breakpoint reason was replaced by trace classification for this test.",
+    "This proves authored refusal/cleanup behavior in the fixture, not genuine Wine trace-stop stability.",
+    "Original-game failure remains unresolved; no new game attachment."
+  ]
+}

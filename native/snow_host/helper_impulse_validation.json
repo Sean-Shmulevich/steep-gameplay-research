@@ -1,0 +1,2850 @@
+{
+  "cases": 192,
+  "evidence": "original_instruction_emulation",
+  "game_process": false,
+  "upstream": "scale and direction supplied; producer arithmetic not executed",
+  "calls": "mask query, locks and backend dispatch intercepted; central impulse arithmetic executed",
+  "configuration": "valid; both body pointers present",
+  "verified": [
+    "strict threshold including adjacent float32",
+    "mask or override",
+    "rider then main",
+    "bit-exact impulse and velocity",
+    "angular unchanged",
+    "pending vector unchanged"
+  ],
+  "rows": [
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.3333333432674408,
+            0.1666666716337204,
+            -0.6666666865348816
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.25,
+            -0.125,
+            0.5
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.3333333432674408,
+            0.1666666716337204,
+            -0.6666666865348816
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -1.0,
+            0.5,
+            -2.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.3333333432674408,
+            0.1666666716337204,
+            -0.6666666865348816
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.25,
+            -0.125,
+            0.5
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.3333333432674408,
+            0.1666666716337204,
+            -0.6666666865348816
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -1.0,
+            0.5,
+            -2.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.3333333432674408,
+            0.1666666716337204,
+            -0.6666666865348816
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.25,
+            -0.125,
+            0.5
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.3333333432674408,
+            0.1666666716337204,
+            -0.6666666865348816
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -1.0,
+            0.5,
+            -2.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000149011612,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.03333333879709244,
+            0.01666666939854622,
+            -0.06666667759418488
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.02500000409781933,
+            -0.012500002048909664,
+            0.05000000819563866
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.03333333879709244,
+            0.01666666939854622,
+            -0.06666667759418488
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.10000001639127731,
+            0.05000000819563866,
+            -0.20000003278255463
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.03333333879709244,
+            0.01666666939854622,
+            -0.06666667759418488
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.02500000409781933,
+            -0.012500002048909664,
+            0.05000000819563866
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.03333333879709244,
+            0.01666666939854622,
+            -0.06666667759418488
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.10000001639127731,
+            0.05000000819563866,
+            -0.20000003278255463
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.03333333879709244,
+            0.01666666939854622,
+            -0.06666667759418488
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            0.02500000409781933,
+            -0.012500002048909664,
+            0.05000000819563866
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.10000000894069672,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": true,
+      "submissions": [
+        {
+          "body": "rider",
+          "impulse": [
+            -0.03333333879709244,
+            0.01666666939854622,
+            -0.06666667759418488
+          ],
+          "force": true
+        },
+        {
+          "body": "main",
+          "impulse": [
+            -0.10000001639127731,
+            0.05000000819563866,
+            -0.20000003278255463
+          ],
+          "force": true
+        }
+      ]
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": -0.009999999776482582,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 0.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.0,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": false,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 0,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 5,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 0,
+      "submitted": false,
+      "submissions": []
+    },
+    {
+      "scale": 1.0,
+      "dt": 0.01666666753590107,
+      "mask_eligible": true,
+      "override_byte": 1,
+      "combined_mass": 80,
+      "descriptor_scale": 1,
+      "submitted": false,
+      "submissions": []
+    }
+  ]
+}
