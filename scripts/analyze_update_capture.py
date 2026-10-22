@@ -66,6 +66,57 @@ def countdown_changes(records):
             'distinct_elapsed_matches','distinct_consumed_matches')}
 
 
+def interval_order(records):
+    """Observed wrapper intervals only; no scheduler exclusion or ownership proof.
+
+    Compare per actor, not per body identity: a rebinding during a call must not
+    hide an overlapping invocation. Closed intervals that merely touch are not
+    counted as overlap. Equal ticks cannot resolve ordering below clock precision.
+    """
+    actors = {}
+    missing = invalid = zero = 0
+    for r in records:
+        if any(k not in r for k in ('entry', 'exit', 'thread')):
+            missing += 1
+            continue
+        start, end, thread = r['entry'], r['exit'], r['thread']
+        if (any(type(x) is not int or x < 0 or x >= 1 << 64
+                for x in (start, end, thread)) or end < start):
+            invalid += 1
+            continue
+        if end == start:
+            zero += 1
+        actors.setdefault(r['actor'], []).append(r)
+    overlaps = migrations = adjacent = reservation_reversals = 0
+    for group in actors.values():
+        reservation_reversals += sum(b['entry'] < a['entry']
+                                    for a, b in zip(group, group[1:]))
+        ordered = sorted(group, key=lambda r: (r['entry'], r['index']))
+        # Retain every prior end, so a long enclosing call is not missed when
+        # the immediately preceding short call has already returned.
+        import heapq
+        active = []
+        for r in ordered:
+            while active and active[0] <= r['entry']:
+                heapq.heappop(active)
+            if r['exit'] > r['entry']:
+                overlaps += len(active)
+                heapq.heappush(active, r['exit'])
+        for a, b in zip(ordered, ordered[1:]):
+            if a['exit'] <= b['entry']:
+                adjacent += 1
+                migrations += a['thread'] != b['thread']
+    return {'available_intervals': sum(map(len, actors.values())),
+            'unavailable_intervals': missing, 'invalid_intervals': invalid,
+            'zero_duration_intervals': zero,
+            'same_actor_overlapping_pairs': overlaps,
+            'nonoverlapping_adjacent_pairs': adjacent,
+            'thread_changes_between_nonoverlapping_neighbors': migrations,
+            'reservation_order_entry_reversals': reservation_reversals,
+            'scheduler_exclusion_proved': False,
+            'input_ingestion_order_proved': False}
+
+
 def analyze(rows):
     if not rows or rows[0].get('kind') != 'summary':
         raise ValueError('Missing capture summary')
@@ -110,6 +161,7 @@ def analyze(rows):
         exact += int(match)
         mismatched += int(not match)
     return {
+        'wrapper_intervals': interval_order(records),
         'preconsume_counter': counter_changes(records),
         'preconsume_countdown': countdown_changes(records),
         'records': len(records), 'rejected_timing_records': rejected,

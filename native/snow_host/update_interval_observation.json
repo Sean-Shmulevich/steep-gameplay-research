@@ -1,0 +1,48 @@
+{
+  "evidence": "reanalysis_of_existing_live_captures",
+  "new_game_run": false,
+  "captures": [
+    {
+      "capture_sha256": "31b5a99e393cd9bca06e1984d75048aff0a7792aac93dcdb8e44fc48c7005562",
+      "records": 235,
+      "loss_free_export": true,
+      "slot_lifecycle_passed": true,
+      "wrapper_intervals": {
+        "available_intervals": 235,
+        "unavailable_intervals": 0,
+        "invalid_intervals": 0,
+        "zero_duration_intervals": 0,
+        "same_actor_overlapping_pairs": 0,
+        "nonoverlapping_adjacent_pairs": 234,
+        "thread_changes_between_nonoverlapping_neighbors": 193,
+        "reservation_order_entry_reversals": 0,
+        "scheduler_exclusion_proved": false,
+        "input_ingestion_order_proved": false
+      }
+    },
+    {
+      "capture_sha256": "395f575e3cebaee8b67412fc9f03edf8245a2177a7700fbd1cb1a7e81874cee0",
+      "records": 228,
+      "loss_free_export": true,
+      "slot_lifecycle_passed": true,
+      "wrapper_intervals": {
+        "available_intervals": 228,
+        "unavailable_intervals": 0,
+        "invalid_intervals": 0,
+        "zero_duration_intervals": 0,
+        "same_actor_overlapping_pairs": 0,
+        "nonoverlapping_adjacent_pairs": 227,
+        "thread_changes_between_nonoverlapping_neighbors": 194,
+        "reservation_order_entry_reversals": 0,
+        "scheduler_exclusion_proved": false,
+        "input_ingestion_order_proved": false
+      }
+    }
+  ],
+  "limits": [
+    "Wrapper intervals include snapshot overhead.",
+    "Absence of observed overlap does not prove scheduler exclusion.",
+    "Clock ties do not resolve sub-tick ordering.",
+    "No input ingestion timestamp was captured."
+  ]
+}

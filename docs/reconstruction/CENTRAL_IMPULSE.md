@@ -10482,3 +10482,41 @@ with air_time/contact_time and per-frame `immersion`, then derives air time befo
 jump evaluation. It rejects simultaneous explicit air_time. This joins recovered
 clock and jump arithmetic under authored scenario scheduling; it does not execute
 the original collision query or prove the full simulation cadence.
+
+
+## Player update intervals and worker migration
+
+Reanalysis of two existing live captures checks the timestamp intervals around
+selected player-wrapper calls. The [aggregate receipt](../../native/snow_host/update_interval_observation.json)
+contains counts and source hashes, without actor pointers or body payloads. No
+new game run or memory modification was performed for this analysis.
+
+The first capture has 235 complete intervals, no observed same-actor overlap,
+and 193 thread changes across 234 adjacent intervals. The second has 228 complete
+intervals, no observed overlap, and 194 thread changes across 227 adjacent
+intervals. Both exports report zero dropped records and successful installation,
+restoration and drain. Neither has a reservation-order entry reversal or a
+zero-duration interval.
+
+This directly distinguishes observed serial execution from fixed thread affinity.
+A future update experiment must follow the selected actor's execution context;
+remembering the first worker thread would miss later updates. These recordings
+do not prove that the scheduler excludes overlap in every mode, that the actor
+remains alive outside each invocation, or that another subsystem cannot write
+its state concurrently. The wrapper intervals include before/after snapshot
+work. Timestamps with equal ticks cannot resolve finer ordering.
+
+`scripts/analyze_update_capture.py` now reports interval overlaps per actor,
+including enclosing intervals and calls whose body binding changes. Different
+actors are kept separate. It also reports worker changes between nonoverlapping
+neighbors and entry-order inversions relative to record reservation. Missing,
+invalid and zero-duration intervals are counted explicitly. Synthetic tests
+cover nested overlap, reservation reordering, rebinding, distinct actors, clock
+ties, malformed intervals and migration without overlap.
+
+The next scheduler question is which dependency or ownership mechanism orders
+these migrating invocations. Join the selected actor callback to the dispatch
+job and its request completion before inferring an execution gate. Input
+publication needs its own timestamp and generation at that boundary; neither
+capture establishes input ingestion order. No command queue or mutation API is
+installed by this analysis.

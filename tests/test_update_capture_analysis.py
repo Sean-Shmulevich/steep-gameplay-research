@@ -80,3 +80,41 @@ class CaptureTimingAnalysisTests(unittest.TestCase):
         self.assertEqual(result['available_pairs'],1)
         self.assertEqual(result['unavailable_pairs'],2)
         self.assertEqual(result['elapsed_subtraction_matches'],0)
+
+
+class WrapperIntervalTests(unittest.TestCase):
+    def intervals(self, values):
+        data = rows(len(values))
+        for r, (start, end, thread) in zip(data[1:], values):
+            r.update(entry=start, exit=end, thread=thread)
+        return data
+
+    def test_serial_calls_can_migrate_threads(self):
+        data = self.intervals([(1, 3, 7), (3, 5, 8), (6, 9, 7)])
+        result = a.analyze(data)['wrapper_intervals']
+        self.assertEqual(result['same_actor_overlapping_pairs'], 0)
+        self.assertEqual(result['thread_changes_between_nonoverlapping_neighbors'], 2)
+        self.assertFalse(result['scheduler_exclusion_proved'])
+        self.assertFalse(result['input_ingestion_order_proved'])
+        self.assertNotIn('private-', str(result))
+
+    def test_nested_overlap_and_reservation_reordering(self):
+        data = self.intervals([(3, 4, 8), (1, 10, 7), (5, 6, 9)])
+        result = a.analyze(data)['wrapper_intervals']
+        self.assertEqual(result['same_actor_overlapping_pairs'], 2)
+        self.assertEqual(result['reservation_order_entry_reversals'], 1)
+
+    def test_rebinding_does_not_hide_overlap_but_other_actor_does(self):
+        data = self.intervals([(1, 5, 7), (2, 6, 8), (3, 7, 9)])
+        data[2]['after']['main'] = 'rebound'
+        data[3]['actor'] = 'other-actor'
+        self.assertEqual(a.analyze(data)['wrapper_intervals']['same_actor_overlapping_pairs'], 1)
+
+    def test_missing_invalid_and_zero_duration(self):
+        data = self.intervals([(1, 1, 7), (4, 3, 8), (5, 6, 9)])
+        del data[3]['entry']
+        result = a.analyze(data)['wrapper_intervals']
+        self.assertEqual(result['zero_duration_intervals'], 1)
+        self.assertEqual(result['invalid_intervals'], 1)
+        self.assertEqual(result['unavailable_intervals'], 1)
+        self.assertEqual(result['same_actor_overlapping_pairs'], 0)
