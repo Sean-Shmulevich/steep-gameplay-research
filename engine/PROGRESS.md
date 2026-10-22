@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Input ownership release now explains a freshness-cutoff writer: removing the
+last owner copies the service timestamp; removing an earlier owner preserves
+it. Backward search, duplicate retention and compaction match 1,456 original
+cases without substitutions. Newer cached timestamps are required after top
+release; physical key refresh semantics remain open. See
+[ownership release](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#ownership-release-and-freshness-cutoff).
+
 Boolean source-query gates reconstructed and matched in 2,560 original-code
 cases: last-owner permission, strict unsigned freshness cutoff, service enable,
 ordinary key bytes and special packet fields. Sentinel handling occurs after

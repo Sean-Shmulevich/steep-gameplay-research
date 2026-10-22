@@ -45,3 +45,22 @@ def query_cached_button(query_id, *, owners, requested_owner, enabled, cutoff,
     if special:return bool(special_value(query_id))
     index=resolve_index(query_id)
     return False if index==-1 else bool(key_byte(index))
+
+
+def release_button_owner(owners, target, *, cutoff, current_timestamp):
+    """Remove the last matching owner; top removal advances the freshness cutoff.
+
+    This is detached sequence arithmetic, not a synchronization/lifetime API.
+    Duplicate owners remain distinct. The original compacting tail copy is
+    represented by tuple deletion; unused storage beyond the new count is not.
+    """
+    owners=tuple(owners)
+    if len(owners)>65535:raise ValueError('uint16 owner count required')
+    for value in (*owners,target,cutoff,current_timestamp):
+        if type(value) is not int or not 0<=value<1<<64:raise ValueError('uint64 owner/time required')
+    for index in range(len(owners)-1,-1,-1):
+        if owners[index]==target:
+            return dict(owners=owners[:index]+owners[index+1:],
+                        cutoff=current_timestamp if index==len(owners)-1 else cutoff,
+                        removed_index=index)
+    return dict(owners=owners,cutoff=cutoff,removed_index=None)

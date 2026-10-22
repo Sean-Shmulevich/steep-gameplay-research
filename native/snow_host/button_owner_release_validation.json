@@ -1,0 +1,13 @@
+{
+  "evidence": "Original owner removal and original compacting copy",
+  "cases": 1456,
+  "passed": true,
+  "comparison": "Retained owner order, count and cutoff",
+  "substitutions": [],
+  "limits": [
+    "Serial synthetic owner lists, no locking or lifetime proof",
+    "Current timestamp is supplied fixture; its producer remains open",
+    "Unused trailing storage not modeled"
+  ],
+  "game_process": false
+}

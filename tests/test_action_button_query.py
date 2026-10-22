@@ -31,3 +31,17 @@ class ButtonQueryTests(unittest.TestCase):
         self.assertFalse(special_button_state(243,bytes(packet),swapped=False))
         self.assertEqual(special_timestamp_slot(243,False),8)
         self.assertEqual(special_timestamp_slot(240,True),1)
+
+    def test_owner_release_sets_cutoff_only_for_top(self):
+        from engine.action_button_query import release_button_owner
+        r=release_button_owner((1,2,1),1,cutoff=5,current_timestamp=11)
+        self.assertEqual(r,dict(owners=(1,2),cutoff=11,removed_index=2))
+        r=release_button_owner((1,2,3),2,cutoff=5,current_timestamp=11)
+        self.assertEqual(r,dict(owners=(1,3),cutoff=5,removed_index=1))
+        self.assertIsNone(release_button_owner((),1,cutoff=5,current_timestamp=11)['removed_index'])
+
+    def test_release_suppresses_old_cached_press(self):
+        from engine.action_button_query import release_button_owner
+        released=release_button_owner((0,99),99,cutoff=0,current_timestamp=11)
+        self.assertFalse(self.query(owners=released['owners'],cutoff=released['cutoff'],timestamp=lambda _:11))
+        self.assertTrue(self.query(owners=released['owners'],cutoff=released['cutoff'],timestamp=lambda _:12))

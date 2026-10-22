@@ -2433,3 +2433,44 @@ This replaces supplied pressed-state assumptions with runnable cache-query
 semantics. It does not establish event ingestion timing, timestamp meaning,
 cache producer threads or synchronization. Next: identify writes to the cache
 and freshness cutoff before joining these queries to simulation generations.
+
+### Ownership release and freshness cutoff
+
+The cutoff is not simply established as a per-frame threshold. A concrete
+writer is owner removal at RVA `0x1170bb0`. It searches the owner list backward
+for the requested value, removes the last matching occurrence, compacts later
+entries and decrements the uint16 count. A missing target or empty list changes
+nothing. Duplicate owner entries remain distinct.
+
+If the removed owner was the final entry, the routine copies service+0x250 to
+the freshness cutoff at +0x13d0 before removal. Removing any earlier entry
+preserves the cutoff. The constructor initializes the cutoff to zero. The
+initial service+0x250 value comes from timer wrapper `0x1c38ae0`; ongoing
+updates to that field and the key timestamps still need tracing.
+
+```text
+index = last index with owners[index] == target
+if no such index: retain owners and cutoff
+else:
+    if index == len(owners)-1:
+        cutoff = service_current_timestamp
+    erase owners[index], preserving remaining order
+```
+
+[`release_button_owner`](../../engine/action_button_query.py) implements this
+serial transition without mutating its input. It does not implement locking,
+object ownership, allocation or the bytes left beyond the reduced count.
+The [original-code receipt](../../native/snow_host/button_owner_release_validation.json)
+compares 1,456 cases, including empty lists, duplicate entries, null owners,
+missing targets and middle/top removal. It executes the original routine and
+its original compacting copy without substituted calls. Remaining owner order,
+count and cutoff match.
+
+Combining this transition with the already reconstructed strict timestamp
+query shows why a cached pressed byte may remain invisible after ownership
+changes: a timestamp at or before the copied cutoff is rejected even when the
+remaining owner now permits the query. A newer timestamp passes that gate.
+This is an arithmetic consequence of the two routines, not proof of which
+menus or gameplay states acquire ownership, or whether a held key receives
+fresh timestamps without a new physical press. Those producer semantics are
+still required before interpreting it as a gameplay input rule.
