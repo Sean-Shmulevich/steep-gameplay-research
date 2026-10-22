@@ -89,3 +89,23 @@ plugin but failed startup navigation after capture/recognition timeouts. It did
 not reach the capture plan or install the observation slot. Cleanup verified the
 original DLL, restored settings and stopped the bottle. The next live gate is
 still a real paired snow-update capture; no impulse is applied by this plan.
+
+### Screen-recognition diagnostic
+
+An [offline comparison](capture_ocr_diagnostic.json) reproduced the recognition
+timeout using an existing splash image with no running game. Vision accurate
+mode timed out both with and without CPU-only processing. Fast mode completed
+in 0.13–0.27 seconds; Tesseract also read the image. The private capture helper
+now selects Vision fast mode. Recognition of the title, map and gameplay HUD
+still needs a live check.
+
+To test an existing local capture independently of Wine or window selection:
+
+```sh
+python3 scripts/image_text.py /path/to/capture.png --timeout 8
+```
+
+This uses an installed `tesseract` executable, returns structured text and timing,
+and fails on OCR timeout or process failure. It performs no capture or input.
+Game screenshots remain private. OCR text alone does not establish player-object
+identity or a safe physics boundary.

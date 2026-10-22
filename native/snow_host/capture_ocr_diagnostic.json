@@ -1,0 +1,44 @@
+{
+  "evidence": "offline OCR against one existing safety-splash capture",
+  "date": "2026-10-22",
+  "game_launched": false,
+  "platform": "macOS 27.0.1 Apple Silicon",
+  "results": [
+    {
+      "backend": "Vision",
+      "mode": "accurate",
+      "cpu_only": false,
+      "timeout_seconds": 20
+    },
+    {
+      "backend": "Vision",
+      "mode": "accurate",
+      "cpu_only": true,
+      "timeout_seconds": 10
+    },
+    {
+      "backend": "Vision",
+      "mode": "fast",
+      "cpu_only": true,
+      "completed_seconds": 0.2706
+    },
+    {
+      "backend": "Vision",
+      "mode": "fast",
+      "cpu_only": false,
+      "completed_seconds": 0.1334
+    },
+    {
+      "backend": "Tesseract",
+      "page_segmentation": 11,
+      "process_seconds": 0.9162,
+      "exit": 0
+    }
+  ],
+  "conclusion": "Accurate-mode recognition stalled independently of Wine or window capture; fast mode and Tesseract recognized the same saved image.",
+  "limitations": [
+    "One image only; title, map and gameplay HUD recognition not yet retested.",
+    "Does not establish an OS regression or explain original game startup duration.",
+    "No live snow-update capture established."
+  ]
+}
