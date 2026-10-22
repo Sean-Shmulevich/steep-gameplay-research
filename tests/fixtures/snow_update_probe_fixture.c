@@ -4,10 +4,10 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-static unsigned char actor[0x1200],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[8];
+static unsigned char actor[0x1200],entity[0x100],runtime[0x1600],main_body[0x300],rider[0x300],world[64];
 static __attribute__((section(".tracevt"),aligned(4096))) unsigned char table[4096]={1};
 static uint32_t request=7,substep=2,calls;
-static unsigned char job[0x210],callable[16],records[80],job_table[16],callable_table[16];
+static unsigned char job[0x1c00],timing[0x1400],callable[16],records[80],job_table[16],callable_table[16];
 static uint64_t range_base;
 extern void fixture_entry_call(void *,float,float,const SnowEntryRegisters *,SnowUpdateOriginal);
 extern unsigned char fixture_entry_return[];
@@ -36,7 +36,8 @@ static void readonly_table(void) {
 }
 int main(int argc,char **argv) {
     assert(argc==2 || argc==3); HMODULE dll=LoadLibraryA(argv[1]); assert(dll);
-    int valid_attribution=argc==3 && !strcmp(argv[2],"valid-attribution");
+    int bad_frame=argc==3 && !strcmp(argv[2],"invalid-frame");
+    int valid_attribution=bad_frame || (argc==3 && !strcmp(argv[2],"valid-attribution"));
     int attributed=valid_attribution || (argc==3 && !strcmp(argv[2],"attributed"));
     int conflict=argc==3 && !attributed;
     int (*configure_attributed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureAttributed");
@@ -57,10 +58,15 @@ int main(int argc,char **argv) {
     f(main_body+0x1a0,10); f(main_body+0x1ac,3); f(rider+0x1ac,9);
     SnowUpdateBinding b={(uintptr_t)actor,(uintptr_t)table,(uintptr_t)world,(uintptr_t)&request,(uintptr_t)&substep};
     SnowUpdateRecord r; size_t used=0,dropped=0;
-    SnowEntryProfile profile={1,2,3,(uintptr_t)table}; /* intentionally wrong route */
+    SnowEntryProfile profile={1,2,3,(uintptr_t)table,0}; /* intentionally wrong route */
     SnowEntryRegisters entry={(uintptr_t)job,(uintptr_t)&range_base,1,0,0};
     if(valid_attribution) {
         profile.return_address=(uintptr_t)fixture_entry_return;
+        profile.batch_return=0x9876;
+        q(job+0x1b58,(void *)(uintptr_t)profile.batch_return);
+        q(job+0x1b60,timing);q(job+0x1b70,(void *)(uintptr_t)1);
+        q(timing,world);uint32_t steps=2;memcpy(timing+0x1390,&steps,4);
+        f(timing+0x1394,.125f);f(timing+0x136c,bad_frame ? .25f : .5f);q(world+0x20,(void *)(uintptr_t)42);
         profile.job_table=(uintptr_t)job_table;profile.callable_table=(uintptr_t)callable_table;
         q(job,job_table);q(job+0x198,records);q(job+0x1f8,callable);
         uint32_t count=5;memcpy(job+0x1a4,&count,4);q(callable,callable_table);
@@ -89,6 +95,9 @@ int main(int argc,char **argv) {
     assert(get(0,&r) && !get(2,&r));
     assert(r.attribution_attempted==(unsigned)attributed && r.attribution_valid==(unsigned)valid_attribution);
     if(valid_attribution) {
+        assert(r.frame_valid==(unsigned)!bad_frame);
+        if(!bad_frame) assert(r.frame.ordinal==1 && r.frame.selected_count==2 && r.frame.outer_completion_counter==42);
+        else { SnowBatchFrame zero={0}; assert(!memcmp(&r.frame,&zero,sizeof zero)); }
         assert(r.attribution.job==(uintptr_t)job && r.attribution.record==(uintptr_t)(records+48));
         assert(r.attribution.actor==(uintptr_t)actor && r.attribution.record_index==3 && r.attribution.initial_count==5);
     }

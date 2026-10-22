@@ -450,3 +450,33 @@ counter must remain separate from the existing request field, and missing frame
 attribution must not invalidate an otherwise valid actor/job observation. The
 next step is additive recording of this optional result with explicit validity,
 followed by a fixture and bounded live capture.
+
+
+## Optional frame capture integration
+
+The experimental record/profile ABI is now version 4. `SnowEntryProfile` has an
+optional `batch_return`, with zero disabling frame reads. After successful job
+attribution, the dispatcher calls the batch-frame reader with the already-bound
+world and bit-copied scalar arguments. Its result is recorded independently as
+`frame_valid` plus frame metadata. A failed frame read preserves valid job
+attribution and exactly-once forwarding. Legacy no-attribution calls leave both
+optional results unavailable.
+
+The selected game capture plugin supplies the verified outer-loop return for
+this build. Valid JSON records now include `substep_ordinal`, `selected_count`
+and `outer_completion_counter`. These fields do not replace `before.request`,
+`after.request` or the existing snapshot's optional substep field. The completion
+counter's live relationship to the request counter remains unmeasured.
+
+The [integrated fixture receipt](../../native/snow_host/batch_frame_fixture_validation.json)
+passed five Wine modes. Successful attribution records ordinal 1 of 2 and outer
+counter 42 through the installed thunk, guarded readers and recorder. A timing
+mismatch keeps job attribution valid, rejects the frame and zeroes its payload.
+Normal, conflict and wrong-route cases still pass. The recorder's native tests
+also verify clearing a partially written frame on invalid results. All fixture
+objects and values are synthetic; no game launched in this integration pass.
+
+The host, probe and optional capture plugin build with the new sources. All users
+of the experimental ABI must rebuild together. Next is a bounded original-game
+capture plus analysis that compares direct ordinals against the existing request
+groups, without silently treating either counter as the other's generation.

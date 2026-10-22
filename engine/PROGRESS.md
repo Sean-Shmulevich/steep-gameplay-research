@@ -2,6 +2,11 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Optional frame capture is integrated in ABI v4. Five Wine fixture modes passed,
+including direct ordinal/count/counter recording and clock-mismatch refusal that
+preserves valid job attribution. Windows builds and 43 focused tests passed.
+Original-game direct ordinal capture is next; existing live receipts lack it.
+
 Bounded batch-frame reader implemented: at most 16 reads validate saved caller,
 timing owner/world, ordinal/count and exact callback clock bits, with bracket
 rereads and zero output on failure. Synthetic native fault/bounds tests passed.

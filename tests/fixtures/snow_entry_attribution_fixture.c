@@ -14,7 +14,7 @@ static int reader(void *ctx,uint64_t a,void *out,size_t n){
     if(reads==fail || a<BASE || a>=BASE+sizeof mem || n>BASE+sizeof mem-a)return 0;
     memcpy(out,mem+a-BASE,n);return 1;
 }
-static SnowEntryProfile p={0x1234,0x2345,0x3456,0x4567};
+static SnowEntryProfile p={0x1234,0x2345,0x3456,0x4567,0};
 static SnowEntryRegisters r;
 static uint64_t actor=BASE+0x3000;
 static void setup(void){

@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdatomic.h>
-#include "snow_entry_attribution.h"
+#include "snow_batch_frame.h"
 /* Authored capture plumbing. No installation, game offsets, or ownership claims.
  * Initialize once before publishing. Context, records and callbacks must remain
  * alive for ALL callers, including calls after close. Never reopen/reinitialize.
@@ -25,6 +25,8 @@ typedef struct {
     SnowUpdateSnapshot before, after;
     uint32_t attribution_attempted, attribution_valid;
     SnowEntryAttribution attribution;
+    uint32_t frame_valid;
+    SnowBatchFrame frame;
 } SnowUpdateRecord;
 typedef void (*SnowUpdateOriginal)(void *, float, float);
 typedef void (*SnowUpdateRead)(void *, SnowUpdateSnapshot *);
@@ -42,10 +44,10 @@ int snow_trace_init(SnowUpdateTrace *, SnowUpdateRecord *, size_t,
                     SnowUpdateOriginal, SnowUpdateRead, SnowUpdateClock, SnowUpdateClock);
 void snow_trace_call(SnowUpdateTrace *, void *, float, float);
 /* Optional bounded, non-mutating callback runs only for reserved records, before
- * original. Return 1 for valid attribution; failure clears its output and never
+ * original. Return 1 for job attribution, 3 for job plus frame; other values clear output and never
  * suppresses original. Context is invocation-local; it must not escape the call.
  * Callback must return normally and must not recursively invoke this trace. */
-typedef int (*SnowUpdateEntryRead)(void *, SnowEntryAttribution *);
+typedef int (*SnowUpdateEntryRead)(void *, SnowEntryAttribution *, SnowBatchFrame *);
 void snow_trace_call_attributed(SnowUpdateTrace *, void *, float, float,
                                 SnowUpdateEntryRead, void *);
 void snow_trace_close(SnowUpdateTrace *);

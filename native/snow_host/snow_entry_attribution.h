@@ -5,6 +5,7 @@
 typedef int (*SnowEntryRead)(void *,uint64_t,void *,size_t);
 typedef struct {
     uint64_t return_address, job_table, callable_table, actor_table;
+    uint64_t batch_return; /* zero disables optional outer-frame observation */
 } SnowEntryProfile;
 typedef struct {
     uint64_t job, callable, record_base, record, actor;

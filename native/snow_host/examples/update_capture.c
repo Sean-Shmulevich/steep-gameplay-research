@@ -58,6 +58,9 @@ static DWORD WINAPI capture(LPVOID ignored) {
                     r.attribution_attempted,r.attribution_valid);
             if(r.attribution_valid) fprintf(f,",\"job\":\"%llx\",\"record_index\":%u,\"initial_count\":%u",
                     (unsigned long long)r.attribution.job,r.attribution.record_index,r.attribution.initial_count);
+            fprintf(f,",\"frame_valid\":%u",r.frame_valid);
+            if(r.frame_valid) fprintf(f,",\"substep_ordinal\":%u,\"selected_count\":%u,\"outer_completion_counter\":%llu",
+                r.frame.ordinal,r.frame.selected_count,(unsigned long long)r.frame.outer_completion_counter);
             fputs(",\"before\":",f); sample(f,&r.before); fputs(",\"after\":",f); sample(f,&r.after); fputs("}\n",f);
         }
         fclose(f);
@@ -73,7 +76,7 @@ static int paused(void *user) {
     }
     /* Build-specific route; binding acquisition already verifies the adapter build.
      * Additional function-table joins are checked before opting into attribution. */
-    SnowEntryProfile profile={0x1413adbacull,0x142916ee0ull,0x142917108ull,binding.actor_table};
+    SnowEntryProfile profile={0x1413adbacull,0x142916ee0ull,0x142917108ull,binding.actor_table,0x141389ad8ull};
     uint64_t visitor=0,dispatcher=0; SIZE_T got=0;
     if(attribute_jobs &&
        (!ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)(profile.job_table+0x80),&visitor,8,&got) || got!=8 || visitor!=0x1413adb70ull ||
@@ -104,7 +107,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     attribute_jobs=GetPrivateProfileIntA("capture","attribute_jobs",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-3";
+    plugin->name="update_capture"; plugin->version="experimental-4";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

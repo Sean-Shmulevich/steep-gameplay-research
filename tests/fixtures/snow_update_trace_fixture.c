@@ -42,8 +42,9 @@ static void *worker(void *unused) {
     assert(actor==200); return NULL;
 }
 static unsigned observations;
-static int observe_entry(void *ctx,SnowEntryAttribution *out) {
+static int observe_entry(void *ctx,SnowEntryAttribution *out,SnowBatchFrame *frame) {
     ++observations;
+    memset(frame,0xa5,sizeof *frame);
     memset(out,0xa5,sizeof *out); /* failure must discard partially written data */
     return *(int *)ctx;
 }
@@ -62,6 +63,12 @@ static void check_attribution(void) {
     assert(rows[0].attribution_attempted==1 && rows[0].attribution_valid==1);
     assert(rows[1].attribution_attempted==1 && rows[1].attribution_valid==0);
     assert(!memcmp(&rows[1].attribution,&zero,sizeof zero));
+    SnowBatchFrame blank={0};
+    assert(!rows[0].frame_valid && !memcmp(&rows[0].frame,&blank,sizeof blank));
+    assert(!rows[1].frame_valid && !memcmp(&rows[1].frame,&blank,sizeof blank));
+    init(1);success=3;
+    snow_trace_call_attributed(&trace,&actor,.125f,.5f,observe_entry,&success);snow_trace_close(&trace);
+    assert(rows[0].attribution_valid && rows[0].frame_valid);
     init(1); snow_trace_call(&trace,&actor,.125f,.5f);snow_trace_close(&trace);
     assert(!rows[0].attribution_attempted && !rows[0].attribution_valid);
 }

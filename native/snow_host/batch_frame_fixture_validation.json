@@ -1,0 +1,39 @@
+{
+  "game_launched": false,
+  "synthetic_objects_only": true,
+  "cases": [
+    {
+      "mode": "normal",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "conflict",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "attributed",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "valid-attribution",
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "mode": "invalid-frame",
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "evidence": "authored Windows fixture in Wine; includes optional frame success and clock-mismatch refusal",
+  "source_sha256": {
+    "native/snow_host/snow_batch_frame.c": "f18bc910699f781f3eda1ef7dbd4d4c53e010080395b57e45aefc9f6615f0e45",
+    "native/snow_host/snow_update_probe.c": "8ca28a8c350d8e9d63eebfd8b249297c167164fcfee139cf0e7d6c14eaa16efc",
+    "native/snow_host/snow_update_trace.c": "e373ea1bb7a25e4bc786ca22c29263b81c034ef40f059cedf4846fe2d1b6e3d4",
+    "tests/fixtures/snow_update_probe_fixture.c": "b5e6b30b0ad64ae7bdb28b8d86b6c917c5ecba623a65188e069eaa529158bc6c"
+  }
+}

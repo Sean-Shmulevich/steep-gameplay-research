@@ -34,7 +34,10 @@ void snow_trace_call_attributed(SnowUpdateTrace *t,void *actor,float elapsed,flo
         r->thread=t->thread_id(); r->entry_tick=t->clock();
         if(observe) {
             r->attribution_attempted=1;
-            r->attribution_valid=observe(context,&r->attribution)==1;
+            int status=observe(context,&r->attribution,&r->frame);
+            r->attribution_valid=status==1 || status==3;
+            r->frame_valid=status==3;
+            if(!r->frame_valid) memset(&r->frame,0,sizeof r->frame);
             if(!r->attribution_valid) memset(&r->attribution,0,sizeof r->attribution);
         }
         t->read(actor,&r->before);

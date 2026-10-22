@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define SNOW_UPDATE_PROBE_BUILD
 #include <windows.h>
+#include <string.h>
 #include "snow_update_probe.h"
 #define CAPACITY 4096
 static SnowUpdateTrace trace;
@@ -43,10 +44,13 @@ int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *b,SnowUpdateOriginal 
        !profile->callable_table || !profile->return_address) return 0;
     return configure(b,original,profile);
 }
-typedef struct { const SnowEntryRegisters *entry; uint64_t actor; } EntryContext;
-static int attribute_entry(void *context,SnowEntryAttribution *out) {
+typedef struct { const SnowEntryRegisters *entry; uint64_t actor; uint32_t elapsed,consumed; } EntryContext;
+static int attribute_entry(void *context,SnowEntryAttribution *out,SnowBatchFrame *frame) {
     EntryContext *c=context;
-    return snow_entry_attribute(read_memory,NULL,&entry_profile,c->entry,c->actor,out);
+    if(!snow_entry_attribute(read_memory,NULL,&entry_profile,c->entry,c->actor,out)) return 0;
+    if(entry_profile.batch_return && snow_batch_frame(read_memory,NULL,out->job,
+           entry_profile.batch_return,binding.world,c->elapsed,c->consumed,frame)) return 3;
+    return 1;
 }
 void SnowProbe_EntryDispatch(void *actor,float elapsed,float derivative,const SnowEntryRegisters *entry) {
     if(InterlockedCompareExchange(&ready,2,2)!=2) return;
@@ -55,7 +59,8 @@ void SnowProbe_EntryDispatch(void *actor,float elapsed,float derivative,const Sn
         trace.original(actor,elapsed,derivative); return;
     }
     InterlockedIncrement64(&selected_calls);
-    EntryContext context={entry,(uint64_t)(uintptr_t)actor};
+    EntryContext context={entry,(uint64_t)(uintptr_t)actor,0,0};
+    memcpy(&context.elapsed,&elapsed,4);memcpy(&context.consumed,&derivative,4);
     snow_trace_call_attributed(&trace,actor,elapsed,derivative,attribute_entry,&context);
 }
 static void *dispatch_target(void) {
