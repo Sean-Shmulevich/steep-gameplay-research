@@ -75,7 +75,7 @@ settings restored, bottle stopped, original DLL verified.
 ## Live pass, 2026-10-22 ([receipt](startup_entry_live_pass.json))
 
 The second run, with the corrected gate, passed end to end. The navigator sent
-three inputs (69, 85 and 98 s). The player was acquired at about 85 s, during
+three inputs (69, 85 and 98 s). The player was acquired at 80 s, during
 loading, and the HUD appeared at 107 s. Native agreement accepted gameplay at
 110 s; IN_WORLD stayed clear while the rider was idle. The demo plan then
 released 10 single world steps, each exactly one step (worst release 17.8 ms),
