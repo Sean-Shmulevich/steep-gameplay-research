@@ -869,8 +869,8 @@ behavior, not game ABI compatibility, live capture, atomic snapshots or a safe
 installation point.
 
 `snow_update_snapshot.c` supplies the build-specific reader for that capture core.
-Its binding requires a freshly validated actor/table/world and two counter
-addresses. Its transport callback must perform exact, safe reads and enforce the
+Its binding requires a freshly validated actor/table/world and independently
+attributed counter addresses where available. Its transport callback must perform exact, safe reads and enforce the
 process/build identity. An integration adapter can call it from `SnowUpdateRead`;
 no live adapter or callback installation is included yet.
 
@@ -974,3 +974,30 @@ conflicting-pointer preservation, retry restoration, and mismatched-original
 refusal pass under Wine. Windows API failure injection and live installation in
 the game have not run. The remaining integration work is fresh owner/counter
 acquisition, bounded session orchestration and trace export with QPC frequency.
+
+### Timing availability and fresh binding resolution
+
+Snapshot validity is a bitmask: bit 0 marks a successful guarded snapshot, bit 1
+marks a present rider, bit 2 marks an available request counter, and bit 3 marks
+an available substep counter. A zero binding address for either counter means
+unavailable. Its numeric output remains zero with the corresponding validity bit
+clear; do not interpret that as an observed index zero. A supplied address that
+cannot be read still invalidates the whole snapshot. Rebuild consumers with the
+current header; the experimental interface has no cross-version ABI promise.
+
+`snow_update_resolve_binding` resolves a freshly acquired actor through its entity,
+world, runtime and the world's physics owner to the scheduler state. It checks
+actor/self/runtime backlinks, the original actor slot, the world callback and
+job-owner relationship against an externally verified build profile, then rereads
+the identity links. Its returned request address is the world job's **started
+counter**, not a device-event sequence or a full simulation generation. The
+substep address is zero. The observed loop index has not been established as a
+stable readable field; neither total substep count nor a world-step counter is a
+valid substitute for it.
+
+This helper does not discover the player or prove current registry membership.
+The session adapter must acquire the actor freshly, establish the profile/build,
+resolve immediately before configuration, and stop/rebind on owner replacement.
+Later snapshot equality still cannot exclude ABA or a stale counter allocation.
+Tests cover failure at each of the resolver's 27 reads and independent absence
+of either timing field. The resolver is synthetic-tested, not live-validated.

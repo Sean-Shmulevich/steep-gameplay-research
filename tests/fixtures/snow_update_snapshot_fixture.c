@@ -16,6 +16,7 @@ static int reader(void *ctx,uint64_t a,void *dst,size_t n) {
 }
 static SnowUpdateBinding binding={BASE,BASE+0x9000,BASE+0xa000,BASE+0xb000,BASE+0xb008};
 static void setup(void) {
+    binding.request_counter=BASE+0xb000; binding.substep_counter=BASE+0xb008;
     memset(memory,0,sizeof memory); reads=fail_at=change_at=0;
     writeq(BASE,binding.actor_table); writeq(BASE+0x1050,BASE); writeq(BASE+0x10,BASE+0x2000);
     writeq(BASE+0x2060,binding.world); writeq(BASE+0x168,BASE+0x3000);
@@ -36,7 +37,7 @@ static void invalid(SnowUpdateSnapshot *out) {
 }
 int main(void) {
     SnowUpdateSnapshot s; setup(); assert(sample(&s)); unsigned total=reads;
-    assert(s.valid==3 && s.pending[3]==4 && s.runtime==BASE+0x3000);
+    assert(s.valid==15 && s.pending[3]==4 && s.runtime==BASE+0x3000);
     assert(s.linear[0][2]==2 && s.angular[0][0]==3 && s.angular[1][2]==15);
     assert(s.inverse_mass[0]==.25f && s.inverse_mass[1]==.5f);
     assert(s.request==17 && s.substep==2 && s.gates[0] && !s.gates[1]);
@@ -48,12 +49,37 @@ int main(void) {
         setup(); change_at=10; change_address=guards[i]; invalid(&s);
     }
     setup(); writeq(BASE+0x3b90,0); assert(sample(&s));
-    assert(s.valid==1 && !s.rider_body && s.angular[1][2]==0);
+    assert(s.valid==13 && !s.rider_body && s.angular[1][2]==0);
     setup(); writeq(BASE+0x168,UINT64_MAX); invalid(&s);
     setup(); writeq(BASE+0x1050,BASE+8); invalid(&s);
     setup(); writeq(BASE+0x2060,BASE+8); invalid(&s);
     setup(); writeq(BASE+0x36e8,0); invalid(&s);
+    setup(); binding.substep_counter=0; assert(sample(&s));
+    assert(s.valid==7 && s.request==17 && s.substep==0);
+    binding.request_counter=0; assert(sample(&s));
+    assert(s.valid==3 && s.request==0 && s.substep==0);
+    binding.substep_counter=BASE+0xb008; assert(sample(&s));
+    assert(s.valid==11 && s.request==0 && s.substep==2);
     assert(!snow_update_snapshot(reader,memory,&binding,NULL));
+    /* Fresh actor -> owning physics state -> world-job started counter. */
+    SnowUpdateProfile profile={BASE+0x9000,BASE+0x9100,BASE+0xe000,BASE+0xe100};
+    SnowUpdateBinding resolved,zero={0}; unsigned resolver_reads=0;
+    for(unsigned failure=0;failure<=27;failure++) {
+        setup(); writeq(BASE+0x92c0,profile.original_target);
+        writeq(BASE+0x3000,profile.runtime_table); writeq(BASE+0x36f0,BASE);
+        writeq(BASE+0xaff0,BASE+0xc000); writeq(BASE+0xc018,BASE+0xd000);
+        writeq(BASE+0xd000,BASE+0xc000); writeq(BASE+0xd010,BASE+0xd1b0);
+        writeq(BASE+0xd360,profile.world_step_callback); writeq(BASE+0xd208,19);
+        fail_at=failure;
+        int ok=snow_update_resolve_binding(reader,memory,BASE,&profile,&resolved);
+        if(!failure) {
+            assert(ok); resolver_reads=reads; assert(resolver_reads==27);
+            assert(resolved.actor==BASE && resolved.world==BASE+0xa000);
+            assert(resolved.request_counter==BASE+0xd208 && resolved.substep_counter==0);
+        } else { assert(!ok); assert(!memcmp(&resolved,&zero,sizeof zero)); }
+    }
+    setup();
+
     printf("PASS: %u read failures, 9 link/counter changes, absent rider and invalid identities\n",total);
     return 0;
 }

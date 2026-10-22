@@ -33,9 +33,9 @@
     "native/snow_host/snow_update_probe.h": "9800039d16efcce5134e1348a4b7648e24cd8e51e7b5b2ecaaa450848cd286dd",
     "native/snow_host/snow_update_trace.c": "6e1a6ff7ae02fba9b688284817bdd77552ae39c59df89b5962fadb9b7dd3624a",
     "native/snow_host/snow_update_trace.h": "0aaf176229586f4bfabdbd2341a61fb9ce94e7a66da9571024bc5b9b2766f690",
-    "native/snow_host/snow_update_snapshot.c": "467c7d680bd42a51c61a4b2e1f2bbf6961fffdf456a77c64d24f83628ba3e873",
-    "native/snow_host/snow_update_snapshot.h": "f44d2ac6e8d1a7f91367f6205954eab23ef31a11586a6f7a166ba7bca5335e02",
-    "tests/fixtures/snow_update_probe_fixture.c": "a0168e4692aeb737859e13570900dd1d0ae67c6acb93cf2a345dddcd878b2077"
+    "native/snow_host/snow_update_snapshot.c": "6fd6f9c0ad4d4b48452841584b5f031cdd12549ffc5fc8376605d6b8c60928b2",
+    "native/snow_host/snow_update_snapshot.h": "f62f84e367b5cce11259e2d380d29d511ae888c280696e6a61dce1aa1dd16846",
+    "tests/fixtures/snow_update_probe_fixture.c": "f386e7612c6c02fe6b34ca84787010de634d5477b978f6f039f3e93f278c169a"
   },
   "fixture_runs": [
     {

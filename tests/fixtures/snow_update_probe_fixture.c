@@ -58,9 +58,9 @@ int main(int argc,char **argv) {
     set_slot((void *)dispatch); assert(restore()==1); assert(read_slot()==original); readonly_table();
     assert(restore()==1);
     assert(close_probe(&used,&dropped)); assert(used==2 && dropped==0 && calls==3);
-    assert(get(1,&r) && r.before.valid==3 && r.after.valid==0);
+    assert(get(1,&r) && r.before.valid==15 && r.after.valid==0);
     assert(get(0,&r) && !get(2,&r));
-    assert(r.before.valid==3 && r.after.valid==3 && r.thread!=0);
+    assert(r.before.valid==15 && r.after.valid==15 && r.thread!=0);
     assert(r.before.linear[0][0]==10 && r.after.linear[0][0]==12);
     assert(r.before.angular[0][0]==3 && r.after.angular[0][0]==3);
     assert(r.before.angular[1][0]==9 && r.after.angular[1][0]==9);
