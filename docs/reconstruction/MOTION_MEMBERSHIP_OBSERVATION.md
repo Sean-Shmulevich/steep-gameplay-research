@@ -2144,3 +2144,46 @@ establish equivalence across all inputs or runtime environments. The next
 input-response work can now capture curve data and configuration without
 assuming a generic easing curve. Live captures remain subject to session
 ownership; none were used for this work.
+
+## Bounded ramp settings reader
+
+[`observe_ramp_settings`](../../engine/action_ramp_observation.py) prepares the
+next parameter capture without invoking the game. It takes a byte-reader,
+a fresh processor identity, expected vtable/callback and the current build's
+manager-global slot. The caller must verify build/process identity and derive
+the processor through the current chain. Saved heap addresses are unsuitable.
+
+It reads the manager's global shaping gate, processor configuration handle,
+active sign bit, duration, axis mode, axis count, curve pointer, enabled bounds
+and up to 64 curve keys. It makes two traversals and accepts only matching
+semantic receipts. Budget is at most 32 reads and 4,608 bytes. Reads have no
+side effects in this API; the caller owns the actual transport. Returned
+addresses are private-session provenance and must not be copied into public
+findings. No live run or launcher integration is claimed yet.
+
+Handle comparison excludes unrelated bits. Key comparison excludes padding,
+but preserves exact semantic float bits, including signed zero. Disabled
+bounds are ignored. Zero-key curves are valid. The reader rejects non-finite
+curve values, decreasing key positions, nonpositive duration, unexpected code
+identity, null required pointers, truncated reads and budget overruns. It
+returns an unstable status when relevant settings change between receipts.
+This is a finite reconstruction-domain restriction, not a claim that the
+original callback validates its inputs this way.
+
+An inactive or null configuration object reports unresolved availability and
+is not dereferenced. A disabled global gate is reported independently from
+configuration availability. The initial native availability helper at RVA
+`0x119f8d0` reads a TLS slot through GS:[0x58] and an indexed thread-local
+pointer at +0x48. Its return combines with the configuration handle sign mask
+in the callback's initial test. The observer does not read that thread-local
+value and must not label a matching receipt as proof of execution or complete
+activation. Chain enablement is also a separate caller-level fact.
+
+Two matching traversals do not guarantee atomicity, lifetime or freedom from
+ABA changes. The reader deliberately excludes changing timers and saved clock
+from configuration equality. A separate state capture can later relate those
+to input at a proven update boundary. Fixture tests cover maximum key count,
+all read failure positions, changed configuration/keys, handle metadata,
+bounds, signed zero, padding, inactive handles and global gating. Next: wire a
+narrow private collector with fresh chain provenance; do not append this to the
+212-request capture without re-budgeting the whole experiment.

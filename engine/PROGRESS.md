@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Bounded ramp-settings observer is implemented and fixture-tested: two matching
+semantic traversals, at most 64 keys/32 reads/4,608 bytes. It separates global
+gate and active handle from unknown TLS availability and actual execution.
+No live run yet. Next: narrow private collector with fresh chain provenance,
+then actual configuration capture once the other agent releases the game.
+See [ramp settings reader](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#bounded-ramp-settings-reader).
+
 Independent curve cosine now matches 20,592 original-instruction cases across
 its supported angle domain, including the prior isolated mismatch. Combined
 independent acos/cos retains exact root-output matches in 1,441 solver cases;
