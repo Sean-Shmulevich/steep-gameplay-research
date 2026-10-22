@@ -1,0 +1,14 @@
+{
+  "evidence": "Private collector offline transport fixture",
+  "passed": true,
+  "requests": 219,
+  "request_limit": 224,
+  "curve_keys": 64,
+  "directional_sources": 1,
+  "game_process": false,
+  "limits": [
+    "Previous private read values combined with synthetic ramp settings",
+    "Not a new live capture or current-address provenance",
+    "Larger or changing graphs can still exhaust global budget and refuse"
+  ]
+}

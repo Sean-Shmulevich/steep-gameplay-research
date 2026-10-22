@@ -246,3 +246,21 @@ chain and recheck its source afterward. The first run passed with two stages,
 using 212 of the helper's 224 permitted requests. A larger traversal may exhaust
 that bound and must report refusal, not silently omit checks. See the
 [live chain receipt](action_chain_live_observation.json).
+
+### Ramp configuration observation
+
+`--plan ramp-observe` prepares a directional-only variant of the private action
+collector. It discovers the current action, composite, directional source and
+processor chain, then reads the known ramp stage's duration, axis mode, axis
+count and up to 64 keys. It skips vector-source details. Independent chain
+identity reads are batched before and after the ramp settings to preserve the
+existing 224-request/40-second helper limit. Parent and source checks remain.
+
+This mode requires the private collector and supported original-game setup;
+it is not a standalone public memory reader. It has passed an offline transport
+fixture with 64 synthetic keys in 219 requests. It has **not** run live.
+Larger or changing graphs can still exceed the budget and must refuse rather
+than extend it. An observed active handle does not prove thread-local
+availability or actual ramp execution. Results contain private-session
+addresses and curve data; keep the raw result outside the public repository.
+Use only when current session ownership permits live testing.

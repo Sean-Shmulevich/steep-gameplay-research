@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Ramp-observe is wired through launcher and private collector, with fresh action
+provenance and batched chain checks around capture. Maximum-key offline fixture
+passes in 219/224 requests after the initial sequential version exceeded the
+limit. No live capture attempted; runtime settings and transport timing remain
+unverified. See [offline collector integration](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#ramp-collector-integration-offline-only).
+
 Composed directional response matches 1,080 consecutive original-chain updates
 across nine press/hold/release/reversal sequences, including internal gates and
 stage bypass. Real curve/solver/math and diagonal code execute offline; only

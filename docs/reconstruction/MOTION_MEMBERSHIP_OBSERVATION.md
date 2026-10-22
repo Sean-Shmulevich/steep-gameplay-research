@@ -2324,3 +2324,23 @@ not install these synthetic curves or the fixture duration as player tuning.
 This is a composed processor result, not end-to-end gameplay validation.
 Device-state ingestion, active action selection, actual curve parameters,
 thread-local availability and physics-substep ordering still need evidence.
+
+### Ramp collector integration, offline only
+
+The launcher/probe now routes `ramp-observe` to the private collector's `--ramp`
+mode. It inspects only the directional source and requires exactly one known
+ramp stage. It brackets settings capture with batched reads of chain shape,
+stage pointers, tables, callbacks, configuration handles and enable flags.
+It also retains the existing source, composite and rooted action rechecks.
+Selected ramp/evaluator instruction signatures are checked before and after.
+
+An initial sequential implementation exceeded the helper's 224-request limit
+in the offline fixture and was rejected. Batching the independent identity
+reads reduced the maximum-key fixture to 219 requests without raising the
+limit. The [fixture receipt](../../native/snow_host/action_ramp_collector_validation.json)
+uses earlier private read values combined with synthetic ramp settings and
+unused handle metadata. It is not a live capture or evidence that old heap
+addresses remain valid. The actual collector always discovers identities
+again. Five requests of headroom in this fixture do not guarantee completion
+for larger graphs; exhaustion still fails closed. Runtime validation awaits
+availability of the game from the other agent.
