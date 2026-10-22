@@ -1351,3 +1351,40 @@ this is not a claim of arbitrary map compatibility or stable live access. The
 next task is bounded live manager/bank ownership and action identity sampling,
 using the decoded search precedence. No live action selection or publication
 ordering was established by this integration pass.
+
+### Manager-to-action observer
+
+`engine/action_binding_observation.py` connects the selected manager bank, reverse
+binding precedence and bounded action-map decoder into one read-only operation.
+`observe_action_binding(read, manager, action_id, fallback)` returns the selected
+bank, binding, physical value slot, action, virtual table, third virtual callback
+and the 16 raw bytes at action+0x60. The callback is an observed identity only;
+this reader does not establish a callable signature or invoke it.
+
+The caller supplies verified build-specific manager and fallback identities and
+a callback that returns exactly the requested bytes. The reader rejects observed
+writer bits in the manager lock word without acquiring a lock. It follows the
+selected bank and checks three binding groups in reverse record order. A missing
+or null action continues unless that binding's stop-on-miss flag is set. An
+out-of-range bank index, exhausted search or stop-on-miss returns the fallback's
+16 bytes at +0x40 with a distinct reason. Unsupported maps, failed reads, changing
+receipts and exhausted budgets never become ordinary missing-action results.
+
+Two complete traversal receipts must match, including read addresses and bytes.
+Limits are 512 reads and 32768 bytes total, 64 records per group and 128 visited
+records per pass. Matching receipts do not prove atomicity, object lifetime or
+absence of ABA reuse. The reader neither calls the game nor writes memory.
+
+The [integrated validation receipt](../../native/snow_host/action_binding_validation.json)
+records 98 comparisons against the original manager, bank and compact-map
+instructions. Only the thread-ID provider was substituted. Fixtures cover each
+of six binding positions, null and missing values, stop flags and fallback
+selection. The original reader-admission path executes and releases its reader
+count. Instances are synthetic; radix encodings are validated separately by the
+map studies above. Public tests cover selected sample and callback identity,
+precedence, writer refusal, unsupported maps, failure at each read and changing
+payloads between passes.
+
+Next: use a fresh live manager identity to observe concrete action types and
+samples alongside motion ingestion. These offline results do not establish live
+ownership, reset ordering or the ingestion job's position among substeps.

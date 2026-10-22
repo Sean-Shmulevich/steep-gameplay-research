@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Manager-to-action observation now joins selected-bank precedence with the full
+action-map reader and returns concrete action/table/callback identities plus
+raw sample bytes. Two bounded traversal receipts must match; busy, unsupported,
+invalid, unstable and limit outcomes remain explicit. All 98 integrated original-
+instruction comparisons pass with synthetic instances. Live ownership and
+ingestion/reset ordering remain open. See
+[manager observer](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#manager-to-action-observer).
+
 Action observer now reuses the existing registry packed/bitmap leaf decoder.
 Optional slot-address identity mapping preserves old decoder callers. All 3,501
 original leaf fixtures match exact action value slots, including 253 branch joins;

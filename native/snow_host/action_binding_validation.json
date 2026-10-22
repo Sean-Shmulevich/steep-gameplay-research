@@ -1,0 +1,11 @@
+{
+  "evidence": "Complete original manager/bank/compact-map lookup versus bounded observer; only thread ID substituted",
+  "cases": 98,
+  "passed": true,
+  "game_process": false,
+  "limits": [
+    "Synthetic manager and action instances",
+    "No concurrent writer or live ownership proof",
+    "Radix forms validated separately; integrated cases use compact maps"
+  ]
+}
