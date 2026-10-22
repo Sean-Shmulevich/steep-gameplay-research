@@ -419,3 +419,34 @@ reentrant worlds remain outside the checked cases.
 This is the next attribution extension to implement and test before another live
 capture. The existing live receipt contains no such saved-register reads and
 must continue to report direct native substep indexing unavailable.
+
+
+## Bounded batch-frame reader
+
+[snow_batch_frame](../../native/snow_host/snow_batch_frame.h) implements the saved
+frame observation as a separate optional reader. The caller must first establish
+the actor/job route with the existing attribution decoder. It then supplies that
+job, the expected outer-loop return address, independently bound world and the
+actual callback's two scalar bit patterns.
+
+The reader checks the expected return before interpreting saved registers. It
+requires the saved timing owner to reference the expected world, ordinal strictly
+less than the unsigned selected count, and exact scalar-bit agreement. Two passes
+compare caller, owner, ordinal, world, count, scalars and outer completion counter.
+It performs at most 16 exact reads and clears its entire output on failure. Zero
+ordinal and zero completion counter are valid observations, not missing sentinels.
+Saved ordinal upper bits cannot be silently truncated into an apparently valid
+32-bit index.
+
+The [native fixture](../../tests/fixtures/snow_batch_frame_fixture.c) checks every
+read failure, all eight fields changing between passes, unexpected caller/world,
+zero count, ordinal bounds, nonzero upper ordinal bits and address overflow.
+It checks both first/second substep positions and zero/maximal outer counters.
+The fixture uses synthetic memory. No process writes, game launch or stack probing
+occurred in these checks. Bracketing still does not pin lifetime or detect ABA.
+
+This reader has not yet been connected to capture records. Its outer completion
+counter must remain separate from the existing request field, and missing frame
+attribution must not invalidate an otherwise valid actor/job observation. The
+next step is additive recording of this optional result with explicit validity,
+followed by a fixture and bounded live capture.
