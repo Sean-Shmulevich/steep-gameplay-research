@@ -222,3 +222,33 @@ This decoder remains separate from the live recorder. Integration must copy the
 result before forwarding, record failed attribution explicitly, and preserve
 exactly-once forwarding regardless of attribution success. The original call
 must never depend on a successful optional observation.
+
+
+## Recorder attribution channel
+
+The recorder core now provides `snow_trace_call_attributed` with an optional
+invocation-local observation callback. It reserves a record first, records its
+entry timestamp, invokes attribution, captures before-state, forwards the original
+call once, then captures after-state. Attribution failure clears its payload and
+continues. The original `snow_trace_call` remains a no-attribution adapter.
+
+Records distinguish `attribution_attempted` and `attribution_valid`. A full or
+closed recorder forwards without running optional attribution. The observation
+callback must be bounded, non-mutating and return normally. Faults, exceptions or
+nonlocal exits are not contained by the core. Existing close/drain, cached-caller
+and lifetime limits still apply.
+
+The native fixture checks success, partial-output failure, full-buffer and
+closed-capture forwarding. Every invocation forwards exactly once in those
+cases; failed output is zero and unattempted records remain explicitly unattempted.
+Existing nesting and concurrent capture tests continue to pass. The experimental
+probe record ABI is now version 3, requiring matching rebuilt headers and binaries.
+The JSON exporter includes the two validity fields and, only for valid attribution,
+private job identity plus record index/count. These raw identities must stay out
+of public aggregate receipts.
+
+The Windows host, probe and optional capture plugin were rebuilt successfully.
+The live dispatcher still uses the original no-attribution entry route. Wiring
+the assembly thunk, verified profile and guarded decoder into that dispatcher
+remains the next integration step; the new fields must not be reported as live
+job observations until that step and an actual capture pass.

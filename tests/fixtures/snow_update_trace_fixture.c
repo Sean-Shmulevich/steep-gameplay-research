@@ -41,7 +41,32 @@ static void *worker(void *unused) {
     for(int i=0;i<200;i++) snow_trace_call(&trace,&actor,0.125f,0.5f);
     assert(actor==200); return NULL;
 }
+static unsigned observations;
+static int observe_entry(void *ctx,SnowEntryAttribution *out) {
+    ++observations;
+    memset(out,0xa5,sizeof *out); /* failure must discard partially written data */
+    return *(int *)ctx;
+}
+static void check_attribution(void) {
+    int actor=0, success=1; SnowEntryAttribution zero={0};
+    mode=0; init(2); observations=0;
+    snow_trace_call_attributed(&trace,&actor,.125f,.5f,observe_entry,&success);
+    success=0;
+    snow_trace_call_attributed(&trace,&actor,.125f,.5f,observe_entry,&success);
+    /* Overflow and closed capture forward without optional observation. */
+    snow_trace_call_attributed(&trace,&actor,.125f,.5f,observe_entry,&success);
+    snow_trace_close(&trace);
+    snow_trace_call_attributed(&trace,&actor,.125f,.5f,observe_entry,&success);
+    assert(snow_trace_drained(&trace) && actor==4 && atomic_load(&calls)==4);
+    assert(observations==2 && atomic_load(&trace.dropped)==1);
+    assert(rows[0].attribution_attempted==1 && rows[0].attribution_valid==1);
+    assert(rows[1].attribution_attempted==1 && rows[1].attribution_valid==0);
+    assert(!memcmp(&rows[1].attribution,&zero,sizeof zero));
+    init(1); snow_trace_call(&trace,&actor,.125f,.5f);snow_trace_close(&trace);
+    assert(!rows[0].attribution_attempted && !rows[0].attribution_valid);
+}
 int main(void) {
+    check_attribution();
     int actor=0;
     assert(!snow_trace_init(NULL,rows,1,original,read_state,clock_tick,thread_id));
     mode=1; init(128);

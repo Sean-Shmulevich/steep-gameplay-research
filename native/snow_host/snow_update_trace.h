@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdatomic.h>
+#include "snow_entry_attribution.h"
 /* Authored capture plumbing. No installation, game offsets, or ownership claims.
  * Initialize once before publishing. Context, records and callbacks must remain
  * alive for ALL callers, including calls after close. Never reopen/reinitialize.
@@ -22,6 +23,8 @@ typedef struct {
     uint64_t entry_tick, exit_tick, thread;
     float elapsed, derivative;
     SnowUpdateSnapshot before, after;
+    uint32_t attribution_attempted, attribution_valid;
+    SnowEntryAttribution attribution;
 } SnowUpdateRecord;
 typedef void (*SnowUpdateOriginal)(void *, float, float);
 typedef void (*SnowUpdateRead)(void *, SnowUpdateSnapshot *);
@@ -38,6 +41,13 @@ typedef struct {
 int snow_trace_init(SnowUpdateTrace *, SnowUpdateRecord *, size_t,
                     SnowUpdateOriginal, SnowUpdateRead, SnowUpdateClock, SnowUpdateClock);
 void snow_trace_call(SnowUpdateTrace *, void *, float, float);
+/* Optional bounded, non-mutating callback runs only for reserved records, before
+ * original. Return 1 for valid attribution; failure clears its output and never
+ * suppresses original. Context is invocation-local; it must not escape the call.
+ * Callback must return normally and must not recursively invoke this trace. */
+typedef int (*SnowUpdateEntryRead)(void *, SnowEntryAttribution *);
+void snow_trace_call_attributed(SnowUpdateTrace *, void *, float, float,
+                                SnowUpdateEntryRead, void *);
 void snow_trace_close(SnowUpdateTrace *);
 /* Records may be read only after this returns true. It does NOT permit unloading
  * the wrapper/context: a cached caller can still enter and forward to original. */

@@ -11,6 +11,10 @@ int snow_trace_init(SnowUpdateTrace *t, SnowUpdateRecord *r, size_t n,
     return 1;
 }
 void snow_trace_call(SnowUpdateTrace *t, void *actor, float elapsed, float derivative) {
+    snow_trace_call_attributed(t,actor,elapsed,derivative,NULL,NULL);
+}
+void snow_trace_call_attributed(SnowUpdateTrace *t,void *actor,float elapsed,float derivative,
+                                SnowUpdateEntryRead observe,void *context) {
     uint_fast64_t g=atomic_load(&t->gate);
     for (;;) {
         if (g & CLOSED) { t->original(actor,elapsed,derivative); return; }
@@ -28,6 +32,11 @@ void snow_trace_call(SnowUpdateTrace *t, void *actor, float elapsed, float deriv
         memset(r,0,sizeof *r);
         r->actor=(uintptr_t)actor; r->elapsed=elapsed; r->derivative=derivative;
         r->thread=t->thread_id(); r->entry_tick=t->clock();
+        if(observe) {
+            r->attribution_attempted=1;
+            r->attribution_valid=observe(context,&r->attribution)==1;
+            if(!r->attribution_valid) memset(&r->attribution,0,sizeof r->attribution);
+        }
         t->read(actor,&r->before);
         t->original(actor,elapsed,derivative);
         t->read(actor,&r->after);

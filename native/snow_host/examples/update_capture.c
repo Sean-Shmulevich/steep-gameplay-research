@@ -53,6 +53,10 @@ static DWORD WINAPI capture(LPVOID ignored) {
               (unsigned long long)i,(unsigned long long)r.actor,(unsigned long long)r.thread,
               (unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick);
             number(f,r.elapsed); fputs(",\"derivative\":",f); number(f,r.derivative);
+            fprintf(f,",\"attribution_attempted\":%u,\"attribution_valid\":%u",
+                    r.attribution_attempted,r.attribution_valid);
+            if(r.attribution_valid) fprintf(f,",\"job\":\"%llx\",\"record_index\":%u,\"initial_count\":%u",
+                    (unsigned long long)r.attribution.job,r.attribution.record_index,r.attribution.initial_count);
             fputs(",\"before\":",f); sample(f,&r.before); fputs(",\"after\":",f); sample(f,&r.after); fputs("}\n",f);
         }
         fclose(f);
@@ -87,7 +91,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     snprintf(output,sizeof output,"%s.trace.jsonl",api->config_path);
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-2";
+    plugin->name="update_capture"; plugin->version="experimental-3";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

@@ -2,6 +2,11 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Recorder attribution channel: optional pre-call observation now preserves
+exactly-once forwarding on failed attribution, overflow and closed capture. Trace
+ABI v3 separates unattempted/invalid attribution; Windows host/probe/capture plugin
+rebuild passed. Live dispatcher wiring remains pending, so this is fixture proof.
+
 Guarded actor-entry decoder: added a bounded read-only check of caller, job,
 callable, actor and claimed record, with bracket rereads and zero output on
 failure. Native fixture covers every read failure, changing fields and range/

@@ -1,7 +1,7 @@
 #ifndef SNOW_UPDATE_PROBE_H
 #define SNOW_UPDATE_PROBE_H
 #include "snow_update_snapshot.h"
-/* Experimental ABI v2: caller must use this exact header/build. Configure alone installs no hook.
+/* Experimental ABI v3: caller must use this exact header/build. Configure alone installs no hook.
  * Configure once BEFORE publishing Dispatch; configuration is never retried.
  * Caller verifies executable identity, original target/signature and counter owners.
  * DLL pins itself. Close stops capture, not forwarding; never free supplied objects
