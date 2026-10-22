@@ -1,0 +1,18 @@
+{
+  "evidence": "joined original normal smoothing block with explicit synthetic numerical services",
+  "game_process": false,
+  "exact_four_lane_cases": 128,
+  "branches": {
+    "control_bypass": 64,
+    "axis_bypass": 24,
+    "angle_bypass": 20,
+    "rotated": 20
+  },
+  "limitations": [
+    "Angle table supplied synthetic constant profiles, not original initialized lookup",
+    "Sine/cosine calls intercepted with host math rounded to float32",
+    "RSQRTPS seed captured from emulator",
+    "Original cooker and lookup execute with reconstructed SSE decay table; floor intercepted",
+    "Candidates and smoothing control supplied; producers excluded"
+  ]
+}

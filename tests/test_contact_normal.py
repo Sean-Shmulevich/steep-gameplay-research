@@ -93,3 +93,32 @@ class ContactNormalTests(unittest.TestCase):
         from reference.contact_normal import rotate_normal
         with self.assertRaises(ValueError):rotate_normal((0,0,0),(0,0,0,1),reciprocal_sqrt=lambda x:1)
         with self.assertRaises(ValueError):rotate_normal((1,0),(0,0,0,1),reciprocal_sqrt=lambda x:1)
+
+    def smoothing_services(self):
+        import math
+        from reference.decay_exp import cooker_table
+        from reference.runtime_curve import evaluate
+        table=cooker_table(vector_path='sse2',scalar_path='sse2')
+        return dict(angle_lookup=lambda x:.6,decay_lookup=lambda x:evaluate(x,**table),
+                    sine=math.sin,cosine=math.cos,reciprocal_sqrt=lambda x:1/math.sqrt(x))
+
+    def test_composed_smoothing_rotates_toward_candidate(self):
+        from reference.contact_normal import smooth_normal
+        result=smooth_normal((0,0,1),(.6,0,.8),1,1/60,**self.smoothing_services())
+        self.assertEqual(result['branch'],'rotated')
+        self.assertGreater(result['normal'][0],0)
+        self.assertLess(result['normal'][0],.6)
+        self.assertEqual(result['gain']['value'],.75)
+
+    def test_composed_bypasses_do_not_call_numerical_services(self):
+        from reference.contact_normal import smooth_normal
+        def forbidden(*args):raise AssertionError('Unexpected callback')
+        services={k:forbidden for k in self.smoothing_services()}
+        for old,new,control,branch in [((0,0,1),(1,0,0),.2,'control_bypass'),
+                                     ((0,0,1),(0,0,-1),1,'axis_bypass')]:
+            result=smooth_normal(old,new,control,.01,**services)
+            self.assertEqual(result['branch'],branch)
+            self.assertEqual(result['normal'],new+(0.,))
+        services['angle_lookup']=lambda x:0
+        result=smooth_normal((0,0,1),(1,0,0),1,.01,**services)
+        self.assertEqual(result['branch'],'angle_bypass')

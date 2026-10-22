@@ -10422,3 +10422,31 @@ reciprocal-square-root seed comes from the emulated instruction. The receipt
 does not cover quaternion generation, angle lookup or scalar trigonometry.
 Those numerical services remain the missing connection between the recovered
 smoothing gain and this recovered rotation block.
+
+
+### Composed normal smoother
+
+`reference.contact_normal.smooth_normal` joins the inspected gates, cross-product
+axis, supplied angle lookup, temporary gain, quaternion construction and final
+rotation. It accepts explicit angle, decay, sine, cosine and reciprocal-square-root
+services. There are no implicit trigonometric or lookup substitutes.
+
+The control <= float32(0.2) branch passes through the selected candidate. So does
+the branch where every axis component is within float32(0.00001), or where the
+angle lookup returns zero. This means exactly antiparallel old/candidate normals
+pass through the candidate rather than rotating smoothly through an invented
+axis. Otherwise compute halfAngle = float32(float32(gain * angle) * 0.5), then
+quaternion XYZ = axis * float32(sine(halfAngle) / axisLength), with W from cosine.
+The separate length guard uses an identity quaternion for length <= 0.00001.
+The recovered rotation block produces the final four-lane normal.
+
+The [joined instruction receipt](../../native/snow_host/normal_smoother_joined_validation.json)
+compares the entire original block in 128 cases: 64 control bypasses, 24 axis
+bypasses, 20 angle bypasses and 20 rotations. All final lanes match exactly.
+The original cooker and decay lookup execute against the previously validated
+reconstructed SSE table. The angle table is synthetic, sine/cosine calls use
+intercepted host-math results rounded to float32, floor is intercepted, and the
+RSQRTPS seed is captured from the emulator. Thus the result validates composition
+under explicit service inputs, not original angle/trigonometric implementations.
+Native gate-state production and fitted candidates remain supplied boundaries.
+The runnable runtime still uses its documented normal approximation.

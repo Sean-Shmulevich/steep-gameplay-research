@@ -4308,3 +4308,9 @@ Normal quaternion application: 514 original-instruction cases match all four
 lanes, including normalization and signed-zero W. The angle lookup and
 trigonometric quaternion construction remain to connect the smoothing gain to
 this block; runtime normal smoothing has not been replaced yet.
+
+Composed normal smoother: all 128 original-block comparisons match using explicit
+synthetic angle tables, intercepted trigonometry and captured RSQRTPS seeds. The
+reference now exposes one callable composition covering gates through rotation.
+Original numerical services, smoothing-control production and fitted candidates
+remain before native-fidelity runtime adoption.

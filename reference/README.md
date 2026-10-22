@@ -53,3 +53,7 @@ for the supplied-normal boundary and runtime substitution.
 normalizes with an explicit reciprocal-square-root seed. See
 [contact normal aggregation](../docs/reconstruction/CENTRAL_IMPULSE.md#contact-normal-aggregation)
 for candidate-selection and smoothing boundaries.
+
+`contact_normal.smooth_normal` composes the recovered smoothing gates, gain and
+rotation with explicit numerical-service callbacks. Its joined receipt labels
+synthetic angle tables, host trigonometry and emulator reciprocal-sqrt seeds.

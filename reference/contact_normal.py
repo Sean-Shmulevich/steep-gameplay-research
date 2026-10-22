@@ -106,3 +106,40 @@ def rotate_normal(previous, quaternion, *, reciprocal_sqrt):
     seed=f32(reciprocal_sqrt(squared))
     scale=f32(f32(f32(3)-f32(f32(seed*squared)*seed))*f32(seed*f32(.5)))
     return tuple(f32(scale*x) for x in rotated)
+
+
+def smooth_normal(previous, candidate, control, elapsed_dt, *, angle_lookup,
+                  decay_lookup, sine, cosine, reciprocal_sqrt):
+    """Composed recovered smoothing block with explicit numerical services.
+
+    Candidate generation and control-state production are caller dependencies.
+    Callback implementations are not implicitly claimed to match native routines.
+    """
+    import math
+    if len(previous)!=3 or len(candidate)!=3:
+        raise ValueError('XYZ previous and candidate normals required')
+    old=tuple(map(f32,previous));new=tuple(map(f32,candidate))
+    output={'normal':new+(0.,),'branch':'control_bypass','gain':None,'quaternion':None}
+    if f32(control)<=f32(.2):return output
+    axis=tuple(f32(f32(old[j]*new[k])-f32(new[j]*old[k]))
+               for j,k in ((1,2),(2,0),(0,1)))
+    output['axis']=axis
+    if all(abs(x)<=f32(.00001) for x in axis):
+        output['branch']='axis_bypass';return output
+    squares=[f32(x*x) for x in axis]
+    length=f32(math.sqrt(f32(squares[0]+f32(squares[1]+squares[2]))))
+    angle=f32(angle_lookup(length));output['angle']=angle
+    if angle==0:
+        output['branch']='angle_bypass';return output
+    gain=smoothing_gain(old[2],new[2],elapsed_dt,decay_lookup=decay_lookup)
+    half=f32(f32(gain['value']*angle)*f32(.5))
+    sin_value=f32(sine(half));cos_value=f32(cosine(half))
+    # Native quaternion construction has a length guard separate from per-lane axis gate.
+    if length<=f32(.00001):
+        quaternion=(0.,0.,0.,1.)
+    else:
+        scale=f32(sin_value/length)
+        quaternion=tuple(f32(scale*x) for x in axis)+(cos_value,)
+    output.update(normal=rotate_normal(old,quaternion,reciprocal_sqrt=reciprocal_sqrt),
+                  branch='rotated',gain=gain,quaternion=quaternion,half_angle=half)
+    return output
