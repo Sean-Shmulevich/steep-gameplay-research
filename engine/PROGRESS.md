@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Standalone JSON response inspector now runs explicit control sequences without
+binary or game access, emitting exact output/state/publication receipts.
+Synthetic fixture exercises buildup, release and reversal; CLI tests check
+schema errors and no partial output. Tuning and clock reads remain mandatory.
+See [response replay contract](../docs/reconstruction/ACTION_RESPONSE_REPLAY.md).
+
 Ramp-observe is wired through launcher and private collector, with fresh action
 provenance and batched chain checks around capture. Maximum-key offline fixture
 passes in 219/224 requests after the initial sequential version exceeded the

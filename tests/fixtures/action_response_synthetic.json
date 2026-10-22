@@ -1,0 +1,111 @@
+{
+  "schema": "directional-response-v1",
+  "provenance": "Synthetic demonstration, not captured player tuning",
+  "settings": {
+    "duration": 0.2,
+    "axis_mode": 0,
+    "keys": [
+      {
+        "x": 0,
+        "y": 0,
+        "incoming": [
+          0,
+          0
+        ],
+        "outgoing": [
+          0,
+          0.2
+        ],
+        "mode": 2
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "incoming": [
+          1,
+          0.8
+        ],
+        "outgoing": [
+          1,
+          1
+        ],
+        "mode": 0
+      }
+    ],
+    "input_bounds": null,
+    "output_bounds": null
+  },
+  "initial": {
+    "clock": 0,
+    "states": [
+      {
+        "current": 1,
+        "remembered": 1,
+        "timer": 0
+      },
+      {
+        "current": 1,
+        "remembered": 1,
+        "timer": 0
+      }
+    ]
+  },
+  "events": [
+    {
+      "vector": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "start_ticks": 50,
+      "end_ticks": 50,
+      "ramp_enabled": true,
+      "diagonal_enabled": true,
+      "global_gate": true,
+      "configuration_available": true
+    },
+    {
+      "vector": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "start_ticks": 100,
+      "end_ticks": 100,
+      "ramp_enabled": true,
+      "diagonal_enabled": true,
+      "global_gate": true,
+      "configuration_available": true
+    },
+    {
+      "vector": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "start_ticks": 150,
+      "end_ticks": 150,
+      "ramp_enabled": true,
+      "diagonal_enabled": true,
+      "global_gate": true,
+      "configuration_available": true
+    },
+    {
+      "vector": [
+        -1,
+        -1,
+        0,
+        0
+      ],
+      "start_ticks": 200,
+      "end_ticks": 200,
+      "ramp_enabled": true,
+      "diagonal_enabled": true,
+      "global_gate": true,
+      "configuration_available": true
+    }
+  ]
+}
