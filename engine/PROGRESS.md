@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Actor-entry attribution: the selected snow visitor carries its job in RDI and
+its claimed-range pointer slot in RSI at actor entry. Original-instruction checks
+passed 72 visitor cases plus 81 joined range-worker cases. Capture the range base
+immediately because the slot is reused. An ABI-tested entry adapter and outer
+batch invocation correlation remain open; no live probe was changed. See
+[register attribution](../docs/reconstruction/SNOW_BATCH_DISPATCH.md#actor-entry-register-attribution).
+
 Batch identity follow-up: [snow batch preparation](../docs/reconstruction/SNOW_BATCH_DISPATCH.md)
 now has a portable gather/claim-size model, six original-instruction gather cases
 and all 65,536 unsigned-count partition checks. Registration uniqueness is a

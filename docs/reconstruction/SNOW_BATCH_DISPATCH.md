@@ -89,3 +89,60 @@ The next unresolved join is the execution-context job pointer available at the
 actor visitor and its relation to that batch-local job. Once established, the
 existing player callback can be attributed to a batch without inventing a
 substep index from elapsed time or record ordering.
+
+
+## Actor-entry register attribution
+
+A follow-up resolves a more direct local route than the proposed TLS lookup.
+The [worker context contract](WORKER_THREAD_CONTEXT.md) establishes that scheduler
+TLS holds the worker receiver, not a demonstrated current-job field. The selected
+range visitor instead retains the job in a nonvolatile register while calling
+its record dispatcher. The dispatcher tail-jumps to the actor wrapper.
+
+At the original actor entry, before its prologue, this inspected route carries:
+
+| Machine value | Established local role |
+| --- | --- |
+| RDI | Batch job pointer |
+| RSI | Address of the worker's claimed-range base pointer slot |
+| EBX | Reverse index within that claimed range |
+| RCX | Actor pointer |
+| Return address | Instruction after the visitor's callable dispatch |
+
+Consequently the selected record address is:
+
+```text
+range_base = read_pointer(entry.RSI)  # copy now, not after return
+record = range_base + 16 * unsigned(entry.EBX)
+job = entry.RDI
+actor = entry.RCX
+```
+
+The index is local to the claimed range. It is neither a global record index nor
+a substep index. For a separately validated job record-array base, subtracting
+that base and dividing by 16 yields the record index. The range-pointer slot is
+reused after each claim, so deferred reads can identify a later range incorrectly.
+The same applies to reading the record array after the batch returns.
+
+The [instruction receipt](../../native/snow_host/actor_job_register_validation.json)
+checks 72 visitor/dispatcher fixtures with mixed tags and shifted range bases,
+including 72 actor entries. A second set joins the actual range worker, installed
+job table, visitor and tag dispatcher in 81 cases, covering counts zero through
+eight, claim sizes one/two/four and tail thresholds zero/two/five. All 324 actor
+entries identify the expected job and record. The actor body is intercepted with
+normal-return ABI behavior. The joined check is single-threaded and does not run
+the outer scheduler or prove native lifetime protection.
+
+This gives the next recorder a concrete entry observation. It must capture the
+registers before a compiled C prologue can reuse them, then validate the expected
+caller route, job type, readable range slot, record tag and actor identity.
+Simply reading RDI inside the existing C callback is not equivalent. An ABI-tested
+entry adapter is needed; none was installed by this pass. Failure to match this
+route must produce unavailable attribution rather than accepting an arbitrary
+register value as a job.
+
+Job identity at actor entry is now locally established for this route. Mapping
+that job to a fresh batch invocation and outer world invocation remains open.
+The job address can still be reused. Thread migration, helper recursion and
+simultaneously active worlds require explicit invocation identities in the
+recorder. No original TLS current-job API or global exclusion guarantee follows.

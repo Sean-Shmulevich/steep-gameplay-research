@@ -1,0 +1,22 @@
+{
+  "evidence": "original_visitor_and_dispatcher_instruction_emulation",
+  "visitor_cases": 72,
+  "joined_worker_cases": 81,
+  "joined_worker_actor_entries": 324,
+  "actor_entries_checked": 72,
+  "passed": true,
+  "game_process": false,
+  "visitor_sha256": "1d17c6eb398ed9246e88469105d63f46314a4b4291f421cfec487775b330cacc",
+  "entry_register_roles": {
+    "RDI": "batch job",
+    "RSI": "address of claimed-range base pointer",
+    "EBX": "reverse index within claimed range",
+    "RCX": "actor"
+  },
+  "limits": [
+    "Observed at original actor entry before its prologue, not inside compiled C callback.",
+    "Actor body intercepted with ABI-preserving normal return.",
+    "No native worker concurrency, job lifetime or live register capture.",
+    "Applies only to this inspected visitor and tag-zero dispatch route."
+  ]
+}
