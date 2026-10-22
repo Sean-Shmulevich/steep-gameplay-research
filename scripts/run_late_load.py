@@ -102,7 +102,7 @@ def main():
     parser.add_argument('--experiment', choices=['probe', 'host'], default='probe')
     parser.add_argument('--load-at', choices=['gameplay', 'startup'], default='gameplay', help='Load host automatically during process startup or after gameplay is verified')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
-    parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
+    parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
     args = parser.parse_args()
     if not 1 <= args.steps <= 60:
         raise RuntimeError('--steps must be 1..60')
@@ -160,6 +160,11 @@ def main():
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-nostdlib', '-Wl,--entry,LoaderEntry', '-o', str(build/'late_probe.dll'), str(src/'late_probe.c'), '-lkernel32'],
                 [cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'load_probe.exe'), str(src/'load_probe.c')],
             ]
+        if args.experiment == 'host' and args.plan == 'update-capture':
+            commands.append([cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host),
+                '-o', str(build/'plugins/update_capture.dll'),
+                *[str(host/name) for name in ('examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c')]])
+            (build/'plugins/update_capture.ini').write_text('[capture]\nenabled=1\nseconds=2\n')
         if args.load_at == 'startup':
             commands.append([cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'startup_launcher.exe'), str(host/'startup_launcher.c'), '-luser32'])
         with (out / 'build.log').open('w') as log:

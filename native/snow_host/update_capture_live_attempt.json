@@ -1,0 +1,25 @@
+{
+  "evidence": "bounded original-game startup attempt",
+  "date": "2026-10-22",
+  "ok": false,
+  "host_version": "0.7.0",
+  "host_loaded_before_visible_window": true,
+  "engine_ready": true,
+  "plugins_active": 2,
+  "capture_plugin_loaded": true,
+  "gameplay_verified": false,
+  "capture_plan_started": false,
+  "slot_install_attempted": false,
+  "physics_records": 0,
+  "failure": "Startup navigation exited 2 after repeated screen-capture/recognition timeouts. Last inspected image showed the safety splash.",
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Plugin loading does not prove slot installation or original-game capture.",
+    "No game crash or cause of the capture timeouts was established.",
+    "Synthetic lifecycle validation remains separate."
+  ]
+}

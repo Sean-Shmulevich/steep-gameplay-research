@@ -66,3 +66,26 @@ requirements. Source availability does not turn it into a finished live hook.
 Game assets, executable payloads, raw memory dumps, recordings, saves and local
 credentials remain excluded. Build-specific offsets and our authored integration
 source are included so another engineer can actually continue the loader work.
+
+## Bounded original-game capture plan
+
+In the configured private research workspace, run:
+
+```sh
+python3 scripts/run_late_load.py --experiment host --load-at startup --plan update-capture
+```
+
+This command builds the opt-in capture plugin, launches with a five-minute
+watchdog, and requires recognized gameplay before requesting pause. The plugin
+acquires the player while held; resume starts a two-second observation interval.
+The controller requires confirmed slot installation, restoration, drain, zero
+dropped records and at least one valid before/after pair. It requests resume on
+exit even if capture fails. Raw traces stay in the private session directory.
+This runner depends on the existing private navigation and runtime helpers; it
+is not the standalone build command above.
+
+The [first live attempt](update_capture_live_attempt.json) loaded the host and
+plugin but failed startup navigation after capture/recognition timeouts. It did
+not reach the capture plan or install the observation slot. Cleanup verified the
+original DLL, restored settings and stopped the bottle. The next live gate is
+still a real paired snow-update capture; no impulse is applied by this plan.

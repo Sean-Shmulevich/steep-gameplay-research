@@ -17,7 +17,7 @@ parser.add_argument('--build', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--port', type=int, default=47017)
 parser.add_argument('--steps', type=int, default=10)
-parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet'], default='demo')
+parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'update-capture'], default='demo')
 parser.add_argument('--game-deadline', type=float)
 parser.add_argument('--preloaded', action='store_true', help='Host was already loaded by the startup launcher')
 args = parser.parse_args()
@@ -229,7 +229,11 @@ try:
     result['hello'] = hello
     result['plugins_before'] = client.call('plugins.list')['plugins']
     assert hello.get('ready', True) and hello['bound'] and hello.get('ordinary'), 'Adapter not ready or engine not ordinary: ' + str(hello.get('bind_error') or hello.get('read_error'))
-    if args.plan == 'acceptance':
+    if args.plan == 'update-capture':
+        from update_capture_probe import capture_update
+        result['update_capture']=capture_update(client,H)
+        assert result['update_capture']['ok'], 'Update capture failed; inspect plugin trace and host log'
+    elif args.plan == 'acceptance':
         from host_acceptance import run_acceptance, prepare_rider
         def preparation_pulse():
             child=hold_forward(i,700)
