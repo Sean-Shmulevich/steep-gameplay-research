@@ -101,7 +101,7 @@
       "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
       "source_sha256": "af6f7f7757d06cecb3f1893f47ed34689b71939f3cbc6c21274b7767136e9864",
       "published": "reference/central_impulse.py",
-      "published_sha256": "86a6d1df8b3a2c0a9b0e353b5a59fb50e525de169e6fcc55dd6fdedeacba8e40",
+      "published_sha256": "30478fe48559352c8ed80ef91e0a0940949e45930bbfdf1871296151f2a91b06",
       "adaptations": [
         "New portable transcription of inspected central-impulse gates and float32 arithmetic; native wrapper and inner executed in 960 synthetic cases.",
         "Finite-input validation and equal-delta-v paired-body impulse calculation are authored API policy and derived mathematics, respectively.",
