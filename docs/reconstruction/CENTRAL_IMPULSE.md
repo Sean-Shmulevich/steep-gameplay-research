@@ -9933,3 +9933,46 @@ arguments all matched elapsed, and none matched consumed. This discriminates
 the clocks rather than relying on the 197 single-call cases where they agree.
 The adjacent magnitude was zero throughout this run. The countdown remained
 negative and continued decreasing; no reset or jump impulse was observed.
+
+## Stateful jump consumer
+
+[reference.snow_jump_step](../../reference/snow_jump_step.py) now supplies the
+stateful local branch described by the existing snow integration guide. Its
+inputs are cached factor, countdown, elapsed interval, air clock, enabled base
+factor, release signal, positive gravity magnitude, combined body mass, configured
+rider mass and rider presence. Compiled-curve gains are explicit inputs evaluated
+at release signal, contact depth and projected speed by the caller.
+
+Operation order follows the inspected instructions:
+
+```text
+countdown = f32(countdown - elapsed_dt)
+if air_time > 0 or base_factor <= 0:
+    cached_factor = 0; countdown = 0; return
+if countdown > 0:
+    retain cached_factor; return
+if release_signal <= 0:
+    cached_factor = 0; return
+factor = f32(f32(coil_gain * base_factor) / gravity)
+factor = f32(depth_gain * factor)
+factor = f32(speed_gain * factor)
+cached_factor = factor
+if rider_present:
+    request rider central impulse (0, 0, f32(factor * configured_rider_mass))
+request main central impulse (0, 0, f32(f32(combined_mass - configured_rider_mass) * factor))
+countdown = f32(0.333)
+```
+
+All operands are rounded to float32 on entry to their modeled arithmetic. The
+coil gain is multiplied by the base factor *before* division by gravity; the
+older mathematical shorthand `base / gravity * coil` can round differently.
+Requests are rider first, then main, each with force=true. Zero gain still
+produces requests and resets the countdown. There is no clamp on the main mass
+difference, and missing rider representation does not remove that subtraction.
+
+The function returns requests; it performs no locking, physics integration or
+backend dispatch. Finite-input validation is our portable policy. Seven synthetic
+boundary tests validate the implementation's contract. The prior 48-case
+original-instruction comparison covers only the countdown subtraction, not this
+whole newly composed branch. Full branch comparison with intercepted curves and
+body calls is the next validation gate. No live jump reset was captured yet.

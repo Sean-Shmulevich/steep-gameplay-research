@@ -1051,6 +1051,17 @@
         "Lazy keyed masked-weight routing with byte pairing, float32 operation order and sentinel cache."
       ],
       "game_payloads_included": false
+    },
+    {
+      "module": "reference.snow_jump_step",
+      "source": "docs/reconstruction/CENTRAL_IMPULSE.md",
+      "source_sha256": "6cf18bf4d54621e4eec91b9c706a68fb80c3da08c18fca1ad20cb628207ecca8",
+      "published": "reference/snow_jump_step.py",
+      "published_sha256": "fe4f154c760e7349ca43047db04ae556e31298a4d4ebdf1732cdc3d6d2bd89c2",
+      "adaptations": [
+        "Caller supplies evaluated compiled-curve gains; returns ordered requests instead of native body calls. Finite validation is authored. Whole-branch original-instruction validation remains pending."
+      ],
+      "game_payloads_included": false
     }
   ]
 }
