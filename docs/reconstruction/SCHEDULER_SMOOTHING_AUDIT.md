@@ -213,3 +213,28 @@ useful probe should qualify the service receiver and associate producer entry/
 return with request and world identities. It should record the timing state
 that the consuming physics batch actually receives. Freezing the entire frame
 or overwriting the ring would bypass unresolved clock and consumer behavior.
+
+
+## Bounded service and world-membership qualification
+
+`engine.timing_service_observation.observe_timing_service` provides the next
+read-only qualification step. The caller supplies build-qualified singleton
+locations, expected service table and dispatch target, and freshly acquired
+world/manager/owner identities. The inspected timing loop obtains its world
+collection through separate registry getters; the service object does not own
+that array directly. The getters read an array pointer at registry +0x72 and
+an unsigned 16-bit count at +0x7c. Each array entry is a signed handle whose
+payload is selected when the status word at +12 is negative.
+
+The reader checks the service table and slot +0x48, finds exactly one matching
+world in at most 32 handles, and validates world -> manager -> timing owner
+and the owner's manager backlink. Two complete samples must agree. It is
+bounded to 84 reads and 2048 bytes and returns no partial binding on refusal.
+Returned addresses are private provenance. The capacity limit and duplicate
+refusal are authored observation safeguards, not recovered engine restrictions.
+
+Synthetic tests exercise the maximum list, empty list, every short-read point,
+service/dispatch/owner changes, invalid handle status, duplicate membership,
+and a receiver replacement between samples. The reader has not yet run live.
+Even a qualified result would establish observed dispatch configuration and
+membership, not that the virtual call executed, atomicity, or pinned lifetimes.

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added bounded timing-service/world-membership reader: validates dispatch slot,
+separate registry, signed world handles, and manager/owner links with two equal
+samples. Four synthetic tests pass, including every short-read point and maximum
+32-handle list. No live qualification yet. Next: combine it with the held timing
+sampler before adding a producer-boundary probe.
+
+
 Reconciled held timing with earlier frame-graph research: BeginEngineFrame
 prepares timing upstream of CheckEngineStop. Rechecked service call and world
 iteration, corrected stale 1-2 substep expectation and universal seven-count
