@@ -325,6 +325,66 @@ label does not establish its complete predecessor chain. The next target is
 this job owner's graph registration and category-job completion/reset path,
 joined through the concrete service table to the outer world AI stage.
 
+## Callback count is unclaimed work, not completion
+
+The category-job table's slot `0x40` selects `0x65b050`. That method atomically
+claims records by reducing `job+0x1a0` before invoking worker slot `0x80`.
+This supplies the missing local explanation for why the gather routine's
+append count can return to zero without clearing the retained backing array.
+It is a remaining-work counter, not an immutable list length or completion
+counter.
+
+For the inspected nonnegative counts, positive chunk size and nonoverflowing
+threshold arithmetic, the claim rule is:
+
+```text
+remaining = job.remaining
+repeat:
+    if remaining > job.tail_threshold:
+        next = max(job.tail_threshold, remaining - job.chunk_size)
+    elif remaining > 0:
+        next = remaining - 1
+    else:
+        return no_claim
+    observed = compare_exchange(job.remaining, remaining, next)
+    if observed == remaining:
+        return records[next:remaining]
+    remaining = observed
+```
+
+The original instructions use signed 32-bit comparisons and arithmetic. The
+pseudocode's domain avoids overflow; it is not a replacement for those rules
+on malformed configuration. Each successful claim names a suffix of the
+remaining prefix. The worker visits that supplied range in descending order.
+
+The method calls an optional pre-hook once before its first range. It attempts
+further claims while the inspected global generation value remains unchanged
+and its optional yield gate does not request an exit. It calls its optional
+post-hook after this processing. The configured category hooks set and clear
+a thread-local world context; they are not the record-count reset mechanism.
+An early exit can leave unclaimed work. A successful last claim can make the
+count zero while its callback body is still running. Scheduler execution and
+completion accounting remain necessary before reusing the job's storage.
+
+[Drain validation](../../native/snow_host/action_refresh_drain_validation.json)
+extends the earlier gather/worker test through the original complete claim
+method. All 294 combinations pass: two categories for each of 49 count pairs,
+with chunk sizes 1, 2 and 6 and tail threshold 1. Each drain checks callback
+order and remaining count, then invokes the drained method again and confirms
+that retained records are not executed. Activation, clock and final callback
+substitutions remain explicit. This test is single-threaded, uses empty
+pre/post hooks and a stable generation, and does not exercise CAS contention,
+early yield or completion barriers.
+
+The pair setup helper `0x699140`, called with category 4 and setup job
+`job_owner+0x2a60`, registers setup -> category 4. Its call into `0x643f90`
+registers category 4 -> category 5. The supplied terminal is null on this
+setup call. Separately, service slot `0x50`, method `0x675660`, links an
+external predecessor to that setup job and returns category 5 at
+`job_owner+0x8f0`. These are inspected registration relations. The caller of
+that service method must still be joined before claiming a complete outer
+poll-to-refresh dependency chain.
+
 ## Next capture contract
 
 Once live access is available, extend the existing request/substep recorder

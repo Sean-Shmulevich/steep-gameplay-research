@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated the category callback job's complete claim/drain method in 294 cases,
+plus empty re-entry. The gather count is unclaimed work: atomic claims reduce
+it before callbacks run. Zero is therefore not a completion barrier. Static
+pair setup links setup -> category 4 -> category 5; the outer service caller
+and completion/reuse proof remain open.
+See [claim semantics](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#callback-count-is-unclaimed-work-not-completion).
+
 Connected category-4 action-refresh storage to SetupUpdateAIManagersBeforeAI
 and the constructor-backed callback worker. The original gather, worker and
 invoker passed 49 composed cases with explicit activation/clock/final-callback
