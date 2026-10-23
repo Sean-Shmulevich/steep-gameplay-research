@@ -1,0 +1,20 @@
+{
+  "kind": "startup_host_failure_injection",
+  "date": "2026-10-23",
+  "method": "a local listener held the host command port before launch, accepting connections without replying",
+  "command": "run_late_load.py --experiment host --load-at startup --navigator native-intro --intro-key escape --plan demo",
+  "host_log": "listen on the command port failed: 10048 (address in use)",
+  "bootstrap": "host DLL loaded before any visible window (host_started ok)",
+  "startup_probe": "Host command service did not answer during startup (75 s limit)",
+  "runner": {
+    "ok": false,
+    "error": "stage failed; no gameplay inputs beyond startup navigation, no host plan"
+  },
+  "navigator_native_samples": "timed out against the held port and kept waiting (bounded)",
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true,
+    "cleanup_errors": null
+  }
+}

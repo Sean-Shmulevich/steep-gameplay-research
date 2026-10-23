@@ -135,6 +135,14 @@ offline notice and the map key. In the first run one press landed on the loading
 screen, which was harmless. Intro presses now stop as soon as loading text
 appears, and the second run confirmed that.
 
+## Startup failure is bounded, 2026-10-23 ([receipt](startup_host_failure_injection.json))
+
+To force a host failure, a local listener held the command port before launch.
+The host loaded but could not listen (address in use), and the startup probe gave
+up after its 75 s limit. The runner then failed the session and cleaned up:
+settings restored, bottle stopped and original DLL verified. Two earlier
+navigation failures also shut down cleanly.
+
 ## Open
 
 - Reliability: five full passes (two with Escape), one gate failure and one

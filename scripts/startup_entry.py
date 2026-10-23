@@ -185,7 +185,7 @@ def spawn_matches(position, expected, tolerance):
 
 
 def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, max_frames=200,
-             expect_spawn=None, spawn_tolerance=0.01):
+             expect_spawn=None, spawn_tolerance=0.01, stop_at=None):
     policy = policy or Policy()
     start = clock(); deadline = start + budget
     result = {'gameplay_hud_observed': False, 'gameplay_native_verified': False, 'gameplay_inputs_sent': False,
@@ -209,7 +209,10 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
         # The player cannot exist before the title; skip refused reads until a menu transition.
         native = game.native(want_player=bool(policy.inputs))
         t = round(clock() - start, 1)
-        action, detail = policy.step(state, native, clock())
+        if stop_at is not None and state == stop_at:
+            action, detail = 'stopped', None  # leave this screen to the caller, no input
+        else:
+            action, detail = policy.step(state, native, clock())
         row = {'frame': i, 't': t, 'state': state, 'native': native, 'action': action}
         result['screens'].append(row)
         print(json.dumps({**row, 'text': text[:120]}), flush=True)
@@ -224,6 +227,9 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
                 if not result['spawn_matches_expected']:
                     result['outcome'] = 'entered_unexpected_spawn'
             print('GAMEPLAY_HUD_OBSERVED', flush=True)
+            break
+        if action == 'stopped':
+            result['outcome'] = 'stopped_at_' + state
             break
         if action == 'abort':
             result['outcome'] = 'abort: ' + detail
@@ -249,6 +255,7 @@ def main(argv=None):
     p.add_argument('--port', type=int, default=47017)
     p.add_argument('--expect-spawn', help='x,y,z the idle player must occupy at entry (fails otherwise)')
     p.add_argument('--spawn-tolerance', type=float, default=0.01)
+    p.add_argument('--stop-at', choices=['map'], help='Stop without input when this screen is recognized')
     p.add_argument('--intro-key', choices=sorted(INTRO_KEYS), help='Experiment: press this key during pre-title videos/notices')
     a = p.parse_args(argv)
     if not 30 <= a.budget <= 210:
@@ -261,9 +268,9 @@ def main(argv=None):
         if len(expect) != 3:
             p.error('--expect-spawn needs x,y,z')
     result = navigate(game, a.budget, policy=Policy(intro_key=INTRO_KEYS.get(a.intro_key)),
-                      expect_spawn=expect, spawn_tolerance=a.spawn_tolerance)
+                      expect_spawn=expect, spawn_tolerance=a.spawn_tolerance, stop_at=a.stop_at)
     (out / 'navigation-result.json').write_text(json.dumps(result, indent=2) + '\n')
-    return 0 if result['outcome'] == 'entered' else 2
+    return 0 if result['outcome'] in ('entered', 'stopped_at_' + str(a.stop_at)) else 2
 
 
 if __name__ == '__main__':

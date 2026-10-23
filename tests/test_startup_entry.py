@@ -180,6 +180,13 @@ class NavigateTests(unittest.TestCase):
         moved = se.navigate(game, 60, clock=clock, sleep=clock.sleep, expect_spawn=[1.5, 2.0, 3.0])
         self.assertEqual(moved['outcome'], 'entered_unexpected_spawn')
 
+    def test_stop_at_map_sends_nothing_there(self):
+        frames = [('title', None), ('offline_notice', ACQUIRED), ('map', ACQUIRED)]
+        game = FakeGame(frames); clock = Clock()
+        result = se.navigate(game, 200, clock=clock, sleep=clock.sleep, stop_at='map')
+        self.assertEqual(result['outcome'], 'stopped_at_map')
+        self.assertEqual([s for _, s in game.sent], [28, 28])
+
     def test_spawn_match_rejects_missing_position(self):
         self.assertFalse(se.spawn_matches(None, [0, 0, 0], 1))
         self.assertFalse(se.spawn_matches([0, 0], [0, 0, 0], 1))
