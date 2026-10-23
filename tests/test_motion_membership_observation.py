@@ -156,6 +156,27 @@ class MotionMembershipObservationTests(unittest.TestCase):
                           row['unclaimed_prefix_indices']), (0x1e7a350, 0x564ee0, [1], []))
         self.assertEqual(r['receivers'][0]['unclaimed_prefix_indices'], [0])
 
+    def test_animation_event_batch_uses_its_own_thunk_and_slot(self):
+        q = lambda v: struct.pack('<Q', v)
+        self.mem[self.graph + 0x43d8] = q(self.base + 0x1ec7f38)
+        self.mem[self.graph + 0x4598] = q(self.base + 0x732320)
+        self.mem[self.graph + 0x4570] = self.mem[self.graph + 0x4c70]
+        self.mem[self.world + 0x570] = self.mem[self.world + 0x730]
+        self.mem[self.ptable + 0x278] = q(self.base + 0x38a590)
+        self.mem[self.otable + 0x278] = q(self.base + 0x123456)
+        def capture():
+            return capture_motion_membership(self.reader, self.entity, self.world,
+                self.base, [(0x90000, b'identity')], job=0x43d8, entry=0x570)
+        r = capture()
+        self.assertEqual((r['batch'], r['registry_entry'], r['dispatch_slot']),
+                         ('DispatchAnimEvents', 17, 0x278))
+        self.assertEqual(r['entity_motion_method_rva'], 0x38a590)
+        self.assertEqual(r['receivers'][0]['motion_method_rva'], 0x123456)
+        self.assertFalse(r['callback_execution_established'])
+        self.mem[self.graph + 0x4598] = q(self.base + 0x8b9750)
+        with self.assertRaisesRegex(ValueError, 'callback mismatch'):
+            capture()
+
     def test_registry_scan_reports_owned_components(self):
         q = lambda v: struct.pack('<Q', v)
         comp, ctable = 0x780000, self.base + 0x1f20000

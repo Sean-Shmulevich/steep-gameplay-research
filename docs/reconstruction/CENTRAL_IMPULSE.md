@@ -968,6 +968,55 @@ are not evidence of shared behavior. The valid local wrapper reconstruction
 remains intact; this failed candidate job join does not invalidate its formulas
 or qualify listener synchronization.
 
+### Animation-event batch discovered through leaf dispatch thunks
+
+The earlier relative-call/exception-function scan omitted tiny leaf thunks that
+have no exception-table function entry. A raw instruction-pattern search followed
+by disassembly found two relevant `mov rax,[rcx]; jmp [rax+0x278]` thunks:
+
+- `0x141371bd8`, the existing physics-state after-simulation range callback.
+- `0x140732320`, registered for the action graph's animation-event range job.
+
+A [live check](../../native/snow_host/markup_after_sim_membership_validation.json)
+of the first route finds zero receivers in world+0x7f0 and one in world+0x8b0.
+The known component appears in neither list nor the one-entry work array at
+physics-state+0xc00. Job identity, roots and source/storage guards pass. This
+rejects that batch as demonstrated membership for this component in this session.
+The correctly typed component flags were byte14c=0, byte14d=1, byte158=16, and
+word8 bit26 set, selecting the direct local update route when invoked. These
+flags do not prove invocation. Cleanup restored saves/settings/original DLL and
+stopped the bottle; no movement input or listener mutation occurred.
+
+The second thunk has a more specific static registration:
+
+| Field | Inspected value |
+| --- | --- |
+| Job in world action graph | graph+0x43d8 |
+| Job name | DispatchAnimEvents |
+| Label | IAnimationComponent::DispatchAnimEvents |
+| Gathered storage | graph+0x4570, job+0x198 |
+| Callback | graph+0x4598, job+0x1c0 -> thunk RVA 0x732320 |
+| Source | world+0x570, registry entry 17 |
+| Gather call | 0x1408be169..0x1408be17d, append argument zero |
+
+Setup at `0x140907fdb` stores the thunk and the nearby name/label strings.
+The gather path passes world+0x570 and graph+0x4570 to `0x1408a6440`.
+This is still a candidate; no live source/receiver join for this batch has yet
+been performed.
+
+The public [`capture_motion_membership`](../../engine/motion_membership_observation.py)
+now accepts `job=0x43d8, entry=0x570`. It requires this batch's specific thunk and
+reads receiver slot 0x278, rather than reusing the motion batches' slot 0x270.
+Returned `dispatch_slot` and `callback_rva` make that distinction explicit. The
+historical `motion_method_rva` field names carry the selected dispatch method,
+not an assertion that every method performs motion. Fourteen portable tests pass,
+including animation-slot resolution and rejecting the wrong batch thunk.
+
+Next live check should use this bounded reader with fresh component/entity/world
+identity guards and compare the known component against the source and storage.
+If present, observe actual batch execution before treating registration or
+cleanup as safe at that phase. A batch name alone is not a synchronization proof.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and

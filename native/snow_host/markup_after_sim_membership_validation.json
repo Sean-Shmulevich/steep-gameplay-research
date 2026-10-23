@@ -1,0 +1,52 @@
+{
+  "evidence": "Live exact-read membership check of Physic::AfterPhysicSimulationUpdate for the independently acquired component",
+  "observation_ok": true,
+  "component_in_sources": false,
+  "component_in_work_array": false,
+  "job_offset_in_physics_state": "0xa68",
+  "callback_rva": "0x1371bd8",
+  "result": {
+    "job_name": "Physic::AfterPhysicSimulationUpdate",
+    "lists": [
+      {
+        "offset": "0x7f0",
+        "count": 0,
+        "known_component_indexes": []
+      },
+      {
+        "offset": "0x8b0",
+        "count": 1,
+        "known_component_indexes": []
+      }
+    ],
+    "work_entries_inferred_from_source_counts": 1,
+    "work_capacity": 1,
+    "remaining_at_read": 0,
+    "known_component_work_indexes": [],
+    "flags": {
+      "word8": 201482132,
+      "byte14c": 0,
+      "byte14d": 1,
+      "byte158": 16
+    },
+    "guards_stable": true,
+    "read_calls": 22
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_hashes": {
+    "route-result.json": "c359e198bacbca0077904e94b09d084417369d843374f0bc2ae4edf23b7e5eac",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794"
+  },
+  "limitations": [
+    "No callback execution or listener mutation. Source-derived work length is an inference checked against capacity.",
+    "Flags are for the known component and select the direct local route, but do not show when it executes.",
+    "Endpoint guards do not establish atomicity, lifetime or absence from other batches."
+  ]
+}

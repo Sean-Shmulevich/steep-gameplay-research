@@ -22,6 +22,7 @@ IMAGE_SPAN = 0x3600000    # receiver tables outside [base, base+span) are not fo
 
 
 BATCHES = {
+    'DispatchAnimEvents': (0x43d8, 0x570),  # entry 17, gather 0x8be169
     # name: (job base in the action graph, world registry entry header offset)
     'Physic::PreBeforeSimulation': (JOB, SOURCE),      # entry 24, gather 0x8be137
     'Ai::UpdateAIPreUpdate': (0x1ae0, 0x270),          # entry 5, builder 0x9119c0
@@ -37,7 +38,10 @@ def capture_motion_membership(readv, entity, world, image_base, guards, job=JOB,
     `job` is the batch job base in the action graph (storage at +0x198, callback
     at +0x1c0); `entry` is its world registry entry header. Reports, per source
     receiver, whether it is exactly the supplied entity and which image
-    table/slot-0x270 method it carries. Destination entries are compared as
+    table/dispatch method it carries. DispatchAnimEvents uses slot 0x278;
+    other supported batches use 0x270. Historical motion_method_rva fields
+    describe the selected dispatch_slot, not an assertion of motion semantics.
+    Destination entries are compared as
     values, never dereferenced.
     """
     _address(entity, 0x68)
@@ -47,6 +51,8 @@ def capture_motion_membership(readv, entity, world, image_base, guards, job=JOB,
     if not names:
         raise ValueError('unrecognised motion batch')
     storage_at, callback_at = job + 0x198, job + 0x1c0
+    thunk_rva, dispatch_slot = ((0x732320, 0x278) if names[0] == 'DispatchAnimEvents'
+                                else (THUNK_RVA, MOTION_SLOT))
     guards = list(guards)
     if not 1 <= len(guards) <= 30:
         raise ValueError('provide 1..30 external identity guards')
@@ -89,7 +95,7 @@ def capture_motion_membership(readv, entity, world, image_base, guards, job=JOB,
         raise ValueError('graph world backlink mismatch')
     if q(graph + job) != image_base + JOB_TABLE_RVA:
         raise ValueError('motion batch job table mismatch')
-    if q(graph + callback_at) != image_base + THUNK_RVA:
+    if q(graph + callback_at) != image_base + thunk_rva:
         raise ValueError('motion batch callback mismatch')
     source, count, tagged_capacity = struct.unpack('<QiI', retain(world + entry, 16))
     storage, remaining, capacity = struct.unpack('<Qii', retain(graph + storage_at, 16))
@@ -105,7 +111,7 @@ def capture_motion_membership(readv, entity, world, image_base, guards, job=JOB,
         head = retain(address, 24)
         table, owner = struct.unpack_from('<Q', head)[0], struct.unpack_from('<Q', head, 16)[0]
         rva = image_rva(table)
-        method = image_rva(q(table + MOTION_SLOT)) if rva is not None else None
+        method = image_rva(q(table + dispatch_slot)) if rva is not None else None
         return rva, method, owner
 
     entity_table, entity_method, _ = describe(entity)
@@ -123,6 +129,7 @@ def capture_motion_membership(readv, entity, world, image_base, guards, job=JOB,
     actor_rows = [r['source_index'] for r in receivers if r['is_actor']]
     owned_rows = [r['source_index'] for r in receivers if r['owned_by_entity']]
     return dict(schema='motion-membership-observation-v1', batch=names[0],
+                dispatch_slot=dispatch_slot, callback_rva=thunk_rva,
                 registry_entry=(entry - REGISTRY) // 0x40, source_count=count,
                 storage_capacity=capacity, remaining_to_claim=remaining,
                 entity_table_rva=entity_table, entity_motion_method_rva=entity_method,

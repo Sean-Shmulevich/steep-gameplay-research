@@ -6884,3 +6884,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Second live attempt verifies the AfterPhysicPropsUpdate descriptor and cached receiver chain, but receiver identity/type differs from the tracked component. Its slot 0x278 resolves to 0x13c03e0, not the known component route. The proposed direct join is rejected for this session; indirect paths remain unproved.
 - Candidate-layout flag interpretations from that different receiver are rejected. Reader now gates those reads on exact known-component identity. Stable sequential reads do not prove lifetime or execution.
 - Both launchers stopped and restored saves/settings/original DLL. No movement, listener mutation or triggered phase recording. Next work returns to type-qualified callers of the known component update route.
+
+### Leaf thunks identify animation-event batch
+
+- Corrected the search blind spot for tiny thunks without exception entries. The physics-state AfterPhysicSimulationUpdate thunk invokes slot 0x278; a fresh live check excludes the known component from its two source lists and gathered storage. Correctly typed component flags still select its direct local update branch. Cleanup passed.
+- Found another slot-0x278 thunk registered for DispatchAnimEvents, labelled IAnimationComponent::DispatchAnimEvents, at action graph+0x43d8. Gather copies world registry entry 17 (+0x570) into graph+0x4570. This batch is not yet joined live to the component.
+- Extended the public bounded membership reader with the specific animation-event thunk/slot and explicit output metadata. Fourteen tests pass, including wrong-thunk rejection. Next is a live source/storage membership check of this batch, not a speculative hook.
