@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Connected original ready-ring acquisition, consumer, refusal, reset and free-pool
+return in 12 passing cases. Reset clears callback/context without a direct context
+free; skip-path ownership remains external. Recycler reenters the consumer's pool
+lock, producing observed service depth two. Full free-ring cases skip insertion
+but still increment available-total; normal-outstanding uses pre-reset kind.
+Added executable reset/recycling and capacity-pressure example. Native tracking,
+seed cleanup, pending-to-ready production and real concurrency remain open.
+No game launch or exactly-once lifetime claim.
+Full suite passed: 2176 tests, one skipped; example and repository checks passed.
+
+
 Found the real request consumer and connected its callback/context fields to the
 previously decoded cleanup signature. Thirty-six full original-consumer cases
 matched the new model: codes 0/1/2, descriptor refusal, failed materialization,

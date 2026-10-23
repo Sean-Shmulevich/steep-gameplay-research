@@ -1,0 +1,43 @@
+{
+  "evidence": "Connected original ready-ring acquisition, consumer, refusal, reset and recycling with synthetic service adapters",
+  "cases": 12,
+  "all_passed": true,
+  "retirement_lock_peak_depth": 2,
+  "context_cleared_without_context_free_service": true,
+  "full_free_ring_still_increments_available": true,
+  "spans": [
+    {
+      "rva": "0x1199a20",
+      "length": 521,
+      "sha256": "0c09634df913796bad85320c828714d228a37b0e4798c55284ea5097bd70d7ae"
+    },
+    {
+      "rva": "0x11afeb0",
+      "length": 197,
+      "sha256": "a545cca3281ebe5ab55bb37459c3d3f471fb901bcc0692ef47a08c7f940a7f24"
+    },
+    {
+      "rva": "0x118fd20",
+      "length": 146,
+      "sha256": "cc4077b531dfee18474e784bc1afc6e816ea55748c8bb39dd699a00d8e6624d1"
+    },
+    {
+      "rva": "0x11ade10",
+      "length": 268,
+      "sha256": "d37f0a942528461016c6c48ae417b30593cbdf4ba278fdae0b28e1f5cf4799d2"
+    },
+    {
+      "rva": "0x11ae9d0",
+      "length": 259,
+      "sha256": "2046d68c52f8c48acb30f005bcec4e7add89994186f2f74d31b6bf224dc67023"
+    }
+  ],
+  "limitations": [
+    "Ready ring begins populated; pending-to-ready production and empty-ring preparation are outside these cases.",
+    "Callback/alternate bodies are intercepted and leave context intact to isolate recycler behavior.",
+    "No tracked-entry removal or seed destruction; associated reference is null.",
+    "Lock services count nested entries but do not establish native recursive-lock correctness.",
+    "Full free ring is a supplied capacity-pressure case, not observed native reachability.",
+    "Context pointer clearing without an observed free in this route is not proof of a leak; external ownership remains unresolved."
+  ]
+}

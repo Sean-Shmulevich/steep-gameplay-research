@@ -3217,3 +3217,64 @@ skips callback cleanup but still recycles and signals. Opaque native services ma
 have other cleanup responsibilities, so this is not a claim of a native leak.
 Exactly-once delivery, context ownership on skip paths, the pending-to-active join,
 and shutdown remain open. No game was launched.
+
+## Connected acquisition, refusal and recycling
+
+The [connected recycling fixture](../../native/snow_host/request_recycling_validation.json)
+now executes ready-ring acquisition, the full consumer, descriptor refusal,
+request reset and free-pool return together. All 12 cases passed across ordinary
+callback, missing callback and descriptor-refusal routes, ordinary/alternate
+kinds, and free-pool capacity pressure. Ready-ring storage begins populated;
+pending-to-ready processing remains separate. Callback bodies deliberately leave
+the context untouched so the recycler's own behavior can be isolated.
+
+Acquisition `0x11afeb0` consumes a nonnull ready-ring entry and installs it at
+manager +0x1c8 before returning. The descriptor-refusal helper `0x118fd20` optionally
+releases the seed, sets byte +0x48, decrements the resource and descriptor holder
+references, and replaces those holders with the default holder. It does not call
+the ordinary callback or directly free its context.
+
+The consumer clears active before calling recycler `0x11ade10` under manager
++0x1d8's lock. The recycler captures the work's original kind and payload, performs
+optional tracking removal, and invokes reset `0x11ae9d0`. Normal reset:
+
+- Clears payload and releases/replaces both holder references.
+- Clears callback, alternate function and context pointers.
+- Clears byte +0x48 and sets mode +0x3c to 1.
+- Clears the associated reference through its helper, then bytes +0x49/+0x4a.
+- Sets kind +0x38 to 1 and destroys/frees a nonnull seed before clearing it.
+
+There is no call to the ordinary callback and no context-specific free in these
+inspected reset instructions. This is not a game-leak finding: callback bodies,
+opaque services and external owners may have cleaned up context elsewhere.
+It does mean context-field zero alone cannot prove cleanup.
+
+The recycler then enters the same manager lock again. The connected fixture sees
+lock-service depth two. It inserts into the free ring only if count is below
+capacity, but increments available-total +0x224 regardless of insertion. If the
+captured pre-reset kind was zero, it decrements normal-outstanding +0x220 even
+though reset has changed the stored kind to 1. The consumer's outer lock is still
+held until the recycler returns; only afterward does the consumer signal its event.
+Lock services are adapters here, so this does not prove native recursion safety.
+
+The full-free-ring cases preserve the existing slot, increase available-total and
+still finish normal retirement. Reachability of that capacity state in the live
+game remains unproved. The counter is therefore not interchangeable with counted
+free-ring entries without further invariants.
+
+`engine.request_recycling` exposes the reset and return rules with explicit
+service adapters. Tracking removal, associated-reference cleanup and seed
+finalization remain supplied; the connected instruction cases use untracked
+records, null associated references and null seeds. Tests of supplied model
+callbacks do not upgrade those omitted native services to recovered behavior.
+
+```sh
+python3 -m engine.examples.request_recycling_probe
+```
+
+A future mod receipt must distinguish callback delivery, context ownership,
+record retirement, and counter updates. Reusing a pooled work-record address as
+a permanent command identity is insufficient; requests need a generation or
+another independently retained identity. Next qualify pending publication and
+ready-ring production, including full-ring accounting and request replacement,
+before declaring this lifecycle reliable for native submissions. No game launched.
