@@ -432,3 +432,106 @@ entry state for this routine. A portable cleanup service must wait for its
 preconditions, allocation/destruction effects and deferred-entry consumer to be
 resolved. Next leads are insertion callers, the record-copy/removal helpers,
 and the virtual operation between cleanup and selection.
+
+
+## Saved-name restoration before fallback
+
+The helper previously left opaque at `0x1174150` searches for the saved record
+name before the fallback selection policy runs. The final-holder helper had
+saved current record+0x0c into link+0x78, then called `0x11b0160(root, 0)` before
+cleanup. That setter checks index<count, writes current index, calls the same
+unresolved post-selection helper, reloads current index and conditionally
+notifies old/new change. It is not merely a reset of unrelated metadata.
+
+After cleanup and the virtual enumeration operation, saved-name restoration is:
+
+```text
+if saved_name[0] == NUL:
+    return false
+count = root.record_count
+for index in [0, count):
+    record = lookup(reload(link.root), index)
+    if equal_u16_through_NUL(saved_name, record.name_at_0c):
+        if low_byte(record.cache.virtual_120()) != 0:
+            set_current_index(reload(link.root), index)
+            return true
+return false
+```
+
+Names match exactly as UTF-16 code units, without case folding, Unicode
+normalization, or interpretation of surrogate pairs. Readiness is called only
+for matching names. Duplicate names continue searching if an earlier matching
+record returns zero in its low byte. Empty saved names bypass all record reads.
+A successful match suppresses the fallback scan at `0x11afd30`. Success means
+the setter was called, not proof that unresolved callbacks retained the chosen
+index. The native search snapshots count but reloads the root per lookup;
+concurrent metadata changes can invalidate that count.
+
+[`preferred_input_cache`](../../engine/action_cache_preference.py) implements
+the stable-input decision with explicit NUL-terminated UTF-16LE byte storage and
+a readiness callback. It returns an index or None and performs no native writes.
+The caller decides when to run it. The API rejects missing terminators instead
+of reading unbounded memory. It ignores bytes after the first aligned NUL and
+preserves lone-surrogate code units.
+
+The [preference receipt](../../native/snow_host/input_cache_preference_validation.json)
+compares 80 original search/lookup/setter executions, supplying readiness returns
+and a no-op post-selection helper. Exact matching, duplicate handling, callback
+order, low-byte booleans and selected-index writes match. The global notification
+holder is null in these cases. Readiness meaning and callback mutation remain
+unvalidated.
+
+## Enumeration callback and record refresh
+
+The callback passed to virtual +0x20 is `0x115a650`. It accepts a descriptor and
+the link context. A mode global gates processing: mode 2 proceeds, mode 1 accepts
+descriptor type byte 0x15/0x18 or a successful helper predicate, and other modes
+skip. It opens a descriptor through virtual +0x18 and skips on signed failure.
+A property query through virtual +0x28 provides a pair of uint16 IDs. Helper
+`0x116ac90` queries another property, formats the literal UTF-16 prefix
+`\\?\hid#vid_%04x&pid_%04x&ig_`, and compares the queried path against that
+prefix. This is concrete device-path evidence; the exact external API binding
+and comparison helper semantics remain to be verified.
+
+When that predicate succeeds, a branch table chooses kinds from the ID pair:
+
+| First ID | Second ID | Kind |
+| --- | --- | --- |
+| 0x28de | any | 7 |
+| 0x045e | 0x02d1 | 6 |
+| 0x045e | 0x028e or 0x02a1 | 2 |
+| 0x046d | 0x1000 | 10 |
+| other matched pairs | other | 8 |
+
+The first-ID 0x28de branch can additionally allocate/append a kind-9 record when
+two external gates succeed. Their meanings remain unresolved. The selected
+kind then goes to `0x11b9320` with descriptor+0x230 as a string source. This helper
+uses cursor object+0x858, updates the current record's kind unless it is zero,
+optionally copies the string to record+0x214 with size argument 0x104, and
+increments the cursor. A zero-kind record returns without advancing the cursor.
+There is no local cursor/count check. The final-holder helper explicitly zeros
+this cursor before enumeration.
+
+When the path predicate fails, the callback constructs another cache object and
+initializes it. On success it derives the appended kind from that object's
++0x820 field: values 1..4 map to 3, value 9 to 4, value 10 to 5, and other values
+retain default kind 1. It appends via `0x118da80`, which updates the counters
+already reconstructed. Thus enumeration can relabel existing records and append
+new records after cleanup. The full ordering invariant is still unproved.
+
+After either route, the callback checks the packed ID pair against two link-local
+collections. Kind 7 skips these duplicate checks. If not filtered out, it appends
+an eight-byte tuple containing the IDs and kind to a third collection and writes
+1 to the global holder's +0xd6 byte. It returns 1 even on skipped/failure paths.
+This write is distinct from the outer holder's initial d5-to-d6 copy; treating d6
+as immutable throughout the update would be incorrect.
+
+Together these paths explain a device-enumeration and preferred-record refresh
+cycle more strongly than a frame-history interpretation. They do not establish
+physical button mappings, exact input ingestion time relative to physics, or
+thread safety. Next: resolve virtual readiness +0x120 for each cache type and
+the external query/post-selection helper, then validate the complete refresh
+cycle when live access is available.
+
+The [refresh evidence receipt](../../native/snow_host/input_cache_refresh_evidence.json)
+records static spans for this callback, path predicate and related helpers.

@@ -1,0 +1,20 @@
+{
+  "evidence": "Original preferred-name search, record lookup and index setter",
+  "cases": 80,
+  "passed": true,
+  "comparison": [
+    "exact name match and callback order",
+    "low-byte boolean return",
+    "selected-index write"
+  ],
+  "substitutions": [
+    "per-record virtual readiness returns supplied uint32",
+    "post-selection helper returns without effects"
+  ],
+  "limits": [
+    "Global notification holder is null",
+    "Stable names, root and count",
+    "No readiness semantics or device name discovery validated"
+  ],
+  "game_process": false
+}

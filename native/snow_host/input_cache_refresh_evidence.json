@@ -1,0 +1,36 @@
+{
+  "status": "statically_inspected",
+  "evidence": "Enumeration callback, path predicate, saved-name restoration and cursor update",
+  "spans": [
+    {
+      "start_rva": "0x115a650",
+      "end_rva_exclusive": "0x115a9fb",
+      "sha256": "df441f7c5219b40566a19f39a3eaa6782160b93cdaa508e98390540cd81fc061"
+    },
+    {
+      "start_rva": "0x116ac90",
+      "end_rva_exclusive": "0x116ad48",
+      "sha256": "b2a2032f3197e6f31701d2984a4473b1dda9315b4a7073bb4087019065ba476d"
+    },
+    {
+      "start_rva": "0x1174150",
+      "end_rva_exclusive": "0x11741f7",
+      "sha256": "2e20c5d6f30002b90a879f41d9fd109b304e78f0e0d7db480cab54175f214a02"
+    },
+    {
+      "start_rva": "0x11b0160",
+      "end_rva_exclusive": "0x11b01b8",
+      "sha256": "d8110a9a855080477fab3496c96fae6b728002855f41431ed32f501c73377886"
+    },
+    {
+      "start_rva": "0x11b9320",
+      "end_rva_exclusive": "0x11b9382",
+      "sha256": "d3b7f82d3b38f93e948da727c2f13d48509b47a14a1ce8ba523a67bfbbd0561a"
+    }
+  ],
+  "limits": [
+    "External API bindings and helper semantics not proven by signatures",
+    "Complete callback not executed",
+    "No game process accessed"
+  ]
+}

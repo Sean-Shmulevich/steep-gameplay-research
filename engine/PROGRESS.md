@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Decoded saved-name restoration before fallback selection and the enumeration
+callback's record update/append routes. Device-path prefix checking ties this
+cache lifecycle to device enumeration. The preference kernel matches 80 original
+search/setter cases with explicit readiness/effect substitutions; physical key
+mapping and ingestion-to-physics timing remain open. See
+[saved-name restoration](../docs/reconstruction/INPUT_UPDATE_ORDER.md#saved-name-restoration-before-fallback).
+
 Resolved cache counter producers: type-based insertion counts and constructor
 seeding of four kind-8 records with IDs 0..3. The former fallback "flag" is a
 count. A portable counter kernel matches 272 original instruction-slice cases;
