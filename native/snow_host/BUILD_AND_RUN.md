@@ -481,3 +481,27 @@ does not guarantee that no earlier constructor invocation occurred.
 The handler/module and main image stay pinned for process lifetime. Use an
 external process watchdog and verify restoration/cleanup. This experimental
 controller is not a general plugin unload or command-manager lifetime API.
+
+### Execution observer control inside the host
+
+`--execution-control-plugin` builds an optional control plugin for either adapter.
+Enable it with `plugins/execution_control.ini`:
+
+```ini
+[control]
+enabled=1
+```
+
+It allocates a dedicated private page, writes an authored function returning 42,
+makes it RX, arms the one-shot observer and calls the function. The handler must
+restore RX before the function returns. Output `.ini.control.json` records the
+steps, exact-entry match, result, code-byte comparison, queried protections and
+protection-API module identity. It contains no game-state capture, but raw API
+addresses should stay private. The page and pinned observer remain until exit.
+No game page is modified and no game routine is called. Use the usual external
+watchdog; this is an instrumentation control, not a modding feature.
+
+The standalone fixture `tests/fixtures/snow_execution_control_fixture.c` loads
+the plugin DLL and accepts DLL path, INI path, and expected initialization result.
+Disabled configuration must decline with no output. Enabled configuration must
+produce a captured exact entry, return 42, preserve bytes and restore RX.

@@ -1389,3 +1389,30 @@ the game process, alongside protection-API provenance. This can distinguish a
 process-wide restriction from a target-page restriction before choosing another
 observation mechanism. Constructor caller, successful return and teardown remain
 open. The earlier singleton publication capture remains valid and independent.
+
+## Authored execution control succeeds inside the game
+
+The [control receipt](../../native/snow_host/execution_control_live_validation.json)
+compares a standalone fixture with one bounded game startup using the same plugin.
+A dedicated private allocation containing an authored return-42 function changed
+from RX to read-only, faulted exactly at its entry, restored RX and returned 42.
+The captured stack window was readable and the authored code bytes were unchanged.
+The game reached scheduler readiness and all cleanup checks passed. No game code
+page was modified or game function invoked by this control.
+
+This rules out a blanket process-wide inability to arm and service this observer.
+It does not yet isolate image mappings from private allocations, because the
+previous failed target was an image page. The next controlled comparison should
+use a separate authored DLL code page inside the game. The standalone and live
+control resolved VirtualProtect to kernel32.dll and NtProtectVirtualMemory to
+ntdll.dll with matching module-relative entry offsets. Module identity alone
+does not establish identical bytes, exclude a downstream wrapper, or locate the
+source of the constructor-page denial.
+
+As an external implementation lead, upstream Wine 10.0 routes a failed host
+protection change through `set_vprot` to `STATUS_ACCESS_DENIED` in `set_protection`.
+The inspected source also converts writable image-page requests to copy-on-write
+flags. See [Wine 10.0 virtual memory implementation](https://github.com/wine-mirror/wine/blob/wine-10.0/dlls/ntdll/unix/virtual.c#L1625-L1660).
+The installed Sikarugir build is patched; this source path is a hypothesis to
+check against that build, not proof of the observed denial's origin. Do not label
+the error as a particular game's protection behavior solely from Win32 error 5.

@@ -6308,3 +6308,15 @@ change or constructor execution was observed. This redirects the next experiment
 to an in-process control allocation/protection-API check rather than another
 identical constructor-page attempt. See the live refusal receipt and lifecycle
 guide; manager ownership and teardown remain unresolved.
+
+### In-game execution control succeeds on authored private code
+
+Added an opt-in control plugin that allocates and observes its own return-42
+function without changing game code. Disabled/null-input fixture checks pass;
+the enabled standalone and live cases both capture the exact entry, restore RX,
+return 42 and preserve instruction bytes. The live game reached scheduler
+readiness and passed cleanup. This excludes a blanket process-wide observer
+restriction. Image-backed control inside the game and the actual constructor
+caller remain unresolved. Protection API module identity is recorded without
+claiming the implementations are unmodified. Upstream Wine's access-denied path
+is documented as an external lead, not attribution to the installed patched build.

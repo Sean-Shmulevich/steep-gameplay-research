@@ -1,0 +1,105 @@
+{
+  "evidence": "Authored private executable-page control under standalone Wine and inside a live game startup",
+  "standalone": {
+    "disabled": "declined and emitted no output",
+    "invalid_null_arguments": "declined",
+    "enabled": {
+      "allocated": 1,
+      "allocation_error": 0,
+      "rx": 1,
+      "rx_error": 0,
+      "flushed": 1,
+      "flush_error": 0,
+      "armed": 1,
+      "arm_stage": 6,
+      "arm_error": 0,
+      "executed": 1,
+      "result": 42,
+      "captured": 1,
+      "exact_entry": 1,
+      "stack_valid": 1,
+      "restore_returned": 1,
+      "bytes_equal": 1,
+      "before_protection": 32,
+      "armed_protection": 2,
+      "final_protection": 32,
+      "memory_type": 131072,
+      "virtual_protect": {
+        "module_ok": 1,
+        "module": "kernel32.dll",
+        "module_offset": "10478",
+        "query": 1,
+        "protection": 32,
+        "type": 16777216
+      },
+      "nt_protect_virtual_memory": {
+        "module_ok": 1,
+        "module": "ntdll.dll",
+        "module_offset": "e7d0",
+        "query": 1,
+        "protection": 32,
+        "type": 16777216
+      }
+    }
+  },
+  "live": {
+    "allocated": 1,
+    "allocation_error": 0,
+    "rx": 1,
+    "rx_error": 0,
+    "flushed": 1,
+    "flush_error": 0,
+    "armed": 1,
+    "arm_stage": 6,
+    "arm_error": 0,
+    "executed": 1,
+    "result": 42,
+    "captured": 1,
+    "exact_entry": 1,
+    "stack_valid": 1,
+    "restore_returned": 1,
+    "bytes_equal": 1,
+    "before_protection": 32,
+    "armed_protection": 2,
+    "final_protection": 32,
+    "memory_type": 131072,
+    "virtual_protect": {
+      "module_ok": 1,
+      "module": "kernel32.dll",
+      "module_offset": "10478",
+      "query": 1,
+      "protection": 32,
+      "type": 16777216
+    },
+    "nt_protect_virtual_memory": {
+      "module_ok": 1,
+      "module": "ntdll.dll",
+      "module_offset": "e7d0",
+      "query": 1,
+      "protection": 32,
+      "type": 16777216
+    }
+  },
+  "cleanup": {
+    "ok": true,
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/examples/execution_control.c": "7368b342657db089371d8db9782374b74fa8342b1289d9bc58f1d12d3315866c",
+    "native/snow_host/snow_first_execute.c": "8b5504f38d7e634f4d5e4b3c77299f7c05abf247743fb8d07ceb0d91f441d01c",
+    "native/snow_host/snow_first_execute.h": "484a3639a7e8084ea827b0335010a77766b67d572c6f4c1ef9442b2fe4433007",
+    "tests/fixtures/snow_execution_control_fixture.c": "f756cf6987cd75909623816733147390f5e6e31a6fcbc5dfe12630de893afb6a",
+    "scripts/build_snow_host.py": "3a0bc0a3c611301213703c6eada7530c171c7ae1813015296f47228a84849e46"
+  },
+  "interpretation": "The private allocation completed RX to READONLY to RX observation inside the game. The prior constructor-page denial is not a blanket prohibition of this mechanism in the game process.",
+  "limitations": [
+    "Only authored private code was executed; no game constructor was observed.",
+    "Live private allocation and prior constructor attempt occurred in separate bounded startups.",
+    "Image-backed controls have not yet run inside the game.",
+    "API module identity and relative address do not establish an unmodified implementation or identify the denial source.",
+    "No allocation/free, callback-lifetime or scheduler guarantee follows from this control."
+  ]
+}
