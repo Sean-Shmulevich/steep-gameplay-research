@@ -1,0 +1,133 @@
+{
+  "evidence": "Original initialization/factory/descriptor-copy instructions with supplied allocation services",
+  "cases": [
+    {
+      "allocated": false,
+      "input_tag": 0,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 0,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 1,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 1,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 2,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 2,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 3,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": false,
+      "input_tag": 3,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 0,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 0,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 1,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 1,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 2,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 2,
+      "auxiliary_nonzero": true,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 3,
+      "auxiliary_nonzero": false,
+      "passed": true
+    },
+    {
+      "allocated": true,
+      "input_tag": 3,
+      "auxiliary_nonzero": true,
+      "passed": true
+    }
+  ],
+  "global_initializer_rva": "0x124a340",
+  "factory_rva": "0x13cdf60",
+  "receiver_global_rva": "0x330fe98",
+  "requested_object_bytes": 8,
+  "vtable_rva": "0x2911780",
+  "callback_descriptor_rva": "0x330fec0",
+  "default_callback_body_is_return_only": true,
+  "spans": [
+    {
+      "rva": "0x124a340",
+      "length": 21,
+      "sha256": "8b99715315b06a4ca263542600d6f133653ac000be99b84292bfd606630bf784"
+    },
+    {
+      "rva": "0x13cdf60",
+      "length": 132,
+      "sha256": "b257e99fa67664873df7bd90c7cf3098b4e1d9a36715087620d0bedc71665164"
+    },
+    {
+      "rva": "0x124d490",
+      "length": 22,
+      "sha256": "fbe39d2a5580bc8af5f3776bdd7250e2d8a6ef5bc8486d7a0e1e35b90df2a829"
+    }
+  ],
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "game_launched": false,
+  "limitations": [
+    "Allocator context/allocator services supplied; no native allocator failure policy or heap ownership established.",
+    "Only this factory, not proof this implementation is the active live receiver.",
+    "Auxiliary descriptor word is copied from supplied preexisting stack content; no zero-initialization claim.",
+    "No link from this eight-byte interface object to allocation or destruction of the separate command manager."
+  ]
+}

@@ -1266,3 +1266,59 @@ in a bounded stack window. Neither wrapper has been established as an allocator,
 a manager constructor caller or a frame in an unwound native call stack. Data
 addresses and stale function values can also appear on a stack. Their runtime
 receiver/descriptor identities are leads for a later focused observation.
+
+
+## Callback candidates resolved to a separate interface factory
+
+Following wrapper A's receiver global found a direct initializer at RVA
+`0x124a340`, calling factory `0x13cdf60` and storing its result at `0x330fe98`.
+The factory requests an eight-byte object, installs table `0x2911780`, and sets
+a default callback descriptor at `0x330fec0`. This object does not match the
+command-manager layout. Its initializer has no local retention check or release
+of an earlier global value.
+
+The [16-case instruction fixture](../../native/snow_host/publication_callback_factory_validation.json)
+runs the initializer, factory and descriptor-copy instructions with supplied
+allocation services. Successful allocation writes the vtable and copies a
+32-byte descriptor. Failed supplied allocation returns/publishes null and leaves
+the descriptor unchanged. These failure cases do not establish the real
+allocator's failure policy.
+
+```text
+object = allocate_eight_byte_object()       // external services not recovered here
+if object != null:
+    object.vtable = interface_table
+    descriptor.body = return_only_callback
+    descriptor.auxiliary = existing_stack_word
+    descriptor.packed_context = existing_stack_tag & 2
+    descriptor.invoker = boolean_argument_adapter
+    copy_32_bytes(global_descriptor, descriptor)
+global_interface = object
+```
+
+The callback body is return-only; its integer return value is unspecified. The
+adapter passes the incoming third argument's low byte as the body's first
+argument. The auxiliary word comes from preexisting stack content in this local
+span, so neither zero initialization nor an owned resource should be inferred.
+Wrapper B invokes this descriptor with false, but later replacement of the
+callback has not been excluded.
+
+The inspected interface table routes wrapper A's virtual slot at byte offset
+0x40 through two forwarding jumps to a callback-array traversal at `0x18b76d0`.
+That traversal calls each registered function with argument zero and rereads the
+count after each call. A nearby routine at `0x18b7630` uses the same array around
+a supplied entry function: if its cached notification flag is set, it calls the
+callbacks with 1 before the entry and 3 afterward. These are static control-flow
+facts; semantic names such as thread attach/detach or shutdown are not established.
+No evidence currently ties any member of that callback array to manager teardown.
+
+This resolves a misleading lead: function-looking words on the publication stack
+can refer to interface/notification machinery, not the manager's allocator.
+Do not use this eight-byte object's factory or its receiver global as a lifetime
+pin for the separate command manager.
+
+The next predicted dispatch handler begins by decoding an eight-byte stream
+operand and pushing it onto the operand stack. That is not itself a native
+allocator call, and forward decoding does not reconstruct the missing history.
+A focused observation of the already identified command-manager constructor's
+entry/return is the more direct next lead for its caller and allocation context.

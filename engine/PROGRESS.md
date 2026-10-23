@@ -6275,3 +6275,13 @@ the two store operands matched the singleton destination and published pointer.
 Captured stream bytes agree with the static image and support the decoded next
 handler calculation, still without proving successor execution. Callback-wrapper
 values on the stack remain candidates, not an allocation call stack. Cleanup passed.
+
+
+### Publication-stack callback candidates qualified
+
+Resolved one callback candidate to a separate eight-byte interface factory and
+its no-op default descriptor. Sixteen original-instruction cases validate the
+local success/failure branches with supplied allocators. Its notification-array
+path is not evidence of command-manager allocation or teardown. This prevents
+using a similarly situated global as a false lifetime pin and redirects the
+ownership investigation toward the known manager constructor's caller.
