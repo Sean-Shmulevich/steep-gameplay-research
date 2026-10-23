@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added executable command-counter interleaving harness; all 16 original-prefix
+cases agree and four boundary tests pass. Synthetic submissions distinguish
+before/after exchange without losing deferred work. Exact manager constructor
+and participant registration remain unresolved: static singleton is null and
+offset matches did not establish identity. Next qualify live manager and concrete
+participant tables; avoid guessing a constructor from unrelated layouts.
+
+
 Command participant preparation now verified: two separate wrapping atomic
 counter transfers precede slot +8 callbacks on the same list whose slot 0 is
 used by execution. Sixteen original-instruction cases pass for empty/reordered/

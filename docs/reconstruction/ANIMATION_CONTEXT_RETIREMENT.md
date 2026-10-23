@@ -2035,3 +2035,22 @@ writer of this specific list; same-offset fields on unrelated objects were not
 accepted as evidence. Next follow construction/destruction of this exact manager
 and identify concrete participant tables implementing both slots. Avoid reusing
 unrelated array append helpers until their receiver identity is established.
+
+
+### Executable counter-transfer interleavings
+
+`engine.command_counter_transfer.replay_counter_transfers` exposes each deferred
+exchange and active add as a separate event. Its sequential transfer results
+match all 16 original-prefix cases above. The harness also accepts explicitly
+synthetic submission increments to test ordering: an increment before exchange
+is included in that transfer, while one after exchange remains deferred even
+when the captured old value is subsequently added to active. Pair A can finish
+while pair B is not yet transferred. Arithmetic wraps at 32 bits.
+
+The harness is not a concurrent implementation or a recovered submission API.
+It accepts caller-selected event order, does not invoke callbacks, and exposes
+pending transfers and every intermediate state. The native producer, exact
+manager construction, participant registration/removal and lifetime guarantees
+remain unresolved. The singleton in the inspected image is null; matching raw
+field offsets in other types did not establish its constructor. A fresh live
+manager/participant-table observation is the next useful qualification step.

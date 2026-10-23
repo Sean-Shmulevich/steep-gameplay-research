@@ -2,6 +2,7 @@
   "evidence": "Original instruction prefix emulated with synthetic memory and intercepted callback bodies",
   "cases": 16,
   "all_passed": true,
+  "independent_counter_model_compared": true,
   "callback_slot": 8,
   "transfers_before_callbacks": true,
   "duplicate_entries_preserved": true,
