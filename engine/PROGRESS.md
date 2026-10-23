@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Found paired-bank publication in the ownership updater: held input preserves
+a nonnull current owner against a null request; otherwise previous=current and
+current=requested. Rising edges capture current before promotion. Added the
+seven-slot descriptor transition; 512 original slices match every record byte
+without substituted calls. Family joins and frame/substep cadence remain open.
+See [ownership publication](../docs/reconstruction/INPUT_UPDATE_ORDER.md#ownership-publication-preserves-held-owners).
+
 Correction: the recent vector-selection/ownership passes repeat rules already
 in vector_action_source.py and its older 4,320-case receipt. Their extra checks
 do not represent new scheduler coverage. Consolidated convenience APIs onto

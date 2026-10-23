@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "cases": 512,
+  "scope": "Complete seven-slot descriptor ownership transition slice; every record byte compared",
+  "substitutions": [],
+  "supplied_inputs": [
+    "Stable synthetic record",
+    "Caller-computed held and rising-edge flags"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x983e09",
+      "end_rva_exclusive": "0x983e48",
+      "sha256": "2f0a67759fb32f7d274149e32bcc73a37e22858ae9d8df5b6039f76ef049737d"
+    }
+  ],
+  "limits": [
+    "Full update caller, key mapping and mask queries not executed",
+    "Descriptor records not yet joined to scalar/vector priority reader addresses",
+    "No native update cadence or concurrency proof"
+  ],
+  "game_process": false
+}

@@ -1467,3 +1467,75 @@ publication from B to A is established here. Next: trace table construction,
 descriptor initialization and writers of the paired banks before assigning
 update-phase semantics. These leads are recorded in the
 [static receipt](../../native/snow_host/input_ownership_writer_leads.json).
+
+## Ownership publication preserves held owners
+
+Update helper 0x983ad0 supplies the missing paired-bank transition for the
+fixed and descriptor-backed records described above. Wrapper 0x69cac0 calls
+0x983ec0 first, then this helper with the global ownership table, then another
+subsystem helper. That is a local call-order observation; the wrapper's place
+in the engine frame and physics substeps is not yet established.
+
+The update obtains a cache count through 0x1162090, then selects caches by
+loop offset through 0x11639a0. For each cache it computes whether any of the
+32 current button bytes is nonzero, subject to the cache-owner mask. Each
+fixed slot at table+0xa0+0xe8*offset+8*i follows this rule:
+
+```text
+if not (any_button_held and current_owner != null and requested_owner == null):
+    previous_owner = current_owner   # current slot - 0x38
+    current_owner = requested_owner  # current slot + 0x38
+```
+
+Requested storage is not cleared. Thus a release that clears only a requested
+entry can leave a current owner in place while a button remains held. This is
+an observed state rule, not evidence of a frame delay or a race.
+
+For each descriptor record, the helper resolves the record's identifier to a
+button index through a lookup. Under the mapped, unmasked path it reads the
+previous/current ordinary button arrays for indices below 32, or the derived
+arrays for indices at least 32. It computes `pressed = !previous && current`
+and separately queries `held = current`, with separate mask observations.
+An unresolved mapping gives false flags. Index validity and lookup semantics
+remain caller dependencies; this pass does not establish arbitrary index safety.
+
+The seven descriptor slots then update four banks:
+
+| Record offset | Meaning in this local transition |
+| --- | --- |
+| +0x08 | Previous owner when promotion occurs |
+| +0x40 | Current owner |
+| +0x78 | Requested owner; unchanged by this transition |
+| +0xb0 | Current owner captured on a rising input edge |
+
+```text
+for i in 0..6:
+    if pressed:
+        press_capture[i] = current[i]
+    if not (held and current[i] != null and requested[i] == null):
+        previous[i] = current[i]
+        current[i] = requested[i]
+```
+
+Press capture happens before promotion, including when held input preserves
+the current owner. On the preservation path, previous storage also remains
+unchanged. The helper additionally records last qualifying pressed/held resource
+IDs in per-offset fields, excluding mapped indices 8 and 9. Their consumers
+are not yet traced, so they are not exposed as semantic actions.
+
+[update_ownership_record](../../engine/action_ownership_transition.py) implements
+the descriptor transition over a detached 0xe8-byte record. The
+[original-instruction receipt](../../native/snow_host/input_ownership_transition_validation.json)
+records 512 passing cases, comparing every record byte across all supplied
+held/pressed combinations and mixed owner identities. No calls were substituted
+inside the executed seven-slot slice. Mapping, mask observations and caller
+execution were not included. Unit tests additionally cover release-while-held,
+replacement, and press capture before replacement.
+
+Static initialization leads now identify allocation of a 0xfe60-byte global
+table in 0x671d10, constructor 0x646fe0, and eight descriptor setup calls to
+0x68cb30. Reset 0x68cf50 clears four banks for scalar/vector/fixed families and
+descriptor records. The descriptor-to-scalar/vector address join still needs
+tracing; this update's descriptor behavior must not be silently applied to all
+families. Next: inspect construction and the preceding 0x983ec0 helper to
+establish which banks the priority readers consume.
