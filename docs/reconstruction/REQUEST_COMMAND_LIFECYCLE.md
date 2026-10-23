@@ -2036,8 +2036,8 @@ Four public tests include composition with the existing buffer-disposal module.
 
 This model is serial. Original locked decrements/exchange do not by themselves
 establish safe concurrent acquisition or a native lifetime pin. The supplied
-services are required to return normally without mutating the modeled record or
-holder state. Python exceptions expose partial progress without rollback; native
+services may update holder state and are required to return normally; subsequent
+decrements observe those updates. Python exceptions expose partial progress without rollback; native
 unwinding is not established. No descriptor invoker is called. Neither this helper
 nor its composition locates the manager destructor or authorizes plugin unload.
 
@@ -2047,3 +2047,29 @@ and the [growth boundary](ANIMATION_CONTEXT_RETIREMENT.md#holder-queue-growth-an
 A record reaching its low-24-bit release threshold may therefore queue later work
 rather than complete disposal. The growth model separately reports whether that
 queue insertion actually happened; setting the holder flag is insufficient.
+
+### Runnable record-to-retirement composition
+
+Run `python3 -m engine.examples.command_retirement_probe`. It composes record
+cleanup, deferred-holder release and real reconstructed ring resize policy using
+synthetic storage and supplied external services. The default case starts with
+four holders in a full wrapped queue, preserves their logical order through
+growth, and appends the record's two newly released holders. It reports queue
+order, growth/insertion diagnostics, holder flags and service order. It does not
+execute the deferred consumer or claim disposal completion.
+
+A [combined comparison](../../native/snow_host/command_retirement_composition_validation.json)
+runs the original record helper through original holder release, resize, storage
+release and copy-control instructions without substituting those middle layers.
+Thirty-two cases compare final headers, logical slot order, holder flags, detached
+record fields and leaf-service events. Cases include empty/full/partly occupied
+wrapped queues, aliased holder fields, mode/thread combinations and empty-ring
+allocation failure. Allocator, memory copy, free, locks, associated destructor,
+thread classification and post-unlock service remain supplied. This is a serial
+composition proof, not a live manager ownership or callback-drain guarantee.
+
+The earlier record-service contract was unnecessarily restrictive about holder
+mutation. The release service sets holder flags, and the next decrement must see
+that current state. The model already reads mutable holder objects; its contract
+now explicitly allows those service updates. Native concurrency is still outside
+its scope.

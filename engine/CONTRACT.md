@@ -59,7 +59,7 @@ with detached dictionary references. It nulls the associated reference before it
 release, clears the invoker afterwards, then decrements holders at +0x10 and +8.
 Associated destruction uses old full count ==1; holder release uses new low24 ==0.
 Holder aliases are preserved and decremented twice. Supplied release services
-must preserve record/holder state. No concurrency or native lifetime pin is
+may update holder state; the next decrement observes those updates. No concurrency or native lifetime pin is
 provided; repeated cleanup is not an idempotent operation.
 
 `holder_release_queue.release_holder_to_queue` models serial valid-ring behavior

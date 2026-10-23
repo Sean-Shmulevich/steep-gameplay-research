@@ -6501,3 +6501,12 @@ cases and 100 stopped null-copy boundaries with supplied allocator/memcpy/free.
 Four public tests pass. This narrows prior synthetic growth failure: nonempty
 preserving resize has no null guard before copy; empty resize can return capacity
 zero. Original allocator failure and native crash behavior remain unknown.
+
+### Record-to-retirement composition validated
+
+Added a runnable composition of record cleanup, holder release and ring resizing.
+Thirty-two original-instruction combined cases match state, queue order and leaf
+service events without replacing the middle routines. Three integration tests
+cover wrapped growth, holder aliasing and empty allocation failure. Corrected the
+record-service contract to permit holder flag updates. Deferred consumer, native
+ownership and scheduler-drain proof remain open. No live game launched.

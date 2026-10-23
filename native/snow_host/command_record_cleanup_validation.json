@@ -13,7 +13,7 @@
   "null_associated_and_aliased_holders_covered": true,
   "state_and_service_order_match": true,
   "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
-  "model_sha256": "8a68eb585bf54be08abc6d4a78355a2c18030802f00633906493097e8e28066e",
+  "model_sha256": "827495eee6912720d979ab066b69636cbeaf64a80883d006f6358032e4ccdeb3",
   "span": {
     "rva": "0x64cd40",
     "length": 127,

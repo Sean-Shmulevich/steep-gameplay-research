@@ -1,0 +1,12 @@
+{
+  "evidence": "Original record cleanup, holder route and resize run together; leaf services supplied",
+  "cases": 32,
+  "state_queue_order_and_service_events_match": true,
+  "probe_sha256": "4d060a230649fbaea9bef5ed3c1dc01c2bf3717e4c8ff710670448fa916bd3b1",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "Allocator, memory copy, free, locks, associated destructor, thread classification and post-unlock service supplied.",
+    "No deferred consumer, payload disposal, scheduler drain or native concurrency tested.",
+    "Empty allocation failure only; occupied null-copy boundary separately documented."
+  ]
+}

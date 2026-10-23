@@ -951,3 +951,8 @@ size-based resolver for the allocation policy's `resolve` callback. Callers supp
 the 15 small-context tokens, candidates for sizes 80/96/128, and the unresolved
 virtual alignment query. Its validation receipt compares original instructions
 with the model; supplied tables do not identify native heaps or prove lifetime.
+
+Run `python3 -m engine.examples.command_retirement_probe` for the serial
+record-cleanup-to-deferred-queue composition. Its JSON shows retained queue order,
+new insertion receipts and holder flags. Storage and leaf services are synthetic;
+no payload disposal or scheduler-drain completion is claimed.

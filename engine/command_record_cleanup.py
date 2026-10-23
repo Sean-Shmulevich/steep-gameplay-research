@@ -11,8 +11,7 @@ def cleanup_record(record, *, destroy_associated, release_holder):
 
     record uses associated, invoker, holder_10 and holder_08 keys. Associated
     objects have uint32 count; holders have uint32 status. Native holder pointer
-    fields remain unchanged. Services must return normally and preserve the record
-    and holder state; exceptions expose partial progress without rollback.
+    fields remain unchanged. Services may update holder state and must return normally; exceptions expose partial progress without rollback.
     """
     associated = record['associated']
     record['associated'] = None
