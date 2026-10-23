@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Connected the registered outer route from UpdatePadManager through world AI,
+AI after-update and world AfterUpdate to the known UpdateAction wrapper.
+Validated three consecutive builders in 121 cases and the extended outer
+registration slice in 16 cases, with list/lock operations substituted. Added a
+[consolidated input-to-action route](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md).
+Actual player publication and per-substep consumption remain unresolved.
+
 Identified the post-pad wrapper as per-world UpdateAI. Its installed predicate
 is signed world.field_1080 <= 0. Twelve original assignment/name cases and six
 predicate cases pass without substitutions. Polling is followed by per-world

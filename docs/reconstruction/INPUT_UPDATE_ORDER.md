@@ -1896,3 +1896,11 @@ The outer route is now identified as global AI -> input poll -> per-world AI
 This corrects any interpretation of the immediate post-pad wrapper as the
 player motion or physics stage. The next stage after AI after-update, and the
 later action graph, are the remaining route to trace for input consumption.
+
+
+## Consolidated polling-to-action route
+
+The [input-to-action route](INPUT_TO_ACTION_ROUTE.md) joins the named polling
+task, both AI provider pairs, the three consecutive world-stage builders and
+the previously decoded action wrapper. It records composed builder/outer-edge
+validation and separates structural ordering from live player/substep timing.

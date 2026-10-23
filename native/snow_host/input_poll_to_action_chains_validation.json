@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "cases": 121,
+  "scope": "Three consecutive original per-world builders for AI, AfterUpdate and Action; adapters and wrapper linkers execute",
+  "substitutions": [
+    "Locks return without synchronization",
+    "Outgoing-list clear/append record receivers/edges without container mutation"
+  ],
+  "inputs": [
+    "Zero to four synthetic world handles, unresolved/resolved/nonnegative-state/null combinations",
+    "Inspected ordinary predecessor table; supplied wrapper entry and terminal identities"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x68a798",
+      "end_rva_exclusive": "0x68a8b8",
+      "sha256": "bc3af686dbc39fec8d4c36c9d95a3653cd3f6f27cefc65a980e720a0db937f8b"
+    },
+    {
+      "start_rva": "0x8eb580",
+      "end_rva_exclusive": "0x8eb593",
+      "sha256": "4587195487b0e06b722afb9fce7b5f6bbb5ff7ef860589c0a2b1c94f394b11f2"
+    },
+    {
+      "start_rva": "0x8eb500",
+      "end_rva_exclusive": "0x8eb513",
+      "sha256": "0670e3ac16380f6c8c4e5ec10ba41b8269e82876481addbf6979685335bed384"
+    },
+    {
+      "start_rva": "0x8eb5a0",
+      "end_rva_exclusive": "0x8eb5b3",
+      "sha256": "3e080c5c1f828341e3affbac814ee6fde116ff8b77e3e9df953340e8ad276e3e"
+    },
+    {
+      "start_rva": "0x11e1680",
+      "end_rva_exclusive": "0x11e16eb",
+      "sha256": "fa7aa8ac00c7e804ecc90ccea7f1aa6b62ca3f8c099b44929af247bb810c5db9"
+    }
+  ],
+  "limits": [
+    "Wrapper interior and conditional execution not evaluated",
+    "No player-world attribution or physics timing proof"
+  ],
+  "game_process": false
+}
