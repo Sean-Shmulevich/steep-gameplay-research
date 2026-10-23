@@ -1,0 +1,40 @@
+{
+  "status": "statically_inspected",
+  "evidence": "Cache container index writer and conditional holder caller",
+  "spans": [
+    {
+      "start_rva": "0x116ff00",
+      "end_rva_exclusive": "0x1170031",
+      "sha256": "66450e201fef0a0950d1fbf753d2d68c3628188bf9693a433dc8d3b3cbb33580"
+    },
+    {
+      "start_rva": "0x11afd30",
+      "end_rva_exclusive": "0x11afea4",
+      "sha256": "af91a19c3c5c7dad157e7597c7e3d7eb8219a695ce38c6279249371f9d83b7fa"
+    },
+    {
+      "start_rva": "0x11a8230",
+      "end_rva_exclusive": "0x11a8364",
+      "sha256": "e2c11620ec22a656edda084bd13fb7ccf6d5aa43dac4eb89fe85e5a5c1e47fe4"
+    },
+    {
+      "start_rva": "0x117c440",
+      "end_rva_exclusive": "0x117c45a",
+      "sha256": "71f34ca6515ac93579c7d47525b1268180c9df12f68eeead7edd9899150f010b"
+    }
+  ],
+  "direct_calls": [
+    {
+      "site_rva": "0x1170017",
+      "target_rva": "0x11afd30"
+    }
+  ],
+  "game_process": false,
+  "original_execution_cases": 0,
+  "limits": [
+    "Query return meaning unresolved",
+    "Post-assignment helper effects unresolved",
+    "Scan metadata validity and writer cadence unresolved",
+    "No live game access or payloads included"
+  ]
+}

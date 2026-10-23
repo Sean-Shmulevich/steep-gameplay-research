@@ -217,3 +217,97 @@ selected pointers cause the field exchange already reconstructed. Next:
 identify ring-index/offset writers and determine whether changes denote input
 history, alternate contexts or another mechanism before assigning generation
 semantics.
+
+
+## Cache-index writer and selection policy
+
+Static inspection now connects the final holder helper `0x116ff00` directly to
+index writer `0x11afd30`. This is the same record container used by the cache
+selectors: pointer +0x82c, uint16 count +0x836, stride 0x440, and current index
++0x828. The writer does **not** advance the index by one. It scans a configured
+range and chooses a record according to an external query result.
+
+The following names describe fields, not recovered class or enum names. All
+indices and scan bounds are unsigned 32-bit values; record count is uint16.
+The scan reads record+0x420 as the query argument. Its output buffer is a local
+stack slot whose contents are not consumed by this caller.
+
+```text
+candidate = object.scan_begin_838
+while candidate < object.scan_end_83c:
+    result = unresolved_query(records[candidate].id_420, temporary_output)
+    if result == 0:
+        if candidate < object.record_count_836:
+            select(candidate)
+        return
+    candidate = wrap_u32(candidate + 1)
+
+if object.fallback_flag_840 > 0:
+    candidate = object.scan_end_83c
+    if candidate < object.record_count_836:
+        select(candidate)
+    return
+
+if object.record_count_836 > 0:
+    select(0)
+notify_helper_1174880(global_holder, 1)
+service = helper_1161170(reload_global_holder())
+helper_1174e00(service, 1)
+
+select(candidate):
+    old = object.current_index_828
+    object.current_index_828 = candidate
+    unresolved_helper_117c440()
+    new = object.current_index_828  # reload after unresolved call
+    if old != new and global_holder != null:
+        helper_91f2f0(global_holder + 0x70, old, new)
+```
+
+The fallback flag comparison is unsigned: any nonzero bit pattern takes the
+scan-end fallback. Finding a zero query result outside record count ends the
+routine without trying a later record or fallback. The scan itself has no
+record-count bounds check before dereferencing each record; metadata validity
+must come from elsewhere. The zero fallback still performs its final two
+notifications when count is zero. Other branches do not perform those final
+notifications. `select` calls its unresolved helper even when old and assigned
+indices are equal. The later old/new comparison uses a fresh read, so treating
+that helper as a no-op would discard possible behavior.
+
+This establishes a selection policy, not its semantic purpose. A query return
+of zero is not yet proved to mean available, connected, active, or successful.
+The query target `0x1c34f3c` and post-assignment helper `0x117c440` lead into
+unresolved code paths in the inspected image. They are not replaced with
+invented device behavior. Historical-buffer rotation is unsupported by this
+writer; alternate input contexts or devices remain hypotheses.
+
+### Placement within the final holder helper
+
+`0x116ff00` first calls helper `0x1179350`, obtains the current record through
+`0x119ed40`, and passes record+0x0c to a helper with destination link+0x78 and
+size argument 0x104. It then calls `0x11b0160(root, 0)` and `0x11ada50(root)`,
+clears root+0x858, prepares link-local collections, and invokes virtual +0x20
+on the receiver at link+0. The arguments include callback `0x115a650`, value 4,
+the link, and a final value 1. These operations are not yet decoded as a whole.
+
+Only a nonnegative signed return from that virtual call reaches the collection
+processing and helper `0x1174150(link)`. Only a false low-byte result from this
+last helper reaches `0x11afd30(reload(link+8))`. The outer holder update already
+gates `0x116ff00` on holder+0xd6. Therefore index selection is conditional within
+a conditional holder path, not an established once-per-physics-step operation.
+
+A second consumer, `0x11a8230`, reads the same current record directly, then
+selects a nested 0xa468-byte record from pointer +0x434/count +0x43e. An external
+index selects that nested record when in range; otherwise a nonempty collection
+falls back to its first record. Modes 0 and 1 test four corresponding pairs of
+32-bit fields for kind 1 and IDs 200/208/203/205. Other modes return false. This
+is a lead for the meaning of these contexts; the ID-to-physical-control mapping
+has not been established. Empty nested collections can lead to null accesses in
+modes 0/1, so this is not a safe public query interface yet.
+
+The [static evidence receipt](../../native/snow_host/input_cache_index_writer_evidence.json)
+records inspected spans and direct call sites. No original-routine execution,
+live observation, external-query semantics, or callback effects are validated by
+this receipt. Next: resolve the query target/import, trace range/flag writers,
+and decode the post-assignment helper before implementing a complete mutable
+cache-selection service. Existing stable-snapshot selectors remain valid within
+their stated assumptions.
