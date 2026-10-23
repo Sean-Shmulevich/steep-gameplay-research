@@ -6,9 +6,11 @@
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "snow_plugin.h"
 #include "snow_delegate_probe.h"
-static char trigger[MAX_PATH],output[MAX_PATH];
+static char trigger[MAX_PATH],output[MAX_PATH],config_path[MAX_PATH];
+static int physics_requested;
 static unsigned duration,request_id,request_count=1;
 static SnowDelegateSite site=SNOW_DELEGATE_GRAPHICS_MAIN;
 static const char *site_name="graphics";
@@ -27,6 +29,20 @@ static void write_state(FILE *f,const SnowDelegateJobState *s) {
         "\"started\":%u,\"requested\":%u,\"holds\":%u,\"usage\":%u,\"selector\":%u}",
         (unsigned)s->valid,(unsigned)s->executions,(int)s->outstanding,(unsigned)s->state,
         (unsigned)s->started,(unsigned)s->requested,(unsigned)s->holds,(unsigned)s->usage,(unsigned)s->selector);
+}
+static void write_float_bits(FILE *f,const float *v,size_t count) {
+    fputc('[',f);
+    for(size_t i=0;i<count;i++){uint32_t bits;memcpy(&bits,v+i,4);fprintf(f,"%s%u",i?",":"",(unsigned)bits);}
+    fputc(']',f);
+}
+static void write_physics(FILE *f,const SnowUpdateSnapshot *s) {
+    fprintf(f,"{\"valid\":%u,\"runtime\":\"%llx\",\"main_body\":\"%llx\",\"rider_body\":\"%llx\",\"physics_request\":%llu,\"substep\":%llu,\"linear_bits\":",
+        s->valid,(unsigned long long)s->runtime,(unsigned long long)s->main_body,(unsigned long long)s->rider_body,
+        (unsigned long long)s->request,(unsigned long long)s->substep);
+    write_float_bits(f,&s->linear[0][0],6);fputs(",\"angular_bits\":",f);write_float_bits(f,&s->angular[0][0],6);
+    fputs(",\"pending_bits\":",f);write_float_bits(f,s->pending,4);
+    fputs(",\"inverse_mass_bits\":",f);write_float_bits(f,s->inverse_mass,2);
+    fprintf(f,",\"gates\":[%u,%u,%u,%u],\"preconsume_counter\":%d}",s->gates[0],s->gates[1],s->gates[2],s->gates[3],s->preconsume_counter);
 }
 static DWORD WINAPI capture(LPVOID unused) {
     (void)unused;ULONGLONG until=GetTickCount64()+180000;
@@ -53,19 +69,29 @@ static DWORD WINAPI capture(LPVOID unused) {
                                      descriptor[0],descriptor[1],descriptor[2],descriptor[3]};
         configured=SnowDelegateProbe_ConfigureSite(&binding,site);
     }
+    int physics_configured=0;
+    if(configured && physics_requested) {
+        char actor_text[40],*end;
+        GetPrivateProfileStringA("capture","actor","",actor_text,sizeof actor_text,config_path);
+        uint64_t actor=strtoull(actor_text,&end,16);
+        SnowUpdateProfile profile={base+0x1e7a350,base+0x2918ea8,base+0x53ec30,base+0x8ab390};
+        if(actor_text[0] && actor_text[0]!='-' && !*end)
+            physics_configured=SnowDelegateProbe_ConfigurePhysics(actor,&profile);
+    }
+    SnowDelegatePhysicsObservation physics[16]={0};unsigned single_physics_count=0;
     SnowDelegateRequestObservation requests[16]={0};
     SnowObservationReceipt outcomes[16]={0};unsigned collected=0,submitted=0;
     SnowObservationAdmission last_submit=SNOW_OBSERVATION_INVALID,after_close=SNOW_OBSERVATION_INVALID;
     int request_armed=0;
-    if(configured && request_id)request_armed=SnowDelegateProbe_ArmObservation(request_id);
+    if(configured && (!physics_requested || physics_configured) && request_id)request_armed=SnowDelegateProbe_ArmObservation(request_id);
     if(request_armed)submitted=1;
-    if(configured && (!request_id || request_armed)) {
+    if(configured && (!physics_requested || physics_configured) && (!request_id || request_armed)) {
         installed=SnowDelegateProbe_Install();
         if(installed) {
             until=GetTickCount64()+duration;
             while(GetTickCount64()<until && !InterlockedCompareExchange(&cancelled,0,0)) {
                 if(request_count>1 && collected<submitted) {
-                    SnowObservationReceipt outcome=SnowDelegateProbe_CollectObservation(&requests[collected]);
+                    SnowObservationReceipt outcome=SnowDelegateProbe_CollectPhysics(&requests[collected],&physics[collected]);
                     if(outcome) {
                         outcomes[collected++]=outcome;
                         if(outcome==SNOW_OBSERVATION_RETURNED && submitted<request_count) {
@@ -83,7 +109,7 @@ static DWORD WINAPI capture(LPVOID unused) {
     }
     if(request_count>1) {
         if(collected<submitted) {
-            SnowObservationReceipt outcome=SnowDelegateProbe_CollectObservation(&requests[collected]);
+            SnowObservationReceipt outcome=SnowDelegateProbe_CollectPhysics(&requests[collected],&physics[collected]);
             if(outcome)outcomes[collected++]=outcome;
         }
         after_close=SnowDelegateProbe_SubmitObservation((uint64_t)request_id+request_count+1);
@@ -108,7 +134,8 @@ static DWORD WINAPI capture(LPVOID unused) {
         snprintf(request_output,sizeof request_output,"%s.request.json",output);
         FILE *rf=fopen(request_output,"w");
         SnowDelegateRequestObservation r={0};
-        SnowObservationReceipt outcome=SnowDelegateProbe_CollectObservation(&r);
+        SnowObservationReceipt outcome=SnowDelegateProbe_CollectPhysics(&r,&physics[0]);
+        if(outcome)single_physics_count=1;
         int returned=outcome==SNOW_OBSERVATION_RETURNED;
         if(rf) {
             fprintf(rf,"{\"route\":\"intercepted_engine_delegate\",\"native_queue_submission\":false,"
@@ -120,6 +147,19 @@ static DWORD WINAPI capture(LPVOID unused) {
                 (unsigned long long)r.storage,(unsigned long long)r.manager_before,(unsigned long long)r.manager_after,
                 r.valid_before,r.valid_after);
             fclose(rf);
+        }
+    }
+    if(physics_requested) {
+        char physics_output[MAX_PATH+32];snprintf(physics_output,sizeof physics_output,"%s.physics.json",output);
+        FILE *pf=fopen(physics_output,"w");
+        if(pf) {
+            unsigned count=request_count==1?single_physics_count:collected;
+            fprintf(pf,"{\"configured\":%d,\"samples\":[",physics_configured);
+            for(unsigned i=0;i<count;i++) {
+                fprintf(pf,"%s{\"request_id\":%llu,\"before\":",i?",":"",(unsigned long long)physics[i].request_id);
+                write_physics(pf,&physics[i].before);fputs(",\"after\":",pf);write_physics(pf,&physics[i].after);fputc('}',pf);
+            }
+            fputs("]}\n",pf);fclose(pf);
         }
     }
     FILE *f=fopen(output,"w");
@@ -152,6 +192,9 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     else if(!strcmp(selected,"graphics")) { site=SNOW_DELEGATE_GRAPHICS_MAIN;site_name="graphics"; }
     else return 1;
     request_id=GetPrivateProfileIntA("capture","request_id",0,api->config_path);
+    physics_requested=GetPrivateProfileIntA("capture","physics",0,api->config_path)==1;
+    if(physics_requested && (!request_id || site!=SNOW_DELEGATE_ENGINE_MAIN))return 1;
+    strcpy(config_path,api->config_path);
     request_count=GetPrivateProfileIntA("capture","request_count",1,api->config_path);
     if(!request_count || request_count>16 || (request_count>1 && !request_id))return 1;
     if(request_id && site!=SNOW_DELEGATE_ENGINE_MAIN)return 1;

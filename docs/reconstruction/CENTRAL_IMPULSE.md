@@ -10520,3 +10520,14 @@ job and its request completion before inferring an execution gate. Input
 publication needs its own timestamp and generation at that boundary; neither
 capture establishes input ingestion order. No command queue or mutation API is
 installed by this analysis.
+
+### Engine-phase stationary body observation
+
+The [resident engine-phase physics baseline](SCHEDULER_DELEGATES.md#live-stationary-actor-baseline)
+now links 16 engine requests to 32 valid before/after snow-body observations. In
+that session the main inverse mass is approximately 0.17580873 and the rider
+inverse mass approximately 0.05, corresponding to rider mass 20 in the existing
+body-unit convention. Main velocity and pending impulse remain zero. This is a
+stationary live baseline, not an impulse-response experiment, universal tuning
+value, or proof of physical units. It makes the two bodies and their mass fields
+available for later request-correlated tests without invoking a setter.

@@ -6769,3 +6769,11 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Single-request plugin output exposes numeric outcome. Repeated capture already stops on non-returned receipts. Trace ABI and observation record layout stay unchanged.
 - Controlled Windows/Wine cases cover owner/descriptor changes before and during execution plus an explicit change-and-restore limitation case. Fixture storage remains retained; no native generation or live transition claim.
 - Existing repeated delivery, competing callbacks, cancellation, close-running and restoration tests are rerun against the new code. No live game launched this pass.
+
+### Physics observations joined to live engine requests
+
+- Added an optional physics channel to resident engine requests, using the existing exact-read snapshot/resolver code and atomic collection of the request with its paired physics payload. Actor/world/counter binding is fixed; body links refresh per sample. No setters or native game calls in the reader.
+- Eleven Windows/Wine fixture scenarios pass, including velocity change, body replacement, absent rider, world/profile invalidation and request regressions. Portable snapshot fixture passes 31 read failures and nine link/counter mutations; two trace/pipeline tests pass. Public full host/delegate-plugin build succeeds with the new link dependency.
+- Live: 16 returned requests, 32 valid physics samples, 99 callback records and zero drops. Fresh unique registered snow-actor acquisition; independent selected-player proof remains open. Rider present, no substep attribution; physics counter stable across callbacks and incrementing between requests.
+- Idle baseline has zero main velocity/pending impulse and inverse masses about 0.17580873 main / 0.05 rider. Engine and physics job counters differ by a session-local 252; they are not interchangeable IDs.
+- Independent slot restoration and engine progress verified; bottle, saves, settings and original DLL restored. Active-motion response, map transitions, object retention and mutation permission remain open.

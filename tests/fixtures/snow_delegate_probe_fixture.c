@@ -5,7 +5,11 @@
 #include <string.h>
 #include "snow_delegate_probe.h"
 static void *owner_global,*expected_receiver;
-static uintptr_t table[16];
+static uintptr_t table[16],physics_actor_table[100],physics_runtime_table[1];
+static unsigned char *physics_memory;
+static unsigned physics_mode;
+static void putq(size_t offset,uintptr_t value){memcpy(physics_memory+offset,&value,8);}
+static void putf(size_t offset,float value){memcpy(physics_memory+offset,&value,4);}
 static volatile LONG calls;
 static HANDLE entered_event,release_event;
 static SnowDelegateOriginal worker_callback;
@@ -17,6 +21,12 @@ static unsigned job_offset=0x218;
 static uintptr_t body(void *receiver) { assert(receiver==expected_receiver);InterlockedIncrement(&calls);
     InterlockedIncrement((LONG *)((unsigned char *)receiver+job_offset+0x4c+16));
     if(entered_event){SetEvent(entered_event);assert(WaitForSingleObject(release_event,5000)==WAIT_OBJECT_0);}
+    if(physics_memory) {
+        putf(0x51a0,2.0f);
+        if(physics_mode==2)putq(0x2060,(uintptr_t)physics_memory+0xb000);
+        if(physics_mode==3)putq(0x36e8,(uintptr_t)physics_memory+0x7000);
+        if(physics_mode==5)putq(0x3000,0);
+    }
     if(mutate_descriptor)((uintptr_t *)((unsigned char *)receiver+job_offset+0x198))[1]^=1;
     if(invalidate)owner_global=NULL;
     return UINT64_C(0xfedcba9876543210); }
@@ -42,6 +52,9 @@ int main(int argc,char **argv) {
     SnowObservationAdmission (*submit)(uint64_t)=(void *)GetProcAddress(dll,"SnowDelegateProbe_SubmitObservation");
     SnowObservationReceipt (*collect)(SnowDelegateRequestObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CollectObservation");
     void (*close_requests)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CloseObservations");
+    int (*configure_physics)(uint64_t,const SnowUpdateProfile *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ConfigurePhysics");
+    SnowObservationReceipt (*collect_physics)(SnowDelegateRequestObservation *,SnowDelegatePhysicsObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CollectPhysics");
+    assert(configure_physics&&collect_physics);
     assert(arm&&read_request&&submit&&collect&&close_requests);SnowDelegateRequestObservation request={0};
     assert(submit(1)==SNOW_OBSERVATION_INVALID);assert(!collect(&request));
     assert(!arm(9));assert(!read_request(&request));
@@ -57,6 +70,42 @@ int main(int argc,char **argv) {
     assert(!configure_site(&b,(SnowDelegateSite)99));
     assert(engine?configure_site(&b,SNOW_DELEGATE_ENGINE_MAIN):configure(&b));
     assert(!configure(&b));
+    if(!strncmp(argv[2],"physics",7)) {
+        assert(engine);
+        physics_mode=!strcmp(argv[2],"physics_world")?2:!strcmp(argv[2],"physics_body")?3:
+            !strcmp(argv[2],"physics_no_rider")?4:!strcmp(argv[2],"physics_profile")?5:1;
+        physics_memory=VirtualAlloc(NULL,0x10000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(physics_memory);
+        uintptr_t a=(uintptr_t)physics_memory;
+        SnowUpdateProfile profile={(uintptr_t)physics_actor_table,(uintptr_t)physics_runtime_table,
+            (uintptr_t)&body,(uintptr_t)&invoker};
+        physics_actor_table[0x2c0/8]=(uintptr_t)&body;
+        putq(0,profile.actor_table);putq(0x1050,a);putq(0x10,a+0x2000);putq(0x2060,a+0x8000);
+        putq(0x168,a+0x3000);putq(0x3000,profile.runtime_table);putq(0x36f0,a);
+        putq(0x36e8,a+0x5000);putq(0x3b90,physics_mode==4?0:a+0x6000);
+        putq(0x8ff0,a+0x9000);putq(0x9018,a+0xa000);putq(0xa000,a+0x9000);
+        putq(0xa010,a+0xa1b0);putq(0xa360,profile.world_step_callback);putq(0xa208,19);
+        putf(0x51a0,1.0f);putf(0x71a0,9.0f);
+        putq(0x1050,0);assert(!configure_physics(a,&profile));putq(0x1050,a);
+        assert(configure_physics(a,&profile));assert(!configure_physics(a,&profile));
+        assert(install());SnowDelegateOriginal cached_physics=(SnowDelegateOriginal)d[3];
+        assert(submit(1)==SNOW_OBSERVATION_ACCEPTED);
+        assert(cached_physics(d,owner)==UINT64_C(0xfedcba9876543210));
+        SnowDelegatePhysicsObservation observed;
+        assert(!collect_physics(&request,NULL));assert(!collect_physics(NULL,&observed));
+        assert(collect_physics(&request,&observed)==SNOW_OBSERVATION_RETURNED);
+        assert(observed.request_id==request.request_id && observed.configured);
+        assert(observed.before.valid==(physics_mode==4?5u:7u));
+        assert(observed.before.linear[0][0]==1.0f && observed.before.request==19 && !observed.before.substep);
+        if(physics_mode==2 || physics_mode==5) {
+            SnowUpdateSnapshot zero={0};assert(!memcmp(&observed.after,&zero,sizeof zero));
+        } else {
+            assert(observed.after.valid==(physics_mode==4?5u:7u));
+            assert(observed.after.linear[0][0]==(physics_mode==3?9.0f:2.0f));
+            assert(observed.after.main_body==a+(physics_mode==3?0x7000:0x5000));
+        }
+        assert(!collect_physics(&request,&observed));assert(restore());assert(close_probe(NULL,NULL));
+        printf("%s passed\n",argv[2]);return 0;
+    }
     int requested=!strcmp(argv[2],"request");
     if(requested){assert(!arm(0));assert(arm(91)==engine);assert(!arm(92));}
 

@@ -1,6 +1,7 @@
 #ifndef SNOW_DELEGATE_PROBE_H
 #define SNOW_DELEGATE_PROBE_H
 #include "snow_delegate_trace.h"
+#include "snow_update_snapshot.h"
 #ifdef SNOW_DELEGATE_PROBE_BUILD
 #define SNOW_DELEGATE_API __declspec(dllexport)
 #else
@@ -73,4 +74,20 @@ SNOW_DELEGATE_API void SnowDelegateProbe_CloseObservations(void);
  * Sequential identity checks cannot detect an intervening change-and-restore,
  * retain owner storage, or make a freed receiver safe for original forwarding.
  */
+/* Optional read-only physics channel. Configure once before arming/installing,
+ * from a freshly acquired actor and externally verified build profile. No actor
+ * discovery or ownership pin. World/counter binding stays fixed for this session;
+ * body links refresh per sample. Invalid samples are zero, independent of delegate
+ * return status. Counters identify the physics job, not this engine request.
+ */
+typedef struct {
+    uint64_t request_id;
+    uint32_t configured;
+    SnowUpdateSnapshot before,after;
+} SnowDelegatePhysicsObservation;
+SNOW_DELEGATE_API int SnowDelegateProbe_ConfigurePhysics(uint64_t actor,const SnowUpdateProfile *);
+/* Atomic collection of the request receipt and its associated physics samples.
+ * Both outputs required; non-consuming primary ReadObservation is unchanged. */
+SNOW_DELEGATE_API SnowObservationReceipt SnowDelegateProbe_CollectPhysics(
+    SnowDelegateRequestObservation *,SnowDelegatePhysicsObservation *);
 #endif

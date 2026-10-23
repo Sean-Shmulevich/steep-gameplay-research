@@ -767,3 +767,36 @@ an authored invalidation policy, not a recovered native generation mechanism.
 The checks cannot detect change-and-restore between observations, prove that an
 address still represents the same allocation, or protect original forwarding
 through freed storage. Keep the existing bounded owner-lifetime prerequisites.
+
+### Physics samples associated with engine-phase requests
+
+The opt-in capture plugin accepts `physics=1` with engine site and nonzero request
+ID. A controller must freshly acquire a snow actor in the same verified process,
+write its hexadecimal `actor` value into the private session INI, then create the
+capture trigger. Never reuse that heap address in another session. Configuration
+fails closed if the profile or actor/world/counter links do not validate. There is
+no actor discovery in the plugin and no independent selected-player identity proof.
+
+`SnowDelegateProbe_ConfigurePhysics(actor, profile)` configures this channel once,
+before arming/installing. The build profile identifies actor/runtime tables,
+actor update target and world-job invoker. The fixed actor/world/counter binding
+is checked afresh at every sample; runtime/body links are reread. Samples reuse
+`snow_update_resolve_binding` and `snow_update_snapshot`, with a second resolver
+pass afterward. World/profile changes invalidate a sample; body replacements
+within the same binding can be observed. No setters or native game routines run
+in this reader.
+
+`CollectPhysics(receipt, physics)` collects the request and its associated before/
+after snapshots under the same control lock. Both outputs are required. The
+legacy collector may ignore this optional channel. A RETURNED request may still
+have an invalid physics sample; valid bits must be checked separately. Physics
+request counters are not engine request IDs. Unavailable substep attribution must
+not be presented as substep zero.
+
+`.trace.jsonl.physics.json` contains the optional private samples keyed by request
+ID. Float fields are serialized as uint32 bit patterns, preserving nonfinite/raw
+values without invalid JSON. It includes velocity, angular velocity, inverse mass,
+pending impulse, gates, preconsume counter and physics-job counter. This is not a
+pose/position reader and not an atomic snapshot. Link checks neither retain the
+actor nor detect address reuse. Build/link `snow_update_snapshot.c` with delegate
+probe users; the public build script now includes it.

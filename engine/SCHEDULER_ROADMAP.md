@@ -303,3 +303,17 @@ change-and-restore test still returns normally: a native generation/retirement
 signal is needed to distinguish reuse of the same pointer. Do not promote these
 checks into an owner-lifetime guarantee or treat the earlier live repeated-request
 receipt as evidence for map transitions on this newer adapter.
+
+### Request-correlated snow-actor physics baseline
+
+The [live physics channel](../docs/reconstruction/SCHEDULER_DELEGATES.md#live-stationary-actor-baseline)
+now connects engine-phase requests to bracketed main/rider state and physics-job
+counter observations. Sixteen requests yield 32 valid stationary samples. The
+engine and physics counters advance together in this short window but have a
+nonzero session offset; preserve their separate identities.
+
+The next useful physics experiment is a bounded, timestamped input stimulus with
+matched phase and snow-update observations, rather than adding more idle samples.
+Acquire selected-player provenance and preserve invalid/transition samples before
+using this channel to infer response timing or force equations. This read-only
+integration does not authorize setters at the phase.

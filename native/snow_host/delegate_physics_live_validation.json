@@ -1,0 +1,52 @@
+{
+  "evidence": "One live Wine gameplay session, resident engine-main request with optional bracketed snow-actor physics samples",
+  "actor_acquisition": "Unique actor matching snow vtable/self/world in current world registry; not independent selected-player identity proof",
+  "selected_player_proved": false,
+  "requests_returned": 16,
+  "valid_physics_samples": 32,
+  "snapshot_valid_masks": [
+    7
+  ],
+  "rider_present_all_samples": true,
+  "substep_attributed": false,
+  "physics_counter_unchanged_across_each_callback": true,
+  "physics_counter_increments_between_observations": [
+    1
+  ],
+  "engine_minus_physics_started_mod32_values": [
+    252
+  ],
+  "counter_domains_equal": false,
+  "inverse_mass_pairs": [
+    [
+      0.17580872774124146,
+      0.05000000074505806
+    ]
+  ],
+  "main_linear_velocity_zero_all_samples": true,
+  "pending_impulse_zero_all_samples": true,
+  "main_body_stable_across_each_callback": true,
+  "callback_records": 99,
+  "dropped": 0,
+  "independent_restoration_and_progress_verified": true,
+  "cleanup_verified": true,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "40929f4a4d4e09b83c941bf203233407ae8cb49a5daa00ed756e73d73b1302aa",
+    "native/snow_host/snow_delegate_probe.h": "09692ce6821038eab1d1053bea0b21fc8814d3f5dce02d026ae312497f524601",
+    "native/snow_host/examples/delegate_capture.c": "14a2699545b4f7d5f7dd243a575818bc874d019bda10daf03c1e0e96d6a1ff9a",
+    "native/snow_host/snow_update_snapshot.c": "f8a17114cd7867ff5ef873eb7ffe81da4c5948a6a52764fe8969e75b6171497f"
+  },
+  "plugin_sha256": "fe3306449fd930df49e8cff7a878291e623efe26096a295a0f72be61b02a916f",
+  "raw_evidence_sha256": {
+    "delegate-capture-result.json": "55fef2ee9029d5b88c18605f51e3e43a38f1ca4e88a8e617e0a9746acb59b336",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "build/plugins/delegate_capture.ini.trace.jsonl": "075f3481887548296da1e2e3bd8fc4240b4b6d61928533d5d18fd8a7914c882b",
+    "build/plugins/delegate_capture.ini.trace.jsonl.physics.json": "a129c43bff1493f2584542ea8047d35a3f245a64d87f860bb1f8f50297c04bad"
+  },
+  "limitations": [
+    "Stationary actor, no input or gameplay mutation; no force/input-response fitting.",
+    "Counter offset is session-local observation, not a universal mapping or time interval.",
+    "Separate before/after guarded samples are not an atomic snapshot or lifetime pin.",
+    "Map transitions, allocation reuse, native queue submission and module unload remain unqualified."
+  ]
+}

@@ -1269,3 +1269,44 @@ or ABA detector. Fixture storage remains allocated throughout. No live transitio
 freed-storage access, owner destruction or unload safety is qualified by these cases.
 Historical live receipts continue to describe their recorded source hashes; this
 new invalidation policy is fixture-qualified, not newly live-transition-qualified.
+
+## Physics state at the observed engine phase
+
+The optional `ConfigurePhysics`/`CollectPhysics` channel joins the existing
+read-only snow-update snapshot reader to the resident request. Samples occur
+before and after forwarding the engine-main invoker, inside the outer request
+interval. Delegate return/invalidation and physics-sample validity are separate.
+The actor/world/counter binding remains fixed; each sample resolves it afresh,
+reads runtime/body state with bracketing, and re-resolves the profile afterward.
+This does not establish actor lifetime or same-address generation identity.
+
+The [compiled fixture receipt](../../native/snow_host/delegate_physics_fixture_validation.json)
+checks changing velocity, replacement of the main body, absent rider body,
+world change and runtime-table invalidation, plus existing repeated/close/stale
+request cases. A world or profile mismatch produces a zero invalid sample while
+the engine request still returns. The underlying portable snapshot fixture also
+passes 31 individual read failures and nine link/counter mutations.
+
+### Live stationary-actor baseline
+
+The [live physics receipt](../../native/snow_host/delegate_physics_live_validation.json)
+records 16 returned requests with 32 valid physics samples. A fresh registry walk
+found exactly one actor matching the snow vtable/self/world chain. That is the
+acquisition evidence; an independent selected-player link was not checked.
+Every sample has a rider body and a valid physics-job counter; no substep counter
+is attributed. Main-body velocity and pending impulse are zero throughout.
+
+The physics started counter advances by one between requests and remains equal
+across each engine callback. Its value differs from the enclosing engine job's
+started counter by 252 in this session. That is a session-local relationship,
+not a universal conversion: the counters name different jobs. It supports the
+inspected ordering before downstream physics work, not full physics quiescence
+or deterministic replay. Map transitions and active-motion responses remain open.
+
+The inverse masses are approximately 0.17580873 for the main body and 0.05 for
+the rider body. The latter corresponds to mass 20 in this body's units, providing
+live support for the rider-body interpretation in this stationary setup. It does
+not prove every use of the extracted mass tuning, nor universal values across
+sports or character configurations. The capture records 99 callbacks with no
+drops, independently verifies slot restoration and continued engine progress,
+and verifies bottle/save/settings/original-DLL cleanup.

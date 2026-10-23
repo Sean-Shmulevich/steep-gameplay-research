@@ -1,0 +1,28 @@
+{
+  "evidence": "Compiled Windows x64 engine-delegate fixture under Wine with authored actor/world/body storage",
+  "passed": [
+    "physics",
+    "physics_world",
+    "physics_body",
+    "physics_no_rider",
+    "physics_profile",
+    "repeat",
+    "close_running",
+    "competing",
+    "stale_owner_before",
+    "stale_owner_after",
+    "identity_aba"
+  ],
+  "game_launched": false,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "40929f4a4d4e09b83c941bf203233407ae8cb49a5daa00ed756e73d73b1302aa",
+    "native/snow_host/snow_delegate_probe.h": "09692ce6821038eab1d1053bea0b21fc8814d3f5dce02d026ae312497f524601",
+    "native/snow_host/snow_update_snapshot.c": "f8a17114cd7867ff5ef873eb7ffe81da4c5948a6a52764fe8969e75b6171497f",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "dfb1d6262978420045876e59049ee46963d43f1f4264fe48b7a0ac1d178cd0c5"
+  },
+  "limitations": [
+    "No live player sample or native ownership proof.",
+    "Physics sample validity and engine request return are independent.",
+    "Body replacement accepted within fixed actor/world binding; world/profile change rejects sample."
+  ]
+}
