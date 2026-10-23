@@ -1,0 +1,96 @@
+{
+  "evidence": "Offline analysis of two saved live captures, restricted to host release QPC intervals",
+  "sessions": [
+    {
+      "session": "initial_partial",
+      "direct_substeps": {
+        "valid_records": 8,
+        "unavailable_records": 0,
+        "invalid_frame_records": 0,
+        "malformed_records": 0,
+        "identity_rejected_records": 0,
+        "selected_count_histogram": {
+          "2": 2,
+          "3": 6
+        },
+        "observed_outer_groups": 3,
+        "complete_ordinal_sequences": 3,
+        "complete_batch_timing": {
+          "matching_groups": 3
+        },
+        "matching_consumed_intervals": [
+          {
+            "seconds": 0.01960499957203865,
+            "batches": 1
+          },
+          {
+            "seconds": 0.024361200630664825,
+            "batches": 1
+          },
+          {
+            "seconds": 0.026159798726439476,
+            "batches": 1
+          }
+        ],
+        "cap_branch_execution_proved": false,
+        "partial_or_nonsequential_groups": 0,
+        "request_minus_outer_mod32_histogram": {
+          "14": 3,
+          "20": 3,
+          "24": 2
+        },
+        "counter_semantic_equivalence_proved": false,
+        "global_invocation_identity_established": false
+      },
+      "slot_lifecycle_passed": true,
+      "loss_free_export": true
+    },
+    {
+      "session": "resume_retry",
+      "direct_substeps": {
+        "valid_records": 16,
+        "unavailable_records": 0,
+        "invalid_frame_records": 0,
+        "malformed_records": 0,
+        "identity_rejected_records": 0,
+        "selected_count_histogram": {
+          "2": 2,
+          "7": 14
+        },
+        "observed_outer_groups": 3,
+        "complete_ordinal_sequences": 3,
+        "complete_batch_timing": {
+          "matching_groups": 3,
+          "cap_value_groups": 2
+        },
+        "matching_consumed_intervals": [
+          {
+            "seconds": 0.020735399797558784,
+            "batches": 1
+          },
+          {
+            "seconds": 0.06666667014360428,
+            "batches": 2
+          }
+        ],
+        "cap_branch_execution_proved": false,
+        "partial_or_nonsequential_groups": 0,
+        "request_minus_outer_mod32_histogram": {
+          "14": 2,
+          "18": 7,
+          "23": 7
+        },
+        "counter_semantic_equivalence_proved": false,
+        "global_invocation_identity_established": false
+      },
+      "slot_lifecycle_passed": true,
+      "loss_free_export": true
+    }
+  ],
+  "limits": [
+    "No new game run.",
+    "Cap-value equality does not establish execution of the cap branch.",
+    "Raw incoming time, retained accumulator, smoothing history and selected frequency were not recorded for these batches.",
+    "Two batches with equal consumed time do not prove identical input, random state or replay determinism."
+  ]
+}

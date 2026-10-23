@@ -1339,3 +1339,13 @@ On `step_not_resumed`, the host now reports `frame_wait_succeeded`, the recorded
 `after_wait` is included only when that wait succeeded, avoiding an uninitialized
 or failed-read snapshot. These are sequential diagnostic reads, not an atomic
 state capture. Recovery behavior was not changed by adding the diagnostics.
+
+The offline update analyzer now reports timing arithmetic for complete direct
+ordinal sequences separately from request-based grouping. It records matching
+consumed intervals and equality to the recovered accumulator-cap value. Partial
+sequences cannot count as matching complete batches. The two saved controlled
+release captures contain six complete release batches whose elapsed durations
+match float32(consumed/count); two have consumed duration equal to the cap.
+See [timing comparison](controlled_release_timing_comparison.json). Matching the
+cap value does not prove the cap branch ran. Incoming time, retained accumulator,
+history and selected frequency still need same-batch observation.

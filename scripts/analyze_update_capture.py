@@ -13,6 +13,7 @@ import struct
 import sys
 if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from engine.scheduler import ACCUMULATOR_CAP
 try:
     from scripts.analyze_motion_capture import analyze_motion, analyze_profile_smoothing
 except ImportError:
@@ -184,13 +185,36 @@ def direct_substeps(records):
             differences[(before['request'] - outer) & 0xffffffff] += 1
         key=(r['actor'],before['runtime'],before['main'],before['rider'],outer)
         if previous != key: groups.append([])
-        groups[-1].append((ordinal,count));previous=key
-    complete = sum(len(g)==g[0][1] and all(n==g[0][1] and ordinal==i
-                   for i,(ordinal,n) in enumerate(g)) for g in groups)
+        groups[-1].append((ordinal,count,r));previous=key
+    complete_groups = [g for g in groups if len(g)==g[0][1] and all(n==g[0][1] and ordinal==i
+                       for i,(ordinal,n,r) in enumerate(g))]
+    complete = len(complete_groups)
+    timing = Counter(); intervals = Counter()
+    for group in complete_groups:
+        try:
+            values = [(r['elapsed'],r['derivative']) for _,_,r in group]
+            if any(type(x) not in (int,float) or not math.isfinite(x) or x<=0
+                   for pair in values for x in pair):
+                raise ValueError('invalid interval')
+            values = [(f32(e),f32(d)) for e,d in values]
+            consumed = values[0][1]
+            if consumed<=0 or not math.isfinite(consumed):raise ValueError('invalid float32 interval')
+            expected = f32(consumed/f32(len(group)))
+            if not all(d==consumed and e==expected for e,d in values):
+                timing['mismatched_groups'] += 1
+                continue
+            timing['matching_groups'] += 1
+            intervals[consumed] += 1
+            if consumed==f32(ACCUMULATOR_CAP):timing['cap_value_groups'] += 1
+        except (KeyError,TypeError,ValueError,OverflowError,struct.error):
+            timing['invalid_groups'] += 1
     return {**{k:counts[k] for k in ('valid_records','unavailable_records','invalid_frame_records',
                                     'malformed_records','identity_rejected_records')},
             'selected_count_histogram':dict(sorted(selected.items())),
             'observed_outer_groups':len(groups),'complete_ordinal_sequences':complete,
+            'complete_batch_timing':dict(timing),
+            'matching_consumed_intervals':[dict(seconds=k,batches=v) for k,v in sorted(intervals.items())],
+            'cap_branch_execution_proved':False,
             'partial_or_nonsequential_groups':len(groups)-complete,
             'request_minus_outer_mod32_histogram':dict(sorted(differences.items())),
             'counter_semantic_equivalence_proved':False,

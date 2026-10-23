@@ -183,3 +183,19 @@ class DirectSubstepTests(unittest.TestCase):
         result=a.analyze(rows())
         self.assertFalse(result['direct_native_substep_index_used'])
         self.assertEqual(result['direct_substeps']['unavailable_records'],3)
+
+    def test_complete_timing_cap_and_partial_exclusion(self):
+        data=self.capture(list(range(7)),7)
+        cap=a.f32(a.ACCUMULATOR_CAP)
+        for r in data[1:]:r.update(elapsed=a.f32(cap/7),derivative=cap)
+        direct=a.analyze(data)['direct_substeps']
+        self.assertEqual(direct['complete_batch_timing'],{'matching_groups':1,'cap_value_groups':1})
+        self.assertFalse(direct['cap_branch_execution_proved'])
+        data[0]['records']-=1;data.pop()
+        self.assertEqual(a.analyze(data)['direct_substeps']['complete_batch_timing'],{})
+
+    def test_direct_timing_mismatch_and_bad_value(self):
+        data=self.capture([0,1,2]);data[2]['elapsed']=.02
+        self.assertEqual(a.analyze(data)['direct_substeps']['complete_batch_timing'],{'mismatched_groups':1})
+        data[2]['elapsed']=None
+        self.assertEqual(a.analyze(data)['direct_substeps']['complete_batch_timing'],{'invalid_groups':1})

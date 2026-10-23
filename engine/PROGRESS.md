@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Cross-referenced controlled releases with recovered subdivision arithmetic.
+All six complete directly indexed batches match float32(consumed/count); two
+consumed intervals equal the recovered cap value exactly. Analyzer now reports
+this separately from request grouping and excludes incomplete ordinal sequences.
+Cap execution and policy/frequency/history remain unobserved for these batches.
+See [timing comparison](../native/snow_host/controlled_release_timing_comparison.json).
+
 Controlled-release diagnostic retry succeeded: one BeforeSimulation callback
 per release, complete physics batches 2/7/7, resume without fallback, cleanup
 passed. Earlier resume failure remains unexplained. Added bounded resume-failure
