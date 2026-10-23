@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Identified and implemented constructor-selected history curves. Channel zero
+uses a nonlinear radians response with two near-center variants; channel one
+maps normalized angle to radians. Original parent construction and append calls
+confirm exact knots and thresholds; 4,065 native evaluator outputs match the
+independent float32 implementation bit-for-bit. Inner storage initialization was
+supplied, and live selection/later mutation remain open. Eleven portable history
+tests pass. See [constructor curves](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#constructor-selected-history-curves).
+
 Composed outer history, feature remapping and original mode-3 conversion across
 864 updates in 288 sequences. Added update_mode3_history as a public detached
 composition. Raw/magnitude/time histories and untouched bytes match exactly;

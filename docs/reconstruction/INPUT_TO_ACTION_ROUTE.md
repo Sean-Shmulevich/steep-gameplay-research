@@ -1316,3 +1316,76 @@ Only the curve virtual callback is substituted in this composed execution.
 Service mode, bases and clock storage are synthetic inputs. There is no context
 preamble, cache read, scheduler dispatch or live freshness proof in this test.
 The actual curve definition and feature-history consumers remain unresolved.
+
+## Constructor-selected history curves
+
+Static layout and instruction execution now identify concrete defaults for the
+curve previously supplied to the history feature adapter. Parent constructor
+`0x94d510` initializes histories at receiver `+0x10` and `+0x3d0`, each of size
+`0x3c0`. These match the two receivers used by the context preamble. Inner
+initializer `0x94d690` installs curve table `0x1edb7d8` at history `+0x308`;
+virtual slot `+8` resolves to evaluator `0x971190`. Parent calls append helper
+`0x9577c0` with X in XMM1 and Y in XMM2. No live constructor invocation or
+absence of later mutation is established.
+
+The first history uses threshold float32 `0.9961947202682495`, approximately
+cosine of five degrees. The second uses `1.0`. The threshold acts on normalized
+Y before curve evaluation, as described above; it is not a time constant.
+The following degree labels explain the constructor constants. The implementation
+retains their exact float32 values rather than regenerating them from degrees.
+
+| Input angle represented by X = angle / pi | First-channel output angle | Alternate-center output |
+| --- | --- | --- |
+| 0 degrees | 0 | 0 |
+| 1.5 degrees | No knot | 0 |
+| 5 degrees | 1 degree | 0.8 degrees |
+| 10 degrees | 5 degrees | Same |
+| 20 degrees | 10 degrees | Same |
+| 30 degrees | 20 degrees | Same |
+| 40 degrees | 40 degrees | Same |
+| 180 degrees | 180 degrees | Same |
+
+The alternate branch depends on the byte at build RVA `0x2e22578`. Its semantic
+name and live value remain unknown. Channel two always contains just `(0,0)`
+and `(1,float32(pi))`. Thus the output really is radians, confirming the earlier
+feature-helper interpretation. Do not label these channels movement/camera or
+left/right stick without a separate binding proof.
+
+For finite strictly increasing knots, the original evaluator is:
+
+```text
+result = 0
+for each consecutive pair (x0,y0), (x1,y1), in stored order:
+    if x0 <= input <= x1:
+        slope = f32(f32(y1-y0) / f32(x1-x0))
+        result = f32(f32(f32(input-x0) * slope) + y0)
+return result
+```
+
+Both segments run at a shared knot, so the later result wins. Values outside
+all segments return zero, not a clamped endpoint. Native duplicate-knot handling
+exists but is outside the independent adapter's domain; constructor defaults
+are strictly increasing.
+
+[Curve implementation](../../engine/action_history_curve.py) exposes
+`history_curve_config(channel, alternate_center=...)` and
+`evaluate_history_curve(value, points)`. Callers can supply the latter to
+`update_mode3_history`; configuration remains explicit. For example:
+
+```python
+from engine.action_history_curve import history_curve_config, evaluate_history_curve
+config = history_curve_config(0, alternate_center=False)
+curve = lambda x: evaluate_history_curve(x, config['points'])
+# Set the detached history snapshot's threshold to config['threshold'], then
+# pass curve=curve to update_mode3_history with explicit basis and clock.
+```
+
+[Validation receipt](../../native/snow_host/action_history_curve_validation.json)
+records two original parent-constructor executions and 4,065 original evaluator
+comparisons. Knot values, thresholds and output float32 bits match. The private
+experiment supplies the inner initializer's storage/vtable setup; original
+parent selection, append operations and evaluator execute unchanged. It covers
+both channels and flag values, uniform samples, knots and neighboring float32
+values. Eleven portable history tests also pass. This closes a constructor
+configuration dependency, not device freshness, gameplay binding, scheduler
+cadence or live deterministic stepping.

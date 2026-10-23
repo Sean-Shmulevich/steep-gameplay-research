@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "constructor_cases": 2,
+  "evaluator_cases": 4065,
+  "comparison": "Exact float32 output bits",
+  "game_process": false,
+  "scope": "Original two-channel parent constructor and append helper, then original virtual curve evaluator",
+  "substitutions": [
+    "Inner history initializer supplied zero storage, curve vtable, inline pointer and capacity; parent curve selection, knot append and evaluator execute original instructions"
+  ],
+  "coverage": [
+    "Both constructor flag values and both channels",
+    "Exact constructor knot values and thresholds",
+    "Uniform range plus every knot and adjacent float32 values",
+    "Out-of-range zero return"
+  ],
+  "limits": [
+    "No live constructor flag or active channel binding claim",
+    "Does not prove absence of subsequent curve mutation",
+    "Independent evaluator supports finite strictly increasing knots only",
+    "No full history composition with constructor defaults in this receipt"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x94d510",
+      "end_rva_exclusive": "0x94d690",
+      "sha256": "a11085c7f1f427cd79f01f0bb105faaea8c7b4a2d44190be519b188ec162f01a"
+    },
+    {
+      "start_rva": "0x94d690",
+      "end_rva_exclusive": "0x94d786",
+      "sha256": "63fb9832e70515b09cf537a46b87e719fc13c5011e93779bd3a895e9a4500f74"
+    },
+    {
+      "start_rva": "0x9577c0",
+      "end_rva_exclusive": "0x957849",
+      "sha256": "5e1b139d0b4b438969847f1c2f77a55b01b78b13c554770ace894b9df3c08006"
+    },
+    {
+      "start_rva": "0x971190",
+      "end_rva_exclusive": "0x9713ed",
+      "sha256": "7dedc6afe6777d24c9490af68af81b80060b3120724be75dbfb53b166944dfcd"
+    }
+  ]
+}
