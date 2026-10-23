@@ -604,10 +604,50 @@ if owner.byte_0x58 == 0:
 tail_call unresolved_helper_2(owner + 0x60)
 ```
 
-This is a flag/event sequence in another receiver. The virtual call, conditional
-helper and final helper are unresolved here; do not label it a proven wait,
-thread join or command-manager shutdown path. It provides a concrete event-based
-lead for later scheduler lifecycle analysis.
+This initial description is superseded by the cross-reference below: the
+conditional and final helpers already have graph-setup and job-submission
+identities in the delegate research. The initial virtual service remains opaque.
+
+## Root submission entry sequence
+
+Cross-referencing [the delegate lifecycle research](SCHEDULER_DELEGATES.md#submission-enables-the-teardown-wait)
+identifies `0x11e2ca0` as job submission, including its usage/wait-flag store.
+The conditional `0x6968e0` routine installs callable bindings and graph edges,
+as distinguished from construction in the same guide. Thus `0x662570` is an
+outer root-submission sequence, not a thread wait or teardown routine.
+
+```text
+submit_root_sequence():
+    call virtual_slot_0x10(global_A)
+    owner = read(global_B)                 // after the initial service
+    owner.byte_0 = 1
+    owner.byte_0x46 = 0
+    ResetEvent(read_pointer(owner + 0x48)) // return value is ignored
+    if owner.byte_0x58 == 0:               // sampled after ResetEvent
+        prepare_graph_and_bindings(owner)
+    return submit_job(owner + 0x60)
+```
+
+The [independent model](../../engine/frame_submission.py) supplies the unresolved
+service bodies explicitly. It does not duplicate or replace the existing job
+request reducers. A [48-case original-instruction comparison](../../native/snow_host/root_submission_validation.json)
+validates the outer sequence and original encoded ResetEvent thunk, with graph,
+submission and API bodies intercepted. Cases vary initial and post-event gate,
+API return, submission return, and a changed global owner after the first call.
+The native sequence and model agree on service order, flags and returned value.
+Three public tests additionally cover nonzero byte gates and supplied-service
+failure boundaries; exception behavior is authored, not native evidence.
+
+This connects event reset, optional graph setup and root submission. It does not
+establish when the event is signaled, who waits on it, the outer caller's exact
+frame phase, or the root owner's lifetime. It does not close the separate command
+manager's publication/destruction gap.
+
+A direct-call search yields a caller at `0xd2c63`. Its immediate sequence calls
+a receiver's virtual slot `+0x10`, submits through this entry, calls the same
+receiver's slot `+8`, then calls `0x6a5230`. This supplies a next caller/phase
+lead; those surrounding services and the outer function are not validated by
+the 48-case fixture.
 
 ## Buffer disposal is not callback delivery
 

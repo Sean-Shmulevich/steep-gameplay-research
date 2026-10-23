@@ -6130,3 +6130,11 @@ section, close handle, reset/set event and file flush. A 240-case instruction
 fixture validates their target arithmetic and tail-transfer ABI. The live probe
 used 448 bytes of guarded reads and restored the session. These identities narrow
 teardown and event-flow searches without proving the command manager destructor.
+
+### Root submission entry sequence
+
+Connected the newly identified event-reset wrapper to existing graph setup and
+job submission research. `engine.frame_submission` preserves the late owner
+read, flag stores, post-event graph gate and root submission order; 48 original
+instruction cases match supplied-service model effects. The outer caller phase
+and lifetime remain unresolved; this is not command-manager shutdown.

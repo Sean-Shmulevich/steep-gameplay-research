@@ -1,0 +1,21 @@
+{
+  "evidence": "Original outer root-submission instructions and ResetEvent thunk compared with independent model; supplied service bodies",
+  "all_passed": true,
+  "cases": 48,
+  "rva": "0x662570",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "dc43633115344c762a9f1d7056d613c041a2dba0cef1b890bbd69774f649c01f",
+  "verified": [
+    "Owner loaded after initial virtual service, including changed global owner.",
+    "Flag stores precede event reset.",
+    "Event API return value ignored.",
+    "Graph gate read after reset service returns.",
+    "Root job submission follows optional graph setup; its result returned."
+  ],
+  "limitations": [
+    "Graph preparation and job submission bodies intercepted; not full scheduler integration.",
+    "ResetEvent API is synthetic; original encoded thunk is executed.",
+    "Serial supplied service mutations are ordering probes, not demonstrated native reentrancy.",
+    "No manager lifetime, frame-phase identity, actual event waiting or shutdown qualification."
+  ]
+}
