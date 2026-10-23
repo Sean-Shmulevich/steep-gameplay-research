@@ -1,0 +1,24 @@
+{
+  "kind": "before_simulation_capture_incomplete",
+  "complete": false,
+  "reason": "Post-capture player query ran while the BeforeSimulation slot wrapper was installed; host identity guard rejected that slot and controller stopped before exporter completed.",
+  "physics_capture_ok": true,
+  "physics_records": 619,
+  "input_coverage": {
+    "covered": true,
+    "key_down_inside": true,
+    "key_up_inside": true,
+    "intersecting_intervals": 54,
+    "game_acceptance": "unverified"
+  },
+  "before_simulation_export_available": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "correction": "Wait for wrapper restoration and export before player reacquisition; keep the strict identity check."
+}

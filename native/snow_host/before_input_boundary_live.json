@@ -1,0 +1,78 @@
+{
+  "before_events": 345,
+  "counters": 690,
+  "transitions": {
+    "consistent_with_one_ingestion": 345,
+    "nonzero_matches": 25,
+    "vector_changed_inside": 2
+  },
+  "comparison": {
+    "no_completed_parent": 4,
+    "match": 583
+  },
+  "physics_records": 587,
+  "counter_matches": 583,
+  "complete_batches": 285,
+  "batch_sizes": {
+    "2": 245,
+    "1": 17,
+    "3": 19,
+    "5": 2,
+    "4": 2
+  },
+  "complete_batches_single_before_source": 285,
+  "distinct_before_sources": 285,
+  "kind": "before_simulation_input_boundary",
+  "evidence": "Live observed actor callback entry/return paired with actor physics substeps",
+  "all_before_after_vector_reads_valid": true,
+  "input_coverage": {
+    "covered": true,
+    "key_down_inside": true,
+    "key_up_inside": true,
+    "intersecting_intervals": 51,
+    "game_acceptance": "unverified"
+  },
+  "before_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 345,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "physics_probe": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 587,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 587,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 587,
+    "other_calls": 0
+  },
+  "action_root_endpoint_identity_equal": true,
+  "host_binding_generation_before": 1,
+  "host_binding_generation_after": 2,
+  "host_binding_generation_note": "Host refuses the temporarily replaced slot and reacquires after restoration; generation continuity is not claimed.",
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "interpretation": "Input transitions occurred within actor BeforeSimulation; all complete sampled substep batches used one preceding callback output and retained its primary counter.",
+  "limits": [
+    "Wrapping the enclosing callback does not directly record the ingestion call instruction.",
+    "Zero counter transitions cannot count ingestion calls; only 25 observed nonzero increments discriminate the once-per-callback hypothesis.",
+    "All writers have not been exhaustively excluded; the nonzero counter result relies on the recovered ingestion rule.",
+    "Samples are sequential and do not pin object lifetime; host binding was intentionally unavailable during the wrapper interval.",
+    "The six-second BeforeSimulation window exceeds the five-second physics window; total callback counts must not be compared directly.",
+    "One moving keyboard session; no claim for all movement modes, suppressed gates or deterministic replay."
+  ]
+}

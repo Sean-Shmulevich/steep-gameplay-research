@@ -2578,3 +2578,55 @@ partial/full/no device writes and repeated reacquisition. Only virtual device
 calls are supplied. The null output-pointer route is excluded from the public
 buffer API. Next: trace callers of `0x11785c0` and the cache notification path
 to connect this local order with action evaluation and scheduler generations.
+
+### Live input changes inside BeforeSimulation
+
+A bounded moving-player capture wrapped the actor's BeforeSimulation callback
+and sampled its primary ingested vector and nonzero-input counter before and
+after the original call. A concurrent actor-update recorder supplied direct
+substep ordinals and selected counts. The timed lateral keyboard pulse was
+inside physics coverage. See [boundary receipt](../../native/snow_host/before_input_boundary_live.json).
+
+All 345 callback pairs had valid vector and counter observations. Both input
+transitions, press and release, occurred between callback entry and return.
+Twenty-five nonzero outputs had a counter increment of exactly one across the
+callback. The other zero-output transitions conform to counter reset, but
+cannot distinguish one ingestion call from repeated zero-input calls.
+
+Of 587 actor physics updates, four preceded the first captured callback. All
+583 remaining input vectors matched the preceding completed BeforeSimulation
+output exactly. Their primary counters matched that callback's return sample
+at both physics-update entry and return. Across 285 complete observed batches,
+each batch mapped to one preceding callback and each mapped callback was
+distinct. Batch sizes were 17 single-step, 245 two-step, 19 three-step, two
+four-step and two five-step. Thus repeated physics substeps retained the same
+observed input and counter in this run.
+
+The evidence supports this local ordering for the captured state:
+
+```text
+BeforeSimulation(actor):
+    execute the actor's gated motion-update path
+    // Input changes and positive counter increments observed inside this call.
+
+PhysicsWorldStep:
+    for each selected substep:
+        update actor physics using the already-ingested input
+        // Observed input and primary counter remained equal to callback return.
+```
+
+This joins the earlier measured BeforeSimulation-to-PhysicsWorldStep ordering
+with the recovered ingestion prefix. It is not a direct trace of the ingestion
+instruction or proof that no other writer exists. The next useful extension
+is recording ingestion-path activation gates alongside callback observations,
+including suppressed/alternate modes, before using this as a universal stepping
+contract. No new claim of whole-engine deterministic replay follows.
+
+The first attempt was incomplete: the host's player guard requires the original
+BeforeSimulation slot and reported `no_player` while the wrapper occupied it.
+The controller then stopped before the recorder exported. That
+[incomplete receipt](../../native/snow_host/before_input_capture_incomplete.json)
+is retained. The successful retry waited for restore/export before reacquisition.
+The host binding generation consequently advanced; it must not be treated as
+uninterrupted binding identity. Both recorders restored and drained with no
+drops, and saves/settings/original DLL cleanup checks passed.
