@@ -1325,3 +1325,17 @@ with no drops. The final resume verification failed with `step_not_resumed`,
 so this is a partial session, not a passing stepping/recovery acceptance test.
 See [receipt](controlled_release_observation.json). Cleanup restored the bottle,
 saves, settings and original DLL. The resume failure needs a separate diagnosis.
+
+A diagnostic retry of the same three-release procedure resumed successfully
+without fallback. Each release contained one BeforeSimulation callback and
+complete physics batches of 2, 7 and 7 substeps. See
+[retry receipt](controlled_release_resume_retry.json), which also records elapsed
+and derivative intervals. This establishes a successful recorded session but
+does not explain the earlier resume failure. Release count alone therefore
+cannot specify fixed simulated duration or deterministic replay.
+
+On `step_not_resumed`, the host now reports `frame_wait_succeeded`, the recorded
+`baseline_group`, and counter snapshots `before_clear` and `before_fallback`.
+`after_wait` is included only when that wait succeeded, avoiding an uninitialized
+or failed-read snapshot. These are sequential diagnostic reads, not an atomic
+state capture. Recovery behavior was not changed by adding the diagnostics.

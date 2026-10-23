@@ -1,0 +1,120 @@
+{
+  "kind": "controlled_release_resume_retry",
+  "session_success": true,
+  "releases": [
+    {
+      "request_token_gap": 9,
+      "before_calls": 1,
+      "physics_calls": 2,
+      "selected_substeps": 2,
+      "elapsed_intervals": [
+        0.0103676999,
+        0.0103676999
+      ],
+      "derivative_intervals": [
+        0.0207353998,
+        0.0207353998
+      ],
+      "input_matches_callback_return": true,
+      "complete_substep_ordinals": true
+    },
+    {
+      "request_token_gap": 5,
+      "before_calls": 1,
+      "physics_calls": 7,
+      "selected_substeps": 7,
+      "elapsed_intervals": [
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989
+      ],
+      "derivative_intervals": [
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701
+      ],
+      "input_matches_callback_return": true,
+      "complete_substep_ordinals": true
+    },
+    {
+      "request_token_gap": 6,
+      "before_calls": 1,
+      "physics_calls": 7,
+      "selected_substeps": 7,
+      "elapsed_intervals": [
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989,
+        0.00952380989
+      ],
+      "derivative_intervals": [
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701,
+        0.0666666701
+      ],
+      "input_matches_callback_return": true,
+      "complete_substep_ordinals": true
+    }
+  ],
+  "resume": {
+    "fallback_restore": false,
+    "engine": {
+      "group": "00000001",
+      "held": false,
+      "step": 546,
+      "paused_job": 541,
+      "end_frame": 546
+    }
+  },
+  "before_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 9,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "physics_probe": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 42,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 42,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 42,
+    "other_calls": 0
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Successful retry does not explain the earlier step_not_resumed failure.",
+    "One BeforeSimulation callback per release observed; physics subdivision remains variable.",
+    "Elapsed interval variation is measured, but its causal dependence on hold duration was not isolated.",
+    "No fixed-duration or deterministic replay guarantee."
+  ]
+}

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Controlled-release diagnostic retry succeeded: one BeforeSimulation callback
+per release, complete physics batches 2/7/7, resume without fallback, cleanup
+passed. Earlier resume failure remains unexplained. Added bounded resume-failure
+state diagnostics without changing recovery. Recorded timing reinforces that
+world-update release count does not specify fixed simulation duration; timing
+selection is the next determinism boundary. See
+[retry receipt](../native/snow_host/controlled_release_resume_retry.json).
+
 Controlled-release QPC windows now join host commands to recorded callbacks.
 Three live releases each contained one actor BeforeSimulation call and complete
 physics batches of 3, 3 and 2 substeps; request-token gaps were 8, 7 and 5.

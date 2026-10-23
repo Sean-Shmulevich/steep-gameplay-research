@@ -674,8 +674,14 @@ static int release_hold(Out *o, const char *reason) {
         }
         fallback = 1;
     }
-    if (!wait_frames(&c, b.end_frame, 3, 1000) || c.step == b.step) {
-        put(o, "\"error\":\"step_not_resumed\",\"fallback\":%s", fallback ? "true" : "false"); return 0;
+    int resume_wait_ok = wait_frames(&c, b.end_frame, 3, 1000);
+    if (!resume_wait_ok || c.step == b.step) {
+        put(o, "\"error\":\"step_not_resumed\",\"fallback\":%s,\"frame_wait_succeeded\":%s,\"baseline_group\":", fallback ? "true" : "false", resume_wait_ok ? "true" : "false");
+        put_group(o, pause_baseline); put(o, ",");
+        put_counters(o, "before_clear", &a); put(o, ",");
+        put_counters(o, "before_fallback", &b);
+        if (resume_wait_ok) { put(o, ","); put_counters(o, "after_wait", &c); }
+        return 0;
     }
     host_paused = 0;
     if (reason) snprintf(last_recovery, sizeof last_recovery, "%s", reason);
