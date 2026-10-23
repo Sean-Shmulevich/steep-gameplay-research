@@ -2129,3 +2129,47 @@ This gives an end-to-end structural join from executor -> concrete participant
 -> guarded operation -> deferred producer -> participant container. It is not
 an observed execution trace. Next decode container publication/clearing and the
 selected operation, while separately locating manager-list membership writers.
+
+
+## Compact participant container is a deduplicating key set
+
+The insertion helper at RVA `0x108d060` branches on the low three bits of the
+container word. Tag 6 uses a compact sorted array of unsigned 64-bit keys. Its
+allocation begins with `count - 1`, followed by keys. A matching key returns 0
+without insertion. A missing key is inserted at its unsigned-order position and
+returns 1; storage may be shifted in place or reallocated using size-class data.
+An empty zero container allocates the first compact entry. Inserting a new key
+into a 31-key compact container takes a tag-7 promotion path, whose internals
+remain outside this implementation. Duplicate lookup at 31 keys stays compact.
+
+```text
+compact_insert(sorted_unique_keys, key):
+    index = unsigned_lower_bound(sorted_unique_keys, key)
+    if index points to key:
+        return unchanged, 0
+    if count == 31:
+        return promote_and_insert(...)  # separate unresolved representation
+    insert key at index, preserving unsigned order
+    return updated, 1
+```
+
+`engine.command_compact_set.compact_command_insert` implements logical compact
+membership and duplicate behavior. It rejects unsupported promotion rather than
+inventing the tag-7 representation. Its [27-case instruction comparison](../../native/snow_host/command_compact_set_validation.json)
+executes the original insertion routine with allocation/free services intercepted.
+Cases include empty, existing and 30/31-key sets, duplicate insertion, unsigned
+high-bit and maximum keys. All returned membership/result pairs match. Synthetic
+allocation succeeds; native allocation failure and concurrency are untested.
+
+For this participant, producer keys are holder addresses, so repeated submission
+of the same holder is coalesced in the compact representation. This is not FIFO
+command storage. Logical key ordering is established; full iterator behavior and
+publication during iteration still need separate validation.
+
+The compact clear branch frees the compact allocation and zeros the container
+word; it does not visibly walk keys to release holder references. The insertion
+routine likewise stores raw keys. Temporary retain/release around submission and
+around each execution callback does not prove a queued holder remains owned for
+the entire deferred interval. That lifetime must come from another owner or
+contract; it is unresolved. Do not infer persistent retain semantics merely from
+the fact that the key denotes a holder.

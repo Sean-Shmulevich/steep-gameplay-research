@@ -1,0 +1,15 @@
+{
+  "evidence": "Original compact insertion instructions with intercepted allocation/free services",
+  "cases": 27,
+  "all_passed": true,
+  "model_compared": true,
+  "span": {
+    "rva": "0x108d060",
+    "length": 833,
+    "sha256": "981c840f79ff3902b99facc2795c27fd1f57c412c7528a09517670b5dd7632fc"
+  },
+  "limitations": [
+    "Successful synthetic allocations only; failures and tag-7 promotion excluded.",
+    "No concurrent mutation, iterator, holder lifetime or manager registration proof."
+  ]
+}
