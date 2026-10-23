@@ -860,6 +860,74 @@ establish ordering and retirement. Those slot numbers are build/type-specific,
 not generic mod API entry points. Existing engine-phase observations alone do
 not prove these operations are serialized there.
 
+### Component update route and after-physics job lead
+
+Further static tracing connects the owned component's markup update to a
+three-phase wrapper and a graph descriptor. On table RVA `0x1e789b8`:
+
+| Slot | Target | Inspected role |
+| --- | --- | --- |
+| 0x278 | 0x14038a590 | Component route selection |
+| 0x470 | 0x1405290a0 | Setup path calling controller slot 0x48 |
+| 0x488 | 0x1404fe3e0 | Releases controller and markup storage among other children |
+| 0x4a0 | 0x14034df20 | Three-phase update wrapper |
+| 0x4b0 | 0x14053c760 | Markup update |
+| 0x4b8 | 0x14053b950 | Middle phase, not decoded here |
+| 0x4c0 | 0x14053c610 | Includes controller slot 0x50 update |
+
+The wrapper reads one float32 time value from helper `0x140472b60` result+0x18,
+then invokes slots 0x4b0, 0x4b8 and 0x4c0 in order with that same value in XMM1.
+The controller update at slot 0x50 resolves to `0x1405ead50`. These observations
+establish a local call sequence, not a cross-job dependency or substep identity.
+
+Route selection first calls external helper `0x1406a30e0`, then reads flags:
+
+```python
+def component_route(component):
+    pre_helper_external(component)
+    if component.byte_14c != 0:
+        return special_path_external(component)
+    if component.byte_14d == 0:
+        return
+    if (component.byte_158 & 0x10) == 0:
+        parent = component.entity_at_10.pointer_at_60
+        if parent:
+            return alternate_path_external(parent + 0x110, component)
+        return
+    if (component.word_8 >> 26) & 1:
+        component.virtual_4a0()
+```
+
+The alternate path `0x140862860` brackets its inner helper with lock-like calls
+on receiver+0xd80. This is not evidence that the direct route, listener
+registration, or cleanup shares that lock. Its full operation remains external.
+[32 original-instruction cases](../../native/snow_host/markup_update_route_validation.json)
+exercise the flag combinations and actual three-phase wrapper with external
+helpers and phase bodies intercepted. Phase order and identical float32 argument
+bits pass; no original phase body, listener mutation or live job ran.
+
+Graph setup around `0x14090207d` constructs a job at graph+0x7218 with name
+`AfterPhysicPropsUpdate` and label `PropsUpdateAfterPhysics`. It stores the
+callback function `0x1408c2080` in descriptor graph+0x73b0. That function:
+
+1. Gets the entity from its captured graph receiver's first pointer.
+2. Uses entity+0x11e0 as a cached component pointer, populating it through
+   `0x14139fb20` and `0x1408e3300` when null.
+3. Reads cached-component+0x70 and, if nonnull, tail-calls its virtual slot 0x278.
+
+This is a concrete **candidate** job-to-markup route. It is not yet proved that
+cached-component+0x70 equals the owned component in our captured session, that
+its flags choose the direct path, or that this callback executes during the
+notification of interest. The earlier AI preupdate membership does not establish
+this after-physics execution either.
+
+Next read-only check: freshly resolve graph/entity, verify the job descriptor,
+join entity+0x11e0 then cached-component+0x70 to the known owned component, and
+record the route flags with before/after ownership guards. Then qualify a bounded
+job callback capture to observe entry/return and correlate with motion/physics.
+Successful sequential pointer checks would establish a session identity join,
+not synchronization or permission to call subscribe/unsubscribe at that phase.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and

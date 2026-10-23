@@ -363,3 +363,12 @@ synchronization/lifetime boundary covering registration, growth and removal, or
 qualify a stable callback boundary. The tested recorder core does not supply
 that lifetime guarantee. Actual notification firing and emitting-job attribution
 remain the target, not another endpoint-only capture.
+
+### Candidate after-physics route into markup update
+
+[Component update tracing](../docs/reconstruction/CENTRAL_IMPULSE.md#component-update-route-and-after-physics-job-lead)
+identifies AfterPhysicPropsUpdate's cached-entity callback as a candidate producer.
+The owned component has a flag-selected route to markup/middle/controller phase
+calls. Thirty-two isolated instruction cases qualify that local route. Next
+verify the cached receiver and flags live, then observe this specific job. No
+live attribution or subscribe/unsubscribe synchronization is established yet.

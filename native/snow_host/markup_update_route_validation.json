@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "evidence": "Original component route and three-phase update wrapper, external helpers and phase bodies intercepted",
+  "cases": 32,
+  "direct_cases": 2,
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "1754b1cbd6b9c93bf93f2c334a619302ccdfdd7fd42dbd8626df9235cc79001e",
+  "instruction_sha256": {
+    "0x38a590": "fb1dfc0896fd0f400812b43edc23d39ecd303aed45723e29b36ce52b2a56687d",
+    "0x34df20": "ae30d904f63a72daf8fbabd4fc9661fe5eeec442b1be3cbf1f24a0807f90b3c8",
+    "0x90214b": "9d56442f6e07d0a8a8902e7ccf9b7c75e708f11f9f7fd3174d6f9d1df2d13b64"
+  },
+  "findings": [
+    "Direct route invokes slots 4b0,4b8,4c0 in order with identical low float32 time bits.",
+    "Alternate route and disabled flags do not invoke direct wrapper in this fixture."
+  ],
+  "limitations": [
+    "Static job descriptor join not executed by these cases.",
+    "Live flags, cached component identity, execution thread and job ordering remain unverified.",
+    "No synchronization, native listener registration or owner lifetime qualification."
+  ]
+}

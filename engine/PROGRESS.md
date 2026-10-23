@@ -6870,3 +6870,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Located cleanup slot 0x18 and registration slot 0x48 on the live-identified controller table. Cleanup removes the nine registered descriptors, including IDs 84/92, through the same owner field. Virtual caller scheduling remains unresolved; this is static evidence, not a live lifecycle trace.
 - Six original dispatch-loop cases with synthetic callback mutations establish reloaded-array/count behavior. Self-removal can skip a swapped-in listener; append can run the new listener in the current notification. The vector object stays allocated in these fixtures.
 - Recorder callbacks should only record and request deferred shutdown. Actual attach/detach still needs an outside-dispatch lifetime boundary. Next tracing is the concrete controller registration/cleanup virtual calls and component markup update, not arbitrary native calls from the existing engine-phase callback.
+
+### Markup update wrapper and after-physics job lead
+
+- Traced owned-component slot 0x278 through flag-controlled routing to slot 0x4a0, whose wrapper calls markup/middle/controller phases in order with one float32 time argument. Thirty-two original-instruction cases validate branches and argument/order with external phase bodies intercepted.
+- Graph setup registers callback 0x8c2080 in AfterPhysicPropsUpdate / PropsUpdateAfterPhysics. It follows graph -> entity -> cached component at +0x11e0 -> receiver at +0x70 -> slot 0x278. This is a static candidate, not a live job-to-owner join.
+- Found the component setup call into controller slot 0x48 and child-release slot 0x488. Direct-route synchronization and controller cleanup calling phase remain unresolved.
+- Next is a bounded read-only join of the after-physics descriptor/cached receiver and route flags. Do not install a listener merely because this candidate phase is named after physics.
