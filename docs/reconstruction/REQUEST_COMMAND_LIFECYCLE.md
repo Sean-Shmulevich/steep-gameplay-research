@@ -2,7 +2,8 @@
 
 This guide connects the recovered command and request paths relevant to a future
 mod-command API. It describes one concrete callback caller and a shared downstream
-request mechanism. It is not a general safe-mutation API, a complete scheduler,
+loading-request mechanism. The engine command queue and loading request owner
+are distinct objects. It is not a general safe-mutation API, a complete scheduler,
 or evidence of original-engine equivalence. All checks described here are static
 analysis or original-instruction emulation with labeled adapters, not live game
 validation of these request paths.
@@ -14,7 +15,7 @@ flowchart TD
     A[Callback descriptor] --> B[Counter-driven engine command queue]
     B --> C[Engine command dispatcher]
     C --> D[Selected callback body]
-    D --> E[Downstream request pool admission]
+    D --> E[Loading request pool admission]
     E --> F[Four pending categories]
     F --> G[Ready ring]
     G --> H[Active request consumer]
@@ -42,6 +43,69 @@ shutdown remain explicit boundaries.
 
 These module names and Python interfaces are our design. Native fields, routines
 and verification receipts are documented in the linked detailed sections below.
+
+## Loading owner and execution route
+
+A static ownership audit now connects the downstream request owner to the named
+`Loading Thread`. This is stronger than guessing from neighboring strings:
+
+- Initialization allocates an object of size `0x338`, calls its constructor, stores
+  it in the downstream singleton, and passes the name `Loading Thread` to thread
+  setup with value 3.
+- The constructor installs the vtable whose slot `+8` is the thread wrapper and
+  whose slot `+0x10` is the run method. Nearby profiling labels identify
+  `::Engine::Loading::LoadingThread::Init` and `ThreadRun`.
+- The wrapper writes the object's thread classification into TLS and invokes
+  slot `+0x10`, between the `+0x18` and `+0x20` virtual hooks.
+- The run method directly invokes the same request consumer already reconstructed
+  here. Thus the downstream callback has an established loading-thread route;
+  it is not automatically a physics-phase callback.
+
+Readable run-method pseudocode, omitting profiling and TLS setup:
+
+```text
+configure_thread_service(1)
+while not owner.stop:
+    old = atomic_fetch_add_i32(owner.wake_counter, -1)
+    # Native CMP/JNS: test the sign of wrapped (old - 1), not signed old < 1.
+    if sign_bit(wrap_i32(old - 1)):
+        wait_service(owner.wake_event)
+    auxiliary_service(owner)
+    prepare_requests(owner)
+    consume_requests(owner)
+    global_followup_service()
+
+if owner.active_request:
+    lock(owner.request_lock)
+    request = owner.active_request
+    owner.active_request = null
+    recycle_request(owner, request)
+    unlock(owner.request_lock)
+
+lock(owner.shutdown_registry_lock)
+for index in reversed(range(initial_shutdown_callback_count)):
+    # Registry base is reloaded before each indirect call.
+    call(owner.shutdown_registry[index].callback)
+unlock(owner.shutdown_registry_lock)
+```
+
+The outer loop does not recheck stop immediately after its wait. The consumer has
+its own stop gate. The shutdown active-record path recycles without directly
+calling the selected request callback. This reinforces the distinction between
+record retirement and context cleanup. Shutdown callback ownership, registry
+mutation and wait-service semantics are not yet reconstructed.
+
+Evidence anchors for this build: initializer `0x11a2060`, constructor
+`0x1188980`, vtable `0x28f1608`, wrapper `0x11e98f0`, run method `0x11ba990`,
+consumer `0x1199a20`. These are research identifiers, not portable API constants.
+The [static audit receipt](../../native/snow_host/loading_request_owner_validation.json)
+records fresh-image span hashes and direct calls. This is not a live thread-ID
+capture, emulated run-loop validation, or proof of exclusive thread affinity.
+
+For mod integration, retain the engine command dispatcher as a separate candidate
+execution boundary. Qualify its thread and held locks directly. Use this loading
+path for resource-lifecycle research; do not route generic player mutations through
+it solely because it can deliver a callback.
 
 ## What a mod receipt must distinguish
 
@@ -88,8 +152,8 @@ execution or authorize native injection/mutation.
 - [Context cleanup](ANIMATION_CONTEXT_RETIREMENT.md#request-callback-binding-and-context-cleanup)
 - [Acquisition and recycling](ANIMATION_CONTEXT_RETIREMENT.md#connected-acquisition-refusal-and-recycling)
 
-Next qualify auxiliary request preparation, cancellation and receiver creation,
-then test one pinned observation callback with explicit admission and completion
+Next test one pinned observation callback with explicit admission and completion
 receipts at a verified engine phase. Avoid using arbitrary gameplay mutation as
 the first proof. Scheduler stepping remains supporting instrumentation; the goal
-is reusable lifecycle and subsystem contracts for broader modding.
+is reusable lifecycle and subsystem contracts for broader modding. Continue loading
+preparation, cancellation and receiver-creation research as a separate workstream.

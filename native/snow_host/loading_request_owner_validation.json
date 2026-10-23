@@ -1,0 +1,54 @@
+{
+  "evidence": "Static loading-owner and consumer call-path audit; not execution emulation or live thread capture",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "owner_label": "Loading Thread",
+  "owner_vtable_rva": "0x28f1608",
+  "thread_wrapper_rva": "0x11e98f0",
+  "run_method_rva": "0x11ba990",
+  "consumer_rva": "0x1199a20",
+  "run_direct_calls": [
+    "0x11eda30",
+    "0x1c3d410",
+    "0x11989a0",
+    "0x1193b80",
+    "0x1199a20",
+    "0x1170690",
+    "0x1c3a280",
+    "0x11ade10",
+    "0x12213c0",
+    "0x1c3a280",
+    "0x12213c0"
+  ],
+  "spans": [
+    {
+      "rva": "0x11a2060",
+      "length": 100,
+      "sha256": "1976c1f22854fa8eb7c336d61a03a5f732ca662e03801cb9885f218055c463c7"
+    },
+    {
+      "rva": "0x1188980",
+      "length": 64,
+      "sha256": "b49830968be19fd4bc04c2d4fb4f7d36959b34a8c077b82a421e6d21181e04ce"
+    },
+    {
+      "rva": "0x11e98f0",
+      "length": 151,
+      "sha256": "071c829f2493903fe83ee944be66e180b60939f2632297ab79f428b3d9d5ec56"
+    },
+    {
+      "rva": "0x11ba990",
+      "length": 364,
+      "sha256": "8e2f7eb286c38fe72c5cf33e90987b0c86ba6a382055c2ba0519f630ef001b0e"
+    },
+    {
+      "rva": "0x28f1608",
+      "length": 143,
+      "sha256": "3b1d38cb3fec9077a72abb3015d9351515366ea711f16ace636b6d76ce530f28"
+    }
+  ],
+  "limitations": [
+    "Static path establishes a loading-thread route, not exclusive consumer thread affinity.",
+    "No live execution, native mutation safety, cancellation completion or module unload guarantee.",
+    "Thread startup, wait implementation and shutdown callback ownership remain unresolved."
+  ]
+}

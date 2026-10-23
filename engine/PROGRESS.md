@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Qualified downstream requests as a loading-thread subsystem. Fresh-image static
+audit connects allocation/constructor, installed vtable, named thread setup,
+wrapper dispatch and a direct run-method call to the recovered consumer. Added
+run-loop and shutdown pseudocode, including wake decrement sign-test semantics
+and active-record recycling without direct callback delivery. This is static
+evidence, not live thread affinity or new mutation permission. The next mod API
+proof remains observation at the separate engine command boundary.
+Static audit and repository packaging/link checks passed; no runtime code changed
+and no game launch was performed.
+
 Connected four-category request publication and pending-to-ready transfer. All 160
 original-instruction cases match category order, resource-preparation pass stop,
 wake coalescing and capacity-pressure accounting, including signed wake extremes.

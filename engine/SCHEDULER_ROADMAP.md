@@ -50,6 +50,12 @@ categories, ready/active consumption, context cleanup and record recycling.
 It distinguishes locally validated joins from opaque preparation/cancellation
 and native concurrency. Use it when designing command receipts and identity.
 
+The downstream request owner is now statically identified as the loading thread,
+including a direct run-method call to the recovered consumer. This qualifies the
+subsystem rather than widening mutation permission. Keep the engine dispatcher
+observation milestone independent of further loading internals. See the
+[loading execution route](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#loading-owner-and-execution-route).
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain
