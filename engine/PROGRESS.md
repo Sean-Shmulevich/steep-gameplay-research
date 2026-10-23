@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Live caller attribution passed: 43 graphics callback records, zero drops, all
+returning to the decoded main-delegate dispatcher call site. Original binding
+restored; simulation advanced afterward; launcher cleanup passed. This closes
+immediate caller provenance for one live capture, not worker-stack, job-counter,
+physics/input, or destruction-lifetime attribution. See the scheduler delegate
+guide and delegate_caller_live_validation.json. No movement/pause/debugger used.
+
 Added caller provenance to the native delegate recorder (record ABI 2), preserving
 bounded capture and original-call forwarding. Windows wrapper captures its return
 address; JSONL includes the ABI and caller field. Full independent suite passed:

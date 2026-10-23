@@ -664,3 +664,22 @@ fixture executable image, not the probe DLL. The portable threaded fixture also
 checks full-width caller preservation while closing during an active call.
 These are synthetic checks; no new game session was launched for this change.
 The controller refusal receipt retains its earlier source hashes and is historical.
+
+## Live caller attribution
+
+The [ABI 2 live receipt](../../native/snow_host/delegate_caller_live_validation.json)
+records 43 captured calls with zero drops during a configured 500 ms window.
+Every caller resolves to RVA `0x65b223`, immediately following the indirect call
+at `0x65b221` in the decoded graphics dispatcher. That call loads the main
+invoker from job +0x1b0, passes function storage at job +0x198, and masks the
+receiver context's low two bits. Recorded storage and receiver matched the
+selected graphics binding throughout this capture.
+
+This closes the immediate live caller-to-dispatcher join. It does not establish
+which worker wrapper invoked the dispatcher, an entire call stack, or a physics
+substep/input relationship. The original invoker was restored and engine steps
+advanced from 2014 to 2031 after restoration (1967 before capture). No movement,
+scheduler pause, or debugger attachment was used. The launcher stopped the game
+and verified saves, settings, and original DLL restoration. The next observation
+is job state before and after this now-attributed main call; completion accounting
+must still be distinguished from returning out of the main callback.

@@ -1,0 +1,48 @@
+{
+  "status": "live_graphics_delegate_caller_passed",
+  "record_abi": 2,
+  "sessions": 1,
+  "configured_capture_ms": 500,
+  "record_count": 43,
+  "dropped": 0,
+  "observed_thread_count": 1,
+  "caller_rvas": [
+    "0x65b223"
+  ],
+  "expected_return_site_rva": "0x65b223",
+  "interpretation": "Every captured wrapper return address follows the graphics dispatcher main-delegate indirect call. This identifies the immediate dispatch site, not the entire worker stack or physics/input phase.",
+  "capture_span_seconds": 0.4889993,
+  "observed_duration_microseconds": {
+    "min": 62.10000000000001,
+    "median": 74.7,
+    "max": 116.89999999999999
+  },
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "engine_steps": {
+    "before": 1967,
+    "after": 2014,
+    "later": 2031
+  },
+  "movement_input_sent": false,
+  "scheduler_pause_requested": false,
+  "debugger_attached": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_result_sha256": "576eeb8481267017f3d294958bb59c80526e1716ef92c145028851fba538a4fb",
+  "private_trace_sha256": "6e5320c8fed66e35ca7783af5f288dfc68db74107b2144043ccc79f463cc09a3",
+  "limitations": [
+    "One bounded normal-gameplay session; no destruction or owner replacement test.",
+    "No per-call job-counter capture yet.",
+    "No input-ingestion or physics-substep alignment.",
+    "Return address does not recover frames removed by tail calls.",
+    "Instrumentation affects duration; no uninstrumented performance claim.",
+    "Module remains pinned through process exit; unload safety is not established."
+  ]
+}
