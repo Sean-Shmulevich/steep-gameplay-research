@@ -1,0 +1,52 @@
+{
+  "evidence": "Original dispatch fragment and actual callback thunk, external graph queries and listener lookup intercepted",
+  "cases": 216,
+  "passed": true,
+  "dimensions": {
+    "link_count": [
+      -1,
+      0,
+      1
+    ],
+    "cached_byte": [
+      0,
+      1,
+      2
+    ],
+    "query_result": [
+      0,
+      1,
+      2
+    ],
+    "force_byte": [
+      0,
+      1
+    ],
+    "pending_index": [
+      -1,
+      4
+    ],
+    "query_backend": [
+      0,
+      1
+    ]
+  },
+  "callback_contract": [
+    "captured receiver with low two tag bits cleared",
+    "markup ID",
+    "sampled byte zero extended",
+    "uint32 sentinel 0xffffffff"
+  ],
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "76237474df8dc9454f7b3eb35acd60a7a326381d6e4892178e8bf69782062ff6",
+  "model_sha256": "f374e6f501cf757e770bb297287c896ffd83ae62cf901e25750cffaa13ce2379",
+  "instruction_sha256": {
+    "0x1539ff3": "7e92c369116dd18004ee3e809eb308538d9aa43be50b9931519324fb369a1874",
+    "0x397a20": "826a3efea5fdb48fbe836543661067996ea081feceb45c32cfe92e0b3557cfa8"
+  },
+  "limitations": [
+    "Graph query semantics, actual marker times and listener map lookup remain external.",
+    "One synthetic listener; reentrant listener mutation and multiple listener ordering not qualified.",
+    "No original-game notification firing or scheduler attribution."
+  ]
+}

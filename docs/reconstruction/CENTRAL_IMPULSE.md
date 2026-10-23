@@ -535,6 +535,68 @@ It remains a hypothesis until IDs 84/92 or their callbacks are observed alongsid
 the actor transition. The IDs are build-specific; authored markup/resource names,
 clip timing, live component ownership and notification scheduling remain open.
 
+### Markup dispatch and callback argument contract
+
+The registered-listener dispatch is now identified at `0x141539f90`. Its local
+notification decision is implemented by
+[`advance_markup_record`](../../engine/markup_notification.py). The dispatcher
+uses 20-byte markup records, with signed link count at `+0x10`, cached byte at
+`+0x0e`, force byte at `+0x0d` and pending index at `+8`. These are operational
+labels, not authored marker names.
+
+```python
+def process_markup(record, sampled_byte):
+    if record.link_count <= 0:
+        return  # no query, notification or cache write
+    notify = (sampled_byte != record.cached_byte or
+              (record.force_byte != 0 and record.pending_index != -1))
+    if notify:
+        notify_global_callback_if_present()
+        notify_registered_listeners(markup_id, sampled_byte, 0xffffffff)
+    record.cached_byte = sampled_byte
+    record.pending_index = -1
+```
+
+The actual query is external to this model. Record byte `+0x0c` chooses one of
+two sources: one helper's integer result becomes 0/1 by comparison with zero;
+the other helper's low byte is retained. The reconstructed decision preserves raw
+bytes instead of normalizing both paths. Nonpositive link counts leave cached
+state and pending index unchanged. A processed record clears the pending index
+even when no callback is emitted. Thus a forced repeated notification normally
+requires another producer to repopulate that index.
+
+The original dispatch accesses 40-byte listener entries. Each entry contains its
+copied 32-byte descriptor at `+8`. It clears the captured receiver's low two tag
+bits and invokes the descriptor thunk with markup ID, sampled byte, and sentinel
+`0xffffffff`. The actual shared thunk `0x140397a20` forwards these as:
+
+```text
+callback(captured_component, markup_id, sampled_byte, uint32(0xffffffff))
+```
+
+This identifies the origin of notification B's tested low-byte argument: it is
+the sampled markup value. It is not inherently "finished", "landed" or "jump".
+Both changes to true and changes to false can notify; the callback chooses its
+two motion routes from that value. The global callback runs before listener-map
+lookup. Listener count is reread after each invocation, so callback mutation and
+reentrancy cannot be replaced by an assumed immutable list without further work.
+
+[216 original-instruction cases](../../native/snow_host/markup_dispatch_validation.json)
+execute the dispatch fragment and actual shared thunk with synthetic records and
+one listener. External source queries and listener-map lookup are intercepted.
+They cross link counts -1/0/1, cached/query bytes 0/1/2, both query branches, force
+0/1 and pending -1/4. Callback arguments, notification decision and cache writes
+match the portable model. This is local instruction validation, not execution of
+an authored marker, full graph evaluation, or a live scheduler join.
+
+An upstream virtual callback at `0x14053c760` conditionally invokes slot `0x4e0`
+when receiver byte `+0x294` is nonzero, then dispatches the object at receiver
+`+0x6c0` through adapter `0x1405eab70`, which adds `0x18` and reaches this markup
+processor. It finally tail-calls another routine. This is an observation-point
+lead; its live relationship to the selected snow actor and enclosing job is not
+yet established. Do not hook the snow vtable at an inferred matching slot: the
+inspected snow table does not directly contain this callback target.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

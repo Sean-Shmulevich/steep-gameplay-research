@@ -6824,3 +6824,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Eight original-instruction constructor/registration cases pass with the registration callee intercepted. Verified descriptor function/receiver, low tag handling, numeric IDs, copied payload and null-owner suppression. No live notification or authored animation meaning claimed.
 - Registration copies the descriptor into listener storage. This rules out assuming that changing the original component descriptor after binding intercepts subscribed callbacks. Next hook work must follow the registered copy or a validated dispatcher.
 - Published the markup-to-motion pseudocode and retained external callees, boolean meaning, emitting job/thread and live attribution as unresolved. The live delay is not converted into an animation constant.
+
+### Markup notification decision and argument forwarding
+
+- Identified dispatcher and shared descriptor thunk. The callback boolean is a sampled markup value. Changed values notify, with an additional force/pending-index path for unchanged values. Both true and false changes are representable.
+- Added a portable local record-update kernel with explicit signed link counts, raw byte semantics and pending-index reset. External graph queries, listener lifecycle and scheduling remain outside the model.
+- 216 isolated original-instruction cases match notification decisions, cache writes and the actual thunk's receiver/ID/value/sentinel forwarding. One synthetic listener, intercepted queries/map lookup; no live marker execution claim.
+- Found an upstream virtual callback via receiver+6c0 but have not joined its owner to the selected snow actor or scheduler job. The known snow vtable does not directly contain this target, so no slot is assumed for a live hook.
