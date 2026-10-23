@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Cached input edge timestamps reconstructed: 512 complete original-updater
+cases match all arrays and clock fields. Held keys retain timestamps; ordinary
+and special-byte zero-to-nonzero edges refresh them. Secondary stamps read the
+root accumulated clock. Cache fill/copy order and updater scheduling remain
+open. See [timestamp edges](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#cached-input-timestamp-edges).
+
 Input ownership release now explains a freshness-cutoff writer: removing the
 last owner copies the service timestamp; removing an earlier owner preserves
 it. Backward search, duplicate retention and compaction match 1,456 original

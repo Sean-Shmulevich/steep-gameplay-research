@@ -1,0 +1,14 @@
+{
+  "evidence": "Complete original cache edge timestamp updater",
+  "cases": 512,
+  "passed": true,
+  "comparison": "All ordinary and special timestamp arrays and current/previous clock fields",
+  "substitutions": [
+    "Primary timer read supplies explicit uint64 value"
+  ],
+  "limits": [
+    "Synthetic cache bytes and root-clock value",
+    "No device cache fill or caller scheduling proof"
+  ],
+  "game_process": false
+}

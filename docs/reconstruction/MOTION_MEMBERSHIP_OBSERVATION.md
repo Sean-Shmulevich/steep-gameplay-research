@@ -2474,3 +2474,56 @@ This is an arithmetic consequence of the two routines, not proof of which
 menus or gameplay states acquire ownership, or whether a held key receives
 fresh timestamps without a new physical press. Those producer semantics are
 still required before interpreting it as a gameplay input rule.
+
+### Cached input timestamp edges
+
+[`refresh_button_timestamps`](../../engine/action_button_timestamps.py)
+reconstructs the complete updater at RVA `0x1179c50`. It saves previous clock
+values, calls timer wrapper `0x1c38ae0` for the primary current value at +0x250,
+and reads the global root clock's first uint64 for the secondary value at
++0x260. The global slot is the same +0x32fb438 used by the existing clock
+observer; that root field is accumulated ticks, not divided_ticks.
+
+For each of 256 ordinary cache bytes, the updater writes both timestamps only
+when current byte is nonzero and previous byte is zero. Current bytes start
+at +0x1c, previous bytes at +0x11c; timestamp arrays start at +0x268 and +0xa68.
+A continuously held nonzero byte, a release, or a change between two nonzero
+values retains the old timestamps.
+
+Eight special packet bytes at current packet+12..19 use the same nonzero edge
+rule against previous packet+12..19. This differs from the high-bit tests used
+by their boolean query: byte value 1 can stamp an edge without producing true
+in the high-bit query. Special timestamps occupy slots 0..7. Slots 8/9 stamp
+positive/negative signed packet dword +8 only when the previous dword is zero.
+A direct positive-to-negative or negative-to-positive transition does not
+refresh either slot in this routine. Current and previous packets begin at
+service+0x21c and +0x230.
+
+```text
+previous_clock = current_clock
+previous_secondary = current_secondary
+current_clock = timer_read()
+current_secondary = root.accumulated_ticks
+for each ordinary key and each of eight special bytes:
+    if current_byte != 0 and previous_byte == 0:
+        primary_stamp = current_clock
+        secondary_stamp = current_secondary
+if previous_signed_value == 0:
+    if current_signed_value > 0: stamp special slot 8
+    if current_signed_value < 0: stamp special slot 9
+```
+
+The [updater receipt](../../native/snow_host/button_timestamp_validation.json)
+compares 512 cases against the complete original routine. All 256 primary and
+secondary key stamps, ten primary and secondary special stamps, and current/
+previous clock values match exactly. Only the primary timer read is supplied;
+root-clock storage and cache arrays are synthetic fixtures. This proves local
+edge stamping, not who fills the cache or when the updater runs.
+
+Together with ownership release and strict freshness queries, this shows why
+a held key can remain suppressed after a top-owner release: this updater does
+not refresh its timestamp until the cache goes through zero and becomes
+nonzero again. Other cache resets or writers could alter that sequence, so
+physical re-press requirements and specific menu behavior remain unproved.
+Next: trace the updater's callers and current/previous cache-copy order to
+place these transitions relative to action queries and simulation work.
