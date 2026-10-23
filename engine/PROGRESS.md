@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved the callback worker's clock accessor to the ordinary world interval,
+joining the existing clock producer. Forty-nine composed cases now execute the
+original accessor, including null and float bit-pattern boundaries. The manager
+refresh callback ignores that float argument; directional ramps read divided
+ticks separately. This preserves the distinct timing sources for future capture.
+See [callback and ramp clocks](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#the-callback-interval-and-ramp-clock-are-separate-reads).
+
 Validated complete PreAI graph setup and category-pair setup in 32 original
 instruction cases, including original service bridges and configuration setters.
 Category 4 selects maximal chunk size with threshold zero and world clock

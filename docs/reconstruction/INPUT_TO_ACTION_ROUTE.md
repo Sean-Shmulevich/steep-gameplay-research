@@ -468,6 +468,49 @@ claims, original clock evaluation and live callback bodies remain outside this
 test. A count of zero is still only evidence that no records remain unclaimed;
 the maximal claim reduces it before running any action callbacks.
 
+## The callback interval and ramp clock are separate reads
+
+The category-job table's slot `0x88` selects accessor `0x66e4c0`:
+
+```text
+callback_interval(job):
+    clock = job.clock_pointer
+    return clock.interval if clock != null else +0.0
+```
+
+It loads the pointer at job `+0x1c0`, then copies the float32 at clock `+0x18`
+without arithmetic or filtering. Category-4 setup supplies `world+0x1048`,
+so this is the ordinary world interval at `world+0x1060`. The
+[existing world-clock producer](WORLD_CLOCK.md) derives it as
+`f32(processed_input_ms / 1000)`. Seconds are supported by that producer's
+arithmetic; this accessor does not compute a physics-substep interval.
+
+The worker reads the interval once before traversing its supplied record range.
+The callable invoker moves it into the callee's second argument register.
+The registered manager callback `0x4b4ba0` does not read that register: its
+inspected body performs exclusive accounting and calls the context-refresh
+routine using the manager receiver. Therefore this argument's presence alone
+does not establish how source processors measure time.
+
+In particular, the [directional ramp clock producer](MOTION_MEMBERSHIP_OBSERVATION.md#ramp-clock-producer-joins-the-existing-clock-tree)
+uses a separately selected object's divided ticks at clock `+8`, converted to
+seconds and differenced against a saved value. It does not use this callback's
+float interval. The two paths have distinct read sites and rounding behavior;
+their live selected-world identities must be observed before assuming equality.
+
+[Clock forwarding validation](../../native/snow_host/action_refresh_clock_validation.json)
+removes the clock-method substitution from the earlier 49-case composed
+setup/worker test. Original accessor, worker and invoker preserve positive and
+negative zero, ordinary finite values, negative values, infinity and a NaN
+payload at the final recording callback. Null clock returns positive zero.
+These are controlled bit-pattern fixtures, not observed gameplay intervals.
+Activation and the final callback remain substituted; original clock updates
+and action-source timing do not run in this test.
+
+For a future capture, record the callback clock identity and interval separately
+from the ramp's selected clock identity, divided ticks and saved ramp value.
+Neither quantity is an action-publication generation or proof of sample age.
+
 ## Next capture contract
 
 Once live access is available, extend the existing request/substep recorder
