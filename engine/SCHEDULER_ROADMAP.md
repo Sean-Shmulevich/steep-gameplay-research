@@ -156,3 +156,5 @@ Stop mode has concrete entry points: confirmed window close, a world-processing 
 **Native suspension demonstrated.** [Entering stop mode live](../docs/reconstruction/NATIVE_STOP_MODE.md) suspended world `Step` for 165 frames while the frame loop, rendering and `UpdateWhileEngineIsPaused` continued, and clearing it resumed `Step`. This advances gate 5 (native pause/single-step) from static routing to an observed boundary. Single-step timing, the native side effects and repeated-toggle stability remain before a modding release.
 
 **Native single-step demonstrated.** [35 of 35 released requests](../docs/reconstruction/NATIVE_STOP_MODE.md#single-step) executed exactly one world `Step` from held stop mode. Gate 5 now has an observed pause/step mechanism; its remaining items are native side effects, per-step time/substep/input accounting and an in-process trigger.
+
+Delegate ABI and job-type distinctions: [scheduler delegates](../docs/reconstruction/SCHEDULER_DELEGATES.md).

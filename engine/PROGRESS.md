@@ -1,5 +1,11 @@
 # Reconstruction progress and next work
 
+Connected branch dispatcher to the common delegate invoker in 16 original-code
+cases: low-two context tags are masked; only AL selects the two list-helper
+orders. Lock/predicate/helpers/unlock ordering validated with external services
+intercepted. This is not the graphics dispatcher; graphics upstream route still
+requires concrete job-table qualification. See SCHEDULER_DELEGATES.md.
+
 Graphics phase delegate invocation adapter verified in eight original-instruction
 cases: function-storage + receiver arguments become a tail call with exact
 receiver bits and caller return address. Constructor links this adapter to the

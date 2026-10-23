@@ -1,0 +1,22 @@
+{
+  "evidence": "Original branch dispatcher and delegate invoker; synthetic predicate and external list/lock services",
+  "cases": 16,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x11d14c0",
+      "length": 121,
+      "sha256": "2d332f732fd88aa0f62f89e06720d61f0e5b8ae690bc0f6a315f2e74cfa2bdb9"
+    },
+    {
+      "rva": "0x8ab390",
+      "length": 9,
+      "sha256": "c2b13b0a2d8635b4a691fc95c63ba2cf2f1482c419541597e898b96ad219cb93"
+    }
+  ],
+  "limitations": [
+    "This is branch dispatch, not proved as the graphics-job dispatcher.",
+    "List helper internals and locking are intercepted; no concurrent behavior proof.",
+    "Predicate returns normally; exception cleanup not tested."
+  ]
+}
