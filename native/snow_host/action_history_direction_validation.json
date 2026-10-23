@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "cases": 570,
+  "scope": "Original history sector reader including native acos compared with independent finite mathematical adapter",
+  "substitutions": [],
+  "game_process": false,
+  "coverage": [
+    "Strict magnitude threshold below/equal/above",
+    "All four sectors plus invalid selector 4",
+    "Two reference headings",
+    "19 directions including exact and neighboring 45/135 degree boundaries"
+  ],
+  "limits": [
+    "Planar synthetic finite nondegenerate directions only",
+    "Agreement in sampled cases does not establish bit-exact normalization/trig or all boundary decisions",
+    "Wrapper ownership gate and action timing not executed",
+    "No live player binding or scheduler cadence proof"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x9760a0",
+      "end_rva_exclusive": "0x976290",
+      "sha256": "3484f30b97204e9b2213a92a6f9fce616b2ef33a7688883602a3c93269308404"
+    }
+  ]
+}

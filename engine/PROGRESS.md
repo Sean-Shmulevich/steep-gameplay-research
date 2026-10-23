@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined the history reader to factory source type 4 and implemented its
+four-sector predicate. It reads newest magnitude and pre-curve history B, not
+curve-remapped history C. All 570 original reader comparisons and fifteen
+portable history tests pass; native comparison corrected the initial cross-product
+sign interpretation. The caller's edge/hold timing is statically identified but
+not validated. Live player binding and physics ingestion remain open. See
+[history direction consumer](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#history-direction-reader-and-action-source).
+
 Validated the complete history path with constructor-derived curves and no
 substituted function calls in the tested native path: 768 updates, 256 sequences.
 Raw/magnitude/time histories match exactly; maximum feature-lane error is

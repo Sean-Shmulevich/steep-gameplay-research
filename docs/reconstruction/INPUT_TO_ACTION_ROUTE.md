@@ -1429,3 +1429,62 @@ stick or player action.
 The next scheduler question remains the consuming job and sample age. Closing
 these local numerical dependencies does not establish ingestion order relative
 to physics substeps, live configuration ownership or safe global quiescence.
+
+## History direction reader and action source
+
+A concrete action consumer joins the history layout to the existing source
+factory. Evaluation callback `0x4b2a20`, installed by builder `0x457910` at
+main table `0x1e6b7e0` slot `+0x10`, calls wrapper `0x48b710`. The wrapper
+checks ownership suppression through `0x957e70`; when allowed, it selects
+`source + 0x10 + channel * 0x3c0`, passes the auxiliary magnitude threshold
+container at history `+0x3a0`, and passes reference vector `source +0x790` to
+reader `0x9760a0`. Channel comes from configuration `+0x28`. This is a type-level
+consumer join, not proof of the active player's selected binding.
+
+The reader uses newest magnitude at history `+0x2e0` and newest feature **B** at
+`+0x1a0`. It does not read the curve-remapped feature C at `+0x240`, older samples
+or history timestamps. Its finite, nondegenerate mathematical interpretation is:
+
+```text
+if newest_magnitude <= threshold_container.values[0]: return false
+reference = normalize4(reference)
+direction = normalize4(history_B[0])
+dot = dot4(reference, direction)
+if dot >= 1: selected = 0
+else if dot <= -1: selected = 1
+else:
+    angle = acos(dot)
+    if cross(direction.xyz, reference.xyz).z < 0: angle = -angle
+    if -pi/4 < angle < pi/4: selected = 0
+    else if -3*pi/4 < angle < -pi/4: selected = 2
+    else if pi/4 < angle < 3*pi/4: selected = 3
+    else: selected = 1
+return selected == requested_sector
+```
+
+Strict angle inequalities matter. Exact computed boundary angles fall through
+to sector 1. Normalization and acos rounding can decide which side a nominal
+45-degree input reaches. The independent adapter retains float32 arithmetic
+where decoded and labels scalar normalization/trig as approximations. With +Y
+reference, +X selects 3, -X selects 2, +Y selects 0 and -Y selects 1. The initial
+static sign interpretation reversed sectors 2/3; original-instruction comparison
+caught it, and the implementation now uses direction cross reference.
+
+[Reader implementation](../../engine/action_history_direction.py) exposes
+`history_direction_matches(snapshot, reference, magnitude_threshold=..., sector=...)`.
+It rejects degenerate directions after the magnitude gate rather than inventing
+native NaN behavior. [Reader validation](../../native/snow_host/action_history_direction_validation.json)
+executes the full original reader including acos without substituted calls.
+All 570 cases agree: below/equal/above magnitude threshold, four sectors plus an
+unknown selector, two reference headings and 19 directions including boundary
+angles and their nearby angles. This is sampled predicate agreement, not proof
+of bit-exact SIMD math across all inputs. Fifteen portable history tests pass.
+
+The calling action evaluator adds temporal behavior. Static inspection shows
+configuration `+0x30` selects a rising-edge route for 0, a held route for 1, and
+a falling-edge route for 2. Held mode uses timing configuration `+0x34/+0x38`
+and action timestamps `+0xc0/+0xc8`. It writes result byte `+0x30`, caches the
+current predicate at byte `+0xb8`, and publishes newest magnitude at `+0x60`
+after a second ownership check. The timing arithmetic, clock units, missing
+configuration path and composed action behavior have not yet been validated.
+These are next local dependencies, not a completed player-physics ingestion join.
