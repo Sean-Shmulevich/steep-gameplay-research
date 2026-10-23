@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Closed the derived-input stage: XY pairs yield one digital direction above a
+strict 0.3f threshold, with Y winning magnitude ties. Added a composed selected
+publication -> direction generation -> edge timestamp API. All bytes match 737
+original-segment sequences with only the timer supplied, including threshold
+neighbors and NaNs. Polling/arbitration and physics scheduling remain open. See
+[derived directions](../docs/reconstruction/INPUT_UPDATE_ORDER.md#derived-directional-inputs).
+
 Reconstructed root-cache timestamps after publication: one clock read, 32
 ordinary and eight derived zero-to-nonzero edges; held/released inputs retain
 stamps. 512 complete original-helper cases match with only timer supplied.

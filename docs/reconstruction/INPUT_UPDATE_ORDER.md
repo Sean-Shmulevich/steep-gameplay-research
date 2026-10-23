@@ -731,3 +731,65 @@ states, zero time, full uint64 time and unrelated raw data preservation. Public
 sequence tests compose publication and stamping across press, held-value change,
 release and repress, checking both edge stamps and previous-clock transfer.
 The derived-input producer, timer units and scheduler cadence remain unresolved.
+
+
+## Derived directional inputs
+
+Helper `0x11798d0` converts each published vector's X/Y pair into at most one
+active derived byte. It first copies all eight current derived bytes at +0x7c8
+to previous at +0x7d0 and clears current. For each pair, its rule is:
+
+```text
+if abs(x) > float32(0.3) or abs(y) > float32(0.3):
+    if abs(x) > abs(y):
+        direction = positive_X if x > 0 else negative_X
+    else:
+        direction = positive_Y if y > 0 else negative_Y
+    current_derived[vector_index * 4 + direction] = 1
+```
+
+Direction indices are negative Y=0, negative X=1, positive Y=2, positive X=3.
+The first four bytes correspond to vector +0x1f0; the next four to +0x200. Only X
+and Y participate. Z and W do not affect this helper. Threshold equality stays
+inactive, and equal active magnitudes select Y. There is no hysteresis or
+normalization. These bytes encode digital directions alongside unchanged analog
+values; this does not establish a deadzone in the analog steering path. Physical
+axis meanings such as left/right/up/down require the device mapping.
+
+The constant is float32 bits 0x3e99999a. The original converts components to
+double, clears their double sign bits, then converts back before comparisons.
+For ordinary float32 values this gives exact magnitude. Unordered comparisons
+are significant: if X exceeds threshold but Y is NaN, the axis comparison falls
+to Y, whose positive comparison fails, producing the negative-Y byte. If X is
+NaN and Y is inactive, neither ordered threshold comparison passes and no byte
+is set. Floating-point exception flags/traps are outside the portable model.
+
+[`derive_input_directions`](../../engine/action_cache_directions.py) implements
+this byte production on raw cache snapshots. Its companion
+`publish_derived_and_stamp(root, selected, now)` composes the now-reconstructed
+tail in the original order: selected-cache publication, direction generation,
+then edge stamping. Inputs are detached stable snapshots and an explicit opaque
+uint64 timer value. The result preserves unrelated bytes and the caller's raw
+analog encodings. It does not choose a device, invoke device polling, modify a
+live process, or decide scheduler cadence.
+
+A direction held over several updates retains its press timestamp. A switch
+from positive X to positive Y releases the X byte and stamps the new Y byte;
+returning to X stamps X again. The source analog vector is still available
+unchanged throughout. Ordinary button history comes from publication, while
+derived history comes from this helper.
+
+The [composed-tail receipt](../../native/snow_host/input_cache_directions_validation.json)
+compares 737 cases against the original publication slice followed by complete
+direction and timestamp helpers in native order. Every byte matches after
+direction generation and again after stamping. The validator sequences these
+original segments; it does not execute the complete root callback. Only the
+timer wrapper is supplied. Inputs include float32 threshold neighbors, signed
+zeros, diagonal ties, infinities, quiet/signaling NaNs and random raw encodings.
+Public tests include repeated directions and direction changes through the
+composed API. Exception flags and traps are not compared.
+
+This closes the previously missing derived-input stage in the publication and
+root timestamp sections. Remaining upstream work is device virtual +0x90
+production, arbitration gates and source-query consumption. Scheduling relative
+to physics remains a separate unresolved join.

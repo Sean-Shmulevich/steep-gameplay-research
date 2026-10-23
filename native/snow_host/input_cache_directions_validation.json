@@ -1,0 +1,28 @@
+{
+  "evidence": "Original publication slice then complete derived-direction and timestamp helpers in native order",
+  "cases": 737,
+  "passed": true,
+  "comparison": "Every cache byte after direction production and after timestamps",
+  "substitutions": [
+    "timestamp wrapper returns supplied uint64"
+  ],
+  "inputs": [
+    "Threshold predecessor/equality/successor for both signs",
+    "Signed zero, ties, infinities, quiet and signaling NaNs",
+    "Random raw float encodings and unrelated bytes"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x11798d0",
+      "end_rva_exclusive": "0x11799d6",
+      "sha256": "6d36d1ef2862d1a6838e9da6977d08d2e020460000fb014d4ba93c92c90e2942"
+    }
+  ],
+  "limits": [
+    "Original segments sequenced by validator, not full root callback execution",
+    "No device polling or arbitration",
+    "Floating-point exception flags/traps not compared",
+    "No scheduler cadence or physical key mapping established"
+  ],
+  "game_process": false
+}
