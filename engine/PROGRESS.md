@@ -6401,3 +6401,17 @@ matching faults and no winning-handler phase before the same launcher exit.
 Cleanup passed. No constructor caller, restoration or exit policy is claimed.
 The next lead is bounded rejected-exception metadata; the current trace cannot
 identify which predicate excluded the observed exceptions.
+
+### Cross-page execute fault corrected; live input-table constructor captured
+
+Bounded exception metadata exposed an execute fault whose instruction starts
+two bytes before the watched page. The old matcher rejected that valid spanning
+instruction. An authored fixture reproduces the rejection; a 14-byte preceding
+start allowance fixes it while preserving the in-page fault-address gate.
+Fifteen classifier checks and before/after cross-page fixtures pass, following
+17 metadata/regression cases and five decoder tests. The corrected live run
+captured the neighboring input-ownership table constructor, restored RX, reached
+scheduler readiness and passed cleanup. The stack return slot matches the known
+input-table allocation caller. Command-manager construction remains uncaptured:
+earlier shared-page code wins the one-shot observation. This was an instrumentation
+bug; these exits do not establish an intentional game protection decision.

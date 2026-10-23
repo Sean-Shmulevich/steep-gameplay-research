@@ -1,0 +1,93 @@
+{
+  "evidence": "Live execute fault spanning the watched page boundary; fixture reproduction and corrected observation",
+  "before": {
+    "handler_entries": 2,
+    "matched_entries": 0,
+    "events": [
+      {
+        "code": "0x406d1388",
+        "reason": "not_access_violation"
+      },
+      {
+        "code": "0xc0000005",
+        "reason": "instruction_outside_page"
+      }
+    ],
+    "execute_fault_relative_to_page": 0,
+    "instruction_relative_to_page": -2,
+    "watchdog_reason": "launcher_exited_3",
+    "cleanup": {
+      "ok": false,
+      "error": "watchdog ended before navigation readiness",
+      "bottle_stopped": true,
+      "saves_restored": true,
+      "settings_restored": true,
+      "original_dll_verified": true
+    }
+  },
+  "synthetic_before": {
+    "captured": false,
+    "fixture_recovery": true,
+    "rejection_reason": 7
+  },
+  "synthetic_after": [
+    {
+      "fixture": "snow-cross-page-classify.exe",
+      "output": "15 classifier cases passed",
+      "passed": true
+    },
+    {
+      "fixture": "snow-cross-page-after.exe",
+      "output": "captured=1 fixture_recovery=0 reason=0",
+      "passed": true
+    }
+  ],
+  "after": {
+    "armed": 1,
+    "captured": 1,
+    "exact_constructor": 0,
+    "restore_returned": 1,
+    "final_protection": 32,
+    "backend_calls": 2,
+    "backend_last_status": "00000000",
+    "stack_valid": 1
+  },
+  "live_caller_join": {
+    "instruction_rva": "0x646ffe",
+    "requested_constructor_rva": "0x647650",
+    "neighbor_entry_rva": "0x646fe0",
+    "stack_return_slot": "rsp+0x28",
+    "return_rva": "0x671d50",
+    "static_call_rva": "0x671d4b",
+    "receiver_equals_saved_rbp": true,
+    "later_manager_was_null": true,
+    "interpretation": "Captured neighboring input ownership table constructor, with return slot consistent with its known allocator caller; not the command manager constructor."
+  },
+  "trace_after": {
+    "version": 2,
+    "handler_entries": 19,
+    "matched_entries": 1,
+    "phase": 4,
+    "restore_error": 0
+  },
+  "cleanup_after": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Live register and stack reads are not a full unwind or lifetime proof.",
+    "Static instruction decoding used the analyzed image; the neighboring instruction was not separately byte-fingerprinted live.",
+    "One corrected live pass does not establish universal game compatibility.",
+    "The observation is one-shot and captures earlier code sharing the page."
+  ],
+  "source_hashes_after_correction": {
+    "native/snow_host/snow_first_execute.c": "231a15c7b2fca24b472fcadc5efde4a44be293d6c3ac8c950facc548febce630",
+    "native/snow_host/snow_first_execute.h": "9880cb45e1685151106f0c40737c37e58cab0d09455a41fe9705efa55530b32e",
+    "tests/fixtures/snow_execute_cross_page_fixture.c": "5a7591cdffbf8e04305a6b0dddea90126cb0810b033bd023b614ce56e673675e",
+    "tests/fixtures/snow_execute_classify_fixture.c": "68709de6f018944097760bcc334026741e81ed0fbed1f30b54a9ec1f15221bd8"
+  }
+}

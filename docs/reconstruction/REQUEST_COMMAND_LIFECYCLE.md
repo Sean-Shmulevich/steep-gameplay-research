@@ -1673,3 +1673,44 @@ covers private/image execution, cancellation, concurrency, injected backend
 failures, arming races and mapped-record survival after process termination.
 Next is bounded metadata for rejected exceptions, rather than changing the
 matching predicates without evidence.
+
+## Boundary-spanning execute fault explains the missed capture
+
+Version-2 tracing retains bounded rejected-exception metadata. The next live
+run recorded a non-access-violation exception, followed by an execute access
+violation whose fault address was the start of the watched page but whose RIP
+was two bytes before it. The old matcher rejected that second event solely
+because RIP was outside the page. The analyzed instruction at 0x646ffe is a
+three-byte register move, so its final byte crosses into page 0x647000.
+
+The [cross-page receipt](../../native/snow_host/cross_page_execute_live_validation.json)
+includes an authored reproduction. With the old matcher, the observer captured
+nothing and a fixture-only fallback restored RX. With the corrected matcher,
+the same fixture captured the preceding-page RIP and restored RX without that
+fallback. Fifteen classifier checks cover the maximum 14-byte preceding start
+allowance and the rejected 15-byte case. The fault address must still be inside
+the watched page, the access must still be execution, and noncontinuable faults
+remain rejected. This is an observer correction, not a decoded game policy.
+
+The corrected live run captured RIP 0x646ffe, restored RX with two successful
+backend calls, and reached scheduler readiness. Cleanup passed. This demonstrates
+a concrete fault in our instrumentation and recovery after correcting it; the
+earlier exits should not be treated as evidence of an intentional protection
+termination at this point. No general conclusion about other protection behavior
+follows. The exact requested command constructor was not captured.
+
+### Captured neighbor joins existing input-ownership construction research
+
+The routine starting at 0x646fe0 is the previously decoded input-ownership table
+constructor. Its prologue pushes one register and reserves 0x20 stack bytes,
+placing its caller return slot at the captured RSP+0x28. That slot contained
+image RVA 0x671d50, immediately after the static call at 0x671d4b to 0x646fe0.
+Captured RCX equaled saved RBP, consistent with this constructor's receiver
+setup. The later command-manager read was still null; it is a separate read,
+not an atomic ordering proof.
+
+This gives a live execution/caller join for the input-ownership constructor
+described in [input ownership layout](INPUT_UPDATE_ORDER.md#ownership-table-layout-and-reader-bank).
+It does not transfer that table's 0xfe60 allocation or lifetime to the command
+manager. The next target-selection problem is to arm after earlier shared-page
+construction, or observe a more selective entry, without relying on a timed sleep.

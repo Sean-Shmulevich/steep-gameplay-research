@@ -1,6 +1,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include "snow_first_execute.h"
 #include <string.h>
+#include <stddef.h>
+_Static_assert(sizeof(SnowExecuteExceptionTrace)==64,"trace event layout");
+_Static_assert(offsetof(SnowFirstExecuteTrace,exceptions)==24,"trace header layout");
+_Static_assert(sizeof(SnowFirstExecuteTrace)==536,"trace file layout");
 /* 0 unused, 1 armed, 2 restoring, 3 captured, 4 cancelled, 5 failed. */
 static volatile LONG state;
 static uintptr_t page;
@@ -14,10 +18,40 @@ static SnowFirstExecuteTrace *trace;
 int snow_first_execute_trace(SnowFirstExecuteTrace *out){
     MEMORY_BASIC_INFORMATION info;
     uintptr_t address=(uintptr_t)out;
-    if(!out || address%sizeof(LONG) || InterlockedCompareExchange(&state,0,0)!=0 ||
+    if(!out || address%sizeof(LONG64) || InterlockedCompareExchange(&state,0,0)!=0 ||
        !VirtualQuery(out,&info,sizeof info) || info.State!=MEM_COMMIT || info.Protect!=PAGE_READWRITE ||
        sizeof *out>info.RegionSize-(address-(uintptr_t)info.BaseAddress))return 0;
-    memset(out,0,sizeof *out);InterlockedExchange(&out->version,1);trace=out;return 1;
+    memset(out,0,sizeof *out);out->capacity=SNOW_EXECUTE_TRACE_CAPACITY;
+    InterlockedExchange(&out->version,2);trace=out;return 1;
+}
+unsigned snow_first_execute_classify(const EXCEPTION_POINTERS *e,uintptr_t watched,SIZE_T size){
+    if(!e || !e->ExceptionRecord || !e->ContextRecord)return 1;
+    const EXCEPTION_RECORD *r=e->ExceptionRecord;
+    if(r->ExceptionCode!=EXCEPTION_ACCESS_VIOLATION)return 2;
+    if(r->NumberParameters<2)return 3;
+    if(r->ExceptionFlags&EXCEPTION_NONCONTINUABLE)return 4;
+    if(r->ExceptionInformation[0]!=8)return 5;
+    if(r->ExceptionInformation[1]<watched || r->ExceptionInformation[1]-watched>=size)return 6;
+    /* x86-64 instructions can span up to 15 bytes. An execute AV fetching the
+     * watched page can retain RIP in the preceding page, up to 14 bytes earlier.
+     * The fault address must still be inside the watched page (checked above). */
+    uintptr_t rip=e->ContextRecord->Rip;
+    if(rip<watched?watched-rip>14:rip-watched>=size)return 7;
+    return 0;
+}
+static void trace_exception(const EXCEPTION_POINTERS *e,unsigned reason){
+    if(!trace)return;
+    LONG index=InterlockedIncrement(&trace->handler_entries)-1;
+    if(index<0 || index>=SNOW_EXECUTE_TRACE_CAPACITY)return;
+    SnowExecuteExceptionTrace *slot=&trace->exceptions[index];slot->reason=reason;
+    if(e && e->ExceptionRecord){
+        const EXCEPTION_RECORD *r=e->ExceptionRecord;
+        slot->code=r->ExceptionCode;slot->flags=r->ExceptionFlags;slot->parameter_count=r->NumberParameters;
+        if(r->NumberParameters>0)slot->operation=r->ExceptionInformation[0];
+        if(r->NumberParameters>1)slot->address=r->ExceptionInformation[1];
+    }
+    if(e && e->ContextRecord)slot->instruction=e->ContextRecord->Rip;
+    InterlockedExchange64(&slot->published,1);
 }
 int snow_first_execute_backend(SnowExecuteProtect protect,void *context){
     if(!protect || InterlockedCompareExchange(&state,0,0)!=0)return 0;
@@ -62,14 +96,10 @@ static void snapshot_stack(void){
     if(!record.stack_valid)memset(record.stack,0,sizeof record.stack);
 }
 static LONG CALLBACK fault(EXCEPTION_POINTERS *e){
-    if(trace)InterlockedIncrement(&trace->handler_entries);
-    if(!e || !e->ExceptionRecord || !e->ContextRecord)return EXCEPTION_CONTINUE_SEARCH;
+    unsigned reason=snow_first_execute_classify(e,page,page_size);
+    trace_exception(e,reason);
+    if(reason)return EXCEPTION_CONTINUE_SEARCH;
     EXCEPTION_RECORD *r=e->ExceptionRecord;
-    if(r->ExceptionCode!=EXCEPTION_ACCESS_VIOLATION || r->NumberParameters<2 ||
-       (r->ExceptionFlags&EXCEPTION_NONCONTINUABLE) || r->ExceptionInformation[0]!=8 ||
-       r->ExceptionInformation[1]<page || r->ExceptionInformation[1]-page>=page_size ||
-       e->ContextRecord->Rip<page || e->ContextRecord->Rip-page>=page_size)
-        return EXCEPTION_CONTINUE_SEARCH;
     if(trace)InterlockedIncrement(&trace->matched_entries);
     LONG seen=InterlockedCompareExchange(&state,2,1);
     if(seen==2)return EXCEPTION_CONTINUE_EXECUTION;

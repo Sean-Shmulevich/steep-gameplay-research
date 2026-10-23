@@ -5,7 +5,8 @@
 /* Authored diagnostic, not recovered engine behavior.
  * One arm per process. Caller retains the entire dedicated RX private/image page
  * until process exit, excludes protection changes, and serializes arm/cancel.
- * The first execution ANYWHERE on the page wins, before the instruction runs.
+ * The first matching execute fault touching the page wins, before the instruction
+ * runs. Its RIP can start up to 14 bytes before the page for a spanning instruction.
  * Observer module is pinned. No unload support or instruction/register edits.
  * Cancel/read are controller operations; never invoke them from a fault handler.
  * A process watchdog remains necessary: this instrumentation can stall/fail.
@@ -30,9 +31,21 @@ typedef BOOL (*SnowExecuteProtect)(void *context,void *address,SIZE_T size,DWORD
  * lets diagnostics survive process exit without performing file IO in the VEH.
  * phase: 0 no winning fault, 1 winner, 2 stack sampled, 3 restoring,
  * 4 capture published, 5 restoration failed. Not an engine state/API. */
+#define SNOW_EXECUTE_TRACE_CAPACITY 8
 typedef struct {
-    volatile LONG version, handler_entries, matched_entries, phase, restore_error;
+    volatile LONG64 published;
+    uint64_t code, flags, parameter_count, reason, operation, address, instruction;
+} SnowExecuteExceptionTrace;
+typedef struct {
+    volatile LONG version, handler_entries, matched_entries, phase, restore_error, capacity;
+    SnowExecuteExceptionTrace exceptions[SNOW_EXECUTE_TRACE_CAPACITY];
 } SnowFirstExecuteTrace;
+/* Pure classification; no reads through game pointers. Reasons: 0 match,
+ * 1 missing exception/context, 2 not AV, 3 insufficient parameters,
+ * 4 noncontinuable, 5 not execution access, 6 fault outside page,
+ * 7 RIP outside the page and its 14-byte instruction-start allowance.
+ * The first eight handler entries retain metadata, not just matching faults. */
+unsigned snow_first_execute_classify(const EXCEPTION_POINTERS *exception,uintptr_t page,SIZE_T size);
 int snow_first_execute_trace(SnowFirstExecuteTrace *trace);
 int snow_first_execute_backend(SnowExecuteProtect protect,void *context);
 int snow_first_execute_arm(void *address);

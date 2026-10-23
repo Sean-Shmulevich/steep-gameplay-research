@@ -1,0 +1,100 @@
+{
+  "evidence": "Authored version-2 exception metadata fixture validation under Wine",
+  "native_cases": [
+    {
+      "case": "classifier",
+      "passed": true
+    },
+    {
+      "case": "False-cold",
+      "passed": true
+    },
+    {
+      "case": "False-neighbor",
+      "passed": true
+    },
+    {
+      "case": "False-concurrent",
+      "passed": true
+    },
+    {
+      "case": "False-cancel",
+      "passed": true
+    },
+    {
+      "case": "False-restore_failure",
+      "passed": true
+    },
+    {
+      "case": "False-arm_race",
+      "passed": true
+    },
+    {
+      "case": "True-cold",
+      "passed": true
+    },
+    {
+      "case": "True-neighbor",
+      "passed": true
+    },
+    {
+      "case": "True-concurrent",
+      "passed": true
+    },
+    {
+      "case": "True-cancel",
+      "passed": true
+    },
+    {
+      "case": "True-restore_failure",
+      "passed": true
+    },
+    {
+      "case": "True-arm_race",
+      "passed": true
+    },
+    {
+      "case": "idle",
+      "passed": true,
+      "phase": 0,
+      "events": 0,
+      "handler_entries": 0
+    },
+    {
+      "case": "capture",
+      "passed": true,
+      "phase": 4,
+      "events": 1,
+      "handler_entries": 1
+    },
+    {
+      "case": "unrelated",
+      "passed": true,
+      "phase": 0,
+      "events": 1,
+      "handler_entries": 1
+    },
+    {
+      "case": "overflow",
+      "passed": true,
+      "phase": 0,
+      "events": 8,
+      "handler_entries": 10
+    }
+  ],
+  "classifier_checks": 13,
+  "decoder_tests": 5,
+  "source_hashes": {
+    "native/snow_host/snow_first_execute.c": "6d6e9bdb9ad3805a37b16dcb19f67aeb58fea74bd083402f5637429e7932f341",
+    "native/snow_host/snow_first_execute.h": "3103acc98cc8621519fb47d8b1b21b2c9398af09f419937ec92daab3cd6f8d31",
+    "tests/fixtures/snow_execute_classify_fixture.c": "c8ca7d12366f0be31e1426301794d58c64577608e18a0445d0491d7a49567b68",
+    "tests/fixtures/snow_execute_backend_fixture.c": "b668f7f3dd7c2e99967f836c83f80de2b0ec37fda0c922f1b0d362d5461a7ef0",
+    "tests/fixtures/snow_execute_trace_persistence.c": "9055b420daf2b73318e382855567d5aab5e1af88a9381d818706649324cc694a",
+    "scripts/decode_execute_trace.py": "bc9320d0fffc2d2b5934607ee23eae58d785093de68f5ef9f55f35344fb44e9f"
+  },
+  "limitations": [
+    "These are authored fixtures, not evidence of original engine behavior.",
+    "Metadata is limited to the first eight handler entries.",
+    "Raw live addresses must remain private."
+  ]
+}

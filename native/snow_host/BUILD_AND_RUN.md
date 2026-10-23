@@ -641,21 +641,37 @@ an early game exit that prevents the worker's final report. They do not establis
 capture or restoration; only the final report can report those observations.
 
 Set `[execution] trace=1` to create `.execute.json.trace.bin` before arming.
-This optional diagnostic is five little-endian signed 32-bit fields: version,
-handler-entry count, matching-fault count, phase and restoration error. Version
-is 1. Phase 0 means no winning fault was recorded; 1 means a winning fault; 2
-means stack sampling returned; 3 means restoration is about to be attempted;
-4 means capture was published; 5 means restoration failed. Phase 0 does not
-prove the game executed no faults: another handler could consume them first.
+Version 2 has a 24-byte little-endian header containing six signed 32-bit fields:
+version, handler-entry count, matching-fault count, phase, restoration error and
+event capacity. Capacity is 8. Phase 0 means no winning fault was recorded; 1
+means a winning fault; 2 means stack sampling returned; 3 means restoration is
+about to be attempted; 4 means capture was published; 5 means restoration failed.
+Phase 0 does not prove the game executed no faults: another handler could consume
+them first. The decoder also accepts the older 20-byte version-1 counter record.
 
-The handler updates only mapped counters with interlocked operations. It does
-not open/write/flush files or allocate memory for this trace. Individual fields
-are atomic, but their collection is not a consistent multi-field snapshot.
-The view stays mapped until process exit. Trace configuration failure declines
-the experiment when explicitly requested. Existing tracing is opt-in, and the
-trace never changes game registers or exception handling decisions.
+Eight 64-byte event slots follow the header, making the file 536 bytes. Each slot
+contains eight 64-bit fields: published, exception code, flags, parameter count,
+classification reason, parameter 0, parameter 1 and instruction address. The
+parameters mean access kind and fault address only for an access violation; other
+exception codes define their own meanings. Slots are reserved with an interlocked
+counter and published once after writing. Further events increment the counter
+but do not overwrite the first eight slots. Unpublished slots must be ignored.
 
-Decode the diagnostic with `python3 scripts/decode_execute_trace.py TRACE_FILE`.
-Inspect it after process exit for a stable final file; reads during execution
-can combine counter values from different instants. The file contains diagnostic
-counters only, not a register dump or a reconstructed scheduler state.
+The handler does not open/write/flush files or allocate memory for this trace.
+Counters and slot publication are atomic, but the full record is not a consistent
+multi-field snapshot. The view stays mapped until process exit. Trace setup
+failure declines the experiment when explicitly requested. Tracing does not
+change game registers, matching predicates or exception handling decisions.
+
+Decode with `python3 scripts/decode_execute_trace.py TRACE_FILE`. Inspect after
+process exit for a stable final file. Version 2 contains process-local addresses
+and raw exception parameters: keep the file and decoded output private. Public
+receipts should summarize classifications without publishing raw address data.
+
+The execution matcher also accepts an instruction starting in the preceding
+14 bytes when the reported execute-fault address lies inside the watched page.
+This handles a maximum-15-byte x86-64 instruction spanning the page boundary.
+It does not accept a fault address outside the watched page, relax the execute
+access requirement, or claim the captured instruction is the requested target.
+The cross-page fixture compares the old rejection with the corrected capture
+and verifies restoration without fixture recovery after the correction.

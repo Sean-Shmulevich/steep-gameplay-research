@@ -1943,3 +1943,14 @@ selected for the player. The existing manager/binding and composite observers
 can enumerate candidates, but a vector/directional child receipt is not a
 history-sector action receipt. Live selection must retain the actual table and
 callback identities rather than relabeling an existing child to fit this reader.
+
+## Live input-ownership constructor caller observation
+
+A [bounded shared-page observation](../../native/snow_host/cross_page_execute_live_validation.json)
+captured execution at 0x646ffe inside the table constructor 0x646fe0. The stack
+slot implied by its prologue, RSP+0x28, contained 0x671d50, matching the return
+after the known allocator caller's direct call at 0x671d4b. RCX equaled saved
+RBP at this point. This adds live caller/receiver consistency to the static
+construction research above. It does not observe the full allocation sequence,
+prove the final global publication, or establish table destruction/lifetime.
+The observation restored executable protection and scheduler readiness passed.

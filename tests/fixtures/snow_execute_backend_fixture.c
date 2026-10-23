@@ -43,7 +43,7 @@ int main(int argc,char **argv){
     assert(argc==2 || argc==3);mode=argv[1];
     assert(!snow_first_execute_trace(NULL));
     trace=VirtualAlloc(NULL,sizeof *trace,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);assert(trace);
-    assert(snow_first_execute_trace(trace) && trace->version==1);
+    assert(snow_first_execute_trace(trace) && trace->version==2);
     nt_protect=(Protect)(uintptr_t)GetProcAddress(GetModuleHandleA("ntdll.dll"),"NtProtectVirtualMemory");assert(nt_protect);
     const unsigned char code[]={0xb8,42,0,0,0,0xc3},neighbor[]={0xb8,99,0,0,0,0xc3};
     if(argc==3){
