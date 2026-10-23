@@ -3490,3 +3490,40 @@ service order. Negative/unaligned differences test arithmetic, not valid pool
 membership. Five public tests include the consumer-callback count-restoration
 case. Token services and pool lookup remain supplied. No live launch, concurrent
 CAS contention, payload destructor or scheduler-wide drain is established.
+
+## Holder pool lookup arithmetic
+
+The previously supplied pool locator `0x119e460..0x119e4c0` is now reconstructed
+in `engine.holder_pool_lookup`. Registry +0xe8 points to a contiguous descriptor
+array and uint16 +0xf2 gives its length. Each descriptor is 16 bytes: uint64 base
+at +0, uint32 capacity at +8, and the head/link field at +0xc used by cleanup.
+The first match wins; an empty list or no match returns null.
+
+```text
+for pool in descriptors:
+    delta = signed64(uint64(holder_address - pool.base))
+    index = truncate_toward_zero(delta / 24)
+    if uint32(index) < pool.capacity:
+        return pool
+return null
+```
+
+This is **not a strict pointer-membership validator**. No alignment check occurs.
+Offsets from -23 through +23 divide to zero, so a nonempty descriptor can match
+an address just before its base. The low32 comparison also admits quotient wrap:
+an address `base + 24 * 2^32` can select index zero. These examples describe raw
+instruction behavior, not legitimate holder locations. Independent mod admission
+must not use this lookup alone as an identity, liveness or ownership guard.
+
+The [lookup receipt](../../native/snow_host/holder_pool_lookup_validation.json)
+compares 4,200 complete original-instruction cases with no substituted callees:
+105 synthetic descriptor layouts and 40 addresses, including signed boundaries,
+first-match overlaps, empty lists and quotient wrap. Seeded generated cases are
+recorded in the private validator. Four public tests include composing this
+lookup with cleanup's free-list update. Descriptors are supplied synthetic data;
+their original allocation/population and synchronization remain unresolved.
+
+Cleanup `0x11943b0` dereferences the returned descriptor without a null test.
+Consequently a failed lookup is not a native graceful refusal contract. The
+Python locator returns None, and callers must not invent a successful recycle
+from that result. Native invalid-input failure behavior was not exercised.

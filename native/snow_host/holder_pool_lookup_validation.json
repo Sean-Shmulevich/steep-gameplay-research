@@ -1,0 +1,16 @@
+{
+  "evidence": "Complete original pool locator compared with independent arithmetic model; synthetic descriptors",
+  "cases": 4200,
+  "returns_match": true,
+  "random_seed": 119460,
+  "layout_count": 105,
+  "address_count": 40,
+  "routine_rva": "0x119e460",
+  "routine_sha256": "8030d370b4ed917d0480fbb34b397d6249127efe704e9a6641a779318186f7df",
+  "model_sha256": "d09deaaa41145f66fca50803d894dbafba509dcf420efecb695a98ef5bdfae27",
+  "limitations": [
+    "Synthetic addresses are arithmetic tokens, not live allocated objects.",
+    "Lookup does not validate alignment, full-width membership, liveness or retention.",
+    "Descriptor population, allocation and concurrent mutation unresolved."
+  ]
+}

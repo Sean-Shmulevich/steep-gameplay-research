@@ -6527,3 +6527,11 @@ token-range conditions and pool-link update. All 1,568 original-instruction case
 match state and supplied-service order. Five public tests include consumer callback
 reacquisition refusing detachment. Token helpers, pool ownership and native
 concurrency remain open; local recycling does not prove payload destruction.
+
+### Holder pool locator reconstructed
+
+Replaced the opaque local pool-selection rule with the original first-match
+signed-difference /24 and low32 comparison. All 4,200 complete instruction cases
+match; four public tests cover boundaries, overlaps and cleanup composition.
+Lookup does not validate alignment or full-width membership. Descriptor origins,
+liveness and synchronization remain unresolved. No live game launched.

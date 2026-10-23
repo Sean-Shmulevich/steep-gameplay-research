@@ -89,3 +89,9 @@ token-release, token-removal and pool-location services. It models eligibility,
 payload detachment, flag changes and pool-link publication on normal return.
 Detached/recycled diagnostic values describe local operations, not native return
 values or payload destruction. Pool membership and synchronization are external.
+
+`holder_pool_lookup.locate_holder_pool` scans at most 65,535 supplied descriptors
+and returns the first whose uint32 capacity exceeds the low32 signed /24 index.
+It reproduces loose arithmetic, including unaligned and wrapped matches. It is
+not an API pointer validator or lifetime pin. No-match returns None; native
+cleanup has no observed null guard before using this result.
