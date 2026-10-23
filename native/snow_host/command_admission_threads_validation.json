@@ -1,0 +1,38 @@
+{
+  "evidence": "Authored native admission adapter tested by actual host pthread producers with retained synthetic storage",
+  "passed": true,
+  "scenarios": 3,
+  "producers": 4,
+  "attempts_per_producer_per_scenario": 256,
+  "total_attempts": 3072,
+  "capacities": [
+    1,
+    7,
+    64
+  ],
+  "initial_cursor": "capacity-1",
+  "checks": [
+    "Admitted total equals capacity",
+    "No duplicate or refused descriptor published",
+    "Count and pending budget equal admitted total",
+    "Final write cursor wraps to initial cursor",
+    "Temporary cleanup runs after submitting thread unlocks",
+    "Descriptor context identities preserved"
+  ],
+  "sources": [
+    {
+      "path": "native/snow_host/snow_command_admission.c",
+      "sha256": "a3d1ab213bf084a96402f8ec7f1dbdc50c1c84b18ead351e62542dfc3dd6e2fe"
+    },
+    {
+      "path": "tests/fixtures/snow_command_admission_threads_fixture.c",
+      "sha256": "93e831b4186c4d062f0c6e72acbeeace8a994048db2798c1001ace8c9ef1605c"
+    }
+  ],
+  "limitations": [
+    "Authored host adapter and pthread locks; original game producer and Windows ABI not exercised.",
+    "Storage, contexts and callbacks retained for the whole test; no teardown or lifetime acquisition.",
+    "No consumer, stale-binding transition, callback execution or other native producers tested.",
+    "Bounded schedules do not prove starvation freedom or arbitrary interleavings."
+  ]
+}

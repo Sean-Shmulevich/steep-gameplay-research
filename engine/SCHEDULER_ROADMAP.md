@@ -200,3 +200,15 @@ Stop mode has concrete entry points: confirmed window close, a world-processing 
 **Native single-step demonstrated.** [35 of 35 released requests](../docs/reconstruction/NATIVE_STOP_MODE.md#single-step) executed exactly one world `Step` from held stop mode. Gate 5 now has an observed pause/step mechanism; its remaining items are native side effects, per-step time/substep/input accounting and an in-process trigger.
 
 Delegate ABI and job-type distinctions: [scheduler delegates](../docs/reconstruction/SCHEDULER_DELEGATES.md).
+
+## Admission concurrency checkpoint
+
+The authored C admission adapter now has a
+[competing-host-producer fixture](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#authored-admission-with-competing-host-producers):
+four threads, three capacities and 3,072 attempts preserve capacity, unique
+publication, budget accounting and cleanup-after-unlock. Storage and callbacks
+are retained, and no consumer or teardown runs. This closes a host-adapter test
+gap, not the native manager lifetime, stale-generation or phase qualification.
+The [resource retirement guide](../docs/reconstruction/RESOURCE_RETIREMENT.md)
+separately maps the now-connected cleanup/destruction evidence; queue emptiness
+still does not authorize unloading.

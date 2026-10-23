@@ -6620,3 +6620,11 @@ architecture records. A process-local matching SDK selection resolved them; no
 source or system configuration change was needed. These tests validate the
 independent implementation and authored fixtures, not full original-engine
 coverage. No game launch in this checkpoint.
+
+### Authored command admission tested with competing producers
+
+Added four-thread host fixture across capacities 1/7/64 and 3,072 attempts. Capacity,
+unique descriptors, budget accounting, wrapped cursor and temporary cleanup after
+unlock all pass. Both serial/threaded admission tests pass with warnings-as-errors
+native builds. Retained synthetic storage, no consumer or teardown; native manager
+lifetime and execution-phase proof remain open. No game launched.

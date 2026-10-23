@@ -2085,3 +2085,32 @@ runs the qualified lock implementation through wait/wake boundaries with one or
 two synthetic waiting contexts. It verifies local ownership/counter transitions;
 OS wait/wake bodies and scheduling remain supplied. This does not close manager
 lifetime, concurrent producer/consumer correctness or native admission safety.
+
+## Authored admission with competing host producers
+
+The [threaded fixture](../../tests/fixtures/snow_command_admission_threads_fixture.c)
+runs the existing C admission adapter with four actual pthread producers. Each
+producer attempts 256 distinct descriptors per scenario. Capacities 1, 7 and 64
+start empty with both cursors at capacity-1 to include wrap. A condition-variable
+start gate releases all producers; queue operations use a real host mutex.
+
+Across 3,072 attempts, admitted totals equal capacity, all admitted IDs appear
+exactly once, refused IDs do not appear, count and deferred budget equal admitted
+total, and the final write cursor wraps to its initial position. Thread-local
+lock depth verifies record copying under the queue lock and temporary cleanup
+after the submitting thread unlocks. Descriptor context identity is checked both
+in cleanup and published slots. No invoker executes.
+
+The [receipt](../../native/snow_host/command_admission_threads_validation.json)
+records this authored-adapter evidence. Run it through
+`python3 -m unittest discover -s tests -p 'test_command_admission*.py'`.
+The fixture compiles with warnings as errors and has a 15-second process timeout
+in its public test. On macOS use a compiler-compatible SDK as described in the
+[runtime README](../../engine/README.md).
+
+Manager, array, descriptor contexts and callback code remain retained throughout.
+There is no consumer, binding invalidation or teardown in this fixture. It does
+not execute the original producer, validate Windows ABI, repair competing native
+producers' full-queue behavior, or establish a safe live submission phase. It
+strengthens the authored adapter's capacity/accounting behavior with competing
+host producers; native lifetime and admission qualification remain open.
