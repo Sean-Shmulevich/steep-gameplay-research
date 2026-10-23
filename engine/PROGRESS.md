@@ -6686,3 +6686,10 @@ it to the full scanner in10 more. Tag clearing precedes context release, byte
 accounting follows it, and scanner/fallback nesting reaches lock depth two.
 Clearing prevents the inert-callback cross-region redispatch. Context virtual
 release, initialized-TLS slow path and concurrent reclamation remain external.
+
+Linked one descriptor family through constructor-retained context to its concrete
+release slot. Reconstructed exact flags==1 dispatch and executed both encoded
+bridges in1024 controlled cases, preserving arguments, return, stack and saved
+registers. The private image's unmodified decoded target is unmapped; target
+substitution occurred only in the emulator. Live API identity and actual release
+remain unresolved. No game launched or modified.

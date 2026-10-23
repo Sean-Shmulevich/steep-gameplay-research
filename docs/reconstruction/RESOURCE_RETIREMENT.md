@@ -428,3 +428,48 @@ registry lock reaches depth two. This supersedes any interpretation of the older
 inert-callback duplicate as native duplicate release; that earlier receipt remains
 valid for its explicitly supplied callback behavior. Initialized TLS, locks and
 context release remain supplied, so this is not live reclamation proof.
+
+## Concrete context release policy
+
+For one statically linked descriptor family, the context behind region release
+is now identified through construction rather than guessed from a virtual slot:
+
+1. Outer initialization `0x1222fe0` publishes root+0x3490 through global
+   `0x3308d50` and installs context vtable `0x29002c0` there.
+2. Constructor `0x1222aa0` loads that global and passes it to `0x1222e20`.
+3. The latter stores the context at outer+0x28 and passes it to embedded descriptor
+   construction `0x1222c60`, which stores it at descriptor+0x28.
+4. Descriptor teardown `0x1223ac0` passes descriptor+0x28 into the region scanner.
+5. The fallback invokes context vtable slot+0x10, which this table maps to
+   `0x1221260`.
+
+This establishes a selected construction/destruction family, not the identity of
+all descriptors or a current live context. The corresponding independent policy
+is [`release_context_region`](../../engine/allocation_context_release.py):
+
+```text
+if flags == 1:
+    return target(address, supplied_uint32_size, 0x4000)
+else:
+    return target(address, 0, 0x8000)
+```
+
+The equality is exact. Upstream fallback uses a bit0 test, so flag3 bypasses its
+tag/accounting edits but selects this context's second branch. Scanner reason2
+also selects the second branch. Its size argument to the external target is zero,
+while the fallback still subtracts the original dispatched byte count from the
+metadata field after the call returns. Do not merge these different sizes.
+
+Both encoded bridges read a slot at `0x377f31d` and reach the same decoded target.
+In the unmodified private analysis image that target is unmapped, so it cannot be
+identified as a live operating-system routine from this capture. No API name or
+OS release semantics are assigned solely from the numeric arguments.
+
+[Full context/bridge comparison](../../native/snow_host/allocation_context_release_validation.json)
+passes1024 cases across all flag bytes, zero/max uint32 sizes and two supplied
+return values. Both original encoded bridges execute; an emulator-only slot
+substitution routes them to a controlled target. Arguments, return value, stack
+restoration and nonvolatile registers match. No live process or game file was
+patched. Actual external target identity, OS behavior and failure effects remain
+open. Public composed tests show that the fallback's accounting size survives the
+context's zero-size dispatch, but do not prove physical memory reclamation.

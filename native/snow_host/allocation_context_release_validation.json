@@ -1,0 +1,18 @@
+{
+  "evidence": "Complete selected context release routine and both encoded bridges; decoded target supplied in emulator",
+  "cases": 1024,
+  "arguments_return_stack_and_nonvolatile_registers_match": true,
+  "entry_rva": "0x1221260",
+  "encoded_slot_rva": "0x377f31d",
+  "synthetic_slot_substitution": true,
+  "executed_instruction_sha256": "730b89d11dfdd105992915de79d90a6af1a179dad2c876e50adcaf42b184e07c",
+  "executed_instruction_count": 113,
+  "model_sha256": "567b6092e041eb3017cb9e87e870e6ce6c9256c3ec74ab6629005dc325c256a3",
+  "static_context_vtable_rva": "0x29002c0",
+  "limitations": [
+    "Unmodified private image decodes an unmapped target; live target identity and operating-system release are not proved.",
+    "Encoded slot substituted only inside emulator, not in any live process or game file.",
+    "Static constructor family establishes one context implementation, not all allocators or current live objects.",
+    "External target body supplied; success/failure effects and memory reclamation remain unknown."
+  ]
+}

@@ -166,3 +166,9 @@ from current uint64 field10 afterward. Bit0 bypasses tag/accounting edits. Zero
 size triggers inclusive terminator scanning when a record exists; nonzero size
 uses at least one tag and otherwise floor(size/65536). Nested registry locking is
 required when composed with the scanner. No actual OS release is implemented.
+
+Selected allocation-context release: `release_context_region` calls a supplied
+target with address, original uint32 size and0x4000 only when flags equals1; all
+other flag bytes use address, zero and0x8000. This is one statically connected
+context family. It does not implement or identify a live OS API. The upstream
+fallback's bookkeeping size remains independent of the target's size argument.
