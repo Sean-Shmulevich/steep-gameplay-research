@@ -644,6 +644,61 @@ descriptors are verified, but the listener entries are not yet read. The next
 capture must inspect or trace registered notification delivery, retaining this
 ownership chain and the existing motion/physics request correlation.
 
+### Bounded registered-listener observation
+
+[`observe_markup_listeners`](../../engine/markup_listener_observation.py) reuses
+the inspected compact/radix map decoder to follow dispatcher `+0x60` by numeric
+markup ID. The returned map value is a listener-vector pointer on this route,
+not an action object despite the shared decoder's historical `action` field name.
+The observer reads the vector header at `+8`, count at `+0x12`, and each 40-byte
+entry's table plus copied descriptor. Returned receiver values have their two
+tag bits separated; dispatch-presence is reported without calling any function.
+
+Callers supply an exact `read(address, size)` transport and 1–16 current
+identity/ownership byte guards. The default listener cap is 16, with an allowed
+maximum of 128. Total work is capped at 320 reads / 49,152 bytes. The reader
+rechecks the map result, vector header, descriptor bytes, markup header/record
+and external guards. It rejects incomplete reads, excessive counts and changed
+storage. Missing keys, present-null values and unsupported map forms remain
+distinct. An empty vector does not cause its data pointer to be dereferenced.
+
+```python
+result = observe_markup_listeners(
+    read, dispatcher, 92, current_identity_guards, max_listeners=16)
+if result["status"] == "found":
+    for entry in result["entries"]:
+        # Compare function, receiver and thunk with the verified build/owner.
+        inspect(entry)
+```
+
+The output contains private runtime addresses and should remain outside the
+findings repository. Matching reads do not pin listener allocation, prove
+atomicity or demonstrate callback execution. A callable-looking descriptor is
+not authorization to invoke it. Public tests cover compact-map copies, receiver
+tags, dispatch-presence checks, missing/null/unsupported/empty cases, count limits,
+failed reads and changes to descriptors, headers or identity guards. The existing
+map decoder retains its separate radix validation.
+
+The [live listener receipt](../../native/snow_host/markup_listeners_live_validation.json)
+now verifies the subscribed copies. IDs 84 and 92 each resolve to exactly one
+entry with table `0x1e66660`, expected callback function, the acquired controller
+as receiver, shared thunk `0x397a20`, zero receiver tags and zero adjustment.
+Value slot, vector address and full decoded descriptor match at both endpoints.
+Each observation uses 56 exact reads totaling 3,328 bytes, within the cap.
+
+The same bounded run returns 32 valid motion and 32 valid physics samples, with
+161 callback records and zero drops. Restoration, continued progress and outer
+cleanup pass. Neither listener is invoked by the observer. Cached markup values
+remain zero at the endpoints; pulses and notification execution remain open.
+
+The next recorder can target these verified subscribed descriptors, but endpoint
+stability is not a lifetime guarantee. Before a live interception, qualify the
+callback ABI, cached-reader forwarding, entry invalidation, compare-and-swap
+restoration and retained wrapper lifetime in fixtures. Preserve the descriptor
+and markup owner identity in every event, and distinguish an empty trace from a
+failed installation. Do not treat a matching listener address as an allocation
+pin or assume that the listener vector cannot reallocate.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

@@ -1,0 +1,96 @@
+{
+  "evidence": "Bounded live exact-read inspection of stored markup listener entries at two endpoints",
+  "rows": [
+    {
+      "markup_id": 84,
+      "status_before": "found",
+      "status_after": "found",
+      "listener_count": 1,
+      "entry_unchanged": true,
+      "vector_unchanged": true,
+      "value_slot_unchanged": true,
+      "function_rva": "0x5c7040",
+      "thunk_rva": "0x397a20",
+      "table_rva": "0x1e66660",
+      "receiver_tags": 0,
+      "adjustment": 0,
+      "receiver_matches_controller": true,
+      "callable_in_dispatch": true,
+      "reads": [
+        56,
+        56
+      ],
+      "bytes_read": [
+        3328,
+        3328
+      ],
+      "cached_endpoints": [
+        0,
+        0
+      ]
+    },
+    {
+      "markup_id": 92,
+      "status_before": "found",
+      "status_after": "found",
+      "listener_count": 1,
+      "entry_unchanged": true,
+      "vector_unchanged": true,
+      "value_slot_unchanged": true,
+      "function_rva": "0x5c74f0",
+      "thunk_rva": "0x397a20",
+      "table_rva": "0x1e66660",
+      "receiver_tags": 0,
+      "adjustment": 0,
+      "receiver_matches_controller": true,
+      "callable_in_dispatch": true,
+      "reads": [
+        56,
+        56
+      ],
+      "bytes_read": [
+        3328,
+        3328
+      ],
+      "cached_endpoints": [
+        0,
+        0
+      ]
+    }
+  ],
+  "game_launched": true,
+  "notification_execution_proved": false,
+  "live_listener_mutation": false,
+  "motion_valid_samples": 32,
+  "physics_valid_samples": 32,
+  "callback_records": 161,
+  "dropped": 0,
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "sources": {
+    "engine/markup_listener_observation.py": "32ffbeba17722ca68d7d1f7740d4a365f49078f6a5dcf4a3b3d3bfc77f10c9d3",
+    "engine/action_map_observation.py": "10993dc44dda0f47bab78f6203a6fb95b17e1bc459f1037b469c8037ce243594",
+    "tests/test_markup_listener_observation.py": "9edad64f738222821606cc7dc06fe3b6863a77f3bd1b2d02cd2fea899afb0a9f"
+  },
+  "private_controller_sha256": "f1722d4c91db059854c28c6d006f90e5765b691addfcbddb61d9658a2f622268",
+  "private_evidence_sha256": {
+    "delegate-capture-result.json": "ed6afed872a6c2f4c0bb34e665aee30478ca43cc6247bfa7ccb3eb6236f1eb3c",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "listeners-before.json": "d388f7bd56bf2bd273c5251a44489104804efac49dd57e3d7c102d358063cdc0",
+    "listeners-after.json": "d388f7bd56bf2bd273c5251a44489104804efac49dd57e3d7c102d358063cdc0"
+  },
+  "limitations": [
+    "Stored copies verified at two endpoints; notification execution and emitting job remain unobserved.",
+    "Equal cached bytes do not exclude intermediate pulses.",
+    "Matching sequential reads do not pin lifetime or rule out ABA and reentrant mutations.",
+    "No permission for arbitrary callback invocation or descriptor replacement is established."
+  ]
+}

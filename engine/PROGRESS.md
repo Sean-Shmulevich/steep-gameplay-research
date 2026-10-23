@@ -6838,3 +6838,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Live exact reads join component+6c0 and controller+388 to one markup object, with component/controller forward/reverse links and descriptor function/receiver/thunk checks. Both endpoint observations pass.
 - Markup IDs 84/92 each have link count one in a 148-record dispatcher, source branch zero, and cached value zero before and after. This does not exclude pulses between reads or prove a registered listener ran. Source descriptors are verified; subscribed copies remain open.
 - Concurrent resident capture returns 16 requests with 32 valid motion and 32 valid physics samples, 201 callbacks and zero drops. Restoration, progress and bottle/save/settings/original-DLL cleanup pass. Sanitized receipt retained; no payload published.
+
+### Registered markup listener copies verified live
+
+- Added a bounded read-only observer using the existing compact/radix map decoder. It preserves missing/null/unsupported distinctions, brackets vector/descriptor/record/owner data, separates receiver tags and enforces read/byte/listener caps.
+- Sixteen portable observer/notification/map tests pass, including failures and changed guards/descriptors. Live IDs 84/92 each resolve to one stored listener targeting the expected controller/function/thunk; both entries and their storage match at endpoints. Each observation is 56 reads / 3,328 bytes.
+- The same live run has 32 valid motion and 32 valid physics samples, 161 callback records and zero drops. Delegate restoration, progress and outer cleanup pass. No listener writes or callback calls performed.
+- Subscribed identity is now established for this session. Notification firing, emitting job and lifetime-safe interception remain open; stable endpoints do not rule out reallocation or intermediate events.
