@@ -1,0 +1,69 @@
+{
+  "evidence": "Live read-only structural observations plus static method/table inspection",
+  "samples": [
+    {
+      "status": "observed",
+      "host_uptime_ms": 15629,
+      "host_ready": true,
+      "count": 1,
+      "reads": 10,
+      "bytes": 104,
+      "participants": [
+        {
+          "table_rva": "0x1efbe38",
+          "execute_rva": "0xa95450",
+          "prepare_rva": "0x75e600"
+        }
+      ]
+    },
+    {
+      "status": "observed",
+      "host_uptime_ms": 16907,
+      "host_ready": true,
+      "count": 1,
+      "reads": 10,
+      "bytes": 104,
+      "participants": [
+        {
+          "table_rva": "0x1efbe38",
+          "execute_rva": "0xa95450",
+          "prepare_rva": "0x75e600"
+        }
+      ]
+    },
+    {
+      "status": "observed",
+      "host_uptime_ms": 17114,
+      "host_ready": true,
+      "count": 1,
+      "reads": 10,
+      "bytes": 104,
+      "participants": [
+        {
+          "table_rva": "0x1efbe38",
+          "execute_rva": "0xa95450",
+          "prepare_rva": "0x75e600"
+        }
+      ]
+    }
+  ],
+  "stable_registry_across_samples": true,
+  "phase": "Host ready during startup; gameplay readiness was not required or proved at sample times.",
+  "movement_commands": 0,
+  "hold_commands": 0,
+  "step_commands": 0,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "No callback invocation was recorded.",
+    "Sequential matching reads do not pin lifetime or prove atomicity.",
+    "Code/table ranges are bounded inspected-module subranges; absence outside them is not claimed.",
+    "Observed membership does not establish registration/removal semantics."
+  ]
+}

@@ -2054,3 +2054,37 @@ manager construction, participant registration/removal and lifetime guarantees
 remain unresolved. The singleton in the inspected image is null; matching raw
 field offsets in other types did not establish its constructor. A fresh live
 manager/participant-table observation is the next useful qualification step.
+
+
+## Live command participant identity
+
+`engine.command_participant_observation.observe_command_participants` now reads
+the build-qualified manager singleton, list header, at most 32 participant
+pointers, tables and the two method slots. Two complete structural samples must
+agree. Reads are bounded to 134 operations/2100 bytes, and tables/method targets
+must lie in caller-qualified image/code ranges. This is structural observation,
+not invocation or lifetime proof. Heap addresses remain private provenance.
+Synthetic tests cover empty/max lists, shared tables, every short-read position,
+null manager, count limits, invalid targets and changing method pointers.
+
+The first live use returned one stable participant across three observations at
+roughly 15.6–17.1 seconds of host uptime. Host readiness was established, but the
+samples did not require or prove gameplay readiness. No movement, hold or release
+commands were issued. Cleanup passed. See [live receipt](../../native/snow_host/command_participant_live_observation.json).
+
+The observed table has RVA `0x1efbe38`, execution method `0xa95450`, and preparation
+method `0x75e600`. Static inspection of preparation shows a no-op return. Execution
+iterates a handle container at participant +8, retains each returned holder,
+resolves its payload through signed status, calls `0x89f730(payload, 0, 1)` for
+visible nonzero targets, releases the holder, advances the iterator, and finishes
+through the container helper. Iterator and target-operation semantics remain
+unresolved; this is not a claim that it implements arbitrary commands.
+
+Two validated table-installation sites now give concrete owner leads. The
+constructor at RVA `0xa708a0` embeds the participant at owner +0x4b8, zeros its
+container pointer, and publishes it to a singleton slot only if that slot is null.
+The teardown candidate at `0xa77a50` reinstalls the same table, clears that singleton
+only if it equals this embedded participant, and calls the container helper.
+These paths do not yet prove removal from the command manager's participant list.
+The next join is between this participant singleton, manager-list registration,
+and owner teardown, followed by decoding the participant's target operation.

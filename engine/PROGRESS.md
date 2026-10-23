@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live command-manager reader observed one stable participant in three startup
+samples. No-op prepare and handle-iteration execute methods identified; table
+references locate embedded owner +0x4b8 construction and singleton-clearing teardown.
+No callback execution or registry removal proved. Reader tests and cleanup pass.
+Next trace participant singleton -> manager-list registration/removal and the
+concrete execute target. See [live observation](../native/snow_host/command_participant_live_observation.json).
+
+
 Added executable command-counter interleaving harness; all 16 original-prefix
 cases agree and four boundary tests pass. Synthetic submissions distinguish
 before/after exchange without losing deferred work. Exact manager constructor
