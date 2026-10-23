@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Connected category-4 action-refresh storage to SetupUpdateAIManagersBeforeAI
+and the constructor-backed callback worker. The original gather, worker and
+invoker passed 49 composed cases with explicit activation/clock/final-callback
+substitutions. Exact outer graph placement and reset/completion remain open;
+no live input freshness result is claimed.
+See [category worker](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#category-4-reaches-a-concrete-callback-worker).
+
 Traced the fixed action-refresh record into category 4 of the attached world's
 service. Setup transfers six records in reverse index order, skipping empty
 records. Original transfer routines passed 192 preallocated cases without

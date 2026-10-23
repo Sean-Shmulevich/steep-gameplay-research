@@ -263,6 +263,68 @@ world service. A global AI provider also has callback lists, but that similarity
 does not establish receiver identity or scheduler placement. Follow the
 `world+0xff8` service and category-4 descriptor before joining it to a named job.
 
+## Category 4 reaches a concrete callback worker
+
+World construction stores the result of factory `0x6595f0` at `world+0xff8`.
+Its constructor `0x644a20` installs table `0x1e89d98`. Service initialization
+`0x658f30` constructs a separate job owner through `0x644ee0`, stores it at
+`service+0xf8`, and assigns `job_owner+0x18f8 = service+0x30`. That last
+assignment is the exact descriptor-base join to the category-4 storage above.
+
+Setup routine `0x69da40` installs callback `0x698cd0` in the job at
+`job_owner+0x2a60`, with the job owner as context. Its labels are
+`SetupUpdateAIManagersBeforeAI` and `Ai::UpdateAIManagersBeforeAI`.
+The callback gathers category 4 and then category 5 through `0x643ba0`.
+This identifies a concrete setup callback, rather than assuming that all
+similarly named AI jobs use the same provider.
+
+```text
+setup_before_ai(job_owner):
+    gather(category=4, descriptors=job_owner.callback_descriptors)
+    gather(category=5, descriptors=job_owner.callback_descriptors)
+
+gather(category, descriptors):
+    source = descriptors[category]
+    if source.count == 0: return
+    job = job_owner + 8 + category * 0x1c8
+    ensure_capacity_if_needed(job, source.count)
+    append_copies(job.records, source.records, source.count)
+    job.record_count += source.count
+    activate_or_notify_job(job, source.count)
+```
+
+The copy helper appends to the existing job count. It does not reset that count
+in this routine. Empty source leaves the job untouched and does not invoke the
+activation helper. Repeated setup therefore needs the separate job-reset and
+completion protocol; this local pseudocode must not be used as a free-standing
+frame loop. Capacity growth and concurrent append safety require their own
+validation.
+
+The constructor installs range-job table `0x1e92b40` for the fourteen category
+jobs. Its worker slot `0x80` resolves to `0x67d690`. Within a supplied range it
+obtains a float from job slot `0x88`, visits records in descending index order,
+clears the context's low two tag bits and calls each record's invoker. The
+refresh record's invoker `0x43f5b0` then dispatches `0x4b4ba0` with the manager
+as receiver. This connects the stored action-refresh record to an executable
+worker route. It does not prove that the selected player's action refresh ran
+in any particular live request.
+
+[Composed validation](../../native/snow_host/action_refresh_job_validation.json)
+executes the original category-4/5 setup callback, gather copy, range worker
+and callable invoker for all 49 count pairs from zero through six. It checks
+record copies, counts, activation arguments, reverse worker order, untagged
+receivers and exact float32 argument forwarding. Job activation is observed
+rather than scheduled, the clock returns a supplied value and the final action
+callback records arguments. Job counts begin at zero and capacity is supplied.
+No actual engine threads or action evaluators run in this test.
+
+The earlier transfer reverses source slots and the worker reverses its supplied
+range. These reversals do not prove globally ascending registration order when
+real scheduling divides the work into multiple ranges. Likewise, the setup
+label does not establish its complete predecessor chain. The next target is
+this job owner's graph registration and category-job completion/reset path,
+joined through the concrete service table to the outer world AI stage.
+
 ## Next capture contract
 
 Once live access is available, extend the existing request/substep recorder

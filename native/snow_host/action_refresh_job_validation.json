@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "cases": 49,
+  "scope": "Original category-4/5 gather, record copy, range worker and callable invoker over count pairs 0..6",
+  "substitutions": [
+    "Job activation helper observed instead of scheduling workers",
+    "Job clock method supplies explicit float32 0.03125",
+    "Final action callback replaced with argument recorder"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x698cd0",
+      "end_rva_exclusive": "0x698d1f",
+      "sha256": "59796c8ba9f72e8098311a00f3ba0a8c7e6e8e3e45c0f9f4109651ed65f2eaa4"
+    },
+    {
+      "start_rva": "0x643ba0",
+      "end_rva_exclusive": "0x643d0c",
+      "sha256": "53034b599bab3c03a016cad55d07638cdf12035d78f3d46c026bfa3810be0604"
+    },
+    {
+      "start_rva": "0x67d690",
+      "end_rva_exclusive": "0x67d707",
+      "sha256": "d8726090f556f5ce988310a3e6dc5b437dab893acb419e324f2d12d58978f9c8"
+    },
+    {
+      "start_rva": "0x43f5b0",
+      "end_rva_exclusive": "0x43f5bc",
+      "sha256": "2ebdc12b8c744a7482b91fa57d2fad496445b8ee732fd551bbe61603a4ae672e"
+    }
+  ],
+  "limits": [
+    "Preallocated job capacity and initially zero job counts",
+    "One manually invoked worker range per category; real chunk scheduling not tested",
+    "Scheduler placement and actual action execution not tested live"
+  ],
+  "game_process": false
+}
