@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Found deadzone constructor default 0.3f and virtual propagation setter. Root
+is updated first, then every record cache; leaf stores preserve raw bits without
+clamping. 384 full original setter cases match without substitutions. Active
+configuration caller and safe invocation context remain unresolved. See
+[deadzone configuration](../docs/reconstruction/INPUT_UPDATE_ORDER.md#deadzone-default-and-propagation-setter).
+
 Resolved post-mapping radial shaping: explicit four-lane deadzone, remapping
 and magnitude normalization. 945 full original-helper cases match with observed
 RSQRT seeds; default portable seed remains labeled a substitute. Active deadzone

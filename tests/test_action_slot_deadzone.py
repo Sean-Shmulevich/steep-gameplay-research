@@ -26,3 +26,13 @@ class SlotDeadzoneTests(unittest.TestCase):
     def test_underflow_boundary_is_explicit(self):
         with self.assertRaisesRegex(ValueError, 'zero divisor'):
             shape_slot_vector((0,0,0,0),1e-30)
+
+    def test_raw_setter_preserves_nan_payload_and_other_fields(self):
+        from engine.action_slot_deadzone import set_cache_deadzone_bits, DEFAULT_DEADZONE_BITS
+        raw = bytes([93])*0x818
+        bits = bytes.fromhex('0100c07f')
+        result = set_cache_deadzone_bits(raw,bits)
+        self.assertEqual(result[:0x210],raw[:0x210])
+        self.assertEqual(result[0x210:0x214],bits)
+        self.assertEqual(result[0x214:],raw[0x214:])
+        self.assertEqual(DEFAULT_DEADZONE_BITS,bytes.fromhex('9a99993e'))

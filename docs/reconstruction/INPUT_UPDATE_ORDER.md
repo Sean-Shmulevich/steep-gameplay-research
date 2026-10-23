@@ -947,3 +947,57 @@ The root later copies the selected cache and regenerates directions/stamps using
 its own history. Do not collapse device and root histories into one cache.
 Next: trace the deadzone writer and common helper to establish actual defaults
 and remaining side effects before composing a complete device update.
+
+
+## Deadzone default and propagation setter
+
+The common cache constructor `0x114ef10` calls the full cache reset and then
+stores float32 bits 0x3e99999a at +0x210: the constructor deadzone is 0.3f. The
+reset excludes this field, so subsequent resets preserve the configured value.
+This default is a static constructor finding, not a live gameplay measurement.
+
+Leaf setter `0x1174d40` copies the low float32 bits of its second argument to
++0x210 and returns. It performs no comparison, clamp or normalization. The three
+identified concrete cache tables expose it at virtual +0x100. The root table's
+corresponding slot targets `0x11b8880`, which does:
+
+```text
+set_leaf_deadzone(root, value)
+begin = root.records
+end = begin + root.record_count * 0x440
+for record in [begin, end):
+    record.cache.virtual_100(value)
+```
+
+Root update happens first, then every record in storage order, including aliases.
+The record span is captured before iteration. Each record's cache pointer is read
+when visited. No null guard, deduplication, lock, rollback or notification is
+present here. Different virtual implementations could have other effects; the
+identified leaf types simply store the bits. Mutating/reallocating the record
+array during the callbacks is not proved safe.
+
+The raw [`set_cache_deadzone_bits`](../../engine/action_slot_deadzone.py) API
+mirrors the leaf store on a detached snapshot, preserving all encodings including
+NaNs, infinities and signed zero. It intentionally differs from the finite
+shaping API, which rejects unsupported numerical cases. The exported
+`DEFAULT_DEADZONE_BITS` names the constructor value; no runtime inspector or
+simulation silently substitutes it for unknown active tuning.
+
+The [setter receipt](../../native/snow_host/input_deadzone_setter_validation.json)
+compares 384 complete original root-setter executions through the concrete leaf
+virtual methods without substitutions. Root and child bytes, root-first call
+order, empty record arrays, repeated child identities and raw float32 encodings
+match. The constructor store is statically inspected separately; the complete
+constructor is not executed by this receipt.
+
+A derived implication of the two shaping stages is useful for experiments. For
+a single active axis, deadzone d=0.3 and analog magnitude at most one, the radial
+output is (m-d)/(1-d). The later digital-direction threshold of 0.3 therefore
+corresponds approximately to raw magnitude m>0.51, with float32 rounding at the
+boundary. This is a conditional calculation, not an additional stored threshold
+or a claim about the player's active setting. Both stages must be included when
+comparing raw input to digital events.
+
+Next: identify the caller of virtual +0x100 and its configuration source. The
+constructor default, raw setter and propagation path are established; active
+tuning, safe live invocation context and physical-action mapping remain open.

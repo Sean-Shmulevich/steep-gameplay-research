@@ -1,0 +1,35 @@
+{
+  "evidence": "Complete original root deadzone setter and concrete virtual leaf setters",
+  "cases": 384,
+  "passed": true,
+  "comparison": [
+    "all snapshot bytes",
+    "root-first and record-order leaf calls",
+    "duplicate child calls preserved",
+    "raw float32 bits including NaN and infinity"
+  ],
+  "substitutions": [],
+  "spans": [
+    {
+      "start_rva": "0x1174d40",
+      "end_rva_exclusive": "0x1174d49",
+      "sha256": "7d5cff73936057790155bc05630e62485c5fbe231e5d3f2cf086ffea2ba610ea"
+    },
+    {
+      "start_rva": "0x11b8880",
+      "end_rva_exclusive": "0x11b88eb",
+      "sha256": "69650a36e611692bf66f330c782446f765980cec192ea48e08ccc57a8169efb9"
+    },
+    {
+      "start_rva": "0x114efd0",
+      "end_rva_exclusive": "0x114efe8",
+      "sha256": "d792c4b03b2be6b190f679e95e93bac51ac4326b2bd8ea5e6712bcbf0420765f"
+    }
+  ],
+  "limits": [
+    "Concrete known leaf types; unknown virtual overrides can have other effects",
+    "No caller, active deadzone or thread-safety proof",
+    "Constructor default statically inspected, full constructor not executed"
+  ],
+  "game_process": false
+}

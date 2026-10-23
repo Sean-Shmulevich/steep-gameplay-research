@@ -7,6 +7,24 @@ import math
 import struct
 from engine.action_cache_exchange import CACHE_SPAN
 
+# Constructor default, not a claim about active gameplay configuration.
+DEFAULT_DEADZONE_BITS = bytes.fromhex("9a99993e")
+
+
+def set_cache_deadzone_bits(snapshot, bits):
+    """Detached raw setter. Preserve all float32 encodings; no value clamping.
+
+    Unlike the finite shaping kernel, the native setter accepts any four bytes.
+    Does not propagate to record caches or modify a live game.
+    """
+    if not isinstance(snapshot, bytes) or len(snapshot) != CACHE_SPAN:
+        raise ValueError("exact 0x818-byte snapshot required")
+    if not isinstance(bits, bytes) or len(bits) != 4:
+        raise ValueError("four float32 encoding bytes required")
+    result = bytearray(snapshot)
+    result[0x210:0x214] = bits
+    return bytes(result)
+
 
 def _f(value):
     try:result=struct.unpack('<f',struct.pack('<f',value))[0]
