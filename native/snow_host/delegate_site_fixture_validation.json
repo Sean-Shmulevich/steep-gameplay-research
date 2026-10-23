@@ -1,0 +1,95 @@
+{
+  "status": "synthetic_windows_fixture_passed",
+  "abi_version": 3,
+  "runtime": "Wine on macOS",
+  "compiler": "MinGW x86_64 Windows target; C11; -O2 -Wall -Wextra -Werror",
+  "scenarios": [
+    {
+      "site": "graphics",
+      "scenario": "normal",
+      "returncode": 0
+    },
+    {
+      "site": "graphics",
+      "scenario": "conflict",
+      "returncode": 0
+    },
+    {
+      "site": "graphics",
+      "scenario": "identity",
+      "returncode": 0
+    },
+    {
+      "site": "graphics",
+      "scenario": "readonly",
+      "returncode": 0
+    },
+    {
+      "site": "graphics",
+      "scenario": "closed",
+      "returncode": 0
+    },
+    {
+      "site": "graphics",
+      "scenario": "observation_invalid",
+      "returncode": 0
+    },
+    {
+      "site": "engine",
+      "scenario": "normal",
+      "returncode": 0
+    },
+    {
+      "site": "engine",
+      "scenario": "conflict",
+      "returncode": 0
+    },
+    {
+      "site": "engine",
+      "scenario": "identity",
+      "returncode": 0
+    },
+    {
+      "site": "engine",
+      "scenario": "readonly",
+      "returncode": 0
+    },
+    {
+      "site": "engine",
+      "scenario": "closed",
+      "returncode": 0
+    },
+    {
+      "site": "engine",
+      "scenario": "observation_invalid",
+      "returncode": 0
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_delegate_probe.c": "8e0452825bb86b220f8947b0be76c8ab4f58f9a22ad8a56e069dbe59722c6ece",
+    "native/snow_host/snow_delegate_probe.h": "72f91ce29c2dd6ad409a2d49155264922e81f772f69b83e189eb73ac7c0f5486",
+    "native/snow_host/snow_delegate_trace.c": "fb4c1e74c86c29a0821f231ae80b01bb12e8a16c32f9ca04ecab9de914f90ef5",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "8e06f648ed5452ed41590f92cef073af85cd575bb471c4d32a190ec932c7bfc9"
+  },
+  "binary_hashes": {
+    "snow-phase-sites.dll": "7e32081d174999a3b5d9eae5b538ddf41ba63520bcfe8c4c2b28c75d335d8cc0",
+    "snow-phase-sites-fixture.exe": "1701d905144caee7afa8ae49b4e5a44c0d209a2856818a0d0b33c905d6857caa"
+  },
+  "game_launched": false,
+  "game_memory_modified": false,
+  "record_abi_changed": false,
+  "checks": [
+    "Legacy Configure still selects graphics; ConfigureSite selects engine.",
+    "Unknown site refused before valid configuration; second configuration refused.",
+    "Selected job counters, full-width return and caller image checked.",
+    "Competing invoker, changed owner/context, read-only memory and closed recorder refuse appropriately.",
+    "Cached forwarding remains callable after restore/close.",
+    "Owner invalidation during original call produces invalid post-observation."
+  ],
+  "limitations": [
+    "Synthetic allocated owner storage remains alive throughout each process.",
+    "No live game engine-main binding, owner lifetime, command submission or protection-layer acceptance tested.",
+    "Controlled sequential identity changes do not establish concurrent teardown safety.",
+    "Existing capture controllers continue to select graphics."
+  ]
+}

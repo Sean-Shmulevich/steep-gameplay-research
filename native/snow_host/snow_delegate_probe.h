@@ -6,7 +6,7 @@
 #else
 #define SNOW_DELEGATE_API
 #endif
-/* Experimental graphics-main ABI v3. Caller verifies build/code identity and
+/* Experimental main-delegate record ABI v3. Caller verifies build/code identity and
  * guarantees owner storage remains allocated and unreused during Configure,
  * Install and Restore, and preserves the function/context ABI for cached callers.
  * Guards/CAS do NOT establish these lifetime and binding prerequisites.
@@ -17,6 +17,10 @@ typedef struct {
     uint64_t owner_global, owner, job_table, dispatch_method;
     uint64_t function, auxiliary, context, invoker;
 } SnowDelegateBinding;
+/* Fixed inspected layouts only; this is not an arbitrary-offset hook API. */
+typedef enum { SNOW_DELEGATE_GRAPHICS_MAIN=1, SNOW_DELEGATE_ENGINE_MAIN=2 } SnowDelegateSite;
+SNOW_DELEGATE_API int SnowDelegateProbe_ConfigureSite(const SnowDelegateBinding *, SnowDelegateSite);
+/* Legacy Configure selects GRAPHICS_MAIN. Record layout/version unchanged. */
 SNOW_DELEGATE_API uint32_t SnowDelegateProbe_ABIVersion(void);
 SNOW_DELEGATE_API size_t SnowDelegateProbe_RecordSize(void);
 SNOW_DELEGATE_API int SnowDelegateProbe_Configure(const SnowDelegateBinding *);

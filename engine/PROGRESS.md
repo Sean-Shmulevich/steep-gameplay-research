@@ -6171,3 +6171,13 @@ observation modules. It demonstrates accepted versus observed requests, full and
 stale refusals, synthetic disposal, recorder overflow and retained calls after
 close. Its dispatcher/lock/lifetime services are synthetic; native phase and
 manager lifetime remain explicit unmet gates.
+
+
+### Engine-main observation adapter
+
+Extended the native delegate observer with a fixed BeginEngineFrame site while
+preserving the graphics default and record ABI. This connects the observer's
+configuration to the inspected command-execution phase. Both site layouts pass
+six synthetic Windows/Wine scenarios each; live engine-main binding, owner
+lifetime and command publication remain unproved. See the engine-main observation
+section in `docs/reconstruction/SCHEDULER_DELEGATES.md`.

@@ -1060,3 +1060,40 @@ completion return boundary (or its caller), with an explicitly validated ABI,
 stack/unwind behavior and installation method. Current slot-based probes do not
 supply that hook. Conditional notification is a useful separate scheduler signal,
 not a substitute that closes the outstanding-decrement observation gap.
+
+
+## Engine-main observation site
+
+The adapter now exports `SnowDelegateProbe_ConfigureSite(binding, site)` with
+fixed `SNOW_DELEGATE_GRAPHICS_MAIN` and `SNOW_DELEGATE_ENGINE_MAIN` choices.
+The existing `SnowDelegateProbe_Configure(binding)` still selects graphics.
+Record ABI version 3 and record layout are unchanged. An unknown site is refused
+without consuming configuration; successful configuration remains one-shot.
+
+| Site | Embedded job | Main descriptor | Invoker slot |
+| --- | --- | --- | --- |
+| Graphics main | owner +0x218 | owner +0x3b0 | owner +0x3c8 |
+| Engine main | owner +0x740 | owner +0x8d8 | owner +0x8f0 |
+
+The engine choice follows the inspected
+[BeginEngineFrame command binding](ANIMATION_CONTEXT_RETIREMENT.md#beginengineframe-command-binding).
+This callback calls the command executor. Selecting its descriptor is therefore
+a way to observe the relevant enclosing phase, not evidence that a submitted
+command ran or that the whole physics frame completed. The caller supplies and
+validates the selected site's function, table and dispatch identities. The
+adapter still requires the masked receiver to equal the descriptor's owner;
+a binding with a different receiver is refused rather than guessed.
+
+Both choices apply the same identity checks, invoker-only compare/exchange,
+conflict-aware restoration and retained forwarding after recorder close.
+Counters are read from the selected job, not always from the graphics job.
+The caller must continue to guarantee owner storage lifetime; image pinning does
+not retain heap objects. Records are sequential observations, not atomic snapshots.
+
+The [site-extension fixture receipt](../../native/snow_host/delegate_site_fixture_validation.json)
+covers six synthetic Windows scenarios for each site under Wine, including
+post-call identity invalidation. Run the fixture as
+`snow_delegate_probe_fixture.exe <DLL-path> <scenario> engine` for engine-main,
+or omit `engine` for the legacy graphics path. The existing capture controllers
+still select graphics; this change does not silently redirect them or publish
+commands to the game. A live engine-main capture remains the next validation step.

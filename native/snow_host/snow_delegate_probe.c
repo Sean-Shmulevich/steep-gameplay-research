@@ -6,6 +6,7 @@
 #define CAPACITY 1024
 #define CLOSED (UINT64_C(1)<<63)
 static SnowDelegateBinding binding;
+static uint32_t job_offset=0x218,descriptor_offset=0x3b0;
 static SnowDelegateTrace trace;
 static SnowDelegateRecord records[CAPACITY];
 static volatile LONG ready;
@@ -34,13 +35,13 @@ static int image_at(uint64_t at,int executable,HMODULE *module) {
 }
 static int qualify(uint64_t *invoker) {
     uint64_t owner,table,method,d[4],again;MEMORY_BASIC_INFORMATION m;
-    uint64_t address=binding.owner+0x3c8;
-    if(binding.owner<0x10000 || binding.owner>UINT64_C(0x7ffffffffff0)-0x3d0 ||
+    uint64_t address=binding.owner+descriptor_offset+24;
+    if(binding.owner<0x10000 || binding.owner>UINT64_C(0x7ffffffffff0)-(descriptor_offset+32) ||
        (address&7) || (binding.context&~UINT64_C(3))!=binding.owner ||
        !read_at(binding.owner_global,&owner,8) || owner!=binding.owner ||
-       !read_at(owner+0x218,&table,8) || table!=binding.job_table ||
+       !read_at(owner+job_offset,&table,8) || table!=binding.job_table ||
        !read_at(table+0x40,&method,8) || method!=binding.dispatch_method ||
-       !read_at(owner+0x3b0,d,sizeof d) || d[0]!=binding.function ||
+       !read_at(owner+descriptor_offset,d,sizeof d) || d[0]!=binding.function ||
        d[1]!=binding.auxiliary || d[2]!=binding.context ||
        !VirtualQuery((void *)(uintptr_t)address,&m,sizeof m) || m.Type!=MEM_PRIVATE ||
        m.State!=MEM_COMMIT || m.Protect!=PAGE_READWRITE ||
@@ -53,10 +54,10 @@ static void observe_job(void *storage,void *receiver,SnowDelegateJobState *out) 
     uint32_t counters[6];uint8_t usage,selector;
     /* A cached wrapper can be called after restoration. Both our wrapper and
      * the original are acceptable; a third-party invoker is not qualified. */
-    if((uintptr_t)storage!=binding.owner+0x3b0 || (uintptr_t)receiver!=binding.owner ||
+    if((uintptr_t)storage!=binding.owner+descriptor_offset || (uintptr_t)receiver!=binding.owner ||
        !qualify(&invoker) || (invoker!=binding.invoker && invoker!=(uintptr_t)&dispatch) ||
-       !read_at(binding.owner+0x218+0x4c,counters,sizeof counters) ||
-       !read_at(binding.owner+0x218+0x194,&usage,1) ||
+       !read_at(binding.owner+job_offset+0x4c,counters,sizeof counters) ||
+       !read_at(binding.owner+job_offset+0x194,&usage,1) ||
        !read_at(binding.owner+0x5a,&selector,1) ||
        !qualify(&invoker) || (invoker!=binding.invoker && invoker!=(uintptr_t)&dispatch)) return;
     s.executions=counters[0];memcpy(&s.outstanding,&counters[1],sizeof s.outstanding);
@@ -66,9 +67,14 @@ static void observe_job(void *storage,void *receiver,SnowDelegateJobState *out) 
 uint32_t SnowDelegateProbe_ABIVersion(void) { return 3; }
 size_t SnowDelegateProbe_RecordSize(void) { return sizeof(SnowDelegateRecord); }
 int SnowDelegateProbe_Configure(const SnowDelegateBinding *b) {
+    return SnowDelegateProbe_ConfigureSite(b,SNOW_DELEGATE_GRAPHICS_MAIN);
+}
+int SnowDelegateProbe_ConfigureSite(const SnowDelegateBinding *b,SnowDelegateSite site) {
     int ok=0;uint64_t invoker;HMODULE module,other,pinned;
     AcquireSRWLockExclusive(&control);
-    if(!b || ready) goto done;
+    if(!b || ready || (site!=SNOW_DELEGATE_GRAPHICS_MAIN && site!=SNOW_DELEGATE_ENGINE_MAIN)) goto done;
+    job_offset=site==SNOW_DELEGATE_GRAPHICS_MAIN?0x218:0x740;
+    descriptor_offset=job_offset+0x198;
     InterlockedExchange(&ready,1);binding=*b;
     if(!image_at(binding.invoker,1,&module) || !image_at(binding.function,1,&other) || module!=other ||
        !image_at(binding.dispatch_method,1,&other) || module!=other ||
@@ -84,7 +90,7 @@ int SnowDelegateProbe_Configure(const SnowDelegateBinding *b) {
         InterlockedExchange(&ready,-1);goto done;
     }
     trace.observe=observe_job;
-    slot=(void *volatile *)(uintptr_t)(binding.owner+0x3c8);
+    slot=(void *volatile *)(uintptr_t)(binding.owner+descriptor_offset+24);
     InterlockedExchange(&ready,2);ok=1;
 done: ReleaseSRWLockExclusive(&control);return ok;
 }
