@@ -1069,3 +1069,48 @@ manager context selection, flag copies, preamble and synchronization remain
 caller responsibilities. Reset/evaluator composition has separate validation;
 this traversal test does not execute those bodies or permit structural mutation
 of context/group arrays during iteration.
+
+
+## Context preamble and vector history
+
+The context preamble `0x984160` is not inert: it obtains the cache from the
+source object, applies last-entry mask suppression separately to vector channels
+0 and 1, and calls history update `0x9842a0` on embedded objects at source+0x10
+and source+0x3d0. Cache pointers and mask state are read again for the second
+channel; this is not an atomic two-channel snapshot. The manager invokes this
+before binding resets. A separate StepPreWorlds history route also uses the
+same history helper, as described in [ownership/history research](INPUT_UPDATE_ORDER.md#ownership-table-layout-and-reader-bank).
+
+The outer history helper is now expressed by
+[`update_vector_history`](../../engine/action_vector_history.py):
+
+```text
+raw_vectors[9..1] = raw_vectors[8..0]
+raw_vectors[0] = input_vector
+update_features(history, input_vector)  # separate, explicitly supplied helper
+magnitudes[9..1] = magnitudes[8..0]
+n = f32(f32(x*x + z*z) + f32(y*y + w*w))  # each product also rounds to f32
+magnitudes[0] = min(float32_sqrt(n), 1.0)
+timestamps[9..1] = timestamps[8..0]
+timestamps[0] = global_clock.field_8
+```
+
+Raw vectors occupy +0x60..+0xff, magnitudes +0x2e0..+0x307 and timestamps
++0x00..+0x4f, each with ten entries. Magnitude clipping does not normalize or
+clip the stored raw vector. Timestamp values are opaque uint64 values; no
+monotonicity, unit conversion or generation check occurs in the outer helper.
+The independent adapter validates finite arithmetic and uses stable detached
+inputs. These are adapter constraints, not claims about all native inputs.
+
+The [history receipt](../../native/snow_host/action_vector_history_validation.json)
+compares 72 complete original outer-helper executions against the adapter,
+including every byte of a synthetic 0x3c0 object and callback-entry state.
+Feature-helper effects are explicitly supplied, including writes that prove
+magnitude/time shifting follows the feature call. Clock storage is synthetic.
+Two portable tests cover update ordering and eviction after more than ten updates.
+
+Helper `0x9599a0` remains a separate feature-analysis boundary. Initial inspection
+shows vector normalization, further history updates and an additional helper
+call; those operations are not replaced with a guessed no-op. The API requires
+an explicit callback. Preamble cadence, history consumers and their relation to
+input selection remain open, so these histories are not sample generations.

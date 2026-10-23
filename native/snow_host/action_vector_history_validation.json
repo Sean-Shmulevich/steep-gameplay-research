@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "cases": 72,
+  "scope": "Original outer vector-history helper compared across all 0x3c0 synthetic bytes and feature callback entry snapshot",
+  "substitutions": [
+    "Feature helper returns supplied unchanged or modified snapshot",
+    "Clock singleton points to synthetic object with explicit uint64 field"
+  ],
+  "coverage": [
+    "Three initial byte patterns",
+    "Zero, analog, over-unit and fourth-lane vectors",
+    "Zero, ordinary and full-width timestamps",
+    "Feature writes to prior timestamp, magnitude and unrelated field"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x9842a0",
+      "end_rva_exclusive": "0x98442a",
+      "sha256": "80d2265b595d21e4f045a315ea64f0f8334ea750825689ca7ad4cba4faf273d1"
+    }
+  ],
+  "limits": [
+    "Finite vector arithmetic; input stable through feature call",
+    "Feature helper math not executed",
+    "No live cadence, clock units or native history consumers established"
+  ],
+  "game_process": false
+}
