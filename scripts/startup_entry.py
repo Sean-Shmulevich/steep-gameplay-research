@@ -16,7 +16,7 @@ when the player was first acquired.
 This skips menu interaction delay, not asset or world loading. Spawn location is
 whatever the profile's startup map closes onto; no map or spawn selection.
 The idle player's position at entry is recorded as spawn_position; --expect-spawn
-makes a different spawn a failure. --intro-key enter is an experiment: bounded Enter presses on visible pre-title
+makes a different spawn a failure. --intro-key enter|escape is an experiment: bounded presses on visible pre-title
 screens, to measure whether the timed videos/notices can be skipped.
 
 Usage: startup_entry.py OUT_DIR [BUDGET_SECONDS] [--workspace W] [--port P]
@@ -31,7 +31,8 @@ import time
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from snow_host_client import SnowHostClient, HostError
 
-ENTER, MAP_KEY = 28, 50
+ENTER, MAP_KEY, ESCAPE = 28, 50, 1
+INTRO_KEYS = {'enter': ENTER, 'escape': ESCAPE}
 # Existing transitions only; same keys as the original navigator.
 TRANSITIONS = {'title': ENTER, 'offline_notice': ENTER, 'tutorial': ENTER, 'map': MAP_KEY}
 RETRY_SECONDS = 5.0      # same screen still showing after an input
@@ -245,7 +246,7 @@ def main(argv=None):
     p.add_argument('--port', type=int, default=47017)
     p.add_argument('--expect-spawn', help='x,y,z the idle player must occupy at entry (fails otherwise)')
     p.add_argument('--spawn-tolerance', type=float, default=0.01)
-    p.add_argument('--intro-key', choices=['enter'], help='Experiment: press this key during pre-title videos/notices')
+    p.add_argument('--intro-key', choices=sorted(INTRO_KEYS), help='Experiment: press this key during pre-title videos/notices')
     a = p.parse_args(argv)
     if not 30 <= a.budget <= 210:
         p.error('Navigation budget must be 30..210 seconds')
@@ -256,7 +257,7 @@ def main(argv=None):
         expect = [float(v) for v in a.expect_spawn.split(',')]
         if len(expect) != 3:
             p.error('--expect-spawn needs x,y,z')
-    result = navigate(game, a.budget, policy=Policy(intro_key=ENTER if a.intro_key else None),
+    result = navigate(game, a.budget, policy=Policy(intro_key=INTRO_KEYS.get(a.intro_key)),
                       expect_spawn=expect, spawn_tolerance=a.spawn_tolerance)
     (out / 'navigation-result.json').write_text(json.dumps(result, indent=2) + '\n')
     return 0 if result['outcome'] == 'entered' else 2

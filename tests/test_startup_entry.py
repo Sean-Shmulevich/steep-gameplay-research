@@ -179,6 +179,13 @@ class NavigateTests(unittest.TestCase):
             self.assertEqual(se.main([tmp + '/o', '200', '--expect-spawn=-2312.9,-4273.3,2385.9']), 0)
         self.assertEqual(nav.call_args.kwargs['expect_spawn'], [-2312.9, -4273.3, 2385.9])
 
+    def test_cli_intro_keys(self):
+        for name, scan in [('enter', 28), ('escape', 1), (None, None)]:
+            with tempfile.TemporaryDirectory() as tmp, patch.object(se, 'Game'), \
+                    patch.object(se, 'navigate', return_value={'outcome': 'entered'}) as nav:
+                se.main([tmp + '/o'] + (['--intro-key', name] if name else []))
+            self.assertEqual(nav.call_args.kwargs['policy'].intro_key, scan)
+
     def test_budget_bounds_cli(self):
         with self.assertRaises(SystemExit):
             se.main(['/nonexistent/out', '20'])

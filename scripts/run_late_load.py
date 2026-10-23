@@ -103,7 +103,8 @@ def main():
     parser.add_argument('--load-at', choices=['gameplay', 'startup'], default='gameplay', help='Load host automatically during process startup or after gameplay is verified')
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
     parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'composite-observe', 'source-observe', 'chain-observe', 'ramp-observe', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
-    parser.add_argument('--navigator', choices=['ocr', 'native', 'native-intro'], default='ocr', help='Startup navigation: existing OCR navigator, or scripts/startup_entry.py gated by the startup-loaded host (native-intro also tries Enter on pre-title screens)')
+    parser.add_argument('--navigator', choices=['ocr', 'native', 'native-intro'], default='ocr', help='Startup navigation: existing OCR navigator, or scripts/startup_entry.py gated by the startup-loaded host (native-intro also tries --intro-key on pre-title screens)')
+    parser.add_argument('--intro-key', choices=['enter', 'escape'], default='enter', help='Key for --navigator native-intro')
     parser.add_argument('--expect-spawn', metavar='X,Y,Z', help='With a native navigator: fail unless the idle player spawns here (tolerance 0.01)')
     parser.add_argument('--capture-steering', action='store_true', help='Opt-in 700 ms scan-30 pulse during a five-second motion capture')
     parser.add_argument('--observe-motion', action='store_true', help='Opt-in bounded before/after motion observations for update-capture')
@@ -206,7 +207,7 @@ def main():
         print('Advancing recognized startup screens; please leave controls alone.', flush=True)
         if args.navigator != 'ocr':
             # '--expect-spawn=' form keeps a leading '-' coordinate a value, not an option.
-            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)] + (['--intro-key', 'enter'] if args.navigator == 'native-intro' else []) + (['--expect-spawn=' + args.expect_spawn] if args.expect_spawn else []), 'navigation')
+            nav = start([sys.executable, str(REPO/'scripts/startup_entry.py'), str(out/'navigation'), '200', '--workspace', str(root)] + (['--intro-key', args.intro_key] if args.navigator == 'native-intro' else []) + (['--expect-spawn=' + args.expect_spawn] if args.expect_spawn else []), 'navigation')
         else:
             nav = start([sys.executable, str(root/'runtime/testbench/run23/navigate_startup.py'), str(out/'navigation'), '200'], 'navigation')
         if args.load_at == 'startup':
