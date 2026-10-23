@@ -6320,3 +6320,14 @@ restriction. Image-backed control inside the game and the actual constructor
 caller remain unresolved. Protection API module identity is recorded without
 claiming the implementations are unmodified. Upstream Wine's access-denied path
 is documented as an external lead, not attribution to the installed patched build.
+
+### In-game authored image control narrows constructor-page refusal
+
+Extended the execution control to a separately loaded, pinned authored DLL with
+export, mapping and code-byte checks. Seven standalone success/refusal cases pass.
+The live image control captured the exact authored entry, restored RX and returned
+42 with unchanged code; scheduler readiness and cleanup passed. Both private and
+image code controls now work inside the game. The constructor denial therefore
+requires a more specific explanation than a blanket image/execution restriction.
+Next work is a read-only protection-API comparison, not another identical attempt
+on the constructor page. No new original-game execution or lifetime claim is made.

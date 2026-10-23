@@ -1,0 +1,107 @@
+{
+  "evidence": "Authored image-page execution control in standalone Wine and inside game startup",
+  "standalone_cases": [
+    {
+      "case": "disabled",
+      "returncode": 0,
+      "capture": null
+    },
+    {
+      "case": "private",
+      "returncode": 0,
+      "capture": true
+    },
+    {
+      "case": "image",
+      "returncode": 0,
+      "capture": true
+    },
+    {
+      "case": "missing",
+      "returncode": 0,
+      "capture": false
+    },
+    {
+      "case": "noexport",
+      "returncode": 0,
+      "capture": false
+    },
+    {
+      "case": "badcode",
+      "returncode": 0,
+      "capture": false
+    },
+    {
+      "case": "invalidsource",
+      "returncode": 0,
+      "capture": null
+    }
+  ],
+  "live": {
+    "source": "image",
+    "page_available": 1,
+    "image_loaded": 1,
+    "image_valid": 1,
+    "image_pinned": 1,
+    "image_error": 0,
+    "allocated": 0,
+    "allocation_error": 0,
+    "rx": 1,
+    "rx_error": 0,
+    "flushed": 1,
+    "flush_error": 0,
+    "armed": 1,
+    "arm_stage": 6,
+    "arm_error": 0,
+    "executed": 1,
+    "result": 42,
+    "captured": 1,
+    "exact_entry": 1,
+    "stack_valid": 1,
+    "restore_returned": 1,
+    "bytes_equal": 1,
+    "before_protection": 32,
+    "armed_protection": 2,
+    "final_protection": 32,
+    "memory_type": 16777216,
+    "virtual_protect": {
+      "module_ok": 1,
+      "module": "kernel32.dll",
+      "module_offset": "10478",
+      "query": 1,
+      "protection": 32,
+      "type": 16777216
+    },
+    "nt_protect_virtual_memory": {
+      "module_ok": 1,
+      "module": "ntdll.dll",
+      "module_offset": "e7d0",
+      "query": 1,
+      "protection": 32,
+      "type": 16777216
+    }
+  },
+  "cleanup": {
+    "ok": true,
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/examples/execution_control.c": "5b2cd1192f7d4327072725e2209e9866b2266a27d0f9473cbd4739f77f1b3688",
+    "tests/fixtures/snow_first_execute_image.c": "ef57bd50be12ce5abc57e8f1a2d80f2e75f681cd37803998cc3d00e48a1e9c35",
+    "tests/fixtures/snow_execution_control_fixture.c": "f756cf6987cd75909623816733147390f5e6e31a6fcbc5dfe12630de893afb6a",
+    "scripts/build_snow_host.py": "1ac824bae9fc9aa97f0a6287765d528dc54226ea7ed9e6dfdaa40e5c124ebe66"
+  },
+  "authored_image_sha256": "43aefbccc468c34e072f383f2956a1e954e73b66ae3cd7c167d5b4fdf7241e3c",
+  "interpretation": "The observer succeeds on a separate authored MEM_IMAGE code page inside the game. The prior constructor-page access denial is not a general inability to observe image-backed code in that process.",
+  "limitations": [
+    "Controls and constructor refusal occurred in separate bounded startups.",
+    "Does not distinguish main-image mapping constraints, selected page constraints, API wrapping or host-level protection failure.",
+    "No original constructor caller, receiver, return or destructor was captured.",
+    "Only the tiny authored fixture function is called; no game instructions are copied or executed by the control.",
+    "Module name and offset identity do not prove unmodified API code."
+  ],
+  "next_step": "Read-only comparison of protection API entry bytes and bounded forwarding paths between standalone and game processes; no further constructor protection attempt without a new explanation."
+}

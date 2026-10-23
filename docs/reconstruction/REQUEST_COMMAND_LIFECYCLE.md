@@ -1416,3 +1416,31 @@ flags. See [Wine 10.0 virtual memory implementation](https://github.com/wine-mir
 The installed Sikarugir build is patched; this source path is a hypothesis to
 check against that build, not proof of the observed denial's origin. Do not label
 the error as a particular game's protection behavior solely from Win32 error 5.
+
+## Authored image-page control also succeeds inside the game
+
+The [image control receipt](../../native/snow_host/execution_image_control_live_validation.json)
+adds a separate authored DLL to the controlled comparison. The controller checks
+its known export and instruction bytes, verifies an RX `MEM_IMAGE` page owned by
+that DLL, and pins the module before arming. It never rewrites the image bytes.
+In one bounded game startup, the observer changed RX to read-only, caught the exact
+entry, restored RX and returned the authored value 42. Bytes remained unchanged,
+the game reached scheduler readiness, and cleanup passed.
+
+Seven standalone cases also passed: disabled configuration, private control,
+image control, missing image, missing export, mismatched authored function bytes,
+and unsupported source. Missing/invalid image cases never arm or call the export.
+DLL loader initialization still executes when loading a configured file; this
+control is intended only for the accompanying authored fixture.
+
+Together with the private control, this excludes a general in-process or
+image-page limitation of the observer in the sampled runtime. It does not tell us
+whether the failed constructor page differs because of the main-image mapping,
+that particular page, API wrapping, or a host-level protection constraint. These
+were separate startup sessions, not a simultaneous comparison.
+
+The next useful observation is read-only inspection of protection API entry bytes
+and bounded forwarding paths against a standalone baseline. Matching module names
+and offsets are insufficient to exclude a wrapper. No further attempt to remove
+execution from the constructor page is justified solely by these control results.
+Constructor ownership, caller and teardown remain unresolved.

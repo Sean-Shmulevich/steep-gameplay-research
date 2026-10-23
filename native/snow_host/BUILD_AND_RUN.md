@@ -505,3 +505,23 @@ The standalone fixture `tests/fixtures/snow_execution_control_fixture.c` loads
 the plugin DLL and accepts DLL path, INI path, and expected initialization result.
 Disabled configuration must decline with no output. Enabled configuration must
 produce a captured exact entry, return 42, preserve bytes and restore RX.
+
+The same control can inspect a separate **authored fixture DLL**:
+
+```ini
+[control]
+enabled=1
+source=image
+image_path=C:\research\fixtures\execution_control_image.dll
+```
+
+The build flag also produces `fixtures/execution_control_image.dll`. Keep that
+fixture outside the host's plugin-discovery directory. Only point `image_path`
+at this authored fixture: loading a DLL executes its loader initialization even
+if later validation refuses its exported function. The controller checks the
+`snow_execute_target` export, page alignment, RX image mapping, allocation owner
+and exact authored function bytes, then pins the fixture before observing it.
+It does not rewrite image code. A missing/invalid fixture records refusal with
+`page_available=0`, `armed=0`, `executed=0`. `allocated` refers only to the private
+control; use `page_available` for either source. Unsupported source names decline
+initialization. Each source needs a fresh process because the observer is one-shot.

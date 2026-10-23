@@ -50,6 +50,8 @@ def main():
         build('plugins/command_manager_execute.dll', ['examples/command_manager_execute.c','snow_first_execute.c'], ['-shared'])
     if args.execution_control_plugin:
         build('plugins/execution_control.dll', ['examples/execution_control.c','snow_first_execute.c'], ['-shared'])
+        (out/'fixtures').mkdir(exist_ok=True)
+        build('fixtures/execution_control_image.dll', ['../../tests/fixtures/snow_first_execute_image.c'], ['-shared','-fno-toplevel-reorder'])
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
     if args.delegate_capture_plugin:
