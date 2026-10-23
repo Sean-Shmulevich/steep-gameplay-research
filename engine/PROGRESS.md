@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Built the filtered native finalizer adapter (ABI 1) and added it to the standalone
+host build. Seven synthetic Windows/Wine scenarios passed: filtering and integer
+forwarding, read-only protection restoration, competitor refusal/retry, owner-loss
+cleanup, pre-install identity refusal, closed capture, and heap-table rejection.
+Selected calls record caller and before/after job state; other shared-table jobs
+forward without capture. No game launched. Bounded capture controller and live
+fingerprints/validation remain next. Full suite: 2119 tests, one skipped; standalone
+build and repository checks passed. Forwarding module stays pinned through exit.
+
 Connected original completion/finalizer to full normal dependency release in a
 128-case instruction fixture (normal holds and credit recipients); all passed.
 Successor begin can run with predecessor outstanding=1 under two predecessor

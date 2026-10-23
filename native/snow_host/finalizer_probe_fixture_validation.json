@@ -1,0 +1,63 @@
+{
+  "status": "synthetic_windows_finalizer_probe_passed",
+  "abi_version": 1,
+  "scenarios": [
+    {
+      "name": "normal",
+      "passed": true
+    },
+    {
+      "name": "readonly",
+      "passed": true
+    },
+    {
+      "name": "conflict",
+      "passed": true
+    },
+    {
+      "name": "identity_before",
+      "passed": true
+    },
+    {
+      "name": "identity_during",
+      "passed": true
+    },
+    {
+      "name": "closed",
+      "passed": true
+    },
+    {
+      "name": "heap_table",
+      "passed": true
+    }
+  ],
+  "runtime": "Wine on macOS",
+  "compiler": "MinGW x86_64 Windows target",
+  "source_hashes": {
+    "native/snow_host/snow_finalizer_probe.c": "f377be6d4cb33ef1d7bfcac87e9cd62358474aaa9a6f098cf6019223ea9be632",
+    "native/snow_host/snow_finalizer_probe.h": "a1b8e1475936f9d43f97518df905a7d06b1f4139df64e460b195b6354c5a0a59",
+    "native/snow_host/snow_delegate_trace.c": "fb4c1e74c86c29a0821f231ae80b01bb12e8a16c32f9ca04ecab9de914f90ef5",
+    "native/snow_host/snow_delegate_trace.h": "3acf7cfa3620aad61effae25c0b17dad6309e16e40407440b081c5fd849b35f1",
+    "tests/fixtures/snow_finalizer_probe_fixture.c": "e8fbb4a4ed7b14f7569e7ccbc240da2a0bc9fae9cfbbf0db6277b8ee4a7aaab7"
+  },
+  "game_launched": false,
+  "game_memory_modified": false,
+  "fixture_correction": "Initial test assumed default image page protection was READWRITE. Fixture now measures the original protection and asserts exact preservation; seven scenarios passed after correction.",
+  "checks": [
+    "Only selected job is captured; other objects sharing the slot forward unchanged.",
+    "Full-width integer return and caller image preserved.",
+    "Before/after state observation maps DONE to UNSCHEDULED with outstanding still one in synthetic original.",
+    "Owner identity loss invalidates post-observation but does not prevent pinned image-slot restoration.",
+    "Competing pointer preserved; restoration succeeds after competitor removes itself.",
+    "Read-only image page protection restored; heap slot refused.",
+    "Close prevents install; cached calls continue forwarding without new records."
+  ],
+  "limitations": [
+    "Synthetic owner, table and original routine; no actual game finalizer invocation or protection acceptance.",
+    "Controlled sequential pointer changes; install/restore concurrency not exercised.",
+    "No forced VirtualProtect failure or concurrent third-party protection change.",
+    "Owner lifetime and object reuse remain caller assumptions.",
+    "No bounded live controller or build fingerprints packaged for this probe yet.",
+    "Capture drain does not authorize module unload or arbitrary mod mutations."
+  ]
+}

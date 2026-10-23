@@ -804,3 +804,57 @@ before the final outstanding decrement. It is useful instrumentation, not an
 unlocked mod callback or complete worker-exit notification. A later boundary is
 still needed to observe the decrement directly. The two inspected call sites do
 not constitute an exhaustive inventory of possible finalizer callers.
+
+## Filtered native finalizer adapter
+
+The authored [finalizer probe](../../native/snow_host/snow_finalizer_probe.c) and
+[ABI 1 header](../../native/snow_host/snow_finalizer_probe.h) implement the next
+observation adapter. The build produces `snow_finalizer_probe.dll`; it is not an
+automatically loaded plugin. A bounded controller and live build fingerprints
+remain required before using it in the game.
+
+Configuration qualifies a current owner/global/table relationship, an aligned
+nonexecutable image slot at table +0x70, and an executable original target in the
+same module as the table and owner global. It pins its module and the original
+image. Install rechecks owner/table/slot, changes only the table pointer using
+compare/exchange, and restores page protection immediately. Restore changes only
+its own pointer (or accepts an already-restored original); a competitor is kept.
+No instruction bytes are patched.
+
+The adapter filters the selected `owner +0x218` job. Other objects using the shared
+table forward without reserving records or running observation readers. Selected
+calls record the return address, entry/exit time, thread, integer result, and
+before/after guarded job fields using the existing delegate recorder. In this
+adapter `function_storage` is zero and `receiver` is the job, not the engine owner.
+The one-pointer integer-result ABI is explicit; it is not a generic virtual-call
+wrapper and makes no floating/vector return claim. Clients must check this
+adapter's ABI and record size, not infer compatibility from a different probe.
+
+Recording validates the current owner, job table and original/wrapper slot before
+and after reading counters. Invalid observations remain zero/invalid while the
+original call still forwards. No user callback, output, mutation or control lock
+runs inside the dispatch wrapper. The original may hold scheduler locks, and the
+read operations add overhead. Guard success is not atomicity or lifetime pinning.
+
+Unlike a heap descriptor, the restored slot lives in a pinned image. Cleanup can
+therefore restore the original pointer even if owner identity is lost during the
+capture. This does not permit further qualified recording against that owner.
+Capture close/drain authorizes copying records only; cached calls still forward,
+and the module and recorder must remain resident until process exit. Installation
+is one-shot, restoration retryable; restore must be attempted after any install
+attempt, including a reported page-protection failure. Concurrent third-party
+page-protection changes and OS protection failures are not excluded by the CAS.
+
+The [synthetic fixture](../../tests/fixtures/snow_finalizer_probe_fixture.c) tests
+shared-table filtering, full-width forwarding, return-site attribution, state
+observation, protection preservation, competing-pointer refusal/retry, owner-loss
+cleanup, close-before-install refusal, and heap-table rejection. The selected
+synthetic original changes DONE to UNSCHEDULED but intentionally leaves the
+outstanding count positive. This models the finalizer boundary; it is not a live
+native completion result or an arbitrary mod execution API.
+
+The [Windows/Wine validation receipt](../../native/snow_host/finalizer_probe_fixture_validation.json)
+records seven passing synthetic scenarios. No game was launched. The initial
+fixture incorrectly assumed the default image-page protection; the corrected
+fixture measures and checks preservation of the original value. Fault-injected
+OS protection failures and concurrent third-party page changes remain untested.

@@ -37,6 +37,7 @@ def main():
     build('snow_update_probe.dll', ['snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c'], ['-shared'])
     build('snow_action_probe.dll', ['snow_action_probe.c','snow_action_trace.c'], ['-shared'])
     build('snow_delegate_probe.dll', ['snow_delegate_probe.c','snow_delegate_trace.c'], ['-shared'])
+    build('snow_finalizer_probe.dll', ['snow_finalizer_probe.c','snow_delegate_trace.c'], ['-shared'])
     if args.delegate_capture_plugin:
         build('plugins/delegate_capture.dll', ['examples/delegate_capture.c','snow_delegate_probe.c','snow_delegate_trace.c'], ['-shared'])
     if args.capture_plugin:

@@ -279,3 +279,25 @@ To build the separate one-shot graphics capture plugin, add
 its INI opt-in and refuses a trigger that exists at initialization. See the
 [capture controller contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#one-shot-capture-controller)
 before using it; it does not establish an owner-lifetime lock.
+
+### Experimental finalizer recorder
+
+The build emits `snow_finalizer_probe.dll`, a separate ABI 1 component, not an
+automatically installed plugin. It filters one configured graphics job while
+forwarding other objects sharing its table. See the
+[finalizer adapter contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#filtered-native-finalizer-adapter)
+for lifetime, ABI, installation, observation and cleanup requirements. A bounded
+live controller with build fingerprint checks is still needed. Finalizer entry
+and return occur before worker completion accounting finishes; neither is an
+unlocked mod callback or an unload barrier.
+
+To build the synthetic Windows fixture from the repository root:
+
+```sh
+x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror -I native/snow_host tests/fixtures/snow_finalizer_probe_fixture.c -o /tmp/snow_finalizer_probe_fixture.exe
+```
+
+Run the fixture in Windows/Wine as `snow_finalizer_probe_fixture.exe <DLL-path>
+<scenario>`. Scenarios are `normal`, `readonly`, `conflict`, `identity_before`,
+`identity_during`, `closed`, and `heap_table`. Each process uses synthetic
+allocated job storage and its own executable-backed table, not game memory.
