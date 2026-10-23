@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "cases": 144,
+  "scope": "Original category worker/completion plus ordinary dependency release into concrete category successor begin",
+  "substitutions": [
+    "Locks are no-ops",
+    "Queue removal sets done; insertion records successor and sets scheduled",
+    "Final action callback records state"
+  ],
+  "coverage": [
+    "One synthetic ordinary successor with one or two initial holds",
+    "Matching versus pending request counters",
+    "Credit gate disabled, enabled with zero credit, enabled with one credit",
+    "Empty versus nonempty successor",
+    "Zero, one, six callbacks and one or two pre-reserved serial dispatches"
+  ],
+  "additional_spans": [
+    {
+      "start_rva": "0x11e7ba0",
+      "end_rva_exclusive": "0x11e7cf7",
+      "sha256": "0af148e9236a8982b5a15b5bd5c696fc29ac4a7ff64309566f53d4787267b369"
+    },
+    {
+      "start_rva": "0x11d1540",
+      "end_rva_exclusive": "0x11d15fa",
+      "sha256": "ea53d67397762e3674b773fd23d3e5e43fec94b55226fec21c419ec9524d737d"
+    },
+    {
+      "start_rva": "0x11cf8f0",
+      "end_rva_exclusive": "0x11cf9a7",
+      "sha256": "a89db77bd142d3f365f7e33a347b1aa26ce7255f7caa7f6da4639e0c09ad574d"
+    }
+  ],
+  "base_receipt": "action_refresh_completion_validation.json",
+  "limits": [
+    "Dependency list constructed synthetically, not by original graph registration",
+    "Credit-recipient list empty; no alternate release",
+    "No actual threads or lock contention",
+    "Successor work is queued but not executed; no next-request proof"
+  ],
+  "game_process": false
+}

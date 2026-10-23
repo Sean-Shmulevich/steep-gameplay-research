@@ -757,3 +757,52 @@ bounded maximal chunk size are fixture choices. Omitted incoming dependencies
 and source evaluators must not be inferred from this example. The useful next
 live evidence remains correlated request identity, category completion and the
 next gather on the actual selected world, once game access is available.
+
+
+## Original release into the next category
+
+The [successor-release receipt](../../native/snow_host/action_refresh_successor_validation.json)
+extends the composed category completion test by executing original ordinary
+release `0x11e7ba0`, rather than replacing it with a recorder. The synthetic
+outgoing list contains a second job with the same concrete category table.
+Its ordinary begin, empty predicate, outgoing activation and empty finalization
+also execute. Queue insertion/removal, locks and final action callbacks remain
+substituted. Registration itself is tested separately; this fixture directly
+constructs the successor list.
+
+The ordinary successor loop follows these decisions:
+
+```text
+if outgoing.active != 1:
+    return
+outgoing.active = 0
+for successor in outgoing.normal_successors:
+    prior_holds = atomic_decrement_return_old(successor.holds)
+    if prior_holds == 1:
+        lock(successor)
+        if successor.started != successor.requested:
+            if successor.credit_gate and successor.credits <= 0:
+                successor.deferred = 1
+            else:
+                if successor.credit_gate:
+                    atomic_decrement(successor.credits)
+                successor.begin()
+        unlock(successor)
+# A separate credit-recipient loop follows; excluded from this fixture.
+```
+
+There are 144 cases combining zero/one/six predecessor callbacks, one/two
+pre-reserved dispatches, one/two initial successor holds, matching/pending
+request counters, three credit configurations and empty/nonempty successor
+ranges. Before the final dispatch return, the successor's holds and started
+counter remain unchanged. Final release decrements one hold. Begin occurs only
+when that decrement removes the final hold, a request is pending and credit
+permits it. A permitted empty successor finalizes immediately; a nonempty one
+is queued. An enabled gate without credit sets the deferred flag.
+
+These gate fixtures test local branch behavior, not a claim that category 5
+uses credit gating in the observed configuration. Credit-recipient lists are
+empty, alternate release is excluded, and no native concurrency is exercised.
+This removes the ordinary successor-release substitution from the tested
+worker/completion chain. It still does not execute the complete PreAI graph,
+the next gather, or actual source evaluation.
