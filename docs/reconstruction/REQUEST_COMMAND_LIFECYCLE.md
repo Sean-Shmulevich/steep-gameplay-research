@@ -436,8 +436,9 @@ queue during this interval does not by itself establish safe native submission.
 Searching for the live capacity, 3072, identifies a constructor-shaped routine
 at RVA `0x647650`. Its layout matches the observed manager across both budget
 pairs, the primary ring, participant container, execution flag and auxiliary
-buffers. This is a static layout attribution, not a captured native constructor
-call or proof of singleton ownership.
+buffers. This was initially a static layout attribution. The exact live entry
+and call/publication boundaries are documented later in this guide; allocation
+ownership and destruction remain unresolved.
 
 The [constructor fixture](../../native/snow_host/command_constructor_validation.json)
 executes the original constructor and ring-allocation helpers in five cases:
@@ -1763,3 +1764,53 @@ factory and then encountered missing runtime state. Its 0x98 allocation request
 is not attributed to the command manager. That probe remains private and is not
 part of the validated call-boundary claim. Next is tracing the producer of RAX
 immediately before this bridge and the continuation after constructor return.
+
+## Constructor return publication
+
+The [32-case continuation validation](../../native/snow_host/constructor_publication_bridge_validation.json)
+starts at the captured return continuation 0x411efd1 with independent synthetic
+post-return registers, flags and caller-stack contents. Every case stores the
+supplied RAX value at the manager global 0x312f3a8, through the previously observed
+generic writer 0x40c2369. No service calls are substituted. Execution stops after
+the store, and the actual destination qword is checked. A synthetic zero-result
+case also stores zero; it does not establish native allocator failure policy.
+
+This connects three separately evidenced boundaries:
+
+```text
+receiver_storage = supplied_storage       // its allocator remains unresolved
+constructed = initialize_manager(receiver_storage)
+command_manager_global = constructed
+```
+
+The call bridge passes supplied storage into RCX. The constructor returns its
+receiver in the earlier constructor fixtures and the new full-storage comparison.
+The continuation publishes its supplied return value. The live exact-entry run
+separately observed receiver equality with a later singleton read. This is a
+composition of static and runtime evidence, not one atomic lifecycle trace.
+It does not recover manager destruction, reference ownership, or concurrency
+protection around singleton publication.
+
+### Runnable detached initialization model
+
+[command_initialization.py](../../engine/command_initialization.py) implements
+the constructor's known writes, allocation sizes, call order, null-result branches
+and auxiliary-buffer clear branch. Caller-supplied services retain the unresolved
+lock, container, allocation and cleanup bodies. Caller storage must cover at least
+0x179 bytes; that minimum observed footprint is not a recovered allocation size.
+The model preserves bytes it does not write and returns the receiver token.
+`initialize_and_publish` invokes the supplied publisher only after normal return.
+Python validation and exception propagation are authored interface behavior, not
+claims about native exception handling.
+
+The [96-case original-instruction comparison](../../native/snow_host/command_initialization_model_validation.json)
+checks all 512 supplied receiver bytes, the return value, and external-call order
+and arguments. It varies initial byte patterns and all 16 null-allocation masks.
+A synthetic container service also selects the existing-capacity clear branch;
+that branch coverage does not establish native container behavior. One subtle
+result is retained: on null allocation the primary/secondary ring ownership bytes
+remain unchanged, whereas auxiliary ownership bytes were already initialized to 1.
+
+Run `python3 -m engine.examples.command_initialization_probe` to inspect an
+initialization/publication composition with clearly labeled synthetic services.
+No original executable, memory snapshot or native allocator is needed.

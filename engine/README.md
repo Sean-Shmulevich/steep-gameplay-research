@@ -919,3 +919,14 @@ build/process/owner qualification. It performs no process access on its own.
 Use its explicit status rather than treating missing or unstable state as zeros.
 Returned runtime addresses belong in private evidence, not public reports.
 See [reader contract](../docs/reconstruction/SCHEDULER_SMOOTHING_AUDIT.md#bounded-timing-state-reader).
+
+## Detached command-manager initialization
+
+Run `python3 -m engine.examples.command_initialization_probe` for recovered
+constructor writes and normal-return publication with supplied synthetic services.
+[command_initialization.py](command_initialization.py) accepts caller-owned storage
+and explicit lock, container, allocation and cleanup callbacks. It preserves
+unwritten bytes, models four backing-allocation requests and publishes only after
+normal constructor return. It does not allocate the manager itself or access the
+live game. See [the lifecycle evidence](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#constructor-return-publication)
+for the 96-case byte comparison and unresolved ownership boundaries.

@@ -1,0 +1,685 @@
+{
+  "evidence": "Independent initialization model compared against original constructor/ring-helper instructions with identical supplied external services",
+  "cases": [
+    {
+      "pattern": 0,
+      "failure_mask": 0,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 0,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 1,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 1,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 2,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 2,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 3,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 3,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 4,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 4,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 5,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 5,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 6,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 6,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 7,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 7,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 8,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 8,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 9,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 9,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 10,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 10,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 11,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 11,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 12,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 12,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 13,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 13,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 14,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 14,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 15,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 0,
+      "failure_mask": 15,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 0,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 0,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 1,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 1,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 2,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 2,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 3,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 3,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 4,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 4,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 5,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 5,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 6,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 6,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 7,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 7,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 8,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 8,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 9,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 9,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 10,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 10,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 11,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 11,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 12,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 12,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 13,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 13,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 14,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 14,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 15,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 165,
+      "failure_mask": 15,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 0,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 0,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 1,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 1,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 2,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 2,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 3,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 3,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 4,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 4,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 5,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 5,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 6,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 6,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 7,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 7,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 8,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 8,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 9,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 9,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 10,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 10,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 11,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 11,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 12,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 12,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 13,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 13,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 14,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 14,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 15,
+      "supplied_service_selects_clear_branch": false,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    },
+    {
+      "pattern": 255,
+      "failure_mask": 15,
+      "supplied_service_selects_clear_branch": true,
+      "full_512_bytes_equal": true,
+      "external_call_order_and_arguments_equal": true
+    }
+  ],
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "862e52d3554f317a63b8b9c925a61e1e1b844570c82346e594267efd56a4e10a",
+  "limitations": [
+    "Lock/container/allocator/cleanup services are supplied, not recovered by this comparison.",
+    "Failure masks inject null returns and do not establish native allocator failure policy.",
+    "The clear branch is selected by a synthetic container service mutating an earlier header; this is branch coverage, not observed native service behavior.",
+    "Compares only 512 supplied receiver bytes and service events; no object allocation, destruction or concurrent safety is proved."
+  ]
+}

@@ -6430,3 +6430,14 @@ entry RAX, other GPRs and checked caller-stack bytes are preserved, and control
 reaches the constructor with the expected return slot. Flags and allocation are
 not covered. Manager allocator origin, return/publication flow and destruction
 remain the next ownership questions; full dispatcher reconstruction is not claimed.
+
+### Constructor return now connects to singleton publication
+
+Thirty-two original-instruction continuation cases publish supplied RAX through
+the already observed generic store into the manager global. Added a runnable
+detached constructor/publication model with explicit external services. Ninety-six
+original-instruction cases compare every supplied receiver byte, return value and
+external service order/arguments across initial patterns, allocation-failure masks
+and the auxiliary clear branch. Five public unit tests and the synthetic example
+pass. No live game was launched for this pass. Manager storage allocation, native
+service bodies, destruction and concurrent publication safety remain unresolved.
