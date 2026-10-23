@@ -989,3 +989,41 @@ A future native request experiment must retain manager and descriptor lifetimes,
 verify build-specific producer services, capture both streams with shared clock
 and session provenance, and report admission separately from observed invocation.
 This correlator removes an analysis gap; it does not satisfy those native gates.
+
+
+## Expanded manager-lifetime search boundary
+
+A [bounded expanded static search](../../native/snow_host/manager_lifetime_search_validation.json)
+checked RIP-relative operands targeting the singleton, allowing 0/1/2/4/8 bytes
+after the displacement. It also checked direct E8/E9 branches to the matched
+constructor and primary-record storage-release helper. The current mapped image
+was compared with the analysis cache before the scan.
+
+The search found 26 metadata-anchored reads and no anchored writes to the exact
+singleton address. Eighteen additional unanchored decode candidates include
+nine overlapping REX-prefix alternatives; these are not 18 independently proved
+instructions. No direct constructor branch was found. The two confirmed direct
+storage-release branches are both inside the constructor's auxiliary-buffer
+initialization. They provide no shutdown call chain or manager retention method.
+
+This narrows the next investigation: repeating direct-reference scans of these
+same targets is not an ownership strategy. The remaining leads are indirect
+construction/publication, writes through aliases or a containing allocation,
+and code absent from this image. None is established as the explanation.
+
+The next runtime ownership experiment should first determine whether the manager
+is already published when the startup plugin initializes. Record that observation
+with process identity and startup phase, without treating a nonnull pointer as
+ownership. If publication predates the plugin, a later gameplay sampler cannot
+capture its writer; an earlier startup observation point or a debugger watchpoint
+would be needed. If it is initially absent, bounded publication observation can
+locate the interval, but still cannot identify the writer's call stack by itself.
+Any watchpoint/instrumentation experiment needs its own cleanup and failure
+handling; none was installed in this static pass.
+
+For native command submission, the unresolved requirement remains a bounded
+ownership window covering the manager, its recursive lock and queue storage.
+Invoked descriptor context/code must also outlive every possible delivery.
+Neither the successful engine-main capture nor this negative static search
+satisfies those requirements. No new command publication is authorized by these
+findings alone.

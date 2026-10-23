@@ -1,0 +1,39 @@
+{
+  "evidence": "Bounded static search of one mapped image; negative results are not lifetime proof",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "singleton_rva": "0x312f3a8",
+  "displacement_trailing_byte_counts": [
+    0,
+    1,
+    2,
+    4,
+    8
+  ],
+  "metadata_anchored_singleton_reads": 26,
+  "metadata_anchored_singleton_writes": 0,
+  "unanchored_decode_candidates": 18,
+  "unanchored_candidates_include_rex_prefix_aliases": true,
+  "constructor_direct_branches": [],
+  "storage_release_direct_branches": [
+    {
+      "instruction_rva": "0x647744",
+      "function_rva": "0x647650",
+      "target_rva": "0x66b6a0"
+    },
+    {
+      "instruction_rva": "0x64779a",
+      "function_rva": "0x647650",
+      "target_rva": "0x66b6a0"
+    }
+  ],
+  "unanchored_branch_candidates": [],
+  "lifetime_mechanism_established": false,
+  "game_launched": false,
+  "limitations": [
+    "RIP-relative operands to this exact global only; derived pointers, aliases, bulk stores and encoded addresses are not covered.",
+    "Direct E8/E9 branches only; indirect calls, encoded dispatch and runtime-generated or absent code are not covered.",
+    "Instruction boundaries for anchored results follow exception metadata and linear decoding; fragmented functions may be missed.",
+    "Unanchored decodes include overlapping prefix alternatives and are candidates, not distinct confirmed instructions.",
+    "No writer found does not imply immutable storage, permanent ownership or safe queue publication."
+  ]
+}

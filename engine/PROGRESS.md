@@ -6203,3 +6203,13 @@ now exercises this join with actual authored C recorder calls, synthetic phase
 and thread services, overflow and post-close forwarding. Eight correlation tests
 and the compiled integration test pass. Native command publication and lifetime
 qualification remain unproved; no game was launched for this change.
+
+
+### Manager lifetime search narrowed
+
+An expanded exact-global operand and direct-call scan found no singleton writer
+or constructor caller in the analyzed image. Its two primary-storage release
+calls are constructor branches, not a shutdown path. The receipt states search
+coverage and unanchored decode ambiguity. Next ownership evidence must address
+startup publication or containing-object teardown rather than repeat the same
+reference search. No game launch or native command submission occurred.
