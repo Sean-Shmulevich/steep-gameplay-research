@@ -6693,3 +6693,10 @@ bridges in1024 controlled cases, preserving arguments, return, stack and saved
 registers. The private image's unmodified decoded target is unmapped; target
 substitution occurred only in the emulator. Live API identity and actual release
 remain unresolved. No game launched or modified.
+
+Added a game-independent allocation lifecycle inspection command connecting
+registration, lookup, region retirement, concrete context policy and removal.
+Joined scanner/fallback/context original execution matches20 scenarios with
+supplied external target returns0/1; bookkeeping is identical for both. The
+fixture explicitly labels authored tag placement and lifecycle order. No actual
+release, live API identity or safe unload is inferred from completed bookkeeping.

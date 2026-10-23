@@ -473,3 +473,44 @@ restoration and nonvolatile registers match. No live process or game file was
 patched. Actual external target identity, OS behavior and failure effects remain
 open. Public composed tests show that the fallback's accounting size survives the
 context's zero-size dispatch, but do not prove physical memory reclamation.
+
+## Inspect the composed metadata lifecycle
+
+```sh
+python3 -m engine.examples.allocation_lifecycle_probe
+```
+
+This standalone command requires no game files. It registers synthetic metadata,
+places an explicitly authored cross-region span, performs lookup, retires the
+span through the reconstructed scanner/fallback/context policy, then removes the
+metadata. A separate synthetic fallback entry keeps post-retirement lookup defined.
+The fixture's tag placement and chosen lifecycle schedule are not recovered
+allocator implementations.
+
+JSON reports before/after lookup, tag bytes, record index and accounting, nested
+lock depth and external target calls. Region retirement changes lookup from the
+selected record to the fallback while the selected metadata is still registered.
+Removal later clears its entry and changes its index to255. The cross-region span
+is dispatched once with registry lock depth two. The external target observes
+already-cleared tags but accounting that has not yet been decremented.
+
+The command runs with supplied external-target returns0 and1. Both produce the
+same bookkeeping, with `native_release_proved=false` and `safe_unload_proved=false`.
+Those return values are not assigned OS failure/success semantics because live
+target identity remains unresolved. They demonstrate that these local callers do
+not validate that result before clearing accounting or completing traversal.
+
+[The joined scanner/fallback/context comparison](../../native/snow_host/joined_region_context_validation.json)
+executes all three original routines and the encoded context bridge in20 cases.
+Initialized TLS, locks and the external target body are supplied, with an
+emulator-only encoded-slot substitution. Both target returns match the models in
+event order, tag bytes, accounting and lock depth. The public probe adds synthetic
+registration, lookup and removal around those separately tested models; its whole
+lifecycle schedule was not replayed as one native allocator session.
+
+This makes the remaining completion boundary concrete: cleared tags, zero
+accounting, removed metadata and a normally returned context call still do not
+prove actual storage release or safe module unloading. A dependable native API
+needs the live target's identity and result contract plus exclusion/lifetime
+proof, rather than promoting these local bookkeeping observations into a global
+completion guarantee.
