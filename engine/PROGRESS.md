@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Command-executor audit validated ten direct call sites across frame entry,
+wrapper and transition helper. Executor tail dispatches a virtual callback list
+with a reread base/count after each call and a plain execution flag; no callback
+registration/lifetime contract yet. Added address-independent pseudocode and
+hashed audit receipt. Next: trace list +0xb0/count +0xba writers and execution-byte
+checks to recover registration, removal and ownership before mod integration.
+
+
 Priority updated per user: whole-scheduler understanding and broad mod APIs;
 deterministic stepping is supporting work. Roadmap now targets engine-phase
 command publication, execution context, ownership and completion. Extended the

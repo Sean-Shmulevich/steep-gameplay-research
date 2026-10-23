@@ -1,0 +1,92 @@
+{
+  "evidence": "Static direct-call audit; no game execution",
+  "targets": {
+    "0x664260": [
+      {
+        "call_rva": "0x65697e",
+        "caller_rva": "0x656900",
+        "sha256": "9310087ef7ab0cfac00ee33c09b305027c4a8fb8d0da61c5b8adcdfe95adf972"
+      },
+      {
+        "call_rva": "0x66422b",
+        "caller_rva": "0x664200",
+        "sha256": "d9b0415faf958a6f188d4fa9fa6601f08cb360cb120d59e15072f76b9e0f1f81"
+      },
+      {
+        "call_rva": "0x67e09f",
+        "caller_rva": "0x67e030",
+        "sha256": "e89c876d5de2b4ad097a0c231d8c33cba43341c1175f07dcbbbd643eb043ef3c"
+      },
+      {
+        "call_rva": "0x67e10c",
+        "caller_rva": "0x67e030",
+        "sha256": "bccebb213650068dc95cc51a2bb182326d39e807332dda850416343cf354f4c7"
+      },
+      {
+        "call_rva": "0x67e186",
+        "caller_rva": "0x67e030",
+        "sha256": "cac8a9d0d667a1118e2b495689126478d04ae89bdbcc6ac0de5b5d498692a608"
+      },
+      {
+        "call_rva": "0x67e26f",
+        "caller_rva": "0x67e030",
+        "sha256": "01937ba0713e5ba81d52d4f3fae250640c0eb6c77ef084960d1096ed00c0cab5"
+      },
+      {
+        "call_rva": "0x67e346",
+        "caller_rva": "0x67e030",
+        "sha256": "72995f851130b390d62546a95b81038376bea446e2f134a07dbba4364367a663"
+      },
+      {
+        "call_rva": "0x67e447",
+        "caller_rva": "0x67e030",
+        "sha256": "498b9dba8347353422bb9f5ef14c7dde3d9c717908f15fe1940b626345bc439b"
+      },
+      {
+        "call_rva": "0x67e516",
+        "caller_rva": "0x67e030",
+        "sha256": "4f2f808fe4785abf7fc506b596c47acccaf53447cce29a6d03728a29dbeb24a6"
+      },
+      {
+        "call_rva": "0x67e62e",
+        "caller_rva": "0x67e030",
+        "sha256": "ad26dc931d6323d370f13181dfc0caee06169608b045ca643722d144a9e1511d"
+      }
+    ],
+    "0x664200": [
+      {
+        "call_rva": "0x662ea6",
+        "caller_rva": "0x662cf9",
+        "sha256": "f81b467d2d2b30c9bff76fd224f735285e596d6b635a1d1ee3de85e49b899cb4"
+      },
+      {
+        "call_rva": "0x69a1d7",
+        "caller_rva": "0x69a1ac",
+        "sha256": "9741eb24b204a535193c0aefd000c41006b832983c8ecf860600d2bf9f57566f"
+      }
+    ],
+    "0x67e030": [
+      {
+        "call_rva": "0x656b0e",
+        "caller_rva": "0x656a51",
+        "sha256": "9c6408bad95eea59ef2380df466d9d83ab44e6301621a11e11b2231ea2c66fd5"
+      },
+      {
+        "call_rva": "0x69d6c2",
+        "caller_rva": "0x69d6a0",
+        "sha256": "11cab724f311db86fca5c34eba8821cbcd8918e16d69241e69a6904aa63b338a"
+      }
+    ]
+  },
+  "executor_span": {
+    "rva": "0x664260",
+    "length": 165,
+    "sha256": "07651bdc38bc5d9b17ff8ad19a85183486f7b84a28577aed724403ec34c5fcb3"
+  },
+  "limitations": [
+    "Search finds E8 rel32 calls validated against exception-table function disassembly.",
+    "Indirect calls, tail jumps, unlisted/protected bodies and runtime dispatch are not covered.",
+    "Callback list ownership and mutation policy are unresolved.",
+    "Caller RVAs identify exception-table ranges, which may be fragments rather than full source functions."
+  ]
+}

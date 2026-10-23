@@ -1930,3 +1930,60 @@ BeginEngineFrame after command flushing is not enough to authorize changes to
 objects still accessible by graphics. A mod command needs an operation-specific
 ownership/exclusion contract in addition to a named phase. Loading and idle
 workers are not modeled by this probe and remain separate concerns.
+
+
+## Command executor entry paths and callback tail
+
+A focused direct-call audit finds ten validated call instructions targeting the
+executor: one in BeginEngineFrame, one in the small profiled wrapper, and eight
+in the transition helper previously associated with the BeginFrame stop-mode
+path. The wrapper itself has two validated direct callers; the transition helper
+also has two. These counts are a bounded image search, not a complete call graph.
+Indirect calls, tail jumps and protected/unlisted bodies remain outside it.
+See [entry audit](../../native/snow_host/command_executor_entry_validation.json).
+
+Consequently, observing the executor address or its execution flag alone cannot
+identify a once-per-frame mod callback. The eight sites are distinct instructions
+in one helper, not evidence of eight executions in a recorded session. A native
+observer must retain caller/request provenance and distinguish regular frame
+entry from transition-driven flushing.
+
+The inspected executor body has this local ordering (descriptive names; opaque
+callees remain unresolved):
+
+```text
+execute_engine_commands(manager):
+    manager.executing_byte = 1
+    flush_hierarchy_commands(manager)
+    service_A(manager)
+    ready = service_B(manager)
+    if not ready or global_state.flag52 != 0:
+        service_C(manager)
+    service_D(manager.embedded58)
+    global_service.virtual60()
+    cursor = manager.callback_array
+    end = manager.callback_array + manager.callback_count_u16
+    while cursor != end:
+        callback = *cursor
+        callback.virtual0()
+        cursor += 1
+        end = manager.callback_array + manager.callback_count_u16
+    manager.executing_byte = 0
+```
+
+The flag at manager +0xbc is set and cleared with ordinary byte stores in this
+body. No test-and-set, recursion rejection, or locking is visible in those stores;
+outer callers or callees may still serialize execution. The callback array at
++0xb0 and 16-bit count at +0xba are reread after every virtual call. The cursor
+continues from its previous address rather than being rebuilt from the reread
+base. This is not an immutable callback snapshot. It does not establish that
+callbacks are permitted to resize or mutate the list; doing so could invalidate
+the cursor. No unconditional exception-cleanup guarantee follows from the normal
+return's byte clear.
+
+The next productive binary search is for writers of this concrete callback list,
+its registration/removal and destruction paths, and checks of the execution byte.
+That can establish whether this is a usable existing registration mechanism,
+what callback ownership it expects, and how removal waits for execution. Until
+then, do not install arbitrary mod objects into this list or interpret the byte
+as a lock. This work is separate from player timing and deterministic stepping.
