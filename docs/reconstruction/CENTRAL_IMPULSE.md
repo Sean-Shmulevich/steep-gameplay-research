@@ -699,6 +699,39 @@ and markup owner identity in every event, and distinguish an empty trace from a
 failed installation. Do not treat a matching listener address as an allocation
 pin or assume that the listener vector cannot reallocate.
 
+### Authored notification recorder core
+
+[`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and
+[its implementation](../../native/snow_host/snow_markup_trace.c) provide bounded
+recording around the inspected five-argument descriptor thunk. The caller passes
+the descriptor, untagged receiver, markup ID, raw value byte and uint32 sentinel;
+the recorder forwards all five unchanged to the original thunk. It never reads
+or rewrites the descriptor. Entry/exit ticks, thread, caller and opaque integer
+return bits accompany each record. The configured owner is an identity label,
+not independently validated ownership. Clock units come from the supplied clock.
+
+This is authored instrumentation, not recovered engine logic. Initialization is
+one-shot before publication. Concurrent callers reserve separate records;
+capacity exhaustion counts drops while still forwarding. Closing stops new
+record admission, but cached calls continue forwarding. Records may be read only
+after all admitted calls return. Drain does not permit unloading the wrapper or
+freeing game storage. Exceptions or nonlocal exits can prevent drain. No capture
+status implies that a listener was installed; installation needs its own receipt.
+
+The [native fixture](../../tests/fixtures/snow_markup_trace_fixture.c), run with
+`python3 -m unittest tests.test_markup_trace`, checks 800 calls from eight threads,
+17 retained records and 783 drops, five-argument/result preservation, raw bytes,
+close during an active call, post-close forwarding, read publication and zero
+capacity. Eight tests across this recorder, notification model and listener
+observer pass. Windows x64 cross-compilation passes. Native fixture execution was
+on the development host, not Windows or the live game; it does not prove the
+installed wrapper ABI or game callback execution.
+
+Remaining before interception: fixture-qualified slot replacement/restoration,
+entry identity checks, a storage-lifetime strategy covering listener-vector
+reallocation, and retained wrapper lifetime. Then capture actual notifications
+alongside motion and physics. This core alone does not close those boundaries.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

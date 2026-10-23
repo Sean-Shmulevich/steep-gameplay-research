@@ -6845,3 +6845,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Sixteen portable observer/notification/map tests pass, including failures and changed guards/descriptors. Live IDs 84/92 each resolve to one stored listener targeting the expected controller/function/thunk; both entries and their storage match at endpoints. Each observation is 56 reads / 3,328 bytes.
 - The same live run has 32 valid motion and 32 valid physics samples, 161 callback records and zero drops. Delegate restoration, progress and outer cleanup pass. No listener writes or callback calls performed.
 - Subscribed identity is now established for this session. Notification firing, emitting job and lifetime-safe interception remain open; stable endpoints do not rule out reallocation or intermediate events.
+
+### Bounded markup callback recorder core
+
+- Added authored native recording for the recovered five-argument listener thunk, preserving the raw byte, sentinel and opaque return bits. Owner labels are supplied identity, not a new ownership proof.
+- Concurrent fixture forwards 800 calls with 17 recorded and 783 explicit drops. Close during an in-flight callback, cached forwarding, read publication and zero-capacity behavior pass. Eight focused tests pass; Windows x64 cross-compilation passes.
+- No game launched or listener modified. Windows execution, installer identity/CAS restoration, listener storage lifetime and actual notification firing remain open. The recorder is not yet integrated into a live plugin.
