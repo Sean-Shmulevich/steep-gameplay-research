@@ -265,3 +265,54 @@ execute and return/state/event order matches the model. Actual region tag
 publication, concurrent registration, registry lifetime and allocator release
 remain open. This finding narrows metadata ownership rules; it does not identify
 the live allocator's release vtable or prove safe memory reclamation.
+
+## Metadata removal and notifications
+
+[`unregister_metadata`](../../engine/allocation_metadata_removal.py) reconstructs
+`0x12313f0..0x123146b`, joined to the complete notification dispatcher at
+`0x1225b50..0x1225bf3`:
+
+```text
+index = record.index                 # captured before locking
+lock(registry.registration_lock)
+registry.entries[index] = null      # no entry-identity or bounds check
+if registry.default == index:
+    registry.default = 255
+unlock(registry.registration_lock)
+result = dispatch_observers(registry, event=0, record)
+record.index = 255                  # after callbacks, even if they changed it
+return result
+```
+
+The local model requires index0..126 and retained table/record storage. Native
+code does not enforce those requirements. In particular it can clear a slot that
+currently contains another record, and it does not reject an already unassigned
+index. Do not expose this as a validated mod-facing removal API.
+
+The dispatcher selects an observer collection at `registry + signed(event)*0x190`.
+Its count at collection +0x188 is re-read after each callback. Object-style records
+call virtual slot +8 with `(object,event,record)`; function-style records call
+`(event,record,context)`. Low32 callback results are bitwise-ORed, with zero for an
+empty collection. No meaning is assigned to those result bits. The public model
+accepts the already selected collection; the connected removal uses event zero.
+
+Observers see a cleared entry and, if it matched, default255, while the record
+still carries its old index. Changes to that record index during notification
+are overwritten by the final255 store. Registration and this removal both use
+event zero in the inspected paths; do not invent distinct add/remove event
+numbers. Notifications do not imply asynchronous callbacks have drained.
+
+**Region tags are not cleared by this routine.** The descriptor destructor at
+`0x1223ac0` calls the separate region scanner `0x1229690` before performing a
+similar entry-removal sequence. That is a static caller relationship, not proof
+that every removal caller retires regions first. The scanner's full behavior and
+its callback to the underlying region owner remain a next investigation. A tag
+still naming a cleared entry makes the lookup return null; the lookup does not
+fall back merely because the selected entry is null.
+
+[Joined original-instruction comparison](../../native/snow_host/allocation_metadata_removal_validation.json)
+passes 108 cases over first/middle/last valid indices, matching/nonmatching
+defaults, null/matching/mismatched slots, both observer styles and controlled
+callback extension/index mutation. Only locks and callback bodies are supplied;
+the removal and dispatcher execute together. Region retirement, concurrent table
+mutation, module lifetime and safe storage reclamation are not established.

@@ -1,0 +1,22 @@
+{
+  "evidence": "Original metadata removal and complete observer dispatcher executed together; locks and callback bodies supplied",
+  "cases": 108,
+  "return_state_and_events_match": true,
+  "routines": [
+    {
+      "rva": "0x12313f0",
+      "sha256": "921e14c79f581a7674a7e186215326dd40a5bf6286cd044f3d17dc2411dc3f91"
+    },
+    {
+      "rva": "0x1225b50",
+      "sha256": "25272bf652ba6028b9363c45ba29467027e10de16049f77d49abf1b7c373913d"
+    }
+  ],
+  "model_sha256": "ae9fa224f77784dfbffad5cf5e9a3335a1325acafc03e7c8d92d6988aca67c6c",
+  "limitations": [
+    "Index scope0..126; original does not enforce bounds or slot identity.",
+    "Synthetic observers may append and mutate record index; concurrent removal and invalid traversal endpoints excluded.",
+    "Region retirement and payload destructors not invoked by this isolated removal comparison.",
+    "No live allocator, callback-module lifetime or safe reclamation proof."
+  ]
+}

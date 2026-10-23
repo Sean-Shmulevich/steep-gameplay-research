@@ -144,3 +144,10 @@ record and notifies supplied observers after unlocking. Observer count is dynami
 `select_default_metadata` copies the post-callback index even on failed insertion.
 The caller retains registry/record/observer storage and callback modules; returned
 success is not a membership, lifetime or concurrent-registration guarantee.
+
+Metadata removal: `unregister_metadata` requires a retained record with index0..126,
+captures that index before locking, clears its entry without a membership check,
+conditionally clears default, then notifies outside the lock before setting the
+record index255. It leaves region tags untouched. `notify_metadata_observers`
+ORs low32 callback returns across a dynamically counted retained collection.
+Neither operation pins callback modules or establishes safe reclamation.

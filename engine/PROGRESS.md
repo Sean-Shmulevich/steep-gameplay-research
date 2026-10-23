@@ -6666,3 +6666,10 @@ and unconditional default assignment. Original routines match the model in 192
 controlled cases. Static initializer inspection explains lookup index127 overlap:
 only entries0..126 are cleared/registered, followed by separate count/default
 fields. Concrete allocator release, region tagging and lifetime remain open.
+
+Reconstructed metadata removal with its complete notification dispatcher; 108
+original-instruction scenarios match state, return bits and callback order.
+Observers run after table removal but before record index reset. Region tags are
+not cleared here; a separate region scanner appears earlier in an inspected
+descriptor destructor. That scanner and caller-wide retirement ordering remain
+open. No live game, native free or safe unloading claim.
