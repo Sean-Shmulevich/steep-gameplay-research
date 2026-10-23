@@ -1,0 +1,84 @@
+{
+  "evidence": "Compiled Windows x64 adapter fixture under Wine with synthetic retained owner and callbacks",
+  "passed": [
+    {
+      "scenario": "stale_owner_before",
+      "site": "engine"
+    },
+    {
+      "scenario": "stale_owner_after",
+      "site": "engine"
+    },
+    {
+      "scenario": "stale_descriptor_before",
+      "site": "engine"
+    },
+    {
+      "scenario": "stale_descriptor_after",
+      "site": "engine"
+    },
+    {
+      "scenario": "identity_aba",
+      "site": "engine"
+    },
+    {
+      "scenario": "repeat",
+      "site": "engine"
+    },
+    {
+      "scenario": "cancel_pending",
+      "site": "engine"
+    },
+    {
+      "scenario": "close_running",
+      "site": "engine"
+    },
+    {
+      "scenario": "competing",
+      "site": "engine"
+    },
+    {
+      "scenario": "request",
+      "site": "engine"
+    },
+    {
+      "scenario": "closed",
+      "site": "engine"
+    },
+    {
+      "scenario": "identity",
+      "site": "engine"
+    },
+    {
+      "scenario": "conflict",
+      "site": "engine"
+    },
+    {
+      "scenario": "readonly",
+      "site": "engine"
+    },
+    {
+      "scenario": "observation_invalid",
+      "site": "engine"
+    },
+    {
+      "scenario": "request",
+      "site": "graphics"
+    }
+  ],
+  "stale_receipt_closes_future_admission": true,
+  "original_callback_forwarded_on_stale_request": true,
+  "change_and_restore_before_callback_detected": false,
+  "game_launched": false,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "4e5120f9d82903980ae5c8dc9e3c0882de39dafef726038cfb0f758070d2d188",
+    "native/snow_host/snow_delegate_probe.h": "ae804dd6401d928ab131918b161d13ea523e224933bc822201cf72802648eea9",
+    "native/snow_host/examples/delegate_capture.c": "16b0c2c6ca5bc792240e3729758b05349dde8d76057924ed766fc29933938911",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "f178a830e1cb9def80aba5f4f9a55a25d49ceaa1968bad6584a4be258999e8e0"
+  },
+  "limitations": [
+    "No native owner generation, heap retention, live transition or safe unloading qualification.",
+    "Change-and-restore is explicitly not detected by sequential pointer checks.",
+    "Synthetic callbacks retain storage even when the owner global changes; freed-pointer forwarding is not tested or made safe."
+  ]
+}

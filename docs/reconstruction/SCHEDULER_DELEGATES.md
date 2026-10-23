@@ -1242,3 +1242,30 @@ settings and original-DLL restoration all pass. This live run closes after work
 returns. Pending cancellation and close during execution remain fixture-tested,
 not live shutdown evidence. No map transition, owner destruction, native command
 queue submission or gameplay mutation was exercised.
+
+### Invalidation between admission and callback return
+
+The resident request adapter adds a second qualification boundary beyond submit:
+actual call storage/receiver and the retained owner's descriptor are checked before
+and after forwarding. Expected original and installed-wrapper invokers are both
+accepted, preserving an already claimed request during legitimate restoration.
+A failed check skips its manager read, latches admission closed, and publishes
+STALE_BEFORE or STALE_AFTER after original forwarding returns. Before failure wins
+if both checks fail. The receipt retains invocation provenance and the original
+result; it does not pretend native execution was cancelled. Only collection
+returns these stale outcomes; non-consuming ReadObservation remains RETURNED-only.
+
+The [invalidation fixture](../../native/snow_host/delegate_invalidation_fixture_validation.json)
+changes the owner global or descriptor before callback entry and from inside the
+original callback. All four cases still forward the original once, report the
+appropriate stale boundary, keep admission closed even after identity restoration,
+and preserve later cached forwarding. The existing repeat, competition, close and
+restoration fixtures also run against the changed adapter.
+
+A fifth case atomically changes the owner pointer away and back before entry.
+The observation returns normally. This explicitly demonstrates the limit of
+sequential identity checks: they are not a generation counter, retention mechanism
+or ABA detector. Fixture storage remains allocated throughout. No live transition,
+freed-storage access, owner destruction or unload safety is qualified by these cases.
+Historical live receipts continue to describe their recorded source hashes; this
+new invalidation policy is fixture-qualified, not newly live-transition-qualified.

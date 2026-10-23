@@ -44,7 +44,7 @@ SNOW_DELEGATE_API int SnowDelegateProbe_ReadObservation(SnowDelegateRequestObser
 /* Reusable single-slot observation, authored policy, not native queue semantics.
  * Submit only after successful Install; IDs must strictly increase (no wrap).
  * A pending/running/uncollected request applies backpressure. Collect consumes
- * one returned or cancelled receipt. ReadObservation remains non-consuming and
+ * one returned, cancelled or stale receipt. ReadObservation remains non-consuming and
  * reports returned receipts only. Control calls serialize internally.
  * CloseObservations permanently refuses new requests and cancels one unclaimed
  * request. A callback that already claimed it finishes normally. Restore/Close
@@ -58,9 +58,19 @@ typedef enum {
 } SnowObservationAdmission;
 typedef enum {
     SNOW_OBSERVATION_NOT_READY=0, SNOW_OBSERVATION_RETURNED=1,
-    SNOW_OBSERVATION_CANCELLED=2
+    SNOW_OBSERVATION_CANCELLED=2, SNOW_OBSERVATION_STALE_BEFORE=3,
+    SNOW_OBSERVATION_STALE_AFTER=4
 } SnowObservationReceipt;
 SNOW_DELEGATE_API SnowObservationAdmission SnowDelegateProbe_SubmitObservation(uint64_t);
 SNOW_DELEGATE_API SnowObservationReceipt SnowDelegateProbe_CollectObservation(SnowDelegateRequestObservation *);
 SNOW_DELEGATE_API void SnowDelegateProbe_CloseObservations(void);
+/* Claimed observations recheck owner/descriptor and actual call arguments before
+ * and after forwarding. A mismatch suppresses the manager read at that boundary,
+ * latches request admission closed and yields STALE_BEFORE or STALE_AFTER.
+ * The original callback is always forwarded: these statuses describe observation
+ * qualification, not cancellation of native work. Before failure takes precedence.
+ * Restored original invoker is allowed for an already claimed/cached call.
+ * Sequential identity checks cannot detect an intervening change-and-restore,
+ * retain owner storage, or make a freed receiver safe for original forwarding.
+ */
 #endif

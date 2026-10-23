@@ -293,3 +293,13 @@ of this phase relative to the specific input/motion/animation operations a mod
 would invoke. Do not grow this into an arbitrary-function executor merely because
 read-only phase delivery works. Native command-queue qualification remains a
 separate route; it is no longer a prerequisite for resident phase observations.
+
+### Accepted-request invalidation boundary
+
+Resident observations now report owner/descriptor mismatches at callback entry or
+return and latch admission closed, even if pointers are later restored. Controlled
+fixtures qualify those guards while retaining original forwarding. The explicit
+change-and-restore test still returns normally: a native generation/retirement
+signal is needed to distinguish reuse of the same pointer. Do not promote these
+checks into an owner-lifetime guarantee or treat the earlier live repeated-request
+receipt as evidence for map transitions on this newer adapter.

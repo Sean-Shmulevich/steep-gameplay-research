@@ -749,3 +749,21 @@ receipt afterward. Pending, running and uncollected receipts all apply
 backpressure. Collection can permit another callback to claim a new request before
 an older wrapper finishes its final machine return; there is no whole-job idle
 claim. Neither request closure nor collection releases module/owner storage.
+
+### Observation invalidation after admission
+
+A claimed request now verifies owner/descriptor identity and actual callback
+storage/receiver both before and after forwarding. It allows the restored original
+invoker for an in-flight or cached call. A mismatch suppresses the manager-global
+read at that boundary and permanently closes future observation admission.
+Collection reports `STALE_BEFORE` (3) or `STALE_AFTER` (4), with before taking
+precedence when both fail. These describe a failed observation qualification;
+the original callback still executes. Single-request output now includes numeric
+`outcome` as well as the legacy `returned` boolean. Repeated capture stops submitting
+when a receipt is not RETURNED. Receipt layout and trace ABI are unchanged.
+
+Restoring the pointer or descriptor afterward does not reopen admission. This is
+an authored invalidation policy, not a recovered native generation mechanism.
+The checks cannot detect change-and-restore between observations, prove that an
+address still represents the same allocation, or protect original forwarding
+through freed storage. Keep the existing bounded owner-lifetime prerequisites.

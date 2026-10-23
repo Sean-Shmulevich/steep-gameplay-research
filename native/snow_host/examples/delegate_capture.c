@@ -107,13 +107,15 @@ static DWORD WINAPI capture(LPVOID unused) {
         char request_output[MAX_PATH+32];
         snprintf(request_output,sizeof request_output,"%s.request.json",output);
         FILE *rf=fopen(request_output,"w");
-        SnowDelegateRequestObservation r={0};int returned=SnowDelegateProbe_ReadObservation(&r);
+        SnowDelegateRequestObservation r={0};
+        SnowObservationReceipt outcome=SnowDelegateProbe_CollectObservation(&r);
+        int returned=outcome==SNOW_OBSERVATION_RETURNED;
         if(rf) {
             fprintf(rf,"{\"route\":\"intercepted_engine_delegate\",\"native_queue_submission\":false,"
-                "\"request_id\":%u,\"armed\":%d,\"returned\":%d,\"entry\":%llu,\"exit\":%llu,"
+                "\"request_id\":%u,\"armed\":%d,\"returned\":%d,\"outcome\":%u,\"entry\":%llu,\"exit\":%llu,"
                 "\"thread\":%llu,\"caller\":\"%llx\",\"receiver\":\"%llx\",\"storage\":\"%llx\","
                 "\"manager_before\":\"%llx\",\"manager_after\":\"%llx\",\"valid_before\":%u,\"valid_after\":%u}\n",
-                request_id,request_armed,returned,(unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick,
+                request_id,request_armed,returned,(unsigned)outcome,(unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick,
                 (unsigned long long)r.thread,(unsigned long long)r.caller,(unsigned long long)r.receiver,
                 (unsigned long long)r.storage,(unsigned long long)r.manager_before,(unsigned long long)r.manager_after,
                 r.valid_before,r.valid_after);

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "snow_delegate_probe.h"
-static void *owner_global;
+static void *owner_global,*expected_receiver;
 static uintptr_t table[16];
 static volatile LONG calls;
 static HANDLE entered_event,release_event;
@@ -12,11 +12,12 @@ static SnowDelegateOriginal worker_callback;
 static void *worker_storage,*worker_receiver;
 static DWORD WINAPI invoke_worker(LPVOID unused){(void)unused;
     assert(worker_callback(worker_storage,worker_receiver)==UINT64_C(0xfedcba9876543210));return 0;}
-static int invalidate;
+static int invalidate,mutate_descriptor;
 static unsigned job_offset=0x218;
-static uintptr_t body(void *receiver) { assert(receiver==owner_global);InterlockedIncrement(&calls);
+static uintptr_t body(void *receiver) { assert(receiver==expected_receiver);InterlockedIncrement(&calls);
     InterlockedIncrement((LONG *)((unsigned char *)receiver+job_offset+0x4c+16));
     if(entered_event){SetEvent(entered_event);assert(WaitForSingleObject(release_event,5000)==WAIT_OBJECT_0);}
+    if(mutate_descriptor)((uintptr_t *)((unsigned char *)receiver+job_offset+0x198))[1]^=1;
     if(invalidate)owner_global=NULL;
     return UINT64_C(0xfedcba9876543210); }
 static uintptr_t invoker(void *storage,void *receiver) { return (*(uintptr_t (**)(void *))storage)(receiver); }
@@ -46,6 +47,7 @@ int main(int argc,char **argv) {
     assert(!arm(9));assert(!read_request(&request));
     assert(abi()==3 && record_size()==sizeof(SnowDelegateRecord));
     owner_global=VirtualAlloc(NULL,0x1000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(owner_global);
+    expected_receiver=owner_global;
     unsigned char *owner=owner_global;table[0x40/8]=(uintptr_t)&dispatch_method;
     *(uintptr_t *)(owner+job_offset)=(uintptr_t)table;
     uintptr_t *d=(uintptr_t *)(owner+job_offset+0x198);
@@ -72,6 +74,31 @@ int main(int argc,char **argv) {
     owner[job_offset+0x194]=1;owner[0x5a]=7;
     invalidate=!strcmp(argv[2],"observation_invalid");
     assert(install());assert(!install());SnowDelegateOriginal cached=(SnowDelegateOriginal)d[3];
+    if(!strcmp(argv[2],"stale_owner_before") || !strcmp(argv[2],"stale_owner_after") ||
+       !strcmp(argv[2],"stale_descriptor_before") || !strcmp(argv[2],"stale_descriptor_after") ||
+       !strcmp(argv[2],"identity_aba")) {
+        assert(engine);assert(submit(1)==SNOW_OBSERVATION_ACCEPTED);
+        int before=strstr(argv[2],"before")!=NULL;
+        int descriptor=strstr(argv[2],"descriptor")!=NULL;
+        int aba=!strcmp(argv[2],"identity_aba");
+        if(aba){InterlockedExchangePointer((PVOID volatile *)&owner_global,NULL);
+            InterlockedExchangePointer((PVOID volatile *)&owner_global,owner);}
+        else if(before){if(descriptor)d[1]^=1;else owner_global=NULL;}
+        else {if(descriptor)mutate_descriptor=1;else invalidate=1;}
+        assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==1);
+        if(!aba)assert(!read_request(&request));
+        SnowObservationReceipt outcome=collect(&request);
+        assert(outcome==(aba?SNOW_OBSERVATION_RETURNED:before?SNOW_OBSERVATION_STALE_BEFORE:SNOW_OBSERVATION_STALE_AFTER));
+        assert(request.request_id==1 && request.entry_tick<=request.exit_tick);
+        assert(request.result==UINT64_C(0xfedcba9876543210));
+        owner_global=owner;d[1]=0;invalidate=mutate_descriptor=0;
+        if(!aba)assert(submit(2)==SNOW_OBSERVATION_CLOSED);
+        else {assert(submit(2)==SNOW_OBSERVATION_ACCEPTED);close_requests();
+            assert(collect(&request)==SNOW_OBSERVATION_CANCELLED);}
+        assert(restore());assert(close_probe(NULL,NULL));
+        assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==2);
+        assert(!collect(&request));printf("%s passed\n",argv[2]);return 0;
+    }
     if(!strcmp(argv[2],"repeat") || !strcmp(argv[2],"cancel_pending") ||
        !strcmp(argv[2],"close_running") || !strcmp(argv[2],"competing")) {
         assert(engine);assert(submit(0)==SNOW_OBSERVATION_INVALID);

@@ -6762,3 +6762,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Eleven compiled Windows/Wine fixture scenarios pass, including 32 sequential requests, eight competing callbacks, pending cancellation, close during a blocked original callback, stale binding and legacy behavior. Two portable trace/pipeline tests also pass.
 - Live bounded capture: 16 accepted requests, 16 returned receipts, 16 distinct matched job-request counters; 99 callbacks, zero drops, three callback threads and two request-bearing threads. Post-close submission is refused, the intercepted slot is independently verified restored, and engine progress continues.
 - Bottle, saves, settings and original DLL cleanup verified. No game data added. Native queue admission, owner transitions, whole-engine drain, arbitrary mutation and unload remain open; live close with work still pending is not claimed.
+
+### Request invalidation after acceptance
+
+- Added callback-boundary owner/descriptor/argument requalification to resident observations. Mismatches produce STALE_BEFORE/STALE_AFTER receipts and permanently close request admission; original forwarding stays intact and manager reads at failed boundaries are skipped.
+- Single-request plugin output exposes numeric outcome. Repeated capture already stops on non-returned receipts. Trace ABI and observation record layout stay unchanged.
+- Controlled Windows/Wine cases cover owner/descriptor changes before and during execution plus an explicit change-and-restore limitation case. Fixture storage remains retained; no native generation or live transition claim.
+- Existing repeated delivery, competing callbacks, cancellation, close-running and restoration tests are rerun against the new code. No live game launched this pass.
