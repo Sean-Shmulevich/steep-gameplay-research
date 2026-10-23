@@ -588,3 +588,96 @@ This resolves the local readiness rules for these identified types. It does not
 resolve all cache subclasses, the post-selection helper, or the external slot
 query. The next useful join is between these device caches and action-source
 queries, with scheduler placement kept separate from device-refresh behavior.
+
+
+## Selected-device publication into the root
+
+The root table's virtual +0x110 resolves to `0x11bb2a0`. This is the update called
+at the beginning of the holder cycle, before the separate keyboard/packet
+service polling described earlier. It performs device updates and arbitration,
+then publishes selected-cache fields into the root. This establishes local
+holder ordering, not its position relative to physics substeps.
+
+After arbitration and before derived-state helpers, the original copies:
+
+```text
+root.previous_buttons[32] = root.current_buttons[32]
+root.current_buttons[32] = selected.current_buttons[32]
+root.vectors[2][4] = selected.vectors[2][4]
+root.scalars[32] = selected.scalars[32]
+```
+
+The raw fields are previous buttons +0x10, current buttons +0x30, vectors +0x1f0
+and +0x200, and scalar array +0x168. These are the same vector/scalar offsets
+already read by the reconstructed action source. The copy uses raw moves; it
+does not normalize, clamp, rescale or interpolate values. It then calls
+`0x11798d0(root)` and tail-calls `0x1179d80(root)`. The first starts by moving
++0x7c8 to +0x7d0, clearing +0x7c8 and reading the published vector lanes. The
+second advances +0x50/+0x58 timestamps and stamps ordinary button rising edges
+into +0x60. Their full bodies remain separate reconstruction work.
+
+[`publish_selected_cache`](../../engine/action_cache_publication.py) implements
+only the detached raw-copy stage. It leaves timestamps and derived button fields
+unchanged for those later producers. The original reloads current index and the
+record pointer separately for button, vector and scalar copies, so concurrent
+changes could mix sources; the API explicitly requires stable inputs.
+
+The same module's `reset_input_cache` reconstructs full helper `0x1171c10`, which
+these concrete cache types expose at virtual +0x118. It zeros exactly the ranges
+[0x10,0x1e8), [0x1f0,0x210), and [0x7c8,0x818), preserving all other bytes. These
+are also the exchange helper's ranges. Root virtual +0x118 delegates to the
+selected cache's reset; it does not directly reset the root snapshot. Do not
+confuse this full reset with helper `0x1171cc0` used on an inactive update branch;
+that helper needs its own complete comparison.
+
+The [publication receipt](../../native/snow_host/input_cache_publication_validation.json)
+compares every cache byte in 256 original publication-slice cases and 256 complete
+full-reset cases without substituted calls. Publication includes 64 cases where
+selected cache and root are the same native object. Random raw bytes include
+non-finite float encodings without interpreting them as numbers. Disjoint source
+bytes remain unchanged. This validates the copy/reset stages, not the complete
+root update, device polling, callback effects or downstream timestamps.
+
+### Activity-driven device arbitration
+
+The inspected root update calls helpers `0x116dbe0` and `0x11bda50`, saves the
+current index as candidate, obtains a timestamp, and reads an external gate.
+When its global signed mode is positive and the gate is true, it iterates records
+from scan_begin to count. For each non-null cache it chooses a nested configuration
+using an external index, falling back to entry zero if that index is out of range
+and the nested collection is nonempty. It calls cache virtual +0x90 with that
+configuration pointer, or null for an empty collection.
+
+Activity is considered for all records when the switching byte is nonzero,
+otherwise only for the initially selected candidate. A cache is active if any of
+its 32 current button bytes is nonzero, or either four-lane vector has a lane
+that fails abs(value)<=float32(0.3). All four lanes are tested, including W.
+NaNs fail the ordered comparison and therefore count as activity in this local
+branch. The constant has bits 0x3e99999a. This is a device-activity threshold,
+not evidence of a steering deadzone.
+
+The arbitration additionally requires the earlier timestamp to exceed a global
+uint64 read through `0x11653b0`. For each qualifying record:
+
+```text
+if not current_record_already_seen_active:
+    candidate = index
+    current_record_already_seen_active = (index == root.current_index)
+any_qualifying_activity = true
+notify_helper_1174880(global_holder, 0)
+```
+
+With stable selection, the active current record wins when encountered. If it
+never qualifies, the last qualifying record wins. Notification still occurs for
+later qualifying records after the candidate becomes fixed. Following the loop,
+helper `0x11bc980` runs. Selection is changed only if switching remains enabled,
+activity occurred, candidate differs from current, and candidate<count. The
+same unresolved post-selection helper and old/new notification follow the store.
+The publication copy then reads the resulting selected cache.
+
+The non-polling branch conditionally clears caches via `0x1171cc0` depending on
+mode and gate changes. Global modes, the gate's meaning, external configuration
+selection, and helper effects are unresolved. This arbitration is statically
+inspected pseudocode; the publication receipt does not execute or validate it.
+Next: virtual +0x90 implementations and the derived-state/timestamp producers,
+then a composed root-update validation with explicitly supplied external inputs.

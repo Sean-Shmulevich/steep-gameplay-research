@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined root update to selected-device publication of the scalar/vector fields
+consumed by action sources. Added exact raw publication and full-reset kernels;
+256 publication and 256 reset executions match without substitutions. Documented
+activity-based arbitration separately, including the 0.3f lane threshold and
+current-device preference. Full polling/arbitration and derived-state helpers
+remain open. See
+[root publication](../docs/reconstruction/INPUT_UPDATE_ORDER.md#selected-device-publication-into-the-root).
+
 Resolved readiness for three constructor-identified cache types and root
 forwarding. The initial slots share the fallback scan's external query; other
 types use byte/pointer predicates. 864 original direct/delegated cases match,

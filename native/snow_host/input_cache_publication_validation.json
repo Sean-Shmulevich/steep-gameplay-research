@@ -1,0 +1,27 @@
+{
+  "evidence": "Original selected-cache publication slice and full reset helper",
+  "publication_cases": 256,
+  "same_identity_publication_cases": 64,
+  "full_reset_cases": 256,
+  "passed": true,
+  "comparison": "Every byte in 0x818-byte cache span; disjoint selected source unchanged",
+  "substitutions": [],
+  "spans": [
+    {
+      "start_rva": "0x11bb523",
+      "end_rva_exclusive": "0x11bb608",
+      "sha256": "e3d54098055802865ebb3120a32363614b9c7d0863d331555a81b2edf7cf3dd5"
+    },
+    {
+      "start_rva": "0x1171c10",
+      "end_rva_exclusive": "0x1171ca9",
+      "sha256": "889ff8524e6ba9cb01cc50f29e34568f3d2d9d6312c8044c10085f051540d5aa"
+    }
+  ],
+  "limits": [
+    "Publication starts after device arbitration and ends before derived-button and timestamp helpers",
+    "Stable current index and selected record",
+    "No live source attribution or full root-update validation"
+  ],
+  "game_process": false
+}
