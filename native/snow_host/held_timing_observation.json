@@ -1,0 +1,238 @@
+{
+  "evidence": "live sequential observation with authored arithmetic comparison",
+  "sample_count": 6,
+  "movement_commands": 0,
+  "step_release_commands": 0,
+  "span_seconds": 0.835102333,
+  "samples": [
+    {
+      "before": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 425,
+        "end_frame": 424
+      },
+      "after": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 425,
+        "end_frame": 424
+      },
+      "steps_released": 0,
+      "timing": {
+        "history_write": 9,
+        "history_count": 10,
+        "history_capacity": 10,
+        "policy": 0,
+        "smoothing_enabled": true,
+        "consumed": 0.06666667014360428,
+        "frequency": 100.0,
+        "step_count": 7,
+        "elapsed": 0.009523809887468815
+      }
+    },
+    {
+      "before": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 426,
+        "end_frame": 425
+      },
+      "after": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 426,
+        "end_frame": 425
+      },
+      "steps_released": 0,
+      "timing": {
+        "history_write": 0,
+        "history_count": 10,
+        "history_capacity": 10,
+        "policy": 0,
+        "smoothing_enabled": true,
+        "consumed": 0.06666667014360428,
+        "frequency": 100.0,
+        "step_count": 7,
+        "elapsed": 0.009523809887468815
+      }
+    },
+    {
+      "before": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 427,
+        "end_frame": 426
+      },
+      "after": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 427,
+        "end_frame": 426
+      },
+      "steps_released": 0,
+      "timing": {
+        "history_write": 1,
+        "history_count": 10,
+        "history_capacity": 10,
+        "policy": 0,
+        "smoothing_enabled": true,
+        "consumed": 0.06666667014360428,
+        "frequency": 100.0,
+        "step_count": 7,
+        "elapsed": 0.009523809887468815
+      }
+    },
+    {
+      "before": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 428,
+        "end_frame": 427
+      },
+      "after": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 428,
+        "end_frame": 427
+      },
+      "steps_released": 0,
+      "timing": {
+        "history_write": 2,
+        "history_count": 10,
+        "history_capacity": 10,
+        "policy": 0,
+        "smoothing_enabled": true,
+        "consumed": 0.06666667014360428,
+        "frequency": 100.0,
+        "step_count": 7,
+        "elapsed": 0.009523809887468815
+      }
+    },
+    {
+      "before": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 429,
+        "end_frame": 428
+      },
+      "after": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 429,
+        "end_frame": 429
+      },
+      "steps_released": 0,
+      "timing": {
+        "history_write": 3,
+        "history_count": 10,
+        "history_capacity": 10,
+        "policy": 0,
+        "smoothing_enabled": true,
+        "consumed": 0.06666667014360428,
+        "frequency": 100.0,
+        "step_count": 7,
+        "elapsed": 0.009523809887468815
+      }
+    },
+    {
+      "before": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 431,
+        "end_frame": 430
+      },
+      "after": {
+        "group": "00010101",
+        "held": true,
+        "step": 419,
+        "paused_job": 431,
+        "end_frame": 430
+      },
+      "steps_released": 0,
+      "timing": {
+        "history_write": 5,
+        "history_count": 10,
+        "history_capacity": 10,
+        "policy": 0,
+        "smoothing_enabled": true,
+        "consumed": 0.06666667014360428,
+        "frequency": 100.0,
+        "step_count": 7,
+        "elapsed": 0.009523809887468815
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "status": "compared",
+      "matches": true,
+      "mismatched_fields": [],
+      "incoming_from_history": 0.14792460203170776,
+      "branch": "rounded_count_up",
+      "producer_call_count_proved": false,
+      "changed_slots": 1
+    },
+    {
+      "status": "compared",
+      "matches": true,
+      "mismatched_fields": [],
+      "incoming_from_history": 0.10408630222082138,
+      "branch": "rounded_count_up",
+      "producer_call_count_proved": false,
+      "changed_slots": 1
+    },
+    {
+      "status": "compared",
+      "matches": true,
+      "mismatched_fields": [],
+      "incoming_from_history": 0.13672930002212524,
+      "branch": "rounded_count_up",
+      "producer_call_count_proved": false,
+      "changed_slots": 1
+    },
+    {
+      "status": "compared",
+      "matches": true,
+      "mismatched_fields": [],
+      "incoming_from_history": 0.17059800028800964,
+      "branch": "rounded_count_up",
+      "producer_call_count_proved": false,
+      "changed_slots": 1
+    },
+    {
+      "status": "not_single_append",
+      "cursor_matches": false,
+      "untouched_slots_match": false,
+      "cursor_delta_mod_capacity": 2,
+      "changed_slots": 2
+    }
+  ],
+  "resume_completed": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "conclusion": "Timing history changes while the world hold is reported active and its request token stays unchanged.",
+  "limitations": [
+    "Sequential reads are not atomic.",
+    "Request token stability alone does not prove zero world executions.",
+    "Ring consistency does not prove exact producer invocation count or exclusive writer.",
+    "This does not identify the timing producer callsite or establish deterministic replay."
+  ]
+}

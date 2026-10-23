@@ -153,3 +153,27 @@ world remains held, with no release command. Correlate request-token stability,
 EndFrame observations and sample timestamps with history changes. This tests
 whether timing preparation can advance independently of the held world; it does
 not assume a cursor delta equals an invocation count.
+
+
+## Timing history changes during world hold
+
+A subsequent held-only experiment issued no movement or step-release commands.
+Six sequential observations spanned about 0.83 seconds. Every bracketing status
+reported held=true and world request token 419; the host reported zero released
+steps. History write cursors were 9, 0, 1, 2, 3, 5. Adjacent snapshots changed
+1, 1, 1, 1, 2 physical ring lanes. EndFrame and paused-job request identifiers
+also advanced. Resume completed and all cleanup checks passed.
+
+The four single-append-compatible pairs reproduce the recovered timing outputs
+bit for bit; the last pair is rejected as not a single append. This establishes
+that timing history can change under the present world hold, while preserving
+the limitations of sequential sampling and request-token observation. It does
+not prove exact producer invocation counts or identify the responsible job.
+See [held timing evidence](../../native/snow_host/held_timing_observation.json).
+
+For scheduler reconstruction, world execution and timing preparation must be
+represented as separately observed stages. A held world does not imply frozen
+smoothing history or a reproducible duration on its next release. The next
+boundary to locate is the timing producer's caller and its ordering relative
+to the hold decision. Do not freeze or overwrite that state until its consumers
+and completion obligations are understood.

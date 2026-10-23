@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Held-only live check confirms timing history changes under the current world
+hold: six samples, stable world request token, zero released steps, cursor
+9/0/1/2/3/5. Four adjacent single-append pairs reproduce timing outputs exactly;
+the two-slot pair is rejected. Resume and cleanup passed. Next: locate timing
+producer caller and ordering relative to hold selection before changing cadence.
+See [held timing observation](../native/snow_host/held_timing_observation.json).
+
+
 Live timing-history pair rejected as a single-update replay: one host release
 request spans six changed ring lanes and cursor advance 3 to 9, despite equal
 capped scalar outputs. Added authored transition comparator and boundary tests;
