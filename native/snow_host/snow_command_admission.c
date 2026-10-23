@@ -1,8 +1,9 @@
 #include "snow_command_admission.h"
 #include <string.h>
 _Static_assert(sizeof(uintptr_t)==8,"inspected layout requires 64-bit ABI");
-SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *b,
-                                             const SnowCommandDescriptor *d) {
+static SnowCommandAdmissionStatus admit(const SnowCommandAdmission *b,
+                                       const SnowCommandDescriptor *d,
+                                       void *attachment) {
     if(!b || !d || !b->manager || !b->enter || !b->leave || !b->copy_record || !b->cleanup_record || !b->default_holder ||
        !b->check || !d->invoker || !d->context)
         return SNOW_COMMAND_INVALID_BINDING;
@@ -33,6 +34,10 @@ SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *b,
             memcpy(temporary+8,&b->default_holder,8);
             memcpy(temporary+16,&b->default_holder,8);
             memcpy(temporary+24,&copy,sizeof copy);
+            /* One caller-owned reference becomes the temporary's reference.
+             * Native copy retains the queue's reference; temporary cleanup
+             * releases the transferred reference after unlocking. */
+            memcpy(temporary+96,&attachment,sizeof attachment);
             b->copy_record((void *)(array+(uintptr_t)write*104),temporary);
             ++count;write=(write+1)%capacity;
             memcpy((unsigned char *)b->manager+0x38,&count,4);
@@ -45,4 +50,15 @@ SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *b,
     b->leave(b->manager);
     if(published)b->cleanup_record(temporary);
     return result;
+}
+
+SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *b,
+                                             const SnowCommandDescriptor *d) {
+    return admit(b,d,0);
+}
+
+SnowCommandAdmissionStatus snow_command_admit_attached(const SnowCommandAdmission *b,
+    const SnowCommandDescriptor *d,void *attachment) {
+    if(!attachment)return SNOW_COMMAND_INVALID_BINDING;
+    return admit(b,d,attachment);
 }

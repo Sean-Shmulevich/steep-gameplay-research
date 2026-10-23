@@ -167,7 +167,7 @@
       ]
     }
   ],
-  "adapter_sha256": "569196a84a98ebefd120641b4bcd63fa645e4046b574366eb6d2b818fae886d9",
+  "adapter_sha256": "e1ea791a50c611fd1d9b805cb779ae76d3054f34df4475077026c1bf49d18395",
   "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
   "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
   "ntdll_instruction_spans": [

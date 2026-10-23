@@ -28,7 +28,7 @@
   "second_empty_drain_creates_no_records": true,
   "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
   "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
-  "adapter_dll_sha256": "b633d355cfb2e75ac518c7408121ab7c61d6097e7b6d0ae2f398e273f9938cca",
+  "adapter_dll_sha256": "7af99d18327f34b2f3f87602f37bfdc8c47ce2e28a35a7300814cd98e6b4237d",
   "limitations": [
     "Serial fixture with retained manager, array, callback owners and code; not a native lifetime proof.",
     "Synthetic TEB, identity check, clock and thread provider; no live callback phase identity.",

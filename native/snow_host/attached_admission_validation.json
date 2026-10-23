@@ -1,0 +1,15 @@
+{
+  "evidence": "Compiled Windows x64 attached admission using original command copy/cleanup; locks, binding check and attachment destructor supplied",
+  "cases": 24,
+  "transfer_refusal_and_final_cleanup_match": true,
+  "sources": {
+    "snow_command_admission.c": "a770b6670bd1db069035c4eef761425b0ff654d89f12d4a3fe674bf65fe03d8e",
+    "snow_command_admission.h": "75e48bfda86c4c8a53e791ee3cadd4b5a0c42490362ece389158463e3531f74f"
+  },
+  "limitations": [
+    "Manager and attachment storage retained synthetically; no live game admission or module pin.",
+    "Early queue cleanup is a controlled intervention at unlock, not a proven native concurrent consumer schedule.",
+    "Attachment destructor is supplied; context storage and native ABI remain caller-qualified.",
+    "No callback execution, exception recovery, teardown exclusion or safe unload proved."
+  ]
+}

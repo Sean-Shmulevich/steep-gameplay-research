@@ -2232,3 +2232,45 @@ and hold the attachment's initial reference through copy and temporary cleanup.
 It must not advertise this reload/CAS loop as a general concurrent pointer pin.
 Manager lifetime and callback-module retention remain independent requirements;
 no native admission interface changed in this pass.
+
+## Experimental attached admission
+
+The authored C interface now adds
+`snow_command_admit_attached(binding, descriptor, attachment)` beside unchanged
+`snow_command_admit`. Both use the same capacity/check/publication path. The new
+entry requires a nonnull associated object with one caller-owned reference and
+places that pointer into the private temporary record at+0x60. Original copying
+retains the queue reference; temporary cleanup releases the transferred reference
+after the queue lock is released.
+
+| Outcome | Ownership of the caller's supplied reference |
+| --- | --- |
+| SUBMITTED | Transferred; temporary cleanup releases it, with a separate queued reference |
+| FULL, STALE_BINDING, INVALID_RING, INVALID_BINDING | Unchanged; caller still owns it |
+
+The attachment may reach its final destructor before admission returns if queued
+cleanup happens after unlocking but before temporary cleanup. Do not dereference
+it after successful transfer unless another reference is retained. This does not
+mean the callback executed. Rejected calls do not clean up or acquire the supplied
+reference. Existing attachment-free calls still use a null associated pointer.
+
+The interface is **experimental and not live-qualified**. The caller must establish
+associated-object ABI, storage/destructor lifetime, relation to descriptor.context
+and normal-return behavior. Manager/lock/array retention and callback-module
+retention remain prerequisites. This function supplies none of those mechanisms;
+it is not wired into the installed host plugin API or a native game launcher.
+No automatic unload permission or native cancellation receipt is introduced.
+
+[Compiled Windows x64 comparison](../../native/snow_host/attached_admission_validation.json)
+checks24 retained-state scenarios using original record copy and cleanup. It
+covers capacity refusal, stale/invalid bindings and cleanup both after admission
+and through a controlled intervention at unlock. The latter redirects the supplied
+unlock service through original queued-record cleanup before producer temporary
+cleanup. It establishes reference-transfer behavior under that supplied ordering,
+not a live consumer schedule. Associated destruction and locks are supplied.
+
+Public host C tests additionally cover null attachments, invalid bindings and
+unchanged ownership on refusal. Existing serial and competing-producer admission
+tests still pass. An obsolete private validator using the old six-field binding
+layout rejects the current eight-field binding; it is superseded by the existing
+copy/cleanup and delivery validators, not evidence of a new runtime failure.

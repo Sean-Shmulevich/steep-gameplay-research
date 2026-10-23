@@ -6721,3 +6721,10 @@ candidate; earlier mismatch still reads that candidate's count before retry.
 Failed CAS restarts and can observe null. Added explicit acquisition model/tests
 and corrected documentation to preserve the two-pointer-reads-before-count order.
 Native admission remains unchanged; retained private source is still required.
+
+Added experimental attached admission in authored C with explicit reference
+transfer on SUBMITTED and no transfer on refusal. It shares the existing path;
+original copy retains queued ownership and temporary cleanup releases transferred
+ownership after unlock.24 compiled Windows x64/original-helper cases pass, including
+controlled early queue cleanup. Public host fixtures pass ownership and refusal
+cases. This is not wired into a live host API and does not pin manager or modules.

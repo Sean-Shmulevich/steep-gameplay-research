@@ -35,4 +35,19 @@ typedef enum {
  */
 SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *,
                                              const SnowCommandDescriptor *);
+/* Experimental ownership transfer, not a live-qualified mod API.
+ * attachment must be nonnull, match the inspected associated-object ABI, and
+ * carry ONE caller-owned live reference. Its storage/destructor/context mapping
+ * must already be qualified. No guessing native objects from arbitrary pointers.
+ * SUBMITTED consumes that reference. Every refusal leaves it caller-owned.
+ * The queue copy retains a separate reference through the original copy helper.
+ * Final destruction can occur on a consumer thread or during temporary cleanup
+ * before this function returns; do not access attachment after SUBMITTED without
+ * another retained reference. Destruction is NOT proof of callback execution.
+ * Retain manager/lock/array for admission and code/modules through all callbacks
+ * and destruction. This attachment does not pin them, allocate itself, or repair
+ * missing native lifetime/exclusion guarantees. All services return normally.
+ */
+SnowCommandAdmissionStatus snow_command_admit_attached(const SnowCommandAdmission *,
+    const SnowCommandDescriptor *,void *attachment);
 #endif
