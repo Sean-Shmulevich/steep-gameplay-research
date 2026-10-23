@@ -945,3 +945,9 @@ example uses synthetic heap services and demonstrates a failed first allocation,
 one recovery, allocator reload and successful construction/publication.
 [allocation_policy.py](allocation_policy.py) implements the verified local policy;
 actual allocator objects, context identities and failure handling remain supplied.
+
+`allocation_context_resolver.resolve_allocation_context` supplies the recovered
+size-based resolver for the allocation policy's `resolve` callback. Callers supply
+the 15 small-context tokens, candidates for sizes 80/96/128, and the unresolved
+virtual alignment query. Its validation receipt compares original instructions
+with the model; supplied tables do not identify native heaps or prove lifetime.

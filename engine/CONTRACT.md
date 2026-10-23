@@ -45,3 +45,11 @@ zero for size zero, and permits at most one retry based on the recovery result's
 low byte. It reloads the allocator on retry. All native heap methods, context
 resolution and recovery bodies remain supplied; Python argument validation and
 exception propagation are authored interfaces, not native failure guarantees.
+
+Size-context resolution uses supplied 15-entry and exact-size context tables.
+`allocation_context_resolver.resolve_allocation_context` preserves uint32 bitwise
+rounding, automatic alignment sentinel and the unsigned virtual-query threshold.
+The source token is unused by the recovered routine. Zero means no context from
+this resolver and lets the caller apply its fallback. Argument validation is our
+Python interface, not recovered native failure behavior. Query implementations,
+heap identities, ownership and deallocation remain external.

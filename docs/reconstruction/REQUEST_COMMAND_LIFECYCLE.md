@@ -1952,3 +1952,54 @@ buffers. This illustrates the decoded arithmetic; it is not a live heap mapping.
 The next implementation boundaries are resolver 0x11601c0, the selected allocator
 vtable implementations, and recovery 0x1225c00. Manager destruction and ownership
 still need independent evidence; allocator policy alone does not establish them.
+
+### Size-based allocation context resolver
+
+The previously supplied resolver at RVA `0x11601c0..0x11602ad` now has an
+independent implementation in `engine/allocation_context_resolver.py`. It ignores
+the incoming source token. All arithmetic below uses unsigned 32-bit operations.
+When alignment is `0xffffffff`, it derives 16 for sizes divisible by 16, otherwise
+8 for sizes divisible by 8, otherwise 4. This includes size zero deriving 16.
+
+```python
+if alignment == UINT32_MAX:
+    alignment = 16 if size % 16 == 0 else 8 if size % 8 == 0 else 4
+if size <= 64:
+    rounding = max(alignment, 4)
+    rounded = u32(max(size, alignment) - 1 + rounding)
+    rounded &= u32(~(rounding - 1))
+    rounded = max(rounded, 8)
+    if rounded <= 64:
+        return small_contexts[(rounded - 8) >> 2]
+if size in (80, 96, 128):
+    candidate = special_contexts[size]
+    if candidate != 0 and candidate.query_slot_0x50() >= alignment:
+        return candidate
+return 0
+```
+
+The 15-entry small table starts at RVA `0x32fb8b0`; candidate globals for exact
+sizes 80, 96 and 128 are `0x32fb928`, `0x32fb930` and `0x32fb938`. The virtual query
+returns a value compared unsigned with the effective alignment. Naming it an
+alignment query describes its consumer; its implementation remains unresolved.
+A zero small-table entry is returned directly without trying a special candidate.
+Do not replace the bitwise expression with generic arithmetic rounding: unusual
+alignment arguments and overflow can produce different results. These edge cases
+are instruction semantics, not evidence the game normally requests such inputs.
+
+The private original-instruction comparison covers **19,370 cases**, checking
+return tokens and virtual-query calls across sizes 0 through 144, the manager's
+larger requests and UINT32_MAX; 13 alignment values; candidate presence/absence;
+and five query results. The public receipt is
+`native/snow_host/allocation_context_resolver_validation.json`. Four public tests
+cover automatic alignment, exact-size gates, query thresholds and unusual input
+arithmetic. Tables and query results are synthetic supplied services. No original
+heap implementation or live allocation is claimed.
+
+For the known startup requests, the resolver returns zero for 384, 13,312 and
+319,488 bytes, so the outer selector's fallback decides their context. A 64-byte
+backing-buffer request with automatic alignment selects the last small-table
+entry, **if the outer selector does not bypass the resolver for a special source**.
+That entry may itself be zero, which also falls back. This closes the resolver's
+local policy gap; it does not prove the concrete allocator identities, free path,
+manager lifetime or safety of concurrent command submission.

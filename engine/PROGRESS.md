@@ -6465,3 +6465,12 @@ pass. The composition demonstrates allocator replacement during recovery and
 request-size-dependent context choice without claiming a native heap mapping.
 No live launch. Resolver, virtual allocator methods, recovery internals and
 manager destruction/lifetime remain open.
+
+### Size-context resolver policy reconstructed
+
+Implemented the formerly opaque resolver's automatic alignment, small-size table,
+exact 80/96/128-byte candidate gates and virtual-query threshold. Original
+instructions match the independent model for 19,370 supplied-table/query cases;
+four focused public tests pass. This explains which known manager requests can
+use the small table and which return to the outer fallback. No live launch or
+heap-method reconstruction. Destruction and concurrent ownership remain open.
