@@ -19,6 +19,18 @@ typedef struct {
     float preconsume_timers[2];
     float pending[4], linear[2][3], angular[2][3], inverse_mass[2];
 } SnowUpdateSnapshot;
+/* Authored observation payload, not a native game object or public wire ABI.
+ * All pointers are session-private provenance. No generation/freshness claim.
+ * Producers preserve float bits and supply their own bounded identity guards. */
+typedef struct {
+    uint64_t action, owner, configuration, history, clock_record;
+    uint64_t receiver, selected, history_times[3], clock_ticks;
+    uint64_t start_time, repeat_time;
+    uint32_t channel, direction_kind, mode, hold_delay_bits, repeat_delay_bits;
+    uint32_t reference_bits[4], history_b_bits[4], history_c_bits[4];
+    uint32_t threshold_bits, history_magnitude_bits, action_magnitude_bits;
+    uint8_t active, previous;
+} SnowHistoryActionObservation;
 typedef struct {
     uintptr_t actor;
     uint64_t entry_tick, exit_tick, thread;
@@ -30,6 +42,8 @@ typedef struct {
     SnowBatchFrame frame;
     uint32_t motion_attempted, motion_before_valid, motion_after_valid;
     SnowMotionObservation motion_before, motion_after;
+    uint32_t history_attempted, history_before_valid, history_after_valid;
+    SnowHistoryActionObservation history_before, history_after;
 } SnowUpdateRecord;
 typedef void (*SnowUpdateOriginal)(void *, float, float);
 typedef void (*SnowUpdateRead)(void *, SnowUpdateSnapshot *);
@@ -59,6 +73,16 @@ void snow_trace_call_attributed(SnowUpdateTrace *, void *, float, float,
 typedef int (*SnowUpdateMotionRead)(void *, void *, SnowMotionObservation *);
 void snow_trace_call_observed(SnowUpdateTrace *, void *, float, float,
                              SnowUpdateEntryRead, void *, SnowUpdateMotionRead, void *);
+/* Optional history channel. Return exactly 1 for a valid guarded sample.
+ * Invalid output is discarded independently before/after. Callback must be
+ * bounded, non-mutating, thread-safe, non-recursive and return normally.
+ * It must resolve fresh action provenance for this actor; no saved heap pointers.
+ * Samples bracket original but do not count producer/evaluator executions.
+ * No installation or concrete memory reader is supplied by this interface. */
+typedef int (*SnowUpdateHistoryRead)(void *, void *, SnowHistoryActionObservation *);
+void snow_trace_call_with_history(SnowUpdateTrace *, void *, float, float,
+    SnowUpdateEntryRead, void *, SnowUpdateMotionRead, void *,
+    SnowUpdateHistoryRead, void *);
 void snow_trace_close(SnowUpdateTrace *);
 /* Records may be read only after this returns true. It does NOT permit unloading
  * the wrapper/context: a cached caller can still enter and forward to original. */

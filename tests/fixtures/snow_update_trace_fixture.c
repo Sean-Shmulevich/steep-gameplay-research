@@ -107,9 +107,45 @@ static void check_motion(void) {
     init(1);snow_trace_call(&trace,&actor,.125f,.5f);snow_trace_close(&trace);
     assert(!rows[0].motion_attempted && !rows[0].motion_before_valid && !rows[0].motion_after_valid);
 }
+static int observe_history(void *ctx,void *actor,SnowHistoryActionObservation *out) {
+    MotionFixture *m=ctx;
+    memset(out,0xa5,sizeof *out);
+    out->clock_ticks=(unsigned)*(int *)actor;
+    out->action=0x1234;
+    return m->calls++==0 ? m->before : m->after;
+}
+static void check_history(void) {
+    SnowHistoryActionObservation blank={0};
+    for(int before=0;before<3;before++) for(int after=0;after<3;after++) {
+        int actor=0,status=0; MotionFixture h={before,after,0},m={1,1,0};
+        mode=0;init(1);
+        snow_trace_call_with_history(&trace,&actor,.125f,.5f,observe_entry,&status,
+            observe_motion,&m,observe_history,&h);
+        snow_trace_call_with_history(&trace,&actor,.125f,.5f,NULL,NULL,
+            NULL,NULL,observe_history,&h);
+        snow_trace_close(&trace);
+        snow_trace_call_with_history(&trace,&actor,.125f,.5f,NULL,NULL,
+            NULL,NULL,observe_history,&h);
+        assert(snow_trace_drained(&trace) && actor==3 && h.calls==2 && m.calls==2);
+        assert(atomic_load(&calls)==3 && atomic_load(&trace.dropped)==1);
+        assert(rows[0].history_attempted && !rows[0].attribution_valid);
+        assert(rows[0].motion_before_valid && rows[0].motion_after_valid);
+        assert(rows[0].history_before_valid==(before==1));
+        assert(rows[0].history_after_valid==(after==1));
+        if(before==1) assert(rows[0].history_before.clock_ticks==0);
+        else assert(!memcmp(&rows[0].history_before,&blank,sizeof blank));
+        if(after==1) assert(rows[0].history_after.clock_ticks==1);
+        else assert(!memcmp(&rows[0].history_after,&blank,sizeof blank));
+    }
+    int actor=0;init(1);
+    snow_trace_call(&trace,&actor,.125f,.5f);snow_trace_close(&trace);
+    assert(!rows[0].history_attempted && !rows[0].history_before_valid && !rows[0].history_after_valid);
+    assert(!memcmp(&rows[0].history_before,&blank,sizeof blank));
+}
 int main(void) {
     check_attribution();
     check_motion();
+    check_history();
     int actor=0;
     assert(!snow_trace_init(NULL,rows,1,original,read_state,clock_tick,thread_id));
     mode=1; init(128);

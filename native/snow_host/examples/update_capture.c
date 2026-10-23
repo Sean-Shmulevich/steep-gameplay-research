@@ -130,7 +130,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     observe_motion=GetPrivateProfileIntA("capture","observe_motion",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-6";
+    plugin->name="update_capture"; plugin->version="experimental-7";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

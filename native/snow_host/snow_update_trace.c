@@ -20,6 +20,12 @@ void snow_trace_call_attributed(SnowUpdateTrace *t,void *actor,float elapsed,flo
 void snow_trace_call_observed(SnowUpdateTrace *t,void *actor,float elapsed,float derivative,
                              SnowUpdateEntryRead observe,void *context,
                              SnowUpdateMotionRead motion,void *motion_context) {
+    snow_trace_call_with_history(t,actor,elapsed,derivative,observe,context,
+                                motion,motion_context,NULL,NULL);
+}
+void snow_trace_call_with_history(SnowUpdateTrace *t,void *actor,float elapsed,float derivative,
+    SnowUpdateEntryRead observe,void *context,SnowUpdateMotionRead motion,void *motion_context,
+    SnowUpdateHistoryRead history,void *history_context) {
     uint_fast64_t g=atomic_load(&t->gate);
     for (;;) {
         if (g & CLOSED) { t->original(actor,elapsed,derivative); return; }
@@ -51,7 +57,16 @@ void snow_trace_call_observed(SnowUpdateTrace *t,void *actor,float elapsed,float
             r->motion_before_valid=motion(motion_context,actor,&r->motion_before)==1;
             if(!r->motion_before_valid) memset(&r->motion_before,0,sizeof r->motion_before);
         }
+        if(history) {
+            r->history_attempted=1;
+            r->history_before_valid=history(history_context,actor,&r->history_before)==1;
+            if(!r->history_before_valid) memset(&r->history_before,0,sizeof r->history_before);
+        }
         t->original(actor,elapsed,derivative);
+        if(history) {
+            r->history_after_valid=history(history_context,actor,&r->history_after)==1;
+            if(!r->history_after_valid) memset(&r->history_after,0,sizeof r->history_after);
+        }
         if(motion) {
             r->motion_after_valid=motion(motion_context,actor,&r->motion_after)==1;
             if(!r->motion_after_valid) memset(&r->motion_after,0,sizeof r->motion_after);

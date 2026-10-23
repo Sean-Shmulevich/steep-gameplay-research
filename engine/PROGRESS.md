@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added an optional history-action callback channel to the native recorder.
+Five native fixture tests pass, including independent failure clearing, overflow
+and close forwarding. Windows host/probe/capture-plugin build passes. Record ABI
+is now v7; all direct readers require matching rebuilds. Concrete native reader,
+active action selection and opt-in configuration are still pending; no game was
+launched. See [recorder channel](../native/snow_host/README.md#optional-history-action-recorder-channel).
+
 Added a bounded passive history-action observer after checking the native
 recorder's coverage. It captures two samples of source/configuration identity,
 history data, action timers and selected clock, separating dynamic changes from

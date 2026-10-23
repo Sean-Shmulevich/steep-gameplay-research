@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "evidence": "authored native fixture and cross compilation",
+  "abi": 7,
+  "game_process": false,
+  "checks": [
+    "Five native observation/recorder fixture tests pass with C11 -Wall -Wextra -Werror",
+    "All nine before/after status combinations for history observer",
+    "Invalid partial samples cleared independently; motion and original forwarding preserved",
+    "Overflow and closed capture skip observer; legacy entry points disable history channel",
+    "Standalone Windows host, launchers, probe and capture plugin built with MinGW"
+  ],
+  "limits": [
+    "No native history reader connected",
+    "No live hook, memory capture or game execution",
+    "Observer must supply fresh action provenance and bounded reads",
+    "Record ABI requires callers and DLL to be rebuilt together"
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_update_trace.c": "97a32e30dc982bf28256f7cf7bf0fbe1bf66f1c8eb88c1a1ea5cb1616b54e013",
+    "native/snow_host/snow_update_trace.h": "7d6e25a144cd63ac4b7680175907acf811d63a2097e6b3b4bb53c2b74c377a09",
+    "native/snow_host/snow_update_probe.h": "fb34f68cf417247ec878ba290830053fccec558a07fe293781eb01eeb12e6a69",
+    "tests/fixtures/snow_update_trace_fixture.c": "5cfb7b5bbab932931e5208113014edd0169adaaac889d369a1bc92b326517697"
+  }
+}

@@ -1054,3 +1054,33 @@ path but replaces acquisition with a supplied fake binding. One Wine run produce
 velocity change and unchanged angular values. See
 [the session receipt](update_capture_session_validation.json). This is a lifecycle
 check, not a native impulse or scheduler-fidelity result.
+
+### Optional history-action recorder channel
+
+Experimental recorder ABI v7 appends history observations to `SnowUpdateRecord`.
+Rebuild the probe, capture plugin and every direct `SnowProbe_ReadRecord` caller
+from the same header; the old v6 record buffer is too small. Historical v6
+receipts remain evidence for those earlier builds.
+
+`snow_trace_call_with_history` accepts an optional bounded history observer and
+context alongside the existing attribution and motion observers. It records
+history just before the original actor callback and just after it returns.
+Exactly return code 1 marks a sample valid; other returns clear that sample,
+without affecting the original call or other observation channels. Overflow,
+closed capture and counter saturation forward without optional observations.
+The normal close/drain lifetime requirements still apply.
+
+The payload preserves action/source/configuration/history/clock identities,
+reference and feature vector bits, magnitude bits, settings, recent history
+times and action timer state. These are observations, not native object layouts,
+producer generation numbers or proof that an inner evaluator executed. The
+observer must resolve fresh action provenance for the actor and obey the
+bounded, non-mutating, thread-safe callback contract. No exception containment
+or pointer-lifetime protection is introduced.
+
+This pass adds recorder plumbing only. Existing probe configuration and the
+capture plugin do not enable a concrete history reader. The Python
+[passive observer contract](../../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#passive-history-action-capture-contract)
+is the reference for the future native reader. Budgeting that reader, selecting
+the active action and exposing an opt-in configuration remain required before
+live use. No hook was installed or game launched for this change.

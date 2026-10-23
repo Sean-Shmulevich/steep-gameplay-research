@@ -1,7 +1,8 @@
 #ifndef SNOW_UPDATE_PROBE_H
 #define SNOW_UPDATE_PROBE_H
 #include "snow_update_snapshot.h"
-/* Experimental ABI v6: caller must use this exact header/build. Configure alone installs no hook.
+/* Experimental ABI v7: caller must use this exact header/build. Configure alone installs no hook.
+ * v7 extends SnowUpdateRecord with optional history observations; rebuild readers.
  * Configure once BEFORE publishing Dispatch; configuration is never retried.
  * Caller verifies executable identity, original target/signature and counter owners.
  * DLL pins itself. Close stops capture, not forwarding; never free supplied objects
