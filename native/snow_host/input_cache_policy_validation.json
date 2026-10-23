@@ -1,0 +1,24 @@
+{
+  "evidence": "Original cache-index writer control flow with supplied external callees",
+  "cases": 1728,
+  "passed": true,
+  "comparison": [
+    "query argument order",
+    "selected index store",
+    "selection helper call even for equal index",
+    "old/new notification arguments",
+    "fallback notifications"
+  ],
+  "substitutions": [
+    "query returns supplied uint32 status",
+    "post-selection helper returns without mutation",
+    "change and fallback notification helpers record calls and return",
+    "service getter returns a synthetic service"
+  ],
+  "limits": [
+    "No external query semantics or callback implementation validated",
+    "Stable root metadata and non-null global holder",
+    "No claim of device identity, history rotation or scheduler cadence"
+  ],
+  "game_process": false
+}

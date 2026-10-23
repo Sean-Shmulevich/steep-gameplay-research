@@ -311,3 +311,46 @@ this receipt. Next: resolve the query target/import, trace range/flag writers,
 and decode the post-assignment helper before implementing a complete mutable
 cache-selection service. Existing stable-snapshot selectors remain valid within
 their stated assumptions.
+
+
+### Executable selection decision
+
+[`choose_input_cache`](../../engine/action_cache_policy.py) exposes the writer's
+selection decision with explicit scan bounds, fallback flag, active count,
+record IDs and a query callback. It returns the selected index, the indices
+queried in order, and whether the zero-fallback notifications are requested.
+It does not assign native memory or execute the unresolved post-selection and
+notification helpers. Inputs have no established physical units; these are
+indices, flags, IDs and opaque uint32 query results. Call cadence is explicit
+and caller-owned. Snapshot stability is required.
+
+A caller can inspect a synthetic decision without a game or binary:
+
+```python
+from engine.action_cache_policy import choose_input_cache
+
+result = choose_input_cache(
+    scan_begin=0, scan_end=3, fallback_flag=1, record_count=4,
+    record_ids=(8, 9, 10), query=lambda ident: 0 if ident == 9 else 1,
+)
+# selected_index=1, queried_indices=(0, 1), final_notifications=False
+```
+
+Missing scanned records and invalid integer inputs raise ValueError. The
+original scan can dereference beyond active count; the portable API allows
+explicit records outside that count but rejects unavailable storage. It does
+not silently clamp scan bounds or treat an invalid zero-result candidate as a
+request to keep searching. A query callback exception propagates; already
+performed caller-supplied query effects are not rolled back.
+
+The [decision validation receipt](../../native/snow_host/input_cache_policy_validation.json)
+compares 1,728 original-writer executions against the portable decision, across
+empty and reversed scan ranges, first-zero positions, active count boundaries,
+nonzero fallback flag bit patterns, and unchanged/changed old indices. Query
+argument order, selected-index stores and notification arguments/order match.
+External query results are supplied, the post-selection helper is a no-op, and
+notification helpers only record their calls. This validates the writer's
+control flow under those explicit substitutions, not the unknown helpers or a
+complete mutable service. In particular, callback mutation of the current index
+or metadata is not covered. The import table inspected in this pass does not
+establish a named import binding for the query target.

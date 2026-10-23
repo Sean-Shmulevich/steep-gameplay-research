@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added an executable cache-selection decision API with explicit query callback.
+1,728 original-writer cases match query order, selection stores and notification
+calls with unresolved external callees supplied. The full mutable service and
+callback effects remain open. No live game access. See
+[selection decision](../docs/reconstruction/INPUT_UPDATE_ORDER.md#executable-selection-decision).
+
 Traced a current-cache-index writer through the final holder helper. It scans
 record IDs until an unresolved query returns zero, then selects that record;
 fallback branches select scan-end or zero. It does not increment a history
