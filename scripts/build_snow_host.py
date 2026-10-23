@@ -50,7 +50,7 @@ def main():
     if args.command_manager_write_plugin:
         build('plugins/command_manager_write.dll', ['examples/command_manager_write.c','snow_first_write.c'], ['-shared'])
     if args.command_manager_execute_plugin:
-        build('plugins/command_manager_execute.dll', ['examples/command_manager_execute.c','snow_first_execute.c'], ['-shared'])
+        build('plugins/command_manager_execute.dll', ['examples/command_manager_execute.c','snow_first_execute.c','snow_local_protection.c','snow_continuation_identity.c'], ['-shared'])
     if args.execution_control_plugin:
         build('plugins/execution_control.dll', ['examples/execution_control.c','snow_first_execute.c'], ['-shared'])
         (out/'fixtures').mkdir(exist_ok=True)

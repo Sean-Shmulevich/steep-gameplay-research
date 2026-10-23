@@ -1617,3 +1617,23 @@ lifetime in general, or a persistent mod API. A next constructor experiment must
 freshly validate the same identities and make the supplied backend explicit,
 retain a bounded wait and report actual restoration. Another function on the
 constructor's page may still win the one-shot observation.
+
+## Constructor-page continuation attempt exits before a final report
+
+The opt-in constructor plugin now accepts `backend=continuation`, using the
+fresh identity qualification exercised by the authored-page control. The normal
+VirtualProtect path remains the default, and qualification failure does not fall
+back silently. The backend implementation is shared in `snow_local_protection`.
+
+The [first live constructor-page attempt](../../native/snow_host/constructor_continuation_live_validation.json) logged successful plugin initialization,
+then the launcher exited with code 3 after approximately 16 seconds. No final
+execution snapshot was written and scheduler readiness was not reached. Plugin
+initialization success requires arming and worker creation to have returned
+successfully, but does not prove constructor execution or page restoration.
+The game process was confirmed absent. This is an unsuccessful observation, not
+a recovered constructor caller or a diagnosed protection-policy decision.
+
+The authored-page success therefore does not transfer to the game-page case.
+The next diagnostic adds flushed initialization milestones outside the exception
+handler so early termination does not erase the arming gates. The private
+continuation lifetime, the cause of exit, and constructor ownership remain open.

@@ -620,3 +620,22 @@ watched allocation stays until process exit rather than being freed. There is
 still no option to select a game page. The backend's private continuation lifetime
 is not generally pinned or recovered; this is a bounded experiment, not a durable
 mod API. Raw output distinguishes the observer mode from direct-call fields.
+
+For the constructor-page experiment, `[execution] backend=continuation` explicitly
+selects the locally qualified continuation through `snow_local_protection`.
+The default remains `backend=virtualprotect`. Unknown values decline loading.
+Continuation mode freshly checks the wrapper, current export, context candidate,
+forwarding arrangement and repeated bytes before configuring the observer. A
+failed identity check refuses arming; it never silently falls back to another
+backend. Output includes selection, qualification and backend call/status fields.
+
+This remains a bounded constructor-page experiment, not a general protection API.
+The callback's module and context stay resident, but the private continuation's
+allocation lifetime is not established generally. Use the external watchdog and
+verify actual restoration. No continuation pointer is reused across sessions.
+
+Constructor initialization also appends `.execute.json.stages.jsonl` milestones
+after eligibility, backend configuration and return from arming. Each record is
+closed immediately, outside the exception handler. These milestones can survive
+an early game exit that prevents the worker's final report. They do not establish
+capture or restoration; only the final report can report those observations.

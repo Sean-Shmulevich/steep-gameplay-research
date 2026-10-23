@@ -6378,3 +6378,15 @@ The live continuation-backed observer captured an authored function's exact entr
 restored RX, returned 42 and preserved bytes without fallback. Readiness/cleanup
 passed. Constructor-page behavior and continuation lifetime remain separate gaps;
 no game-page permission or hook change occurred.
+
+### Constructor-page backend integration exposes an early-exit boundary
+
+Integrated fresh continuation qualification into the opt-in constructor observer,
+with explicit selection and no silent fallback. The first live attempt loaded the
+plugin but exited with launcher code 3 before a capture report or readiness. This
+does not identify a constructor caller or prove restoration. Added initialization
+milestones outside the exception handler to retain arming diagnostics on early
+exit. The authored-page control remains valid within its narrower tested scope.
+The updated build and four Wine refusal/journal cases pass. Live cleanup verified
+bottle shutdown, save/settings restoration and the original DLL. The journal has
+not yet been exercised in a compatible live game session.

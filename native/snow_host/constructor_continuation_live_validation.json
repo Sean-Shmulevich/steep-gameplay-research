@@ -1,0 +1,51 @@
+{
+  "evidence": "Live constructor-page continuation attempt; unsuccessful observation",
+  "live": {
+    "plugin_initialization_logged": true,
+    "launcher_exit_code": 3,
+    "launcher_elapsed_seconds": 16,
+    "final_capture_report_written": false,
+    "readiness_observed": false,
+    "constructor_capture": "unproved",
+    "page_restoration": "unproved"
+  },
+  "tested_plugin_sha256": "ebd394a658ae1e7bb8f04668d28c448f36520ea0233a0bd884f0b31542e6c18d",
+  "limitations": [
+    "Exit cause was not diagnosed.",
+    "Initialization success establishes returned arming and worker creation, not constructor execution.",
+    "Initialization journal was added after this live attempt and was not exercised by it.",
+    "Private continuation allocation lifetime remains unresolved."
+  ],
+  "cleanup": {
+    "ok": false,
+    "error": "did not reach the startup map or gameplay",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes_after_journal_addition": {
+    "native/snow_host/snow_local_protection.c": "9fbcfafa5a43434bffe1e0366a7062fb0be085cd550b12f7d1b6779b3de657af",
+    "native/snow_host/snow_local_protection.h": "f04234fea23b029dc67f526be71a4487f70acedac28e4e6c655f210907bf7957",
+    "native/snow_host/examples/command_manager_execute.c": "63396a454640a77c8a65ec46476d79a6ee8dae853c15ffc664dc7c34a79aa3c1",
+    "scripts/build_snow_host.py": "c330af094158564c3411109d6b3ec63fed91eff22cba0eef4daf4259e608a6b2"
+  },
+  "standalone_journal_fixtures": [
+    {
+      "case": "disabled",
+      "passed": true
+    },
+    {
+      "case": "invalid",
+      "passed": true
+    },
+    {
+      "case": "incompatible_default",
+      "passed": true
+    },
+    {
+      "case": "incompatible_continuation",
+      "passed": true
+    }
+  ]
+}
