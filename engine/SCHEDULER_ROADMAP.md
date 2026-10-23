@@ -30,6 +30,13 @@ command API. Preserve this distinction while tracing the engine-wide executor;
 qualify other subsystem receivers independently. See the
 [owner identification](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#named-owner-correction-uimanager-and-uimanagergame).
 
+The [executor reconstruction](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#executor-reconstruction-and-nested-call-boundary)
+now tests complete local flow against 96 original-instruction cases. A supplied
+nested invocation clears the execution byte before the outer invocation finishes;
+supplied list removal can skip the moved participant. Native reachability remains
+unproved. Admission/drain must track actual admitted calls and object lifetime;
+neither the byte nor registry absence alone establishes safe unloading.
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain

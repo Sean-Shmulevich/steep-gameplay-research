@@ -2756,3 +2756,47 @@ owner +0x59 writes it to zero. The same prefix constructs root +0x60 and graphic
 selected prefix/base construction and tail stores. This closes the initialization
 lead above; it does not establish later writer coverage, selector stability or
 an exactly-once frame-service event.
+
+## Executor reconstruction and nested-call boundary
+
+`engine.command_executor.execute_commands` now implements the full local executor
+flow shown above. The caller supplies the unresolved services, participant storage
+and virtual calls. Service B's low byte controls the branch, and the global flag
+is read only when that byte is nonzero. The embedded receiver goes to service D.
+The model retains the cursor while reloading the registry end after each callback.
+Storage identities are abstract integer slots; no native pointer API is exposed.
+
+[96 original-instruction comparisons](../../native/snow_host/command_executor_flow_validation.json)
+matched service order, callback order and execution-byte observations. The fixture
+runs the complete executor body with intercepted services. It varies the initial
+execution byte, service B low/high bits, global flag and six registry scenarios.
+Backing memory remains allocated in all scenarios.
+
+Two supplied scenarios constrain a future mod API:
+
+- A synthetic callback invokes the same original executor recursively once.
+  The inner normal return clears the execution byte. The outer callback then
+  resumes, and subsequent outer callbacks observe zero even though the outer
+  executor has not returned. There is no restoration of the previous byte.
+- Removing the current entry by replacing it with the last entry and shortening
+  the count skips that moved entry in this traversal. Appending within retained
+  backing can visit the appended entry. Relocating the base does not rebase the
+  existing cursor; the experiment retains old storage and chooses a reachable end.
+
+These are conditional behaviors of the inspected body, not evidence that native
+callers permit recursion or registry mutation. Opaque services may impose further
+constraints. A zero byte is therefore insufficient as a standalone drain check;
+removal from the registry is insufficient as an unload protocol. A mod callback
+adapter needs its own admitted-call accounting, lifetime policy and proven engine
+phase before it can permit commands or unloading.
+
+Run the payload-free illustration:
+
+```sh
+python3 -m engine.examples.command_executor_probe
+```
+
+The Python adapter has an explicit callback budget to stop malformed synthetic
+traversals. That limit is authored. Exceptions and budget exhaustion do not clear
+the byte through an invented `finally` block; original exception unwinding remains
+unverified. This pass neither installs a participant nor launches the game.

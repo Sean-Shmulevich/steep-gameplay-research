@@ -1,0 +1,25 @@
+{
+  "evidence": "Original full executor instructions with intercepted services and synthetic callback bodies compared to serial reconstruction",
+  "cases": 96,
+  "all_passed": true,
+  "scenarios": [
+    "empty",
+    "duplicate",
+    "append in retained backing",
+    "swap remove current",
+    "relocate end within retained backing",
+    "nested same-manager invocation"
+  ],
+  "nested_return_clears_outer_execution_byte": true,
+  "span": {
+    "rva": "0x664260",
+    "length": 165,
+    "sha256": "07651bdc38bc5d9b17ff8ad19a85183486f7b84a28577aed724403ec34c5fcb3"
+  },
+  "limitations": [
+    "Opaque services are synthetic returns; their locking or recursion prevention is not modeled.",
+    "Nested invocation and registry mutation are supplied experiments, not observed reachable gameplay paths.",
+    "Backing storage remains allocated; no concurrent mutation, lifetime, allocation or safe native callback permission proved.",
+    "Exceptions and authored callback budget are independent model behavior tests, not original unwind validation."
+  ]
+}

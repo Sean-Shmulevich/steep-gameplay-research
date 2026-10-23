@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Reconstructed the complete command executor control flow with opaque service
+interfaces and dynamic participant-end reloads. All 96 original-instruction
+comparisons passed, including a supplied recursive callback: inner return clears
+the execution byte while outer callbacks remain active. Supplied append/removal
+cases establish traversal effects, not permission to mutate native storage.
+Added a runnable payload-free nested-call probe and boundary tests. No game launch;
+this narrows the mod admission/drain contract without claiming native recursion.
+Full suite passed: 2142 tests, one skipped; example and repository checks passed.
+
 Reconstructed full ordinary execution-wrapper order as an authored serial adapter:
 TLS mode/context gates, diagnostic scope, body, completion, and conditional worker
 notification. Compared against 256 connected original-instruction cases; all
