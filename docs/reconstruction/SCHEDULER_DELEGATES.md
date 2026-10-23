@@ -1399,3 +1399,41 @@ mode/input, unavailable nested state, actor/world/profile invalidation, motion-o
 failure with valid physics, repeated requests, and existing close/concurrency
 guards. The public host/plugin build and six portable tests pass. This is authored
 storage under Wine, not original-game execution of the combined channel.
+
+### Live motion/input/gate transition in one capture
+
+The [combined live receipt](../../native/snow_host/delegate_motion_live_validation.json)
+contains 16 returned requests, 32 valid motion samples and 32 valid physics
+samples. Three request intervals precede the down report, five fall inside the
+reported hold, and eight follow the up report. There are 166 callback records
+across six threads, with zero drops. Both payloads match across each callback's
+before/after pair; values evolve between requests.
+
+| First sampled request | Current / outer / inner mode | Primary ingested vector | Blocking byte | Main speed in body units |
+| --- | --- | --- | --- | --- |
+| 101 | 0 / 0 / 1 | 0, 0, 0, 0 | 1 | 0 |
+| 105 | 0 / 0 / 5 | 0, 1, 0, 0 | 1 | 0 |
+| 108 | 0 / 0 / 5 | 0, 1, 0, 0 | 0 | About 0.603 |
+| 110 | 0 / 0 / 5 | 0, 0, 0, 0 | 0 | About 0.717 |
+| 112 | 0 / 3 / 1 | 0, 0, 0, 0 | 0 | About 1.932 |
+
+The primary nonzero counter is 5, 14, 22, 30 and 39 in requests 105–109, then
+returns to zero at 110. Secondary input remains zero. Request 109 is after the
+OS up report but still contains nonzero ingested input; report time is not the
+game's consumption timestamp. Sampling does not measure exact ingestion delay.
+
+Requests 105–107 have the state tuple that selects the unconditional block-release
+callback in both inspected dispatch variants, yet the blocking byte remains set.
+This distinguishes route eligibility from actual dispatch execution. Do not
+automatically invoke the release when a reconstructed state equals five, or infer
+that the input vector itself clears the gate. The first observed input/state
+change precedes the first observed unblock by about 304 ms, but sparse sampling,
+unknown invocation timing and other state effects prevent identifying that value
+as an original delay constant or animation duration.
+
+The boxed ownership route and registry candidate agree. Independent selected-player
+identity and the precise writer/copy instructions remain unobserved. The capture
+verifies delegate restoration, continued engine progress and bottle/save/settings/
+original-DLL cleanup. This is one input sequence, not comprehensive transition
+coverage. The next useful observation is the relevant actor adapter or release
+callback entry/return, joined to these modes and job counters.

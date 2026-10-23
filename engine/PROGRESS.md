@@ -6810,3 +6810,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - The capture plugin accepts motion=1 with physics=1 and emits a private motion sidecar containing mode/availability, ownership, raw ingested input, counters and latches. Actor/world binding is requalified around the existing bounded reader.
 - Public host/plugin build passes. Fourteen Windows/Wine fixture scenarios plus two follow-up cases pass, including motion-only invalidation, missing child state and a second request after changed input. Six portable tests pass with the selected macOS SDK environment.
 - No live game launched. The next bounded capture should join this channel to the already proven gated-input protocol; receipt association alone cannot identify a writer, establish atomicity or prove an input-to-force cause.
+
+### Live combined motion/input/physics transition
+
+- Bounded gated-input run returns 16 requests with 32 valid motion and 32 valid physics samples. Report-relative coverage is 3 before / 5 during / 8 after, with 166 callbacks, six threads and zero drops.
+- State tuple changes from 0/0/1 to 0/0/5 when primary ingested input first becomes nonzero. Three samples retain the blocking byte despite eligibility for the decoded release route. The gate clears and velocity becomes nonzero later; input then clears while motion continues and outer state changes to 3.
+- This proves an observed ordering across sampled phases, not direct causal execution or an exact delay. Request 109 retains input after the OS key-up report. Callback pairs are equal, emphasizing the distinction between this engine phase and downstream updates.
+- Boxed/registry actor paths agree. Delegate restoration, continued progress and bottle/save/settings/original DLL cleanup pass. Writer identity, exact ingestion timing and independent selected-player proof remain open. Public receipt contains derived summaries and hashes; raw traces stay private.

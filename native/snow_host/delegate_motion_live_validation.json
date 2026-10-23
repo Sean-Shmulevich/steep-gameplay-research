@@ -1,0 +1,282 @@
+{
+  "evidence": "One live Wine engine-phase capture with paired physics and bounded motion-state reads; derived summaries",
+  "requests_returned": 16,
+  "valid_motion_samples": 32,
+  "valid_physics_samples": 32,
+  "report_groups": {
+    "before_down_report": 3,
+    "inside_reported_hold": 5,
+    "after_up_report": 8,
+    "overlaps_report_boundary": 0
+  },
+  "reported_hold_seconds": 0.4938465,
+  "ingested_primary_nonzero_request_ids": [
+    105,
+    106,
+    107,
+    108,
+    109
+  ],
+  "primary_nonzero_counts": [
+    0,
+    0,
+    0,
+    0,
+    5,
+    14,
+    22,
+    30,
+    39,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "secondary_input_zero_all_samples": true,
+  "motion_pairs_equal": true,
+  "physics_pairs_equal": true,
+  "eligible_state_with_block_still_set": [
+    105,
+    106,
+    107
+  ],
+  "milestones": [
+    {
+      "request_id": 101,
+      "label": "initial stationary",
+      "seconds_after_first_request": 0.0,
+      "modes": [
+        0,
+        0,
+        1
+      ],
+      "state_available": [
+        1,
+        1
+      ],
+      "primary_input": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "nonzero_counts": [
+        0,
+        0
+      ],
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0
+    },
+    {
+      "request_id": 105,
+      "label": "first sampled nonzero ingested input and inner mode five",
+      "seconds_after_first_request": 0.4126658,
+      "modes": [
+        0,
+        0,
+        5
+      ],
+      "state_available": [
+        1,
+        1
+      ],
+      "primary_input": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "nonzero_counts": [
+        5,
+        0
+      ],
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0
+    },
+    {
+      "request_id": 108,
+      "label": "first sampled cleared block and nonzero velocity",
+      "seconds_after_first_request": 0.7170129,
+      "modes": [
+        0,
+        0,
+        5
+      ],
+      "state_available": [
+        1,
+        1
+      ],
+      "primary_input": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "nonzero_counts": [
+        30,
+        0
+      ],
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "main_speed_body_units": 0.6026321003651696,
+      "rider_speed_body_units": 0.8355949071691405
+    },
+    {
+      "request_id": 110,
+      "label": "first sampled zero input after release",
+      "seconds_after_first_request": 0.9254623,
+      "modes": [
+        0,
+        0,
+        5
+      ],
+      "state_available": [
+        1,
+        1
+      ],
+      "primary_input": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "nonzero_counts": [
+        0,
+        0
+      ],
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "main_speed_body_units": 0.7166561860116188,
+      "rider_speed_body_units": 0.8816560095747752
+    },
+    {
+      "request_id": 112,
+      "label": "first sampled outer mode three",
+      "seconds_after_first_request": 1.1282437,
+      "modes": [
+        0,
+        3,
+        1
+      ],
+      "state_available": [
+        1,
+        1
+      ],
+      "primary_input": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "nonzero_counts": [
+        0,
+        0
+      ],
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "main_speed_body_units": 1.9316297297149028,
+      "rider_speed_body_units": 2.171469062453446
+    },
+    {
+      "request_id": 116,
+      "label": "last observation",
+      "seconds_after_first_request": 1.5316839,
+      "modes": [
+        0,
+        3,
+        1
+      ],
+      "state_available": [
+        1,
+        1
+      ],
+      "primary_input": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "nonzero_counts": [
+        0,
+        0
+      ],
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "main_speed_body_units": 3.72954667207306,
+      "rider_speed_body_units": 3.7190041943246013
+    }
+  ],
+  "callback_records": 166,
+  "callback_threads": 6,
+  "dropped": 0,
+  "boxed_actor_matches_registry": true,
+  "selected_player_independently_proved": false,
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "gate_writer_observed": false,
+  "input_copy_instruction_observed": false,
+  "substep_attributed": false,
+  "sources": {
+    "native/snow_host/examples/delegate_capture.c": "49319027c0b5ba2f1f82acbd4ee9ca922ea71b522620926b34285cc9ec6e9c02",
+    "native/snow_host/snow_delegate_probe.c": "6c56d5ef0927690f447c03d15ea217bde842cccdee54efc0ba624db5bea7b3ed",
+    "native/snow_host/snow_delegate_probe.h": "69e2e0cd922543227d4b28667a9131cc4732ced740d5e08c4600414f619434bf",
+    "native/snow_host/snow_motion_observation.c": "de9e045b58f27b4d5d180948c910ac42069e5929252ab833e9c9a9cc2b552ae7",
+    "native/snow_host/snow_update_snapshot.c": "f8a17114cd7867ff5ef873eb7ffe81da4c5948a6a52764fe8969e75b6171497f",
+    "engine/snow_block_route.py": "adde56174f6dda0af76257d1e3c9b6c00b7bdc10923231659daf8860222943b8"
+  },
+  "plugin_sha256": "02733c7078d412bea7990e86d77cb55b525f515ea49d3e35d53e801f347a8544",
+  "private_controller_sha256": "fb9192d187aa920ce6c1fab23e8c64a21db6fbcd09bb6afce2de4cbbda97d7e5",
+  "private_evidence_sha256": {
+    "delegate-capture-result.json": "60fe106a5d05e6343333516be6b077effbec0d1120a9f1826ed27ff3e4dd42b9",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "boxed-provenance.json": "73a22cc8110e336d0e79953738d04fb91e7daab0e84a63762aa89e6efcde0413",
+    "input-events.jsonl": "8f3356f4e753f6f1036311aa1b37297369fff0177bc9af7aef6c4b62dab15ad7",
+    "report-relative-analysis.json": "e3f9348986584dac58981db4e93abe91c825b276ffaf4b8010bcc88e98bfc29d"
+  },
+  "limitations": [
+    "One input sequence and actor; selected-player identity not independently proved.",
+    "Sequential guarded reads do not pin ownership or establish an atomic snapshot.",
+    "State eligibility does not imply callback execution; the gate remains set at three eligible-state samples.",
+    "The input-copy instruction and gate writer were not traced; sample times do not measure exact input latency.",
+    "No state names, force formulas, mutation permission, transition lifetime or deterministic replay inferred."
+  ]
+}

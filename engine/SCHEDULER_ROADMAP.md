@@ -331,3 +331,17 @@ then observe that state alongside the snow job's entry and completion. The usefu
 deliverable is an evidenced input-to-job-to-body chain with explicit counter
 domains and stale-object behavior. Additional idle sampling or arbitrary setters
 would not close that gap.
+
+### Combined motion and physics capture now live-qualified
+
+The [combined capture](../docs/reconstruction/SCHEDULER_DELEGATES.md#live-motioninputgate-transition-in-one-capture)
+records nonzero ingested input and inner-mode change before snow unblocks, followed
+by input release and another state change while body motion continues. All 32
+motion and 32 physics samples are valid; restoration/progress/cleanup pass.
+
+Three observations satisfy the recovered block-release route's mode predicates
+while the blocking byte remains set. The remaining transition question is when
+the adapter/callback actually executes and which caller requests it. Observe that
+entry/return with existing modes and request counters; do not replace execution
+evidence with state eligibility. Exact ingestion latency, writer identity and
+independent selected-player proof remain open.
