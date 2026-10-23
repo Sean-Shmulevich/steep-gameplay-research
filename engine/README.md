@@ -52,9 +52,13 @@ python3 -m engine.input_refresh_bench engine/examples/input_refresh_plan.json --
 object with an `events` list. `publish` supplies two four-lane vectors, 32 scalar
 channels and an opaque uint64 `now`. `refresh` supplies uint32 `source_kind` and
 `lane_mode`, explicit boolean owner/configuration/ownership/cache-mask gates,
-and `processor: "bypass"`. The checked-in example lists the exact field names.
-Only processor bypass is supported by this bench; the lower-level vector adapter
-accepts explicit processor callbacks.
+and `processor: "bypass"` or `"default"`. The checked-in example lists the exact
+field names. Default explicitly selects the decoded copy processor; it is never
+inferred from missing configuration. Its first-use flag and stored vector persist
+across events and appear in each observation. Suppression, missing source
+configuration and bypass leave this state unchanged. This caller selection does
+not prove which processor the native player uses. The lower-level vector adapter
+accepts other explicit processor callbacks.
 
 Output includes an input hash, event indices, action raw/sample/direction/status,
 cache clock, derived press stamps and evaluation diagnostics. Events operate on

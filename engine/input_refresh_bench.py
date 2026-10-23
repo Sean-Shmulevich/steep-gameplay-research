@@ -3,6 +3,7 @@
 No device access or native process. Event ordering and resolved gates are supplied
 by the caller; event indices are harness labels, never native sample generations.
 """
+import copy
 import argparse
 import hashlib
 import json
@@ -11,6 +12,7 @@ import struct
 from .action_cache_exchange import CACHE_SPAN
 from .action_cache_directions import publish_derived_and_stamp
 from .action_sample import f32
+from .action_processor import initial_state, process_default
 from .vector_action_refresh import refresh_vector_action
 
 
@@ -20,6 +22,7 @@ def inspect_timeline(plan):
     if not isinstance(plan['events'], list) or len(plan['events']) > 1000:
         raise ValueError('events must be a list of at most 1000 items')
     root, action = bytes(CACHE_SPAN), bytes(192)
+    processor_state = initial_state()
     observations = []
     for index, event in enumerate(plan['events']):
         if not isinstance(event, dict):
@@ -49,8 +52,13 @@ def inspect_timeline(plan):
             for selector in ('source_kind', 'lane_mode'):
                 if type(event[selector]) is not int or not 0 <= event[selector] < 1 << 32:
                     raise ValueError(selector+' must be uint32')
-            if event['processor'] != 'bypass':
-                raise ValueError('this bench currently supports only explicit processor bypass')
+            if event['processor'] not in ('bypass', 'default'):
+                raise ValueError('processor must explicitly select bypass or default')
+            def process(raw):
+                nonlocal processor_state
+                evaluated = process_default(list(struct.unpack('<4f', raw)), processor_state)
+                processor_state = evaluated['state']
+                return struct.pack('<4f', *evaluated['output'])
             def read_vector(channel):
                 return bytes(16) if event['cache_masked'] else root[0x1f0+channel*16:0x200+channel*16]
             def read_scalar(channel):
@@ -59,7 +67,7 @@ def inspect_timeline(plan):
                 configuration_available=event['configuration_available'], kind=event['source_kind'],
                 lane_mode=event['lane_mode'], ownership_blocked=lambda *_: event['ownership_blocked'],
                 read_vector=read_vector, read_scalar=read_scalar,
-                processing_enabled=False, process=None)
+                processing_enabled=event['processor'] == 'default', process=process)
             action = result.pop('snapshot')
             diagnostics = result
         else:
@@ -71,10 +79,11 @@ def inspect_timeline(plan):
             sample=list(struct.unpack_from('<4f', action, 0x60)),
             direction=list(struct.unpack_from('<4f', action, 0x70)),
             magnitude=struct.unpack_from('<f', action, 0x80)[0],
-            status=action[0x30], diagnostics=diagnostics))
+            status=action[0x30], diagnostics=diagnostics,
+            processor_state=copy.deepcopy(processor_state)))
     digest = hashlib.sha256(json.dumps(plan, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
     return dict(schema_version=1, input_sha256=digest, observations=observations,
-        scope='Synthetic zero-initialized caches/action, caller-ordered events and resolved gates; processor bypass only. No device polling, native scheduling or game access.',
+        scope='Synthetic zero-initialized caches/action, caller-ordered events and resolved gates; explicit bypass or default-copy processor. No device polling, native scheduling or game access.',
         sample_generation_established=False,
         direction_policy='Derived scalar reciprocal seed with recovered refinement; not native RSQRT seed parity')
 

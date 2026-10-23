@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Extended the JSON inspection API with explicit default-copy processor selection
+and persistent processor-state observations. A sequence test verifies state is
+unchanged during suppression, missing configuration and bypass, then updates on
+actual processing without normalizing the sample. No native processor selection
+is inferred; caller-selected default and bypass remain distinct.
+See [testbench usage](README.md#input-refresh-json-testbench).
+
 Added a JSON input-refresh inspection API and CLI with explicit publication/
 refresh events, gates and processor bypass. Output carries an input hash, decoded
 action/cache observations and fidelity limits. API/CLI equivalence and invalid
