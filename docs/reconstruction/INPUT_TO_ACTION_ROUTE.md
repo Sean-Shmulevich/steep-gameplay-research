@@ -1175,3 +1175,36 @@ The conversion helper has mode-dependent branches and is not proved inert in
 live use. Curve configuration, history consumers and scheduler cadence remain
 open. These are input-history features, not evidence of player-body rotation or
 animation actuation.
+
+
+### Runnable feature-history adapter
+
+[`update_history_features`](../../engine/action_history_features.py) now implements
+the finite mathematical flow above and returns a detached snapshot plus conversion
+and curve-call diagnostics. `convert` and `curve` are required callbacks. The
+adapter uses the existing labeled scalar reciprocal seed and scalar trigonometry;
+it does not claim bit-exact native SIMD/quaternion results.
+
+The 72 original-helper cases now compare this implementation directly: newest
+history-vector lanes agree within 2e-6, and all other bytes match exactly for the
+synthetic fixtures. Four portable tests verify the curve's angular scale, repeated
+conversion on the zero path, separation of conversion output from threshold input,
+and composition with the outer history updater.
+
+```python
+from engine.action_history_features import update_history_features
+from engine.action_vector_history import update_vector_history
+
+def features(snapshot, raw):
+    return update_history_features(
+        snapshot, raw, convert=explicit_conversion, curve=explicit_curve
+    )["snapshot"]
+
+updated = update_vector_history(snapshot, raw_vector, now=opaque_time,
+                                update_features=features)
+```
+
+The callbacks above must be supplied from known configuration or explicitly
+labeled fixtures. They are pure detached-value interfaces: native callbacks that
+mutate history storage or input aliases are outside this adapter's contract.
+Live curve identity, coordinate service modes and history consumers remain open.

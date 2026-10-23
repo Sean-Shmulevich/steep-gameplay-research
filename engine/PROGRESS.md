@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Implemented the decoded feature-history flow with required conversion and curve
+callbacks and explicit approximate numerical policy. All 72 original-helper
+cases agree within 2e-6 for new vector lanes and exactly for unaffected bytes.
+Four portable tests cover angular scale, zero-route repeated conversion and
+composition with outer history. Live callback identities remain unresolved.
+See [runnable feature histories](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#runnable-feature-history-adapter).
+
 Decoded the history feature helper's three vector histories, +Y threshold,
 signed angle and curve-driven direction remapping. Seventy-two complete original
 helper cases match a finite mathematical interpretation within 2e-6. A corrected

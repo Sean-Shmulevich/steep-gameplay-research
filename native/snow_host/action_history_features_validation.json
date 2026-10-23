@@ -2,6 +2,7 @@
   "status": "passed",
   "cases": 72,
   "scope": "Complete original feature helper including native acos/sin/cos routines compared with finite mathematical interpretation within 2e-6 per lane",
+  "independent_adapter": "engine.action_history_features.update_history_features; all unchanged bytes exact, newest vector lanes within 2e-6",
   "substitutions": [
     "Three coordinate-conversion calls record vectors and leave them unchanged",
     "Curve virtual callback returns supplied gain times normalized absolute angle"
