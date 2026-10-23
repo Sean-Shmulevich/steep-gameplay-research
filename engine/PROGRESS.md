@@ -6441,3 +6441,16 @@ external service order/arguments across initial patterns, allocation-failure mas
 and the auxiliary clear branch. Five public unit tests and the synthetic example
 pass. No live game was launched for this pass. Manager storage allocation, native
 service bodies, destruction and concurrent publication safety remain unresolved.
+
+### Manager allocation request and conditional publication reconstructed
+
+Isolated the startup segment supplying manager storage: 384 bytes with alignment
+argument 8 through the existing allocation-context/allocator services. Thirty-two
+nonzero-result instruction cases tolerate synthetic volatile-register clobbers.
+A further 32 success/null cases match the startup model: success constructs then
+publishes the constructor result; null skips construction and publishes incoming
+RSI through a separate writer. The fallback stays explicit because a universal
+zero-RSI invariant is not proved. Added a runnable full startup composition.
+Eight public initialization tests and the 96-case full-byte constructor comparison
+pass. No live launch this pass. Allocator internals and eventual free/destruction
+remain open; these findings do not establish lifetime safety.

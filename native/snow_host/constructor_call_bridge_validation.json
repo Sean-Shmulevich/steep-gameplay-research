@@ -1729,6 +1729,7 @@
     "Stops before native constructor executes; allocator origin, constructor return and publication are not proved here.",
     "Flags are not claimed preserved; instruction counts may vary.",
     "Synthetic states do not establish every reachable native state or all hidden side effects.",
-    "Only the supplied 128 caller-stack bytes are checked for preservation; temporary storage below RSP is used."
+    "Only the supplied 128 caller-stack bytes are checked for preservation; temporary storage below RSP is used.",
+    "This fixture samples nonzero RAX values; the null-allocation branch is covered separately in manager_startup_flow_validation.json."
   ]
 }

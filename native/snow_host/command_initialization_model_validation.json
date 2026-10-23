@@ -675,7 +675,7 @@
     }
   ],
   "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
-  "model_sha256": "862e52d3554f317a63b8b9c925a61e1e1b844570c82346e594267efd56a4e10a",
+  "model_sha256": "23be35b6f14bf0b84849cf3bfc77b69673a7a8e068032e1e29dfd4679769c42c",
   "limitations": [
     "Lock/container/allocator/cleanup services are supplied, not recovered by this comparison.",
     "Failure masks inject null returns and do not establish native allocator failure policy.",

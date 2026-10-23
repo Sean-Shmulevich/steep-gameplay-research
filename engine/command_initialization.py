@@ -88,3 +88,32 @@ def initialize_and_publish(storage, receiver, *, services, publish):
     result = initialize_manager(storage, receiver, services=services)
     publish(result)
     return result
+
+
+def allocate_construct_publish(*, services, construct, publish, fallback):
+    """Recovered startup control with allocator/constructor/publisher supplied.
+
+    See REQUEST_COMMAND_LIFECYCLE.md, Manager storage request and conditional
+    construction. Context receives (384, 8, allocator_source); allocate receives
+    (384, 8, context). A zero allocation skips construct and publishes fallback,
+    corresponding to incoming RSI. No universal zero-RSI invariant is assumed.
+    Native allocator implementation, failure policy and lifetime remain unknown.
+    Validation and Python exception propagation are authored interface behavior.
+    """
+    if type(fallback) is not int or not 0 <= fallback < 2**64:
+        raise ValueError('explicit uint64 fallback token required')
+    if not callable(construct) or not callable(publish):
+        raise ValueError('constructor and publisher required')
+    if any(not callable(services.get(name)) for name in
+           ('read_allocator_source', 'allocation_context', 'allocate')):
+        raise ValueError('explicit allocator services required')
+    source = services['read_allocator_source']()
+    context = services['allocation_context'](384, 8, source)
+    receiver = services['allocate'](384, 8, context)
+    if type(receiver) is not int or not 0 <= receiver < 2**64:
+        raise ValueError('allocator service must return a uint64 token')
+    result = construct(receiver) if receiver else fallback
+    if type(result) is not int or not 0 <= result < 2**64:
+        raise ValueError('constructor service must return a uint64 token')
+    publish(result)
+    return result

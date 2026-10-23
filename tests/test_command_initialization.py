@@ -1,7 +1,7 @@
 import struct
 import unittest
 
-from engine.command_initialization import initialize_manager, initialize_and_publish
+from engine.command_initialization import initialize_manager, initialize_and_publish, allocate_construct_publish
 
 
 def services_for(events, failure_mask=0, clear_first=False):
@@ -83,3 +83,37 @@ class CommandInitializationTests(unittest.TestCase):
             initialize_and_publish(bytearray(512), 0x100000, services=services,
                                    publish=lambda value: events.append(('publish', value)))
         self.assertFalse(any(e[0] == 'publish' for e in events))
+
+    def test_manager_allocation_arguments_and_constructor_return_publication(self):
+        events = []
+        services = dict(read_allocator_source=lambda: 77,
+                        allocation_context=lambda *args: events.append(('context', args)) or 88,
+                        allocate=lambda *args: events.append(('allocate', args)) or 99)
+        result = allocate_construct_publish(services=services, fallback=17,
+                    construct=lambda token: events.append(('construct', token)) or 100,
+                    publish=lambda token: events.append(('publish', token)))
+        self.assertEqual(result, 100)
+        self.assertEqual(events, [('context', (384, 8, 77)), ('allocate', (384, 8, 88)),
+                                  ('construct', 99), ('publish', 100)])
+
+    def test_null_manager_allocation_skips_constructor_and_preserves_fallback(self):
+        for fallback in (0, 123, 2**64-1):
+            with self.subTest(fallback=fallback):
+                events = []
+                services = dict(read_allocator_source=lambda: 0,
+                                allocation_context=lambda *args: 1, allocate=lambda *args: 0)
+                result = allocate_construct_publish(services=services, fallback=fallback,
+                    construct=lambda token: self.fail('null allocation must not construct'),
+                    publish=events.append)
+                self.assertEqual(result, fallback)
+                self.assertEqual(events, [fallback])
+
+    def test_startup_service_exception_has_no_synthetic_fallback_publication(self):
+        events = []
+        def fail(*args):
+            raise RuntimeError('supplied allocator failed')
+        services = dict(read_allocator_source=lambda: 0, allocation_context=fail, allocate=fail)
+        with self.assertRaises(RuntimeError):
+            allocate_construct_publish(services=services, construct=lambda value: value,
+                                       publish=events.append, fallback=0)
+        self.assertEqual(events, [])

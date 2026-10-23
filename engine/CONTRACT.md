@@ -29,3 +29,11 @@ assumed dynamic and unsuppressed; inverse mass comes from its positive scenario
 mass. No dispatch/wake or paired rider behavior is implied. Spin, rigid angular
 momentum and clocks are untouched. Controller publication is isolated, tokened
 and replayable. Native host integration remains separate and unimplemented.
+
+Command-manager startup: `allocate_construct_publish` requests receiver storage
+through supplied allocator services with arguments (384, 8). Nonzero storage goes
+to the supplied constructor; zero storage skips it and selects an explicit
+uint64 fallback corresponding to incoming RSI. The selected result goes to the
+publisher after normal return. Caller-supplied services own storage, lock/container
+behavior and cleanup; no live access, native failure policy, rollback, lifetime
+pin or concurrent publication safety is implied.

@@ -1743,7 +1743,8 @@ and 0x411efd1 placed at the new stack top. The checked 128 bytes of caller stack
 above the entry RSP remain unchanged. Flags are not claimed preserved, and the
 encoded implementation uses temporary storage below RSP.
 
-The verified entry-side behavior can therefore be expressed as:
+For the nonzero-storage construction path, the verified entry-side behavior
+can be expressed as:
 
 ```text
 constructor_storage = entry.RAX
@@ -1754,7 +1755,9 @@ transfer_to_command_manager_constructor()
 
 This describes the state at constructor entry, not a complete replacement for the
 encoded dispatcher. The receiver storage is already supplied in RAX when the
-bridge starts; how that storage was obtained remains unresolved.
+bridge starts. Its preceding allocation request is recovered in the later
+"Manager storage request and conditional construction" section; the allocator
+implementation remains unresolved.
 The validation stops before construction and does not prove the subsequent return
 or singleton publication. The live receiver-to-later-singleton equality supplies
 a separate sequential observation of that relationship.
@@ -1814,3 +1817,61 @@ remain unchanged, whereas auxiliary ownership bytes were already initialized to 
 Run `python3 -m engine.examples.command_initialization_probe` to inspect an
 initialization/publication composition with clearly labeled synthetic services.
 No original executable, memory snapshot or native allocator is needed.
+
+## Manager storage request and conditional construction
+
+Tracing backward from the validated call boundary isolates an encoded startup
+segment beginning at 0x411efa4. The [allocation-boundary validation](../../native/snow_host/manager_allocation_bridge_validation.json)
+executes its original instructions in 32 nonzero-result cases while supplying
+allocator services and deliberately clobbering volatile registers and flags
+after those calls. The context service receives `(384, 8, allocator_source)`,
+then the allocation service receives `(384, 8, returned_context)`. The source
+comes from global 0x32fb868; its pool/type meaning remains opaque. The allocated
+result reaches the command constructor as its receiver. The allocator calls
+return to 0x411efaa and 0x411efbb respectively.
+
+Thus this manager's requested storage is 0x180 bytes, distinct from its four
+backing allocations and from the unrelated 0x98-byte factory encountered earlier
+in startup. Argument 8 is retained as the allocator's alignment argument; these
+checks do not execute the allocator or verify actual heap alignment or ownership.
+
+### Null allocation takes a separate publication branch
+
+The [startup-flow validation](../../native/snow_host/manager_startup_flow_validation.json)
+compares the independent model with original control instructions in 32 success
+and null-result cases. Allocator and constructor services are supplied. Nonzero
+allocation invokes construction and publishes its returned value using writer
+0x40c2369. A null allocation skips construction and publishes incoming RSI through
+a different writer, 0x4026efa. The tests include zero and nonzero RSI values.
+The live constructor-entry sample had RSI zero, but that is not a universal
+startup invariant, so the reconstruction requires an explicit fallback token.
+
+```text
+source = read_allocator_source()
+context = allocation_context(384, 8, source)
+storage = allocate(384, 8, context)
+if storage != null:
+    published = initialize_manager(storage)
+else:
+    published = incoming_fallback           // RSI at this boundary
+command_manager_global = published
+```
+
+This corrects any reading of the earlier constructor-call pseudocode as
+unconditional for a null allocator result. Injecting a null return does not prove
+that the native allocator can return null; it may throw or terminate instead.
+The checks stop immediately after manager publication, preventing later startup
+allocations from being misattributed to this manager.
+
+[allocate_construct_publish](../../engine/command_initialization.py) exposes this
+control with explicit services and fallback. Run
+`python3 -m engine.examples.manager_startup_probe` for a full synthetic composition
+with the byte-level constructor model. It requests 384 manager bytes, then
+319488, 64, 13312 and 13312 backing bytes on success. On a null manager allocation
+it skips all constructor backing requests and publishes the supplied fallback.
+No live addresses, executable or game resources are needed. The existing 96-case
+constructor comparison still passes, along with eight public initialization tests.
+
+The remaining ownership boundary is now the allocator implementation, allocation
+metadata, failure policy, and eventual destruction/freeing path, rather than the
+manager's requested size or how its storage reaches construction and publication.

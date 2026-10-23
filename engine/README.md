@@ -930,3 +930,11 @@ unwritten bytes, models four backing-allocation requests and publishes only afte
 normal constructor return. It does not allocate the manager itself or access the
 live game. See [the lifecycle evidence](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#constructor-return-publication)
 for the 96-case byte comparison and unresolved ownership boundaries.
+
+For the preceding storage request and null-result branch, run
+`python3 -m engine.examples.manager_startup_probe`. It composes
+`allocate_construct_publish` with the constructor model using synthetic storage.
+The manager request is 384 bytes with alignment argument 8. A null allocation
+skips construction and publishes the explicit fallback; it does not automatically
+assume a zero startup register. Native allocator behavior and destruction remain
+outside this reconstruction.
