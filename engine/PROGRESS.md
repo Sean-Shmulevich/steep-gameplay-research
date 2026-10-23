@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Built a separate action-probe DLL with guarded image-slot installation,
+compare-and-swap restoration, pinned lifetime, QPC frequency and sized reads.
+Synthetic Windows fixtures passed under Wine in normal and competing-pointer
+modes. No game launch or hook; live target qualification and selected-player
+attribution remain pending. See [probe validation](../native/snow_host/action_probe_validation.json).
+
 Added a bounded native evaluator-event recorder with explicit entry/exit ticks
 and thread/action identity. Seven native fixtures pass, including nested calls,
 concurrent overflow and close while an original call remains active; Windows

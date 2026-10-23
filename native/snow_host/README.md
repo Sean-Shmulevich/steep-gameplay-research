@@ -1198,3 +1198,28 @@ installation or action/physics ordering is established by these fixtures.
 Remaining integration needs verified target/calling convention, guarded slot
 installation/restoration, selected-player attribution, clock-domain qualification,
 and export of evaluator events alongside the update trace.
+
+### Action probe DLL and guarded slot installer
+
+The build script also produces `snow_action_probe.dll`. Its separate experimental
+ABI 1 exports configure, install, restore, close, sized record reads, ABI/record
+size queries and QPC frequency. Configuration supplies a verified slot address
+and original void evaluator. No game offsets or selected action are built in.
+Installation accepts an aligned nonexecutable committed image slot only when
+its current pointer matches the original and both belong to the same module.
+It pins the probe and target modules and permits one install attempt.
+
+Restoration compares against this probe's dispatch pointer, preserves competing
+pointers, and restores the recorded page protection. Always attempt restoration
+after installation, including failed installation, then close and drain. A
+protection failure returns -1 and requires retry/diagnosis. Neither restoration
+nor drain permits unloading because a caller may retain a dispatch pointer.
+Capture includes every object routed through that class slot; selected-player
+attribution must be established separately and renewed across lifecycle changes.
+
+The synthetic Windows fixture passed under Wine in normal and competing-pointer
+modes, including actual read-only image-page protection changes, original-call
+forwarding, captured records, restoration and late dispatch after close. This is
+not a live game hook result. Game signature qualification, class-slot selection,
+player attribution, and combined action/update capture remain open. See
+[action probe validation](action_probe_validation.json).

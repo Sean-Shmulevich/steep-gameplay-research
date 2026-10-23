@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "evidence": "authored synthetic Windows fixture executed under Wine",
+  "game_process": false,
+  "modes": [
+    "normal",
+    "competing_pointer"
+  ],
+  "checks": [
+    "ABI and record size queries",
+    "QPC frequency positive",
+    "Read-only image slot installation and original call forwarding",
+    "Second configure/install refused",
+    "Read before close refused",
+    "Competing pointer preserved during restoration",
+    "Original pointer and page protection restored",
+    "Sized record copy after close/drain",
+    "Late cached dispatch forwards without adding records"
+  ],
+  "build": "MinGW x64 C11 warnings treated as errors; standard host fixture build succeeded",
+  "limits": [
+    "No original game code executed",
+    "No live class-slot selection or player attribution",
+    "No action/physics ordering measurement",
+    "Forced OS page-protection failures and cached-call races not exercised by this Windows fixture"
+  ]
+}
