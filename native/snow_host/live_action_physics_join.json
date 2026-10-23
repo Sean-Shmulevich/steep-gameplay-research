@@ -52,7 +52,13 @@
     "selected_count": 2,
     "all_pairs_same_request": true,
     "all_pairs_same_ingested_input_bits": true,
-    "intervening_selected_evaluations": 0
+    "intervening_selected_evaluations": 0,
+    "all_pairs_same_nonzero_counters": true,
+    "positive_primary_counter_pairs": [
+      28,
+      32,
+      36
+    ]
   },
   "ingested_input_unchanged_within_updates": 224,
   "player_moved": true,
@@ -72,6 +78,8 @@
     "Identical input bits do not prove the producer never rewrote the same value.",
     "Actor update entry is not the complete physics-world solver boundary.",
     "The legacy summary substep_available flag is false; per-record frame_valid and decoded ordinal/count are the direct substep evidence.",
-    "Recorder overhead affects timings; reported lag is not input latency."
-  ]
+    "Recorder overhead affects timings; reported lag is not input latency.",
+    "Positive unchanged counters support no intervening ingestion under the decoded increment rule, but do not observe all possible writes."
+  ],
+  "ingestion_counters_unchanged_within_updates": 224
 }

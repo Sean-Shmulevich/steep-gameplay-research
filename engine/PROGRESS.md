@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Reconfirmed the existing static ingestion copy and narrowed the next live source
+to composite-parent publication, rather than directional-child return. Three
+double-substep groups retain positive ingestion counters across both updates.
+Fixed the update export's stale substep-availability flag to derive it from
+validated drained records and include their count. Historical receipts preserved.
+See [publication boundary](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#parent-publication-is-the-next-missing-dataflow-observation).
+
 Combined live capture joins 575 selected evaluator calls with 224 attributed
 actor updates, no drops. All updates lie between adjacent evaluations; 12
 requests contain two directly decoded substeps with unchanged ingested bits and

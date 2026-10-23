@@ -1884,10 +1884,39 @@ and after ingested-input samples also agree within all 224 updates. This is live
 evidence that the selected action need not reevaluate for every actor substep.
 It does not prove an upstream producer never rewrote an identical value.
 
-Remaining boundary: identify the actual input-copy operation and correlate its
-source payload with these events. Temporal precedence alone is not dataflow.
+Remaining boundary: observe the statically identified input-copy operation live
+and correlate its source payload with these events. Temporal precedence alone is not dataflow.
 The actor-update entry is not the entire world solver boundary. The old export
 summary has a hardcoded `substep_available: false`; use each record's validated
 `frame_valid`, ordinal and selected count for the direct evidence here. The
 runner verified movement, key release, both restorations and final save/settings
 cleanup. Generalization requires more inputs, sports and scheduling conditions.
+
+## Parent publication is the next missing dataflow observation
+
+Reinspection confirms the existing
+[copy-getter and ingestion-view join](MOTION_MEMBERSHIP_OBSERVATION.md#copy-getter-and-ingestion-view-join).
+The selected action lookup returns the parent record plus 0x20, and the vector
+view adds 0x40. Ingestion copies the resulting parent sample at +0x60 into the
+motion primary vector, with the existing alternate-action and X-sign gates.
+The static copy location is known; its live execution and source values remain
+unobserved in the combined trace.
+
+The current event recorder wraps the directional **child** evaluator. A child
+evaluation precedes the composite parent's final publication, so its exit is not
+the publication timestamp. The next source observation should bracket the parent
+composite evaluator and retain its published sample after return, then compare
+that sample with the motion ingestion payload and account for the sign gate.
+A temporal match or equal vector alone must not be called a proven copy event.
+
+The existing trace provides an additional cadence check: all 12 double-substep
+requests retain the same ingestion counters across both substeps. Three pairs
+have positive primary counts, 28, 32 and 36; the other nine are zero. Counters
+also remain unchanged within every actor update. Given the recovered rule that
+nonzero primary input increments its counter on ingestion, the positive pairs
+support reuse without intervening ingestion. They do not trace every potential
+writer or prove this for other scheduler modes.
+
+The update plugin now derives its summary availability flag from drained records
+with valid attribution and batch frames, and exports their count. Historical
+receipts retain their original stale flag; their per-record evidence is unchanged.
