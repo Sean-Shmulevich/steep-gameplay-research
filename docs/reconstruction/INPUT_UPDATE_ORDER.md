@@ -354,3 +354,81 @@ control flow under those explicit substitutions, not the unknown helpers or a
 complete mutable service. In particular, callback mutation of the current index
 or metadata is not covered. The import table inspected in this pass does not
 establish a named import binding for the query target.
+
+
+## Record categories and counter producers
+
+The field previously named `fallback_flag_840` is a uint32 **counter**. The
+selection API retains its `fallback_flag` keyword for compatibility with the
+first implementation, but callers should supply the counter value. Selection
+only tests whether it is nonzero. This correction changes the interpretation,
+not the previously validated branch results.
+
+The constructor `0x1188f50` initializes current index +0x828 and all four
+counters +0x838/+0x83c/+0x840/+0x844 to zero. It calls record insertion
+`0x118da80` four times, passing kind 8 and identifiers 0, 1, 2, 3. The insertion
+stores kind at record+8 and initializes query ID +0x420 to 0xffffffff. Its
+counter branch then applies this policy, with uint32 wrap on every increment:
+
+```text
+if kind == 0:
+    scan_begin += 1
+    scan_end += 1
+elif kind in {2, 6, 7, 8, 10}:
+    scan_end += 1
+    query_id = zero_extend_u16(supplied_record_id)
+else:
+    fallback_count += 1
+    if kind == 9:
+        kind9_count += 1
+```
+
+The membership test is an unsigned kind<=10 check followed by a bit test of
+0x5c4. Large kinds must not alias lower bits through a masked shift. The record
+is appended after this classification; the same insertion routine also builds
+nested 0xa468-byte configuration records. Those builders remain outside this
+kernel. The counter branch does not sort records, so a contiguous category
+layout still requires tracing insertion callers and later reordering.
+
+The constructor's four insertions yield scan_begin=0, scan_end=4,
+fallback_count=0 and kind9_count=0, with query IDs 0..3, assuming successful
+construction. This is consistent with four controller slots, but neither the
+kind name nor the external query binding is proved. Do not turn that inference
+into a device API contract.
+
+[`count_inserted_cache`](../../engine/action_cache_counts.py) reconstructs the
+counter updates and query ID independently of allocation. Inputs and outputs
+are integer metadata, not physical quantities. It owns no persistent state;
+the caller supplies counters and invokes it once for each intended insertion.
+The [counter validation receipt](../../native/snow_host/input_cache_counts_validation.json)
+records 272 executions of the original counter instruction slice with no
+substituted calls. All four counters and the query ID match, including uint32
+wrap, uint16 ID boundaries, kind 9 and large unsigned kinds. This is not a
+complete original-constructor or insertion-routine test.
+
+### Cleanup before the selection scan
+
+The earlier final-holder helper calls `0x11ada50` before invoking the external
+virtual operation and eventually the selection writer. That cleanup visits
+records backward from count-1 while index>=scan_end. For each visited record it
+appends a 16-byte entry containing the record's cache pointer and value 5 to the
+collection at object+0x848, destroys/removes the record through helpers, and
+decrements record count and fallback_count. The entry's final four bytes are
+not assigned by this local sequence, so they should not be invented as zero.
+The general removal path can copy the last record into the removed slot.
+Destructor, allocation and downstream queue behavior are not yet reconstructed.
+
+After removals, cleanup visits records [0, scan_end), changes every nonzero kind
+to 8, clears kind9_count, writes 2 at object+0x854, and clears a global dword.
+Thus record kinds are mutable and kind9_count is explicitly reset. For a valid
+contiguous layout whose trailing length equals fallback_count, cleanup removes
+that trailing category before subsequent operations may repopulate it. This is
+a conditional interpretation, not proof of the layout invariant or the virtual
+operation's effects.
+
+The original backward loop computes count-1 in uint32 and has no local empty
+count guard before the unsigned comparison. Count zero is not a proved safe
+entry state for this routine. A portable cleanup service must wait for its
+preconditions, allocation/destruction effects and deferred-entry consumer to be
+resolved. Next leads are insertion callers, the record-copy/removal helpers,
+and the virtual operation between cleanup and selection.

@@ -1,0 +1,18 @@
+{
+  "evidence": "Original insertion counter branch only",
+  "cases": 272,
+  "passed": true,
+  "start_rva": "0x118dd4e",
+  "end_rva_exclusive": "0x118dd9a",
+  "sha256": "4d2356ec5c7c3b021787d0717a44f5bc11d7c14f34e2299ef26fc14d7233b098",
+  "substitutions": [],
+  "setup": [
+    "Registers and stack query-ID sentinel supplied as at branch entry"
+  ],
+  "limits": [
+    "No full insertion, allocator or nested configuration execution",
+    "No live device identities",
+    "Record ordering invariant not established"
+  ],
+  "game_process": false
+}

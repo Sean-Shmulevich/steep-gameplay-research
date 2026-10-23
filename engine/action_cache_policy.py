@@ -9,7 +9,8 @@ def choose_input_cache(*, scan_begin, scan_end, fallback_flag, record_count,
                        record_ids, query):
     """Return selected index or None, queried indices, and final-notification flag.
 
-    Query receives each record's uint32 ID and returns its uint32 result.
+    fallback_flag is the historical API name for the uint32 fallback count.
+    Only its zero/nonzero value is used. Query receives each record's uint32 ID and returns its uint32 result.
     Zero stops the scan. IDs and bounds are caller-supplied snapshots; the
     original may reread mutable metadata. No index assignment or notification
     is performed here. Missing scanned records raise rather than reading past

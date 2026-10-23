@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved cache counter producers: type-based insertion counts and constructor
+seeding of four kind-8 records with IDs 0..3. The former fallback "flag" is a
+count. A portable counter kernel matches 272 original instruction-slice cases;
+cleanup also removes trailing records and normalizes retained nonzero kinds.
+Full construction, removal effects and device meanings remain unresolved. See
+[record categories](../docs/reconstruction/INPUT_UPDATE_ORDER.md#record-categories-and-counter-producers).
+
 Added an executable cache-selection decision API with explicit query callback.
 1,728 original-writer cases match query order, selection stores and notification
 calls with unresolved external callees supplied. The full mutable service and
