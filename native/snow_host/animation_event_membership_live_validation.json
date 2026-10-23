@@ -1,0 +1,40 @@
+{
+  "evidence": "Live guarded source and gathered-storage membership for DispatchAnimEvents",
+  "accepted": true,
+  "batch": "DispatchAnimEvents",
+  "source_count": 4,
+  "storage_capacity": 4,
+  "remaining_to_claim": 0,
+  "known_motion_component_present": false,
+  "kino_component_owned_by_acquired_actor_entity": {
+    "source_index": 3,
+    "storage_indices": [
+      3
+    ],
+    "table_rva": "0x1f289d0",
+    "dispatch_slot": "0x278",
+    "method_rva": "0xdd37a0"
+  },
+  "guards_matched": true,
+  "reader_calls": 39,
+  "guard_retries": 0,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_evidence_sha256": {
+    "route-result.json": "33cf08e2a0f7d8c89e0bd44fe80daafa22164c8a70e7b363aab53f3a80a307b4",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "membership-reader-calls.json": "6b81bbd66964861b6210677767d70ed400fcd20900b7ed826c41036d794fe01d"
+  },
+  "limitations": [
+    "Membership, not callback execution, notification causality or synchronization.",
+    "Known motion component is absent; different Kino receiver is joined by entity ownership and table identity.",
+    "Acquired snow actor matches boxed/registry routes; independent local-player identity remains outside this check.",
+    "Storage capacity can include stale entries; source equality and table/method guards are separate supporting checks."
+  ]
+}

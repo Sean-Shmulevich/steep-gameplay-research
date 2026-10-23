@@ -6896,3 +6896,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Two bounded attempts: first rejected changed guarded data, with exact range unavailable; second timed out before native readiness. Neither proves component presence or absence. Both cleanup paths restored saves/settings/original DLL and stopped the bottle.
 - Added changed-range diagnostics to the public reader without relaxing acceptance. Private controller now retains read calls and bounds fresh retries to three. Fifteen tests pass, including source and claim-counter changes.
 - DispatchAnimEvents membership remains open. Next accepted read must retain evidence sufficient to diagnose any rejection before proceeding to execution capture.
+
+### Accepted animation-event membership and queued-handler call plan
+
+- Third DispatchAnimEvents capture passes unchanged guards without retries: four source/storage receivers; the known motion component is absent. One KinoComponent belongs to the acquired actor entity at source/storage index 3, with table 0x1f289d0 and slot-0x278 method 0xdd37a0. Cleanup passes. Membership is not execution.
+- Followed that method to its embedded queue drain. Added a portable ordered call planner preserving independent handle sign-bit resolution, null-event skips and suppression. Thirty-two original-instruction cases match with event handlers intercepted; 18 focused Python tests pass.
+- Refcount cleanup, queue producer, event type semantics and connection to markup IDs 84/92 remain unresolved. Static predecessor edges from two Ai::UpdateAfterPhysics jobs provide scheduling leads, not live synchronization proof.

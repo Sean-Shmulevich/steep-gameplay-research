@@ -1037,6 +1037,22 @@ portable identifiers or proof of why a field changed.
 Component membership in DispatchAnimEvents remains unresolved. A later accepted
 capture or a diagnosed rejection is still needed before any batch instrumentation.
 
+### Accepted animation-event membership identifies a different owned receiver
+
+A third [live capture](../../native/snow_host/animation_event_membership_live_validation.json)
+passes all membership guards without retries. Four source receivers match gathered
+storage. The tracked motion component is absent, but source/storage index 3 is a
+KinoComponent owned by the same acquired actor entity. Its table and method match
+the independently researched animation component. This is not a direct join to
+the motion component's markup updater.
+
+The Kino method drains an embedded event queue through event-specific handlers.
+The [queued-event reconstruction](ANIMATION_COMPONENT_DISPATCH.md#queued-event-drain)
+provides call pseudocode and a portable planner checked against 32 original-loop
+cases. Connecting concrete event types to markup notification remains open.
+This accepted capture supersedes the earlier inconclusive membership attempts
+without converting them into positive evidence. All launch cleanup checks pass.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and

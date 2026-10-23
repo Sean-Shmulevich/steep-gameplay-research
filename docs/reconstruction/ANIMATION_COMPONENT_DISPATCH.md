@@ -60,3 +60,61 @@ The original interval-selection block matched 256 synthetic cases spanning all c
 4. Follow concrete parameter-group callback types. The interface is now identified, but those producers remain separate.
 
 Evidence anchors: component type global `142e908a8`, descriptor `142e915c0`, constructor `140dd0c50`, component table `141f289d0`, slot-0x270 thunk `140dd37c0`, component update `140de1b60`, interface call `140de1cfd`, manager constructor `1412618b0`, manager table `142906bb8`, interface factory `1412784d0`, owner constructor `1412b7fd0`. Task setup `140905dd0`, receiver dispatcher `1409d44c0`, batch consumer `1408f2b00`. These anchors identify private evidence; no game payload is distributed.
+
+## Queued event drain
+
+A separate component route handles animation events, rather than the slot-0x270
+animation-time update above. Live guarded membership now places a KinoComponent
+owned by the acquired snow actor's entity in `DispatchAnimEvents`: source index 3
+of four, with matching gathered-storage index 3. Its table is RVA 0x1f289d0 and
+slot 0x278 is RVA 0xdd37a0. The known motion component is absent from this batch.
+See the [live receipt](../../native/snow_host/animation_event_membership_live_validation.json).
+This is membership evidence, not observed event-handler execution or independent
+local-player selection proof. The earlier two inconclusive attempts remain in
+the [attempt receipt](../../native/snow_host/markup_animation_membership_attempts.json).
+
+The slot-0x278 method adds 0xf0 to the component pointer, sets the second argument
+to zero, and tail-calls `0x140d5c450`. The event-call portion is:
+
+```python
+def drain_calls(queue, suppress):
+    if not suppress:
+        count = queue.first_handle_count_u16
+        for i in range(count):
+            event = queue.event_pointers[i]
+            if event is None:
+                continue
+            first = resolve_if_status_bit31(queue.first_handles[i])
+            second = resolve_if_status_bit31(queue.second_handles[i])
+            event.virtual_50(first, second, 0)
+    # Later original code clears counts and conditionally releases handle refs.
+```
+
+Offsets relative to the embedded queue: event pointer array at +0, first handle
+array at +0x90 with uint16 count at +0x9a, second handle array at +0x120. Each
+handle's pointer is at +0 and status word at +0xc. The sign bit selects its
+pointer or null independently. The event callback uses RCX=event, RDX=first,
+R8=second, R9=0. Their gameplay meanings are unresolved. Null events skip both
+handle reads. Count is captured before iteration; producer count consistency,
+callback mutation and handler object lifetime remain external requirements.
+
+[`plan_event_dispatch`](../../engine/animation_event_dispatch.py) implements only
+the ordered call plan over explicit rows. It never calls handlers or releases
+objects. [32 original-instruction cases](../../native/snow_host/animation_event_dispatch_validation.json)
+match the planner across one/three events, suppression, null events and independent
+handle-status signs. Handlers are intercepted. Three portable tests cover ordering,
+null/suppressed skips and malformed input. Queue clearing/refcount retirement are
+static findings only and are not implemented by this call planner.
+
+The routine's later code clears event count, conditionally decrements references
+in the two handle arrays depending on each header's bit14, and clears their
+counts. This does not make listener teardown safe or identify markup IDs 84/92.
+The next useful connection is the queued event type and its slot-0x50 handler,
+plus the producer that enqueues it. Event payload pointers must remain private.
+
+Graph setup also registers graph+0x65c0 and graph+0x6788 as predecessors of the
+event job at graph+0x43d8 using the established successor-registration slot.
+Their setup labels are AfterPhysicUpdate and AfterPhysicUpdateMainActor, both
+named Ai::UpdateAfterPhysics. The event job registers graph+0x4768 as successor.
+These are static edges; request identity, live execution and complete graph
+ordering remain to be measured.

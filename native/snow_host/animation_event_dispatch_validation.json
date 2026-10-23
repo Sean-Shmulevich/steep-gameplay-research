@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "cases": 32,
+  "evidence": "Original queued-event call loop with synthetic arrays/handles and intercepted event handler",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "76930323275385067143d9a71d5095ad73aa053a454d7c7e4cc0a5142c68e28d",
+  "instruction_sha256": "1dba23387ecce2e511b4609d8c827a15c82599661fc8d11c7267741c85ab1d8b",
+  "model_sha256": "a3400c28040a0c329257ef540ecc58302431af627be69b03dcdaa5a26229e670",
+  "limitations": [
+    "Queue cleanup and reference retirement not executed.",
+    "Queue producer, event handler effects and callback-side mutation remain unresolved.",
+    "No live event callback execution claimed."
+  ]
+}
