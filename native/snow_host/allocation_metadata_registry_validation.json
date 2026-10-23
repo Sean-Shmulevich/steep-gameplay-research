@@ -1,0 +1,22 @@
+{
+  "evidence": "Original metadata registration and default wrapper; locks and notification callbacks supplied",
+  "cases": 192,
+  "return_state_and_events_match": true,
+  "routines": [
+    {
+      "rva": "0x122eb90",
+      "sha256": "fe9a013f1191142a376fc882cea2b76741860f00dac95a378e606e0eac5de5ca"
+    },
+    {
+      "rva": "0x122eca0",
+      "sha256": "bebfe3c2f08ba9e590fdc94001dca2dc45b5d8c6254989b7e753a5c89ae17a2b"
+    }
+  ],
+  "model_sha256": "22b0328a6ec3179ee9748d46279767089d313768933aad39bf29fea4bc83a359",
+  "limitations": [
+    "Synthetic registry and records; no live allocator or concurrent registration.",
+    "Callbacks may extend the observer list and change record index in controlled cases; shrinking past current traversal endpoint is outside tested scope.",
+    "Existing non-255 record indices are trusted by the original even without registry membership; success is not lifetime or ownership proof.",
+    "Region tag publication, allocator free and observer lifetime remain unresolved."
+  ]
+}

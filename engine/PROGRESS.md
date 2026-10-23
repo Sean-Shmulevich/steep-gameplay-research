@@ -6659,3 +6659,10 @@ Complete original leaf matches 16,448 synthetic cases without service stubs.
 Replaced supplied lookup in the connected retirement/loading comparison; all 24
 scenarios still match. Table registration/lifetime and final allocator release
 remain external; lookup does not validate objects or acquire locks.
+
+Followed allocation startup into metadata registration. Reconstructed first-free
+selection across 127 slots, existing-index trust, notifications after unlocking
+and unconditional default assignment. Original routines match the model in 192
+controlled cases. Static initializer inspection explains lookup index127 overlap:
+only entries0..126 are cleared/registered, followed by separate count/default
+fields. Concrete allocator release, region tagging and lifetime remain open.

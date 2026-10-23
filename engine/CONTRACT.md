@@ -137,3 +137,10 @@ high32 region selection and bits16..31 byte-tag selection. Tags other than 255
 select low7 entry bits; absent regions/tag255 use the unmasked default byte.
 Supplied readers own table retention, native storage aliases and concurrency.
 The returned opaque value is not allocation validity or payload-lifetime proof.
+
+Metadata registration: `register_metadata` trusts an existing non-255 record index;
+otherwise it searches exactly 127 entries under supplied locking, publishes the
+record and notifies supplied observers after unlocking. Observer count is dynamic.
+`select_default_metadata` copies the post-callback index even on failed insertion.
+The caller retains registry/record/observer storage and callback modules; returned
+success is not a membership, lifetime or concurrent-registration guarantee.

@@ -201,3 +201,67 @@ paragraphs describing supplied allocation services remain applicable to the
 allocator's final release operation; lookup itself is now reconstructed. The
 synthetic selected entry is stable during these joined runs. Real payload
 methods, region registration and allocator release remain external dependencies.
+
+## Metadata registration and default selection
+
+[`register_metadata`](../../engine/allocation_metadata_registry.py) reconstructs
+`0x122eb90..0x122ec93`; `select_default_metadata` adds the wrapper at
+`0x122eca0..0x122ecc9`. A metadata record carries its byte index at +0x19.
+
+```text
+register(registry, record):
+    if record.index != 255:
+        return true
+    lock(registry.registration_lock)
+    inserted = false
+    for index in 0..126:
+        if registry.entries[index] == null:
+            record.index = index
+            registry.entries[index] = record
+            inserted = true
+            break
+    unlock(registry.registration_lock)
+    if inserted:
+        notify observers in order with event 0 and record
+        # observer count is read again after every callback
+    return inserted
+
+select_default(registry, record):
+    result = register(registry, record)
+    registry.default = record.index
+    return result
+```
+
+The table has **127 usable registration slots**, not 128. The initializer at
+`0x1227380` clears 0x3f8 bytes beginning at +0x378, exactly 127 pointers, sets a
+separate count at +0x770 to zero and sets default +0x774 to 255. This explains the
+raw lookup's entry-127 overlap noted above: a malformed tag can index into other
+fields, but normal registration never assigns 127. The region initializer at
+`0x1224f30` requests 65536 bytes, fills them with 255, then publishes the region
+pointer and increments the separate count. These initialization statements are
+static inspection; the registration comparison below does not execute them.
+
+Registration trusts every preexisting index other than 255 without checking the
+selected registry. It checks that byte before locking and does not check it again
+after locking. A successful return therefore does not establish membership,
+current region association or exclusive ownership. After a new insertion,
+notifications run outside the lock. Object-style observers receive event zero
+and the record through virtual slot +8; function-style observers receive event
+zero, the record and their stored context. The count is re-read, so callbacks can
+extend the traversal. Retaining observer storage/modules remains an external
+requirement; arbitrary removal during traversal is not made safe by this model.
+
+The default wrapper ignores registration failure when assigning the default.
+A full table plus an unassigned record therefore returns false and writes 255
+as the default. It also reads the record index after notifications, so callback
+changes affect that assignment. This wrapper cannot be treated as a validated
+fallback installation API without an additional caller contract.
+
+[Original-instruction comparison](../../native/snow_host/allocation_metadata_registry_validation.json)
+passes 192 cases covering existing indices, first/middle/last free slots, full
+tables, both observer styles, callback extension/index changes and the default
+wrapper. Locks and observer effects are supplied. The full original routines
+execute and return/state/event order matches the model. Actual region tag
+publication, concurrent registration, registry lifetime and allocator release
+remain open. This finding narrows metadata ownership rules; it does not identify
+the live allocator's release vtable or prove safe memory reclamation.
