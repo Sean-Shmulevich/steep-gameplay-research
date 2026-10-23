@@ -1,0 +1,15 @@
+{
+  "evidence": "Complete original actor predicate leaves and static actor-table slot targets",
+  "passed": true,
+  "cases": 70,
+  "substituted_calls": 0,
+  "game_process": false,
+  "code_sha256": {
+    "a": "eb8d572f2b1254562f160fcee81e3d608eae41a7eced7bb3c77825b511f11a8b",
+    "b": "9d7abeb9e4e287306dcc85d5676d1067c8c2eb27591feaa4dad51a6b6abee297"
+  },
+  "limits": [
+    "Specific inspected actor table and raw numeric modes only.",
+    "Sport enum names and live actor mode selection not established."
+  ]
+}

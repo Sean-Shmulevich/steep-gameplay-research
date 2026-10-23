@@ -63,3 +63,18 @@ class MotionInputGateTests(unittest.TestCase):
             self.assertEqual(reads,[] if suppress else [0x76,0x77,0x76,0x77])
             self.assertEqual(len(samples),3)
             self.assertTrue(all(m is batch.motion for m in samples))
+
+    def test_concrete_mode_predicates_select_only_their_preparation(self):
+        from engine.motion_input_gate import preparation_mode_matches
+        for mode,expected in ((0,None),(5,'prepare_b'),(9,'prepare_a'),(0xffffffff,None)):
+            calls=[]
+            flags=dict(active=True,controller_blocked=False,motion_enabled=True,skip_ingestion=False)
+            gate=resolve_motion_input_gate(flags.__getitem__,
+                lambda:preparation_mode_matches(mode,'a'),
+                lambda:preparation_mode_matches(mode,'b'),
+                lambda:calls.append('prepare_a'),lambda:calls.append('prepare_b'))
+            self.assertTrue(gate.ingestion_enabled)
+            self.assertEqual(gate.preparation,expected)
+            self.assertEqual(calls,[] if expected is None else [expected])
+        for invalid in (-1,1<<32,True,None):
+            with self.assertRaises(ValueError):preparation_mode_matches(invalid,'a')

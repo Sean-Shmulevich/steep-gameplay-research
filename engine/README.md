@@ -904,3 +904,10 @@ helpers' real effects. Actor preparation before these gates, controller handle
 resolution, and downstream bookkeeping remain caller dependencies. A failed
 outer gate prevents subsequent reads and preparations. Unresolved/non-boolean
 values raise an error rather than silently disable ingestion.
+
+For the inspected concrete actor type, preparation predicates can be supplied
+as `lambda: preparation_mode_matches(read_actor_mode(), 'a')` and the equivalent
+`'b'` call from `engine.motion_input_gate`. They compare raw modes 9 and 5,
+respectively. These are build-qualified mode values, not portable sport IDs.
+Other modes skip both preparations but may still ingest. The predicates are
+validated leaves; preparation bodies remain caller-supplied dependencies.

@@ -52,3 +52,17 @@ def resolve_motion_input_gate(read_flag, predicate_a, predicate_b,
     skip = flag('skip_ingestion')
     return MotionInputGate(not skip, preparation,
                            'skip_ingestion' if skip else None, tuple(events))
+
+
+def preparation_mode_matches(mode, preparation):
+    """Concrete actor predicates for the inspected actor table.
+
+    A tests raw actor mode == 9; B tests mode == 5. Values are build-qualified
+    actor modes, not portable sport IDs. Call at predicate evaluation time;
+    do not reuse a mode snapshot across helper effects or actor replacement.
+    """
+    if type(mode) is not int or not 0 <= mode < 1 << 32:
+        raise ValueError('uint32 actor mode required')
+    if preparation not in ('a', 'b'):
+        raise ValueError('preparation must be a or b')
+    return mode == (9 if preparation == 'a' else 5)

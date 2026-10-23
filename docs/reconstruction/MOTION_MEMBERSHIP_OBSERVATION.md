@@ -2663,3 +2663,60 @@ Tests also compose transformation, history advancement and query endpoints.
 The resource-key meaning, live selection and downstream query/skip effects
 remain unresolved. Finite moderate arithmetic is validated; exceptional SIMD
 behavior and overflow are not claimed.
+
+### Concrete preparation predicates and preparation A event path
+
+The inspected actor table resolves predicate A to a complete leaf comparing
+actor mode `+0xfcc` with 9, and predicate B to a leaf comparing it with 5.
+`engine.motion_input_gate.preparation_mode_matches` implements those predicates.
+Seventy complete-leaf emulation cases matched with no substituted calls,
+including unsigned high-bit modes. See [validation](../../native/snow_host/preparation_mode_validation.json).
+Neither preparation is unconditional snow input processing. If neither predicate
+matches, the caller proceeds directly to its skip check and may still ingest.
+The selected mode must be read at predicate evaluation time; the two reads are
+not assumed to be an atomic snapshot. Sport names for these numeric values are
+not established by this validation.
+
+Preparation A contains event strings `Sledge Big turn` and `Sledge Big big turn`.
+That is a specific sledge lead, not proof of the complete mode-name table. Its
+inspected local control flow is:
+
+```text
+resolve settings
+if actor predicate(slot 0x4b0) or actor byte(+0x230) or downstream guard blocks:
+    clear motion scalar(+0x7a4)
+    reset armed timer if armed
+    return
+
+magnitude = abs(motion scalar(+0x7a0))
+if magnitude <= settings first threshold:
+    reset armed timer if armed
+    return
+
+expired = false
+if timer is not armed:
+    start = dereference timer clock
+    deadline = start + native_uint64_conversion(float32(30000 * duration))
+    override_clock = 0
+    armed = true
+else if (override_clock if nonzero else dereference timer clock) >= deadline:
+    emit "Sledge Big turn" on actor entity
+    reset timer using a fresh clock read
+    expired = true
+
+large_threshold = float32(float32(settings angle_degrees * float32(pi)) / 180)
+if magnitude > large_threshold:
+    emit "Sledge Big big turn" on actor entity
+    reset timer using a fresh clock read
+    notify shared service with argument 5
+else if expired:
+    notify shared service with argument 5
+```
+
+This is static pseudocode, not a validated whole-helper implementation. The
+first threshold's units and the timer clock's physical scale remain unresolved;
+30000 is a numeric conversion factor, not a proven sample rate. Event delivery,
+the downstream guard, service notification and allocator behavior are external
+calls here. Both event conditions can occur in one invocation. The later skip
+read remains necessary because transitive effects have not been excluded.
+The actor slot 0x4b0 leaf returns byte `+0xfdc`; its semantic meaning is unknown.

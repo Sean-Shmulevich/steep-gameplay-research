@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved concrete actor preparation predicates: A is raw mode 9, B mode 5.
+Seventy original-leaf cases match the new predicate kernel without substituted
+calls. Other modes can ingest without either preparation. Preparation A's
+static event/timer flow is documented with its sledge event strings; clock
+scale, sport enum names and transitive effects remain unresolved.
+
 Resolved preparation B's provider-pose transform: position rotation/translation
 and provider-times-local quaternion composition now feed the existing pose
 history API. All 32 bytes matched 1,000 original-instruction cases without
