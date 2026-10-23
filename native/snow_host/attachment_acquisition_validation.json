@@ -1,0 +1,14 @@
+{
+  "evidence": "Original attachment acquisition loop with controlled instruction-boundary source/count changes",
+  "cases": 21,
+  "phase_order_selected_pointer_and_counts_match": true,
+  "span_rva": "0x647614..0x64763b",
+  "span_sha256": "341dd2ee95e546086f10768780d8bb86edf208e398f0e645d13442ed4b511e2f",
+  "model_sha256": "588864be179d4cc05fa81835d8ca6cc94820fa4b86977c24951f137d34ff7b9d",
+  "limitations": [
+    "Supplied deterministic interleavings, not operating-system thread scheduling or stress testing.",
+    "Both candidate objects remain mapped; no reclamation, ABA-safe lifetime or freed-memory behavior proved.",
+    "Loop only, ending before destination publication; no descriptor synchronization or manager/module retention.",
+    "Zero/overflow counts describe raw arithmetic, not valid reference ownership."
+  ]
+}

@@ -2151,9 +2151,9 @@ incremented twice. The destination associated pointer is zeroed before the sourc
 associated pointer is read; prior destination references are not released. This
 is construction by copying, not a safe assignment operation or self-copy API.
 
-The native associated acquisition repeatedly reads source+0x60, reads its count
-at object+8, verifies the source pointer has not changed, then compare-exchanges
-the count to count+1. Failed comparison retries from the source. This local
+The native associated acquisition reads source+0x60 twice, reads the first
+object's count at object+8, compares the two saved pointer values, then
+compare-exchanges the count to count+1. Failed comparison retries from the source. This local
 protocol does not itself prove that a concurrently removed object remains readable,
 prevent address reuse, reject zero references or saturate overflow. The current
 model requires retained objects and stable source fields; native contention and
@@ -2190,3 +2190,45 @@ reference, let record copying acquire another, and release the temporary only
 through the proven cleanup path. Before exposing it natively, qualify attachment
 ABI/storage, descriptor-context association, source stability, thread of final
 destruction and callback-module retention. Manager lifetime remains independent.
+
+## Attachment acquisition interleavings
+
+[`acquire_attachment`](../../engine/command_attachment_acquisition.py) exposes
+the exact local acquisition loop with supplied source reads, count reads and
+uint32 compare-exchange. This complements the stable-source `copy_record` model:
+
+```text
+repeat:
+    candidate = read(source.associated)
+    if candidate == null: return null
+    confirmation = read(source.associated)
+    old_count = read(candidate.count)
+    if candidate != confirmation: continue
+    observed = compare_exchange(candidate.count, old_count, uint32(old_count+1))
+    if observed == old_count: return candidate
+```
+
+Ordering matters. The candidate count is read even when the two pointer values
+already differ. If source.associated changes after the confirmation read, a
+successful count CAS can acquire the previous candidate. There is no source
+recheck after CAS. If the CAS fails, the loop restarts and can return null when
+the source was cleared. Zero counts are not rejected and increment wraps at
+uint32 maximum. These are not validation rules for safe reference ownership.
+
+[Original-instruction interleaving comparison](../../native/snow_host/attachment_acquisition_validation.json)
+passes21 cases: stable/null source, source replacement before/after confirmation,
+replacement at CAS, count-CAS failure and failure followed by source clearing,
+with selected zero/one/max initial counts. Both object tokens stay mapped.
+The original loop executes with controlled mutations at instruction boundaries;
+phase order, selected pointer and final counts match. It ends before destination
+publication and does not demonstrate live races, OS scheduling, ABA-safe retention
+or access to freed objects.
+
+Consequently a request attachment requires an external retention contract for
+all observed candidates. The existing authored admission function constructs its
+temporary record on its own stack and uses it synchronously under the queue lock.
+Any future associated-object extension should preserve exclusive source ownership
+and hold the attachment's initial reference through copy and temporary cleanup.
+It must not advertise this reload/CAS loop as a general concurrent pointer pin.
+Manager lifetime and callback-module retention remain independent requirements;
+no native admission interface changed in this pass.

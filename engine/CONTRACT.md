@@ -179,3 +179,9 @@ and preserves unmodeled destination padding. Its serial contract excludes source
 mutation during native acquisition. It does not release overwritten destination
 references or establish module/manager lifetime. Attachment final release may
 occur on disposal with no callback execution.
+
+Attachment acquisition: `acquire_attachment` exposes source read/read/count-read,
+saved-pointer comparison and uint32 CAS retry as supplied services. A mismatch
+still reads candidate.count; successful CAS does not recheck source identity.
+Caller must keep every observed candidate readable. This is not a standalone
+concurrent lifetime pin or safe source-replacement operation.

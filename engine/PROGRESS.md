@@ -6714,3 +6714,10 @@ copy disposal, with final attachment destruction and no command execution. This
 provides a concrete request-context retention lead while leaving native CAS
 contention, attachment ABI, module pinning and manager lifetime open. Native
 admission remains unchanged and still constructs a null associated reference.
+
+Validated attachment acquisition against21 original-instruction controlled
+interleavings. Source replacement after confirmation can still acquire the old
+candidate; earlier mismatch still reads that candidate's count before retry.
+Failed CAS restarts and can observe null. Added explicit acquisition model/tests
+and corrected documentation to preserve the two-pointer-reads-before-count order.
+Native admission remains unchanged; retained private source is still required.
