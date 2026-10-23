@@ -1,13 +1,14 @@
 {
   "kind": "startup_native_director",
   "date": "2026-10-23",
-  "summary": "a private in-process plugin posts the title's press-start command, closes the offline notice and skips the startup map through the game's own flow and UI calls; with it, startup needs no input at all",
+  "summary": "a private in-process plugin finishes the splash video playlist, posts the title's press-start command, closes the offline notice and skips the startup map through the game's own calls; with it, startup needs no input at all",
   "navigator": "startup_entry.py --intro-key escape --hands-off offline_notice,map",
   "mechanism": {
     "map": "posts the game's own back-to-player flow event 1.5 s after the in-game flow event (same event the map's Back key posts)",
     "offline_notice": "from the notice page's own UI-thread update, 1.5 s after it is pushed, queues the UI manager's close-top-page command (the call a sibling information box makes on accept)",
     "patching": "per-class vtable slot swaps only, restored on unload; code pages are not modified",
-    "title": "1 s after the title flow event, calls the game's frontend command entry with the press-start command; it posts the same chart event the title posts itself when a user is already assigned"
+    "title": "1 s after the title flow event, calls the game's frontend command entry with the press-start command; it posts the same chart event the title posts itself when a user is already assigned",
+    "intro": "1 s after the intro state is entered, moves the splash player's playlist index to its end and sends one entry-ended event; the player runs its own finish path, which releases the intro state"
   },
   "sessions": [
     {
@@ -82,15 +83,45 @@
       },
       "note": "no key presses before gameplay; intros played in full (no Escape); title never seen by OCR",
       "navigator": "startup_entry.py --hands-off title,offline_notice,map (no intro key)"
+    },
+    {
+      "id": "x27",
+      "ok": true,
+      "inputs": [],
+      "entered_t": 78.5,
+      "note": "failed intro skip: called the intro's own finished callback, but its flag was already set; the intro waits for the splash player instead"
+    },
+    {
+      "id": "x28",
+      "ok": true,
+      "inputs": [],
+      "intro_skip": "native",
+      "entered_t": 48.6,
+      "player_flags": 1,
+      "spawn_position": [
+        -2312.95581,
+        -4273.34521,
+        2385.93262
+      ],
+      "ended_by": "stop",
+      "navigator": "startup_entry.py --hands-off title,offline_notice,map (no intro key)",
+      "after_entry": {
+        "step_samples": [
+          2478,
+          3299
+        ],
+        "forward_key_0_5s": {
+          "player_flags": 3,
+          "moved": true
+        }
+      },
+      "note": "no key presses; the intro video stopped (no lingering video, observed by the user); title never seen by OCR"
     }
   ],
   "previous_best_entered_t": 78.3,
   "screens_not_shown": [
     "title (press-start posted 1 s after it is entered)",
     "startup map"
-  ],
-  "screens_shown_without_input": [
-    "offline notice (about 1.5 s)"
   ],
   "still_needs_input": [],
   "failed_attempts_before_this": [
@@ -105,5 +136,9 @@
     "bottle_stopped": true,
     "original_dll_verified": true
   },
-  "limits": "three passes (one fully input-free); build-specific; the plugin stays private; same map and spawn as the normal flow; the intro videos still play unless Escape is sent"
+  "limits": "one fully native pass (x28) and one input-free pass with full intros (x26); build-specific; the plugin stays private; same map and spawn as the normal flow",
+  "screens_shortened": [
+    "intro videos (finished 1 s after the intro state starts)",
+    "offline notice (about 1.5 s)"
+  ]
 }

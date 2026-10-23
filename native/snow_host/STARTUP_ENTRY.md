@@ -145,10 +145,13 @@ navigation failures also shut down cleanly.
 
 ## Native director, 2026-10-23 ([receipt](startup_native_director.json))
 
-A private in-process plugin (build-specific, not published) now handles the title,
-the offline notice and the startup map through the game's own calls, using per-class vtable slot swaps that are restored on
+A private in-process plugin (build-specific, not published) now handles the intro
+videos, the title, the offline notice and the startup map through the game's own calls, using per-class vtable slot swaps that are restored on
 unload:
 
+- Intro videos: 1 s after the intro state starts, it moves the splash player's
+  playlist index to the end and sends one "entry ended" event. The player runs its own
+  finish path, which releases the intro. The video does not linger.
 - Title: 1 s after the title flow event it calls the game's frontend command entry
   with the press-start command. That posts the same chart event the title posts
   itself when a user is already assigned. The title is never seen.
@@ -169,7 +172,8 @@ With the title handled as well (`--hands-off title,offline_notice,map`, no intro
 a third pass sent no input at all. The intros played in full, and gameplay was
 natively verified at 78.4 s at the same spawn. A 0.5 s forward key after entry moved
 the rider (in-world flag set, about 22 m/s), so control works without a real
-press-start.
+press-start. With the intro skip added, the next pass also sent no input and reached
+natively verified gameplay at 48.6 s, faster than the Escape runs (57–61 s).
 
 ## Open
 
@@ -177,4 +181,5 @@ press-start.
   argument failure so far.
 - Choosing a different map or spawn (drop zone or helicopter on the startup map),
   and whether long-distance travel changes the startup spawn. Untested.
-- The intro videos still play unless Escape is sent (about 20 s saved with Escape).
+- Reliability of the fully native path: one pass so far (x28, gameplay at 48.6 s
+  with no input; the rider responds to input afterwards).
