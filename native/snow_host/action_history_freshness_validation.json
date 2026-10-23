@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "sequences": 12,
+  "evaluations": 36,
+  "history_updates": 24,
+  "substitutions": [],
+  "game_process": false,
+  "scope": "Original history producer and configured action execute sequentially, including native curve, conversion, ownership and clock branches",
+  "setup": [
+    "Synthetic mode-3 identity heading, constructor curves, magnitude threshold and hold configuration",
+    "Explicit update/evaluate/evaluate/update/evaluate ordering",
+    "Clock values supplied separately for history publication and action evaluation"
+  ],
+  "findings": [
+    "Held action activates on repeated evaluation without new history",
+    "History bytes remain unchanged across action evaluations",
+    "Release history update deactivates held action without resetting start timestamp"
+  ],
+  "comparison": [
+    "Action flag, magnitude, timestamps and clock reads match public timeline probe",
+    "All history bytes unchanged during each action evaluation"
+  ],
+  "limits": [
+    "This imposed schedule is not proved to occur in the live game",
+    "Axis input and one held configuration; broader kernels validated separately",
+    "No manager, reset or scheduler jobs executed",
+    "Clock domains are synthetic; no common epoch or live units asserted"
+  ]
+}

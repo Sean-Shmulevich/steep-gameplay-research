@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added a runnable producer/action timeline probe and validated its repeated-
+evaluation scenario against original producer and consumer instructions. Across
+12 synthetic sequences, 24 history updates and 36 action evaluations agree.
+A held action activates with unchanged history when its action clock advances;
+producer/evaluator observations must therefore remain separate in live tracing.
+No native schedule or shared clock epoch is inferred. See
+[freshness probe](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#producer-and-action-freshness-probe).
+
 Composed history classification, timing and publication into a detached action
 adapter. All 1,800 original configured-action evaluations across 360 sequences
 match complete action snapshots and clock reads, with no substituted calls.

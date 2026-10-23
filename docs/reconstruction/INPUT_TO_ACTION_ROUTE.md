@@ -1597,3 +1597,44 @@ The native registry is stable during each evaluation, classifier inputs here are
 finite planar axes, and the missing-configuration route remains excluded. The
 remaining scheduler connection is the selected player's consuming job and input
 age relative to its physics substeps, not an unidentified local timing predicate.
+
+## Producer and action freshness probe
+
+The [timeline inspection API](../../engine/history_action_bench.py) composes
+constructor-configured history production with configured action evaluation.
+Callers supply `update` and `evaluate` events independently. Update events carry
+four input lanes and an opaque history timestamp; evaluate events carry exactly
+the clock reads and two ownership observations consumed by that evaluation.
+The API rejects missing or unused observations instead of silently synthesizing
+a clock. It reports producer sequence, reuse, history timestamp, action result,
+magnitude, timer state and clock reads. Sequence counters are authored inspection
+metadata, not discovered native generation fields. No shared clock epoch is assumed.
+
+Run [the freshness example](../../engine/examples/history_action_freshness.py):
+
+```sh
+python3 -m engine.examples.history_action_freshness
+```
+
+The imposed sequence publishes +Y at history time 9000, evaluates held mode at
+action time 100, evaluates again at 200 without publication, publishes release
+at history time 9001, then evaluates again. With hold delay 0.1 and no repeat
+delay, active states are false, true, false. The second evaluation reuses the
+same history but reaches its hold threshold. Release preserves the start time.
+The differing timestamp ranges deliberately avoid implying a common clock domain.
+
+[Original-instruction freshness validation](../../native/snow_host/action_history_freshness_validation.json)
+executes the history producer and action consumer in that order, with no substituted
+calls. Twelve sequences cover both channels, both curve variants and all three
+clock-selection cases: 24 producer updates and 36 evaluations. Flags, magnitudes,
+timestamps and clock reads match the public probe. Every history byte stays
+unchanged during each action evaluation. Mode-3 conversion, native curve evaluator,
+sector reader, ownership lookup and clock accessor all execute on synthetic data.
+
+This proves that the local action can change without new history when evaluated
+again with an advancing clock. It does not prove that the imposed repeated-
+evaluation schedule occurs in the live game. The next correlated scheduler trace
+must therefore count producer updates and consumer evaluations separately, retain
+both clock observations, and identify the selected objects. An action event alone
+is not evidence of fresh input, and an unchanged history timestamp alone cannot
+establish whether publication ran with an unchanged clock value.
