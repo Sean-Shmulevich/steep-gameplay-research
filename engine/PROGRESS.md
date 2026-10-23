@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Connected original completion/finalizer to full normal dependency release in a
+128-case instruction fixture (normal holds and credit recipients); all passed.
+Successor begin can run with predecessor outstanding=1 under two predecessor
+lock-service acquisitions and one successor acquisition. This rules out treating
+the finalizer slot as an unlocked mod phase. Added model dependency-begin entry/
+return events with owner accounting and cause, plus tests for both release routes
+and empty-range inline finalization. A concrete filtered native finalizer-probe
+contract is documented; no game launched or hook installed in this pass.
+Full suite passed: 2119 tests, one skipped; packaging/link checks passed.
+
 Added and live-validated guarded entry/return job observations (native record ABI
 3). All 48 graphics calls had executions=1, outstanding=1, state=DONE, usage=0,
 and selector=0 on both sides. Request counts advanced consecutively. This proves

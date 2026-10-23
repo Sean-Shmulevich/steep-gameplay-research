@@ -1,0 +1,66 @@
+{
+  "evidence": "Connected original completion, ordinary finalizer and normal/credit dependency release; synthetic lock services and successor begin",
+  "cases": 128,
+  "all_passed": true,
+  "successor_begins": 10,
+  "cases_by_kind": {
+    "normal": 64,
+    "credit": 64
+  },
+  "phase_contract": {
+    "finalizer_entry": {
+      "predecessor_lock_depth": 1,
+      "executions": 0,
+      "outstanding": 1,
+      "state": 2
+    },
+    "dependency_release": {
+      "predecessor_lock_depth": 2,
+      "executions": 0,
+      "outstanding": 1,
+      "state": 2
+    },
+    "successor_begin": {
+      "predecessor_lock_depth": 2,
+      "successor_lock_depth": 1,
+      "executions": 0,
+      "outstanding": 1,
+      "state": 2
+    },
+    "finalizer_return": {
+      "predecessor_lock_depth": 1,
+      "executions": 0,
+      "outstanding": 1,
+      "state": 0
+    },
+    "outstanding_decrement": {
+      "predecessor_lock_depth": 0,
+      "executions": 0,
+      "outstanding": 1,
+      "state": 0
+    }
+  },
+  "spans": [
+    {
+      "rva": "0x11e2d70",
+      "length": 171,
+      "sha256": "1877fddd9c59e7a7eddee73f440834efc81f1784d26b543697b88200acd00075"
+    },
+    {
+      "rva": "0x11d1670",
+      "length": 123,
+      "sha256": "1a91ff93e0f55c64247ba8d459ff0f21064ce670612d81c7404b18143c902586"
+    },
+    {
+      "rva": "0x11e7ba0",
+      "length": 343,
+      "sha256": "0af148e9236a8982b5a15b5bd5c696fc29ac4a7ff64309566f53d4787267b369"
+    }
+  ],
+  "limitations": [
+    "Serial instruction execution with synthetic lock counters; native lock implementation and concurrency not proved.",
+    "Successor begin is a recording stub; no successor queueing, inline execution or further dependency propagation modeled.",
+    "Supplied dependency fields cover local branches, not claimed live graphics dependency configurations.",
+    "No native slot hook, plugin unload safety or finalizer live observation."
+  ]
+}

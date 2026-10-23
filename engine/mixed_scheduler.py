@@ -247,7 +247,7 @@ class MixedScheduler:
                 else:
                     if job['credit_gate']:
                         job['credits'] -= 1
-                    self._begin(target, context)
+                    self._dependency_begin(owner, target, 'normal_hold', context)
         for target in dependencies['credit_recipients']:
             job = self._jobs[target]
             job['credits'] += 1
@@ -255,7 +255,21 @@ class MixedScheduler:
             if job['credits'] > 0 and job['holds'] == 0 and job['requested'] != job['started'] and job['deferred']:
                 job['credits'] -= 1
                 job['deferred'] = False
-                self._begin(target, context)
+                self._dependency_begin(owner, target, 'credit', context)
+
+    def _dependency_begin(self, owner, target, cause, context):
+        # SCHEDULER_DELEGATES.md: Connected finalization and dependency release.
+        # Serial model observations; these do not implement native lock scopes.
+        def phase(which):
+            source = self._jobs[owner]
+            self._emit('mixed_dependency_begin_' + which, owner=owner, job=target,
+                       cause=cause, owner_state=source['state'],
+                       owner_executions=source['executions'],
+                       owner_outstanding_dispatches=source['outstanding_dispatches'],
+                       target_state=self._jobs[target]['state'])
+        phase('enter')
+        self._begin(target, context)
+        phase('return')
 
     def _alternate_release(self, owner, which):
         dependencies = self._lists[owner][which]

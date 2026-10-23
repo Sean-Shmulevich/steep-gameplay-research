@@ -741,3 +741,66 @@ and saves/settings/original DLL cleanup passed. No movement, pause, or debugger
 was used. Instrumented durations include both observation providers. The next
 missing live boundary is worker completion/finalization and its dependency
 release, rather than another idle poll or treating the main return as a drain.
+
+## Connected finalization and dependency release
+
+The [128-case instruction check](../../native/snow_host/completion_release_validation.json)
+connects original completion, ordinary finalizer, and the full normal dependency
+release routine. Earlier connected tests stubbed the release service. This check
+substitutes recording lock services and successor begin only. It varies active
+list, last hold/zero holds, pending request, credit gate, zero/positive credit,
+and deferred flag for both normal successors and credit recipients. Ten cases
+invoke the successor begin stub. The credit-recipient path here is the second
+loop inside normal release, not the separate alternate-release operation.
+
+For the supplied one-dispatch DONE predecessor, the checked boundaries are:
+
+| Boundary | Predecessor lock depth | Executions | Outstanding | State |
+| --- | --- | --- | --- | --- |
+| Virtual finalizer entry | 1 | 0 | 1 | DONE |
+| Dependency release entry | 2 | 0 | 1 | DONE |
+| Successor begin, when eligible | 2 (plus successor lock depth 1) | 0 | 1 | DONE |
+| Finalizer return | 1 | 0 | 1 | UNSCHEDULED |
+| Just before outstanding decrement | 0 | 0 | 1 | UNSCHEDULED |
+
+Depth means nested calls to the inspected lock/unlock services in this serial
+fixture. It does not establish the OS implementation, contention behavior, or
+reentrancy guarantees of those services. Successor begin is a stub: whether it
+queues work or runs another inline chain depends on its actual job type.
+
+Normal release clears the active list before visiting targets. Its normal-target
+loop decrements holds; only a last hold with a pending request reaches the credit
+gate. An enabled gate with no positive credit sets deferred; otherwise begin runs
+and consumes one credit only when that gate is enabled. The credit-recipient loop
+adds a credit and begins only with positive credit, zero holds, a pending request,
+and deferred set. It consumes that credit and clears deferred before begin.
+
+The reconstructed scheduler now emits `mixed_dependency_begin_enter` and
+`mixed_dependency_begin_return`, including owner state, executions, outstanding
+count, target state, and cause (`normal_hold` or `credit`). These are serial model
+observations, not native lock events. Tests cover both routes and immediate empty
+range finalization, which has zero outstanding dispatches. A finalizer name alone
+therefore does not imply that a worker dispatch is completing.
+
+### Next native observation boundary
+
+A one-argument wrapper around callback-job table slot +0x70 can observe finalizer
+entry/return. The completion caller returns to RVA `0x11e2dff`; ordinary begin's
+empty-work caller returns to `0x11d15e2`. Caller provenance must distinguish these
+paths. The inspected callback predicate is false, but a shared-table probe still
+must not presume every invocation represents the selected graphics job.
+
+The existing image-slot installer demonstrates guarded compare/exchange and
+protection restoration, but its action-vector record format is not a job-state
+record. A dedicated adapter should filter the current selected job, forward all
+other objects, preserve the original ABI, pin forwarding code, bound records,
+and avoid arbitrary plugin calls, logging, or scheduler mutation inside the hook.
+Configuration must verify current build, table slot, method, owner and job identity;
+restoration must preserve competing slot values. No such finalizer hook has been
+installed by this pass.
+
+Crucially, this slot executes under the outer job lock, and its return is still
+before the final outstanding decrement. It is useful instrumentation, not an
+unlocked mod callback or complete worker-exit notification. A later boundary is
+still needed to observe the decrement directly. The two inspected call sites do
+not constitute an exhaustive inventory of possible finalizer callers.
