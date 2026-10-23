@@ -1,0 +1,23 @@
+{
+  "evidence": "Original two gate instruction spans with shared-update call intercepted",
+  "cases": 16,
+  "all_passed": true,
+  "model_compared": true,
+  "spans": [
+    {
+      "rva": "0x656c01",
+      "end_exclusive": "0x656c0f",
+      "sha256": "0fe975b80b6cee5eb0f0c4b6a51245ed4a96e68af2a0b2fef10d0bea1b1807d8"
+    },
+    {
+      "rva": "0x656c6c",
+      "end_exclusive": "0x656c77",
+      "sha256": "24f2b2a2d00020064d46f47cdf004be2a6c0e2fabc9e4c96a3f773be9d4a529f"
+    }
+  ],
+  "limitations": [
+    "Caller visits and read values are supplied synthetic scenarios.",
+    "No proof the selector changes in native frames or that both sites execute each frame.",
+    "Writer, initialization and cross-phase stability contracts remain unresolved."
+  ]
+}

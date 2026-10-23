@@ -2683,3 +2683,31 @@ callback; it does not reclassify it as animation-only or a universal mod drain.
 Next qualify owner +0x5a writers and identify the second ring's consumer against
 the existing loading-thread evidence. Scheduler-wide teardown safety remains
 unproven despite the now-established local preparation/service order.
+
+
+### Phase-selection stability is a separate requirement
+
+`engine.frame_service_placement` models the two observed selector reads rather
+than replacing them with one assumed configuration value. A
+[16-pair original-instruction comparison](../../native/snow_host/frame_service_placement_validation.json)
+checks both gate snippets with byte values zero, one, two and 255. The shared
+update call is intercepted; its receiver argument is checked.
+
+| Site A read | Graphics read | Calls selected, if both sites are visited |
+| --- | --- | --- |
+| Zero | Zero | Site A only |
+| Nonzero | Nonzero | BeginGraphicFrame only |
+| Zero | Nonzero | Both |
+| Nonzero | Zero | Neither |
+
+Different nonzero bytes preserve the predicate. The required invariant is
+zero/nonzero stability, not necessarily byte equality. This table demonstrates
+branch semantics under supplied samples; it does not demonstrate a native race
+or that both call sites necessarily execute in every frame.
+
+The bounded writer search has not identified an assignment with proven
+engine-loop receiver identity. Same-offset copy and deserialization writes are
+not accepted as selector writers. Bulk initialization, aliasing, leaf wrappers
+and uninspected callers remain possible. A qualified live capture should record
+the owner and selector at both gates, together with entry counts, before an API
+exposes this service as an exactly-once frame hook.

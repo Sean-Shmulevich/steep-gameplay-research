@@ -1,5 +1,11 @@
 # Reconstruction progress and next work
 
+Shared frame-service gates now modeled as two distinct reads. Sixteen original
+branch-pair cases confirm stable zero/nonzero selects one site, while supplied
+changes select both or neither. No native selector change is claimed. Qualified
+writer/initialization identity remains open; next capture both gate entries with
+owner identity before promising an exactly-once phase hook.
+
 Connected new holder routes to the existing loading-thread reconstruction in a
 runnable serial inspection probe. It shows retirement, staged, captured, pending
 and busy boundaries separately, plus nonzero-count retirement that produces no
