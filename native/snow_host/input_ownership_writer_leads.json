@@ -1,0 +1,32 @@
+{
+  "status": "statically_inspected",
+  "spans": [
+    {
+      "start_rva": "0x97f0f0",
+      "end_rva_exclusive": "0x97f123",
+      "sha256": "fb5cb2145b51a32f2c84fefa7dec40c86574aaf21be44f8fda4c1fb63741d9f3"
+    },
+    {
+      "start_rva": "0x97dd20",
+      "end_rva_exclusive": "0x97de55",
+      "sha256": "0d7962599958b676cd4f6d03ed14220d37457bfc69999bd6d730ecc7d84e18af"
+    },
+    {
+      "start_rva": "0x959500",
+      "end_rva_exclusive": "0x959578",
+      "sha256": "570ea02fa560fa38350949dd8672eab2b238f8f78f8e02b3026a2d5b13790fc0"
+    },
+    {
+      "start_rva": "0x94e8a0",
+      "end_rva_exclusive": "0x94e900",
+      "sha256": "5114052028ad17c72692e3147eb54f52a20f09a33126e5220ebec7101e85bed1"
+    }
+  ],
+  "limits": [
+    "No execution of writer helpers in this pass",
+    "Paired-bank semantics unresolved",
+    "Descriptor records not joined to vector/scalar priority entries",
+    "No concurrency or scheduler-order proof"
+  ],
+  "game_process": false
+}

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Correction: the recent vector-selection/ownership passes repeat rules already
+in vector_action_source.py and its older 4,320-case receipt. Their extra checks
+do not represent new scheduler coverage. Consolidated convenience APIs onto
+that canonical model and reran 180/2,880-case validations. New static leads:
+conditional claim, paired-bank release and a membership predicate in the same
+global table. Bank publication and descriptor-to-query joins remain unresolved.
+See [writer leads](../docs/reconstruction/INPUT_UPDATE_ORDER.md#canonical-model-and-ownership-writer-leads).
+
 Closed both vector/scalar read gates: first nonzero of seven priority owners
 must match the adapter; separately, any nonzero final cache owner blocks the
 raw read. Added independent ownership APIs. 2,880 composed original cases pass

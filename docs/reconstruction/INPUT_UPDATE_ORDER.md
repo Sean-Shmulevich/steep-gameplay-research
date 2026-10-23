@@ -1413,3 +1413,57 @@ calls alone were substituted; their arguments and order were checked. All
 other query/read branches ran against stable synthetic memory. This supersedes
 the earlier selection test's supplied-gate/read limitation for these composed
 cases, without proving concurrency safety, live ownership or scheduler order.
+
+## Canonical model and ownership writer leads
+
+The source selection, priority and cache-mask behavior above was already
+reconstructed in [vector_action_source.py](../../engine/vector_action_source.py)
+and documented under
+[Vector-source ownership and masking](MOTION_MEMBERSHIP_OBSERVATION.md#vector-source-ownership-and-masking),
+with 4,320 original-instruction comparisons. The later 180-case and 2,880-case
+receipts are additional checks of those rules, not newly recovered behavior or
+additional coverage of the scheduler. The newer convenience modules now delegate
+to that canonical implementation so the rules cannot drift independently.
+
+Tracing references to the same global table gives concrete write-side leads.
+The following is static evidence; bank names A/B describe storage locations and
+do not establish staging, current-frame or next-frame semantics.
+
+* Claim helper 0x97f0f0 uses adapter.index to select a record and the signed
+  argument as a slot. It writes the requesting adapter into bank B only when
+  both corresponding bank A and B entries are null:
+
+  ```text
+  a = table + 0xa0 + 0xe8 * uint32(adapter.index) + 8 * int32(slot)
+  b = a + 0x38
+  if read_qword(a) == null and read_qword(b) == null:
+      write_qword(b, adapter)
+  ```
+
+* Release helper 0x97dd20 reads the descriptor at table+12*adapter.index:
+  a record pointer and uint16 count at descriptor+0x0a. For each 0xe8-byte
+  record it visits seven B slots at record+0x78+8*i and corresponding A slots
+  0x38 bytes earlier. It then applies the same rule to seven fixed B slots at
+  table+0xd8+0xe8*adapter.index+8*i:
+
+  ```text
+  for each paired slot (a, b):
+      if read_qword(b) == adapter or read_qword(a) == adapter:
+          write_qword(b, null)
+  ```
+
+  This does not erase bank A. A matching A entry clears B even when B contains
+  another identity. Treating this as "erase every occurrence of adapter" would
+  incorrectly preserve that B entry and incorrectly erase A.
+
+* Predicate 0x959500 scans those same fixed and descriptor-backed B slots for
+  the adapter. It does not scan A. Caller 0x94e8a0 invokes release only when
+  this predicate succeeds, then calls another cleanup helper on two adapter
+  subobjects. Wrapper 0x97dd10 calls release directly with the global table.
+
+The fixed claim/release slots are not yet joined to the scalar/vector priority
+reader addresses, and descriptor records may be the missing link. No copy or
+publication from B to A is established here. Next: trace table construction,
+descriptor initialization and writers of the paired banks before assigning
+update-phase semantics. These leads are recorded in the
+[static receipt](../../native/snow_host/input_ownership_writer_leads.json).
