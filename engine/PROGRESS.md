@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Extended mode-3 conversion to nonplanar/four-lane inputs and implemented its
+finite mathematical adapter. W contributes to normalization but the final
+(2,2,2,0) multiplier clears output W, so XYZ need not have unit length. All 252
+original dispatcher comparisons and three portable tests pass. Actual mode/basis
+selection and unsupported degenerate arithmetic remain explicit boundaries.
+See [four-lane conversion](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#four-lane-mode-3-conversion).
+
 Decoded conversion dispatch and verified 140 original runs covering mode-3 planar
 basis rotation, direct no-op modes and disabled global conversion. Mode 3
 normalizes input and uses a secondary basis when the primary is nearly vertical.

@@ -1257,3 +1257,39 @@ fields. It must not be assumed identity or used to infer that the action sample
 itself is normalized. The active service mode, basis owner, live updates and
 history consumers remain unknown; a camera-space interpretation is only a lead,
 not an established identity.
+
+
+## Four-lane mode-3 conversion
+
+The expanded [conversion receipt](../../native/snow_host/action_history_conversion_four_lane_validation.json)
+adds Z, W and mixed four-lane inputs. The final SIMD multiplier is `(2,2,2,0)`,
+so W participates in input normalization but is cleared in the converted result.
+For finite nondegenerate inputs, the mathematical extension is:
+
+```text
+n = input / sqrt(x*x + y*y + z*z + w*w)
+output = [cos(yaw)*n.x - sin(yaw)*n.y,
+          sin(yaw)*n.x + cos(yaw)*n.y,
+          n.z,
+          0]
+```
+
+This is not normalization of XYZ alone. With unchanged heading, input
+`(0,3,0,4)` produces approximately `(0,0.6,0,0)`. A pure W input can produce
+zero output. The earlier planar equation remains valid for its stated domain.
+The multiplier was identified after a four-lane comparison disproved the initial
+assumption that ordinary rotation would preserve W.
+
+[`convert_history_mode3`](../../engine/action_history_conversion.py) implements
+this finite mathematical behavior with explicit primary/secondary basis vectors.
+Its scalar normalization and trigonometry remain labeled substitutes. Exactly
+zero input returns before consulting basis values; a degenerate projected basis
+or normalization underflow is rejected rather than silently repaired. Those
+validation failures are adapter policy, not native branch behavior.
+
+All 252 original dispatcher cases pass within 2e-6 per lane across the expanded
+inputs and previously tested modes. Mode-3 results compare directly against the
+new adapter; no-op and disabled global routes compare against unchanged input.
+Three portable tests check fourth-lane participation/discard, vertical fallback
+and zero-input early return. The active global route, mode 1, actual basis owner
+and runtime mode selection remain unresolved.
