@@ -6803,3 +6803,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Corrected the former event-code label to the motion machine's current mode, supported by the existing commit routine and actor-to-embedded-motion adapters. Portable selector renamed accordingly; 90 original-instruction comparisons rerun successfully.
 - Adapter B conditionally invokes dispatch when actor byte `fe4` is clear, then always runs the existing state guard with output `fe5`. That guard can service pending transitions; the complete adapter is not a read-only predicate.
 - Mapped the selector inputs to the existing bounded motion reader's mode/availability fields. No new state sampler is needed. Documented the upstream boolean component callback as a caller lead, without assigning a keyboard or gameplay action name.
+
+### Motion state joined to resident phase receipts
+
+- Added opt-in EnableMotion after physics configuration and CollectState for consuming request/physics/motion payloads together. Existing exported collectors and record layouts remain unchanged. Callback reads remain sequential and each channel has separate validity.
+- The capture plugin accepts motion=1 with physics=1 and emits a private motion sidecar containing mode/availability, ownership, raw ingested input, counters and latches. Actor/world binding is requalified around the existing bounded reader.
+- Public host/plugin build passes. Fourteen Windows/Wine fixture scenarios plus two follow-up cases pass, including motion-only invalidation, missing child state and a second request after changed input. Six portable tests pass with the selected macOS SDK environment.
+- No live game launched. The next bounded capture should join this channel to the already proven gated-input protocol; receipt association alone cannot identify a writer, establish atomicity or prove an input-to-force cause.

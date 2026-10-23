@@ -798,8 +798,9 @@ ID. Float fields are serialized as uint32 bit patterns, preserving nonfinite/raw
 values without invalid JSON. It includes velocity, angular velocity, inverse mass,
 pending impulse, gates, preconsume counter and physics-job counter. This is not a
 pose/position reader and not an atomic snapshot. Link checks neither retain the
-actor nor detect address reuse. Build/link `snow_update_snapshot.c` with delegate
-probe users; the public build script now includes it.
+actor nor detect address reuse. Build/link `snow_update_snapshot.c` and
+`snow_motion_observation.c` with delegate probe users; the public build script
+includes both.
 
 ### Spacing observations across an input interval
 
@@ -816,3 +817,26 @@ then release a bounded readiness gate. Starting a fresh helper after capture can
 spend the entire observation window in process startup. Preserve key-down/up API
 reports and their clock provenance, plus explicit key-release cleanup. OS delivery
 reports do not prove that the game consumed the input at those timestamps.
+
+### Motion state alongside resident physics observations
+
+Set `motion=1` together with `physics=1` in the engine delegate capture INI.
+The plugin configures physics first, enables motion observation before arming,
+and refuses installation if requested configuration fails. It writes a separate
+private `.trace.jsonl.motion.json` keyed by the same request IDs. This contains
+mode values, nested-state availability, current ownership pointers, ingested
+input words, nonzero-input counters and latch bytes. Keep raw traces private.
+
+Native callers use `SnowDelegateProbe_EnableMotion()` after `ConfigurePhysics`
+and before the first request/install attempt. `CollectState(request, physics,
+motion)` requires all three outputs and consumes them together. The older
+collectors and their record layouts remain unchanged; choosing an older collector
+discards the optional motion payload along with that request.
+
+Motion validity is independent of physics validity. Missing child objects can
+produce a valid observation with unavailable nested levels; never substitute a
+zero mode for those levels. Read failures or changed actor/world binding produce
+zero invalid motion samples. The existing reader requires two matching snapshots,
+but neither that nor joint receipt collection proves atomicity, object lifetime,
+input freshness or that physics and motion were read at the exact same instant.
+Reads run sequentially on each side of the forwarded callback and add overhead.

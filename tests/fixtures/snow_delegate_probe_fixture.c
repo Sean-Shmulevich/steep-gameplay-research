@@ -26,6 +26,10 @@ static uintptr_t body(void *receiver) { assert(receiver==expected_receiver);Inte
         if(physics_mode==2)putq(0x2060,(uintptr_t)physics_memory+0xb000);
         if(physics_mode==3)putq(0x36e8,(uintptr_t)physics_memory+0x7000);
         if(physics_mode==5)putq(0x3000,0);
+        if(physics_mode==6){putf(0x1170,0.75f);putq(0xd018,1);}
+        if(physics_mode==7)putq(0x1050,0);
+        if(physics_mode==8)putq(0x1020,0);
+        if(physics_mode==9)putq(0xc020,1);
     }
     if(mutate_descriptor)((uintptr_t *)((unsigned char *)receiver+job_offset+0x198))[1]^=1;
     if(invalidate)owner_global=NULL;
@@ -54,7 +58,10 @@ int main(int argc,char **argv) {
     void (*close_requests)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CloseObservations");
     int (*configure_physics)(uint64_t,const SnowUpdateProfile *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ConfigurePhysics");
     SnowObservationReceipt (*collect_physics)(SnowDelegateRequestObservation *,SnowDelegatePhysicsObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CollectPhysics");
-    assert(configure_physics&&collect_physics);
+    int (*enable_motion)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_EnableMotion");
+    SnowObservationReceipt (*collect_state)(SnowDelegateRequestObservation *,SnowDelegatePhysicsObservation *,SnowDelegateMotionObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CollectState");
+    assert(configure_physics&&collect_physics&&enable_motion&&collect_state);
+    assert(!enable_motion());
     assert(arm&&read_request&&submit&&collect&&close_requests);SnowDelegateRequestObservation request={0};
     assert(submit(1)==SNOW_OBSERVATION_INVALID);assert(!collect(&request));
     assert(!arm(9));assert(!read_request(&request));
@@ -73,7 +80,8 @@ int main(int argc,char **argv) {
     if(!strncmp(argv[2],"physics",7)) {
         assert(engine);
         physics_mode=!strcmp(argv[2],"physics_world")?2:!strcmp(argv[2],"physics_body")?3:
-            !strcmp(argv[2],"physics_no_rider")?4:!strcmp(argv[2],"physics_profile")?5:1;
+            !strcmp(argv[2],"physics_no_rider")?4:!strcmp(argv[2],"physics_profile")?5:!strcmp(argv[2],"physics_motion")?6:
+            !strcmp(argv[2],"physics_motion_bad")?7:!strcmp(argv[2],"physics_motion_missing")?8:!strcmp(argv[2],"physics_motion_only_bad")?9:1;
         physics_memory=VirtualAlloc(NULL,0x10000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(physics_memory);
         uintptr_t a=(uintptr_t)physics_memory;
         SnowUpdateProfile profile={(uintptr_t)physics_actor_table,(uintptr_t)physics_runtime_table,
@@ -85,25 +93,47 @@ int main(int argc,char **argv) {
         putq(0x8ff0,a+0x9000);putq(0x9018,a+0xa000);putq(0xa000,a+0x9000);
         putq(0xa010,a+0xa1b0);putq(0xa360,profile.world_step_callback);putq(0xa208,19);
         putf(0x51a0,1.0f);putf(0x71a0,9.0f);
+        putq(0x1020,a+0xc000);putq(0xc020,a+0xd000);putq(0xd018,5);
         putq(0x1050,0);assert(!configure_physics(a,&profile));putq(0x1050,a);
         assert(configure_physics(a,&profile));assert(!configure_physics(a,&profile));
-        assert(install());SnowDelegateOriginal cached_physics=(SnowDelegateOriginal)d[3];
+        assert(enable_motion());assert(!enable_motion());
+        assert(install());assert(!enable_motion());SnowDelegateOriginal cached_physics=(SnowDelegateOriginal)d[3];
         assert(submit(1)==SNOW_OBSERVATION_ACCEPTED);
         assert(cached_physics(d,owner)==UINT64_C(0xfedcba9876543210));
-        SnowDelegatePhysicsObservation observed;
+        SnowDelegatePhysicsObservation observed;SnowDelegateMotionObservation motion;
         assert(!collect_physics(&request,NULL));assert(!collect_physics(NULL,&observed));
-        assert(collect_physics(&request,&observed)==SNOW_OBSERVATION_RETURNED);
+        assert(!collect_state(&request,&observed,NULL));assert(!collect_state(NULL,&observed,&motion));
+        assert(collect_state(&request,&observed,&motion)==SNOW_OBSERVATION_RETURNED);
+        assert(motion.configured && motion.request_id==request.request_id && motion.valid_before);
+        assert(motion.before.current_mode==0 && motion.before.state_observed && motion.before.child_observed);
+        assert(motion.before.child_mode==5 && motion.before.ingested[0]==0);
+        if(physics_mode==2 || physics_mode==5 || physics_mode==7 || physics_mode==9) {
+            SnowMotionObservation zero={0};assert(!motion.valid_after && !memcmp(&motion.after,&zero,sizeof zero));
+        } else {
+            assert(motion.valid_after);
+            if(physics_mode==6)assert(motion.after.child_mode==1 && motion.after.ingested[0]==0x3f400000);
+            if(physics_mode==8)assert(!motion.after.state_observed && !motion.after.child_observed);
+        }
         assert(observed.request_id==request.request_id && observed.configured);
         assert(observed.before.valid==(physics_mode==4?5u:7u));
         assert(observed.before.linear[0][0]==1.0f && observed.before.request==19 && !observed.before.substep);
-        if(physics_mode==2 || physics_mode==5) {
+        if(physics_mode==2 || physics_mode==5 || physics_mode==7) {
             SnowUpdateSnapshot zero={0};assert(!memcmp(&observed.after,&zero,sizeof zero));
         } else {
             assert(observed.after.valid==(physics_mode==4?5u:7u));
             assert(observed.after.linear[0][0]==(physics_mode==3?9.0f:2.0f));
             assert(observed.after.main_body==a+(physics_mode==3?0x7000:0x5000));
         }
-        assert(!collect_physics(&request,&observed));assert(restore());assert(close_probe(NULL,NULL));
+        assert(!collect_physics(&request,&observed));
+        if(physics_mode==6) {
+            assert(submit(2)==SNOW_OBSERVATION_ACCEPTED);
+            assert(cached_physics(d,owner)==UINT64_C(0xfedcba9876543210));
+            assert(collect_state(&request,&observed,&motion)==SNOW_OBSERVATION_RETURNED);
+            assert(motion.request_id==2 && observed.request_id==2 && request.request_id==2);
+            assert(motion.valid_before && motion.valid_after && motion.before.child_mode==1);
+            assert(motion.before.ingested[0]==0x3f400000 && motion.after.ingested[0]==0x3f400000);
+        }
+        assert(restore());assert(close_probe(NULL,NULL));
         printf("%s passed\n",argv[2]);return 0;
     }
     int requested=!strcmp(argv[2],"request");

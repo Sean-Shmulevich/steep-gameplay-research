@@ -1374,3 +1374,28 @@ already connects BeforeSimulation results to later actor samples in another
 session. Reuse that recorder and attribution route rather than treating input
 ingestion as wholly unexplored; the missing connection here is to this capture's
 gate transition and resident engine-phase requests.
+
+### Resident motion-state channel
+
+`EnableMotion` and `CollectState` now connect the existing bounded motion reader
+to the optional resident physics configuration. Configuration is immutable after
+the first request or install attempt. The engine callback samples physics and
+then motion before forwarding, and repeats that order after return. Both are
+published with one request receipt, but each channel has independent validity.
+Motion collection rechecks the configured actor/world binding around the reader.
+The reader's nested-state availability flags remain explicit.
+
+This permits the current/outer/inner modes, ingested input and physics gates to be
+compared within one request interval. It does not observe the gate writer or
+input-copy instruction. It adds no setter, no callback invocation and no lifetime
+pin. Existing collectors remain compatible and may ignore the motion payload.
+The capture plugin's `motion=1` option requires `physics=1` and emits a separate
+private sidecar. Live behavior of this newly composed channel still needs a
+bounded capture; prior independent readers' live results are not its validation.
+
+The [compiled fixture receipt](../../native/snow_host/delegate_motion_fixture_validation.json)
+records 14 initial scenarios and two follow-up cases. It covers changing nested
+mode/input, unavailable nested state, actor/world/profile invalidation, motion-only
+failure with valid physics, repeated requests, and existing close/concurrency
+guards. The public host/plugin build and six portable tests pass. This is authored
+storage under Wine, not original-game execution of the combined channel.

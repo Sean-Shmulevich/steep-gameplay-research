@@ -2,6 +2,7 @@
 #define SNOW_DELEGATE_PROBE_H
 #include "snow_delegate_trace.h"
 #include "snow_update_snapshot.h"
+#include "snow_motion_observation.h"
 #ifdef SNOW_DELEGATE_PROBE_BUILD
 #define SNOW_DELEGATE_API __declspec(dllexport)
 #else
@@ -90,4 +91,15 @@ SNOW_DELEGATE_API int SnowDelegateProbe_ConfigurePhysics(uint64_t actor,const Sn
  * Both outputs required; non-consuming primary ReadObservation is unchanged. */
 SNOW_DELEGATE_API SnowObservationReceipt SnowDelegateProbe_CollectPhysics(
     SnowDelegateRequestObservation *,SnowDelegatePhysicsObservation *);
+/* Optional motion observations share receipt publication, not an atomic memory
+ * snapshot with physics. Enable after ConfigurePhysics and before any request. */
+typedef struct {
+    uint64_t request_id;
+    uint32_t configured,valid_before,valid_after;
+    SnowMotionObservation before,after;
+} SnowDelegateMotionObservation;
+SNOW_DELEGATE_API int SnowDelegateProbe_EnableMotion(void);
+/* All three outputs required. Legacy collectors remain ABI-compatible. */
+SNOW_DELEGATE_API SnowObservationReceipt SnowDelegateProbe_CollectState(
+    SnowDelegateRequestObservation *,SnowDelegatePhysicsObservation *,SnowDelegateMotionObservation *);
 #endif

@@ -1,0 +1,43 @@
+{
+  "evidence": "Compiled Windows fixture under Wine with authored object storage; no game launched",
+  "initial_passed": [
+    "physics",
+    "physics_world",
+    "physics_body",
+    "physics_no_rider",
+    "physics_profile",
+    "physics_motion",
+    "physics_motion_bad",
+    "physics_motion_missing",
+    "repeat",
+    "close_running",
+    "competing",
+    "stale_owner_before",
+    "stale_owner_after",
+    "identity_aba"
+  ],
+  "followup_passed": [
+    "physics_motion",
+    "physics_motion_only_bad"
+  ],
+  "followup_changes": "Added motion-only invalidation and a second request in physics_motion; production DLL unchanged between batches",
+  "game_launched": false,
+  "public_build_passed": true,
+  "portable_tests_passed": 6,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "6c56d5ef0927690f447c03d15ea217bde842cccdee54efc0ba624db5bea7b3ed",
+    "native/snow_host/snow_delegate_probe.h": "69e2e0cd922543227d4b28667a9131cc4732ced740d5e08c4600414f619434bf",
+    "native/snow_host/snow_motion_observation.c": "de9e045b58f27b4d5d180948c910ac42069e5929252ab833e9c9a9cc2b552ae7",
+    "native/snow_host/examples/delegate_capture.c": "49319027c0b5ba2f1f82acbd4ee9ca922ea71b522620926b34285cc9ec6e9c02",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "a31b2aa5fd8a3f96c24985c1f228d8652119df5700cc3e44dac93f086fddeabe",
+    "scripts/build_snow_host.py": "dda663de99c56458b3bd55ffd85769c6a7fea4e47c8ad63b4255a87c88ff3252"
+  },
+  "probe_sha256": "13278ab9ed39ce379be672301c6bb205554eeb0e6f53dbde954a62fde25a7e59",
+  "capture_plugin_sha256": "02733c7078d412bea7990e86d77cb55b525f515ea49d3e35d53e801f347a8544",
+  "limitations": [
+    "Synthetic objects, not live ownership or actor identity proof.",
+    "Motion and physics read sequentially; receipt association does not establish atomic snapshots.",
+    "Nested-state absence is availability, not a zero state.",
+    "Live combined motion channel and transition attribution remain untested."
+  ]
+}
