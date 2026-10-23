@@ -1,0 +1,32 @@
+{
+  "evidence": "Original related handler, request wrapper and pool admission compared to serial reference model",
+  "cases": 54,
+  "all_passed": true,
+  "reference_update_precedes_admission": true,
+  "failed_admission_preserves_reference_update": true,
+  "request_calls_after_pool_unlock": true,
+  "spans": [
+    {
+      "rva": "0x8328a0",
+      "length": 191,
+      "sha256": "d0b4645f69129197dc6aab06692a7763c7a05a82c46a3151e9e0101b2589974b"
+    },
+    {
+      "rva": "0x118d340",
+      "length": 66,
+      "sha256": "f044c61a5b3a57d01260bcd35422995d039ca2c768b18ca3834c666a26c40e5d"
+    },
+    {
+      "rva": "0x118d390",
+      "length": 266,
+      "sha256": "5fe1c252414a46ca5b839889f10cf558cd045e72a40b825a35f47211d19cf0a3"
+    }
+  ],
+  "limitations": [
+    "Release, TLS mask, locks, request initialization and publication bodies are intercepted.",
+    "Synthetic holder memory stays allocated even on release callbacks; no final-free/lifetime proof.",
+    "Stable entry/source/holder links; callback-driven mutations only covered by separate model tests.",
+    "Work acceptance means the two downstream calls returned, not execution or completion.",
+    "No native thread, game launch, receiver retention or mod submission contract proved."
+  ]
+}

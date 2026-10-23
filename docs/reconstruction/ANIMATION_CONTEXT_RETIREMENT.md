@@ -3034,3 +3034,64 @@ receiver's creator/destructor and the selected handler's reference changes, or
 provide an independently pinned callback context and explicit receipt under a
 qualified admission contract. The existing post-submit routine is not a substitute
 for that receipt. No game was launched during these checks.
+
+## Related handler retention and downstream request admission
+
+The selected handler at RVA `0x8328a0` replaces one holder in the selected related
+record before submitting another request. It does not visibly retain the callback
+receiver from `0x659760`. Its local ordering is:
+
+```text
+source = entry.holder18
+increment_u32(source.statusC)
+increment_u32(source.statusC)
+old = exchange(entry.holder28, source)
+decrement_u32(old.statusC)
+if low24(old.statusC) == 0: release_service(old)
+decrement_u32(source.statusC)
+if low24(source.statusC) == 0: release_service(source)
+# TLS resolution checks follow, with their services still external.
+payload = entry.holder18.payload10  # reloaded after reference callbacks
+request_service(1, payload, fixed_descriptor, null, null, null, false)
+# Returned admission byte is not tested by this handler.
+```
+
+For distinct ordinary live holders, the net change is one added source reference
+and one removed old reference. When old and source are the same holder, the net
+count is unchanged. The order still matters: old-holder release sees the new field
+already installed and the source's temporary extra reference still present.
+The operations wrap at 32 bits; low-24-bit tests preserve their original boundary.
+A release callback could affect later reads, but the instruction fixture keeps
+all holder storage allocated and links stable.
+
+The request wrapper `0x118d340` reaches pool admission at `0x118d390`. It takes the
+manager's +0x1d8 lock and attempts to pop a pointer from the +0x1a8 ring. A positive
+signed count permits a pop, updates the read index modulo capacity and decrements
+both ring count and available-total +0x224. The lock is then released. Empty count
+returns false. A positive count whose slot contains null also returns false,
+after consuming that slot and accounting. A nonnull work record receives the
+initializer `0x11b8730` and publisher `0x118eae0`, then admission returns true.
+Those downstream bodies remain outside this validation; true is not completion.
+
+[54 connected original-instruction cases](../../native/snow_host/related_handler_validation.json)
+match `engine.command_related_handler`. Cases cover same/different holders,
+ordinary and low-24-bit release boundaries, empty pools, null slots and successful
+local initialization/publication. The helper calls occur after pool unlock.
+Failed admission leaves the preceding holder replacement in place. Original
+release, lock, TLS, initializer and publisher bodies are intercepted; final
+freeing, real exclusion and exception unwinding are not proved.
+
+```sh
+python3 -m engine.examples.related_request_probe
+```
+
+The example gives both failed and successful admission the same retained-holder
+result while showing different request events. This is an inspection tool for the
+recovered ordering, not an implementation of native lifetime safety. The public
+model deliberately exposes the ignored admission result as a diagnostic field.
+It must not be described as an original receipt API.
+
+The queued callback body at `0x6545f0` also reaches this request wrapper, with a
+callback and context in its supplied arguments. That is a separate downstream
+handoff to trace before claiming a final completion signal. The related-record
+retention studied here does not close the original queued receiver's ownership.

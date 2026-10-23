@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Recovered related-handler reference replacement and downstream request-pool
+admission. All 54 connected instruction cases match: exchange precedes old release,
+aliasing balances counts, and failed pool admission leaves replacement intact.
+The handler ignores admission status; initialization/publication occur after pool
+unlock and do not prove completion. Added serial APIs and a two-case demonstration.
+This retains a related-record holder, not a proved queued-callback receiver.
+Callback-body downstream handoff and original receiver lifetime remain open.
+No game launch or native mutation API exposed.
+Full suite passed: 2162 tests, one skipped; example and repository checks passed.
+
+
 Qualified the concrete callback caller's post-submit path. Forty connected original
 instruction cases return with the callback still queued and the temporary holder
 reference already balanced; later preparation/consumption delivers the receiver.
