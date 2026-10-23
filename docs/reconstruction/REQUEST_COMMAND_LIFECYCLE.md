@@ -952,3 +952,40 @@ receipts at a verified engine phase. Avoid using arbitrary gameplay mutation as
 the first proof. Scheduler stepping remains supporting instrumentation; the goal
 is reusable lifecycle and subsystem contracts for broader modding. Continue loading
 preparation, cancellation and receiver-creation research as a separate workstream.
+
+
+## Command-to-phase correlation
+
+`engine.command_phase.correlate_command_phases` is an authored diagnostic for
+joining copied command-observer records to copied enclosing-phase records. It
+implements no original scheduler policy and publishes no commands. The caller
+must provide matching acquisition session IDs, clock IDs and clock frequency;
+the function validates equality, not the truth of externally supplied provenance.
+Do not combine captures from different launches even if their timestamps overlap.
+
+For each command invocation, it retains the request ID and searches for phase
+intervals that contain the entire invocation on the same observed thread.
+Exactly one candidate is `unique_containment`; multiple candidates remain
+`ambiguous_containment`; absence is `not_matched`. It does not choose the nearest
+frame, erase repeated request IDs, or use another thread's overlapping interval.
+Equal clock ticks can make adjacent phases ambiguous. Input phase indexes identify
+records within this capture only, not persistent job identities. Drop counts from
+both recorders remain visible; an unmatched command is not proof of execution
+outside the phase, because missing records or capture-window differences may
+explain it. Containment does not itself prove call ancestry or native phase.
+
+The public `python3 scripts/run_command_pipeline_probe.py` now wraps synthetic
+command dispatch in the actual authored C delegate recorder. Its output includes
+command intervals, phase intervals and `phase_correlation`. Two retained command
+records match two distinct enclosing phase records while preserving request 101.
+The fixture alternates supplied synthetic thread IDs; it does not spawn two OS
+threads. Four phase calls remain visible, including the command-recorder overflow
+and the cached call after command-recorder close. These cases exercise the join
+without treating absent command records as nonexecution.
+
+The separate live engine-main capture establishes that the selected enclosing
+callback executed across two threads in one session. It did not submit a command.
+A future native request experiment must retain manager and descriptor lifetimes,
+verify build-specific producer services, capture both streams with shared clock
+and session provenance, and report admission separately from observed invocation.
+This correlator removes an analysis gap; it does not satisfy those native gates.

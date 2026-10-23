@@ -6192,3 +6192,14 @@ the slot, and passed session cleanup. Calls ran across two threads, so a future
 command API must describe the engine phase rather than promise a fixed main
 thread. No mod command was submitted; manager lifetime and transition safety
 remain open. Evidence: `native/snow_host/engine_main_capture_live_validation.json`.
+
+
+### Command and phase interval correlation
+
+Added an address-free diagnostic that retains repeated request IDs and joins
+same-thread enclosing intervals only when capture provenance matches. Ambiguous,
+missing and wrong-thread matches remain explicit. The compiled command pipeline
+now exercises this join with actual authored C recorder calls, synthetic phase
+and thread services, overflow and post-close forwarding. Eight correlation tests
+and the compiled integration test pass. Native command publication and lifetime
+qualification remain unproved; no game was launched for this change.

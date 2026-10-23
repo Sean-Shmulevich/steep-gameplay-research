@@ -29,3 +29,11 @@ class CommandPipelineProbeTests(unittest.TestCase):
         self.assertEqual(report['queue_remaining'], 0)
         self.assertEqual(report['synthetic_disposals_without_invocation'], 1)
         self.assertTrue(report['cached_call_after_close_returned'])
+
+        correlation = report['phase_correlation']
+        self.assertEqual(correlation['command_records'], 2)
+        self.assertEqual(correlation['phase_records'], 4)
+        self.assertEqual([m['phase_indexes'] for m in correlation['matches']], [[0], [1]])
+        self.assertEqual({r['thread'] for r in report['command_records']}, {1, 2})
+        self.assertEqual(correlation['command_dropped'], 1)
+        self.assertFalse(correlation['native_phase_proved'])

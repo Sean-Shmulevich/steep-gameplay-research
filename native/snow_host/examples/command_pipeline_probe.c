@@ -8,9 +8,9 @@
 static _Alignas(8) unsigned char manager[256], ring[2][104], holder[16];
 static int depth, binding_valid=1;
 static unsigned copied, cleaned;
-static uint64_t tick;
+static uint64_t tick, current_thread=1;
 static uint64_t clock_tick(void){return ++tick;}
-static uint64_t thread_id(void){return 1;}
+static uint64_t thread_id(void){return current_thread;}
 static void enter(void *p){assert(p==manager && depth==0);depth=1;}
 static void leave(void *p){assert(p==manager && depth==1);depth=0;}
 static int check(void *p,void *context){assert(p==manager && context==&binding_valid && depth==1);return binding_valid;}
@@ -29,7 +29,17 @@ static uintptr_t dispatch(unsigned char *record){
     SnowCommandDescriptor *d=(SnowCommandDescriptor *)(void *)(record+24);
     return ((SnowDelegateOriginal)d->invoker)(d,(void *)(d->context&~(uintptr_t)3));
 }
+static uintptr_t phase_dispatch(void *storage,void *receiver){
+    (void)receiver;return dispatch(storage);
+}
+static void print_interval(const SnowDelegateRecord *r){
+    printf("{\"result\":%llu,\"thread\":%llu,\"entry_tick\":%llu,\"exit_tick\":%llu}",
+        (unsigned long long)r->result,(unsigned long long)r->thread,
+        (unsigned long long)r->entry_tick,(unsigned long long)r->exit_tick);
+}
 int main(void){
+    SnowDelegateTrace phase_trace;SnowDelegateRecord phase_records[4];
+    assert(snow_delegate_trace_init(&phase_trace,phase_records,4,phase_dispatch,clock_tick,thread_id));
     SnowCommandObservation owners[4];SnowCommandDescriptor descriptors[4];
     SnowDelegateRecord records[4][2],observed;
     SnowCommandAdmissionStatus status[4];
@@ -46,12 +56,18 @@ int main(void){
     memset(descriptors,0,sizeof descriptors); /* Queue owns descriptor copies. */
     _Alignas(8) unsigned char cached[104],discarded[104];
     take(cached);take(discarded);cleanup(discarded); /* Discard without invocation. */
-    for(unsigned i=0;i<3;i++)assert(dispatch(cached)==101);
+    for(unsigned i=0;i<3;i++){
+        current_thread=1+i%2;
+        assert(snow_delegate_trace_call(&phase_trace,cached,NULL)==101);
+    }
     for(unsigned i=0;i<4;i++){
         snow_delegate_trace_close(&owners[i].trace);
         assert(snow_delegate_trace_drained(&owners[i].trace));
     }
-    assert(dispatch(cached)==101); /* Closed recorder still forwards while retained. */
+    assert(snow_delegate_trace_call(&phase_trace,cached,NULL)==101);
+    /* Closed command recorder still forwards; enclosing phase remains recorded. */
+    snow_delegate_trace_close(&phase_trace);
+    assert(snow_delegate_trace_drained(&phase_trace));
     cleanup(cached);
     printf("{\"evidence\":\"synthetic dispatcher with compiled admission and observer\","
            "\"game_launched\":false,\"native_phase_proved\":false,\"native_lifetime_proved\":false,\"requests\":[");
@@ -67,6 +83,18 @@ int main(void){
     }
     assert(atomic_load(&owners[0].trace.dropped)==1);
     printf("],\"queue_remaining\":%u,\"synthetic_disposals_without_invocation\":1,"
-           "\"cached_call_after_close_returned\":true,\"unload_safety_proved\":false}\n",word(0x38));
+           "\"cached_call_after_close_returned\":true,\"unload_safety_proved\":false,\"command_records\":[",word(0x38));
+    for(size_t i=0;i<2;i++){
+        assert(snow_delegate_trace_read(&owners[0].trace,i,&observed,sizeof observed));
+        if(i)printf(",");
+        print_interval(&observed);
+    }
+    printf("],\"phase_records\":[");
+    for(size_t i=0;i<4;i++){
+        assert(snow_delegate_trace_read(&phase_trace,i,&observed,sizeof observed));
+        if(i)printf(",");
+        print_interval(&observed);
+    }
+    printf("]}\n");
     return 0;
 }

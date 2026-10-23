@@ -32,7 +32,15 @@ def main():
             'snow_command_observation.c', 'snow_delegate_trace.c', 'examples/command_pipeline_probe.c')]
         subprocess.run(command + ['-o', str(exe)], check=True, timeout=60, env=env)
         result = subprocess.run([str(exe)], check=True, capture_output=True, text=True, timeout=10)
-        print(json.dumps(json.loads(result.stdout), indent=2))
+        sys.path.insert(0, str(ROOT))
+        from engine.command_phase import correlate_command_phases
+        report = json.loads(result.stdout)
+        domain = dict(session_id='synthetic-probe', clock_id='monotonic-counter', ticks_per_second=1)
+        report['phase_correlation'] = correlate_command_phases(
+            report['command_records'], report['phase_records'],
+            command_domain=domain, phase_domain=domain,
+            command_dropped=sum(r['recorder_dropped'] for r in report['requests']))
+        print(json.dumps(report, indent=2))
 
 
 if __name__ == '__main__':
