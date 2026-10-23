@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "cases": 12,
+  "scope": "Original StepPreWorlds registration slice with original name/configuration setter calls",
+  "substitutions": [],
+  "supplied_inputs": [
+    "Synthetic enclosing owner and setup stack",
+    "Tagged context and callback support values normally prepared by surrounding setup"
+  ],
+  "callback_rva": "0x69cac0",
+  "task_owner_offset": "0x3c68",
+  "callback_task_offset": "0x198",
+  "labels": [
+    "StepPreWorlds",
+    "Engine::StepPreWorlds"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x697c5c",
+      "end_rva_exclusive": "0x697d0c",
+      "sha256": "bc5129243bea7d7cabac71dfe55094ea796446c3f067646f9a63de4218cb309c"
+    },
+    {
+      "start_rva": "0x69cac0",
+      "end_rva_exclusive": "0x69cae5",
+      "sha256": "9318d04fdd72e331a96da0b290995201183dac6c98ba19959be98acca5b29eb1"
+    }
+  ],
+  "limits": [
+    "Full task construction and execution not performed",
+    "Dependency topology supported by separate frame graph research",
+    "No live per-substep input sampling proof"
+  ],
+  "game_process": false
+}

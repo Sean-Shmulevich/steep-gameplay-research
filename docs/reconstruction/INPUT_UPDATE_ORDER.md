@@ -1596,3 +1596,49 @@ Its complete arithmetic, other provider semantics and frame cadence remain open.
 Next: resolve how descriptors are populated and find writes to embedded
 scalar/vector +0x40 banks. The constructor and gate joins now give exact record
 boundaries for that search without guessing update policy from layout alone.
+
+## Input history and ownership update are registered in StepPreWorlds
+
+Setup assigns callback 0x69cac0 to the embedded task at engine-owner+0x3c68,
+storing its callable at task+0x198. The same registration sets task names
+`StepPreWorlds` and `Engine::StepPreWorlds`. Original setters write the short
+name at +0x178 and the qualified name at +0x188. Thus the previously inspected
+wrapper has a concrete engine-task identity:
+
+```text
+StepPreWorlds callback:
+    update_vector_histories()          # 0x983ec0
+    update_ownership(global_table)     # 0x983ad0
+    remaining_subsystem_update()       # tail call 0xd33a10
+```
+
+The [existing engine frame graph](ENGINE_FRAME_GRAPH_COVERAGE.md#static-topology)
+places `PreActionWorldStep -> StepPreWorlds -> Step` on the normal world route.
+Its separately inspected dependency preparation also registers
+`StepPreWorlds -> Step`. Joining that graph evidence with this callback identity
+supports an ordering conclusion: under the recovered ordinary dependency
+semantics, these history and ownership updates execute upstream of the engine
+`Step` callback on that route. This is more specific than an unnamed input
+update helper, but is still static registration evidence.
+
+It does not establish device-poll freshness, one poll per physics substep,
+ordering of each action-source evaluation, or consumption by the active player.
+Paused/bypass routes and alternate dependency-release paths retain the limits
+in the frame-graph report. The wrapper's final subsystem call is not decoded
+here and must remain in any account of its work.
+
+[Registration validation](../../native/snow_host/input_pre_world_registration_validation.json)
+executes the original registration slice and original name/configuration setter
+calls in 12 synthetic contexts. Callback identity, names, configuration field,
+and tagged context storage match. No calls were substituted. The surrounding
+setup supplies the enclosing object, callable support value and context; full
+task construction, submission and execution are not emulated by this check.
+The setup clears context tag bit 0 and preserves bit 1 in this slice.
+
+Descriptor setup helper 0x68cb30 also proved narrower than a resource-binding
+operation: it checks capacity masked with 0x3fff, then allocates/grows storage
+in 0xe8-byte elements while transferring existing records. Its setup call
+requests capacity 32 for each of eight descriptors. This does not establish
+that 32 records are populated or that the descriptors alias embedded scalar
+records. Descriptor population and scalar/vector ownership writers remain
+separate open leads.

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Identified the history/ownership wrapper as the registered StepPreWorlds
+callback. Joined it to the existing normal-route frame graph upstream of Step.
+Twelve original registration slices pass without substituted calls. This closes
+a task-identity/order boundary, not device freshness or per-substep consumption.
+Descriptor setup reserves capacity; populated records and family writers remain
+open. See [pre-world registration](../docs/reconstruction/INPUT_UPDATE_ORDER.md#input-history-and-ownership-update-are-registered-in-steppreworlds).
+
 Joined ownership construction to query addresses: eight fixed, 256 scalar
 and 16 vector records; scalar/vector gates read the +0x40 bank in descending
 priority order. Added a bounded detached-table inspector. Three full original
