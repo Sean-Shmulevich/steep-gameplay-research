@@ -551,3 +551,54 @@ for a future shared-sequence capture. It does not yet support a claim of exact
 frame-by-frame replay, a universal one-poll-per-substep rule, or safe arbitrary
 scheduler mutation. Detailed instruction findings remain in
 [input update order](INPUT_UPDATE_ORDER.md).
+
+
+## Runnable local refresh reconstruction
+
+[`engine.action_refresh`](../../engine/action_refresh.py) now exposes two independent
+adapters for the decoded local behavior. `reset_action` accepts an immutable byte
+snapshot, a caller-resolved owner suppression gate, and an explicit source evaluator.
+It clears offsets 0x60 through 0x83 before evaluation, preserving status, raw input,
+and all other bytes. A suppressed owner still permits the clearing but prevents
+evaluation. The evaluator can immediately repopulate samples. Returning a copy is
+our API design; the native routine mutates its action in place.
+
+`refresh_groups` visits exactly three stable groups in forward order, visiting
+bindings within each group in reverse order. It resets a binding before reading
+its blocker; a blocker stops only that group's walk. Callers supply binding-map
+enumeration, concrete source evaluation, active-context selection, preamble and
+manager synchronization. Structural list mutation during traversal is not modeled.
+These rules come from [the reset and group walk](ACTION_PUBLICATION_FOLLOWUP.md#the-reset-reaches-the-sampled-vector)
+and [concrete callback research](ACTION_RESET_CALLBACK.md).
+
+```python
+from engine.action_refresh import reset_action, refresh_groups
+
+# Synthetic example: the caller supplies the source evaluator and binding order.
+actions = {"steer": bytes(160)}
+def reset_binding(name):
+    actions[name] = reset_action(
+        actions[name], owner_suppressed=False, evaluate=lambda cleared: cleared)
+
+refresh_groups([["steer"], [], []], reset_binding=reset_binding,
+               blocker_enabled=lambda name: False)
+```
+
+The identity evaluator above is solely an example. It does not reproduce the
+native source evaluators or device caches.
+
+The [differential receipt](../../native/snow_host/action_reset_adapter_validation.json)
+records 72 comparisons against the complete original reset routine. Each compares
+all 160 synthetic action bytes and the callback-entry snapshot. Fixtures vary
+initial byte patterns, status, absent/present owner, suppression byte and callback
+repopulation. Tagged-map enumeration and the virtual evaluator were substituted;
+original reset stores and owner gating executed in instruction emulation.
+Three-group ordering, callback-dependent blocking, duplicate binding identity and
+error propagation have separate unit tests. This is not native differential proof
+of group traversal, live scheduler execution or input freshness.
+
+Run the portable tests without game files:
+
+```sh
+python3 -m unittest discover -s tests -p test_engine_action_refresh.py
+```

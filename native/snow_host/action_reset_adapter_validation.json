@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "cases": 72,
+  "scope": "Complete original reset routine compared byte-for-byte with independent reset_action adapter, including callback-entry snapshot",
+  "substitutions": [
+    "Tagged-map first/next helpers supply one synthetic action then end",
+    "Action virtual evaluator replaced with preserve or sample-repopulate callback"
+  ],
+  "coverage": [
+    "Three initial byte patterns including nonfinite float representations",
+    "Status bytes 0, 1, 255",
+    "Absent owner and owner gate bytes 0, 1, 255",
+    "Suppression prevents callback but still clears sample fields"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x4b69b0",
+      "end_rva_exclusive": "0x4b6a5b",
+      "sha256": "aaef3fda0c25e8d037ed424d9af88b8597cd62210607f357e75d9fb1e5aeb196"
+    }
+  ],
+  "limits": [
+    "Synthetic action and owner only; no live process",
+    "Native map enumeration and actual source evaluators are substituted",
+    "Three-group traversal has independent unit tests, not native differential validation",
+    "No concurrent publication, scheduler execution or input freshness proof"
+  ],
+  "game_process": false
+}

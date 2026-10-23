@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Implemented independent action reset and three-group refresh adapters. Seventy-two
+original-instruction comparisons matched complete synthetic action snapshots and
+callback-entry values, including owner suppression and immediate repopulation.
+Six portable tests cover ordering, group-local blocking and adapter boundaries.
+Map enumeration, concrete source evaluators and manager synchronization remain
+explicit caller responsibilities. No live game was used.
+See [runnable local refresh](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#runnable-local-refresh-reconstruction).
+
 Resolved the callback worker's clock accessor to the ordinary world interval,
 joining the existing clock producer. Forty-nine composed cases now execute the
 original accessor, including null and float bit-pattern boundaries. The manager
