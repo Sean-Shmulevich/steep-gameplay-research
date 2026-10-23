@@ -6851,3 +6851,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Added authored native recording for the recovered five-argument listener thunk, preserving the raw byte, sentinel and opaque return bits. Owner labels are supplied identity, not a new ownership proof.
 - Concurrent fixture forwards 800 calls with 17 recorded and 783 explicit drops. Close during an in-flight callback, cached forwarding, read publication and zero-capacity behavior pass. Eight focused tests pass; Windows x64 cross-compilation passes.
 - No game launched or listener modified. Windows execution, installer identity/CAS restoration, listener storage lifetime and actual notification firing remain open. The recorder is not yet integrated into a live plugin.
+
+### Listener growth exposes copied-hook restoration hazard
+
+- Inspected the listener growth and publication helpers. Growth copies complete descriptors, including any substituted thunk pointer, into a new allocation before destroying old entries and publishing storage.
+- Twelve original-instruction cases pass, nine relocating, with allocation/destruction/publication intercepted. Synthetic substituted thunks survive every copy. Separate static publication inspection identifies conditional old-storage release; no live growth claim.
+- This changes the next action: do not install a saved-slot-only listener hook. Qualify registration/growth/removal synchronization or a stable upstream boundary first. CAS restoration and module retention alone do not resolve copied hooks or allocation lifetime.

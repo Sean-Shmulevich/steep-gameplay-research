@@ -352,3 +352,14 @@ release paths. Registration copies descriptors, so source-field replacement alon
 would not establish notification interception. Next, identify the subscribed
 receiver for the captured actor and observe notification/callback execution with
 the existing motion/physics channel. Do not assume a clip marker name or thread.
+
+### Listener interception lifetime boundary
+
+[Listener growth inspection](../docs/reconstruction/CENTRAL_IMPULSE.md#listener-relocation-changes-the-interception-plan)
+now proves that descriptor relocation copies substituted thunk pointers. Twelve
+isolated instruction cases pass. A saved-slot-only installer could leave a copied
+hook behind or restore retired storage. Before live interception, identify the
+synchronization/lifetime boundary covering registration, growth and removal, or
+qualify a stable callback boundary. The tested recorder core does not supply
+that lifetime guarantee. Actual notification firing and emitting-job attribution
+remain the target, not another endpoint-only capture.

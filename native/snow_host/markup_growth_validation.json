@@ -1,0 +1,103 @@
+{
+  "evidence": "Original listener growth helper with synthetic storage and intercepted allocation, destruction and publication",
+  "passed": true,
+  "cases": [
+    {
+      "count": 0,
+      "force": 0,
+      "requested_capacity": 4,
+      "relocated": false,
+      "descriptors_preserved": false
+    },
+    {
+      "count": 0,
+      "force": 0,
+      "requested_capacity": 8,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 0,
+      "force": 1,
+      "requested_capacity": 4,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 0,
+      "force": 1,
+      "requested_capacity": 8,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 1,
+      "force": 0,
+      "requested_capacity": 4,
+      "relocated": false,
+      "descriptors_preserved": false
+    },
+    {
+      "count": 1,
+      "force": 0,
+      "requested_capacity": 8,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 1,
+      "force": 1,
+      "requested_capacity": 4,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 1,
+      "force": 1,
+      "requested_capacity": 8,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 3,
+      "force": 0,
+      "requested_capacity": 4,
+      "relocated": false,
+      "descriptors_preserved": false
+    },
+    {
+      "count": 3,
+      "force": 0,
+      "requested_capacity": 8,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 3,
+      "force": 1,
+      "requested_capacity": 4,
+      "relocated": true,
+      "descriptors_preserved": true
+    },
+    {
+      "count": 3,
+      "force": 1,
+      "requested_capacity": 8,
+      "relocated": true,
+      "descriptors_preserved": true
+    }
+  ],
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "ee4bd4f0093de8db8198f3c3b58e7053ec421cb5579300864b10c20f01953050",
+  "instruction_sha256": "c95f51eeebd25b2c059e78bf8e2deaa26669b1bf4e32c083e7233ac850fbc6e6",
+  "findings": [
+    "Growth or force copies all 32 descriptor bytes into new 40-byte entries, including substituted thunk pointers.",
+    "Old entries receive virtual destruction with argument zero before external publication.",
+    "No-force capacity-sufficient calls leave storage untouched."
+  ],
+  "limitations": [
+    "Allocator, destructor and publication helper calls intercepted.",
+    "No live reallocation, deallocation, locking or installation safety proof.",
+    "Static publication helper inspection separately identifies conditional old-storage release; not executed here."
+  ]
+}

@@ -699,6 +699,57 @@ and markup owner identity in every event, and distinguish an empty trace from a
 failed installation. Do not treat a matching listener address as an allocation
 pin or assume that the listener vector cannot reallocate.
 
+### Listener relocation changes the interception plan
+
+The growth helper at `0x14153bd00`, called by listener registration, moves
+40-byte entries into a new allocation. Its capacity is the low 14 bits of the
+header word, and count is the uint16 at header+0x0a. Without force, a requested
+capacity no greater than current capacity returns without moving entries.
+Otherwise it allocates, writes each destination entry's table, copies the entire
+32-byte descriptor, calls each old entry's virtual destructor with argument zero,
+and passes the new allocation/count/capacity to the publication helper.
+
+```python
+def grow_listeners(header, requested_capacity, force):
+    if not force and (header.flags_capacity & 0x3fff) >= requested_capacity:
+        return
+    new = allocate_external(requested_capacity, stride=40, alignment=8)
+    for i in range(header.count):
+        new[i].table = listener_table
+        new[i].descriptor = copy_32_bytes(header.array[i].descriptor)
+    for i in range(header.count):
+        header.array[i].virtual_destructor(0)
+    publish_external(header, new, header.count, requested_capacity)
+```
+
+[12 original-instruction cases](../../native/snow_host/markup_growth_validation.json)
+cover zero/one/three entries, force on/off and sufficient/insufficient capacity.
+Nine relocate. Synthetic descriptors deliberately contain substituted thunk
+pointers; the copied descriptors preserve those pointers exactly. Allocation,
+destruction and publication are intercepted. This validates the local copy and
+call order, not actual allocation, retirement or live reallocation.
+
+Separate static inspection of publication helper `0x14115baa0` shows conditional
+old-storage release before replacing the array pointer and packed header. A
+nonnull old pointer is sent through the allocator release path when header bit
+15 is clear. That release path was not executed by the fixture.
+
+**Installer consequence:** restoring the saved original slot is insufficient.
+A growth operation can copy an installed wrapper to a new slot, leaving the
+new listener redirected after the old slot is restored or retired. Checking an
+old address and using compare-and-swap does not resolve this propagation or pin
+allocation lifetime. Never write the old slot after a failed identity check.
+Module retention prevents an unloaded wrapper target, but does not by itself
+make descriptor dereferences or restoration safe.
+
+Direct listener-slot interception is therefore deferred until mutation and
+restoration can run under a proven lifetime/synchronization boundary that covers
+registration, growth and removal. Alternatives to investigate are a stable
+upstream callback boundary or supported listener registration/removal with
+qualified ownership. An upstream observation alone would not prove which
+listener fired. The recorder core remains useful for any route that establishes
+the actual five-argument callback boundary.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and
