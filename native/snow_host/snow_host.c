@@ -22,6 +22,7 @@
 #include <string.h>
 #include "snow_adapter.h"
 #include "snow_plugins.h"
+#include "snow_step_contract.h"
 
 #define HOST_VERSION SNOW_HOST_VERSION
 #define API_VERSION 1
@@ -701,7 +702,7 @@ static int do_step(const Request *r, Out *o) {
     if (!SNOW_GROUP_HELD(first.group) || first.owner != pause_owner) { put(o, "\"error\":\"not_held\""); return 0; }
     uint32_t held = first.group, cleared = held & 0xff000000u;
     int exact = 0; double max_release = 0;
-    put(o, "\"unit\":\"world_step_job\",\"steps\":[");
+    put(o, "\"unit\":\"world_step_job\",\"verification\":\"request_token_stable_after_rearm\",\"execution_count_verified\":false,\"steps\":[");
     long long n;
     for (n = 0; n < count; n++) {
         SnowCounters a, b, after; uint32_t seen;
@@ -720,12 +721,13 @@ static int do_step(const Request *r, Out *o) {
         if (snow_adapter.cas_group(b.owner, cleared, held, &seen)) { put(o, "],\"error\":\"rearm_failed\",\"group\":"); put_group(o, seen); goto partial; }
         if (!ok) { put(o, "],\"error\":\"step_timeout\""); goto partial; }
         if (!wait_frames(&after, b.end_frame, 4, 1000)) { put(o, "],\"error\":\"frames_stalled\""); goto partial; }
-        int one = after.step == released && SNOW_GROUP_HELD(after.group);
+        int one = snow_step_release_stable(b.step, released, after.step, SNOW_GROUP_HELD(after.group));
         exact += one; if (release_ms > max_release) max_release = release_ms;
         put(o, "%s{\"step_before\":%u,\"step_released\":%u,\"step_after\":%u,\"end_frame_after\":%u,\"release_ms\":%.3f,\"exactly_one\":%s}",
             n ? "," : "", b.step, released, after.step, after.end_frame, release_ms, one ? "true" : "false");
         if (!one) { n++; put(o, "],\"error\":\"not_exactly_one\""); goto partial; }
-        /* Engine-ordered execution point: exactly one Step ran and the hold is re-armed. */
+        /* Observed release boundary: Step request token changed and hold is re-armed.
+         * Exact execution count needs an independent callback recorder. */
         steps_released++;
         SnowStepInfoV1 info = {sizeof info, (uint32_t)n, (uint32_t)count, 0, steps_released, release_ms};
         snow_plugins_on_step(&info);

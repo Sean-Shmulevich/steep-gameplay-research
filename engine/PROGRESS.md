@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Controlled-step audit corrected a semantic risk: host Step values are last-run
+request identifiers, not execution counts. API now labels token-stability
+verification and explicitly reports execution_count_verified=false; legacy
+exactly_one fields retain their compatibility meaning. Native fixture covers
+gaps/wrap/stability, and host build passed. Next live experiment must count
+recorded callbacks, not subtract request IDs.
+
 Live mode/gate qualification: all 700 BeforeSimulation boundary samples had
 mode 0 and permissive ingestion gates. Neither mode-specific preparation is
 selected by that observed mode. Repeated 583 matching physics samples across

@@ -216,7 +216,7 @@ fills in its name, version and callbacks, and returns 0.
 | Callback | When it runs |
 |---|---|
 | `on_pause` | After the host has verified the hold |
-| `on_step` | After each released world step: exactly one `Step` ran and the hold is re-armed, so the simulation is held during the call. Receives the batch position and a host-wide step count |
+| `on_step` | After each observed release: the Step request token changed and the hold is re-armed. This does not independently count executed callbacks. The simulation is held during the call. Receives the batch position and a host-wide step count |
 | `on_resume` | After `Step` is verified advancing again. Reason: requested, lease expired, or client disconnected |
 | `on_unload` | When a plugin that returned nonzero is disabled cleanly, just before it is unloaded |
 | `on_player` | Host 0.6+, optional: the player binding was lost or (re)acquired ([events](#player-events-host-06)). The simulation may be running |
@@ -1290,3 +1290,24 @@ not continuous sampling or whether the game ingested the input.
 Regression against retained private traces rejects the late lateral pulse and
 accepts the armed lateral pulse with 56 intersecting update intervals. No new
 live test was performed for this controller change.
+
+### Step-result evidence correction
+
+`SnowCounters.step` is the Step job's last-run **request identifier**, not a
+monotonic execution count. Paused frames can produce gaps between successive
+values. The historical public receipt includes a stable transition from 9806
+to 9814; subtracting these values does not count eight executed world steps.
+
+The host checks that the request token changed, stopped changing after rearm,
+and the hold is set. Responses now explicitly include
+`verification: "request_token_stable_after_rearm"` and
+`execution_count_verified: false`. The legacy `exactly_one` fields and error
+name remain for protocol compatibility but denote this stability check, not
+an independently measured callback count. Historical “exactly one” claims in
+this document and receipts should be read with that limitation. Those claims
+require callback recording to establish actual execution count. `on_step` and
+`steps_released` count accepted host release operations.
+
+The native acceptance fixture tests request gaps, wrap, no change, continued
+change and missing hold. The game adapter and capture plugin build with this
+clarification. No new live stepping experiment has validated execution count.

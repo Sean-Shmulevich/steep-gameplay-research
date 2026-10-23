@@ -11,8 +11,9 @@
  * Threading and timing:
  * - Every call into a plugin (Initialize and all callbacks) runs on the host's
  *   plugin thread, one call at a time. Plugins need no locking against the host.
- * - on_step runs after the host has released exactly one world Step and
- *   re-armed the hold, so the world simulation is held while it runs.
+ * - on_step runs after a changed Step request token is observed and the
+ *   hold is re-armed. Token stability does not independently count callbacks.
+ *   The world simulation is held while it runs.
  *   Rendering continues meanwhile.
  * - Each call has a time budget (SNOW_PLUGIN_CALL_BUDGET_MS). A call that
  *   exceeds it, crashes (access violation, illegal instruction, divide by zero,
