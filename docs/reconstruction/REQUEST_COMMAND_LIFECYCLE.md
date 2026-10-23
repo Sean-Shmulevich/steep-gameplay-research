@@ -1544,3 +1544,38 @@ A useful next check is a same-process identity join between the current ntdll
 export, the context candidate and its continuation target. Only after that can a
 controlled operation on authored memory qualify the candidate as callable. This
 is distinct from applying it to the game constructor page.
+
+## Same-process continuation identity and authored-memory call validated
+
+The [continuation control receipt](../../native/snow_host/protection_continuation_control_validation.json)
+closes the cross-process identity gap for one bounded startup. The new pure
+matcher checks the current export's detour, the context candidate's copied prefix
+and return jump, the private thunk's main-image destination, and the continuation
+fingerprint. The controller verifies memory types, pins ntdll, and rereads the
+context pointer, candidate pointer and sampled code before proceeding.
+
+The opt-in exercise allocates its own page and initially makes it RX. A qualified
+candidate call with an unaligned address and short size changed that allocation
+to read-only and returned success. The resulting address and size were normalized
+to its page; old protection was RX. A second candidate call restored RX, returned
+success and reported old protection read-only. Queries agreed with both changes,
+marker bytes were unchanged, no fallback was needed, and the allocation was
+released. The game reached scheduler readiness and passed all cleanup checks.
+
+This establishes a callable continuation for the tested operation on authored
+memory. It does not establish a permission change on the constructor page, explain
+the earlier access denial, or justify storing the candidate as a durable mod API.
+Pointer/code rereads still do not pin its private allocation against concurrent
+retirement. No game page or hook was changed.
+
+The identity matcher has 18 positive/refusal cases tested natively and under Wine,
+including changed fingerprints, branch targets, indirect-slot layout, handler
+identity and invalid address ranges. Disabled and incompatible plugin cases never
+allocate the test page or call the candidate. These tests validate the inspection
+contract, not all Windows builds or all protection behaviors.
+
+The next instrumentation step can now evaluate an explicitly supplied protection
+backend on authored execution-observer fixtures, including restoration and
+cancellation. A constructor experiment remains separate and must retain fresh
+identity checks, a bounded lifetime and verified restoration. No broad native
+command-manager safety contract is inferred from this control.

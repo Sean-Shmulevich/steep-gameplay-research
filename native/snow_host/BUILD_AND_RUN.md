@@ -563,3 +563,35 @@ Optional `[context] follow_candidate=1` adds one bounded window through the qwor
 at context offset `0x78`. This is a research lead, not a stable context layout or
 callable API. The 256-byte context storage window does not establish object size
 and may include neighboring heap storage. No candidate function is invoked.
+
+### Continuation identity and authored-page control
+
+`--adapter steep --protection-continuation-control-plugin` builds a bounded
+experimental control. Enable `plugins/protection_continuation_control.ini`:
+
+```ini
+[continuation]
+enabled=1
+exercise=0
+```
+
+With `exercise=0`, it only checks the current ntdll export, context candidate,
+code fingerprints and observed forwarding arrangement, then rereads the sampled
+pointers and bytes. The fingerprints qualify the locally inspected Wine build;
+this is not a portable Windows syscall implementation. `snow_continuation_identity`
+is the pure matcher and never reads memory or calls a function.
+
+`exercise=1` additionally permits a test on a page allocated by this control,
+only if the identity checks pass. It makes that page RX through VirtualProtect,
+then calls the qualified candidate to change it to read-only and back to RX.
+An unaligned request checks returned address/size normalization. The control
+checks returned old protection, actual page protection and unchanged marker bytes,
+then releases its allocation. A public VirtualProtect fallback is available if
+restoration did not yield RX. No game page is selected or changed, no hook is
+installed/removed, and no target-address configuration exists.
+
+Output `.ini.join.json` records gates and operation results. Keep raw pointers
+private. Rereads are not a lifetime pin for the candidate's private allocation;
+this remains a bounded startup experiment with the external watchdog, not a
+persistent callable mod API. Disabled or incompatible configurations never call
+the candidate or allocate a control page.

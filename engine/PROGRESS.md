@@ -6354,3 +6354,15 @@ and stack effects without issuing a syscall. The downstream dispatcher emulation
 remains incomplete, and no denial policy is inferred from its invalid computed
 fetch. A fresh same-process identity join is required before any candidate call;
 no hook change, constructor capture or lifetime guarantee is claimed.
+
+### Protection continuation qualified within one live process
+
+Added a pure identity matcher and opt-in authored-page control. Eighteen matcher
+cases pass natively and under Wine; disabled/incompatible cases do not allocate
+or invoke the candidate. One live startup joined the current export and context
+candidate, reread their identities, and successfully changed its own allocation
+RX to read-only and back through the candidate. Returned normalization and old
+protections, actual protections, marker bytes and release all matched expectations;
+no fallback was needed. Game readiness/cleanup passed. No game-page permission or
+hook change occurred, and continuation lifetime and constructor behavior remain
+open. Next is supplied-backend observer qualification before any constructor test.

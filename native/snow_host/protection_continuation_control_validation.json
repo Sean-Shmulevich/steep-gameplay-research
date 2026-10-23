@@ -1,0 +1,60 @@
+{
+  "evidence": "Same-process continuation identity and live authored-page protection operation",
+  "live": {
+    "compatible": 1,
+    "sampled": 1,
+    "joined": 1,
+    "rechecked": 1,
+    "ntdll_pinned": 1,
+    "exercise": 1,
+    "allocated": 1,
+    "initial_rx": 1,
+    "called": 1,
+    "status": "00000000",
+    "rounded": 1,
+    "old_protection": 32,
+    "observed_protection": 2,
+    "restore_called": 1,
+    "restore_status": "00000000",
+    "restore_old": 2,
+    "fallback": 0,
+    "final_protection": 32,
+    "bytes_equal": 1,
+    "released": 1
+  },
+  "cleanup": {
+    "ok": true,
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "validation": {
+    "identity_cases": 18,
+    "identity_platforms": [
+      "macOS native",
+      "Windows x64 under Wine"
+    ],
+    "plugin_refusals": [
+      "disabled",
+      "incompatible inspect",
+      "incompatible exercise"
+    ],
+    "invalid_fixture_adapter": "refused"
+  },
+  "source_hashes": {
+    "native/snow_host/snow_continuation_identity.h": "115f6d5f7d9ab4bf110589d4e02fb991f9897ee53480e13f7b077ad23e0836bc",
+    "native/snow_host/snow_continuation_identity.c": "e1af174c23d2cc853130c099200aefb0f24c28f98964d25857f8ed51b1b27fff",
+    "tests/fixtures/snow_continuation_identity_fixture.c": "c132b6b7acd9841aec58419682a4b7baa22dbb0fa5de049ad63789beae677cd7",
+    "native/snow_host/examples/protection_continuation_control.c": "a46b48cac9208387419e8538a090f58b71057377f2786cbe0cda93201a6482e2",
+    "scripts/build_snow_host.py": "9f40501d87ac156dbfe8bceee89f3d177ac866268aa2b4645adbde4a80682939"
+  },
+  "interpretation": "A freshly qualified context candidate completed protection requests on an authored allocation in the live process, with expected normalization, old-protection outputs, restoration and unchanged data.",
+  "limitations": [
+    "Game-page permissions and the installed hook were not changed.",
+    "Does not recover the protected downstream decision or explain the constructor-page denial.",
+    "Does not prove private continuation allocation lifetime or general safe concurrent use.",
+    "Only the local Wine code fingerprints are supported; no portable syscall-number contract.",
+    "No constructor caller, manager teardown or native command submission guarantee follows."
+  ]
+}
