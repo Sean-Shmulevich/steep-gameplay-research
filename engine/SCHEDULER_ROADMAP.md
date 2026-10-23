@@ -23,6 +23,13 @@ held-world player setters do not establish arbitrary mutation safety.
 | Ownership and lifetime | Player identity events, link checks, animation retirement research | Stable generation and invalidation contracts across queued command execution |
 | Subsystem interfaces | Native player velocity/pose API; animation and asset research | Independently qualify each animation, terrain, environment or entity operation |
 
+The command participant observed live is now statically linked to the
+`UIManager` owner family through named constructor metadata. Its registration,
+compact set and callback behavior are subsystem evidence, not a general physics
+command API. Preserve this distinction while tracing the engine-wide executor;
+qualify other subsystem receivers independently. See the
+[owner identification](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#named-owner-correction-uimanager-and-uimanagergame).
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain

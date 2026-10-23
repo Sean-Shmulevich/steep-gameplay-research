@@ -2356,3 +2356,41 @@ classes, so slot equality alone cannot identify a removal caller.
 
 This audit is static evidence. No live lifecycle observation, concurrency test,
 or safe third-party participant installation is claimed.
+
+
+## Named owner correction: UIManager and UIManagerGame
+
+The [named-type audit](../../native/snow_host/command_owner_type_audit.json)
+resolves the previously unnamed owner through constructor metadata, independent
+of RTTI. This supersedes the earlier unknown-name boundary, while preserving
+its unresolved scheduling and lifetime boundaries.
+
+| Metadata name | Name field RVA | Recorded size | Constructor thunk | Constructor |
+| --- | --- | --- | --- | --- |
+| `UIManager` | `0x2e62838` | `0x4d8` | `0xa6a8e0` | `0xa708a0` |
+| `UIManagerGame` | `0x2c7b7e8` | `0x550` | `0x19b8b0` | `0x1b3140` |
+
+Each record points to the exact null-terminated name. At name-field +0x10 it
+records the size matching the deleting wrapper; at +0x38 it points to a short
+constructor thunk. Both thunks directly jump to the constructor whose table
+installation was audited above. `UIManagerGame` calls the `UIManager` constructor
+before installing its derived table. The thunks have no exception-table entry,
+so a direct-call-only constructor search did not find the registration metadata.
+
+The participant at owner +0x4b8 is therefore a UI-manager-owned participant.
+Its live table and execute/prepare identities remain valid observations. The
+prior live sample did not read the enclosing owner's primary table, so it does
+not establish which derived owner type was instantiated in that session.
+
+This matters for reconstruction: the engine command manager can host subsystem
+participants, and the one observed so far is associated with UI. Its compact
+pending set and deferral bypass must not be presented as a proven universal
+physics-command queue. The applied target operation is still unnamed; ownership
+alone does not determine every operation that a UI manager can request.
+
+Next separate the engine-wide dispatch contract from this participant's local
+UI lifecycle. A bounded live observation can qualify the enclosing owner table
+using the embedded offset and same-build table identities. A caller trace must
+still prove the phase and any drain before removal. Other subsystem interfaces
+need their own receiver and lifetime evidence rather than inheriting this
+participant's semantics.

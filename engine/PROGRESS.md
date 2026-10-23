@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Identified the observed participant's owner family as UIManager / UIManagerGame
+through named descriptors, matching object sizes and constructor tail thunks.
+This resolves owner names, not the previous live instance's exact derived type.
+Keep its compact deferred-operation path scoped to the UI-owned participant;
+it is not a proven general physics/mod command queue. Next qualify enclosing
+owner identity and lifecycle phase, while keeping engine dispatch guarantees
+separate from subsystem operation semantics.
+
 Owner lifecycle dispatch now tied to constructor-installed base/derived tables:
 registration +0x90, removal +0xc8, deleting destructor +0x00. Static audit passes
 11 instruction checks and six table entries. Derived registration calls base

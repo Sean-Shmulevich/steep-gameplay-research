@@ -1,0 +1,34 @@
+{
+  "evidence": "Static named metadata, size fields, constructor pointers and tail thunks; table installation checked by companion lifecycle audit",
+  "all_passed": true,
+  "owners": [
+    {
+      "name": "UIManager",
+      "name_rva": "0x1efa6f0",
+      "descriptor_name_field_rva": "0x2e62838",
+      "recorded_size": "0x4d8",
+      "constructor_thunk_rva": "0xa6a8e0",
+      "constructor_rva": "0xa708a0",
+      "constructor_installed_table_rva": "0x1efbe68",
+      "descriptor_span_sha256": "13628749167880eb2ce833297980e00354080a5eb7eb6ad90ae66106f8301d32",
+      "thunk_sha256": "d78c12653e10e93c0ef7e326d0f6dec81f338ac7be0fb30ccc87efa0767a6d38"
+    },
+    {
+      "name": "UIManagerGame",
+      "name_rva": "0x1e06ed8",
+      "descriptor_name_field_rva": "0x2c7b7e8",
+      "recorded_size": "0x550",
+      "constructor_thunk_rva": "0x19b8b0",
+      "constructor_rva": "0x1b3140",
+      "constructor_installed_table_rva": "0x1e0f650",
+      "descriptor_span_sha256": "61fd7cc39380167064c35c6826761bb630f96aeea117e61d7952d2c7c9a45402",
+      "thunk_sha256": "c825087ad90d352344f14bd1f5fd88458199588fd0bbc3e818bb3e893c615248"
+    }
+  ],
+  "interpretation": "The observed embedded command participant belongs to UIManager. Derived owner type is UIManagerGame; no physics ownership or general mod command semantics established.",
+  "limitations": [
+    "Static names do not identify which derived type was present in the earlier live sample.",
+    "Deferred operation semantics and lifecycle caller phase remain unresolved.",
+    "No new live test or native participant installation."
+  ]
+}
