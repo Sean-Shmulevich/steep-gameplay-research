@@ -83,3 +83,9 @@ payload virtual48, and clears queued bit on current status. Eligible-path cleanu
 is called even if callbacks changed the count; cleanup eligibility is external.
 Callbacks may mutate fields or queue work. This is serial ordering, not a native
 synchronization, output-capacity or completed-disposal guarantee.
+
+`holder_cleanup.cleanup_holder` requires explicit holder/payload fields and supplied
+token-release, token-removal and pool-location services. It models eligibility,
+payload detachment, flag changes and pool-link publication on normal return.
+Detached/recycled diagnostic values describe local operations, not native return
+values or payload destruction. Pool membership and synchronization are external.

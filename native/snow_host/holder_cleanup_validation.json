@@ -1,0 +1,38 @@
+{
+  "evidence": "Original holder cleanup instructions with supplied token and pool services",
+  "cases": 1568,
+  "state_and_service_order_match": true,
+  "statuses": [
+    0,
+    1,
+    16777216,
+    67108864,
+    268435456,
+    2147483648,
+    2415919104
+  ],
+  "tokens": [
+    0,
+    123,
+    4026531839,
+    4026531840,
+    4160749567,
+    4160749568,
+    18446744073709551615
+  ],
+  "pool_deltas": [
+    -48,
+    0,
+    48,
+    49
+  ],
+  "routine_rva": "0x11943b0",
+  "routine_sha256": "21f5e76c76d48346888422ebc06e40c9a12f3f4c6b9c69bf1f285a36e057f5f0",
+  "model_sha256": "2bd38199f86785fa566f11d10fb96b8d617d5b7ebe31f7283a9f4da2563207a3",
+  "limitations": [
+    "Token release/removal and pool lookup are supplied, not reconstructed.",
+    "Serial states only; no concurrent CAS contention, live ownership or scheduler drain demonstrated.",
+    "Negative and unaligned pool deltas check arithmetic only, not valid pool membership.",
+    "Processed flag and free-list publication do not establish payload destruction."
+  ]
+}

@@ -3454,3 +3454,39 @@ fields and service order, including payload identity. Three public tests cover
 cached payload versus current mode/status, nonzero-count skipping and callback
 queue changes. Outer locks, output growth, cleanup bodies and subsequent loop
 iterations are not executed in this comparison. No live game was launched.
+
+## Holder cleanup gates and recycling
+
+`engine.holder_cleanup.cleanup_holder` models `0x11943b0..0x1194510` with supplied
+token services and pool lookup. The normal-return gate rejects holders if status
+bit 26 or bit 24 is set, if the separate uint32 at +8 is nonzero, or if low24 of
+status at +0xc is nonzero. Thus a consumer callback restoring a count can cause
+this helper to refuse detachment even though the consumer calls it.
+
+After the gate, payload +0 and token +0x10 are captured. With nonnull payload,
+its uint32 field +8 is atomically masked with `0xfff80000`, clearing its low 19
+bits. If payload bit 28 remains set, helper `0x1194510` receives the captured
+token. Then holder payload is nulled and holder status bit 31 cleared. With null
+payload, that bit-31 clearing is skipped. Holder status bit 26 is then set.
+Neither mask nor flag is assigned a stronger semantic name here.
+
+A zero token skips the remaining work. For nonzero tokens, `0x11ae050` is called
+on registry +0x100 unless the token is in inclusive range `0xf0000000..0xf7ffffff`
+or holder status bit 28 is set. The range comparison is unsigned uint64. These
+conditions skip token removal only; they do not skip subsequent pool lookup.
+
+Helper `0x119e460(registry, holder)` returns a pool descriptor. Its uint32 +0xc
+is copied to holder +8. The holder's index is then calculated from the signed
+64-bit address difference `(holder - pool.base) / 24`, truncated toward zero,
+and its low 32 bits stored into pool +0xc. This supports a free-list-link
+interpretation: holder +8 receives the old head and the pool receives this index.
+The pool locator and membership validation remain supplied, so this is local
+link-publication behavior rather than a proof of allocator ownership.
+
+The [cleanup comparison](../../native/snow_host/holder_cleanup_validation.json)
+covers 1,568 original-instruction cases with gates, payload mask/flag combinations,
+token range boundaries and pool-index arithmetic. It compares fields and exact
+service order. Negative/unaligned differences test arithmetic, not valid pool
+membership. Five public tests include the consumer-callback count-restoration
+case. Token services and pool lookup remain supplied. No live launch, concurrent
+CAS contention, payload destructor or scheduler-wide drain is established.

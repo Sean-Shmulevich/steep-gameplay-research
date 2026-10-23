@@ -6519,3 +6519,11 @@ payload linkage and queue count. Three public tests pass. Captured payload remai
 selected across callbacks; mode and queued-bit clearing use current fields.
 Cleanup is called without repeating the initial count gate, but its body can
 refuse disposal. Outer synchronization and disposal completion remain unresolved.
+
+### Holder cleanup eligibility and free-list publication reconstructed
+
+Implemented the cleanup helper's two-count/flag gates, payload mask and detachment,
+token-range conditions and pool-link update. All 1,568 original-instruction cases
+match state and supplied-service order. Five public tests include consumer callback
+reacquisition refusing detachment. Token helpers, pool ownership and native
+concurrency remain open; local recycling does not prove payload destruction.
