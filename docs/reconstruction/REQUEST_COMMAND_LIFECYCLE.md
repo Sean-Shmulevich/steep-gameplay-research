@@ -1637,3 +1637,39 @@ The authored-page success therefore does not transfer to the game-page case.
 The next diagnostic adds flushed initialization milestones outside the exception
 handler so early termination does not erase the arming gates. The private
 continuation lifetime, the cause of exit, and constructor ownership remain open.
+
+## Initialization journal isolates the failure after arming
+
+The [second constructor-page attempt](../../native/snow_host/constructor_journal_live_validation.json)
+recorded eligible target identity, a qualified backend and successful arming at
+stage 6. The one backend invocation returned NT status zero. The game again
+exited with launcher code 3 before a final capture report. Cleanup verified the
+bottle, saves, settings and original DLL. This rules out refusal at the recorded
+initialization gates for this run; it does not establish handler participation,
+restoration, a constructor caller, or the cause of process exit.
+
+An optional mapped trace now counts handler entries and matching execution
+faults and records the winning handler's restoration phase. It performs no file
+operations in the handler. A zero matching count cannot prove absence of game
+faults: dispatch may not have reached this observer. A completed capture phase
+would establish only this observer's completion, not the constructor identity,
+because neighboring functions share the watched page. Raw execution snapshots
+and process-local addresses remain private.
+
+The [mapped-trace live attempt](../../native/snow_host/constructor_trace_live_validation.json)
+again completed arming, then exited with launcher code 3. The retained trace
+contains two handler entries, zero matching faults and phase zero. Thus this
+observer did receive exceptions, but none passed all its execution-fault
+predicates before exit. No winning handler, capture or handler restoration was
+recorded. Version 1 does not retain rejected exception metadata, so it cannot
+distinguish unrelated exceptions from an unexpected access kind or address.
+Other handlers may also consume faults before this observer. This is not proof
+of a protection-policy decision or proof that the watched page never executed.
+All cleanup checks passed, and the private launcher now stops navigation when
+its watchdog process ends instead of waiting out the navigation budget.
+
+The [26-case trace validation](../../native/snow_host/first_execute_trace_validation.json)
+covers private/image execution, cancellation, concurrency, injected backend
+failures, arming races and mapped-record survival after process termination.
+Next is bounded metadata for rejected exceptions, rather than changing the
+matching predicates without evidence.

@@ -6390,3 +6390,14 @@ exit. The authored-page control remains valid within its narrower tested scope.
 The updated build and four Wine refusal/journal cases pass. Live cleanup verified
 bottle shutdown, save/settings restoration and the original DLL. The journal has
 not yet been exercised in a compatible live game session.
+
+### Constructor observation reaches arming but no matching handler fault
+
+The initialization journal confirms stage-6 arming with backend status zero in
+a second early-exit run. Added an optional mapped diagnostic with no file IO
+inside the handler, a decoder and synthetic tests. Twenty-six Wine cases and
+three decoder tests pass. A third live run retained two handler entries, zero
+matching faults and no winning-handler phase before the same launcher exit.
+Cleanup passed. No constructor caller, restoration or exit policy is claimed.
+The next lead is bounded rejected-exception metadata; the current trace cannot
+identify which predicate excluded the observed exceptions.

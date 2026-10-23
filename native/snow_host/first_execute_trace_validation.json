@@ -1,0 +1,159 @@
+{
+  "evidence": "Authored execution observer trace fixtures under Wine",
+  "cases": [
+    {
+      "image": false,
+      "mode": "cold",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "warm",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "neighbor",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "concurrent",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "cancel",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "arm_failure",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "arm_lie",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "cancel_failure",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "restore_failure",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "restore_lie",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "arm_race",
+      "passed": true
+    },
+    {
+      "image": false,
+      "mode": "overlap",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "cold",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "warm",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "neighbor",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "concurrent",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "cancel",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "arm_failure",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "arm_lie",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "cancel_failure",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "restore_failure",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "restore_lie",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "arm_race",
+      "passed": true
+    },
+    {
+      "image": true,
+      "mode": "overlap",
+      "passed": true
+    },
+    {
+      "mode": "idle",
+      "mapped_trace_after_termination": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "mode": "capture",
+      "mapped_trace_after_termination": [
+        1,
+        1,
+        1,
+        4,
+        0
+      ],
+      "passed": true
+    }
+  ],
+  "decoder_tests": 3,
+  "limitations": [
+    "Synthetic tests do not establish game-page exception delivery.",
+    "Mapped counters are individually atomic, not an atomic aggregate.",
+    "Persistence tested after process termination, not host power loss."
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_first_execute.c": "0dc722614d046f2c5355c2b922723719c0f724bc2ce6877151376bd278a43b97",
+    "native/snow_host/snow_first_execute.h": "a8ed48e949f15e96f43016407c47dee7966f745f8336f88355bfcd0ca613bbd6",
+    "tests/fixtures/snow_execute_backend_fixture.c": "ca1ec548832dff807bcf9d82edd95d423d8cf963a1037f1f335679ff79d08dac",
+    "tests/fixtures/snow_execute_trace_persistence.c": "1ce27161822d2e850b60996fe6c8391a328b77600e35aa9e0fe78824374fe637"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "evidence": "Third constructor-page observation with retained mapped handler diagnostics",
+  "trace": {
+    "version": 1,
+    "handler_entries": 2,
+    "matched_entries": 0,
+    "phase": 0,
+    "phase_name": "no_winning_fault_recorded",
+    "restore_error": 0,
+    "atomic_snapshot": false
+  },
+  "initialization": [
+    {
+      "stage": "eligibility_checked",
+      "compatible": 1,
+      "eligible": 1,
+      "backend_ready": 0,
+      "armed": 0,
+      "arm_stage": 0,
+      "arm_error": 0,
+      "backend_calls": 0,
+      "backend_last_status": "00000000"
+    },
+    {
+      "stage": "backend_checked",
+      "compatible": 1,
+      "eligible": 1,
+      "backend_ready": 1,
+      "armed": 0,
+      "arm_stage": 0,
+      "arm_error": 0,
+      "backend_calls": 0,
+      "backend_last_status": "00000000"
+    },
+    {
+      "stage": "arm_returned",
+      "compatible": 1,
+      "eligible": 1,
+      "backend_ready": 1,
+      "armed": 1,
+      "arm_stage": 6,
+      "arm_error": 0,
+      "backend_calls": 1,
+      "backend_last_status": "00000000"
+    }
+  ],
+  "watchdog_reason": "launcher_exited_3",
+  "cleanup": {
+    "ok": false,
+    "error": "watchdog ended before navigation readiness",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "final_capture_report_written": false,
+  "tested_plugin_sha256": "f9b83c229b17e2b0394aa174eaee4dfbf4a1d4cc42f745ebecc1864b0e89d905",
+  "interpretation": "The observer handler was entered twice; neither entry passed its matching execution-fault predicates. No winning handler or restoration attempt was recorded. Exit cause remains unresolved.",
+  "limitations": [
+    "No exception code, access kind or rejected predicate was retained in version 1.",
+    "Other handlers could consume faults before this observer.",
+    "No matching entry is not proof the watched page never executed.",
+    "No constructor identity or restored page protection was established."
+  ]
+}

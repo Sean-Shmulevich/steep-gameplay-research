@@ -25,6 +25,15 @@ typedef struct {
  * inferred by the observer. Callback module and context must not overlap the
  * watched page. Default backend remains VirtualProtect. */
 typedef BOOL (*SnowExecuteProtect)(void *context,void *address,SIZE_T size,DWORD protection,DWORD *old);
+/* Optional caller-owned RW storage, retained until process exit. Individual
+ * counters are atomic; the collection is not an atomic snapshot. A file mapping
+ * lets diagnostics survive process exit without performing file IO in the VEH.
+ * phase: 0 no winning fault, 1 winner, 2 stack sampled, 3 restoring,
+ * 4 capture published, 5 restoration failed. Not an engine state/API. */
+typedef struct {
+    volatile LONG version, handler_entries, matched_entries, phase, restore_error;
+} SnowFirstExecuteTrace;
+int snow_first_execute_trace(SnowFirstExecuteTrace *trace);
 int snow_first_execute_backend(SnowExecuteProtect protect,void *context);
 int snow_first_execute_arm(void *address);
 int snow_first_execute_cancel(void); /* Retry if another thread is restoring. */

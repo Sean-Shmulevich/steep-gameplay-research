@@ -10,6 +10,15 @@ static unsigned arm_stage;
 static DWORD arm_error;
 static SnowExecuteProtect backend;
 static void *backend_context;
+static SnowFirstExecuteTrace *trace;
+int snow_first_execute_trace(SnowFirstExecuteTrace *out){
+    MEMORY_BASIC_INFORMATION info;
+    uintptr_t address=(uintptr_t)out;
+    if(!out || address%sizeof(LONG) || InterlockedCompareExchange(&state,0,0)!=0 ||
+       !VirtualQuery(out,&info,sizeof info) || info.State!=MEM_COMMIT || info.Protect!=PAGE_READWRITE ||
+       sizeof *out>info.RegionSize-(address-(uintptr_t)info.BaseAddress))return 0;
+    memset(out,0,sizeof *out);InterlockedExchange(&out->version,1);trace=out;return 1;
+}
 int snow_first_execute_backend(SnowExecuteProtect protect,void *context){
     if(!protect || InterlockedCompareExchange(&state,0,0)!=0)return 0;
     backend=protect;backend_context=context;return 1;
@@ -53,6 +62,7 @@ static void snapshot_stack(void){
     if(!record.stack_valid)memset(record.stack,0,sizeof record.stack);
 }
 static LONG CALLBACK fault(EXCEPTION_POINTERS *e){
+    if(trace)InterlockedIncrement(&trace->handler_entries);
     if(!e || !e->ExceptionRecord || !e->ContextRecord)return EXCEPTION_CONTINUE_SEARCH;
     EXCEPTION_RECORD *r=e->ExceptionRecord;
     if(r->ExceptionCode!=EXCEPTION_ACCESS_VIOLATION || r->NumberParameters<2 ||
@@ -60,18 +70,24 @@ static LONG CALLBACK fault(EXCEPTION_POINTERS *e){
        r->ExceptionInformation[1]<page || r->ExceptionInformation[1]-page>=page_size ||
        e->ContextRecord->Rip<page || e->ContextRecord->Rip-page>=page_size)
         return EXCEPTION_CONTINUE_SEARCH;
+    if(trace)InterlockedIncrement(&trace->matched_entries);
     LONG seen=InterlockedCompareExchange(&state,2,1);
     if(seen==2)return EXCEPTION_CONTINUE_EXECUTION;
     if(seen==3 || seen==4)return executable()?EXCEPTION_CONTINUE_EXECUTION:EXCEPTION_CONTINUE_SEARCH;
     if(seen!=1)return EXCEPTION_CONTINUE_SEARCH;
+    if(trace)InterlockedExchange(&trace->phase,1);
     record.fault_address=r->ExceptionInformation[1];record.instruction=e->ContextRecord->Rip;
     record.context=*e->ContextRecord;record.thread=GetCurrentThreadId();
     LARGE_INTEGER tick;QueryPerformanceCounter(&tick);record.tick=(uint64_t)tick.QuadPart;
     snapshot_stack();
+    if(trace){InterlockedExchange(&trace->phase,2);InterlockedExchange(&trace->phase,3);}
     if(!change_protection(PAGE_EXECUTE_READ)){
+        if(trace){InterlockedExchange(&trace->restore_error,(LONG)GetLastError());InterlockedExchange(&trace->phase,5);}
         InterlockedExchange(&state,5);return EXCEPTION_CONTINUE_SEARCH;
     }
-    InterlockedExchange(&state,3);return EXCEPTION_CONTINUE_EXECUTION;
+    InterlockedExchange(&state,3);
+    if(trace)InterlockedExchange(&trace->phase,4);
+    return EXCEPTION_CONTINUE_EXECUTION;
 }
 int snow_first_execute_arm(void *address){
     if(InterlockedCompareExchange(&state,5,0)!=0)return 0;
@@ -83,6 +99,7 @@ int snow_first_execute_arm(void *address){
        info.Protect!=PAGE_EXECUTE_READ || (info.Type!=MEM_PRIVATE && info.Type!=MEM_IMAGE) ||
        !VirtualQuery((void *)(uintptr_t)&fault,&own,sizeof own))return 0;
     arm_stage=2;if(info.AllocationBase==own.AllocationBase)return 0;
+    if(trace && (uintptr_t)trace<page+page_size && (uintptr_t)trace+sizeof *trace>page)return 0;
     if(backend){
         MEMORY_BASIC_INFORMATION provider;
         if(!VirtualQuery((void *)(uintptr_t)backend,&provider,sizeof provider) ||

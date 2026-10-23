@@ -11,6 +11,7 @@ static const char *mode;
 static volatile LONG calls,recovered,completed;
 static int context;
 static HANDLE gate;
+static SnowFirstExecuteTrace *trace;
 static BOOL provider(void *ctx,void *address,SIZE_T size,DWORD protection,DWORD *old){
     assert(ctx==&context);InterlockedIncrement(&calls);
     int arm=protection==PAGE_READONLY;
@@ -40,6 +41,9 @@ static DWORD WINAPI caller(LPVOID ignored){
 }
 int main(int argc,char **argv){
     assert(argc==2 || argc==3);mode=argv[1];
+    assert(!snow_first_execute_trace(NULL));
+    trace=VirtualAlloc(NULL,sizeof *trace,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);assert(trace);
+    assert(snow_first_execute_trace(trace) && trace->version==1);
     nt_protect=(Protect)(uintptr_t)GetProcAddress(GetModuleHandleA("ntdll.dll"),"NtProtectVirtualMemory");assert(nt_protect);
     const unsigned char code[]={0xb8,42,0,0,0,0xc3},neighbor[]={0xb8,99,0,0,0,0xc3};
     if(argc==3){
@@ -55,6 +59,7 @@ int main(int argc,char **argv){
     assert(snow_first_execute_backend(provider,!strcmp(mode,"overlap")?page:(void *)&context));
     assert(AddVectoredExceptionHandler(0,recovery));
     int armed=snow_first_execute_arm(page);unsigned stage;DWORD error;
+    assert(!snow_first_execute_trace(trace));
     snow_first_execute_arm_diagnostic(&stage,&error);SnowFirstExecuteRecord record;
     if(!strcmp(mode,"overlap") || !strcmp(mode,"arm_failure") || !strcmp(mode,"arm_lie")){
         assert(!armed && !snow_first_execute_read(&record));
@@ -85,6 +90,14 @@ int main(int argc,char **argv){
         }
     }
     assert(calls==2);assert(((Function)(uintptr_t)page)()==42);
+    if(!strcmp(mode,"cancel") || !strcmp(mode,"cancel_failure")){
+        assert(trace->phase==0 && trace->matched_entries==0);
+    }else{
+        assert(trace->handler_entries>=trace->matched_entries && trace->matched_entries>=1);
+        int failed=!strcmp(mode,"restore_failure") || !strcmp(mode,"restore_lie");
+        assert(trace->phase==(failed?5:4));
+        assert(trace->restore_error==(failed?(!strcmp(mode,"restore_failure")?ERROR_ACCESS_DENIED:ERROR_INVALID_DATA):0));
+    }
     MEMORY_BASIC_INFORMATION info;assert(VirtualQuery(page,&info,sizeof info) && info.Protect==PAGE_EXECUTE_READ);
     assert(!memcmp(page,code,sizeof code) && !memcmp(page+64,neighbor,sizeof neighbor));
     printf("%s passed calls=%ld recovered=%ld\n",mode,calls,recovered);return 0;

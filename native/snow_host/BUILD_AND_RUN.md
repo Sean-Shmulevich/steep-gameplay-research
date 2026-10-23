@@ -639,3 +639,23 @@ after eligibility, backend configuration and return from arming. Each record is
 closed immediately, outside the exception handler. These milestones can survive
 an early game exit that prevents the worker's final report. They do not establish
 capture or restoration; only the final report can report those observations.
+
+Set `[execution] trace=1` to create `.execute.json.trace.bin` before arming.
+This optional diagnostic is five little-endian signed 32-bit fields: version,
+handler-entry count, matching-fault count, phase and restoration error. Version
+is 1. Phase 0 means no winning fault was recorded; 1 means a winning fault; 2
+means stack sampling returned; 3 means restoration is about to be attempted;
+4 means capture was published; 5 means restoration failed. Phase 0 does not
+prove the game executed no faults: another handler could consume them first.
+
+The handler updates only mapped counters with interlocked operations. It does
+not open/write/flush files or allocate memory for this trace. Individual fields
+are atomic, but their collection is not a consistent multi-field snapshot.
+The view stays mapped until process exit. Trace configuration failure declines
+the experiment when explicitly requested. Existing tracing is opt-in, and the
+trace never changes game registers or exception handling decisions.
+
+Decode the diagnostic with `python3 scripts/decode_execute_trace.py TRACE_FILE`.
+Inspect it after process exit for a stable final file; reads during execution
+can combine counter values from different instants. The file contains diagnostic
+counters only, not a register dump or a reconstructed scheduler state.

@@ -1,0 +1,49 @@
+{
+  "evidence": "Second live constructor-page attempt with initialization journal",
+  "initialization": [
+    {
+      "stage": "eligibility_checked",
+      "compatible": 1,
+      "eligible": 1,
+      "backend_ready": 0,
+      "armed": 0,
+      "arm_stage": 0,
+      "arm_error": 0,
+      "backend_calls": 0,
+      "backend_last_status": "00000000"
+    },
+    {
+      "stage": "backend_checked",
+      "compatible": 1,
+      "eligible": 1,
+      "backend_ready": 1,
+      "armed": 0,
+      "arm_stage": 0,
+      "arm_error": 0,
+      "backend_calls": 0,
+      "backend_last_status": "00000000"
+    },
+    {
+      "stage": "arm_returned",
+      "compatible": 1,
+      "eligible": 1,
+      "backend_ready": 1,
+      "armed": 1,
+      "arm_stage": 6,
+      "arm_error": 0,
+      "backend_calls": 1,
+      "backend_last_status": "00000000"
+    }
+  ],
+  "watchdog_reason": "launcher_exited_3",
+  "final_capture_report_written": false,
+  "interpretation": "Arming completed at stage 6 with a successful protection call. No final capture or restoration report survived. Exit cause and handler participation remain unresolved.",
+  "cleanup": {
+    "ok": false,
+    "error": "did not reach the startup map or gameplay",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  }
+}

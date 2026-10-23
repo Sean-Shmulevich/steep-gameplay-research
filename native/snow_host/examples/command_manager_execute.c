@@ -20,6 +20,19 @@ static uintptr_t initial_allocation;
 static int eligible,pin_ok;
 static int continuation_requested,backend_ready;
 static SnowLocalProtection continuation;
+static int prepare_trace(void){
+    char path[MAX_PATH+16];snprintf(path,sizeof path,"%s.trace.bin",output);
+    HANDLE file=CreateFileA(path,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,
+        NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+    if(file==INVALID_HANDLE_VALUE)return 0;
+    HANDLE mapping=CreateFileMappingA(file,NULL,PAGE_READWRITE,0,sizeof(SnowFirstExecuteTrace),NULL);
+    CloseHandle(file);if(!mapping)return 0;
+    SnowFirstExecuteTrace *view=MapViewOfFile(mapping,FILE_MAP_ALL_ACCESS,0,0,sizeof *view);
+    CloseHandle(mapping);if(!view)return 0;
+    if(!snow_first_execute_trace(view)){UnmapViewOfFile(view);return 0;}
+    /* Retain the view until process exit, including failed arming. */
+    return 1;
+}
 /* Flush initialization milestones outside the exception handler. A process exit
  * before the worker report must not erase which arming gates completed. */
 static void milestone(const char *stage){
@@ -103,6 +116,9 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     eligible=compatible && (initial_read=read_at(base+0x312f3a8,&initial,8)) && initial==0 &&
        info.State==MEM_COMMIT && info.Type==MEM_IMAGE && info.AllocationBase==(void *)base && info.Protect==PAGE_EXECUTE_READ;
     milestone("eligibility_checked");
+    if(eligible && GetPrivateProfileIntA("execution","trace",0,api->config_path)==1 && !prepare_trace()){
+        milestone("trace_failed");collect(NULL);return 1;
+    }
     if(eligible){
         pin_ok=GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,(LPCSTR)target,&pinned);
         if(!pin_ok)pin_error=GetLastError();
