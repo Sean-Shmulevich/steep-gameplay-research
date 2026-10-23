@@ -1638,3 +1638,43 @@ must therefore count producer updates and consumer evaluations separately, retai
 both clock observations, and identify the selected objects. An action event alone
 is not evidence of fresh input, and an unchanged history timestamp alone cannot
 establish whether publication ran with an unchanged clock value.
+
+## Action timer joins the clock record
+
+Accessor `0x472b60` returns selected object `+0x1048`, or the shared global
+fallback record if either pointer is null. Action tick accessor `0x478fe0`
+returns exactly the qword at `+8` of that selected record. Both accessors use
+the same global receiver and fallback globals. This is a direct field-selection
+join, not an inference from two coincidentally similar offsets.
+
+[Clock-record validation](../../native/snow_host/action_clock_record_validation.json)
+executes both original accessors in 15 cases with no substitutions. It covers
+both null fallback conditions and selected object, with values from zero through
+uint64 maximum and above the exact integer range of a double. Pointer selection
+and integer results match exactly. No float conversion occurs in the tick getter.
+
+The selected-object record matches the already reconstructed ordinary world
+clock at `+0x1048`; its `+8` field is `divided_ticks`. See
+[the clock producer join](MOTION_MEMBERSHIP_OBSERVATION.md#ramp-clock-producer-joins-the-existing-clock-tree)
+and [clock tree arithmetic](CLOCK_TREE.md). Under that established clock layout:
+
+```text
+accumulated_ticks = wrap_u64(accumulated_ticks + processed_input_ticks)
+divided_ticks = accumulated_ticks // 30
+hold_elapsed = wrap_u64(divided_ticks - saved_action_start)
+```
+
+The driver/producer evidence supports milliseconds for divided ticks and seconds
+for action delay configuration multiplied by 1000. This is stronger than the
+isolated multiplier inference, but live initialization and selected-object
+membership still need observation. Do not replace the tick accessor with float
+interval, accumulated ticks or the ramp's float32 seconds conversion.
+
+[Clock/action integration tests](../../tests/test_history_action_clock.py) combine
+the existing independent clock tree and action timer. Positive hold count retains
+divided ticks and prevents the tested hold timer from progressing; enabling scale
+two advances the tested timer twice as fast. Disabling accumulation retains the
+timer's ticks even when the float interval changes. These are composed local
+arithmetic consequences, not proof that all game jobs stop during pause or that
+the selected clock remains the same across evaluations. The fallback record's
+producer and live selected-object changes remain separate observation questions.

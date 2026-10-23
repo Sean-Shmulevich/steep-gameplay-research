@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Full regression checkpoint: 2,009 tests passed with one skip using the selected
+Xcode bundled SDK, after the history-to-action integration. Joined the action
+tick accessor to the clock-record accessor in 15 original instruction cases;
+it reads record +8 directly. Two additional clock/action tests verify divided-
+tick hold/scale and accumulation behavior. Live clock selection/root membership
+remain open. See [action clock record](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#action-timer-joins-the-clock-record).
+
 Added a runnable producer/action timeline probe and validated its repeated-
 evaluation scenario against original producer and consumer instructions. Across
 12 synthetic sequences, 24 history updates and 36 action evaluations agree.

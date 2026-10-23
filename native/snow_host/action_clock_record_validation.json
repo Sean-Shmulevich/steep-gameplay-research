@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "cases": 15,
+  "scope": "Original clock record accessor and action tick accessor resolve the same selected record and field",
+  "substitutions": [],
+  "game_process": false,
+  "findings": [
+    "Action clock is exactly qword +8 of record selected by 0x472b60",
+    "Selected object record at +0x1048; otherwise shared global fallback record",
+    "No float conversion in tick accessor"
+  ],
+  "coverage": [
+    "Both null fallback conditions and selected object",
+    "Zero, small ticks, above 2**53 and uint64 maximum"
+  ],
+  "limits": [
+    "Synthetic pointers; no live selected object or clock tree membership proof",
+    "Clock producer validated separately; not executed in this receipt"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x472b60",
+      "end_rva_exclusive": "0x472b87",
+      "sha256": "224a65cf2d410dd04adf43e93dd979dc73c3c8adcdf81dcc954b0532dd1d6b3e"
+    },
+    {
+      "start_rva": "0x478fe0",
+      "end_rva_exclusive": "0x47900c",
+      "sha256": "a538d3ae42b4679c9dbd873032c04fa2a5aae6480cbe2f94fb95e870c2b66dcb"
+    }
+  ]
+}
