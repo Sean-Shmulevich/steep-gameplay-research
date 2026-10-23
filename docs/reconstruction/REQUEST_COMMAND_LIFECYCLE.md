@@ -152,6 +152,31 @@ is overwritten after copying. Recorded caller RVA matches the kind-3 return site
 Lock services and thread/clock values are supplied. This establishes ABI plumbing,
 not live thread identity, phase, exclusion, native admission or unload safety.
 
+The [connected pipeline receipt](../../native/snow_host/command_observation_pipeline_validation.json)
+extends this to 72 original-instruction cases through producer, descriptor copy,
+preparation prefix, counted consumer, cleanup and dispatcher. Each submission has
+its own retained observer and request ID. Queue capacities 1/2/4, submission counts
+1 through 6 and all four context tags are supplied; 44 cases exercise overflow.
+For capacity 2 and four submissions, the observed ID sequence is `1, 2, 2, 2`:
+IDs 3 and 4 were not inserted in the constructed state, while ID 2 is dispatched
+three times. The recorder uses the same consumer-local descriptor address for
+distinct IDs. It must not use that address as request identity.
+
+`engine.command_observation.summarize_deliveries` groups copied records by the
+observer's authored request ID. It reports repeated delivery, observed threads,
+unknown IDs, recording loss and shared temporary storage without emitting raw
+addresses. Absent IDs remain `not_observed`, even with zero recording drops:
+publication rejection, pending work or capture closure cannot be distinguished
+from the capture alone. It does not infer a safe phase, admission receipt, drain
+or unload permission. This authored interpreter is checked against all 72 cases.
+
+```sh
+python3 -m engine.examples.command_observation_probe
+```
+
+This runnable example uses synthetic records illustrating the validated pattern.
+It does not contain or replay captured game memory.
+
 The inspected lock wrappers load a pointer and transfer into `.upx0` code. Those
 targets contain bytes in the analyzed image. Their section name and unusual
 control flow do not by themselves identify a packer, virtualization scheme or

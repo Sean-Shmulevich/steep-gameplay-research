@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Connected the compiled command observer through original producer, descriptor copy,
+preparation prefix, counted consumer, cleanup and dispatcher in 72 emulated cases,
+including 44 supplied overflow states. Distinct retained IDs show last-admitted
+callback repetition and consumer-local record storage reuse across requests.
+Added a runnable capture interpreter and example that distinguish observed repeat,
+unknown identity, recorder loss and absence without claiming rejected admission.
+Interpreter outputs checked against all 72 cases. Native concurrency, phase,
+publication policy and unload safety remain open; no game launch.
+Full suite passed: 2187 tests, one skipped. Example and repository checks passed.
+
 Added a native read-only kind-3 command observation descriptor using the existing
 bounded recorder. Original dispatcher/lock-getter instructions successfully invoke
 the compiled Win64 observer in 12 emulated cases, covering context tags, copied

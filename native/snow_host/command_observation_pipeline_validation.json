@@ -1,0 +1,75 @@
+{
+  "evidence": "Original producer, copy, preparation prefix, counted consumer, cleanup and dispatcher invoke compiled independent Win64 observer",
+  "cases": 72,
+  "overflow_cases": 44,
+  "all_passed": true,
+  "public_interpreter_checked": true,
+  "queue_capacities": [
+    1,
+    2,
+    4
+  ],
+  "submissions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "context_tags": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "distinct_request_context_per_submission": true,
+  "source_overwritten_after_submission": true,
+  "consumer_storage_reused_between_distinct_requests": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "observer_dll_sha256": "3da20573650323dd31e10e51dce67db10e679e9fbcd35e54f3ceca44a659034f",
+  "spans": [
+    {
+      "rva": "0x6538b0",
+      "length": 596,
+      "sha256": "cd3cf5fb49196d847cce0ea269607915de0b7a39fb89db6d06b9b8c6e4d706a6"
+    },
+    {
+      "rva": "0x6475b0",
+      "length": 157,
+      "sha256": "22ef435864a35fe11ffff7ed030f2e31c70cccf4c6ad5655ca119f11f92ad6f5"
+    },
+    {
+      "rva": "0x67ced0",
+      "length": 132,
+      "sha256": "ed455382e34a9fbb119b06f3f0b4f42bd2cfeb4245bd0bff2660316f982849ea"
+    },
+    {
+      "rva": "0x663de0",
+      "length": 598,
+      "sha256": "915062bfd44a777ca6cbbce67da95f223e82259bfc66c024da5f008b509c938b"
+    },
+    {
+      "rva": "0x662a60",
+      "length": 536,
+      "sha256": "efe1366ade7f3cb48c64e55ab58da2e67738f99346efd72a61fb2e2ed1d1215d"
+    },
+    {
+      "rva": "0x64cd40",
+      "length": 127,
+      "sha256": "8caf9d580084dda8230e0020ab64a6b409263135bb5428d0155af4844b2f5581"
+    },
+    {
+      "rva": "0xe237c0",
+      "length": 14,
+      "sha256": "3940cfdce40fc7787a417788b8c32926508989326e52387e3fb819252cad0ded"
+    }
+  ],
+  "limitations": [
+    "Synthetic locks, clock and thread provider; no native concurrency, execution thread or phase proof.",
+    "Preparation stops after an empty participant list; later preparation services excluded.",
+    "Owners remain retained and dummy holder references do not reach zero. No native lifecycle or unload proof.",
+    "Queue capacity pressure is constructed, not a live observed occurrence.",
+    "Native producer return is not treated as an admission or completion receipt."
+  ]
+}
