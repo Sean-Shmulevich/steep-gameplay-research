@@ -601,3 +601,43 @@ incompatible synthetic executable under Wine. The underlying adapter's successfu
 synthetic installation is documented separately. No live-game installation has
 been performed with this controller. A trigger is not a native lifetime lock;
 the experiment must still state and check its owner-lifetime assumptions.
+
+## First live graphics delegate capture
+
+The [live receipt](../../native/snow_host/delegate_probe_live_validation.json)
+records a successful 500 ms one-shot experiment after native startup reached
+gameplay. The controller first qualified the owner and job bindings, checked the
+game was advancing and not held, then created the plugin trigger. The plugin's
+instruction fingerprints, configuration and installation all passed.
+
+The recorder captured 42 calls, with no dropped records, over a measured
+0.4990537-second entry-to-final-exit span. Every record used the selected main
+function-storage address and decoded engine receiver. One thread appeared in
+these records. Observed call durations ranged from 60.3 to 258.8 microseconds,
+with a median of 70.3 microseconds. These are instrumented durations, not an
+original-engine performance benchmark or a physics-step rate.
+
+Restore and capture drain succeeded. The controller reread the original common
+invoker and same owner identity, then observed the engine step count advance from
+2058 to 2075 after restoration. Before capture it was 2014. Those counters are
+separate observations, not per-record substep attribution. The experiment sent
+no movement input, requested no scheduler pause and attached no debugger.
+
+This provides actual invocation evidence that the earlier idle-looking polls
+could not supply. The bounded ABI forwarding, pointer replacement, complete
+record output and restoration worked for this binding in this session. It does
+not establish safe arbitrary mod execution at this phase, all-thread affinity,
+input/physics alignment, or behavior during owner destruction. The experiment
+assumed stable engine storage during normal gameplay; same-owner guards before
+and after do not prove lifetime exclusion or rule out address reuse.
+
+The capture plugin and forwarding code stayed pinned until the game process
+exited. The launcher deliberately stopped the bottle after validation and verified
+save/settings restoration and the original DLL. No raw pointers or trace payloads
+are included in the public receipt. This supersedes prior no-live-installation
+status for this one tested binding and controller; general native unload remains
+unsupported.
+
+The next instrumentation join should associate these callback entries with job
+state, frame-service selector and caller provenance. Forty-two graphics callbacks
+alone do not establish which physics or input work belongs to each one.

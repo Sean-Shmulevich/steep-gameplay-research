@@ -1,0 +1,53 @@
+{
+  "status": "live_graphics_delegate_capture_passed",
+  "sessions": 1,
+  "configured_capture_ms": 500,
+  "summary": {
+    "compatible": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 42,
+    "dropped": 0,
+    "qpf": 10000000
+  },
+  "record_count": 42,
+  "observed_thread_count": 1,
+  "capture_span_seconds": 0.4990537,
+  "observed_duration_microseconds": {
+    "min": 60.300000000000004,
+    "median": 70.3,
+    "max": 258.8
+  },
+  "records_match_selected_storage_and_receiver": true,
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "engine_steps": {
+    "status_before": 2014,
+    "status_after": 2058,
+    "status_later": 2075
+  },
+  "movement_input_sent": false,
+  "scheduler_pause_requested": false,
+  "debugger_attached": false,
+  "mutation": "Temporarily replaced the graphics main delegate invoker qword; restored original with compare/exchange.",
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_result_sha256": "c8f12360b9dbf44800feb63b172a9ed3cafb41497a7da138aae351b00599ee47",
+  "private_trace_sha256": "41041a915bc043704f1f111248ae89c959692ebdb358d60906ca5f9d71767d65",
+  "limitations": [
+    "One bounded normal-gameplay session, not a shutdown/owner replacement test.",
+    "Guard checks and restored identity do not prove absence of ABA or concurrent teardown.",
+    "Duration includes instrumentation effects; not an uninstrumented performance benchmark.",
+    "One observed thread does not establish permanent thread affinity.",
+    "No physics-substep or input-ingestion alignment proved.",
+    "Pinned module stays resident until process exit; arbitrary plugin unload remains unsupported."
+  ]
+}

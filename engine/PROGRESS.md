@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+First live graphics delegate probe succeeded: 42 calls in a 500 ms capture, zero
+drops, selected storage/receiver matched, one observed thread. Original invoker
+restored, capture drained, and engine steps advanced afterward. No movement,
+scheduler pause or debugger attachment. Saves/settings/original DLL and bottle
+cleanup passed. This proves bounded live forwarding/capture for one binding, not
+shutdown exclusion, arbitrary mod mutation safety or physics/input alignment.
+Next join entry records to job/phase/caller provenance.
+
 Built opt-in one-shot graphics capture controller with explicit post-initialization
 trigger, three instruction fingerprints, 100..2000 ms capture, restoration and
 bounded drain. Three synthetic Windows/Wine refusal scenarios passed; standalone
