@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Traced a current-cache-index writer through the final holder helper. It scans
+record IDs until an unresolved query returns zero, then selects that record;
+fallback branches select scan-end or zero. It does not increment a history
+counter. The post-assignment callback and query semantics remain unresolved,
+so this pass adds static pseudocode/evidence rather than a guessed runtime.
+Live testing remains on hold. See
+[cache-index writer](../docs/reconstruction/INPUT_UPDATE_ORDER.md#cache-index-writer-and-selection-policy).
+
 Both cache selectors now reconstruct zero-offset root bypass and wrapped-u32
 ring indexing. 360 original cases pass without substituted calls. The two
 holder offsets select record cache pointers, which can alias and make exchange
@@ -4809,3 +4817,9 @@ notices and title. Two runs entered gameplay at 85 and 89 s (baseline 110 to
 121 s) with the expected spawn, demo, stability and cleanup all passing.
 Recommended: `--navigator native-intro --intro-key escape --expect-spawn=...`. See
 the [receipt](../native/snow_host/startup_escape_intro_skip.json).
+
+Shared runner note for other agents (2026-10-23): `run_late_load.py` gained
+opt-in `--navigator native|native-intro`, `--intro-key` and `--expect-spawn`.
+The default `--navigator ocr` path is unchanged. The full suite passes (1,910
+tests) with `SDKROOT=.../MacOSX26.5.sdk`; the default 27.0 SDK fails six
+native-compile fixtures at link time, which is environmental.
