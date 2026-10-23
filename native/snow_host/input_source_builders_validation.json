@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "cases": 18,
+  "scope": "Original successful-allocation builder/constructor paths to substituted initialization callback; main table identities checked against image",
+  "substitutions": [
+    "Allocator selection and allocation return supplied aligned storage",
+    "Helper 0x57f660 returns without side effects",
+    "Source virtual +0x40 checks receiver/adapter/handle arguments then returns without side effects"
+  ],
+  "checks": [
+    "Requested allocation size and 16-byte alignment",
+    "Constructor main vtable and image evaluation/initialization targets",
+    "Zero base adapter/configuration/output fields before initializer",
+    "One initializer call and builder returns source pointer"
+  ],
+  "builders_in_factory_order": [
+    {
+      "builder_rva": "0x457630",
+      "allocation_size": 208,
+      "constructor_rva": "inline",
+      "vtable_rva": "0x1e6b6a0",
+      "evaluate_rva": "0x4b2370",
+      "initialize_rva": "0x47ae20",
+      "cases": 3,
+      "builder_sha256": "bae97f0db5a135fceb57185ee20cf4687cda372ef67caf4a713c3c73f6f0dfe0",
+      "builder_end_rva_exclusive": "0x457719",
+      "vtable_0x50_sha256": "5bb2e197ab7e2040e3034ee70576a6b1b92f56ea2caadc62536d059ebcb959e6"
+    },
+    {
+      "builder_rva": "0x4575b0",
+      "allocation_size": 256,
+      "constructor_rva": "0x441020",
+      "vtable_rva": "0x1e6b650",
+      "evaluate_rva": "0x4b21d0",
+      "initialize_rva": "0x47ad50",
+      "cases": 3,
+      "builder_sha256": "5f331d50cbf7aa134a99aceb001dfe2d3767951f40e5bf82bf8cfde6ecac71fc",
+      "builder_end_rva_exclusive": "0x457623",
+      "vtable_0x50_sha256": "111a0b330dc3e04f150be61de05aa44fcff5074ec6a2addb68b993d06086dea2"
+    },
+    {
+      "builder_rva": "0x457890",
+      "allocation_size": 256,
+      "constructor_rva": "0x441190",
+      "vtable_rva": "0x1e6b790",
+      "evaluate_rva": "0x4b2900",
+      "initialize_rva": "0x47ad50",
+      "cases": 3,
+      "builder_sha256": "9977aa03537f3941e92e427154b6783f009969a4a1132fcf30ea99ba6ad2bb7b",
+      "builder_end_rva_exclusive": "0x457903",
+      "vtable_0x50_sha256": "bf30511ac4dcbacb12bbb5012bf8db1aefa292c39535c69cdad790aa5226dad7"
+    },
+    {
+      "builder_rva": "0x457910",
+      "allocation_size": 224,
+      "constructor_rva": "inline",
+      "vtable_rva": "0x1e6b7e0",
+      "evaluate_rva": "0x4b2a20",
+      "initialize_rva": "0x47ace0",
+      "cases": 3,
+      "builder_sha256": "c61a1e587fb7f2c9a4aefca954646b8c874126a18f30ad5c8e34796c09e1cfdb",
+      "builder_end_rva_exclusive": "0x457a03",
+      "vtable_0x50_sha256": "5d5b1bbf84580b57db8340bdf10bc0d1d87e5e025412d32381a003cdbf0c7e8e"
+    },
+    {
+      "builder_rva": "0x4577a0",
+      "allocation_size": 208,
+      "constructor_rva": "inline",
+      "vtable_rva": "0x1e6b740",
+      "evaluate_rva": "0x4b2680",
+      "initialize_rva": "0x47ad50",
+      "cases": 3,
+      "builder_sha256": "624a0cf9fd93416d967df9d570f6c7443d82b6508cb379a0af26684ffa46d83c",
+      "builder_end_rva_exclusive": "0x457889",
+      "vtable_0x50_sha256": "bc7c24c8531fe816e1ddd9964a6d5359427fb1eb6e3f48aa69d0ce18a8768bf8"
+    },
+    {
+      "builder_rva": "0x457720",
+      "allocation_size": 208,
+      "constructor_rva": "0x4410f0",
+      "vtable_rva": "0x1e6b6f0",
+      "evaluate_rva": "0x4b24c0",
+      "initialize_rva": "0x47af10",
+      "cases": 3,
+      "builder_sha256": "58535ff49bf5ede0fd93a6afc0f8682c0bfbd138e61742b5a59797a4166788bc",
+      "builder_end_rva_exclusive": "0x457793",
+      "vtable_0x50_sha256": "656329b864c31e928d7847d40f6b340d1dd5b5c2faac6e2c14a09eac6f8ed9b0"
+    }
+  ],
+  "limits": [
+    "Factory type tests not executed",
+    "Allocation failure not tested",
+    "Container and initialization behavior not validated",
+    "No runtime instance attribution or scheduler ordering proof"
+  ],
+  "game_process": false
+}

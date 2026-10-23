@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined all six source builders to concrete virtual tables and callbacks.
+Two exactly match previously observed vector/directional action source types.
+18 original builder cases pass with allocator/container/initializer substitutions
+explicitly recorded. Shared initialization ownership now has static pseudocode;
+player instance attribution and substep order remain open. See
+[source construction join](../docs/reconstruction/INPUT_UPDATE_ORDER.md#source-builders-join-the-observed-action-types).
+
 Traced adapter setup into 31 configuration binding slots, first-resolved-match
 resource selection, six source factory branches and registry insertion rules.
 Preserved reference/cleanup side effects and special-ID handling in pseudocode.

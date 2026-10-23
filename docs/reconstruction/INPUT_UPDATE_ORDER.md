@@ -1161,8 +1161,8 @@ order using helper `0x11a7320`. The first successful test selects a builder:
 | 6 | 0x457720 |
 
 Unresolved handles and configurations matching none of these tests return null.
-The type descriptor identities and builder-to-known-source joins need tracing;
-no sport or semantic control names are assigned here. These are factory
+The builder identities are resolved below. Type descriptor names and sport or
+semantic control names remain unassigned. These are factory
 branches, not a list of six physical devices.
 
 ### Registry insertion rules
@@ -1210,3 +1210,83 @@ without proving that these are the same active sources captured in prior live
 motion observations. Next: decode the six builders' constructors and virtual
 initializers, join their source types to the existing action-source research,
 and recover the owner-array consumer.
+
+
+## Source builders join the observed action types
+
+The six builders install concrete main virtual tables, then invoke virtual
++0x40 with `(source, adapter, child_handle_reference)`. The table's +0x10 slot
+identifies the evaluation callback. Tracing those stores gives:
+
+| Factory order | Builder | Bytes allocated | Main table | Evaluate +0x10 | Initialize +0x40 | Established type |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 0x457630 | 0xd0 | 0x1e6b6a0 | 0x4b2370 | 0x47ae20 | Unassigned |
+| 2 | 0x4575b0 | 0x100 | 0x1e6b650 | 0x4b21d0 | 0x47ad50 | Vector source |
+| 3 | 0x457890 | 0x100 | 0x1e6b790 | 0x4b2900 | 0x47ad50 | Unassigned |
+| 4 | 0x457910 | 0xe0 | 0x1e6b7e0 | 0x4b2a20 | 0x47ace0 | Unassigned |
+| 5 | 0x4577a0 | 0xd0 | 0x1e6b740 | 0x4b2680 | 0x47ad50 | Directional source |
+| 6 | 0x457720 | 0xd0 | 0x1e6b6f0 | 0x4b24c0 | 0x47af10 | Unassigned |
+
+Builders 2, 3 and 6 call constructors 0x441020, 0x441190 and 0x4410f0;
+the other constructors are inline. The vector and directional table/callback
+pairs exactly match the two children recorded in
+[the live composite observation](MOTION_MEMBERSHIP_OBSERVATION.md#live-composite-has-vector-source-and-directional-children).
+This establishes a **type-level connection** between adapter configuration and
+the observed action pipeline. It does not establish that this factory invocation
+created those particular live objects, that the registry owns the player's
+currently selected action, or when evaluation runs relative to physics substeps.
+
+### Shared initialization and ownership
+
+Static inspection of initializer 0x47ad50 shows the following sequence for
+builders 2, 3 and 5. Field labels below are explanatory names, not an original
+class declaration. `resolve` returns the handle's pointer only when the signed
+state word at +0x0c is negative; otherwise it returns null.
+
+```text
+source.adapter = adapter                         # +0x10
+incoming = *child_handle_reference
+atomic_increment(incoming.reference_count)       # +8
+old = atomic_exchange(source.handle, incoming)   # +0x98
+previous_count = atomic_decrement_return_old(old.reference_count)
+if previous_count == 1 and (old.state & 0x00ffffff) == 0:
+    release_handle(old)
+source.configuration = resolve(source.handle)   # +0x90
+source.virtual_38()                              # type-specific setup
+
+if source.field_b8 != null:
+    nested_handle_reference = &source.field_b8.field_28
+    nested_configuration = resolve(*nested_handle_reference)
+    result = null
+    if nested_configuration != null:
+        result = nested_configuration.virtual_98(nested_handle_reference)
+    if result == null:
+        result = fallback_457ee0(nested_handle_reference)
+    source.field_b0 = result
+    result.virtual_10(source.adapter)
+```
+
+The initializer does not simply copy an adapter pointer: it transfers handle
+ownership, resolves configuration, invokes type-specific setup, then optionally
+creates and initializes another object. There is no visible null check after
+the fallback before its virtual call. The semantics of virtual +0x38, the
+nested object, and the other three initialization variants remain open in this
+construction path. Do not substitute a borrowed pointer assignment for the
+reference operations when designing an in-process API.
+
+### Validation and remaining boundary
+
+[Builder validation](../../native/snow_host/input_source_builders_validation.json)
+executed all six original successful-allocation paths with three different
+initial storage patterns, 18 cases total. It checked allocation size/alignment,
+main table identity, evaluation/initialization entries, selected zero-initialized
+base fields, initializer argument order, and returned source identity.
+Allocator calls supplied storage; helper 0x57f660 and virtual +0x40 were
+substituted. Therefore this validates constructor dispatch and arguments, not
+resource lifetime, container setup, initialization side effects or source
+behavior. Shared initializer pseudocode above remains static evidence.
+
+Next useful join: decode virtual +0x38 for the vector and directional types and
+follow the binding registry's consumer. That can connect selected resources to
+source configuration without assuming that a matching type proves player
+ownership. Exact device-ingestion versus physics-substep order remains separate.
