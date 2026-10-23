@@ -47,6 +47,12 @@ class PolicyTests(unittest.TestCase):
         self.assertEqual(p.step('title', None, 5.0), ('send', 28))
         self.assertEqual(p.step('title', None, 10.0)[0], 'abort')
 
+    def test_hands_off_screens_get_no_input(self):
+        p = se.Policy(hands_off=['offline_notice', 'map'])
+        self.assertEqual(p.step('offline_notice', None, 0), ('wait', 'handled_elsewhere'))
+        self.assertEqual(p.step('map', None, 1), ('wait', 'handled_elsewhere'))
+        self.assertEqual(p.step('title', None, 2), ('send', 28))
+
     def test_new_screen_is_not_delayed_by_previous_retry_window(self):
         p = se.Policy(retry=5)
         p.step('title', None, 0)

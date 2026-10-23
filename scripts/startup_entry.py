@@ -59,8 +59,9 @@ class Policy:
     """Pure decision state: which existing transition to send, and when gameplay is proven."""
 
     def __init__(self, retry=RETRY_SECONDS, max_inputs=MAX_INPUTS_PER_STATE, confirmations=NATIVE_CONFIRMATIONS,
-                 intro_key=None, intro_interval=INTRO_INTERVAL_SECONDS, max_intro=MAX_INTRO_INPUTS):
+                 intro_key=None, intro_interval=INTRO_INTERVAL_SECONDS, max_intro=MAX_INTRO_INPUTS, hands_off=()):
         self.retry, self.max_inputs, self.confirmations = retry, max_inputs, confirmations
+        self.hands_off = frozenset(hands_off)  # screens another component handles; never send input
         self.intro_key, self.intro_interval, self.max_intro = intro_key, intro_interval, max_intro
         self.intro_inputs = []
         self.inputs = {}
@@ -88,6 +89,8 @@ class Policy:
                 return 'wait', 'intro'
             self.intro_inputs.append(now)
             return 'send', self.intro_key
+        if state in self.hands_off:
+            return 'wait', 'handled_elsewhere'
         scan = TRANSITIONS.get(state)
         if scan is None:
             return 'wait', 'unrecognized_screen'
@@ -257,6 +260,7 @@ def main(argv=None):
     p.add_argument('--spawn-tolerance', type=float, default=0.01)
     p.add_argument('--stop-at', choices=['map'], help='Stop without input when this screen is recognized')
     p.add_argument('--intro-key', choices=sorted(INTRO_KEYS), help='Experiment: press this key during pre-title videos/notices')
+    p.add_argument('--hands-off', default='', help='Comma-separated screens to leave to another component (e.g. offline_notice,map)')
     a = p.parse_args(argv)
     if not 30 <= a.budget <= 210:
         p.error('Navigation budget must be 30..210 seconds')
@@ -267,7 +271,10 @@ def main(argv=None):
         expect = [float(v) for v in a.expect_spawn.split(',')]
         if len(expect) != 3:
             p.error('--expect-spawn needs x,y,z')
-    result = navigate(game, a.budget, policy=Policy(intro_key=INTRO_KEYS.get(a.intro_key)),
+    hands_off = [s for s in a.hands_off.split(',') if s]
+    if any(s not in TRANSITIONS for s in hands_off):
+        p.error('--hands-off accepts: ' + ','.join(sorted(TRANSITIONS)))
+    result = navigate(game, a.budget, policy=Policy(intro_key=INTRO_KEYS.get(a.intro_key), hands_off=hands_off),
                       expect_spawn=expect, spawn_tolerance=a.spawn_tolerance, stop_at=a.stop_at)
     (out / 'navigation-result.json').write_text(json.dumps(result, indent=2) + '\n')
     return 0 if result['outcome'] in ('entered', 'stopped_at_' + str(a.stop_at)) else 2
