@@ -1,0 +1,13 @@
+{
+  "evidence": "Both original input cache selectors and record lookup helpers",
+  "cases": 360,
+  "passed": true,
+  "comparison": "Selected cache pointer",
+  "substitutions": [],
+  "limits": [
+    "Stable root and ring metadata",
+    "Nonzero-offset zero-count native divide fault excluded",
+    "No live selected identities or ring advancement proof"
+  ],
+  "game_process": false
+}

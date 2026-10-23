@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Both cache selectors now reconstruct zero-offset root bypass and wrapped-u32
+ring indexing. 360 original cases pass without substituted calls. The two
+holder offsets select record cache pointers, which can alias and make exchange
+a no-op. Ring index/offset producers and generation meaning remain open. See
+[ring selectors](../docs/reconstruction/INPUT_UPDATE_ORDER.md#ring-index-cache-selectors).
+
 Decoded the holder's bracketing helper as a raw input-cache field exchange,
 including scalar/vector slots used by the action source. Full snapshot bytes
 match 512 original cases, with 64 identical-pointer no-ops. Two holder calls

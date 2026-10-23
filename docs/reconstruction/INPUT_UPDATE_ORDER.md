@@ -167,3 +167,53 @@ both have a zero-index branch returning holder.link_e8.object_at_8. Nonzero
 selection and caller lifetime still need reconstruction. These selector
 branches are the next static leads for determining which cache is exchanged
 when, before claiming a publication or synchronization boundary.
+
+## Ring-index cache selectors
+
+The selectors at RVAs `0x115dd60` and `0x1161b90` use the same arithmetic with
+holder offsets +0x230 and +0xd0 respectively. They obtain the root object through
+holder+0xe8, then link+8. An offset of zero returns that root directly, without
+consulting ring metadata. A nonzero offset selects a cache through a record:
+
+```text
+current = root.uint32_at_828
+count = root.uint16_at_836
+index = wrap_u32(current + holder_offset) % count
+record = root.pointer_at_82c + index * 0x440
+cache = record.first_uint64
+```
+
+The addition wraps to uint32 before the unsigned division. Signed-looking
+values such as 0xffffffff are treated as their 32-bit bit patterns, not
+Python negative indices. The two offsets are not themselves array indices.
+For example, current=0xffffffff and offset=2 yields wrapped sum 1, selecting
+record 1 when count is 3. Offset zero still returns the root even if the ring
+is empty or its current index would point elsewhere.
+
+[`select_input_cache`](../../engine/action_cache_selection.py) implements the
+stable-snapshot rule and returns the selected record index with its cache
+identity. It preserves null and repeated record-cache values rather than
+inventing a fallback. It rejects nonzero offset with zero count; the original
+selector would attempt division by zero. Native record lookup additionally
+checks index<count, but the selector then dereferences its result without a
+null check. These routines do not provide safe recovery from invalid metadata.
+
+The original selector reloads the holder link/root before record lookup, after
+reading the current index/count from the earlier root. Concurrent root or count
+changes are outside the stable-snapshot kernel and need guarding in any passive
+reader. No lock, ownership hold or synchronization boundary was found here.
+
+The [selector receipt](../../native/snow_host/input_cache_selection_validation.json)
+executes both complete selectors and their record lookup helpers without
+substituted calls. All 360 selected pointers match across empty zero-offset
+paths, ring counts 1/2/3/7/16, wrap boundaries, large offset bit patterns, null
+cache values and records sharing the root cache. It does not validate the
+producer of the current ring index or either holder offset.
+
+This resolves the nonzero-selector gap in the cache-exchange section. If both
+holder offsets are zero, both helpers return the root and the exchange is a
+no-op. Equal or aliased selected cache pointers also produce a no-op. Distinct
+selected pointers cause the field exchange already reconstructed. Next:
+identify ring-index/offset writers and determine whether changes denote input
+history, alternate contexts or another mechanism before assigning generation
+semantics.
