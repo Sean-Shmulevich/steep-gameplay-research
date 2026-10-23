@@ -6163,3 +6163,11 @@ branch; message-shaped routines compare WM_QUIT before setting the same global
 byte. A 179-case original-instruction fixture validates dispatch, gates and the
 passive setter. This supports application-stop semantics, not a reusable per-frame
 barrier. Global request reset and restart remain unproved.
+
+### Public compiled command pipeline probe
+
+Added a one-command integration probe combining the authored C admission and
+observation modules. It demonstrates accepted versus observed requests, full and
+stale refusals, synthetic disposal, recorder overflow and retained calls after
+close. Its dispatcher/lock/lifetime services are synthetic; native phase and
+manager lifetime remain explicit unmet gates.

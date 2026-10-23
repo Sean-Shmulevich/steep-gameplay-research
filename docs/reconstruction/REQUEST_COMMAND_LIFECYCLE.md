@@ -883,6 +883,43 @@ Consequences for an eventual mod API:
   explicit cancellation accounting. This local helper does not establish where
   that adapter may safely run or whether shutdown uses this helper at all.
 
+## Combined native-code inspection probe
+
+Run the actual authored C admission and observation components together, with a
+synthetic dispatcher and synthetic lifetime/lock services:
+
+```sh
+python3 scripts/run_command_pipeline_probe.py
+```
+
+A native 64-bit C11 compiler is required (`--cc gcc` may be appropriate on
+Windows with MinGW-w64). The script builds in a temporary directory, runs the
+probe, prints JSON and removes its build output. On macOS it uses the selected
+Xcode SDK unless `SDKROOT` is already supplied. It never loads a game, injects a
+DLL or accesses a game installation.
+
+The [probe source](../../native/snow_host/examples/command_pipeline_probe.c)
+combines `snow_command_admit`, `snow_command_observation_init` and the delegate
+recorder. It overwrites source descriptors after publication, then exercises:
+
+| Request | Admission | Subsequent synthetic behavior |
+| --- | --- | --- |
+| 101 | Submitted | Two recorded invocations, one recorder overflow; a retained cached call still returns after recorder close |
+| 102 | Submitted | Record disposed without invocation, so no callback observation |
+| 103 | Full | No publication or callback observation |
+| 104 | Stale binding | Binding guard refuses publication |
+
+The report separates admission, observed deliveries and recorder loss. Empty
+queue and drained recorder do not become unload guarantees. The fixed synthetic
+disposal is known to this harness; it is not a native cancellation receipt inferred
+from missing records. Likewise its repeated invocations are deliberately driven
+by the harness, not a claim about how often the original scheduler delivers.
+
+This is a public integration baseline for the compiled components already tested
+against original instructions privately. It does not close the live publication,
+manager lifetime or verified execution-phase requirements. The probe is a console
+program, not a SnowMod plugin; do not place it in the host's plugins directory.
+
 ## Inspect the behavior without game files
 
 ```sh

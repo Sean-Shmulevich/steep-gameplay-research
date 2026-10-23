@@ -330,3 +330,15 @@ performs no player acquisition. It returns the distinct `scheduler_ready` outcom
 and does not claim player readiness or a spawn position. The default remains
 `--readiness player`; `--expect-spawn` requires that mode. The experiment controller
 must still qualify engine owner/job bindings before installing any probe.
+
+## Inspect command admission and callback records without the game
+
+```sh
+python3 scripts/run_command_pipeline_probe.py
+```
+
+Run from the repository root with a native 64-bit C11 compiler available. This
+builds and runs the admission and observer C components against synthetic queue,
+lock and lifetime services. See the [combined probe contract](../../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#combined-native-code-inspection-probe)
+for refusals, disposal, repeated delivery and recorder-close boundaries. This
+console probe neither launches the game nor installs a native callback.
