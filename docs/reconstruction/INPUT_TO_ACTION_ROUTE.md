@@ -117,6 +117,69 @@ Source callbacks and their sample writes are also already decoded, including
 The missing result is their invocation and publication timing for the selected
 action in the same request, not the existence of a local vector writer.
 
+## Action refresh has a registered callback
+
+A focused offline follow-up connects the reset enumerator to a registered
+manager callback. It does not yet identify the registration service's scheduler
+job. All addresses here are RVAs in the same analyzed build as the preceding
+receipts.
+
+```text
+initialization helper, receiver owner
+  manager = global_input_manager
+  service = owner + 0x10
+  register_manager_callbacks(manager, service)
+    service.virtual_slot_20(index=0,
+        callback=refresh_manager_callback, context=manager)
+
+refresh_manager_callback(manager):
+  enter_exclusive_accounting(manager)
+  refresh_contexts(manager)
+  leave_exclusive_accounting(manager)
+
+refresh_contexts(manager):
+  enter_exclusive_accounting(manager)
+  for context in manager.context_array:
+    copy_three_current_service_flags(context)
+    if context.active:
+      refresh_context_preamble(context.source)
+      for group in context.three_groups:
+        for binding in reverse(group.bindings):
+          reset_and_evaluate_actions(binding.map)
+          if binding.blocker and binding.blocker.enabled:
+            break   # next group, not end of all contexts
+  leave_exclusive_accounting(manager)
+```
+
+The initialization call at `0x458e78` passes the manager loaded from global
+`0x312bb00`, the same global used by motion ingestion. Registration routine
+`0x4ba730` builds a callable for `0x4b4ba0` and passes it to the supplied
+service's virtual slot `0x20`, with index zero. The callable retains the manager
+receiver and uses invoker `0x43f5b0`. Two other callbacks are registered by that
+routine through different slots; their presence does not establish invocation
+order.
+
+The registered callback calls `0x4d0290`, which enumerates manager contexts
+using the count at `+0x2a` and array at `+0x20`. Active contexts visit the three
+groups at `+0x90`, stride `0xc`. Each selected binding supplies its map at
+`+0x28` to `0x4b69b0`. That enumerator clears sample fields and dispatches the
+stored action's virtual slot `0x10`, matching the earlier
+[reset and repopulation study](ACTION_RESET_CALLBACK.md). This closes a callback
+registration-to-writer route independently of binding insertion/removal.
+
+[Registration validation](../../native/snow_host/action_refresh_registration_validation.json)
+executes the complete original registration routine in 12 cases, varying three
+manager identities and all four initial context tag combinations. All three
+outgoing callable arguments, indices, manager contexts and invokers match. The
+service's three virtual registration methods are substituted with argument
+observers. Thus the test validates construction and handoff, not storage,
+invocation, locking under contention or sample freshness.
+
+The next static target is the concrete object behind `owner+0x10` and its
+slot-`0x20` implementation. We need its stored callback list and invoker caller
+before assigning this refresh to UpdatePadManager, UpdateAction, or another
+stage. None of those placements follows merely from the registration index.
+
 ## Next capture contract
 
 Once live access is available, extend the existing request/substep recorder

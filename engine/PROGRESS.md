@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Connected action reset/evaluation to a registered manager callback. Initialization
+passes the same global manager used by ingestion; its callback traverses active
+contexts and reaches the known reset enumerator. Twelve original registration
+cases passed with service methods substituted by argument observers. The
+registration service's concrete type and invocation schedule remain open.
+See [action refresh registration](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#action-refresh-has-a-registered-callback).
+
 Reconciled the polling-to-action route with the earlier live BeforeSimulation
 study. The actor callback already completed before PhysicsWorldStep in 701
 matching standing-state requests; its inner gated ingestion and action sample
