@@ -1,0 +1,14 @@
+{
+  "evidence": "Original resize, release and copy-control instructions; allocator, memcpy and free supplied",
+  "normal_return_cases": 636,
+  "null_destination_boundary_cases": 100,
+  "state_and_events_match": true,
+  "routine_rva": "0x11af100",
+  "routine_sha256": "1833b0d2d5d8bc3f75ae3b8632087e25b3ce3720c24d0c66ba59e05eeedbafd7",
+  "model_sha256": "0922c50c3bc403384184ab969dc462c6c43ae00c4c3032a97e138ac6c3c4d7cd",
+  "limitations": [
+    "Null copy cases stop at supplied memcpy entry; no native crash or exception behavior claimed.",
+    "Valid small rings only; no concurrency, overflow-sized allocation, original heap or allocator failure policy proved.",
+    "Model free abstracts original allocation lookup and virtual free."
+  ]
+}

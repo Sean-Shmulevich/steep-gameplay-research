@@ -3361,3 +3361,57 @@ our diagnostic interface. The original routine supplies no equivalent admission
 receipt here. These diagnostics do not mean payload destruction or scheduler
 callback completion. Supplied service exceptions expose partial progress; no
 native exception unwinding or guaranteed unlock-on-error behavior is claimed.
+
+## Holder ring resize implementation
+
+`engine.holder_ring_resize.resize_holder_ring` reconstructs the normal-return
+control of `0x11af100..0x11af22d` with supplied storage services. Related original
+helpers are logical copy `0x11ad190`, storage release `0x119b720` and allocation
+initialization `0xeaeee0`. This is a pointer ring, so copied entries are eight
+bytes; no per-holder retain/release calls occur in these resize paths.
+
+For valid nonnegative int32 counts/capacities:
+
+```text
+if new_capacity == old_capacity:
+    if not preserve: count = head = tail = 0
+    return
+retained = min(count, new_capacity)
+if preserve and retained > 0:
+    replacement = allocate(uint32(new_capacity * 8))
+    copy retained pointers in logical head order into replacement
+    count = head = tail = 0
+    free old storage if owned and nonnull
+    storage = replacement; owns_storage = true
+    capacity = new_capacity; count = tail = retained
+else:
+    clear counters and free owned old storage
+    storage = null; capacity = 0; owns_storage = true
+    if new_capacity > 0:
+        storage = allocate(uint32(new_capacity * 8))
+        capacity = new_capacity if storage != null else 0
+```
+
+Allocation context selection receives the byte request, sentinel `0xffffffff`
+and source global `0x32fb868`; actual allocation uses alignment argument 1.
+The independent model's allocate/free services abstract these already documented
+allocator calls. Copy splits at the old ring end and continues at slot zero.
+Shrinking keeps the first `retained` logical pointers. Final tail is exactly
+`retained`, even when equal to capacity; do not normalize it silently. The known
+release caller grows capacity, so that full-shrink tail case is not its insertion
+path. Same-capacity clearing preserves storage and ownership.
+
+This narrows the prior synthetic failed-growth result. With zero retained items,
+a supplied null allocation returns a zero-capacity ring. With retained items,
+there is **no null-result guard before the copy call**. It reaches the supplied
+memory-copy entry with null destination; it does not normally preserve the old
+full queue through an explicit failure-return branch. Actual allocator failure
+policy and native memory-copy failure behavior remain unknown.
+
+The [resize receipt](../../native/snow_host/holder_ring_resize_validation.json)
+compares 636 normal-return original-instruction cases, including wrapped queues,
+shrink/grow/equal requests, preserve/discard, ownership and allocation results.
+Another 100 cases stop at the null-destination copy boundary. These latter cases
+are not native crash tests. Four public tests cover logical ordering, empty null
+allocation, nonempty null destination and same-capacity clearing. No live launch,
+concurrency or overflow-sized allocation was tested.

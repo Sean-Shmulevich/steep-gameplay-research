@@ -69,3 +69,10 @@ insertion. Failed normal-return growth can leave a flagged, unqueued holder and
 still trigger post-unlock service. Diagnostic insertion receipts are authored,
 not native return values or disposal receipts. No concurrent or exception-safety
 contract is supplied.
+
+`holder_ring_resize.resize_holder_ring` preserves valid nonnegative int32 ring
+control and uses explicit allocate/copy/free services. Copy is in logical head
+order and must reject invalid destinations. A null allocation with retained
+items is passed to copy before header reset; no silent loss or invented recovery
+is permitted. Empty/discard allocation failure returns zero capacity. Services
+and exception behavior remain supplied; native failure outcomes are unproved.

@@ -6492,3 +6492,12 @@ cases match state, slot writes and service order. Four public tests cover failed
 insertion, replacement storage, available capacity and retry suppression by the
 queued flag. Bit 24 and the post-unlock service do not imply insertion. Native
 growth internals and failure policy remain unresolved. No live launch.
+
+### Deferred-holder ring resize reconstructed
+
+Implemented logical pointer preservation, owned-storage replacement, same-capacity
+clear and empty allocation failure. Matched 636 original-instruction normal-return
+cases and 100 stopped null-copy boundaries with supplied allocator/memcpy/free.
+Four public tests pass. This narrows prior synthetic growth failure: nonempty
+preserving resize has no null guard before copy; empty resize can return capacity
+zero. Original allocator failure and native crash behavior remain unknown.
