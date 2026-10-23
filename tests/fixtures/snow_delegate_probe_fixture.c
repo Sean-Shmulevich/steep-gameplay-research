@@ -21,7 +21,7 @@ int main(int argc,char **argv) {
     size_t (*record_size)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_RecordSize");
     uint32_t (*abi)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ABIVersion");
     assert(configure&&install&&restore&&close_probe&&read_record&&record_size&&abi);
-    assert(abi()==1 && record_size()==sizeof(SnowDelegateRecord));
+    assert(abi()==2 && record_size()==sizeof(SnowDelegateRecord));
     owner_global=VirtualAlloc(NULL,0x1000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(owner_global);
     unsigned char *owner=owner_global;table[0x40/8]=(uintptr_t)&dispatch_method;
     *(uintptr_t *)(owner+0x218)=(uintptr_t)table;
@@ -55,6 +55,9 @@ int main(int argc,char **argv) {
     assert(close_probe(&used,&dropped));assert(used==1);
     SnowDelegateRecord r;assert(read_record(0,&r,sizeof r));
     assert(r.function_storage==(uintptr_t)d && r.receiver==(uintptr_t)owner && r.result==UINT64_C(0xfedcba9876543210));
+    MEMORY_BASIC_INFORMATION caller_info;
+    assert(r.caller && VirtualQuery((void *)r.caller,&caller_info,sizeof caller_info));
+    assert(caller_info.Type==MEM_IMAGE && caller_info.AllocationBase==GetModuleHandleA(NULL));
     assert(!read_record(0,&r,sizeof r-1));assert(!read_record(1,&r,sizeof r));
     printf("%s passed\n",argv[2]);return 0;
 }

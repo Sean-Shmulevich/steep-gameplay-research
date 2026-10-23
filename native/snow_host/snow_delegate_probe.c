@@ -18,9 +18,10 @@ static int read_at(uint64_t at,void *dst,size_t n) {
 }
 static uint64_t clock_tick(void) { LARGE_INTEGER q; QueryPerformanceCounter(&q);return (uint64_t)q.QuadPart; }
 static uint64_t thread_id(void) { return GetCurrentThreadId(); }
-static uintptr_t dispatch(void *storage,void *receiver) {
+static __attribute__((noinline)) uintptr_t dispatch(void *storage,void *receiver) {
     /* Install is the only supported publisher, after successful configure. */
-    return snow_delegate_trace_call(&trace,storage,receiver);
+    return snow_delegate_trace_call_from(&trace,storage,receiver,
+        (uintptr_t)__builtin_extract_return_addr(__builtin_return_address(0)));
 }
 static int image_at(uint64_t at,int executable,HMODULE *module) {
     MEMORY_BASIC_INFORMATION m;
@@ -47,7 +48,7 @@ static int qualify(uint64_t *invoker) {
        !read_at(binding.owner_global,&again,8) || again!=owner) return 0;
     *invoker=d[3];return 1;
 }
-uint32_t SnowDelegateProbe_ABIVersion(void) { return 1; }
+uint32_t SnowDelegateProbe_ABIVersion(void) { return 2; }
 size_t SnowDelegateProbe_RecordSize(void) { return sizeof(SnowDelegateRecord); }
 int SnowDelegateProbe_Configure(const SnowDelegateBinding *b) {
     int ok=0;uint64_t invoker;HMODULE module,other,pinned;

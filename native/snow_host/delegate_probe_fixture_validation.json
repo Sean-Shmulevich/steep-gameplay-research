@@ -1,6 +1,6 @@
 {
   "status": "synthetic_windows_fixture_passed",
-  "abi_version": 1,
+  "abi_version": 2,
   "scenarios": [
     {
       "name": "normal",
@@ -26,9 +26,9 @@
   "compiler": "MinGW x86_64 Windows target",
   "runtime": "Wine on macOS",
   "source_hashes": {
-    "native/snow_host/snow_delegate_probe.c": "82fab7e629b4b30fbb8d59b42def909213caed7d50356b5290a40fe3f4c87591",
-    "native/snow_host/snow_delegate_trace.c": "e5ca06fb47f591a86ae0a438e598aaea0f446f5ca6502804cf1323b43c15e249",
-    "tests/fixtures/snow_delegate_probe_fixture.c": "810b31d011a8f7ff9dba437fcd9b0d482c17fdac4e74a48b4331e00294389892"
+    "native/snow_host/snow_delegate_probe.c": "f2249c91ceb873edb052e95d0bd91393e5598d5301854126211c129843ccfd2d",
+    "native/snow_host/snow_delegate_trace.c": "1b5f905e892fa4031f23206cd917db5aca533031521b2fd42c5cbe194fdc2d2d",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "5e4900384e914bb89af41f8d418442d6eb41eee0eca245848834ebc3cc9c1478"
   },
   "game_launched": false,
   "game_memory_modified": false,
@@ -37,5 +37,6 @@
     "No game build signature, actual game invoker ABI, or protection-layer acceptance tested.",
     "Owner storage remains allocated throughout fixture. Native owner lifetime/exclusion not proved.",
     "Conflict scenarios are controlled sequential changes; concurrent original dispatch during install/restore not exercised."
-  ]
+  ],
+  "caller_provenance": "Nonzero return address resolves to fixture executable image in every captured scenario."
 }

@@ -19,7 +19,7 @@ static uintptr_t original(void *s,void *r) {
 }
 static void *worker(void *ignored) {
     (void)ignored;
-    assert(snow_delegate_trace_call(&trace,&storage,&receiver)==((uintptr_t)&receiver ^ UINT64_C(0xfedcba9876543210)));
+    assert(snow_delegate_trace_call_from(&trace,&storage,&receiver,UINT64_C(0x123456789abcdef0))==((uintptr_t)&receiver ^ UINT64_C(0xfedcba9876543210)));
     return NULL;
 }
 int main(void) {
@@ -43,6 +43,7 @@ int main(void) {
     assert(copy.function_storage==(uintptr_t)&storage && copy.receiver==(uintptr_t)&receiver);
     assert(copy.result==((uintptr_t)&receiver ^ UINT64_C(0xfedcba9876543210)));
     assert(copy.exit_tick>copy.entry_tick && copy.thread==7);
+    assert(copy.caller==UINT64_C(0x123456789abcdef0));
     assert(!snow_delegate_trace_read(&trace,1,&copy,sizeof copy));
     assert(!snow_delegate_trace_read(&trace,0,&copy,sizeof copy-1));
     SnowDelegateTrace zero;

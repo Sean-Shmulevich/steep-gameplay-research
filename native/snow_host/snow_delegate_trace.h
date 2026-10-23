@@ -15,7 +15,7 @@
 typedef uintptr_t (*SnowDelegateOriginal)(void *function_storage, void *receiver);
 typedef uint64_t (*SnowDelegateClock)(void);
 typedef struct {
-    uintptr_t function_storage, receiver, result;
+    uintptr_t function_storage, receiver, result, caller;
     uint64_t entry_tick, exit_tick, thread;
 } SnowDelegateRecord;
 typedef struct {
@@ -28,6 +28,9 @@ typedef struct {
 } SnowDelegateTrace;
 int snow_delegate_trace_init(SnowDelegateTrace *, SnowDelegateRecord *, size_t,
     SnowDelegateOriginal, SnowDelegateClock, SnowDelegateClock);
+/* Caller is the native wrapper's return address, or zero when unavailable.
+ * It is provenance, not proof of an entire call stack (tail calls may erase it). */
+uintptr_t snow_delegate_trace_call_from(SnowDelegateTrace *, void *, void *, uintptr_t);
 uintptr_t snow_delegate_trace_call(SnowDelegateTrace *, void *, void *);
 void snow_delegate_trace_close(SnowDelegateTrace *);
 /* Drain permits record reads only. It does not prove no future forwarding call,

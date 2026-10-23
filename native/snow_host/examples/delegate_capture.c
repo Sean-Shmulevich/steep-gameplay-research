@@ -54,14 +54,14 @@ static DWORD WINAPI capture(LPVOID unused) {
     FILE *f=fopen(output,"w");
     if(f) {
         LARGE_INTEGER frequency;QueryPerformanceFrequency(&frequency);
-        fprintf(f,"{\"kind\":\"summary\",\"compatible\":%d,\"configured\":%d,\"installed\":%d,\"restored\":%d,\"drained\":%d,\"used\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"owner\":\"%llx\"}\n",
+        fprintf(f,"{\"kind\":\"summary\",\"record_abi\":2,\"compatible\":%d,\"configured\":%d,\"installed\":%d,\"restored\":%d,\"drained\":%d,\"used\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"owner\":\"%llx\"}\n",
             compatible,configured,installed,restored,drained,(unsigned long long)used,
             (unsigned long long)dropped,(unsigned long long)frequency.QuadPart,(unsigned long long)owner);
         if(drained)for(size_t i=0;i<used;i++) {
             SnowDelegateRecord r;if(!SnowDelegateProbe_Read(i,&r,sizeof r))break;
-            fprintf(f,"{\"kind\":\"record\",\"index\":%llu,\"storage\":\"%llx\",\"receiver\":\"%llx\",\"result\":\"%llx\",\"entry\":%llu,\"exit\":%llu,\"thread\":%llu}\n",
+            fprintf(f,"{\"kind\":\"record\",\"index\":%llu,\"storage\":\"%llx\",\"receiver\":\"%llx\",\"result\":\"%llx\",\"entry\":%llu,\"exit\":%llu,\"thread\":%llu,\"caller\":\"%llx\"}\n",
                 (unsigned long long)i,(unsigned long long)r.function_storage,(unsigned long long)r.receiver,
-                (unsigned long long)r.result,(unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick,(unsigned long long)r.thread);
+                (unsigned long long)r.result,(unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick,(unsigned long long)r.thread,(unsigned long long)r.caller);
         }
         fclose(f);
     }

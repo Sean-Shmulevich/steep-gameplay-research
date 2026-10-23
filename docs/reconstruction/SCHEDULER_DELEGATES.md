@@ -641,3 +641,26 @@ unsupported.
 The next instrumentation join should associate these callback entries with job
 state, frame-service selector and caller provenance. Forty-two graphics callbacks
 alone do not establish which physics or input work belongs to each one.
+
+## Caller provenance instrumentation (record ABI 2)
+
+The authored native recorder now accepts an explicit caller return address. The
+Windows wrapper captures its own return address before forwarding, with inlining
+prevented, and exports record ABI 2. JSONL summaries identify `record_abi: 2`;
+each record adds private hexadecimal `caller`. Clients must check both ABI and
+record size before reading native records. The existing portable call API records
+zero for unavailable provenance; it does not guess a caller from its own stack.
+
+This adds no stack walk or game-state reads. A caller address identifies a return
+site, not a complete invocation chain: tail calls can remove intermediate frames.
+Interpret it only after checking the current module range and build identity;
+normalize to an image RVA for public findings. Raw addresses remain private.
+The prior 42-call live receipt used ABI 1 and does not validate this new field.
+Job counters, selector reads, and input/physics association remain pending.
+
+All five synthetic Windows/Wine adapter scenarios passed with ABI 2. In the
+three scenarios that capture a call, the recorded return address belongs to the
+fixture executable image, not the probe DLL. The portable threaded fixture also
+checks full-width caller preservation while closing during an active call.
+These are synthetic checks; no new game session was launched for this change.
+The controller refusal receipt retains its earlier source hashes and is historical.

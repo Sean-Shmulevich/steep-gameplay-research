@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Added caller provenance to the native delegate recorder (record ABI 2), preserving
+bounded capture and original-call forwarding. Windows wrapper captures its return
+address; JSONL includes the ABI and caller field. Full independent suite passed:
+2116 tests, one skipped; standalone Windows host/plugin build passed. The earlier
+42-call live receipt is ABI 1; caller attribution is not yet game-validated.
+Five Windows/Wine adapter scenarios passed, including caller-image attribution.
+Before/after job-state capture remains pending.
+
 First live graphics delegate probe succeeded: 42 calls in a 500 ms capture, zero
 drops, selected storage/receiver matched, one observed thread. Original invoker
 restored, capture drained, and engine steps advanced afterward. No movement,
