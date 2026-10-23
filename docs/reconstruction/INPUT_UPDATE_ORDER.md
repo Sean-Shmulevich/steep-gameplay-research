@@ -681,3 +681,53 @@ selection, and helper effects are unresolved. This arbitration is statically
 inspected pseudocode; the publication receipt does not execute or validate it.
 Next: virtual +0x90 implementations and the derived-state/timestamp producers,
 then a composed root-update validation with explicitly supplied external inputs.
+
+
+## Root-cache edge timestamps
+
+Helper `0x1179d80`, tail-called after root publication and derived-button
+production, advances one pair of clock fields and stamps rising edges. It does
+not copy current inputs to previous inputs; those copies belong to earlier
+stages. Its complete local behavior is:
+
+```text
+previous_clock = current_clock
+current_clock = read_timer_once()
+for i in 0..31:
+    if current_buttons[i] != 0 and previous_buttons[i] == 0:
+        ordinary_press_stamp[i] = current_clock
+for i in 0..7:
+    if current_derived[i] != 0 and previous_derived[i] == 0:
+        derived_press_stamp[i] = current_clock
+```
+
+Clock fields are uint64 +0x50/+0x58. Ordinary current/previous bytes are +0x30/
++0x10, with stamps at +0x60. Derived current/previous bytes are +0x7c8/+0x7d0,
+with stamps at +0x7d8. Every nonzero byte counts as active; this is not a high-bit
+test. A held value changing from 1 to 255 keeps its old stamp. Release also
+keeps the stamp. A later zero-to-nonzero transition replaces it with the newly
+read clock, even if that value is numerically smaller. No monotonicity check,
+subtraction, wrap correction, duration or physical-unit conversion occurs here.
+
+[`stamp_input_cache`](../../engine/action_cache_timestamps.py) accepts an exact
+raw cache snapshot and an explicit uint64 time, preserving all unrelated bytes.
+It composes after `publish_selected_cache` for ordinary buttons. Complete native
+order also runs the derived-button producer between publication and stamping;
+callers must supply those current/previous derived bytes until that producer is
+reconstructed. Repeated stamping without updating previous inputs can repeatedly
+stamp the same apparent edge, so this helper alone is not an input-step loop.
+
+This is distinct from `refresh_button_timestamps`, which operates on the separate
+256-key/20-byte service cache and two clock sources. The root has 32 ordinary and
+eight derived byte inputs and only one clock read. It has no packet-sign edge
+slots or secondary clock array. Shared zero-to-nonzero behavior does not justify
+combining these layouts or their update order.
+
+The [root timestamp receipt](../../native/snow_host/input_cache_timestamps_validation.json)
+compares 512 complete original-helper executions, supplying only the timer return.
+Every byte of the 0x818-byte cache span matches, and the timer is called exactly
+once per invocation. Tests include noncanonical nonzero bytes, held/released
+states, zero time, full uint64 time and unrelated raw data preservation. Public
+sequence tests compose publication and stamping across press, held-value change,
+release and repress, checking both edge stamps and previous-clock transfer.
+The derived-input producer, timer units and scheduler cadence remain unresolved.

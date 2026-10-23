@@ -1,0 +1,18 @@
+{
+  "evidence": "Complete original root-cache timestamp helper",
+  "cases": 512,
+  "passed": true,
+  "comparison": "Every byte in the cache span and exactly one timer call",
+  "start_rva": "0x1179d80",
+  "end_rva_exclusive": "0x1179eb4",
+  "sha256": "c1d938127d93fc3c860665b442b7f41f2a5784e93a40cb283a1f8c2840270abc",
+  "substitutions": [
+    "timer wrapper returns supplied uint64"
+  ],
+  "limits": [
+    "Derived-button producer not executed",
+    "No timer units or live update cadence established",
+    "Distinct from keyboard-service timestamp helper"
+  ],
+  "game_process": false
+}
