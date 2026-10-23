@@ -2,6 +2,15 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Priority updated per user: whole-scheduler understanding and broad mod APIs;
+deterministic stepping is supporting work. Roadmap now targets engine-phase
+command publication, execution context, ownership and completion. Extended the
+BeginEngineFrame probe with the registered graphics sibling: command/world or
+paused routing can proceed while graphics dispatch remains outstanding; the
+terminal waits for graphics completion. Three tests pass. Next audit command
+producer publication and direct executor paths before native integration.
+
+
 Player validity failures now identify the first nonfinite copied field/lane and
 its float32 bits. Finite-only rejection and transform-first/interleaved velocity
 check ordering are unchanged. Native fixture covers all 16 transform lanes,

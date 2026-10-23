@@ -2,6 +2,43 @@
 
 Scheduler reconstruction is the current primary goal. The independent runtime is the testbed; rendering and broader gameplay expansion take second priority. Progress is tracked by evidence gates rather than a coverage percentage.
 
+## Current priority: scheduler-wide mod integration
+
+The user's current priority is understanding the whole scheduler and enabling
+mods across subsystems. Deterministic stepping is supporting instrumentation,
+not the primary release milestone. Preserve the timing research, but do not make
+perfect replay a prerequisite for unrelated scheduler or subsystem work.
+
+The next milestone is a **qualified engine-phase command contract**: identify
+where a bounded command can execute, what work it is ordered before/after, which
+objects it may access, how completion is reported, and how unloading cancels or
+drains it. The current host plugin thread is not an engine phase. Existing
+held-world player setters do not establish arbitrary mutation safety.
+
+| Workstream | Existing evidence / runnable implementation | Next proof needed |
+| --- | --- | --- |
+| Registration and dispatch | Mixed scheduler, recovered frame graph, BeginEngineFrame binding | Qualified native callback context and per-request association |
+| Command publication | Hierarchy command producer/flush research; begin_commands_probe | Producer publication ordering, full-queue handling, and direct executor callers |
+| Completion and exclusion | Ordinary dispatch finalization; explicit graphics sibling probe | Operation-specific exclusion from graphics, loading, idle tasks and alternate release |
+| Ownership and lifetime | Player identity events, link checks, animation retirement research | Stable generation and invalidation contracts across queued command execution |
+| Subsystem interfaces | Native player velocity/pose API; animation and asset research | Independently qualify each animation, terrain, environment or entity operation |
+
+Immediate sequence:
+
+1. Audit command producer publication and all executor entry paths; retain
+   queue-full and pending-count mismatches as explicit cases.
+2. Qualify an engine-phase receiver and observe commands there without mutation.
+   Capture request identity, thread context, entry/exit and owner generation.
+3. Integrate one already-understood operation through that context with bounded
+   admission, stale-generation rejection, receipts and unload/drain rules.
+4. Extend capabilities only when their subsystem lifetime and ordering contracts
+   are established. Do not expose arbitrary addresses as a substitute for this work.
+
+A whole-process idle claim is not required for every mod. Each operation must
+establish exclusion from the specific readers/writers it can conflict with.
+The idle-task producer and loading-thread contracts remain independent research
+tracks because ordinary frame completion does not cover them.
+
 ## Current evidence
 
 | Area | Established | Remaining boundary |

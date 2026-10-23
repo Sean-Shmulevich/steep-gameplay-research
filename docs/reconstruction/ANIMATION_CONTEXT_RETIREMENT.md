@@ -1913,3 +1913,20 @@ It needs a caller-supplied read transport, fresh component identity and guards;
 sequential rechecks do not pin lifetime or make a snapshot atomic. Remaining work
 should follow the producer/caller chain and resource-key mapping, rather than
 reimplementing the already available metadata decoder and channel reader.
+
+
+## Graphics sibling exclusion probe
+
+The runnable `engine.examples.begin_commands_probe` now also composes the
+registered graphics sibling chain with the entry/stop branch. It reserves and
+executes a synthetic GraphicFrame callback but deliberately delays its dispatch
+finalization. Commands and either selected world/paused route can execute while
+that graphics dispatch remains outstanding. The authored terminal waits until
+the graphics chain is finalized. Tests cover both branch selections.
+
+This demonstrates the ordering limits of the reconstructed graph, not native
+parallel execution or a complete frame graph. In particular, being inside
+BeginEngineFrame after command flushing is not enough to authorize changes to
+objects still accessible by graphics. A mod command needs an operation-specific
+ownership/exclusion contract in addition to a named phase. Loading and idle
+workers are not modeled by this probe and remain separate concerns.

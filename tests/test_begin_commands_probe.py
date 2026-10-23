@@ -19,3 +19,10 @@ class BeginCommandsProbeTests(unittest.TestCase):
         self.assertEqual(observation['begin_executions'],1)
         self.assertEqual(observation['branch_holds'],1)
         self.assertEqual(observation['branch_requested'],1)  # Requested, but still held.
+
+    def test_graphics_dispatch_can_remain_outstanding_after_commands_and_world_route(self):
+        for paused in (False, True):
+            result=run_probe(paused,graphics_overlap=True)
+            self.assertEqual(result['graphics_overlap'],dict(
+                graphic_executions=1,route_executed=True,terminal_begins=0))
+            self.assertTrue(result['completed'])
