@@ -1001,3 +1001,42 @@ RSQRT estimate. The new result establishes read-side composition, not device
 identity, timestamps, atomic cache publication or which polling cycle produced
 the selected sample. The next source-side gap is upstream cache production and
 its relation to the refresh/request timeline, rather than these cache getters.
+
+
+## Publication clocks are not analog sample generations
+
+The existing [selected-cache publication](INPUT_UPDATE_ORDER.md#selected-device-publication-into-the-root)
+and [root timestamps](INPUT_UPDATE_ORDER.md#root-cache-edge-timestamps) already
+identify a concrete upstream writer for the vector/scalar slots. The unresolved
+source-side question is therefore not whether any writer is known. It is which
+selected-device update and publication the active refresh actually consumes,
+including the holder's exchanges and alternate polling routes.
+
+Selected-cache publication copies vector/scalar bytes without normalization.
+Derived-direction production follows, then the root timestamp helper advances
+its clock and stamps rising edges. A held derived direction retains its press
+stamp even while its analog magnitude changes. Conversely, the current cache
+clock can advance while the analog value remains identical. Neither the press
+stamp nor equality of vector bytes supplies an analog sample generation.
+
+The [timeline probe](../../engine/examples/input_refresh_timeline.py) connects
+`publish_derived_and_stamp` to `refresh_vector_action` using stable synthetic
+snapshots and explicit event ordering. Its sequence includes two publications
+with identical analog values, then an analog change while the same derived
+direction stays pressed. Tests verify the distinct clock/value/edge behavior.
+
+```sh
+python3 -m engine.examples.input_refresh_timeline
+python3 -m unittest discover -s tests -p test_input_refresh_timeline.py
+```
+
+The harness chooses refresh-before-publication, then a final refresh. That
+schedule illustrates which cache contents are visible; it does not establish
+one-frame input latency, timer units or one publication per engine request.
+The processor is explicitly bypassed and native devices are not polled.
+
+A live trace must retain request identity, actual publication and evaluation
+entry/return, selected cache identity, raw values and the consuming player
+callback/substep. Timestamp equality alone cannot replace those observations.
+When reads can straddle a writer, record that uncertainty rather than assigning
+a fabricated generation from the clock or vector contents.

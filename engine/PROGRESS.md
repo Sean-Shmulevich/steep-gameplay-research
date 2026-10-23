@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined the existing selected-cache publication tail to the vector refresh adapter
+in a runnable synthetic timeline. Two tests demonstrate that cache clocks can
+advance without value changes and analog values can change without new derived
+press stamps. Clarified that upstream publication is already decoded; the open
+question is actual writer/evaluator/request correlation, not absence of writers.
+See [publication versus generations](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#publication-clocks-are-not-analog-sample-generations).
+
 Extended vector refresh validation through original source selection, ownership
 predicates and masked cache getters: 2,880 comparisons pass without a supplied
 source result. Synthetic priority/mask layouts exercise precedence and last-entry
