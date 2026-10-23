@@ -126,6 +126,49 @@ their documented ownership ends. No broad mutation permission follows from being
 inside a callback; its thread, held locks and conflicting subsystem work still
 need qualification.
 
+## Native observation callback preparation
+
+`native/snow_host/snow_command_observation.h` and `.c` provide an authored,
+read-only kind-3 descriptor. Initialize one stable observation owner and caller-
+owned record buffer, then retain them and the code for every possible delivery.
+The descriptor source itself may be copied. This module does not publish into a
+native queue or install a hook. Admission is still a separate unresolved contract.
+
+The invoker records caller return address, thread provider value, entry/exit ticks,
+receiver and descriptor-storage identity through `snow_delegate_trace`. The result
+field is our supplied request ID, not an engine operation result. Multiple records
+with the same ID are intentional: native queue behavior can repeat a cached
+callback. Recording exhaustion increments a drop counter; it does not block the
+callback. Close stops new recording, while retained late invocations still return.
+Drained permits reading records; it does not permit freeing callback storage or
+unloading code. Exceptions and nonlocal exits are outside the normal-return model.
+
+The [compiled observer receipt](../../native/snow_host/command_observation_validation.json)
+compares the original dispatcher and lock getter with our compiled Windows x64
+observer in emulation. Twelve cases cover all four context tags and capacities
+0/1/3, four supplied deliveries followed by one after close. The descriptor source
+is overwritten after copying. Recorded caller RVA matches the kind-3 return site
+`0x662b34`; record-storage identity is the dispatch copy, not the original source.
+Lock services and thread/clock values are supplied. This establishes ABI plumbing,
+not live thread identity, phase, exclusion, native admission or unload safety.
+
+The inspected lock wrappers load a pointer and transfer into `.upx0` code. Those
+targets contain bytes in the analyzed image. Their section name and unusual
+control flow do not by themselves identify a packer, virtualization scheme or
+anti-debug mechanism. Native lock reentrancy remains unproved.
+
+Run the portable C plumbing fixture through:
+
+```sh
+python3 -m unittest discover -s tests -p test_command_observation_native.py
+```
+
+For a future live pass, first qualify publication capacity under the queue lock,
+retain owner/code for cached repetitions, and record actual thread ID and caller.
+Keep capture bounded and perform no gameplay writes. The callback return site
+identifies the dispatcher branch; it cannot distinguish frame versus transition
+entry into the executor without additional enclosing provenance.
+
 ## Inspect the behavior without game files
 
 ```sh

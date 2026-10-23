@@ -1,0 +1,38 @@
+{
+  "evidence": "Original kind-3 dispatcher and lock getter invoke independently compiled Win64 C observer under emulation",
+  "cases": 12,
+  "all_passed": true,
+  "context_tags": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "record_capacities": [
+    0,
+    1,
+    3
+  ],
+  "deliveries_per_case": 5,
+  "dispatch_return_rva": "0x662b34",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "observer_dll_sha256": "3ee32b7fd43eba8c5d08e1c6760245d5b4bef1ac6a9af76773ef3e7be99e7d3f",
+  "spans": [
+    {
+      "rva": "0x662a60",
+      "length": 536,
+      "sha256": "efe1366ade7f3cb48c64e55ab58da2e67738f99346efd72a61fb2e2ed1d1215d"
+    },
+    {
+      "rva": "0xe237c0",
+      "length": 14,
+      "sha256": "3940cfdce40fc7787a417788b8c32926508989326e52387e3fb819252cad0ded"
+    }
+  ],
+  "limitations": [
+    "Lock enter/leave, clock and thread-ID services are supplied; native exclusion and live thread identity are not proved.",
+    "No native producer admission, phase identity, owner pin, gameplay mutation or unload safety established.",
+    "Compiled observer is authored instrumentation, not recovered game behavior.",
+    "Repeated dispatch and closed late delivery are supplied scenarios, not recorded live occurrences."
+  ]
+}

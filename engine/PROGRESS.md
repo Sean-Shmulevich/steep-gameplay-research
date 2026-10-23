@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Added a native read-only kind-3 command observation descriptor using the existing
+bounded recorder. Original dispatcher/lock-getter instructions successfully invoke
+the compiled Win64 observer in 12 emulated cases, covering context tags, copied
+descriptors, repeated delivery, full capture and late calls after close. The
+recorded caller matches the original kind-3 dispatch return site. Native lock,
+thread, phase, producer admission and lifetime remain unproved; no live launch.
+Full suite passed: 2183 tests, one skipped. Repository packaging/link checks passed.
+
 Qualified downstream requests as a loading-thread subsystem. Fresh-image static
 audit connects allocation/constructor, installed vtable, named thread setup,
 wrapper dispatch and a direct run-method call to the recovered consumer. Added
