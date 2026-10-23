@@ -109,3 +109,10 @@ published budget from a valid triple ring. Matching keys mark bit31 and dispatch
 the current payload; queued payloads are unused. Callback publications remain for
 another invocation. Budget/occupancy mismatch raises an authored boundary error
 with partial progress, not a recovered native recovery or unlock guarantee.
+
+`holder_consumer_scope.run_holder_consumer` supplies the serial outer guard and
+worker handoff protocol. The caller supplies locks, signal and progressing item
+processing. Reentrancy is checked after two lock acquisitions. Pending transfer,
+signed wake-state update and signal precede clearing processing and unlocking.
+No concurrent CAS retry, native recursive-lock behavior, exception safety or
+receiving-worker completion is established.

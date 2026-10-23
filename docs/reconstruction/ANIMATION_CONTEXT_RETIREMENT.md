@@ -3637,3 +3637,44 @@ instructions execute the loop; locks and dispatch are supplied. State and event
 order match. Three public tests cover current-versus-queued payload, callback
 publication, stale/null cases and shortage. No native concurrent producer,
 resource readiness, downstream dispatch body or live fault was tested.
+
+## Consumer guard and worker handoff
+
+`engine.holder_consumer_scope.run_holder_consumer` models the normal-return outer
+protocol of `0x1198a40..0x1198cee`, with supplied item processing, locks and signal.
+The original acquires global-owner +0x1d8 and registry +0xb8 **before** checking
+registry +0x5c. A nonzero processing word causes those two guards to be released
+in that order and returns without modifying processing/coordination/worker state.
+
+On entry it sets registry +0x5c and global byte `0x32fe954` to one, then acquires
+the coordination guard at `0x3301e98`. Uncontended CAS normalization produces
+`word = (word & 0xff800000) | 0x00800000` at `0x3301d4c`; the word at `0x3301d48`
+is set to `0x3fffffff`. These fields retain raw descriptive names. The original
+CAS loop can repeat even after a successful state-changing exchange until the
+observed value equals the desired value; the serial model describes the resulting
+state, not concurrent retries.
+
+After the dynamically checked item loop empties, the consumer exchanges worker
++0x28c to zero. If the captured uint32 is nonzero, it atomically adds that amount
+to worker +0x288 with uint32 wrap. It then updates worker +0x208:
+
+```text
+old = signed32(worker.word208)
+worker.word208 = uint32(old + 1 if old < 1 else 1)
+if old < 0: signal(worker + 0x210)
+```
+
+Zero captured work skips both word208 modification and signaling. Finally it
+clears registry processing and the global active byte, then releases coordination,
+global-owner +0x1d8 and registry +0xb8 guards in that order. Signaling precedes
+those clears/unlocks. This handoff is not proof that the receiving worker has run
+or completed any payload disposal.
+
+The [outer-protocol receipt](../../native/snow_host/holder_consumer_scope_validation.json)
+compares 90 complete original-function cases with an empty ring, supplying only
+locks and signal. Cases vary reentrancy gate, pending count, signed worker word
+and coordination bits, checking state and event order. Three public tests cover
+wrap/signaling, a nested supplied callback observing the processing gate, and zero
+pending work preserving word208. Native recursive-lock semantics, contention and
+exception unwinding remain unproved. Item bodies have separate validations; this
+comparison does not claim a full concurrent service execution. No live launch.

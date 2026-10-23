@@ -1,0 +1,13 @@
+{
+  "evidence": "Original full consumer with empty ring and supplied lock/signal calls",
+  "cases": 90,
+  "state_and_event_order_match": true,
+  "routine_rva": "0x1198a40",
+  "routine_sha256": "aea1e317349ed9fc78cbd34dfd7ed32ee85ec1d497b1e1ef22e79e85beea0797",
+  "model_sha256": "3cda21d0b8f26eead5e25b80f83b7a357be4af1afc49d5c9045daa4eeeed7be4",
+  "limitations": [
+    "Empty ring isolates outer protocol; item bodies validated separately.",
+    "Uncontended serial exchanges/CAS only; native locks and signal implementation supplied.",
+    "No global scheduler barrier, native reentrancy safety or exception unwind proved."
+  ]
+}

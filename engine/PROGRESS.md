@@ -6561,3 +6561,11 @@ retirement consumption. Matched 96 original normal-return cases plus 48 stopped
 shortage boundaries, with wrapped pops, stale keys and callback publication.
 Three public tests pass. Additional publications do not extend the captured
 budget. Downstream resource dispatch and concurrency remain outside this model.
+
+### Retirement consumer outer protocol reconstructed
+
+Implemented processing gate after guard acquisition, raw coordination-state
+normalization, dynamic item-loop boundary and pending-to-worker transfer with
+conditional signal. Ninety original empty-ring function cases match state/events;
+three public tests include serial nested-gate behavior. Native lock semantics,
+concurrency and receiving-worker completion remain unresolved. No live launch.
