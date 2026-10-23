@@ -1114,3 +1114,64 @@ shows vector normalization, further history updates and an additional helper
 call; those operations are not replaced with a guessed no-op. The API requires
 an explicit callback. Preamble cadence, history consumers and their relation to
 input selection remain open, so these histories are not sample generations.
+
+
+## History feature direction remapping
+
+Complete helper `0x9599a0..0x959eef` produces three additional ten-vector
+histories at +0x100, +0x1a0 and +0x240. Each shifts nine older entries upward
+before storing its newest vector. It normalizes a nonzero input with native
+RSQRT/refinement, retains zero, and uses reference axis `(0,1,0,0)`.
+
+A finite-input mathematical description is:
+
+```text
+n = normalize_nonzero_four_lanes(input)  # native estimate/refinement boundaries
+history_A.push(convert(n))
+v = reference_Y if n.y > history.threshold_50 else n
+history_B.push(convert(v))
+if any(abs(v.lane) > float32(1e-5)):
+    unit = normalize_four_lanes(v)
+    dot = dot_four_lanes(unit, reference_Y)
+    if dot >= 1: angle = 0
+    elif dot <= -1: angle = pi
+    else:
+        angle = acos(dot)
+        if dot(cross_xyz(unit, reference_Y), reference_Z) < 0:
+            angle = -angle
+    response = history.curve(abs(angle) / float32(pi))
+    theta = sign(angle) * response
+    q = axis_angle(reference_Z, -theta)
+    candidate = rotate(q, reference_Y)
+else:
+    candidate = the already converted value used for history_B
+history_C.push(convert(candidate))
+```
+
+`convert` denotes the same external helper called three times, not an assumed
+identity transform. The first converted result does not replace `n` for threshold
+selection, and the second does not replace `v` for angle calculation. In the
+near-zero branch, however, the third conversion receives the already converted
+second temporary. Aliasing and conversion effects therefore matter.
+
+The curve input is normalized absolute angle, but **its output is not multiplied
+by pi before rotation**. The instructions multiply its signed output by -0.5,
+then use sine/cosine to construct a Z-axis quaternion. With identity conversion,
+this yields approximately `(sin(theta), cos(theta), 0, 0)`. For an identity
+curve, backward input maps to theta=1 radian, not pi radians. This distinction
+was caught by the original-instruction comparison. The actual configured curve
+could supply a different angular scale; its identity is not established here.
+
+The [feature receipt](../../native/snow_host/action_history_features_validation.json)
+records 72 complete original-helper runs, including its native trigonometric
+routines, against this finite mathematical interpretation. Tests vary zero,
+axis, diagonal and Z inputs, threshold -1/0.5/1, and supplied curve gains
+0/0.5/1. Three conversion calls are recorded and substituted with identity;
+the curve callback is supplied. Newest history vectors agree within 2e-6 per
+lane. This is a tolerance comparison, not bit-exact reconstruction of SIMD or
+transcendental functions.
+
+The conversion helper has mode-dependent branches and is not proved inert in
+live use. Curve configuration, history consumers and scheduler cadence remain
+open. These are input-history features, not evidence of player-body rotation or
+animation actuation.

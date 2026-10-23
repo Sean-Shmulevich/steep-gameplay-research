@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "cases": 72,
+  "scope": "Complete original feature helper including native acos/sin/cos routines compared with finite mathematical interpretation within 2e-6 per lane",
+  "substitutions": [
+    "Three coordinate-conversion calls record vectors and leave them unchanged",
+    "Curve virtual callback returns supplied gain times normalized absolute angle"
+  ],
+  "coverage": [
+    "Zero and axis directions, +/-X, +/-Y, diagonal and Z vectors",
+    "Thresholds -1,0.5,1; strict threshold branch",
+    "Curve gains zero, half, identity"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x9599a0",
+      "end_rva_exclusive": "0x959eef",
+      "sha256": "2e017f8346764b51a52692d8ad36c4a076ac567828bf739e2a1196bee38309f9"
+    }
+  ],
+  "limits": [
+    "Tolerance comparison, not bit-exact independent SIMD/trig reconstruction",
+    "No real coordinate service or configured curve identity",
+    "No active history consumer, units or cadence proof"
+  ],
+  "game_process": false
+}

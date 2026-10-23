@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Decoded the history feature helper's three vector histories, +Y threshold,
+signed angle and curve-driven direction remapping. Seventy-two complete original
+helper cases match a finite mathematical interpretation within 2e-6. A corrected
+scale matters: normalized angle enters the curve, but its output is used directly
+as rotation angle, without multiplying by pi. Coordinate conversion and curve
+identity remain explicit dependencies; no gameplay consumer is inferred.
+See [history direction remapping](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#history-feature-direction-remapping).
+
 Resolved the manager preamble as masked updates of two vector histories. Added
 an outer history adapter for ten raw vectors, clipped magnitudes and opaque
 uint64 times, retaining the feature-analysis helper as an explicit dependency.
