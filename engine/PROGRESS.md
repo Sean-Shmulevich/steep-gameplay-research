@@ -6544,3 +6544,12 @@ original-instruction cases match consumer, cleanup and pool lookup state without
 substituting the latter routines. Three public integration tests pass. Queue
 emptiness remains explicitly separate from payload detachment, holder recycling
 and disposal completion. No live launch or concurrency proof.
+
+### Post-unlock retirement destruction wrapper reconstructed
+
+Implemented lock/prepare/consume/unlock order, post-unlock mode-one traversal,
+lookup-before-destructor-before-free, and independent output-array ownership.
+All 108 complete original-wrapper cases match supplied-service events and mode
+changes. Two public tests cover ordering and ownership/mode separation. Native
+payload destruction, preparation and allocator internals remain external; no live
+launch or scheduler-wide completion claim.

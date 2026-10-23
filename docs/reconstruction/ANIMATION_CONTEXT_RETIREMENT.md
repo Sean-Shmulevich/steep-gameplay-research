@@ -3549,3 +3549,55 @@ initial reference gates, separate counts, payload presence, initial/current mode
 and callback-restored reference counts. Three public integration tests cover the
 main outcomes. No outer locks, output destruction, further iterations or live
 concurrency are claimed.
+
+## Post-unlock payload destruction service
+
+`engine.holder_retirement_service.run_retirement_service` reconstructs the
+normal-return wrapper `0x1198820..0x1198991` with supplied synchronization,
+preparation, consumer and allocator/destructor services. Its local output array
+starts with 20 inline pointer slots, count zero and flags `0x80000014`.
+
+The inspected ordering is:
+
+```text
+lock(registry + 0x60)
+lock(global_owner + 0x1d8)
+lock(registry + 0xb8)
+prepare(registry)                  # 0x1198740
+consume(registry, output)          # 0x1198a40
+unlock(global_owner + 0x1d8)
+unlock(registry + 0x60)
+unlock(registry + 0xb8)
+if current registry.mode == 1:
+    capture output range
+    for each nonnull payload:
+        info = allocation_lookup(payload)
+        payload.virtual0(argument=0)
+        allocator_free(payload, info)
+if output.flags bit30 and output.storage != null:
+    info = allocation_lookup(output.storage)
+    allocator_free(output.storage, info)
+```
+
+Mode is tested after the unlock calls, once for this traversal. Mode changes
+inside a destructor do not stop the remaining payload iterations. Allocation
+information is captured before each destructor, while the allocator object is
+loaded afterwards for free. The model supplies lookup/free as services, so it
+does not identify native heaps or assert their stability. Null payload entries
+are skipped. Output-array ownership is independent of mode and controls only
+array-storage freeing, not payload destruction.
+
+The [service receipt](../../native/snow_host/holder_retirement_service_validation.json)
+compares 108 complete original-wrapper cases with supplied inner services. It
+checks exact event order and mode changes across initial/post-consume/post-destroy
+modes, owned/borrowed arrays and empty/null/mixed payload lists. Two public tests
+verify all unlocks precede destruction, mode changes do not interrupt traversal,
+and other modes can still free owned array storage. The output descriptor remains
+stable during destruction in this contract; arbitrary callback replacement of
+that descriptor is not covered.
+
+This closes the wrapper's local call-order gap, not the internals of payload
+destructors or the mode-zero dispatcher. Successful supplied destructor/free calls
+do not establish original resource effects or scheduler-wide callback completion.
+Native exception unwinding and guaranteed unlock-on-error remain unproved. No
+live game was launched.

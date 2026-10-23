@@ -95,3 +95,11 @@ and returns the first whose uint32 capacity exceeds the low32 signed /24 index.
 It reproduces loose arithmetic, including unaligned and wrapped matches. It is
 not an API pointer validator or lifetime pin. No-match returns None; native
 cleanup has no observed null guard before using this result.
+
+`holder_retirement_service.run_retirement_service` models normal-return lock/service
+ordering and mode-gated payload destruction. Output collection and allocation
+services are supplied. Mode is checked once after unlocking; destructor mode
+changes do not abort the captured traversal. Output ownership bit30 separately
+controls array freeing. Output storage/descriptor must stay valid and stable during
+destruction. No native destructor effects, exception safety or scheduler drain
+are supplied by this model.

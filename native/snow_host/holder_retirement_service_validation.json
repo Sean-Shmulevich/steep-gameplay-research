@@ -1,0 +1,13 @@
+{
+  "evidence": "Complete original retirement-service wrapper with supplied consumer, lock, destructor and allocator leaf services",
+  "cases": 108,
+  "events_and_mode_match": true,
+  "routine_rva": "0x1198820",
+  "routine_sha256": "9aa54d8bbe8e4c5c9e9259d8c16c0e3e90b9c8dbd24deb66d7b883ca14f7aa01",
+  "model_sha256": "60d722de46167eee621054ff50471458a98436748a12640bd4be44cebc0114be",
+  "limitations": [
+    "Consumer preparation, collection, locks, destructors and allocator implementations supplied.",
+    "Mode mutation tested serially; output descriptor remains stable during destruction.",
+    "No native scheduler drain, exception unwinding, or destructor resource effects demonstrated."
+  ]
+}
