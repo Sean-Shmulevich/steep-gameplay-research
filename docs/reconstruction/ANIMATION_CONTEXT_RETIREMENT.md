@@ -2506,3 +2506,64 @@ Next qualify the collection's receiver population and its outer caller's phase.
 Neither local ordering nor the temporary holder demonstrates exclusion from the
 command executor or a drain of already-running callbacks. Do not install or
 unload third-party participants based on this ordering alone.
+
+
+## Holder release versus scheduler callback drain
+
+The collection-removal path releases counts at holder +0x0c. Helper `0x1192fe0`
+obtains a holder under a registry lock and increments this word. The indexed
+eraser `0x2300c0` decrements it, calls `0x11a8a10` when the resulting low 24 bits
+are zero, shifts subsequent entries down and decrements the collection count.
+This is a different removal policy from the command-participant pointer array's
+swap-last removal. Neither count should be named a callback count without proof.
+
+Routine `0x11a8a10` selects between no action, cleanup helper and deferred ring
+publication. The local stable-input behavior is:
+
+```text
+lock(registry + 0xb8)
+status = holder.status
+if bit26(status) or low24(status) != 0:
+    unlock(); return
+if holder.payload == null or bit27(status) or global_suppress:
+    cleanup_helper(registry, holder)
+    unlock(); return
+if bit24(status):
+    unlock(); return
+atomically_set_bit24(holder.status)
+ensure_ring_capacity()  # growth and failure contract unresolved
+if ring has space:
+    ring[tail] = holder
+    count += 1
+    tail = (tail + 1) % capacity
+run_service = registry.mode == 1 and classify_thread() != 3
+unlock(registry + 0xb8)
+if run_service:
+    post_unlock_service(registry)
+```
+
+The flag and mode names above are descriptive placeholders. Bit 24 prevents a
+second enqueue through this local path. The global byte is read at RVA
+`0x32fe955`. Capacity growth uses helper `0x11af100`; the routine sets the queued
+bit before testing capacity again. Failed growth must therefore not be modeled
+as an ordinary successful enqueue. The reconstruction excludes that case.
+
+`engine.holder_release_route` implements only the stable-input routing and flag
+update with available capacity. Its returned status reflects this routine's
+local update, not mutations that an external cleanup/service may perform.
+A [128-case original-instruction comparison](../../native/snow_host/holder_release_route_validation.json)
+varies low-count and high flags, payload presence, global suppression, mode and
+thread classification. It also checks ring-tail wrap and that the optional
+service occurs after unlocking. Lock operations and external services are
+intercepted; this does not test concurrency or their internals.
+
+Cleanup helper `0x11943b0` independently checks holder +8 and low24(+0x0c),
+plus flag gates, before clearing payload linkage. This is evidence that the two
+words participate in distinct lifetime conditions. Their existence does not
+establish that all command callbacks take those references.
+
+Consequently, successful lifecycle removal and a returned holder release do not
+by themselves prove completed disposal or scheduler callback drain. A holder can
+be queued for later processing. The next link is the ring consumer and its caller
+phase, followed by whether that phase orders against command execution. Preserve
+that distinction when designing plugin unload receipts.

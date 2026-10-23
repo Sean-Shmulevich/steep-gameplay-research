@@ -1,0 +1,14 @@
+{
+  "evidence": "Original holder-release routine on synthetic storage; lock, cleanup, thread classification and post-unlock service intercepted",
+  "cases": 128,
+  "all_passed": true,
+  "model_compared": true,
+  "ring_case": "capacity four, count one, tail three; enqueue wraps tail to zero",
+  "routine_rva": "0x11a8a10",
+  "routine_sha256": "fc36d0e4b67c9277f458e134618eb4b292209fa5da566ccaea578c69c7e5dbcc",
+  "limitations": [
+    "Stable inputs and uncontended atomics; no concurrent flag/count changes.",
+    "Queue growth/failure, cleanup and service internals excluded.",
+    "No lifetime pin, disposal completion or scheduler callback-drain proof."
+  ]
+}

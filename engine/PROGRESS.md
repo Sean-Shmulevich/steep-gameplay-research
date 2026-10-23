@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Holder-release routing reconstructed and compared with 128 original-instruction
+cases. Last-low24 release can enqueue a holder, set bit24, wrap the ring tail,
+and optionally invoke a service after unlocking. It is not a callback-drain
+receipt. Collection holder erasure shifts entries, unlike participant swap-last.
+Next trace retirement-ring consumer phase and its relation to command execution.
+Growth failures, external service semantics and concurrent changes remain open.
+
 Paired collection lifecycle helpers located: registration calls +0x90 before
 holder insertion; removal calls related-holder +0xe0 callbacks before +0xc8,
 then erases the collection holder. Twelve original-instruction cases validate
