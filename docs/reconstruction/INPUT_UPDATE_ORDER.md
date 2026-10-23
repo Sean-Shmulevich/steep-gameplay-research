@@ -1001,3 +1001,61 @@ comparing raw input to digital events.
 Next: identify the caller of virtual +0x100 and its configuration source. The
 constructor default, raw setter and propagation path are established; active
 tuning, safe live invocation context and physical-action mapping remain open.
+
+
+## Setup-time deadzone override
+
+A concrete caller now supersedes any interpretation of constructor 0.3f as a
+universal setting. Setup routine `0x47c330` accepts a uint32 offset as its second
+argument, builds an adapter at owner+8, and eventually calls helper `0x981ad0`
+with that offset. It then loads constant float32 0.25 from `0x1df4050` and invokes
+virtual +0x100 on the adapter's resolved cache pointer.
+
+The adapter helper stores the supplied offset at adapter+8, gets the global
+holder, calls generic selector `0x11639a0(holder, offset)`, and stores the selected
+cache pointer at adapter+0. This generic selector implements the same arithmetic
+as the previously reconstructed holder-field selectors:
+
+```text
+if offset == 0:
+    selected = holder.link.root
+else:
+    selected = root.records[wrap_u32(root.current_index + offset) % count].cache
+adapter.offset = offset
+adapter.cache = selected
+selected.virtual_set_deadzone(0.25f)
+```
+
+The actual helper writes adapter.offset before selection. A selection failure
+therefore does not imply an untouched adapter. The pseudocode above assumes
+valid stable metadata; native root/count reload hazards remain as documented
+for the other selectors.
+
+Offset zero resolves the root and calls its propagation setter, changing the
+root and every concrete record cache to 0.25f. A nonzero offset resolves one
+record cache and invokes its setter, ordinarily changing that cache alone. The
+constructor default and this later override are both recovered facts. Which
+setup instance belongs to the active player, the supplied offset in gameplay,
+and any later overrides remain unverified. No global engine default is changed
+in the portable model on the strength of this caller alone.
+
+The [setup validation receipt](../../native/snow_host/input_deadzone_setup_validation.json)
+executes the original setup tail, adapter helper, generic selector and concrete
+virtual setters for 45 synthetic object graphs without substituted calls.
+Counts 1/3/5, zero/nonzero offsets and uint32 wrap cases match adapter identity,
+stored offset and every root/child cache byte. The earlier allocator and setup
+body are excluded; this is not a full constructor or live-player test.
+
+For the conditional single-axis experiment described above, d=0.25 makes the
+later digital threshold approximately raw magnitude >0.475, rather than the
+>0.51 derived for d=0.3. This demonstrates why configuration provenance matters:
+using the constructor value alone changes predicted input timing. These figures
+are derived real-arithmetic approximations with float32 boundary effects, not
+additional binary constants or observed physical-controller thresholds.
+
+The caller search found no direct call to the root propagation implementation
+in the decoded function ranges; the successful route is virtual dispatch.
+Other uses of virtual slot +0x100 belong to unrelated interfaces. Matching a slot
+number alone is not sufficient to attribute a deadzone write. Next: identify
+setup routine callers and their offset values, then verify the corresponding
+adapter during an authorized live session.

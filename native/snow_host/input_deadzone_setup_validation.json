@@ -1,0 +1,39 @@
+{
+  "evidence": "Original setup tail, adapter selection, generic cache selector and deadzone virtual dispatch",
+  "cases": 45,
+  "passed": true,
+  "comparison": [
+    "adapter selected pointer and offset",
+    "every root/child cache byte",
+    "zero-offset propagation versus one-record override"
+  ],
+  "substitutions": [],
+  "spans": [
+    {
+      "start_rva": "0x47c50c",
+      "end_rva_exclusive": "0x47c549",
+      "sha256": "916a332d87fd7605803166db0895e6e73caf4f026ffc440eb4b80c75fcc00f84"
+    },
+    {
+      "start_rva": "0x981ad0",
+      "end_rva_exclusive": "0x981af1",
+      "sha256": "9d2f1c00c69762e56eff126a4294fc5d3685344d716cdf05c46e2b5821fcaee2"
+    },
+    {
+      "start_rva": "0x11639a0",
+      "end_rva_exclusive": "0x1163a09",
+      "sha256": "4aa69ed29d2f0eb5c5c1ca00728ecb088ef8f14c77d90f1bb034f67043249d85"
+    }
+  ],
+  "constant": {
+    "rva": "0x1df4050",
+    "bits": "0x3e800000",
+    "value": 0.25
+  },
+  "limits": [
+    "Setup tail only; allocation and preceding initialization excluded",
+    "Supplied valid object graph and concrete vtables",
+    "No live player/setup invocation proof or safe-thread claim"
+  ],
+  "game_process": false
+}
