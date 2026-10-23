@@ -911,3 +911,11 @@ as `lambda: preparation_mode_matches(read_actor_mode(), 'a')` and the equivalent
 respectively. These are build-qualified mode values, not portable sport IDs.
 Other modes skip both preparations but may still ingest. The predicates are
 validated leaves; preparation bodies remain caller-supplied dependencies.
+
+`physics_timing_observation.observe_physics_timing(read, owner, physics_manager,
+policy_address)` provides a bounded inspection API for the recovered timing
+state and smoothing ring. The caller supplies an exact read transport and fresh
+build/process/owner qualification. It performs no process access on its own.
+Use its explicit status rather than treating missing or unstable state as zeros.
+Returned runtime addresses belong in private evidence, not public reports.
+See [reader contract](../docs/reconstruction/SCHEDULER_SMOOTHING_AUDIT.md#bounded-timing-state-reader).

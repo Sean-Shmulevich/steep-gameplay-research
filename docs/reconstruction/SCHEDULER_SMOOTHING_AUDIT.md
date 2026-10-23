@@ -102,3 +102,31 @@ A timing stage that reproduces this formula still cannot safely pause the origin
 ## Evidence receipt
 
 The prior source attribution is retained in the linked scheduler research. Newly verified instruction count: 158. Studied image SHA-256: `32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2`. Timing producer's contiguous code-window SHA-256: `6c078e3bab452a7f0a6aefe2628371b667aac3ef92c7169f3141e6340cd34a96`. These identify the checked source without distributing executable bytes or requiring addresses in an implementation API.
+
+## Bounded timing-state reader
+
+`engine.physics_timing_observation.observe_physics_timing` reads the inspected
+52-byte timing block, external policy byte, current world interval, and up to
+64 history lanes. It requires a freshly qualified timing-owner address, expected
+physics-manager identity, build-qualified policy location and exact-read
+transport. Two equal sequential samples are required. Work is bounded to 12
+reads and 658 bytes; no process writes or engine calls occur.
+
+The returned values include retained duration, consumed duration, reciprocal,
+frequency, selected count, elapsed duration, smoothing flag, physical ring bits
+and chronological active-ring bits. Unused ring lanes can contain arbitrary
+bits; active lanes and timing fields must be in the reader's finite nonnegative
+domain. Zero selected steps with nonzero initialized durations is accepted,
+consistent with the constructor. Unsupported ring capacity/layout and changing
+samples are reported without a partial timing result.
+
+The producer's 12 timing-field offsets and external policy load were rechecked
+against the inspected instruction spans. See [reader validation](../../native/snow_host/physics_timing_reader_validation.json).
+Synthetic tests cover every read failure, owner/policy change, wrap order,
+unused versus active NaN lanes, capacity limit, and initialized zero-step state.
+The new reader has not yet been used live. Current world interval is an
+observation, not a proved input to the already-produced batch. Retained state
+is sampled after or during whatever phase the caller selected, not reconstructed
+pre-update state. Returned pointers are private provenance; strip them from
+published receipts. Object lifetime and full-cycle mutation remain unresolved
+even when both samples agree.

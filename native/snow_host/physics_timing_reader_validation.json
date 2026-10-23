@@ -1,0 +1,17 @@
+{
+  "evidence": "Inspected producer offsets and policy load; synthetic bounded-reader tests",
+  "producer_fields_checked": 12,
+  "policy_load_matches": true,
+  "producer_span_sha256": "b36e0059c45c481053770c498ab58c0874d749b3d238ab973d3fec14abd8e676",
+  "game_process": false,
+  "reader_limits": {
+    "max_reads": 12,
+    "max_bytes": 658,
+    "max_history_capacity": 64
+  },
+  "limits": [
+    "No live use of the new timing reader yet.",
+    "Caller must qualify build, process and fresh owner identity.",
+    "Repeated equal reads do not prove atomicity or timing-producer input association."
+  ]
+}
