@@ -6147,3 +6147,11 @@ the root or signals the owner event. The caller waits through a live-resolved
 return. Eighteen callback and four wait instruction cases match the independent
 model; the 48 submission cases still pass. Stop-byte writer, complete dependency
 ordering and owner lifetime remain unresolved.
+
+### Root stop request connected
+
+Recovered the local stop-byte writer and persistent global request flag, including
+late owner lookup and repeated optional receiver lookup. Twelve instruction cases
+match `engine.root_stop`; a public composed test connects request to later event
+signal and wait return. Input mapping, flag reset, complete prerequisite services
+and engine-wide quiescence remain unresolved.

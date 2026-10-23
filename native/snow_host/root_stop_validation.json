@@ -1,0 +1,19 @@
+{
+  "evidence": "Original root-stop request instructions compared with independent model under supplied service bodies",
+  "all_passed": true,
+  "cases": 12,
+  "rva": "0x665250",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "2e906525a157d9e78c6f2a5e56026ea42b4e22da5da4f89469703891c15777d2",
+  "verified": [
+    "Fixed service arguments 64,15,1 precede followup service.",
+    "Non-null optional receiver triggers a second lookup and invokes the second result.",
+    "Owner singleton read after services; global request flag set even when owner absent.",
+    "Present owner receives stop byte one; no event signal occurs in this routine."
+  ],
+  "limitations": [
+    "External services intercepted; no claim of native stop success or service side effects.",
+    "Second receiver always valid when invoked; native null/stale lookup failure not tested.",
+    "No thread races, owner lifetime, complete input mapping or whole-engine quiescence validated."
+  ]
+}

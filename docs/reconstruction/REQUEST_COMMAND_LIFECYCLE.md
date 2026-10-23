@@ -715,6 +715,59 @@ The live target check used 15 guarded reads / 192 bytes and did not wait, signal
 submit work or send movement input itself. The game stopped normally and cleanup
 verified saves/settings restoration and the original DLL.
 
+## Root stop request and persistent flag
+
+The writer at `0x665250` is now reconstructed as a stop-request sequence, with
+its preceding service meanings left explicit. The [12-case original-instruction
+comparison](../../native/snow_host/root_stop_validation.json) matches the
+[independent model](../../engine/root_stop.py) for absent/present/changed owners,
+optional receiver presence and initially clear/set global request flags.
+
+```text
+request_root_stop():
+    service_A(its_global_receiver, 0x40, 0x0f, true)
+    service_B(reload_its_global_receiver())
+    if provider.virtual_slot_0x220() != null:
+        receiver = reload_provider().virtual_slot_0x220()
+        receiver.virtual_slot_0()
+    owner = read(owner_singleton)
+    global_request_byte = 1
+    if owner != null:
+        owner.byte_0x46 = 1
+```
+
+The second receiver lookup is not replaced with the first result. Native code
+dereferences that second result without a further null test. This is an ordering
+and lifetime requirement, not a safe getter API. Services A and B acquire locks
+internally in their inspected prefixes, but their complete effects and subsystem
+semantics are not recovered here; the fixture intercepts them.
+
+The getter at `0x674fa0` returns the same global request byte (`0x312f32c`) that
+this routine sets. Caller `0xd2900` runs three preceding services, tests the getter's
+low byte, then tail-calls the request routine when nonzero. Thus the request byte
+can drive repeated requests until another writer clears it; this is not an
+ordinary completion pulse. A second caller at `0xd13d9` is in input-dispatch code.
+Its exact control mapping and eligibility gates remain unresolved.
+
+The public composed test requests stop, verifies that no event has yet been
+signaled, executes the existing cycle callback with services supplied, observes
+signal instead of resubmission, then returns from a supplied wait and clears
+owner byte zero. The global request byte remains set. This demonstrates the
+reconstructed local sequence only: the original full graph, actual OS waiting,
+stop-trigger eligibility, request reset and owner destruction are not executed.
+
+The known sequence is therefore:
+
+```text
+request: run prerequisite services; set global request; set owner stop byte
+later callback: run cycle services; observe stop byte; signal owner event
+waiter returns: clear owner active byte, without testing wait result
+```
+
+This removes the unknown local stop-byte writer. It does not establish a general
+mod shutdown API or show that all cached callbacks, other queues and workers are
+quiescent when this event becomes signaled.
+
 ## Buffer disposal is not callback delivery
 
 The constructor's auxiliary-buffer cleanup leads to clear routine `0x658470`
