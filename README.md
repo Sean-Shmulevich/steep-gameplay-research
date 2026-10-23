@@ -12,6 +12,10 @@ Current priority: [scheduler reconstruction and modding release gates](engine/SC
 
 ## Build the mod loader
 
+For prebuilt DLLs and Windows launch instructions, use the
+[Windows quick start](native/snow_host/WINDOWS_QUICKSTART.md) and
+[release downloads](https://github.com/Sean-Shmulevich/steep-gameplay-research/releases).
+
 The [standalone native build](native/snow_host/BUILD_AND_RUN.md) includes the
 build-specific game adapter, startup launcher, plugin API, sample plugins and
 observation sources. It builds without the private research workspace. Running
