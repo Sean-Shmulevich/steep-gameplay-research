@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "cases": 140,
+  "scope": "Original conversion dispatcher including mode-3 planar arithmetic and native trig, plus direct no-op modes and explicitly disabled global route",
+  "substitutions": [],
+  "setup": [
+    "Synthetic explicit mode-3 basis pointer; primary/secondary basis vectors supplied",
+    "Global-route disable flag set for modes 0/6"
+  ],
+  "coverage": [
+    "Modes 2,4,5,7 preserve input",
+    "Modes 0/6 preserve input under explicit disable gate",
+    "Mode3 zero input early return, planar normalization and basis-relative rotation",
+    "Near-vertical primary chooses supplied secondary basis"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x7db490",
+      "end_rva_exclusive": "0x7db846",
+      "sha256": "c5a25602ed3c8851cd1556b5de1cc72b781d244330ff004a98fe8e114da10ec0"
+    }
+  ],
+  "limits": [
+    "Mode1 service delegation not executed",
+    "Active global route and null basis fallback not tested",
+    "Planar finite inputs only; no general four-lane formula claim",
+    "Actual mode, basis provenance and update cadence unknown",
+    "Tolerance 2e-6; not bit-exact independent numerical reconstruction"
+  ],
+  "game_process": false
+}

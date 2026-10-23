@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Decoded conversion dispatch and verified 140 original runs covering mode-3 planar
+basis rotation, direct no-op modes and disabled global conversion. Mode 3
+normalizes input and uses a secondary basis when the primary is nearly vertical.
+Actual mode/basis ownership, active global conversion and general four-lane
+behavior remain open; no camera-space identity or action-sample normalization
+is claimed.
+See [history conversion modes](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#history-conversion-modes-and-planar-basis-rotation).
+
 Implemented the decoded feature-history flow with required conversion and curve
 callbacks and explicit approximate numerical policy. All 72 original-helper
 cases agree within 2e-6 for new vector lanes and exactly for unaffected bytes.

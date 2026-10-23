@@ -1208,3 +1208,52 @@ The callbacks above must be supplied from known configuration or explicitly
 labeled fixtures. They are pure detached-value interfaces: native callbacks that
 mutate history storage or input aliases are outside this adapter's contract.
 Live curve identity, coordinate service modes and history consumers remain open.
+
+
+## History conversion modes and planar basis rotation
+
+The shared conversion dispatcher `0x7db490` reads mode at service+0x6c:
+
+| Mode | Inspected route |
+| --- | --- |
+| 0 or 6 | Global-basis helper 0x7db0a0; a global disable byte returns without changing input |
+| 1 | Delegates through another service when available; not decoded here |
+| 3 | Uses basis pointer service+0x148, or a global fallback basis when null |
+| Other | Returns without modifying the vector |
+
+Mode 3 returns immediately for an exactly zero four-lane vector. It selects the
+basis vector at matrix+0x10 unless `abs(abs(primary.z)-1) <= float32(1e-5)`, in
+which case it selects matrix+0x20. It clears selected Z/W, normalizes the XY
+projection, derives a signed angle relative to +Y, normalizes the input and
+rotates it with a Z-axis quaternion.
+
+For finite planar inputs with a nondegenerate selected projection, the derived
+mathematical equivalent is:
+
+```text
+basis = secondary if abs(abs(primary.z)-1) <= float32(1e-5) else primary
+heading = normalize(basis.xy)
+yaw = atan2(-heading.x, heading.y)
+unit = normalize(input.xy)
+output.xy = [cos(yaw)*unit.x - sin(yaw)*unit.y,
+             sin(yaw)*unit.x + cos(yaw)*unit.y]
+```
+
+The native code obtains the angle through dot/cross/acos branches and uses
+RSQRT/refinement and quaternion rotation; atan2 above expresses the planar
+geometry, not the original instruction sequence. General nonplanar and fourth-
+lane behavior is not established by this equation. Degenerate projected bases
+also require separate analysis.
+
+The [conversion receipt](../../native/snow_host/action_history_conversion_validation.json)
+records 140 complete original dispatcher runs without substituted calls, using
+synthetic service/basis objects. Mode 3 planar results agree within 2e-6;
+no-op modes and the explicitly disabled mode-0/6 route retain input. Native
+trigonometric routines execute. Mode 1, active global conversion and null-basis
+fallback remain outside these tests.
+
+The conversion can therefore change both heading and magnitude in these history
+fields. It must not be assumed identity or used to infer that the action sample
+itself is normalized. The active service mode, basis owner, live updates and
+history consumers remain unknown; a camera-space interpretation is only a lead,
+not an established identity.
