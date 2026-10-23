@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined category-4 activation to the common range begin/empty/finalizer lifecycle.
+Forty-eight composed original-instruction cases cover holds, scheduled wake,
+queueing and empty immediate finalization with explicit synchronization/queue
+substitutions. The activation helper never directly runs the range worker.
+Category worker completion and next-request storage exclusion remain open.
+See [category activation](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#category-activation-joins-the-common-range-lifecycle).
+
 Implemented independent action reset and three-group refresh adapters. Seventy-two
 original-instruction comparisons matched complete synthetic action snapshots and
 callback-entry values, including owner suppression and immediate repopulation.

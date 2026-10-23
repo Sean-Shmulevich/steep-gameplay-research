@@ -602,3 +602,52 @@ Run the portable tests without game files:
 ```sh
 python3 -m unittest discover -s tests -p test_engine_action_refresh.py
 ```
+
+
+## Category activation joins the common range lifecycle
+
+The category-4 table `0x1e92b40` binds the same ordinary begin (`0x11d1540`),
+empty predicate (`0x8eb040`) and finalizer (`0x11d1670`) described in
+[range begin behavior](SCHEDULER_BEGIN_PATHS.md) and
+[ordinary completion](SCHEDULER_REARM.md). This is a concrete table join;
+it does not depend on naming this object an animation job.
+
+The previously substituted activation helper `0x8c12d0` locks the job and reads
+its dependency-hold field before selecting a path:
+
+```text
+activate_category(job):
+    enter_scope()
+    lock(job)
+    if job.dependency_holds == 0:
+        if job.state == 0 or job.state == 2:
+            job.ordinary_begin()
+        elif job.state == 1:
+            wake_scheduler_workers()
+    unlock(job)
+    leave_scope()
+```
+
+`ordinary_begin` acknowledges the requested generation and activates outgoing
+dependencies before testing signed remaining count. Positive remaining count
+queues the job. Nonpositive count takes the immediate ordinary-finalizer route.
+The existing scheduled-state path only wakes workers through the inspected
+helper; it does not call the range worker directly or repopulate its array.
+The wake helper enumerates scheduler workers, updates each wake-state counter
+atomically and signals workers whose prior counter was negative.
+
+The [activation receipt](../../native/snow_host/action_refresh_activation_validation.json)
+records 48 composed instruction-emulation cases executing the original activation,
+begin, empty predicate and finalizer using the category table. Synthetic holds,
+states and remaining counts select each local branch. Locking, scope helpers,
+queue insertion, dependency effects and worker wake are substituted. Thus this
+extends the earlier gather tests' activation boundary, but does not execute a
+real dependency graph or dispatch a worker. Negative remaining count and state 3
+are branch probes, not claims that these represent valid workloads.
+
+This narrows the remaining completion question. The category job shares the
+ordinary lifecycle, whose established dispatch accounting separates exhausted
+claims from returned worker bodies. We still need a composed category-specific
+worker/completion check and the next-request graph barrier before claiming its
+callback storage is safe to reuse. A direct call to its finalizer is not a safe
+mod API: the finalizer itself does not check for active worker bodies.
