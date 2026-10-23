@@ -1,0 +1,59 @@
+{
+  "passed": true,
+  "evidence": "Original dispatch loop with synthetic descriptors and authored callback-side mutations",
+  "cases": [
+    {
+      "scenario": "unchanged",
+      "callback_order": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "scenario": "remove_current",
+      "callback_order": [
+        1,
+        2
+      ]
+    },
+    {
+      "scenario": "remove_next",
+      "callback_order": [
+        1,
+        3
+      ]
+    },
+    {
+      "scenario": "append",
+      "callback_order": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "scenario": "relocate",
+      "callback_order": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "scenario": "empty",
+      "callback_order": [
+        1
+      ]
+    }
+  ],
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "d21dcbcfdd4e2600dbf568c73f28033c3b7a6f2e2eb5848e4391fde7a56eaa91",
+  "instruction_sha256": "e14d04aa462c1024b7f546c1930a05bdd188cf6cef072137fbe45a8d4801bb81",
+  "limitations": [
+    "Mutation helpers and allocation/destruction not executed. Vector owner retained for every case.",
+    "Empty-vector case does not validate actual final-listener removal, which can destroy the vector.",
+    "No live mutation, synchronization or job attribution proof."
+  ]
+}

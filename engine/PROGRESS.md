@@ -6864,3 +6864,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - 392 original-instruction comparisons match the model; seven original erase cases confirm swap-last descriptor copying and destructor-before-count-decrement. Ten focused Python tests pass. Allocator/destructor and full map cleanup remain outside executed validation.
 - Thunk changes do not distinguish subscriptions. Paired removal unlinks even after no match, so cleanup cannot be blindly retried. A unique recorder subscription is a concrete alternative to replacing copied gameplay descriptors.
 - No live registration/removal. Next: trace caller synchronization and owner lifetime for the paired native subscription routines, then qualify exactly-once cleanup and in-flight dispatch before a live recorder subscription.
+
+### Markup lifecycle pair and mutation-sensitive iteration
+
+- Located cleanup slot 0x18 and registration slot 0x48 on the live-identified controller table. Cleanup removes the nine registered descriptors, including IDs 84/92, through the same owner field. Virtual caller scheduling remains unresolved; this is static evidence, not a live lifecycle trace.
+- Six original dispatch-loop cases with synthetic callback mutations establish reloaded-array/count behavior. Self-removal can skip a swapped-in listener; append can run the new listener in the current notification. The vector object stays allocated in these fixtures.
+- Recorder callbacks should only record and request deferred shutdown. Actual attach/detach still needs an outside-dispatch lifetime boundary. Next tracing is the concrete controller registration/cleanup virtual calls and component markup update, not arbitrary native calls from the existing engine-phase callback.

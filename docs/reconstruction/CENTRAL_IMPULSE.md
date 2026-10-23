@@ -804,6 +804,62 @@ that does not prove their callers lack it. Trace their actual caller context
 before calling them live. Listener-order changes and callback-triggered mutation
 remain relevant to dispatcher behavior.
 
+### Controller lifecycle and mutable dispatch iteration
+
+The controller table already verified in the live ownership chain, RVA
+`0x1e7d4b0`, contains registration routine `0x1405b8c50` at virtual slot `0x48`
+and cleanup routine `0x1405e07f0` at slot `0x18`. Cleanup reads the same markup
+owner at controller+0x388 and passes the original stored descriptors to paired
+removal. The inspected list is:
+
+| Markup ID | Controller descriptor offset |
+| --- | --- |
+| 84 | 0x948 |
+| 2 | 0x9e8 |
+| 87 | 0xa08 |
+| 88 | 0xa28 |
+| 92 | 0x9c8 |
+| 93 | 0x968 |
+| 94 | 0x988 |
+| 95 | 0x9a8 |
+| 96 | 0x928 |
+
+These are static lifecycle relationships joined to a previously live-verified
+table, not a live cleanup trace or a proof of caller synchronization. The cleanup
+routine does other work before removing markups. It must not be invoked merely
+to remove a recorder subscription. No direct relative-call reference to this
+routine was found; its virtual caller context remains to be identified.
+
+The notification loop retains the listener-vector object, but reloads its entry
+array each iteration and its count after each callback. It increments the index
+unconditionally. It neither snapshots the listener list nor revisits a slot
+filled by swap-last removal. This matters even on one thread:
+
+| Authored callback-side mutation of initial listeners A, B, C | Observed original-loop callback order |
+| --- | --- |
+| None | A, B, C |
+| A removes itself using swap-last effect | A, B; C is skipped |
+| A removes B using swap-last effect | A, C |
+| A appends D | A, B, C, D |
+| A moves the entries to another allocation | A, B, C from the reloaded array |
+| A sets count to zero while retaining vector storage | A only |
+
+[Six original-loop cases](../../native/snow_host/markup_iteration_validation.json)
+validate these orders and preserve the ID/raw-byte/sentinel argument contract.
+The callback mutations are authored synthetic effects; original registration,
+removal, allocators and destructors are not executed by these cases. In
+particular, retaining the vector at count zero does not validate actual
+last-listener removal, which can destroy that vector. The loop reads its count
+after the callback returns, so storage retention is a real requirement.
+
+Recorder policy: callbacks should record and request deferred shutdown, not
+mutate the listener vector. Attach/detach must occur outside active dispatch at
+a verified lifecycle/update boundary. Next caller tracing should follow controller
+slots `0x18` and `0x48`, and the owned component markup-update slot `0x4b0`, to
+establish ordering and retirement. Those slot numbers are build/type-specific,
+not generic mod API entry points. Existing engine-phase observations alone do
+not prove these operations are serialized there.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and
