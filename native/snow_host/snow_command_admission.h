@@ -9,14 +9,17 @@
  * No installer, allocator, scheduler hold, module pin or unload permission.
  */
 typedef void (*SnowCommandLock)(void *wrapper);
-typedef void (*SnowCommandProducer)(void *manager,const SnowCommandDescriptor *,uint8_t alternate);
+typedef void *(*SnowCommandRecordCopy)(void *destination,const void *source);
+typedef void (*SnowCommandRecordCleanup)(void *record);
 /* Called under queue lock, bounded/nonblocking, must not submit or acquire other
  * engine locks. This detects a changed binding; it does not establish lifetime. */
 typedef int (*SnowCommandBindingCheck)(void *manager,void *context);
 typedef struct {
     void *manager;
     SnowCommandLock enter,leave;
-    SnowCommandProducer produce;
+    SnowCommandRecordCopy copy_record;
+    SnowCommandRecordCleanup cleanup_record;
+    void *default_holder;
     SnowCommandBindingCheck check;
     void *check_context;
 } SnowCommandAdmission;
@@ -25,8 +28,9 @@ typedef enum {
     SNOW_COMMAND_INVALID_BINDING=3, SNOW_COMMAND_STALE_BINDING=4,
     SNOW_COMMAND_INVALID_RING=5
 } SnowCommandAdmissionStatus;
-/* SUBMITTED means the guarded native producer returned. No exactly-once,
+/* SUBMITTED means record publication and temporary cleanup returned. No exactly-once,
  * execution, completion, counter consistency or gameplay-mutation guarantee.
+ * Uses recovered copy/cleanup helpers. Cleanup runs AFTER releasing queue lock.
  * The gate does not repair full submissions made by other native producers.
  */
 SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *,

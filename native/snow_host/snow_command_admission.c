@@ -3,12 +3,14 @@
 _Static_assert(sizeof(uintptr_t)==8,"inspected layout requires 64-bit ABI");
 SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *b,
                                              const SnowCommandDescriptor *d) {
-    if(!b || !d || !b->manager || !b->enter || !b->leave || !b->produce ||
+    if(!b || !d || !b->manager || !b->enter || !b->leave || !b->copy_record || !b->cleanup_record || !b->default_holder ||
        !b->check || !d->invoker || !d->context)
         return SNOW_COMMAND_INVALID_BINDING;
     /* Binding and descriptor are caller-owned immutable inputs for this call. */
     SnowCommandDescriptor copy=*d;
     SnowCommandAdmissionStatus result;
+    _Alignas(8) unsigned char temporary[104]={0};
+    int published=0;
     b->enter(b->manager);
     if(!b->check(b->manager,b->check_context)) {
         result=SNOW_COMMAND_STALE_BINDING;
@@ -25,10 +27,22 @@ SnowCommandAdmissionStatus snow_command_admit(const SnowCommandAdmission *b,
         } else if(count==capacity) {
             result=SNOW_COMMAND_FULL;
         } else {
-            b->produce(b->manager,&copy,0);
+            /* Recovered kind-3 temporary record. Unused bytes are authored zeroes. */
+            uint32_t kind=3;
+            memcpy(temporary,&kind,4);
+            memcpy(temporary+8,&b->default_holder,8);
+            memcpy(temporary+16,&b->default_holder,8);
+            memcpy(temporary+24,&copy,sizeof copy);
+            b->copy_record((void *)(array+(uintptr_t)write*104),temporary);
+            ++count;write=(write+1)%capacity;
+            memcpy((unsigned char *)b->manager+0x38,&count,4);
+            memcpy((unsigned char *)b->manager+0x3c,&write,4);
+            __atomic_fetch_add((uint32_t *)((unsigned char *)b->manager+0x54),1,__ATOMIC_SEQ_CST);
+            published=1;
             result=SNOW_COMMAND_SUBMITTED;
         }
     }
     b->leave(b->manager);
+    if(published)b->cleanup_record(temporary);
     return result;
 }

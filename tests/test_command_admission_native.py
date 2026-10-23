@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class AdmissionTests(unittest.TestCase):
-    def test_full_stale_invalid_and_nested_publication(self):
+    def test_full_stale_invalid_and_cleanup_after_unlock(self):
         cc = shutil.which('cc')
         if not cc:
             self.skipTest('C compiler unavailable')

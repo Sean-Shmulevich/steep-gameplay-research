@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Corrected native admission lock ordering. Original temporary-holder cleanup can
+acquire a resource-manager lock at low-24-bit count boundaries, even with payload
+destruction suppressed. The initial outer-lock/full-producer adapter retained the
+queue lock there. Current adapter uses original copy/cleanup helpers and unlocks
+before cleanup. 54 compiled-adapter cases match successful original publication
+in meaningful record fields, queue/counter state and references. 140 release-helper
+calls across adapter/reference paths occur after queue unlock. No live publication;
+manager lifetime, competing producers and callback phase remain unresolved.
+Full suite passed: 2193 tests, one skipped. Repository checks passed.
+
 Added native guarded-admission C adapter with normal-path lock balance, binding
 check, ring validation and explicit full refusal. The compiled Win64 adapter
 passes 18 serial emulated cases with original producer/thunks and observed Wine

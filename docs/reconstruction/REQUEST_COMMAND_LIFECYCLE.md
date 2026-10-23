@@ -268,8 +268,10 @@ at depths 1/2/3/8. The fixture supplies a same-thread TEB and an initialized
 spin-zero critical section. Lock count, recursion count and owner balance on
 release. Contention, wait/wake, destruction and exception paths are excluded.
 
-This supports the following **authored admission policy**, also tested around
-the original producer in 18 serial instruction cases:
+An initial **authored admission candidate** was tested around the original
+producer in 18 serial instruction cases. It is now superseded: keeping its outer
+lock through producer cleanup changes the original lock order, as explained below.
+This historical pseudocode is not the current adapter:
 
 ```text
 # Preconditions: verified live build, ordinary producer route, retained manager,
@@ -300,42 +302,72 @@ it must not infer permission to mutate gameplay or unload after one callback.
 
 ## Native guarded-admission adapter
 
-`native/snow_host/snow_command_admission.h` and `.c` implement the authored guard
-above for the inspected ordinary producer layout. The binding supplies retained
-manager storage, verified enter/leave/producer functions and a bounded identity
-check. The check runs **under** the queue lock and cannot itself establish that
-the lock storage was safe to acquire. Lifetime retention is a precondition.
+`native/snow_host/snow_command_admission.h` and `.c` now use the recovered record
+copy and cleanup helpers, rather than calling the complete producer inside an
+outer queue lock. The binding supplies retained manager storage, verified
+enter/leave/copy/cleanup functions, the build's default holder and a bounded
+identity check. The check runs under the queue lock; it cannot establish that the
+lock storage was safe to acquire. Lifetime retention is a precondition.
 
-The adapter copies the descriptor, acquires the recursive queue lock, checks the
-binding, validates array/count/index/capacity fields, refuses a full ring, and
-otherwise calls the native producer with alternate routing disabled. It releases
-the outer lock on every normal status path. It does not catch exceptions or
-nonlocal exits. Binding/descriptor immutability during the call and retained
-callback context/code after submission are caller responsibilities.
+The initial nested-producer adapter changed lock ordering. In the original
+producer, temporary cleanup follows queue unlock. Its two default-holder decrements
+can reach a zero low-24-bit count and call the resource release helper. That helper
+acquires a separate manager lock **before** checking the holder's suppression bit
+26. A suppressed destructor therefore does not mean no additional lock is acquired.
+The initial high-count fixtures missed this boundary. This establishes a changed
+lock order, not proof of an actual observed deadlock.
+
+The corrected authored adapter follows this structure:
+
+```text
+copy descriptor into caller-owned temporary value
+acquire(queue_lock)
+validate binding and ring fields
+if invalid or full:
+    release(queue_lock)
+    return refusal
+construct temporary kind-3 record with two default-holder references
+copy_record_into_ring(destination, temporary)  # original helper; retains holders
+advance queue count/write cursor
+atomic_increment(deferred_budget)
+release(queue_lock)
+cleanup_temporary_record(temporary)           # original helper; may acquire resource lock
+return submitted
+```
+
+The 104-byte temporary record has kind 3, default holders at +8/+16, the descriptor
+at +24 and no associated reference at +96. Unused fields are authored zeroes. No
+source context or callback-module lifetime is retained by this layout. The ring
+lock covers publication; it is released before temporary cleanup. Full refusal
+makes no temporary-holder release or budget change. That refusal behavior is an
+authored correction, not the full-ring behavior of the original producer.
 
 Statuses distinguish `SUBMITTED`, `FULL`, `INVALID_BINDING`, `STALE_BINDING` and
-`INVALID_RING`. `SUBMITTED` only reports return from the guarded producer call;
-it is neither delivery nor a completion receipt. Invalid-ring rejection, positive
-capacity bounds and mandatory binding checks are authored policy, not claims that
-the original producer performs those checks.
+`INVALID_RING`. `SUBMITTED` reports publication and normal return from temporary
+cleanup, not callback delivery. Exceptions/nonlocal exits are not caught. Binding
+and descriptor inputs must remain immutable during the call; callback context and
+code must survive every possible later delivery.
 
-The [compiled-adapter receipt](../../native/snow_host/command_admission_validation.json)
-executes the compiled Windows x64 adapter against the original producer, decoded
-lock thunks and observed Wine lock routines in 18 serial admission cases. The
-binding validator and retained storage are supplied. The separate portable C
-fixture checks full, stale and malformed rings and normal lock balance:
+The older [nested-producer receipt](../../native/snow_host/command_admission_validation.json)
+is preserved as limited historical evidence. The current
+[cleanup-order receipt](../../native/snow_host/command_admission_cleanup_validation.json)
+executes the compiled Windows adapter with original copy/cleanup/release helpers,
+game lock thunks and observed Wine critical-section routines. All 54 supplied cases
+match successful original-producer publication in meaningful kind-3 record fields,
+queue/cursor/budget fields, holder counts and final lock state. The fixture compares
+capacities 1/2/4, 1 through 6 submissions and three holder-count states with bit 26
+set. Across adapter and reference paths, 140 resource-release helper calls occur
+with the queue lock released. Payload destruction, concurrency and exceptions
+remain excluded; unspecified record bytes are not claimed equivalent.
 
 ```sh
 python3 -m unittest discover -s tests -p test_command_admission_native.py
 ```
 
-This adapter is not installed in the game. A bounded direct-reference scan of the
-command singleton found readers but no direct writer; it does not establish that
-the singleton is permanent or that no indirect writer/destructor exists. The
-native producer's temporary-holder cleanup also runs while the adapter retains
-the outer lock. Final-release side effects were not exercised by the retained
-fixture holders. Manager teardown, cleanup lock ordering, competing producers and
-callback phase remain explicit live-integration gates.
+This adapter is not installed live. A bounded direct-reference scan of the command
+singleton found readers but no direct writer. That does not establish permanent
+storage or exclude indirect writers/destructors. Manager teardown, competing
+producers, counter transfers and callback phase remain live-integration gates.
 
 ## Inspect the behavior without game files
 

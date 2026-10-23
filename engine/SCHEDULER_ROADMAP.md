@@ -59,8 +59,10 @@ observation milestone independent of further loading internals. See the
 The publication/dispatch lock helpers now have validated encoded-target formulas,
 with 96 original-instruction cases against supplied target slots. One read-only
 live session resolves them to Wine ntdll critical-section enter/leave exports.
-Composed emulation validates same-thread recursion and an outer capacity guard
-around the original producer in 18 serial admission cases. Native manager lifetime,
+Composed emulation validates same-thread recursion. The initial outer guard around
+the full producer is superseded because it retained the queue lock during resource
+cleanup. The current adapter uses original record-copy/cleanup helpers and releases
+the queue lock before cleanup, matching original publication in 54 serial cases. Native manager lifetime,
 competing producers and callback execution phase remain open. See [encoded lock targets](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#encoded-lock-wrapper-targets).
 
 Immediate sequence:
