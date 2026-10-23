@@ -1133,3 +1133,55 @@ The next command experiment must distinguish the enclosing phase from a command'
 own invocation and correlate request identity through admission and completion.
 The live thread distribution is a constraint on that design, not a reason to
 assume the command can run on any arbitrary thread.
+
+## Resident request observation in engine-main
+
+The experimental delegate adapter now accepts one opt-in observation request
+through `SnowDelegateProbe_ArmObservation`, after configuration and before any
+install attempt. This is our resident wrapper's one-slot request, not a submission
+to the game's command manager. The first intercepted engine-main invocation
+atomically claims it, samples the command-manager global read-only, forwards the
+original invoker, samples again and publishes a returned receipt. Later concurrent
+or cached calls continue forwarding without repeating the request.
+
+The receipt identifies request, thread, caller, receiver, descriptor storage and
+entry/return ticks. It can be matched to the enclosed normal delegate record.
+Read failure is explicit, and pointer equality between two samples is not an
+atomic snapshot or lifetime pin. A missing returned receipt is inconclusive: the
+request may be pending, executing, or unable to return. No cancellation, exception
+recovery, native-queue admission, gameplay write or safe-unload promise is added.
+The existing owner-storage prerequisites for installing/restoring the descriptor
+remain. Modules and observation storage stay resident through the experiment.
+
+The Windows fixture receipt is
+[delegate_request_fixture_validation.json](../../native/snow_host/delegate_request_fixture_validation.json).
+It exercises the real compiled adapter under Wine with authored owner/callback
+storage: engine request execution/return, graphics refusal, no rearm, and a cached
+post-close invocation that does not repeat the request. It does not establish
+native phase or manager ownership. The optional plugin setting and private output
+format are documented in [build and run](../../native/snow_host/BUILD_AND_RUN.md#one-resident-engine-delegate-observation-request).
+
+### Live one-request result
+
+[Two live session receipts](../../native/snow_host/delegate_request_live_validation.json)
+record the request running inside the inspected BeginEngineFrame main-delegate
+wrapper, with caller RVA `0x65b223`. Each request bracket encloses exactly one
+ordinary delegate entry/return record on the same thread, with valid before/after
+job observations. The two manager-pointer reads succeed and agree in each run.
+This is a live authored read-only request delivered by interception, not proof of
+native command-queue submission.
+
+The first capture contains 50 callback records without loss, but its controller
+then used an incorrect job-map key and stopped validation. Its adapter reports
+restoration and drain, and process cleanup passed; do not count it as a complete
+success. The corrected second controller reads the selected invoker slot directly.
+It captures 48 callbacks without loss across three thread IDs, independently
+verifies restoration, and observes continued engine progress. Request brackets
+last approximately 100.1 and 96.9 microseconds, including instrumentation and the
+forwarded original call; these are not uninstrumented engine timing estimates.
+
+The three observed callback threads reinforce that the contract should identify
+an engine phase and request, not assume one fixed operating-system thread.
+Both sessions close the research bottle and verify saves, settings and the
+original DLL. Neither tests map transitions or owner destruction. The manager
+pointer remaining equal is an observation, not a lifetime or safe-mutation proof.

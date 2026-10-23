@@ -30,6 +30,10 @@ int main(int argc,char **argv) {
     size_t (*record_size)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_RecordSize");
     uint32_t (*abi)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ABIVersion");
     assert(configure&&configure_site&&install&&restore&&close_probe&&read_record&&record_size&&abi);
+    int (*arm)(uint64_t)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ArmObservation");
+    int (*read_request)(SnowDelegateRequestObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ReadObservation");
+    assert(arm&&read_request);SnowDelegateRequestObservation request={0};
+    assert(!arm(9));assert(!read_request(&request));
     assert(abi()==3 && record_size()==sizeof(SnowDelegateRecord));
     owner_global=VirtualAlloc(NULL,0x1000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(owner_global);
     unsigned char *owner=owner_global;table[0x40/8]=(uintptr_t)&dispatch_method;
@@ -41,6 +45,9 @@ int main(int argc,char **argv) {
     assert(!configure_site(&b,(SnowDelegateSite)99));
     assert(engine?configure_site(&b,SNOW_DELEGATE_ENGINE_MAIN):configure(&b));
     assert(!configure(&b));
+    int requested=!strcmp(argv[2],"request");
+    if(requested){assert(!arm(0));assert(arm(91)==engine);assert(!arm(92));}
+
     if(!strcmp(argv[2],"readonly")) {
         DWORD old;assert(VirtualProtect(owner,0x1000,PAGE_READONLY,&old));
         assert(!install());assert(restore());assert(d[3]==(uintptr_t)&invoker);
@@ -56,6 +63,13 @@ int main(int argc,char **argv) {
     invalidate=!strcmp(argv[2],"observation_invalid");
     assert(install());assert(!install());SnowDelegateOriginal cached=(SnowDelegateOriginal)d[3];
     assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==1);
+    if(requested&&engine){
+        assert(read_request(&request));assert(request.request_id==91);
+        assert(request.thread==GetCurrentThreadId() && request.entry_tick<=request.exit_tick);
+        assert(request.receiver==(uintptr_t)owner && request.storage==(uintptr_t)d);
+        assert(request.result==UINT64_C(0xfedcba9876543210));
+        assert(!arm(92));assert(!read_request(NULL));
+    }
     owner_global=owner;invalidate=0;
     if(!strcmp(argv[2],"conflict")) {
         d[3]=(uintptr_t)&competitor;assert(!restore());assert(d[3]==(uintptr_t)&competitor);
@@ -69,6 +83,8 @@ int main(int argc,char **argv) {
     size_t used=0,dropped=0;assert(close_probe(&used,&dropped));assert(used==1&&dropped==0);
     assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==2);
     assert(close_probe(&used,&dropped));assert(used==1);
+    if(requested&&engine){SnowDelegateRequestObservation again;assert(read_request(&again));
+        assert(!memcmp(&again,&request,sizeof request));}
     SnowDelegateRecord r;assert(read_record(0,&r,sizeof r));
     assert(r.function_storage==(uintptr_t)d && r.receiver==(uintptr_t)owner && r.result==UINT64_C(0xfedcba9876543210));
     assert(r.before.valid && r.before.executions==3 && r.before.outstanding==-2);

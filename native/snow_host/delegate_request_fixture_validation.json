@@ -1,0 +1,19 @@
+{
+  "evidence": "Compiled Windows x64 fixture run under Wine, no game process",
+  "scenarios": [
+    "engine request once, returned receipt, cached invocation without request repeat",
+    "graphics request refused"
+  ],
+  "passed": 2,
+  "native_game_delivery_proved": false,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "99e94850ef542ad0d2bbf8a86b01eaf330a4255958586b37f48ad758e184b6e0",
+    "native/snow_host/snow_delegate_probe.h": "663893b4b77c8aa938b144fcfa492c47b4d5ecc3ecefeb366df3862014d7210b",
+    "native/snow_host/examples/delegate_capture.c": "42782451ae7354869935638447d9adc2eae00eaf1c419ac9d15bd5c9981d34e1",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "a46ace8f1191f74885e4de518fb8979258b5efaa2516e27d780533205098f831"
+  },
+  "limitations": [
+    "Synthetic owner, table and callback; no native engine phase or object lifetime proof.",
+    "Manager global read may fail in fixture executable; validity bits preserved."
+  ]
+}

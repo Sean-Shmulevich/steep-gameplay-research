@@ -28,4 +28,17 @@ SNOW_DELEGATE_API int SnowDelegateProbe_Install(void);
 SNOW_DELEGATE_API int SnowDelegateProbe_Restore(void);
 SNOW_DELEGATE_API int SnowDelegateProbe_Close(size_t *,size_t *);
 SNOW_DELEGATE_API int SnowDelegateProbe_Read(size_t,void *,size_t);
+/* One optional authored observation delivered by the next intercepted delegate.
+ * Arm after Configure, before Install; one attempt, never rearm. Does not submit
+ * to the native command queue or authorize gameplay mutation. Module/storage
+ * remain resident. Read succeeds only after the forwarding invocation returns.
+ * Manager samples are sequential read-only pointers, not ownership or snapshots.
+ */
+typedef struct {
+    uint64_t request_id, entry_tick, exit_tick, thread, caller, receiver, storage;
+    uint64_t manager_before, manager_after, result;
+    uint32_t valid_before, valid_after;
+} SnowDelegateRequestObservation;
+SNOW_DELEGATE_API int SnowDelegateProbe_ArmObservation(uint64_t request_id);
+SNOW_DELEGATE_API int SnowDelegateProbe_ReadObservation(SnowDelegateRequestObservation *);
 #endif

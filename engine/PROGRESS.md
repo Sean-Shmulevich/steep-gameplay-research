@@ -6747,3 +6747,11 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Continued original startup control past manager publication in 32 synthetic-state emulator cases to the next allocator-context entry: 24 factory-path cases request 24 bytes; eight direct-path cases request 88 bytes. No manager lifetime proof follows.
 - Recorded the boundary in `native/snow_host/manager_post_publication_validation.json`; no game launched.
 - Updated scheduler roadmap with the next bounded live milestone: harmless resident-plugin request with actual phase/thread/return observation, preceded by owner-boundary observation if manager exclusion is not yet established. Further allocator branching is deferred.
+
+### Live resident engine-phase request and return
+
+- Added opt-in one-shot observation requests to the existing engine-main delegate probe, armed before installation and claimed atomically by one callback. Original invocations keep forwarding; later cached calls do not repeat the request.
+- Windows/Wine fixture passes engine execution/return and graphics refusal. Two portable trace/pipeline tests pass; Windows plugin builds with warnings as errors.
+- Two live captures return the authored request inside exactly one matched engine callback. First controller has a post-capture job-map-key error, retained as partial evidence. Corrected run has 48 records, zero drops, three callback threads, independent slot-restoration verification and continued engine progress.
+- Both live sessions verify bottle shutdown, save/settings restoration and original DLL identity. Public sanitized receipts preserve source and private-output hashes without raw pointers or game payloads.
+- Native queue submission, reusable delivery, transition/shutdown lifetime and arbitrary mutation remain open. The request is delivered by the resident intercepted delegate, not the game's command queue.

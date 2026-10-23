@@ -9,7 +9,7 @@
 #include "snow_plugin.h"
 #include "snow_delegate_probe.h"
 static char trigger[MAX_PATH],output[MAX_PATH];
-static unsigned duration;
+static unsigned duration,request_id;
 static SnowDelegateSite site=SNOW_DELEGATE_GRAPHICS_MAIN;
 static const char *site_name="graphics";
 static volatile LONG cancelled;
@@ -53,7 +53,9 @@ static DWORD WINAPI capture(LPVOID unused) {
                                      descriptor[0],descriptor[1],descriptor[2],descriptor[3]};
         configured=SnowDelegateProbe_ConfigureSite(&binding,site);
     }
-    if(configured) {
+    int request_armed=0;
+    if(configured && request_id)request_armed=SnowDelegateProbe_ArmObservation(request_id);
+    if(configured && (!request_id || request_armed)) {
         installed=SnowDelegateProbe_Install();
         if(installed) {
             until=GetTickCount64()+duration;
@@ -62,6 +64,23 @@ static DWORD WINAPI capture(LPVOID unused) {
         restored=SnowDelegateProbe_Restore();
         until=GetTickCount64()+2000;
         do { drained=SnowDelegateProbe_Close(&used,&dropped);if(drained)break;Sleep(1); }while(GetTickCount64()<until);
+    }
+    if(request_id) {
+        char request_output[MAX_PATH+32];
+        snprintf(request_output,sizeof request_output,"%s.request.json",output);
+        FILE *rf=fopen(request_output,"w");
+        SnowDelegateRequestObservation r={0};int returned=SnowDelegateProbe_ReadObservation(&r);
+        if(rf) {
+            fprintf(rf,"{\"route\":\"intercepted_engine_delegate\",\"native_queue_submission\":false,"
+                "\"request_id\":%u,\"armed\":%d,\"returned\":%d,\"entry\":%llu,\"exit\":%llu,"
+                "\"thread\":%llu,\"caller\":\"%llx\",\"receiver\":\"%llx\",\"storage\":\"%llx\","
+                "\"manager_before\":\"%llx\",\"manager_after\":\"%llx\",\"valid_before\":%u,\"valid_after\":%u}\n",
+                request_id,request_armed,returned,(unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick,
+                (unsigned long long)r.thread,(unsigned long long)r.caller,(unsigned long long)r.receiver,
+                (unsigned long long)r.storage,(unsigned long long)r.manager_before,(unsigned long long)r.manager_after,
+                r.valid_before,r.valid_after);
+            fclose(rf);
+        }
     }
     FILE *f=fopen(output,"w");
     if(f) {
@@ -92,6 +111,8 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     if(!strcmp(selected,"engine")) { site=SNOW_DELEGATE_ENGINE_MAIN;site_name="engine"; }
     else if(!strcmp(selected,"graphics")) { site=SNOW_DELEGATE_GRAPHICS_MAIN;site_name="graphics"; }
     else return 1;
+    request_id=GetPrivateProfileIntA("capture","request_id",0,api->config_path);
+    if(request_id && site!=SNOW_DELEGATE_ENGINE_MAIN)return 1;
     duration=GetPrivateProfileIntA("capture","milliseconds",500,api->config_path);
     if(duration<100 || duration>2000)return 1;
     snprintf(trigger,sizeof trigger,"%s.trigger",api->config_path);

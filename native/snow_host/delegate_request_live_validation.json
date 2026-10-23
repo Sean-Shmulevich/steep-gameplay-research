@@ -1,0 +1,64 @@
+{
+  "evidence": "Two bounded live Wine game sessions with opt-in resident engine-main delegate interception and one authored read-only request per process",
+  "delivery_route": "intercepted engine-main delegate; not native command queue",
+  "request_slot": "one-shot, armed before install, no rearm",
+  "runs": [
+    {
+      "controller_passed": false,
+      "controller_error": "'engine'",
+      "request_returned": true,
+      "request_id": 91,
+      "matching_delegate_records": 1,
+      "delegate_records": 50,
+      "delegate_thread_count": 2,
+      "dropped": 0,
+      "caller_rva": "0x65b223",
+      "request_duration_microseconds": 100.1,
+      "manager_pointer_reads_valid_and_equal": true,
+      "adapter_restored_and_drained": true,
+      "independent_restoration_and_progress_check": false,
+      "cleanup_verified": true,
+      "raw_evidence_sha256": {
+        "delegate-capture-result.json": "aa11180b7f90848907ef72d0970afc1e6d764f01f4be62a246add73bd8e15612",
+        "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+        "build/plugins/delegate_capture.ini.trace.jsonl": "a8eaed29591a68ac60bb10baaaad403f8520206e7844438d85df89417f188d7c",
+        "build/plugins/delegate_capture.ini.trace.jsonl.request.json": "1c44eb11797dde6518639187a49e8acac5ca44aeacbed7da735dcf6359d588d0"
+      }
+    },
+    {
+      "controller_passed": true,
+      "controller_error": null,
+      "request_returned": true,
+      "request_id": 91,
+      "matching_delegate_records": 1,
+      "delegate_records": 48,
+      "delegate_thread_count": 3,
+      "dropped": 0,
+      "caller_rva": "0x65b223",
+      "request_duration_microseconds": 96.89999999999999,
+      "manager_pointer_reads_valid_and_equal": true,
+      "adapter_restored_and_drained": true,
+      "independent_restoration_and_progress_check": true,
+      "cleanup_verified": true,
+      "raw_evidence_sha256": {
+        "delegate-capture-result.json": "f1e336d310f9e1227f458c197be671711a92156a86f4834b76ec581d72449cbc",
+        "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+        "build/plugins/delegate_capture.ini.trace.jsonl": "08ceeb9bc9d9512e9c2237e34c07e430e765f10ac35505b98921befe60f1362c",
+        "build/plugins/delegate_capture.ini.trace.jsonl.request.json": "db18cc62f71839cb94c649d552a413a3aee8a7d8b82e9ef2e3cf5eb93b3c5298"
+      }
+    }
+  ],
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "99e94850ef542ad0d2bbf8a86b01eaf330a4255958586b37f48ad758e184b6e0",
+    "native/snow_host/snow_delegate_probe.h": "663893b4b77c8aa938b144fcfa492c47b4d5ecc3ecefeb366df3862014d7210b",
+    "native/snow_host/examples/delegate_capture.c": "42782451ae7354869935638447d9adc2eae00eaf1c419ac9d15bd5c9981d34e1"
+  },
+  "plugin_sha256": "bdcdc5edd8926aa4fa08ccda1ef4a695be7ee8042f283f3d28a1886f54c6ff00",
+  "limitations": [
+    "First controller stopped its validation on a wrong job-map key after request capture; retained as partial evidence, not a full successful run.",
+    "Resident plugin and recorder; no safe unloading or reusable command queue demonstrated.",
+    "Manager samples are sequential pointer reads, not native queue admission, manager retention or mutation permission.",
+    "Known descriptor identity and bounded owner stability are experimental conditions, not a general owner lifetime guarantee.",
+    "No map transition, shutdown race, deterministic scheduling, physics completion or gameplay mutation qualified."
+  ]
+}

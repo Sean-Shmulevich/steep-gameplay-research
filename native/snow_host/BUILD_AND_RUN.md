@@ -691,3 +691,29 @@ The 1-ms polling interval is not a scheduler boundary or an atomic event callbac
 Construction may race between checks and arming. Final output and milestones
 report wait gates, samples, late/read-failure refusal and the sampled table pointer.
 A successful wait is not proof of exact-constructor capture or object lifetime.
+
+### One resident engine-delegate observation request
+
+The opt-in `delegate_capture` plugin accepts `request_id=91` under `[capture]`
+with `site=engine`. Zero, the default, leaves request observation disabled.
+The controller must still establish the bounded owner-lifetime experiment and
+create the trigger only after readiness. The plugin arms the request before
+installing the wrapper. This is an authored one-slot observation inside the
+intercepted engine callback, not native command-queue submission.
+
+The next intercepted invocation atomically claims the request. It reads the
+command-manager global through `ReadProcessMemory`, forwards the original
+invoker unchanged, samples that global again, and publishes a returned receipt.
+Concurrent or cached later calls do not reexecute the request. There is no engine
+lock acquisition or gameplay mutation. A nonreturning original leaves the receipt
+unavailable. A failed pointer read has a separate validity bit, not a valid zero.
+The `.trace.jsonl.request.json` sidecar contains private process pointers, request
+ID, callback bounds and thread; keep it out of the public repository.
+
+`SnowDelegateProbe_ArmObservation` requires configured engine-main, an open
+recorder and no install attempt. It refuses zero IDs, graphics site, rearming,
+and calls after installation. `ReadObservation` succeeds only after forwarding
+returns. This does not pin the manager, establish an atomic snapshot, prove a
+native queue delivery phase or authorize arbitrary commands. The plugin, recorder
+and original image remain resident; existing installation lifetime prerequisites
+still apply.

@@ -261,3 +261,19 @@ The bounded post-publication startup trace found subsequent 24-byte factory and
 88-byte allocation paths, but no manager lifetime proof. Record those as leads;
 do not expand another allocator branch unless it answers the admission lifetime
 question or a concrete engine-reconstruction requirement.
+
+### First resident engine-phase observation delivered live
+
+The [live resident request result](../docs/reconstruction/SCHEDULER_DELEGATES.md#live-one-request-result)
+now establishes one harmless request's entry and return in the intercepted
+BeginEngineFrame main delegate. The corrected run independently verifies slot
+restoration and later engine progress; 48 callbacks span three threads with no
+recorder drops. Native command-queue admission and its manager lifetime remain
+unqualified. This route uses a resident authored one-shot interception request.
+
+Next, qualify repeated request delivery and explicit close/refusal semantics at
+this already observed phase while preserving request IDs and callback context.
+Before map-transition or shutdown claims, observe owner changes and establish
+invalidation/exclusion. Keep fixed-thread assumptions out of the API: the phase
+was observed on multiple workers. This is a concrete execution foothold, not
+permission for arbitrary subsystem mutation or plugin unload.
