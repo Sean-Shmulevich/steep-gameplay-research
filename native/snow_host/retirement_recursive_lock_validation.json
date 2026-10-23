@@ -1,0 +1,21 @@
+{
+  "evidence": "Joined original retirement path plus original game lock adapters and previously observed Wine critical-section implementation",
+  "cases": 24,
+  "maximum_recursion": {
+    "registry_60": 1,
+    "global_1d8": 2,
+    "registry_b8": 2,
+    "coordination": 1
+  },
+  "final_locks_balanced": true,
+  "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+  "state_and_leaf_event_order_match": true,
+  "probe_sha256": "26c17066e34fb5ac398ff290682c7c88c56af300948562ed500961fc854be762",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "One synthetic holder, zero preparation budget, sufficient inline output, reserved token.",
+    "Synthetic same-thread TEB and initialized spin-zero critical sections; encoded target slots supplied only in emulator.",
+    "Signal, payload virtual/destructor/dispatch and allocator lookup/free supplied; no contention, OS waits, lock destruction or exceptions tested.",
+    "No original destructor effects, concurrent ownership, output growth or global scheduler drain demonstrated."
+  ]
+}

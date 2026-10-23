@@ -2073,3 +2073,9 @@ mutation. The release service sets holder flags, and the next decrement must see
 that current state. The model already reads mutable holder objects; its contract
 now explicitly allows those service updates. Native concurrency is still outside
 its scope.
+
+The previously qualified Wine recursive-lock implementation is also composed
+with the joined resource-retirement path in
+[the retirement lock receipt](ANIMATION_CONTEXT_RETIREMENT.md#joined-service-with-original-recursive-lock-implementation).
+This extends same-thread recursion evidence to that nested path; it does not
+supply the missing command-manager lifetime or cross-thread admission proof.

@@ -3712,3 +3712,32 @@ registry guard. The supplied serial lock tracker reaches depth two and returns
 to zero. This is a call-order observation, not proof of native recursive-lock
 semantics or an authorization to substitute a nonrecursive mutex. Those guard
 implementations and contention behavior are the next synchronization boundary.
+
+## Joined service with original recursive-lock implementation
+
+The [recursive-lock receipt](../../native/snow_host/retirement_recursive_lock_validation.json)
+strengthens the prior joined-service comparison by removing interception of both
+lock adapters. It runs original game helpers `0x1c3a280` / `0x12213c0`, their
+encoded dispatch and the previously live-resolved Wine ntdll critical-section
+implementations. The local module hash is checked against the earlier
+[recursive-lock qualification](../../native/snow_host/recursive_lock_validation.json)
+before reuse. This is not a new live target resolution.
+
+The emulator supplies fresh initialized spin-zero critical sections, a same-thread
+TEB identity and encoded target-slot values directing transfers to the qualified
+module. Those slot writes exist only in emulator memory. The original retirement
+wrapper, zero-budget preparation, consumer, cleanup and pool lookup continue to
+execute together. The payload/signal/allocator leaf services remain supplied.
+
+All 24 joined cases retain the earlier field and event results. Observed recursion
+maxima are one for registry +0x60, two for global-owner +0x1d8, two for registry
++0xb8, and one for the coordination guard. After each case, all four critical
+sections have lock count -1, recursion count zero and null owner. This qualifies
+the expected nested same-thread acquire/release behavior for the observed Wine
+implementation with synthetic initialized storage. It supersedes the narrower
+statement that this joined path has only synthetic recursion-counter evidence.
+
+Contention, OS waits/wakes, lock destruction, exception unwinding, live guard
+initialization/lifetime and cross-thread memory ordering remain outside the
+experiment. Balanced recursion does not prove that concurrent resource mutation
+or plugin unload is safe. No live game was launched or modified in this pass.

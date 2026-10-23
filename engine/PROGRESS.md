@@ -6578,3 +6578,12 @@ order without stubbing those middle routines. Three public integration tests
 cover mode-one destruction, mode-zero dispatch and retained/reentrant refusal.
 Nested guard acquisitions are visible; native guard semantics and contention
 remain the next synchronization boundary. No live game launched.
+
+### Joined retirement path qualified with original Wine lock instructions
+
+Replaced synthetic lock interception in the private joined fixture with original
+game adapters and the previously observed, hash-matched Wine ntdll routines.
+All 24 cases retain matching state/event order; nested guards reach depth two and
+all four locks finish unowned with recursion zero. Synthetic initialized locks,
+TEB and encoded target slots remain supplied. Contention, live lifetime and unload
+safety are not established. No game launch or live memory modification.
