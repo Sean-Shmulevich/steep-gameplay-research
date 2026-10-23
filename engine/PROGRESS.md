@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added a runnable two-request action-refresh probe joining the independent scheduler
+and reset adapter. Two tests verify that exhausted claims do not release category
+5 while another reservation remains, and that next-request suppression clears the
+old sample. Joined the existing PreAI-to-Action and EndFrame research into a
+conditional ordinary-rearm argument; no new live or whole-frame proof is claimed.
+See [rearm and probe](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#ordinary-rearm-argument-and-runnable-refresh-probe).
+
 Validated the complete execution-wrapper/category-worker/completion chain in 21
 composed instruction cases with synthetic callbacks and reserved dispatches.
 Dependency release waits for the last execution return, but precedes the final

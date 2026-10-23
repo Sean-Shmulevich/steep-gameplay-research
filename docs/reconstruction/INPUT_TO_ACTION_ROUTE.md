@@ -705,3 +705,55 @@ that the next gather waits on this category's completion in every mode, that no
 other code accesses its storage, or that a live snapshot is atomic. The next
 storage-lifetime question is the graph path from this request's completion to
 permission to gather the next request.
+
+
+## Ordinary rearm argument and runnable refresh probe
+
+The remaining lifetime question can reuse the existing
+[EndFrame dependency research](ENGINE_LOOP_HANDSHAKE.md). The category-4/5
+terminal feeds the world PreAI terminal, whose outer chain precedes the named
+pad poll and the later Action stage. The established Action-to-EndFrame chain
+then precedes dependency preparation and ordinary root resubmission:
+
+```text
+category 4 worker bodies return
+  -> category 4 releases category 5
+  -> world PreAI terminal
+  -> outer PreAI tail and intervening stages
+  -> pad poll and later Action stage
+  -> Action terminal and downstream frame joins
+  -> EndFrame callback prepares links and submits next ordinary root
+  -> next eligible Step path can gather again
+```
+
+This is an inference joining the documented ordinary graph edges and completion
+rules. It is stronger than treating the next gather as an unidentified external
+call, but remains conditional on those routes being selected. It is not a newly
+executed whole-frame graph or a universal exclusion proof. Alternate release,
+startup/event submission, direct service calls, dynamic world membership and
+concurrent external mutation remain outside this argument. EndFrame can submit
+the next root before its own wrapper returns; global engine idleness is not
+required by this narrower callback-storage ordering.
+
+A portable composition now runs the recovered partial chain
+`BeforeAISetup -> Category4 -> Category5 -> PreAISingleThreaded -> PreAITerminal`
+with the independent scheduler and action-reset adapter:
+
+```sh
+python3 -m engine.examples.action_refresh_probe
+python3 -m unittest discover -s tests -p test_action_refresh_probe.py
+```
+
+The [probe](../../engine/examples/action_refresh_probe.py) supplies synthetic
+populations and a constant source evaluator. It reserves two dispatches before
+claiming the single manager callback. Remaining count becomes zero immediately,
+but category 5 stays blocked after the first return and starts only after the
+second reservation returns. The next request suppresses evaluation and clears
+the first request's sample. Tests assert these transitions and callback ordering.
+
+The harness resubmits after the partial terminal; it does not implement or test
+the native EndFrame graph. Two reservations, the serial execution order and the
+bounded maximal chunk size are fixture choices. Omitted incoming dependencies
+and source evaluators must not be inferred from this example. The useful next
+live evidence remains correlated request identity, category completion and the
+next gather on the actual selected world, once game access is available.
