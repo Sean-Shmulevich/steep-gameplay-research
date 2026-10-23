@@ -1,0 +1,195 @@
+{
+  "status": "passed",
+  "cases": 21,
+  "scope": "Full original execution wrapper, category claim worker, visitor, invoker, clock getter, completion, done transition and finalizer",
+  "substitutions": [
+    "Locks are no-ops",
+    "Queue removal records event and sets done state",
+    "Dependency release records counters and clears synthetic active flag",
+    "Final action callback records receiver and job counters"
+  ],
+  "setup": [
+    "Synthetic TLS with no active wrapper instrumentation",
+    "No profiling object; category priority 255",
+    "Pre-reserved dispatch counts; no original selector execution",
+    "Stable generation; null callback clock; empty pre/post hooks",
+    "Maximal chunk size, zero threshold, no early-yield flag",
+    "Finalizer registration-accounting flag zero"
+  ],
+  "rows": [
+    {
+      "callbacks": 0,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 0,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 0,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 2,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 2,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 2,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 4,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 4,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 4,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 5,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 5,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 5,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reserved_dispatches": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reserved_dispatches": 2,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reserved_dispatches": 3,
+      "release_executions": 0,
+      "release_outstanding": 1
+    }
+  ],
+  "spans": [
+    {
+      "start_rva": "0x11e9990",
+      "end_rva_exclusive": "0x11e9b27",
+      "sha256": "24d3e80d0b765aebc07cfaa0eac77846acaa87228fa25cd4e2ab55b98e686a3e"
+    },
+    {
+      "start_rva": "0x65b050",
+      "end_rva_exclusive": "0x65b1dd",
+      "sha256": "ce4c9a4e319886935d5abf24a88e6f3ddaee977b1f6015953a437ff41d04e96e"
+    },
+    {
+      "start_rva": "0x67d690",
+      "end_rva_exclusive": "0x67d707",
+      "sha256": "d8726090f556f5ce988310a3e6dc5b437dab893acb419e324f2d12d58978f9c8"
+    },
+    {
+      "start_rva": "0x43f5b0",
+      "end_rva_exclusive": "0x43f5bc",
+      "sha256": "2ebdc12b8c744a7482b91fa57d2fad496445b8ee732fd551bbe61603a4ae672e"
+    },
+    {
+      "start_rva": "0x66e4c0",
+      "end_rva_exclusive": "0x66e4d6",
+      "sha256": "508334ca181f2dc67d2473811ec5a3186ddae356dc143750372af67138c16b91"
+    },
+    {
+      "start_rva": "0x11e2d70",
+      "end_rva_exclusive": "0x11e2e1b",
+      "sha256": "1877fddd9c59e7a7eddee73f440834efc81f1784d26b543697b88200acd00075"
+    },
+    {
+      "start_rva": "0x11d16f0",
+      "end_rva_exclusive": "0x11d1746",
+      "sha256": "89b528b2c7149d9004972b00bf4d67e7a507e38fa4e31ff756c7a4a95cd26f6e"
+    },
+    {
+      "start_rva": "0x11d1670",
+      "end_rva_exclusive": "0x11d16eb",
+      "sha256": "1a91ff93e0f55c64247ba8d459ff0f21064ce670612d81c7404b18143c902586"
+    }
+  ],
+  "limits": [
+    "Dispatches executed serially; no actual overlapping workers or lock contention",
+    "No successor graph traversal or next-request storage reuse proof",
+    "Synthetic callbacks, no game process or input freshness proof"
+  ],
+  "game_process": false
+}

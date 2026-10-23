@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated the complete execution-wrapper/category-worker/completion chain in 21
+composed instruction cases with synthetic callbacks and reserved dispatches.
+Dependency release waits for the last execution return, but precedes the final
+outstanding-dispatch decrement. Callback execution observes zero remaining claims.
+Native locks, queue removal and successor traversal remain substitutions; actual
+concurrency and next-request storage reuse are not proved.
+See [category completion](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#category-worker-return-and-dependency-release).
+
 Joined category-4 activation to the common range begin/empty/finalizer lifecycle.
 Forty-eight composed original-instruction cases cover holds, scheduled wake,
 queueing and empty immediate finalization with explicit synchronization/queue

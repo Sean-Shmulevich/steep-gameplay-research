@@ -651,3 +651,57 @@ claims from returned worker bodies. We still need a composed category-specific
 worker/completion check and the next-request graph barrier before claiming its
 callback storage is safe to reuse. A direct call to its finalizer is not a safe
 mod API: the finalizer itself does not check for active worker bodies.
+
+
+## Category worker return and dependency release
+
+The generic execution wrapper `0x11e9990` calls the job's slot 0x40, restores
+its execution context, then calls completion `0x11e2d70`. With the concrete
+category table, that slot reaches the decoded claim worker `0x65b050` and
+callback visitor `0x67d690`. Completion reaches the same table's empty predicate
+and finalizer. This joins the category route to the previously documented
+[ordinary completion protocol](SCHEDULER_REARM.md#completion-separates-empty-work-from-finished-callbacks).
+
+```text
+execute_reserved_category_dispatch(job):
+    install_execution_context()
+    job.claim_and_execute_callback_ranges()
+    restore_execution_context()
+    atomic_decrement(job.executions)
+    if job.state == SCHEDULED and job.remaining <= 0:
+        lock(job)
+        if job.state == SCHEDULED and job.remaining <= 0:
+            remove_from_scheduler_and_mark_done(job)
+        unlock(job)
+    if job.state == DONE:
+        lock(job)
+        if job.state == DONE and job.executions == 0:
+            job.ordinary_finalize()  # releases active outgoing dependencies
+        unlock(job)
+    atomic_decrement(job.outstanding_dispatches)
+```
+
+Execution and outstanding counters are at job+0x4c and +0x50, respectively.
+They must already account for reserved dispatches before this wrapper runs.
+The pseudocode abbreviates native nested locking and profiling. It is not a
+standalone lock implementation or permission to call the finalizer directly.
+
+The [composed receipt](../../native/snow_host/action_refresh_completion_validation.json)
+records 21 cases: zero through six callbacks, with one through three pre-reserved
+dispatches. Original wrapper, range claiming, callback visitor, invoker, clock
+getter, completion, done transition and finalizer execute together. Locks,
+queue removal, successor release and final action callbacks are substituted.
+The test serially returns each reserved dispatch; it does not emulate concurrent
+worker interleavings.
+
+All callbacks observe remaining count zero while execution and outstanding counts
+still include every reserved dispatch. Earlier returns can mark the job done,
+but release occurs only on the final return. At the release hook, executions is
+zero and outstanding dispatches is one. The final outstanding decrement follows
+release, leaving both counters zero when the wrapper returns.
+
+These results close the composed local worker/completion check. They do not prove
+that the next gather waits on this category's completion in every mode, that no
+other code accesses its storage, or that a live snapshot is atomic. The next
+storage-lifetime question is the graph path from this request's completion to
+permission to gather the next request.
