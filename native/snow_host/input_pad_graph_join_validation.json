@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "cases": 16,
+  "scope": "Original Step graph slice, original provider getters and ordinary successor registration wrappers",
+  "expected_edges": [
+    "preceding job -> AI first entry",
+    "AI first terminal -> UpdatePadManager",
+    "UpdatePadManager -> world singleton member +0x638"
+  ],
+  "substitutions": [
+    "Lock/unlock return without synchronization",
+    "Outgoing-list clear and append helpers record receiver/edge calls without mutating native container storage"
+  ],
+  "supplied_inputs": [
+    "Synthetic engine/provider/world objects with inspected provider and ordinary-node tables"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x69c7c3",
+      "end_rva_exclusive": "0x69c829",
+      "sha256": "600651e52fb27de6042b888749775673b03ca3f68db3ff4cd804c87554f1e766"
+    },
+    {
+      "start_rva": "0x66f1a0",
+      "end_rva_exclusive": "0x66f1ac",
+      "sha256": "8f787e4399d41108c81ca9fe66f4e0f4ca1c947deb9942e716884a24f20e6b8a"
+    },
+    {
+      "start_rva": "0x66f1c0",
+      "end_rva_exclusive": "0x66f1c8",
+      "sha256": "725ed962e750ca38877e96d9fe8868c9933e1d44e12d5656e381da6f870f3bf6"
+    },
+    {
+      "start_rva": "0x11e1790",
+      "end_rva_exclusive": "0x11e17e2",
+      "sha256": "2a6523cae645a436af9e534ededc8e76b7bf331abc269163055a770c3de6654d"
+    }
+  ],
+  "limits": [
+    "World stage +0x638 interior not executed",
+    "Full graph dispatch and callback return not tested",
+    "No physics substep consumption or runtime cadence proof"
+  ],
+  "game_process": false
+}

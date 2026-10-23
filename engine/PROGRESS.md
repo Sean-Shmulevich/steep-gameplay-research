@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved the pad predecessor as the first AI provider terminal. Step registers
+AI global-update terminal -> UpdatePadManager -> world-stage member +0x638.
+Sixteen original graph-slice cases pass with list mutation/locks observed via
+substitutions. Provider interiors were already decoded; the following stage's
+physics-consumption join remains open. See
+[pad dependency join](../docs/reconstruction/INPUT_UPDATE_ORDER.md#pad-task-follows-the-ai-global-update-terminal).
+
 Found the indirect normal-task registration missed by direct-call searches:
 holder cycle 0x11789f0 is UpdatePadManager with the input holder as context.
 Twelve original registration cases pass. The conditional object caller is an

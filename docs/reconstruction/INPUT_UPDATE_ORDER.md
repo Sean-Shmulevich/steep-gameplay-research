@@ -1751,3 +1751,48 @@ Do not collapse these tasks into "poll then publish before Step". History and
 ownership are pre-world work, while the holder poll has its own task and
 per-frame registration. A frame/substep timestamp join still requires resolving
 that world-stage chain or observing it live when the game becomes available.
+
+## Pad task follows the AI global-update terminal
+
+The receiver saved at engine-owner+0x3048 is now identified as the first
+terminal of the [AI provider](ENGINE_PROVIDER_CHAINS.md#one-receiver-owns-both-pairs),
+not an untyped world-stage receiver. The singleton writer constructs provider
+0x644ad0 and publishes it to the exact global read by the Step registration.
+Its main table selects these first-pair getters:
+
+```text
+first_entry(provider) = pointer_at(provider + 0x3a8)
+first_terminal(provider) = provider + 0x3b0
+```
+
+The inspected Step slice clears that terminal's outgoing list, then registers:
+
+```text
+register(preceding_job, provider.first_entry())
+register(provider.first_terminal(), engine.UpdatePadManager)
+register(engine.UpdatePadManager, world_stage_singleton.member_638)
+engine.saved_first_terminal = provider.first_terminal()
+```
+
+The ordinary registration method returns its successor. Consequently the last
+chained virtual call has UpdatePadManager as its receiver, not the AI terminal.
+These are dependency registrations, not immediate invocations of the input
+poller. The provider's first graph is the AI global-update graph; its distinct
+second pair is the after-update graph and must not be substituted here.
+
+Combining the prior provider-interior audit with this join gives a concrete
+conditional ordering: when this rebuilt ordinary graph executes and its
+callbacks return, the first AI terminal releases before the pad task, and the
+pad task precedes the selected +0x638 world-stage entry. The full interior of
+that world stage and the exact physics input-consumption point remain open.
+This does not prove that every frame rebuilds the graph or that an alternate
+release path executes each receiver body.
+
+[Graph-join validation](../../native/snow_host/input_pad_graph_join_validation.json)
+executes 16 relocated synthetic cases through the original Step slice, original
+provider getters and ordinary registration wrappers. All three edge arguments,
+the terminal clear receiver and saved terminal identity match. Lock/unlock and
+outgoing-list clear/append helpers were substituted with observations; container
+mutation and complete graph execution were not validated. This resolves the
+receiver-identity ambiguity in the preceding section without upgrading it to a
+live input-to-physics trace.
