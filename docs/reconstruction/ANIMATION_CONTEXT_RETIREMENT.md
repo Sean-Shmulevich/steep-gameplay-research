@@ -3601,3 +3601,39 @@ destructors or the mode-zero dispatcher. Successful supplied destructor/free cal
 do not establish original resource effects or scheduler-wide callback completion.
 Native exception unwinding and guaranteed unlock-on-error remain unproved. No
 live game was launched.
+
+## Captured resource preparation budget
+
+The wrapper's preparation call `0x1198740..0x119881c` is the resource-triple
+consumer previously documented in
+[animation runtime binding](../systems/animations/runtime-binding/trace-recipe.md#triple-consumption-and-dispatch).
+`engine.resource_preparation_queue.prepare_resource_queue` now composes its
+existing count/entry decision helpers into a serial loop.
+
+Under registry +0xb8 guard, the routine exchanges uint32 registry +0x50 to zero
+and processes exactly the captured number of entries. It pops 24-byte triples
+from the ring at registry +0, updating count +8 and head +0x10 modulo capacity
++0x14 before dispatch. Triple +0 is the key and +0x10 the holder; queued record
+at +8 is copied but not used. If the queued key equals holder +0x10, status bit31
+is set and the holder's current payload is loaded. A nonnull current payload is
+sent to `0x11a8bd0`. Mismatches skip marking/dispatch. No generation or recycled
+flag gate is introduced by the reconstructed loop.
+
+Dispatch callbacks can publish additional count while this call runs. Those
+writes remain in registry +0x50 for a later call; they do not extend the captured
+budget. This differs from the retirement consumer, which re-reads its ring count
+each iteration. The producer-to-publication path remains documented in the prior
+resource publication research; this routine does not perform that transfer.
+
+Captured budget greater than available triples reaches an original access through
+a null holder. The model raises an explicit boundary error after already committed
+pops/dispatches rather than silently reporting successful drain. Neither the model
+nor the native observation establishes exception-safe unlock or recovery.
+
+The [comparison receipt](../../native/snow_host/resource_preparation_queue_validation.json)
+covers 96 normal-return paths and 48 stopped shortage boundaries, varying budget,
+occupancy, wrap, stale keys, payload presence and callback publication. Original
+instructions execute the loop; locks and dispatch are supplied. State and event
+order match. Three public tests cover current-versus-queued payload, callback
+publication, stale/null cases and shortage. No native concurrent producer,
+resource readiness, downstream dispatch body or live fault was tested.

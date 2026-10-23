@@ -103,3 +103,9 @@ changes do not abort the captured traversal. Output ownership bit30 separately
 controls array freeing. Output storage/descriptor must stay valid and stable during
 destruction. No native destructor effects, exception safety or scheduler drain
 are supplied by this model.
+
+`resource_preparation_queue.prepare_resource_queue` consumes one exchanged uint32
+published budget from a valid triple ring. Matching keys mark bit31 and dispatch
+the current payload; queued payloads are unused. Callback publications remain for
+another invocation. Budget/occupancy mismatch raises an authored boundary error
+with partial progress, not a recovered native recovery or unlock guarantee.

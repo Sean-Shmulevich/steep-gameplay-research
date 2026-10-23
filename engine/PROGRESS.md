@@ -6553,3 +6553,11 @@ All 108 complete original-wrapper cases match supplied-service events and mode
 changes. Two public tests cover ordering and ownership/mode separation. Native
 payload destruction, preparation and allocator internals remain external; no live
 launch or scheduler-wide completion claim.
+
+### Resource preparation loop composed with captured publication budget
+
+Joined prior resource decision helpers into the preparation routine used before
+retirement consumption. Matched 96 original normal-return cases plus 48 stopped
+shortage boundaries, with wrapped pops, stale keys and callback publication.
+Three public tests pass. Additional publications do not extend the captured
+budget. Downstream resource dispatch and concurrency remain outside this model.

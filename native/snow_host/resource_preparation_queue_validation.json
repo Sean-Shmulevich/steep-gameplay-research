@@ -1,0 +1,14 @@
+{
+  "evidence": "Original complete resource preparation routine with supplied locks and dispatch",
+  "normal_return_cases": 96,
+  "shortage_boundary_cases": 48,
+  "state_and_events_match": true,
+  "routine_rva": "0x1198740",
+  "routine_sha256": "65ff940eb48f9cb1f711da83ce07b274db4039ca42e8399752c481a9ee40191f",
+  "model_sha256": "e82c6e53a325258842a43af247ca212335915215b36b107dc0e00f10a030a3e2",
+  "limitations": [
+    "Shortage stops before original null-holder access; native fault/unwind not tested.",
+    "Callback publication is serial; no concurrent producers or lock implementation tested.",
+    "Dispatch body and resource lifetime/readiness remain unresolved."
+  ]
+}
