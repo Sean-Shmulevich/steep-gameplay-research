@@ -1040,3 +1040,32 @@ entry/return, selected cache identity, raw values and the consuming player
 callback/substep. Timestamp equality alone cannot replace those observations.
 When reads can straddle a writer, record that uncertainty rather than assigning
 a fabricated generation from the clock or vector contents.
+
+
+## Manager traversal differential validation
+
+The [manager receipt](../../native/snow_host/action_refresh_manager_validation.json)
+records 864 executions of complete routine `0x4d0290`, comparing its binding
+reset sequence with `refresh_groups`. Cases combine two independently active
+contexts, zero/one/three bindings per group, four blocker configurations and
+fresh versus same-thread nested exclusive accounting.
+
+The original copies global bytes +0x384/+0x385/+0x388 into context fields
++0xc1/+0xc2/+0xc5 before consulting the context activity byte. Inactive contexts
+therefore still receive those flag copies, but do not run the preamble or binding
+resets. Active contexts invoke the preamble before visiting the three groups.
+Groups are forward, bindings reverse; the blocker check follows each reset.
+A reset that changes its blocker to nonzero stops only its own group.
+
+The test supplies thread identity, global flag accessor, preamble and binding
+reset effects. The original exclusive-accounting instructions execute without
+contention. Both fresh entry and same-thread nested entry restore their expected
+owner/depth/accounting fields on return. This does not validate cross-thread
+locking or native reentrant callbacks.
+
+This extends the earlier portable group-order tests with original-instruction
+comparison. The public adapter still models only the stable group traversal;
+manager context selection, flag copies, preamble and synchronization remain
+caller responsibilities. Reset/evaluator composition has separate validation;
+this traversal test does not execute those bodies or permit structural mutation
+of context/group arrays during iteration.

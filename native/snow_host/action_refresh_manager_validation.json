@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "cases": 864,
+  "scope": "Complete original manager traversal compared to independent three-group traversal with caller-supplied context gates",
+  "substitutions": [
+    "Thread identity fixed at 42",
+    "Global flag accessor returns synthetic flags",
+    "Context preamble records its receiver",
+    "Binding reset records identity and optionally sets blocker"
+  ],
+  "coverage": [
+    "Two contexts independently active/inactive",
+    "Each of three groups has zero, one or three bindings",
+    "Absent blocker, clear blocker, set blocker, blocker enabled by reset",
+    "Fresh uncontended exclusive accounting and same-thread nested accounting",
+    "Flag copies checked even for inactive contexts"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x4d0290",
+      "end_rva_exclusive": "0x4d0424",
+      "sha256": "f999ac9a4611a55483be96df2d41e5b5552566f273c4c6e00921c7a8fdd5ec2f"
+    }
+  ],
+  "limits": [
+    "No competing threads or structural mutation",
+    "Preamble and action reset are substituted, not composed with evaluator",
+    "Independent API models group traversal only; manager context/locking are caller responsibilities"
+  ],
+  "game_process": false
+}

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated the full original manager traversal in 864 cases against the independent
+three-group adapter. Confirmed reverse binding visits, post-reset group-local
+blockers, and flag copies even for inactive contexts. Fresh/nested uncontended
+exclusive accounting restores expected state. Preamble and reset effects remain
+supplied, and cross-thread locking/structural mutation are not proved.
+See [manager traversal](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#manager-traversal-differential-validation).
+
 Full regression validation completed: 1,983 tests ran successfully with one skip
 using the selected Xcode installation's bundled SDK. The initial default-SDK run
 had six native fixture build errors caused by a newer Command Line Tools SDK
