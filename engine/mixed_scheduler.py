@@ -58,7 +58,8 @@ class MixedScheduler:
             self._handlers[name] = dict(binding)
         allowed = {'id', 'kind', 'successors', 'credit_recipients', 'secondary', 'secondary_credits',
                    'handler', 'predicate', 'condition', 'receivers', 'chunk_size', 'tail_threshold',
-                   'max_concurrency', 'credit_gate', 'credits', 'front_insert', 'early_exit_enabled'}
+                   'max_concurrency', 'credit_gate', 'credits', 'front_insert', 'early_exit_enabled',
+                   'before_handler', 'after_handler'}
         self._definitions, self._jobs, self._lists = {}, {}, {}
         for original in definitions:
             if not isinstance(original, dict) or set(original) - allowed:
@@ -71,7 +72,9 @@ class MixedScheduler:
                 raise ValueError('conditional-only fields on other job')
             if kind not in ('range', 'callback') and 'handler' in spec:
                 raise ValueError('body handler requires executable job kind')
-            for key in ('handler', 'predicate'):
+            if kind != 'callback' and any(key in spec for key in ('before_handler', 'after_handler')):
+                raise ValueError('before/after handlers require callback job kind')
+            for key in ('handler', 'predicate', 'before_handler', 'after_handler'):
                 if key in spec and spec[key] not in self._handlers:
                     raise ValueError('unresolved versioned handler')
             if kind == 'conditional':
@@ -547,8 +550,17 @@ class MixedScheduler:
             self._worker_depth += 1
             try:
                 self._emit('mixed_callback_enter', job=dispatch['job'], dispatch=token.dispatch)
-                if 'handler' in spec:
-                    self._invoke(spec['handler'], context)
+                for phase, key in (('before', 'before_handler'), ('main', 'handler'),
+                                   ('after', 'after_handler')):
+                    if key in spec:
+                        job = self._jobs[dispatch['job']]
+                        self._emit('mixed_callback_phase_enter', job=dispatch['job'],
+                                   dispatch=token.dispatch, phase=phase,
+                                   executions=job['executions'],
+                                   outstanding_dispatches=job['outstanding_dispatches'])
+                        self._invoke(spec[key], context)
+                        self._emit('mixed_callback_phase_return', job=dispatch['job'],
+                                   dispatch=token.dispatch, phase=phase)
                 dispatch['callback_ran'] = True
                 dispatch['stage'] = 'reserved'
                 self._emit('mixed_callback_return', job=dispatch['job'], dispatch=token.dispatch)

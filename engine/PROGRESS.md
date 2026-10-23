@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Graphics before/main/after dispatch now connects to worker completion and ordinary
+finalization in 64 original-instruction cases. After runs before execution-count
+decrement; dependency release precedes final outstanding-count decrement. Added
+optional before_handler/after_handler to reconstructed callback jobs, preserving
+versioned bindings and fail-stop policy. Three integration tests and a runnable
+callback_phase_probe expose that boundary. This is an independent-engine API,
+not a native installer. Slot +0x58 caller identity and destruction exclusion
+remain open; unrelated same-slot calls were not accepted as evidence. Full suite
+passed: 2105 tests, one skipped; runnable probe and packaging/link checks passed.
+
 Connected teardown wait policy to submission: job +0x194 is the existing `usage`
 flag set after synchronous begin, on every normal submit path. Eighteen original
 instruction cases pass. MixedScheduler now exposes read-only teardown_wait_status

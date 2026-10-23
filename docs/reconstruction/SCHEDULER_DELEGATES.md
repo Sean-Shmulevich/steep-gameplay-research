@@ -233,3 +233,57 @@ slot +0x58 through `0x11d16f0`. That route can transition to DONE without waitin
 for every outstanding dispatch. Its optional +0x150 delegate must not be exposed
 as an all-dispatches-drained notification. The outer lifecycle exclusion and
 actual callers of slot +0x58 remain open.
+
+## Dispatch phases versus finalization
+
+The worker wrapper at RVA `0x11e9990` invokes job slot +0x40 at `0x11e9a3c`,
+restores its execution context, then calls `0x11e2d70` at `0x11e9a7d`. The
+[category worker analysis](INPUT_TO_ACTION_ROUTE.md#category-worker-return-and-dependency-release)
+already established that wrapper's ordinary completion path. The concrete
+graphics binding now connects its before/main/after calls to the same boundary.
+
+The [64-case connected check](../../native/snow_host/graphics_completion_validation.json)
+executes the graphics dispatcher, common invoker, completion routine and ordinary
+finalizer in that serial order. An authored caller omits the wrapper's TLS,
+profiling and notification operations. Synthetic callbacks, lock services and
+dependency release replace external effects. The check varies context tags,
+optional handlers, states SCHEDULED/DONE and one/two active dispatches. These
+supplied states exercise local branches, not asserted live graphics workloads.
+
+All optional after calls run with execution and outstanding counts unchanged.
+Completion first decrements executions. With DONE and zero executions, it calls
+the ordinary finalizer. That finalizer releases active dependencies before
+writing UNSCHEDULED. The outstanding count remains positive during that release
+and drops only afterward. With SCHEDULED and the callback job's false empty
+predicate, this local completion path does not finalize it. This connects the
+callbacks to existing completion semantics without treating an after callback,
+DONE state or dependency release as a universal drain.
+
+## Reconstructed before and after handlers
+
+`MixedScheduler` callback definitions accept optional `before_handler` and
+`after_handler` names alongside `handler`. Names resolve through the existing
+versioned registry. Each receives `(context, None)` and runs synchronously in
+before/main/after order, inside the reserved dispatch. Return values do not
+select a branch. Missing optional handlers are skipped; an absent main handler
+remains the reconstruction's authored no-op fixture policy. This is not a model
+of a null native main invoker, which the inspected dispatcher calls unconditionally.
+
+Run the example with:
+
+```sh
+python3 -m engine.examples.callback_phase_probe
+```
+
+The example reports positive outstanding accounting during all three handlers
+and after their return, then zero after `finish_dispatch`. A dependent terminal
+job begins during finalization. The registry is immutable after construction;
+this API does not replace live native descriptors. Existing fail-stop behavior
+on Python handler exceptions is adapter policy, not recovered native unwinding.
+Three tests cover ordering and dependency timing, ignored return values, failure
+without invented completion, and rejected bindings/job kinds.
+
+A scoped search of indirect slot +0x58 calls in scheduler-region functions found
+several profiling and unrelated object calls, but no newly qualified graphics-job
+caller. Do not identify those solely from their slot offset. The actual caller
+of the separate +0x150 delegate and outer destruction exclusion remain open.

@@ -1,0 +1,33 @@
+{
+  "evidence": "Original graphics dispatch, common invoker, dispatch completion and ordinary finalizer in authored serial wrapper order",
+  "cases": 64,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x65b1e0",
+      "length": 116,
+      "sha256": "2e8ae64033cd66104b93c56d2edb3c306b2474293286ee4b1eb4988954892f4b"
+    },
+    {
+      "rva": "0x8ab390",
+      "length": 9,
+      "sha256": "c2b13b0a2d8635b4a691fc95c63ba2cf2f1482c419541597e898b96ad219cb93"
+    },
+    {
+      "rva": "0x11e2d70",
+      "length": 171,
+      "sha256": "1877fddd9c59e7a7eddee73f440834efc81f1784d26b543697b88200acd00075"
+    },
+    {
+      "rva": "0x11d1670",
+      "length": 123,
+      "sha256": "1a91ff93e0f55c64247ba8d459ff0f21064ce670612d81c7404b18143c902586"
+    }
+  ],
+  "limitations": [
+    "Wrapper TLS, profiling and notification work omitted; wrapper order separately inspected.",
+    "Synthetic callbacks, locks, dependency release and false empty predicate.",
+    "Supplied execution counts and states test local branches; no proof all combinations occur for the live graphics job.",
+    "No concurrent callback, exception, resubmission during dependency release or native unload safety validation."
+  ]
+}
