@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Repeated live capture with selected-action lookup before/after: root and child
+identities agree, and the directional child matches 518 evaluator calls. All
+4,662 class records form 518 nine-action groups with no drops. Movement and
+cleanup verified. Endpoint attribution is not continuous lifetime tracking;
+concurrent physics-update capture remains next. See
+[selected events](../native/snow_host/live_selected_action_events.json).
+
 Analyzed the live class trace with a tested interval/motif tool: 910 complete
 nine-action groups repeat without order deviations; each group uses one thread,
 with 817 changes between groups and no measured interval overlap. This supports

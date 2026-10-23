@@ -1,0 +1,91 @@
+{
+  "kind": "live_selected_action_endpoint_attribution",
+  "evidence": "live pre/post selected-action lookup and class evaluator capture",
+  "selected_action_id": 118,
+  "before_guard_passed": true,
+  "after_guard_passed": true,
+  "root_identity_fields_equal": true,
+  "compared_root_fields": [
+    "manager",
+    "bank",
+    "binding",
+    "map_root",
+    "value_slot",
+    "action",
+    "table",
+    "reset_callback",
+    "selected_index"
+  ],
+  "child_identity_tuples_equal": true,
+  "selected_family": "directional",
+  "selected_callback_records": 518,
+  "selected_callback_threads": 10,
+  "selected_entry_counts_relative_to_delivery_reports": {
+    "before": 348,
+    "during": 42,
+    "after": 128
+  },
+  "probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 4662,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "batch_analysis": {
+    "records": 4662,
+    "dropped": 0,
+    "no_reported_drops": true,
+    "distinct_actions": 9,
+    "distinct_threads": 10,
+    "batch_size_hypothesis": 9,
+    "complete_batches": 518,
+    "trailing_records": 0,
+    "motif_has_distinct_actions": true,
+    "motif_mismatches": 0,
+    "tied_entry_timestamps": 0,
+    "reservation_order_inversions": 0,
+    "motif_order_unambiguous": true,
+    "single_thread_batches": 518,
+    "batch_thread_changes": 450,
+    "entries_overlapping_previous_intervals": 0,
+    "peak_positive_width_intervals": 1,
+    "batch_start_gap_seconds": {
+      "min": 0.0078579,
+      "median": 0.0115655,
+      "max": 0.0617892
+    },
+    "proves_job_identity": false,
+    "proves_physics_order": false
+  },
+  "movement": {
+    "ok": true,
+    "method": "sequential player-state polling; evaluator events recorded separately",
+    "helper_launch_seconds": 2.0087128749873955,
+    "input_exit": 0,
+    "keys_released": true,
+    "samples": 94,
+    "baseline_samples": 19,
+    "max_distance_from_initial": 65.83315630311387,
+    "max_speed": 25.03294856249411,
+    "first_step": 2230,
+    "last_step": 3076,
+    "action_export_complete": true,
+    "binding_after_exit": 0
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Endpoints agree; no continuous identity or object-lifetime guarantee.",
+    "Selected action lookup is not per-invocation provenance.",
+    "No concurrent physics update trace or ingested input snapshots.",
+    "OS delivery timestamps do not establish when game code accepted input."
+  ]
+}

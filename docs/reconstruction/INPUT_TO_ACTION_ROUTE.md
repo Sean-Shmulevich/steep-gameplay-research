@@ -1834,3 +1834,28 @@ job, the full refresh list, physics substep frequency, or an input-ingestion
 boundary. The batch size was selected after examining this trace, not predicted
 by the analyzer. The capture overflowed at its tail; unrecorded calls are outside
 these claims. Equal timestamps in future captures must leave ordering ambiguous.
+
+## Selected-action attribution at capture endpoints
+
+A new six-second live capture resolves selected action 118 before instrumentation
+and again after slot restoration. Both bounded observers pass. Manager, selected
+bank, binding, map root, value slot, parent action, table, reset callback and
+selected index agree at the endpoints. Both child action/table/callback tuples
+also agree. Dynamic payload equality is not required across the capture.
+
+The directional child's identity matches 518 recorded evaluator calls across ten
+thread IDs. On the reported QPC time scale, 348 entries precede key-down delivery,
+42 occur between key-down/key-up reports, and 128 follow key-up. The class-wide
+trace contains 4,662 records, exactly 518 ordered nine-action groups, with no
+dropped records or measured evaluator overlap. See the
+[attribution receipt](../../native/snow_host/live_selected_action_events.json).
+
+A 500 ms forward pulse moved the rider; the separate player-state capture recorded
+94 samples, about 65.8 units displacement and 25.0 units/s maximum speed. Slot
+restoration, drain and shutdown restoration checks passed.
+
+This connects callback events to a selected-action identity verified at both
+ends. It is not continuous binding verification: transient replacement or reuse
+between observations remains possible. It also does not identify the enclosing
+scheduler job, establish physics substep ordering, or prove ingestion timing.
+The next experiment needs concurrent actor-update events in the same QPC domain.
