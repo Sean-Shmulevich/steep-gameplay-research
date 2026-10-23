@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Connected new holder routes to the existing loading-thread reconstruction in a
+runnable serial inspection probe. It shows retirement, staged, captured, pending
+and busy boundaries separately, plus nonzero-count retirement that produces no
+loading destruction. Two composed boundary tests pass; destructor/free are
+requests only, not executed. Phase-selector +0x5a writer identity remains open;
+same-offset copy/deserialization hits are not accepted without receiver proof.
+
 Retirement service connected to shared frame update: command preparation runs
 before service on its inspected normal path. Constructor binds one gated caller
 to Graphic::BeginGraphicFrame; owner +0x5a selects it versus a complementary

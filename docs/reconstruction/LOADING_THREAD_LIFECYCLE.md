@@ -201,3 +201,31 @@ processing or an alternate callback. Active request clearing precedes release
 under the ring guard. See [animation resource research](research/animation.md)
 under Loading-request cadence connected for pseudocode and unresolved contracts.
 This is request-driven work, not a proved physics or animation frame boundary.
+
+
+## Composed retirement-to-loading inspection probe
+
+Run `python3 -m engine.examples.retirement_loading_probe` to inspect a synthetic
+serial handoff from holder release through retirement consumption, loading
+publication and batch consumption. This composes the local rules documented in
+[holder retirement](ANIMATION_CONTEXT_RETIREMENT.md#deferred-holder-consumer-and-disposal-boundary)
+with this document's staged/pending/busy counter rules. It does not run the game.
+
+Every trace row includes retirement occupancy, loading occupancy, staged count,
+a captured-but-not-yet-published count, pending, busy and remaining batch work.
+The exact stop-poll predicate is shown separately from completion claims.
+The ordinary example demonstrates three distinct states where the poll passes
+although work remains: a queued retirement holder, a staged loading item, and a
+captured publication count before its add to pending. After batch capture,
+pending is zero but busy keeps the poll false. The probe records destructor/free
+requests; it does not execute or claim successful disposal.
+
+Calling `probe(reacquired_count=True)` supplies a second scenario: the holder's
+count becomes nonzero before consumption. The retirement entry is consumed and
+its queued bit cleared, but no loading item or destructor request follows. This
+scenario change is authored input, not a recovered native acquisition API.
+
+The operation schedule, one-object input and sufficient-capacity assumption are
+explicit fixture choices. Callback mutation, exceptions, concurrent producers,
+allocator failure and native shutdown exclusion remain outside the probe. An
+empty final trace state is not evidence of a safe native plugin unload.
