@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "cases": 24,
+  "scope": "Original history-action initializer and original virtual setup execute together",
+  "substitutions": [],
+  "game_process": false,
+  "setup": [
+    "Synthetic incoming/old handles and adapter; original action vtable",
+    "Old handle low state count is one so terminal destruction is not taken"
+  ],
+  "coverage": [
+    "Inactive/active signed-state resolution",
+    "Null/nonnull handle object",
+    "Old reference counts one, two and five"
+  ],
+  "findings": [
+    "Incoming handle reference incremented before exchange; old reference decremented",
+    "Adapter stored at action +0x10",
+    "Configuration resolved into +0x90, then virtual +0x38 resolves handle again into +0xb0"
+  ],
+  "limits": [
+    "Terminal handle release not exercised",
+    "No resource allocation, live binding or mutation during initializer",
+    "Initializer does not prove cached pointer remains equal to later handle resolution"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x47ace0",
+      "end_rva_exclusive": "0x47ad49",
+      "sha256": "9acaa9d89e3968553d0fea5a6fbf2033e88be68255e1113ac3ee6c9ed7a1b20a"
+    },
+    {
+      "start_rva": "0x4b15a0",
+      "end_rva_exclusive": "0x4b15be",
+      "sha256": "6902405bdebd6eb0fd941171f4203c2704532aed786eb1c8f0378b72bd6a0b87"
+    }
+  ]
+}

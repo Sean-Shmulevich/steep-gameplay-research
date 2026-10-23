@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated history-sector source initialization in 24 original-instruction cases.
+Its virtual setup caches resolved configuration at +0xb0; evaluation does not
+re-resolve the handle each call. Passive readers therefore report cached settings,
+not current handle availability. Existing resolver inspection still does not
+establish a live player history-sector binding. See
+[configuration initialization](../docs/reconstruction/INPUT_UPDATE_ORDER.md#history-sector-source-configuration-initialization).
+
 Connected the native history reader to the recorder through a fresh resolver
 callback, bracketed around each observation. Reader/recorder integration fixtures
 pass, including changed resolution and late forwarding; combined Windows fixture

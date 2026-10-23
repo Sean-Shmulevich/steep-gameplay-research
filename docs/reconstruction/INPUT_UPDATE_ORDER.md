@@ -1904,3 +1904,42 @@ The [input-to-action route](INPUT_TO_ACTION_ROUTE.md) joins the named polling
 task, both AI provider pairs, the three consecutive world-stage builders and
 the previously decoded action wrapper. It records composed builder/outer-edge
 validation and separates structural ordering from live player/substep timing.
+
+## History-sector source configuration initialization
+
+Factory source type 4 uses initializer `0x47ace0`. It stores the adapter at
+source `+0x10`, increments the incoming handle reference count, exchanges the
+handle at `+0x98`, decrements the old reference count, and follows the usual
+terminal-release condition. It resolves the incoming handle by the sign bit of
+state word `+0xc` into source `+0x90`, then invokes virtual slot `+0x38`.
+
+For table `0x1e6b7e0`, that slot is `0x4b15a0`. This setup reads the handle again,
+performs the same signed-state resolution and stores the result at source `+0xb0`.
+Unlike the vector/directional setup described above, this path does not create
+a nested processing object. Here `+0xb0` is the evaluator's cached configuration.
+
+```text
+source.adapter = adapter
+incoming = *handle_reference
+increment_reference(incoming)
+old = exchange(source.handle, incoming)
+decrement_and_conditionally_release(old)
+source.configuration_90 = resolve(source.handle)
+source.configuration_b0 = resolve(source.handle)  # virtual setup, separate read
+```
+
+[Initializer validation](../../native/snow_host/action_history_initializer_validation.json)
+executes both original routines and the original virtual dispatch in 24 cases,
+without substituted calls. Active/inactive handle states, null/non-null objects
+and three old-reference counts match both cached pointers and reference counts.
+The synthetic old handle retains a nonzero low state count, so terminal release
+is not exercised. Concurrent mutation, allocation and live binding remain open.
+
+The history action evaluator reads cached `+0xb0`; it does not re-resolve `+0x98`
+on each evaluation. Consequently the passive history reader reports that cached
+configuration and does not assert current handle availability. Stable pointer
+reads do not establish that the resource remains active or that this action is
+selected for the player. The existing manager/binding and composite observers
+can enumerate candidates, but a vector/directional child receipt is not a
+history-sector action receipt. Live selection must retain the actual table and
+callback identities rather than relabeling an existing child to fit this reader.
