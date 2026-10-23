@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Qualified engine constructor prefix through event holder +0x48, root +0x60 and
+graphics +0x218 table bindings. Its word store at +0x59 initializes the frame
+service selector +0x5a to zero. Six original-instruction cases pass with varied
+initial storage and shared defaults. Construction leaves main delegates null;
+setup later binds them, and submission enables their usage/wait policy. This
+closes the selector initialization lead, not later writes or shutdown exclusion.
+No live game launch, attachment or mutation in this pass.
+
 Resolved the graphics slot +0x58 caller as the queue reservation tail, joining
 older engine-loop research to the concrete live table. The optional reservation
 delegate runs with dispatch counts incremented and DONE set, after job-lock

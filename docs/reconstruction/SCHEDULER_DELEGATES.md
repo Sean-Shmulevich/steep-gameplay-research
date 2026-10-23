@@ -355,3 +355,52 @@ hooks. Failure uses the existing authored fail-stop policy without pretending
 the reserved dispatch completed. Three tests cover phase order and counters,
 context forwarding, failed reservation and incompatible job kinds. The runnable
 `callback_phase_probe` now includes reservation as its first observation.
+
+## Engine construction and initial frame-service selector
+
+Constructor RVA `0x647d60` initializes an event holder at owner +0x48 and
+constructs ordinary callback jobs at +0x60 and +0x218. Both receive table RVA
+`0x1e89618`, matching the root/graphics layout and the earlier live graphics-table
+observation. This is a layout-and-binding join; constructor entry was not observed
+live. The constructor prefix stores word 1 at owner +0x59, which writes byte
++0x59 as 1 and the adjacent frame-service selector +0x5a as 0. Selected tail
+stores clear owner +0x58. These are distinct bytes, not one boolean field.
+
+```text
+engine_constructor_prefix(owner):
+    initialize_event_holder(owner + 0x48, 0, 0)
+    owner.byte59 = 1
+    owner.frame_service_selector = 0  // same native 16-bit store
+    initialize_callback_job(owner + 0x60, category=1, byte_limit=1)
+    initialize_callback_job(owner + 0x218, category=1, byte_limit=1)
+    # Further embedded jobs and initialization follow.
+
+selected_constructor_tail(owner):
+    owner.byte58 = 0
+    # Other stores omitted.
+```
+
+Each of these two job initializations clears the main function, context and
+invoker. Their limit is set explicitly to 1 after the base constructor. The
+base constructor supplies initially empty optional delegates and a zero usage
+flag. A constructed job with a null main invoker is not ready for dispatch;
+the later setup routine `0x6968e0` supplies callable bindings and graph edges.
+This separates construction, binding and submission instead of treating a
+matching table as evidence that a callable is installed.
+
+The [six-case instruction check](../../native/snow_host/engine_job_initialization_validation.json)
+executes the constructor prefix and base job constructor, followed by selected
+tail stores. It varies initially zero/nonzero synthetic storage and three shared
+worker defaults. It verifies event/job receiver offsets, table identities,
+selector bytes, limits, null callable fields and zero usage flags. Event, lock
+and dependency-list construction are intercepted, and the middle of the engine
+constructor is omitted. This does not validate full construction, its caller,
+shutdown, or the absence of later writes through aliases.
+
+For the [two-read placement model](../../engine/frame_service_placement.py),
+two observations retaining this initialized zero select site A, not the
+BeginGraphicFrame site. The live zero samples agree with the initialized value,
+but neither those samples nor this constructor store proves selector stability
+between gates. Later selector writers and the outer lifetime exclusion still
+need qualification. This supersedes the earlier missing-initialization lead
+without changing the model's two-independent-read contract.

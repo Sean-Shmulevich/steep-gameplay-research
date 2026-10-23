@@ -2746,3 +2746,13 @@ candidate is an owner-relative delegate. Its installer cannot simply be reused:
 owner lifetime, descriptor consistency and upstream context decoding need their
 own guards. Keep the existing plugin thread callbacks separate from any future
 engine-phase callback until this route is qualified end to end.
+
+### Frame-service selector initialization follow-up
+
+The [engine constructor join](SCHEDULER_DELEGATES.md#engine-construction-and-initial-frame-service-selector)
+now identifies a concrete initialization of selector +0x5a: the 16-bit store at
+owner +0x59 writes it to zero. The same prefix constructs root +0x60 and graphics
++0x218 with the observed callback-job table. Six instruction cases validate the
+selected prefix/base construction and tail stores. This closes the initialization
+lead above; it does not establish later writer coverage, selector stability or
+an exactly-once frame-service event.

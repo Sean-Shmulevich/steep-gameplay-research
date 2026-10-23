@@ -1,0 +1,37 @@
+{
+  "evidence": "Engine constructor prefix connected to base job constructor, plus selected tail stores",
+  "cases": 6,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x647d60",
+      "length": 201,
+      "sha256": "384ff1c41c720487e7d844c6bb3277f548cb51c84af604b053e6933632d93364"
+    },
+    {
+      "rva": "0x11c8c40",
+      "length": 295,
+      "sha256": "dba9faba49faad59ca76457313fb9afd6d818ba55d7bf752a0a5a6d55a757fc2"
+    },
+    {
+      "rva": "0x648805",
+      "length": 57,
+      "sha256": "bc8ffb59a768c44b5ed8b5a5a11582ef12b7bd645579b4aa6b2ce31e402a1fef"
+    }
+  ],
+  "established": {
+    "root_job_offset": "0x60",
+    "graphics_job_offset": "0x218",
+    "job_table_rva": "0x1e89618",
+    "event_holder_offset": "0x48",
+    "byte_58": 0,
+    "byte_59": 1,
+    "frame_service_selector_5a": 0
+  },
+  "limitations": [
+    "Event, lock and dependency-list construction intercepted.",
+    "Middle of engine constructor omitted; no full allocation or constructor return check.",
+    "Initial values do not prove later selector stability or runtime teardown exclusion.",
+    "Concrete binding joined to prior live owner/layout; constructor execution not captured live."
+  ]
+}
