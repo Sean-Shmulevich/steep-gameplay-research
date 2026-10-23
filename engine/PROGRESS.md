@@ -6673,3 +6673,10 @@ Observers run after table removal but before record index reset. Region tags are
 not cleared here; a separate region scanner appears earlier in an inspected
 descriptor destructor. That scanner and caller-wide retirement ordering remain
 open. No live game, native free or safe unloading claim.
+
+Reconstructed metadata region scanner, matching 20 complete original-instruction
+cases with initialized TLS and supplied lock/dispatch bodies. Span ownership is
+checked only at the first tag, high-bit termination is inclusive, byte length is
+uint32, and callbacks execute under registry lock. Scanner-only inert callbacks
+leave tags intact; fallback122bbc0 is the next dependency and statically contains
+tag clearing plus nested locking before a context virtual operation.

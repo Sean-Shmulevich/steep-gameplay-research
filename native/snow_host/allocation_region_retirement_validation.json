@@ -1,0 +1,14 @@
+{
+  "evidence": "Original complete region scanner with initialized TLS guard and supplied lock/dispatch bodies",
+  "cases": 20,
+  "events_fields_and_unchanged_tags_match": true,
+  "routine_rva": "0x1229690",
+  "routine_sha256": "eae6be4aa23470ac8aefd144104a4dd185e25328ede9b2558924485b4f2a431a",
+  "model_sha256": "8223dc1e76dc050b1753b4834bab2c3c0cf55179539f42876cb129a23ae339c4",
+  "limitations": [
+    "Initialized TLS branch supplied; static initialization slow path not executed.",
+    "Callback bodies and lock operations supplied; no actual release, tag clearing or concurrent mutation.",
+    "Synthetic cross-region and 4GiB-size-wrap cases establish arithmetic, not valid native allocation layouts.",
+    "Record field10 semantics and reason2 meaning remain unnamed."
+  ]
+}

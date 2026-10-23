@@ -151,3 +151,10 @@ conditionally clears default, then notifies outside the lock before setting the
 record index255. It leaves region tags untouched. `notify_metadata_observers`
 ORs low32 callback returns across a dynamically counted retained collection.
 Neither operation pins callback modules or establishes safe reclamation.
+
+Region retirement: `retire_metadata_regions` requires retained address-region
+tables and an externally supplied initialization/bounds service. It checks low7
+ownership at span starts, scans inclusively through a high-bit terminator and
+dispatches uint32 byte length with reason2 while locked. Callback effects remain
+external. It clears raw record.field10 before unlocking, not region tags itself.
+This is a traversal model, not a native release or unload API.

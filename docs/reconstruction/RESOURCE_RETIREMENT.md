@@ -316,3 +316,62 @@ defaults, null/matching/mismatched slots, both observer styles and controlled
 callback extension/index mutation. Only locks and callback bodies are supplied;
 the removal and dispatcher execute together. Region retirement, concurrent table
 mutation, module lifetime and safe storage reclamation are not established.
+
+## Region-span retirement traversal
+
+[`retire_metadata_regions`](../../engine/allocation_region_retirement.py)
+reconstructs the scanner at `0x1229690..0x1229868`. It holds the registration lock
+through the scan and all span dispatches. Each outer iteration checks an
+initialization guard, reads an address-limit value and compares its high32 with
+the region index. An initialized TLS guard is a supplied prerequisite of the
+instruction comparison; initialization slow-path helpers remain external.
+
+```text
+lock(registry)
+for each high32 region below address_limit >> 32:
+    skip null region pointers
+    scan tag positions from 0 to 65535:
+        if (tag & 127) != record.index:
+            advance one
+        else:
+            address = (region << 32) + (position << 16)
+            count = scan through first tag >= 128, inclusive
+            byte_size = uint32(count << 16)
+            if registry.override exists:
+                override(address, byte_size, 2, record, context)
+            else:
+                fallback(registry, address, byte_size, 2, record, context)
+            advance position by count
+record.field10 = 0
+unlock(registry)
+```
+
+The inner scan checks ownership only at its starting tag. Subsequent tags are
+counted until the first high-bit marker, even if their low7 values differ. It
+can cross a high32-region boundary and requires readable region tables throughout
+the span; it has no null-table guard inside that scan. The native count has a
+uint32 maximum, and the dispatched byte size wraps at 32 bits. A 65536-tag span
+therefore supplies size zero. These are instruction-level rules, not a claim
+that all such synthetic layouts are valid allocations.
+
+The scanner itself does not clear tags. It re-reads the current record index,
+region-table pointer and dispatch pointer for later matches, allowing callback
+effects to influence subsequent scanning. After a cross-region span, the next
+outer region still starts at position zero. With an inert supplied callback this
+can dispatch the terminating tag again when it matches. Actual fallback effects
+must be composed before inferring native duplicate release. The raw field+0x10
+reset and reason value2 remain unnamed until their consumers are established.
+
+[Complete scanner comparison](../../native/snow_host/allocation_region_retirement_validation.json)
+passes 20 cases with initialized TLS, supplied locks and supplied override/fallback
+bodies. Cases include null regions, mixed ownership inside a span, callback index
+changes, cross-region termination and 32-bit byte-size wrap. Events, final record
+fields and unchanged tag bytes match. No native free, initialization race or safe
+reclamation is proved.
+
+The next concrete dependency is fallback `0x122bbc0`. Static inspection shows it
+acquires the same registration lock again and, for the scanner's reason2 branch
+with a nonnull record, writes tag bytes to255 before invoking a context object's
+virtual operation. This explains why scanner-only inert callbacks cannot stand
+in for the complete native release path. Full fallback execution and its context
+ownership are not included in the scanner receipt.
