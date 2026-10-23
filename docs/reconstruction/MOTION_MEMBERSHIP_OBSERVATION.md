@@ -228,8 +228,8 @@ if sample_count >= 2:
 Current and previous poses occupy motion `+0x3d0..+0x40f`, each 32 bytes;
 the count byte is `+0x410`. The provider's pose object is at `+0x258` and its
 flags at `+0x8c`. The conversion branch contains rotation/translation arithmetic,
-but its exact convention is outside this validation. The independent API accepts
-an already resolved final pose and preserves its bits as opaque bytes.
+and was outside the original history validation. The later provider-transform
+validation below resolves that branch; history still preserves final pose bits.
 
 Twelve original-instruction emulation cases tested missing provider, missing key,
 and valid direct-pose lookup with initial counts 0, 1, 2 and 255. See the
@@ -2636,3 +2636,30 @@ is retained. The successful retry waited for restore/export before reacquisition
 The host binding generation consequently advanced; it must not be treated as
 uninterrupted binding identity. Both recorders restored and drained with no
 drops, and saves/settings/original DLL cleanup checks passed.
+
+### Provider pose transform
+
+Preparation B's transform branch is implemented as
+`engine.motion_pose_history.transform_provider_pose`. Provider bit26 bypasses
+conversion and preserves all 32 pose bytes. Otherwise, with provider position
+`t`, provider quaternion `q`, local position `p` and local quaternion `r`:
+
+```text
+dot = q.x*p.x + (q.y*p.y + q.z*p.z)
+v = dot*q.xyz + cross(q.xyz, p.xyz)*q.w + (q.w*q.w - 0.5)*p.xyz
+world_position.xyz = 2*v + t.xyz
+world_rotation = q * r  // Hamilton product, XYZW; no normalization
+```
+
+The implementation preserves the observed float32 operation grouping and fourth
+position-lane arithmetic, including the final zero multiplier before adding the
+provider lane. The vector formula assumes unit quaternions for ordinary rigid
+rotation, but the code does not normalize or silently enforce that assumption.
+
+One thousand synthetic cases matched all 32 output bytes against the original
+transform instruction span with no substituted calls. They include signed zero
+and non-unit quaternions. See [validation](../../native/snow_host/provider_pose_transform_validation.json).
+Tests also compose transformation, history advancement and query endpoints.
+The resource-key meaning, live selection and downstream query/skip effects
+remain unresolved. Finite moderate arithmetic is validated; exceptional SIMD
+behavior and overflow are not claimed.

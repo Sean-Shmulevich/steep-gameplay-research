@@ -3,7 +3,7 @@
 Evidence: docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md,
 'Preparation B pose history'. Call cadence and source lookup remain external.
 The opaque 32-byte poses are two four-lane values; this module preserves bits
-and requires the caller to supply the final pose after any coordinate transform.
+and accepts the final pose from transform_provider_pose or another qualified source.
 """
 from dataclasses import dataclass
 from typing import Literal
@@ -77,3 +77,49 @@ def query_endpoints(state: PoseHistory, local_point: tuple[float, float, float])
                                    f(scale*v[i]))))
                      for i, p in enumerate((px, py, pz)))
     return endpoint(state.previous), endpoint(state.current)
+
+
+def transform_provider_pose(pose: bytes, provider: bytes, *, already_world: bool) -> bytes:
+    """Resolve preparation B's provider transform before advancing history.
+
+    Both poses contain position XYZW then quaternion XYZW, 32 bytes each.
+    Provider bit26 selects already_world; that branch preserves pose bits.
+    Otherwise compose provider rotation * local rotation and rotate/translate
+    local position. No quaternion normalization. Finite float32 arithmetic only;
+    reject overflow rather than claim native exceptional-value equivalence.
+    Evidence: MOTION_MEMBERSHIP_OBSERVATION.md, Provider pose transform.
+    """
+    import math
+    import struct
+    if type(already_world) is not bool:
+        raise ValueError('explicit provider transform flag required')
+    if not isinstance(pose, bytes) or len(pose) != 32:
+        raise ValueError('pose must be 32 bytes')
+    if already_world:
+        return pose
+    if not isinstance(provider, bytes) or len(provider) != 32:
+        raise ValueError('provider transform must be 32 bytes')
+    def f(x):
+        try: value=struct.unpack('<f',struct.pack('<f',x))[0]
+        except (OverflowError,struct.error) as exc:raise ValueError('float32 overflow') from exc
+        if not math.isfinite(value):raise ValueError('finite float32 domain required')
+        return value
+    p=struct.unpack('<8f',pose); t=struct.unpack('<8f',provider)
+    if not all(math.isfinite(x) for x in (*p,*t)):
+        raise ValueError('finite float32 domain required')
+    q=t[4:]; r=p[4:]
+    product=[f(q[i]*p[i]) for i in range(4)]
+    dot=f(product[0]+f(product[1]+product[2]))
+    scale=f(f(q[3]*q[3])-.5)
+    cross=[f(f(q[(i+1)%3]*p[(i+2)%3])-f(p[(i+1)%3]*q[(i+2)%3])) for i in range(3)]
+    cross.append(f(f(q[3]*p[3])-f(p[3]*q[3])))
+    position=[]
+    for i in range(4):
+        value=f(f(f(dot*q[i])+f(cross[i]*q[3]))+f(scale*p[i]))
+        position.append(f(f(value*(2.0 if i<3 else 0.0))+t[i]))
+    # Match SIMD grouping: ((qw*r + x-term) + y-term), then z-term + sum.
+    xterms=(r[3],-r[2],r[1],-r[0])
+    yterms=(r[2],r[3],-r[0],-r[1])
+    zterms=(-r[1],r[0],r[3],-r[2])
+    rotation=[f(f(q[2]*zterms[i])+f(f(f(q[3]*r[i])+f(q[0]*xterms[i]))+f(q[1]*yterms[i]))) for i in range(4)]
+    return struct.pack('<8f',*position,*rotation)

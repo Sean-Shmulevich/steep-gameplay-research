@@ -1,0 +1,13 @@
+{
+  "evidence": "Original instruction transform span without substituted calls",
+  "passed": true,
+  "cases": 1000,
+  "comparison": "All 32 output bytes",
+  "code_sha256": "47588034375ee9bb7cb2a7b137ea648727f87703063c268ac39697d3dbe65e08",
+  "game_process": false,
+  "limits": [
+    "Finite moderate float32 domain; no overflow or NaN equivalence claimed.",
+    "Provider and pose are synthetic; no live provider key meaning or branch selection established.",
+    "Transform span only; resource lookup and downstream consumers excluded."
+  ]
+}

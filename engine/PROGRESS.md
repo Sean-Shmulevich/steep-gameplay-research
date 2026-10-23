@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved preparation B's provider-pose transform: position rotation/translation
+and provider-times-local quaternion composition now feed the existing pose
+history API. All 32 bytes matched 1,000 original-instruction cases without
+substituted calls. Live provider selection and transitive skip effects remain
+open; no preparation-helper completeness claim.
+
 Implemented the recovered ingestion-gate sequence with deferred skip reads
 after preparation and predicate precedence. Reran 192 original-instruction
 emulation cases against the new kernel: ingestion eligibility and predicate/
