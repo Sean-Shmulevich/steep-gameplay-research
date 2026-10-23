@@ -13,6 +13,7 @@
 #include <string.h>
 #include <wchar.h>
 #include "snow_adapter.h"
+#include "snow_finite_diagnostic.h"
 #include "snow_animation_reader.h"
 #include "steep_probe_binding.h"
 
@@ -139,9 +140,10 @@ static int player_read(SnowPlayerRaw *out, char *why, size_t n) {
         out->flags = 0x1u | (in_world ? 0x2u : 0);
     }
     if (player_links(why, n) != body) { p_actor = 0; return 2; }   /* bracket: links unchanged across the copy */
-    for (int k = 0; k < 16; k++) if (!isfinite(out->transform[k])) { snprintf(why, n, "nonfinite transform"); return 1; }
+    if (snow_nonfinite_field(out->transform, 16, "transform", why, n)) return 1;
     for (int k = 0; k < 3; k++)
-        if (!isfinite(out->linear_velocity[k]) || !isfinite(out->angular_velocity[k])) { snprintf(why, n, "nonfinite velocity"); return 1; }
+        if (snow_nonfinite_field(out->linear_velocity + k, 1, k == 0 ? "linear_velocity.x" : k == 1 ? "linear_velocity.y" : "linear_velocity.z", why, n) ||
+            snow_nonfinite_field(out->angular_velocity + k, 1, k == 0 ? "angular_velocity.x" : k == 1 ? "angular_velocity.y" : "angular_velocity.z", why, n)) return 1;
     diag("read");
     return 0;
 }

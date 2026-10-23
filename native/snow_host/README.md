@@ -1349,3 +1349,14 @@ match float32(consumed/count); two have consumed duration equal to the cap.
 See [timing comparison](controlled_release_timing_comparison.json). Matching the
 cap value does not prove the cap branch ran. Incoming time, retained accumulator,
 history and selected frequency still need same-batch observation.
+
+
+### Nonfinite player diagnostics
+
+The build-specific adapter rejects nonfinite transform or velocity values after
+copying and bracketing the player links. Its error detail now names the first
+failing field/lane and the copied IEEE-754 bits, for example
+`nonfinite transform[12] bits=7fc01234` (synthetic example). This does not return
+a usable player snapshot or relax validation. A lane diagnostic does not identify
+the writer or distinguish bad simulation state from an incorrect body layout.
+No process address is included in this error detail.

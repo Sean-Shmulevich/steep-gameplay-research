@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Player validity failures now identify the first nonfinite copied field/lane and
+its float32 bits. Finite-only rejection and transform-first/interleaved velocity
+check ordering are unchanged. Native fixture covers all 16 transform lanes,
+positive/negative infinity, quiet/signaling NaNs, finite extremes and truncated
+diagnostic buffers. Host and capture plugin build passed. Not yet exercised live;
+next retry should use the diagnostic build to identify the startup failure.
+
+
 First live timing-service qualification attempt stopped before capture: startup
 player queries repeatedly rejected a nonfinite transform, so READY was never
 accepted. No hold, step, or service observation ran. Bottle stopped and saves,
