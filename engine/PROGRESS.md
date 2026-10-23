@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Found the indirect normal-task registration missed by direct-call searches:
+holder cycle 0x11789f0 is UpdatePadManager with the input holder as context.
+Twelve original registration cases pass. The conditional object caller is an
+additional route. StepPreWorlds and UpdatePadManager are separate tasks; pad's
+per-frame world-stage chain is the next ordering boundary. See
+[pad registration](../docs/reconstruction/INPUT_UPDATE_ORDER.md#holder-polling-is-also-the-updatepadmanager-task).
+
 Traced the direct holder-poll caller through its finite-scalar and flag gates
 and an outer context/type gate. 240 original prefix cases pass without call
 substitutions. This is a conditional polling path, not proof of one poll per

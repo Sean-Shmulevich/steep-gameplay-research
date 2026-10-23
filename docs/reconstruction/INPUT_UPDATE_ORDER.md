@@ -1700,3 +1700,54 @@ freshness. Next useful probes are the writers of byte_af and the owning objects'
 registration paths, alongside indirect references to the holder update. Until
 those joins are established, do not model polling as once per world step merely
 because ownership updates precede Step.
+
+## Holder polling is also the UpdatePadManager task
+
+An indirect registration resolves the earlier direct-call limitation. Engine
+setup at 0x697989..0x697a40 installs holder cycle 0x11789f0 as the callback of
+the embedded task at engine-owner+0x20d0. The callback context comes from the
+input-holder global already used by cache selection, with the callable's tag
+bit 1 retained and bit 0 cleared. Setup names this task `UpdatePadManager` and
+`Engine::UpdatePadManager`.
+
+```text
+UpdatePadManager callback(holder):
+    exchange_selected_caches(holder)
+    consume_refresh_flag(holder)
+    update_holder(holder)             # root/device update, then service poll
+    exchange_selected_caches(holder)  # receivers reacquired
+```
+
+This is the same complete holder-cycle entry, not the gated object helper
+0xf906e0. Therefore the conditional direct caller documented above is an
+additional route and cannot be used to infer the normal task's eligibility.
+No identity link was established for the unrelated +0xaf writes found during
+that search; matching an offset alone does not identify a type or field.
+
+[Task registration validation](../../native/snow_host/input_pad_registration_validation.json)
+executes 12 original registration slices and original setter calls without
+substitution. It checks the callback, holder-context tagging, callable support
+pointer, names and configuration field. This tests registration storage, not
+live scheduling or device polling. The constructor/holder dependencies remain
+external to the slice.
+
+There are now two distinct named scheduling boundaries:
+
+| Task | Identified work | Ordering evidence |
+| --- | --- | --- |
+| StepPreWorlds | Vector histories, ownership transitions, remaining subsystem call | Registered upstream of Step on the normal engine route |
+| UpdatePadManager | Cache exchange, root/device update, optional service poll, cache exchange | Embedded task wired through per-frame world-stage work; exact consumer/substep join remains unresolved |
+
+The [frame-graph report](ENGINE_FRAME_GRAPH_COVERAGE.md#coverage-result) already
+identifies pad work among the per-frame edges whose full completion path depends
+on world-stage internals. The inspected Step-side region at 0x69c800 passes the
+pad task to a stage receiver's virtual +0x10; it then passes a singleton member
+at +0x638 through the returned receiver's virtual +0x10. The preceding stage
+receiver is also saved at engine-owner+0x3048. These are concrete next anchors,
+but that pair of virtual calls is not decoded here as a complete dependency
+chain or proof of how many times polling occurs.
+
+Do not collapse these tasks into "poll then publish before Step". History and
+ownership are pre-world work, while the holder poll has its own task and
+per-frame registration. A frame/substep timestamp join still requires resolving
+that world-stage chain or observing it live when the game becomes available.

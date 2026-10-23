@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "cases": 12,
+  "scope": "Original UpdatePadManager registration slice with original name/configuration setter calls",
+  "substitutions": [],
+  "supplied_inputs": [
+    "Synthetic enclosing owner and setup stack",
+    "Tagged context and callback support values normally prepared by surrounding setup"
+  ],
+  "callback_rva": "0x11789f0",
+  "task_owner_offset": "0x20d0",
+  "callback_task_offset": "0x198",
+  "labels": [
+    "UpdatePadManager",
+    "Engine::UpdatePadManager"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x697989",
+      "end_rva_exclusive": "0x697a40",
+      "sha256": "3a20547e43425ec16f4f7be6294b11c4577e0a4d34cfe37163d9aa6aca53c4ba"
+    },
+    {
+      "start_rva": "0x11789f0",
+      "end_rva_exclusive": "0x1178a60",
+      "sha256": "636e66989b4b26a98089e9ffe4f2b886e71a0a8a82d5f25ad189cf5ebb03cea4"
+    }
+  ],
+  "limits": [
+    "Full task construction and execution not performed",
+    "Dependency topology supported by separate frame graph research",
+    "No live per-substep input sampling proof"
+  ],
+  "game_process": false
+}
