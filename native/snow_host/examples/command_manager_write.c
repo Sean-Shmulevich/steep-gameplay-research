@@ -65,7 +65,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     MEMORY_BASIC_INFORMATION info={0};HMODULE pinned;
     if(compatible && (initial_read=read_at(target,&initial,8)) && initial==0 &&
        VirtualQuery((void *)target,&info,sizeof info) && info.Type==MEM_IMAGE &&
-       info.AllocationBase==(void *)base && info.Protect==PAGE_READWRITE &&
+       info.AllocationBase==(void *)base && (info.Protect==PAGE_READWRITE || info.Protect==PAGE_WRITECOPY) &&
        GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,(LPCSTR)target,&pinned)){
         initial_protection=info.Protect;armed=snow_first_write_arm((void *)target);
     }

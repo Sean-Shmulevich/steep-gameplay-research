@@ -1059,10 +1059,11 @@ contract or native command-publication permission follows yet.
 ## One-shot first-write observer preparation
 
 The authored `snow_first_write.c` / `snow_first_write.h` component prepares a
-publication experiment. It arms one committed READWRITE data page as READONLY
+publication experiment. It arms one committed READWRITE data page or WRITECOPY
+image page as READONLY
 and registers a vectored exception handler. The first continuable write access
 violation on that page records fault address, instruction address, thread, QPC
-and the supplied Windows context. It restores READWRITE and returns to retry the
+and the supplied Windows context. It restores the original protection and returns to retry the
 original instruction without changing registers or instruction bytes. A record
 therefore describes a **write attempt**, not successful publication or a completed
 constructor. A neighboring write can win; exact fault address must be checked.
@@ -1079,7 +1080,8 @@ Arm is one-shot. Read-only and incompatible mappings refuse without making them
 writable. Cancel restores an untriggered page; a controller must retry if another
 thread is currently handling the fault. Concurrent matching faults retry while
 one handler restores protection. A delayed matching fault after restoration is
-handled only while the page is still READWRITE. Restore failure is not reported
+handled only while the page has its original writable protection, or READWRITE
+after a WRITECOPY page has been copied. Restore failure is not reported
 as success. Unrelated exceptions, read faults and faults on other pages pass to
 later handlers. The code pins its module and retains its handler until process
 exit; there is deliberately no unloading or rearming API. A stalled handler or
@@ -1109,7 +1111,7 @@ bounded waiting/cancellation and private output. Its
 [first live attempt](../../native/snow_host/command_manager_write_live_refusal.json)
 matched the getter fingerprint and read a null singleton, but did not arm. The
 post-refusal page query reported protection 8, `PAGE_WRITECOPY`; the generic
-observer currently accepts only protection 4, `PAGE_READWRITE`. The controller
+observer at that revision accepted only protection 4, `PAGE_READWRITE`. The controller
 reports no captured fault and installed no observer on this refused branch.
 The early predicates are not individually reported, so the receipt preserves
 the actual post-refusal protection observation rather than claiming a complete
@@ -1120,3 +1122,50 @@ and restore the original image-page protection, with an image-backed synthetic
 fixture for copy-on-write behavior and cancellation. Broadly converting the page
 to ordinary read/write would change the experiment's semantics. No publisher
 instruction or manager-lifetime fact was recovered in this attempt.
+
+
+## Copy-on-write support and exact singleton write
+
+The observer now remembers the original protection and restores that value on
+capture or cancellation. WRITECOPY is accepted only for image pages; ordinary
+READWRITE private/image pages remain supported. The
+[copy-on-write fixture receipt](../../native/snow_host/first_write_copy_fixture_validation.json)
+records ten Windows/Wine cases across dedicated private storage and a separately
+loaded authored DLL's data page. Image capture, neighbor capture, cancellation
+and concurrent writes finished with original/final protection 8; the DLL file
+hash stayed unchanged. Read-only refusal remained intact.
+
+The [next live startup capture](../../native/snow_host/manager_publication_write_live_validation.json)
+armed while the singleton sample was null and caught a write at its exact address,
+not a neighbor. The writer was at RVA `0x40c2369`; RCX held the singleton address,
+RSI held the value being stored, and a subsequent singleton read matched RSI.
+The instruction-byte snapshot matched the analyzed image. Protection was restored
+to WRITECOPY, the game reached scheduler readiness and cleanup verified saves,
+settings and the original DLL. No engine command was submitted.
+
+The identified instruction uses a register-held destination. It therefore has no
+direct RIP-relative reference to the singleton for the earlier search to find.
+This is a concrete explanation for that search miss, not evidence that all
+missing lifecycle functions use this mechanism.
+
+The contiguous prefix at RVA `0x40c2353`, when entered there, loads two operands
+through RBP and advances RBP before the write. Its relevant memory effects are:
+
+```text
+destination = read_u64(operand_pointer)
+value       = read_u64(operand_pointer + 8)
+operand_pointer += 16
+write_u64(destination, value)
+```
+
+This is a generic store handler, not a manager constructor. Intervening arithmetic
+also changes other registers/flags; the pseudocode is not a complete CPU-state
+emulator. A [32-case original-instruction fixture](../../native/snow_host/manager_publication_store_validation.json)
+checks the operand loads, pointer advance and exact eight-byte destination write,
+including unchanged neighboring bytes. It stops immediately after the store.
+Subsequent instruction-stream decoding/dispatch remains outside that fixture.
+
+The next ownership lead is the producer of these two operands and the constructor
+or allocator that produced the stored pointer. The captured writer closes the
+publication-address gap, but it provides no retain/release protocol or teardown
+exclusion. Safe native command submission remains a separate unmet requirement.

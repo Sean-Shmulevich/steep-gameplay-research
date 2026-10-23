@@ -14,7 +14,14 @@ static LONG CALLBACK fallback(EXCEPTION_POINTERS *e){
 }
 static DWORD WINAPI writer(LPVOID arg){WaitForSingleObject(gate,INFINITE);page[(uintptr_t)arg]=77;return 0;}
 int main(int argc,char **argv){
-    assert(argc==2);page=VirtualAlloc(NULL,4096,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);assert(page);
+    assert(argc==2 || argc==3);int image=argc==3;DWORD original=PAGE_READWRITE;
+    if(image){
+        HMODULE dll=LoadLibraryA(argv[2]);assert(dll);
+        page=(void *)GetProcAddress(dll,"snow_fixture_page");assert(page && !((uintptr_t)page%4096));
+        MEMORY_BASIC_INFORMATION info;assert(VirtualQuery((void *)page,&info,sizeof info));assert(info.Type==MEM_IMAGE);
+        DWORD old;assert(VirtualProtect((void *)page,4096,PAGE_WRITECOPY,&old));original=PAGE_WRITECOPY;
+    }else page=VirtualAlloc(NULL,4096,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
+    assert(page);
     SnowFirstWriteRecord r;assert(!snow_first_write_read(&r));
     if(!strcmp(argv[1],"readonly")){
         DWORD old;assert(VirtualProtect((void *)page,4096,PAGE_READONLY,&old));
@@ -31,7 +38,9 @@ int main(int argc,char **argv){
     RaiseException(EXCEPTION_ACCESS_VIOLATION,0,2,args); /* Foreign page is not ours. */
     synthetic_fault=0;assert(forwarded==3);assert(!snow_first_write_read(&r));
     if(!strcmp(argv[1],"cancel")){
-        assert(snow_first_write_cancel());assert(snow_first_write_cancel());page[64]=9;
+        assert(snow_first_write_cancel());assert(snow_first_write_cancel());
+        MEMORY_BASIC_INFORMATION before;assert(VirtualQuery((void *)page,&before,sizeof before));assert(before.Protect==original);
+        page[64]=9;
         assert(!snow_first_write_read(&r));
     }else if(!strcmp(argv[1],"concurrent")){
         HANDLE threads[16];gate=CreateEventA(NULL,TRUE,FALSE,NULL);assert(gate);
@@ -45,6 +54,6 @@ int main(int argc,char **argv){
         assert(r.instruction==r.context.Rip && r.thread==GetCurrentThreadId());
         uintptr_t original=r.instruction;page[64]=66;assert(snow_first_write_read(&r)&&r.instruction==original);
     }
-    MEMORY_BASIC_INFORMATION info;assert(VirtualQuery((void *)page,&info,sizeof info));assert(info.Protect==PAGE_READWRITE);
-    assert(snow_first_write_cancel());printf("%s passed\n",argv[1]);return 0;
+    MEMORY_BASIC_INFORMATION info;assert(VirtualQuery((void *)page,&info,sizeof info));assert(info.Protect==original || (image && info.Protect==PAGE_READWRITE));
+    assert(snow_first_write_cancel());printf("%s %s passed original=%lu final=%lu\n",image?"image":"private",argv[1],(unsigned long)original,(unsigned long)info.Protect);return 0;
 }

@@ -1,0 +1,150 @@
+{
+  "evidence": "Observed writer prefix executed as original instructions with synthetic operand stack and destination",
+  "cases": [
+    {
+      "index": 0,
+      "passed": true
+    },
+    {
+      "index": 1,
+      "passed": true
+    },
+    {
+      "index": 2,
+      "passed": true
+    },
+    {
+      "index": 3,
+      "passed": true
+    },
+    {
+      "index": 4,
+      "passed": true
+    },
+    {
+      "index": 5,
+      "passed": true
+    },
+    {
+      "index": 6,
+      "passed": true
+    },
+    {
+      "index": 7,
+      "passed": true
+    },
+    {
+      "index": 8,
+      "passed": true
+    },
+    {
+      "index": 9,
+      "passed": true
+    },
+    {
+      "index": 10,
+      "passed": true
+    },
+    {
+      "index": 11,
+      "passed": true
+    },
+    {
+      "index": 12,
+      "passed": true
+    },
+    {
+      "index": 13,
+      "passed": true
+    },
+    {
+      "index": 14,
+      "passed": true
+    },
+    {
+      "index": 15,
+      "passed": true
+    },
+    {
+      "index": 16,
+      "passed": true
+    },
+    {
+      "index": 17,
+      "passed": true
+    },
+    {
+      "index": 18,
+      "passed": true
+    },
+    {
+      "index": 19,
+      "passed": true
+    },
+    {
+      "index": 20,
+      "passed": true
+    },
+    {
+      "index": 21,
+      "passed": true
+    },
+    {
+      "index": 22,
+      "passed": true
+    },
+    {
+      "index": 23,
+      "passed": true
+    },
+    {
+      "index": 24,
+      "passed": true
+    },
+    {
+      "index": 25,
+      "passed": true
+    },
+    {
+      "index": 26,
+      "passed": true
+    },
+    {
+      "index": 27,
+      "passed": true
+    },
+    {
+      "index": 28,
+      "passed": true
+    },
+    {
+      "index": 29,
+      "passed": true
+    },
+    {
+      "index": 30,
+      "passed": true
+    },
+    {
+      "index": 31,
+      "passed": true
+    }
+  ],
+  "writer_rva": "0x40c2369",
+  "prefix_rva": "0x40c2353",
+  "prefix_length": 25,
+  "prefix_sha256": "214d77f87b73334855cd65ad95a4371544f0cf9d943a636657931fa7c377ad8f",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "semantic_effects": [
+    "Read destination qword from operand pointer.",
+    "Read value qword from operand pointer plus 8.",
+    "Advance operand pointer by 16.",
+    "Write value qword to destination."
+  ],
+  "limitations": [
+    "Generic store handler; no constructor, allocation, type or manager lifetime inferred.",
+    "Fixture stops immediately after the store; subsequent dispatch and rolling decode state are excluded.",
+    "Intervening register/flag changes execute but are not modeled as part of the four listed memory/operand effects.",
+    "Only valid writable destinations tested; no fault recovery semantics inferred."
+  ]
+}

@@ -400,7 +400,7 @@ timeout_ms=60000
 ```
 
 It checks the singleton-getter fingerprint, requires a sampled null singleton,
-and accepts only a READWRITE image page belonging to the main executable. The
+and accepts a READWRITE or WRITECOPY image page belonging to the main executable. The
 observer pins code/image modules and stays registered until process exit. The
 worker waits at most the configured 100..90000 ms, then attempts cancellation for
 up to two additional seconds. An external process watchdog is still required.
@@ -415,10 +415,10 @@ faulting instruction subsequently completed or targeted the singleton rather
 than another global on the page.
 
 The first live attempt declined to arm. Its post-refusal page query reported
-`PAGE_WRITECOPY`, unsupported by the current READWRITE-only observer. Do not
+`PAGE_WRITECOPY`, unsupported by the initial READWRITE-only observer revision. Do not
 interpret this as a successful publication capture or override it with a generic
 READWRITE restore. See the
-[refusal receipt](command_manager_write_live_refusal.json). Copy-on-write support
-requires preservation of the original protection and an image-backed fixture
-before another live attempt. The separate initial-protection field remains zero
+[refusal receipt](command_manager_write_live_refusal.json). The subsequent copy-on-write extension preserves the original protection and
+adds an image-backed fixture; see the copy-on-write section in the command
+lifecycle guide. The separate initial-protection field remains zero
 on this refused branch; it is not an observed protection value.

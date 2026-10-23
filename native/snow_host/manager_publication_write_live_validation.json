@@ -1,0 +1,41 @@
+{
+  "status": "exact_singleton_write_attempt_captured",
+  "singleton_rva": "0x312f3a8",
+  "instruction_rva": "0x40c2369",
+  "initial_singleton_null": true,
+  "fault_address_matches_singleton": true,
+  "captured_destination_register": "rcx",
+  "captured_value_register": "rsi",
+  "later_singleton_matches_captured_value": true,
+  "initial_protection": 8,
+  "final_protection": 8,
+  "restoration_reported": true,
+  "instruction_snapshot_matches_analyzed_image": true,
+  "instruction_snapshot_sha256": "1b8fca70cbb820c759ddc62d62da751d7b5dc1d4ac53f8aad14e824ab3acff00",
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/snow_first_write.c": "09b75446c0599b43d3f871b7d47bef97ad4cd597ffab388e3713e1c0ddeabde4",
+    "native/snow_host/snow_first_write.h": "0aeea940f314214c2276c50bd04ed885e192860a0128501906b972cc923faa25",
+    "native/snow_host/examples/command_manager_write.c": "79a88bf97aaf7f60a70681990494ee4afcaaf77ac6dcc82ee918ee358acd7a7d"
+  },
+  "plugin_sha256": "f9a8e1f2b77663322e8ba5dee1ea167b364a3b6525bfe077607892ebf519dfdd",
+  "private_output_sha256": "dc396be443d3539cb64d79dc427b4692417db9a63d31c30363ea9f9af0180de9",
+  "game_launched": true,
+  "data_page_protection_temporarily_changed": true,
+  "game_instruction_bytes_patched": false,
+  "mod_commands_submitted": false,
+  "limitations": [
+    "Context records the write attempt before instruction retry; later matching value is a separate read.",
+    "Instruction bytes were read after protection restoration; matching static image is not an atomic code/context capture.",
+    "The preceding stack-fed prefix is static and synthetic-instruction evidence, not a captured call stack.",
+    "Constructor caller, allocation owner, producer of stack operands, teardown and manager retention remain open.",
+    "One successful live session; no proof of general transition safety or repeatability."
+  ]
+}

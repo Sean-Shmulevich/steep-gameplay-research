@@ -5,10 +5,12 @@
 static volatile LONG state;
 static uintptr_t page;
 static SIZE_T page_size;
+static DWORD original_protection;
 static SnowFirstWriteRecord record;
 static int writable(void){
     MEMORY_BASIC_INFORMATION info;
-    return VirtualQuery((void *)page,&info,sizeof info) && info.State==MEM_COMMIT && info.Protect==PAGE_READWRITE;
+    return VirtualQuery((void *)page,&info,sizeof info) && info.State==MEM_COMMIT && (info.Protect==original_protection ||
+        (original_protection==PAGE_WRITECOPY && info.Protect==PAGE_READWRITE));
 }
 static LONG CALLBACK fault(EXCEPTION_POINTERS *e){
     if(!e || !e->ExceptionRecord || !e->ContextRecord)return EXCEPTION_CONTINUE_SEARCH;
@@ -24,7 +26,7 @@ static LONG CALLBACK fault(EXCEPTION_POINTERS *e){
     record.context=*e->ContextRecord;record.thread=GetCurrentThreadId();
     LARGE_INTEGER tick;QueryPerformanceCounter(&tick);record.tick=(uint64_t)tick.QuadPart;
     DWORD old;
-    if(!VirtualProtect((void *)page,page_size,PAGE_READWRITE,&old)){
+    if(!VirtualProtect((void *)page,page_size,original_protection,&old)){
         InterlockedExchange(&state,5);return EXCEPTION_CONTINUE_SEARCH;
     }
     InterlockedExchange(&state,3);
@@ -36,11 +38,14 @@ int snow_first_write_arm(void *address){
     page=(uintptr_t)address-((uintptr_t)address%page_size);
     MEMORY_BASIC_INFORMATION info;
     if(!address || !VirtualQuery((void *)page,&info,sizeof info) || info.State!=MEM_COMMIT ||
-       info.Protect!=PAGE_READWRITE || (info.Type!=MEM_PRIVATE && info.Type!=MEM_IMAGE) ||
+       (info.Protect!=PAGE_READWRITE && !(info.Type==MEM_IMAGE && info.Protect==PAGE_WRITECOPY)) ||
+       (info.Type!=MEM_PRIVATE && info.Type!=MEM_IMAGE) ||
        ((uintptr_t)&state>=page && (uintptr_t)&state-page<page_size) ||
        ((uintptr_t)&record<page+page_size && (uintptr_t)&record+sizeof record>page) ||
        ((uintptr_t)&page>=page && (uintptr_t)&page-page<page_size) ||
-       ((uintptr_t)&page_size>=page && (uintptr_t)&page_size-page<page_size))return 0;
+       ((uintptr_t)&page_size>=page && (uintptr_t)&page_size-page<page_size) ||
+       ((uintptr_t)&original_protection>=page && (uintptr_t)&original_protection-page<page_size))return 0;
+    original_protection=info.Protect;
     HMODULE pinned;
     if(!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,
                           (LPCSTR)(uintptr_t)&fault,&pinned) || !AddVectoredExceptionHandler(1,fault))return 0;
@@ -56,7 +61,7 @@ int snow_first_write_cancel(void){
     if(seen==3 || seen==4)return 1;
     if(seen!=1)return 0;
     DWORD old;
-    if(!VirtualProtect((void *)page,page_size,PAGE_READWRITE,&old)){
+    if(!VirtualProtect((void *)page,page_size,original_protection,&old)){
         InterlockedExchange(&state,5);return 0;
     }
     InterlockedExchange(&state,4);return 1;

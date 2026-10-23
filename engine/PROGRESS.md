@@ -6243,3 +6243,14 @@ the observer only supports READWRITE. No protection change or write capture
 occurred, and cleanup passed. Two synthetic controller refusal cases also pass.
 Next work is preserving copy-on-write protection with an image-backed fixture,
 then repeating the publication experiment. No lifetime claim is added.
+
+
+### Exact command-manager publication writer captured
+
+Preserved WRITECOPY protection and passed ten private/image-backed Wine fixture
+cases. The subsequent startup capture caught the exact singleton write at a
+register-indirect store; the later singleton value matched the captured source
+register. Protection restoration and session cleanup passed. A 32-case original
+instruction fixture decodes the preceding generic two-operand store prefix.
+This explains the direct-reference search miss. Operand production, allocation
+ownership and teardown remain open; no command submission was attempted.

@@ -1,0 +1,79 @@
+{
+  "cases": [
+    {
+      "image": false,
+      "scenario": "normal",
+      "returncode": 0,
+      "stdout": "private normal passed original=4 final=4"
+    },
+    {
+      "image": false,
+      "scenario": "neighbor",
+      "returncode": 0,
+      "stdout": "private neighbor passed original=4 final=4"
+    },
+    {
+      "image": false,
+      "scenario": "cancel",
+      "returncode": 0,
+      "stdout": "private cancel passed original=4 final=4"
+    },
+    {
+      "image": false,
+      "scenario": "readonly",
+      "returncode": 0,
+      "stdout": "readonly passed"
+    },
+    {
+      "image": false,
+      "scenario": "concurrent",
+      "returncode": 0,
+      "stdout": "private concurrent passed original=4 final=4"
+    },
+    {
+      "image": true,
+      "scenario": "normal",
+      "returncode": 0,
+      "stdout": "image normal passed original=8 final=8"
+    },
+    {
+      "image": true,
+      "scenario": "neighbor",
+      "returncode": 0,
+      "stdout": "image neighbor passed original=8 final=8"
+    },
+    {
+      "image": true,
+      "scenario": "cancel",
+      "returncode": 0,
+      "stdout": "image cancel passed original=8 final=8"
+    },
+    {
+      "image": true,
+      "scenario": "readonly",
+      "returncode": 0,
+      "stdout": "readonly passed"
+    },
+    {
+      "image": true,
+      "scenario": "concurrent",
+      "returncode": 0,
+      "stdout": "image concurrent passed original=8 final=8"
+    }
+  ],
+  "image_file_sha256": "00df69db7330e3614bffdd3a49d398ad472d52f60052e735ea336ab7afccc1e3",
+  "image_file_unchanged": true,
+  "evidence": "Synthetic private and image-backed page write/cancel fixtures under Wine",
+  "game_launched": false,
+  "source_hashes": {
+    "native/snow_host/snow_first_write.c": "09b75446c0599b43d3f871b7d47bef97ad4cd597ffab388e3713e1c0ddeabde4",
+    "native/snow_host/snow_first_write.h": "0aeea940f314214c2276c50bd04ed885e192860a0128501906b972cc923faa25",
+    "tests/fixtures/snow_first_write_fixture.c": "c2ac9f80890d6cde5e1f6757c4eecf1d88da1aa4ba5eab8ccf4e2774ec38ab9d",
+    "tests/fixtures/snow_first_write_image.c": "0229a062756bdff6de731de196ab43219017c91e18132930dae1216af5812705"
+  },
+  "limitations": [
+    "The image target is a separate authored DLL, not a game page.",
+    "Concurrent schedule coverage is bounded; protection failures and concurrent cancellation were not fault-injected.",
+    "Original protection is restored before retry; the captured context describes an attempt, not completed publication."
+  ]
+}

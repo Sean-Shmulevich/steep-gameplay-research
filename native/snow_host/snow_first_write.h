@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <stdint.h>
 /* Authored one-shot page observer, not recovered game code.
- * Caller retains an entire committed READWRITE data page through process exit
+ * Caller retains an entire committed READWRITE data page or WRITECOPY image page through process exit
  * and excludes all other protection changes. Never use a heap allocator page.
  * The first write ANYWHERE on that page wins; the instruction has not completed.
  * Arm once, on one controller thread. Cancel may need retry while handling.
