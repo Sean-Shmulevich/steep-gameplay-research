@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Added native guarded-admission C adapter with normal-path lock balance, binding
+check, ring validation and explicit full refusal. The compiled Win64 adapter
+passes 18 serial emulated cases with original producer/thunks and observed Wine
+critical-section routines. Portable C fixture covers full, stale and malformed
+state. No live publication: manager lifetime and cleanup under the outer lock
+remain open; a bounded direct-reference scan found no singleton writer.
+Full suite passed: 2193 tests, one skipped. Repository checks passed.
+
 Resolved both encoded targets live to Wine ntdll RtlEnterCriticalSection and
 RtlLeaveCriticalSection with stable slots and matching 32-byte module prefixes.
 One read-only scheduler-ready session; no movement, target invocation or command

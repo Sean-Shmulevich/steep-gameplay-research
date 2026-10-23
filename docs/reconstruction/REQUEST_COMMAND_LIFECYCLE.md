@@ -298,6 +298,45 @@ remain separate requirements. The next native experiment can use this qualified
 recursive-lock identity to prepare a bounded, observation-only submission adapter;
 it must not infer permission to mutate gameplay or unload after one callback.
 
+## Native guarded-admission adapter
+
+`native/snow_host/snow_command_admission.h` and `.c` implement the authored guard
+above for the inspected ordinary producer layout. The binding supplies retained
+manager storage, verified enter/leave/producer functions and a bounded identity
+check. The check runs **under** the queue lock and cannot itself establish that
+the lock storage was safe to acquire. Lifetime retention is a precondition.
+
+The adapter copies the descriptor, acquires the recursive queue lock, checks the
+binding, validates array/count/index/capacity fields, refuses a full ring, and
+otherwise calls the native producer with alternate routing disabled. It releases
+the outer lock on every normal status path. It does not catch exceptions or
+nonlocal exits. Binding/descriptor immutability during the call and retained
+callback context/code after submission are caller responsibilities.
+
+Statuses distinguish `SUBMITTED`, `FULL`, `INVALID_BINDING`, `STALE_BINDING` and
+`INVALID_RING`. `SUBMITTED` only reports return from the guarded producer call;
+it is neither delivery nor a completion receipt. Invalid-ring rejection, positive
+capacity bounds and mandatory binding checks are authored policy, not claims that
+the original producer performs those checks.
+
+The [compiled-adapter receipt](../../native/snow_host/command_admission_validation.json)
+executes the compiled Windows x64 adapter against the original producer, decoded
+lock thunks and observed Wine lock routines in 18 serial admission cases. The
+binding validator and retained storage are supplied. The separate portable C
+fixture checks full, stale and malformed rings and normal lock balance:
+
+```sh
+python3 -m unittest discover -s tests -p test_command_admission_native.py
+```
+
+This adapter is not installed in the game. A bounded direct-reference scan of the
+command singleton found readers but no direct writer; it does not establish that
+the singleton is permanent or that no indirect writer/destructor exists. The
+native producer's temporary-holder cleanup also runs while the adapter retains
+the outer lock. Final-release side effects were not exercised by the retained
+fixture holders. Manager teardown, cleanup lock ordering, competing producers and
+callback phase remain explicit live-integration gates.
+
 ## Inspect the behavior without game files
 
 ```sh

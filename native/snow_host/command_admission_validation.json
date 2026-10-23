@@ -1,0 +1,373 @@
+{
+  "evidence": "Compiled independent C admission adapter calls original producer and game lock thunks into observed Wine ntdll under emulation",
+  "all_passed": true,
+  "guarded_admission_cases": 18,
+  "sequences": [
+    {
+      "depth": 1,
+      "states": [
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "depth": 2,
+      "states": [
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          1,
+          2,
+          71
+        ],
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "depth": 3,
+      "states": [
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          1,
+          2,
+          71
+        ],
+        [
+          2,
+          3,
+          71
+        ],
+        [
+          1,
+          2,
+          71
+        ],
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "depth": 8,
+      "states": [
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          1,
+          2,
+          71
+        ],
+        [
+          2,
+          3,
+          71
+        ],
+        [
+          3,
+          4,
+          71
+        ],
+        [
+          4,
+          5,
+          71
+        ],
+        [
+          5,
+          6,
+          71
+        ],
+        [
+          6,
+          7,
+          71
+        ],
+        [
+          7,
+          8,
+          71
+        ],
+        [
+          6,
+          7,
+          71
+        ],
+        [
+          5,
+          6,
+          71
+        ],
+        [
+          4,
+          5,
+          71
+        ],
+        [
+          3,
+          4,
+          71
+        ],
+        [
+          2,
+          3,
+          71
+        ],
+        [
+          1,
+          2,
+          71
+        ],
+        [
+          0,
+          1,
+          71
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "adapter_sha256": "f0038192cbf44119b61d50bc9323e4a9ea5fdb950edfe99472faf6d917567d1c",
+  "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "ntdll_instruction_spans": [
+    {
+      "rva": "0x21fe0",
+      "length": 1,
+      "sha256": "8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643"
+    },
+    {
+      "rva": "0x21fe1",
+      "length": 4,
+      "sha256": "e746e80a9e90a0ad65f07af5a6fa7ce141762b96cb08c37888d41c4a7155b8eb"
+    },
+    {
+      "rva": "0x21fe5",
+      "length": 5,
+      "sha256": "e2d4df4d13555ad71d6a4444792f73a59927325b7e4adefd0cbcabe4bf0e494b"
+    },
+    {
+      "rva": "0x21fea",
+      "length": 3,
+      "sha256": "5d32f6373486d4a84fe9a589f070c313397406a27c19496987e21c99dff7ad22"
+    },
+    {
+      "rva": "0x21fed",
+      "length": 2,
+      "sha256": "76592b9de6d38238a52a3651867871e5c670e6320a8ef46a84b5590f8933f33e"
+    },
+    {
+      "rva": "0x22030",
+      "length": 9,
+      "sha256": "2755882714473f31a777626ef7f0483e253826df58d5722cb18604038b8d7e76"
+    },
+    {
+      "rva": "0x22039",
+      "length": 3,
+      "sha256": "226b0a6a22e66fc16aad8a98547a3bdc65843a03495ec9d6e64370e3ff3b36a4"
+    },
+    {
+      "rva": "0x2203c",
+      "length": 7,
+      "sha256": "47116a1adb267005f51f1f1468a739762c0e336a34b43d0044781feda149e982"
+    },
+    {
+      "rva": "0x22043",
+      "length": 4,
+      "sha256": "281e121f1366e59f5527b2e308b3b581c20c690af7591a00500aefc098299798"
+    },
+    {
+      "rva": "0x22047",
+      "length": 2,
+      "sha256": "8359c8f2ab7af5c7569d43a68ce42c771d8e5c6e1349821ed39c1c0234f3785d"
+    },
+    {
+      "rva": "0x22049",
+      "length": 4,
+      "sha256": "bfe972cfee329e83af922087be9b4c73a39a3e04adac3bb8ff9d1cf1046e361f"
+    },
+    {
+      "rva": "0x2204d",
+      "length": 1,
+      "sha256": "245843abef9e72e7efac30138a994bf6301e7e1d7d7042a33d42e863d2638811"
+    },
+    {
+      "rva": "0x2204e",
+      "length": 1,
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e"
+    },
+    {
+      "rva": "0x22050",
+      "length": 5,
+      "sha256": "7f3e6a3adf5bf997dfb402b891c64b29319fde467a25622856c5111ee2b403cd"
+    },
+    {
+      "rva": "0x22055",
+      "length": 2,
+      "sha256": "97ca6575bddf5001eef5467bc040e4144529b755d77ac4121002cb32d576e60d"
+    },
+    {
+      "rva": "0x22057",
+      "length": 9,
+      "sha256": "2755882714473f31a777626ef7f0483e253826df58d5722cb18604038b8d7e76"
+    },
+    {
+      "rva": "0x22060",
+      "length": 3,
+      "sha256": "226b0a6a22e66fc16aad8a98547a3bdc65843a03495ec9d6e64370e3ff3b36a4"
+    },
+    {
+      "rva": "0x22063",
+      "length": 4,
+      "sha256": "342c6923b0b6c975c155084b863a2b4ad5dd02609c21db642363f23096f74585"
+    },
+    {
+      "rva": "0x22067",
+      "length": 2,
+      "sha256": "6c11c1b3de30d627eef949d594471291e88e63b1b414d98c322fe9654051860f"
+    },
+    {
+      "rva": "0x22080",
+      "length": 4,
+      "sha256": "8447c7eee2ab88bc5f1e86f37aae84ea2c3b74ab0615bbf749b7a0ed9c7417ae"
+    },
+    {
+      "rva": "0x22084",
+      "length": 2,
+      "sha256": "8359c8f2ab7af5c7569d43a68ce42c771d8e5c6e1349821ed39c1c0234f3785d"
+    },
+    {
+      "rva": "0x22086",
+      "length": 4,
+      "sha256": "bfe972cfee329e83af922087be9b4c73a39a3e04adac3bb8ff9d1cf1046e361f"
+    },
+    {
+      "rva": "0x2208a",
+      "length": 1,
+      "sha256": "245843abef9e72e7efac30138a994bf6301e7e1d7d7042a33d42e863d2638811"
+    },
+    {
+      "rva": "0x2208b",
+      "length": 1,
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e"
+    },
+    {
+      "rva": "0x2b540",
+      "length": 4,
+      "sha256": "bd3bb9365e3b4752ce52b29184ad2180341a44e4972785ba046b16c38e27a617"
+    },
+    {
+      "rva": "0x2b544",
+      "length": 3,
+      "sha256": "20303652b024e91ea1659934623368e09b640377ab9245dd3251c1536643d6a9"
+    },
+    {
+      "rva": "0x2b547",
+      "length": 3,
+      "sha256": "8d76600c739ad95eaf27ab4cb509d1ed1057538d099570cbc31e271bbd23d665"
+    },
+    {
+      "rva": "0x2b54a",
+      "length": 3,
+      "sha256": "b13e00319f10dc81fc810ecb248935794e08b65b108ba833f4bc4fd2b93b30d0"
+    },
+    {
+      "rva": "0x2b54d",
+      "length": 2,
+      "sha256": "043b5c16f0c4129abe8ea534766c2117090a2f144dcc6fe6f25719f50ea562e1"
+    },
+    {
+      "rva": "0x2b54f",
+      "length": 3,
+      "sha256": "1ac035309a8e3859b63d8e0bef060b8efd81e328dead3331d3d564711d7a5891"
+    },
+    {
+      "rva": "0x2b552",
+      "length": 2,
+      "sha256": "426c3d77b13e3495a692e288b674a24bc7e96599869244e38b7c4c28f27f0618"
+    },
+    {
+      "rva": "0x2b554",
+      "length": 2,
+      "sha256": "fe5ecb161d30d79550470b3f2e01476c941f7906256e44a9d6f28bc34d904232"
+    },
+    {
+      "rva": "0x2b5c0",
+      "length": 5,
+      "sha256": "c51da3347a12ecd7d04cbfa48f681b25606b0e4e8d7f3cf39a0e57431d037032"
+    },
+    {
+      "rva": "0x2b5c5",
+      "length": 2,
+      "sha256": "8359c8f2ab7af5c7569d43a68ce42c771d8e5c6e1349821ed39c1c0234f3785d"
+    },
+    {
+      "rva": "0x2b5c7",
+      "length": 4,
+      "sha256": "341b2c8b2ca9d73ce90fe8f8344f713ceecdabc5a6bb5018c5a0da3257e83e04"
+    },
+    {
+      "rva": "0x2b5cb",
+      "length": 1,
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e"
+    },
+    {
+      "rva": "0x2b5d0",
+      "length": 8,
+      "sha256": "9f168dd8c87a45d8ee913abb26f614c1943aa3480f9e3195f2e330933e3a8aa4"
+    },
+    {
+      "rva": "0x2b5d8",
+      "length": 5,
+      "sha256": "c51da3347a12ecd7d04cbfa48f681b25606b0e4e8d7f3cf39a0e57431d037032"
+    },
+    {
+      "rva": "0x2b5dd",
+      "length": 2,
+      "sha256": "2c4a2a22d0b350ca48c83e663e10f7eec103aa8325cf4de5906d925fc8c45f80"
+    }
+  ],
+  "limitations": [
+    "Synthetic TEB/thread identity and initialized spin-zero critical section.",
+    "Encoded target slots supplied to route to the observed module implementation.",
+    "No contention, wait/wake, destruction, exception or live recursive acquisition tested.",
+    "Guarded original producer submission checked only in a serial fixture with retained manager/array; no native manager lifetime or concurrent safety qualification."
+  ]
+}
