@@ -6122,3 +6122,11 @@ A bounded read-only Wine session resolves initialization to
 exports. All three code prefixes match installed files and targets stay stable.
 Fifteen reads total 192 bytes. Cleanup verified saves/settings and original DLL.
 This closes target identity for that Wine build, not manager lifetime safety.
+
+### Lock deletion and event-wrapper resolution
+
+Five encoded pointer wrappers now have live export identities: delete critical
+section, close handle, reset/set event and file flush. A 240-case instruction
+fixture validates their target arithmetic and tail-transfer ABI. The live probe
+used 448 bytes of guarded reads and restored the session. These identities narrow
+teardown and event-flow searches without proving the command manager destructor.

@@ -559,6 +559,56 @@ verified. This establishes API identity in the observed Wine build, not safe
 initialization or deletion of a live manager lock. Ownership, publication,
 destruction and synchronization with plugin submission remain open.
 
+## Lock deletion and event-wrapper identities
+
+A [second bounded target-resolution session](../../native/snow_host/lock_lifecycle_live_validation.json)
+distinguishes five pointer wrappers that otherwise have similar encoded-call
+shapes. The [instruction fixture](../../native/snow_host/lock_lifecycle_thunk_validation.json)
+validates 240 supplied-target cases: 48 per wrapper, preserving the caller stack,
+flags and nonvolatile integer registers, with `RCX = read_pointer(wrapper)` at
+the target. SIMD and ASLR remain excluded.
+
+| Wrapper RVA | Encoded slot RVA | Addend, modulo 2^64 | Observed exported target |
+| --- | --- | --- | --- |
+| `0x115d480` | `0x3f6fab0` | `0x2b6a317d` | `kernel32!FlushFileBuffers` |
+| `0x1221400` | `0x35db73b` | `0x68915110` | `kernel32!CloseHandle` |
+| `0x1221410` | `0x3ee2f8e` | `0x1a156938` | `kernel32!ResetEvent` |
+| `0x1c370b0` | `0x3f4320b` | `0x0459521e` | `ntdll!RtlDeleteCriticalSection` |
+| `0x1c3b570` | `0x3dc7c29` | `0x7ef2492e` | `kernel32!SetEvent` |
+
+Each live target resolves exactly to the indicated export and has a 32-byte code
+prefix matching its installed module file. Seven slots, including the existing
+enter/leave controls, remain stable before and after resolution. The probe makes
+35 guarded reads totaling 448 bytes, calls none of these APIs, and submits no
+commands. Cleanup verifies game exit, saves/settings restoration and the original
+DLL. Target names do not prove a manager-specific invocation or synchronization
+policy.
+
+A direct-relative-call scan finds 479 instruction-boundary-checked calls to the
+delete wrapper within unwind-described functions. No manager destructor has been
+identified from these calls. A caller at `0x72e0e0` deletes a lock at receiver
+`+0x120`, but also releases containers at `+0x1e8` and `+0x1c8` and uses a `0x210`
+size in a conditional delete path. Matching a single offset is insufficient to
+assign this function to the command manager.
+
+A separate sequence at `0x662570` can now be described more precisely:
+
+```text
+call virtual_slot_0x10(global_A)
+owner = global_B
+owner.byte_0 = 1
+owner.byte_0x46 = 0
+ResetEvent(read_pointer(owner + 0x48))
+if owner.byte_0x58 == 0:
+    unresolved_helper(owner)
+tail_call unresolved_helper_2(owner + 0x60)
+```
+
+This is a flag/event sequence in another receiver. The virtual call, conditional
+helper and final helper are unresolved here; do not label it a proven wait,
+thread join or command-manager shutdown path. It provides a concrete event-based
+lead for later scheduler lifecycle analysis.
+
 ## Buffer disposal is not callback delivery
 
 The constructor's auxiliary-buffer cleanup leads to clear routine `0x658470`

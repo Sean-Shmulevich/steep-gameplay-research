@@ -1,0 +1,103 @@
+{
+  "evidence": "One PID/creation-guarded read-only Wine session resolving pointer-wrapper candidates",
+  "ok": true,
+  "session_count": 1,
+  "input_sent": false,
+  "native_targets_called_by_probe": false,
+  "resolved": {
+    "enter_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x21fe0",
+      "exports": [
+        "RtlEnterCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "329049c9b40cb61d9c1879399e3470eefc3904de3d9991911a6253aa8119f2d2"
+    },
+    "leave_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x2b540",
+      "exports": [
+        "RtlLeaveCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "980260d888d10762fda9f7a40b165d49dd1798c6bc3ce71e897c09ff731cebd7"
+    },
+    "wrapper_115d480": {
+      "matching_module_count": 1,
+      "module": "kernel32.dll",
+      "rva": "0xd088",
+      "exports": [
+        "FlushFileBuffers"
+      ],
+      "module_sha256": "759faa48eede76d56dd0cbfabef09f7947ecd802187a5c49d76a3084259fe458",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "9a9e2a7e2e6e5752b913c7dd66a46d25de12a9ca9fcf71df0d07313ad6aed15f"
+    },
+    "wrapper_1221400": {
+      "matching_module_count": 1,
+      "module": "kernel32.dll",
+      "rva": "0xc2c0",
+      "exports": [
+        "CloseHandle"
+      ],
+      "module_sha256": "759faa48eede76d56dd0cbfabef09f7947ecd802187a5c49d76a3084259fe458",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "e34891bcb9b2fd0f9ec1f3559c10af18f6eb84688595c5f5c9d165f64c6c2d80"
+    },
+    "wrapper_1221410": {
+      "matching_module_count": 1,
+      "module": "kernel32.dll",
+      "rva": "0xf7b8",
+      "exports": [
+        "ResetEvent"
+      ],
+      "module_sha256": "759faa48eede76d56dd0cbfabef09f7947ecd802187a5c49d76a3084259fe458",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "1c0608c27ca90798ecb72903da53e3f299d203a09e35502a95cbfd10a765a753"
+    },
+    "wrapper_1c370b0": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x202b0",
+      "exports": [
+        "RtlDeleteCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "2f21cd2c66a66c7293b63b27d99e9a9cc8a9ce4decb559c1035aa56beb269923"
+    },
+    "wrapper_1c3b570": {
+      "matching_module_count": 1,
+      "module": "kernel32.dll",
+      "rva": "0xfc38",
+      "exports": [
+        "SetEvent"
+      ],
+      "module_sha256": "759faa48eede76d56dd0cbfabef09f7947ecd802187a5c49d76a3084259fe458",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "05c4c888319579d8088510e0ce2ead08708f72cbb7b41b871dd53ab60e15332f"
+    }
+  },
+  "stable_across_resolution": true,
+  "reader_calls": 35,
+  "targeted_read_bytes": 448,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Code-prefix matches and exports identify targets in this Wine build, not native Windows compatibility.",
+    "No candidate API was invoked by the probe.",
+    "No manager destructor or caller lifetime guarantee established.",
+    "Read slots sequentially; no atomic snapshot or lock ownership proof."
+  ]
+}
