@@ -1987,3 +1987,51 @@ That can establish whether this is a usable existing registration mechanism,
 what callback ownership it expects, and how removal waits for execution. Until
 then, do not install arbitrary mod objects into this list or interpret the byte
 as a lock. This work is separate from player timing and deterministic stepping.
+
+
+## Command participants have a preparation dispatch
+
+The same manager and callback array also appear in the preparation routine at
+RVA `0x67ced0`. Its prefix performs two atomic counter transfers before invoking
+slot +8 on each entry. The executor later invokes slot 0. This supports describing
+the entries as two-phase command participants; it does not identify their concrete
+classes or turn either slot into a public mod API.
+
+```text
+prepare_command_participants(manager):
+    deferred_A = atomic_exchange(manager.deferred_A, 0)
+    atomic_add_wrapping_u32(manager.active_A, deferred_A)
+    deferred_B = atomic_exchange(manager.deferred_B, 0)
+    atomic_add_wrapping_u32(manager.active_B, deferred_B)
+    cursor = manager.callback_array
+    end = manager.callback_array + manager.callback_count_u16
+    while cursor != end:
+        (*cursor).virtual8()
+        cursor += 1
+        end = manager.callback_array + manager.callback_count_u16
+    # Additional locking and processing follow; not modeled by this prefix.
+```
+
+The counter pairs are manager +0x50/+0x54 and +0xa8/+0xac. Each deferred field
+is exchanged separately, then added into its active field with `lock xadd`.
+The two transfers are not one atomic transaction. Counter meaning beyond the
+observed active/deferred roles remains tied to the surrounding consumers.
+
+The [16-case original-instruction check](../../native/snow_host/command_participant_prepare_validation.json)
+uses empty, single, reordered and duplicate participant lists, plus zero,
+ordinary and wrapping counter combinations. Both transfers complete before
+all intercepted participant calls. Duplicate entries receive repeated calls.
+Original prefix instructions execute; participant bodies are synthetic returns,
+and execution stops before the later manager lock. This validates local ordering
+and arithmetic, not mutation safety or native concurrent execution.
+
+The transition helper calls this preparation repeatedly before its corresponding
+executor calls. Other observed direct paths also call preparation, so neither
+method is inherently once-per-frame. A candidate participant must be researched
+as a pair of behaviors with explicit lifetime and reentrancy constraints.
+
+Registration/removal is still open. The local offset scan did not establish a
+writer of this specific list; same-offset fields on unrelated objects were not
+accepted as evidence. Next follow construction/destruction of this exact manager
+and identify concrete participant tables implementing both slots. Avoid reusing
+unrelated array append helpers until their receiver identity is established.

@@ -1,0 +1,18 @@
+{
+  "evidence": "Original instruction prefix emulated with synthetic memory and intercepted callback bodies",
+  "cases": 16,
+  "all_passed": true,
+  "callback_slot": 8,
+  "transfers_before_callbacks": true,
+  "duplicate_entries_preserved": true,
+  "span": {
+    "rva": "0x67ced0",
+    "length": 132,
+    "sha256": "ed455382e34a9fbb119b06f3f0b4f42bd2cfeb4245bd0bff2660316f982849ea"
+  },
+  "limitations": [
+    "Stops before later lock and command processing.",
+    "Synthetic callback bodies return without mutating registry or counters.",
+    "No native concurrency, registration, removal, allocation or lifetime proof."
+  ]
+}

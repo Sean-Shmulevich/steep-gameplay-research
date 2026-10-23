@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Command participant preparation now verified: two separate wrapping atomic
+counter transfers precede slot +8 callbacks on the same list whose slot 0 is
+used by execution. Sixteen original-instruction cases pass for empty/reordered/
+duplicate lists and counter overflow. Registration/removal remains open; next
+trace exact manager construction and concrete participant types. See
+[preparation validation](../native/snow_host/command_participant_prepare_validation.json).
+
+
 Command-executor audit validated ten direct call sites across frame entry,
 wrapper and transition helper. Executor tail dispatches a virtual callback list
 with a reread base/count after each call and a plain execution flag; no callback
