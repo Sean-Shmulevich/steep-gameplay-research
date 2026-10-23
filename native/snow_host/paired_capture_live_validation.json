@@ -1,0 +1,145 @@
+{
+  "status": "paired_graphics_phase_capture_passed",
+  "sessions": 1,
+  "configured_capture_ms": 500,
+  "record_counts": {
+    "delegate_capture": 14,
+    "finalizer_capture": 10
+  },
+  "correlation": {
+    "schema": "graphics-phase-correlation-v1",
+    "pairs": [
+      {
+        "request": 951,
+        "observed_order": true,
+        "inside_shared_interval": false,
+        "same_thread": true,
+        "gap_ticks": 406,
+        "accounting_matches": true
+      },
+      {
+        "request": 952,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 9,
+        "accounting_matches": true
+      },
+      {
+        "request": 953,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 10,
+        "accounting_matches": true
+      },
+      {
+        "request": 954,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 9,
+        "accounting_matches": true
+      },
+      {
+        "request": 955,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 8,
+        "accounting_matches": true
+      },
+      {
+        "request": 956,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 9,
+        "accounting_matches": true
+      },
+      {
+        "request": 957,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 6,
+        "accounting_matches": true
+      },
+      {
+        "request": 958,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 7,
+        "accounting_matches": true
+      },
+      {
+        "request": 959,
+        "observed_order": true,
+        "inside_shared_interval": true,
+        "same_thread": true,
+        "gap_ticks": 7,
+        "accounting_matches": true
+      },
+      {
+        "request": 960,
+        "observed_order": true,
+        "inside_shared_interval": false,
+        "same_thread": true,
+        "gap_ticks": 6,
+        "accounting_matches": true
+      }
+    ],
+    "pair_count": 10,
+    "observed_capture_windows_overlap": true,
+    "shared_interval_ticks": 4994697,
+    "rejected_main": 0,
+    "rejected_finalizer": 0,
+    "ambiguous_requests": [],
+    "unmatched_main": 4,
+    "unmatched_finalizer": 0,
+    "clock_frequency": 10000000,
+    "session_identity_source": "caller assertion",
+    "atomic_snapshot": false,
+    "outstanding_decrement_observed": false,
+    "native_mutation_authorized": false
+  },
+  "readiness": {
+    "contract": "scheduler",
+    "outcome": "scheduler_ready",
+    "scheduler_native_verified": true,
+    "player_native_verified": false
+  },
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "engine_steps": {
+    "before": 948,
+    "after": 963,
+    "later": 965
+  },
+  "movement_input_sent": false,
+  "scheduler_pause_requested": false,
+  "debugger_attached": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_result_sha256": "4b710962d1f13ffe4449c9b46775273cf84e5683d5164daa20bde9f36c47241a",
+  "private_envelope_sha256": {
+    "delegate_capture": "77c29a013b1373d270a70fff440a47e10c1d6f6e5a19e41f1681fefe93602c3f",
+    "finalizer_capture": "52800cf86f7fbca9bdc9c7bc7fac37f4f75223dcc2ef39dbbecc90331c758527"
+  },
+  "limitations": [
+    "One selected graphics job in one gameplay window, not universal scheduler behavior.",
+    "No direct capture of final outstanding decrement, OS lock ownership, or input/physics phase.",
+    "Session identity comes from the live controller; offline analyzer cannot independently verify it.",
+    "Guarded reads and matching request values do not pin lifetime or exclude address/counter reuse.",
+    "Four unmatched main records and two matched boundary pairs remain explicit.",
+    "No player API repair established by scheduler-only readiness.",
+    "No native mutation or module-unload authorization from these observations."
+  ]
+}

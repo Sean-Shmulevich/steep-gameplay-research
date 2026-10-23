@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Same-request paired capture passed after adding explicit scheduler-only readiness.
+14 main records and 10 finalizers produced 10 matched requests, eight wholly inside
+the shared interval; all ordered on the same observed thread and matched the
+expected body-to-finalizer accounting transition. Both original bindings were
+reread, simulation advanced, and launcher cleanup passed. No movement/pause/debugger.
+Default readiness still requires a player; scheduler mode does no player reads,
+reports a distinct outcome and rejects spawn validation. Prior player-link failure
+is not claimed repaired. Final outstanding decrement and OS lock ownership remain
+unobserved. Full suite: 2131 tests, one skipped; repository checks passed.
+
 Built coordinated main/finalizer controller with one trigger, five fingerprints,
 shared QPC interval after both installs, and cleanup for both configured adapters.
 Four synthetic refusal scenarios passed; correlation tests now qualify shared

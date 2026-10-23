@@ -223,5 +223,39 @@ class NavigateTests(unittest.TestCase):
             se.main(['/nonexistent/out', '20'])
 
 
+
+class SchedulerReadinessTests(unittest.TestCase):
+    def test_distinct_outcome_without_player_reads(self):
+        game = FakeGame([('gameplay', NO_PLAYER)] * 3);clock = Clock()
+        result = se.navigate(game, 30, clock=clock, sleep=clock.sleep,
+                             policy=se.Policy(readiness='scheduler'))
+        self.assertEqual(result['outcome'], 'scheduler_ready')
+        self.assertTrue(result['scheduler_native_verified'])
+        self.assertFalse(result['gameplay_native_verified'])
+        self.assertNotIn('spawn_position', result)
+        self.assertEqual(game.player_reads, [False, False])
+        self.assertEqual(game.sent, [])
+
+    def test_requires_consecutive_hud_progress_and_nonfaulted_host(self):
+        policy = se.Policy(readiness='scheduler')
+        self.assertEqual(policy.step('gameplay', NO_PLAYER, 0)[0], 'wait')
+        self.assertEqual(policy.step('gameplay', dict(NO_PLAYER, faulted=True), 1)[0], 'wait')
+        self.assertEqual(policy.step('gameplay', dict(NO_PLAYER, advancing=False), 2)[0], 'wait')
+        self.assertEqual(policy.step('unknown', NO_PLAYER, 3)[0], 'wait')
+        self.assertEqual(policy.step('gameplay', NO_PLAYER, 4)[0], 'wait')
+        self.assertEqual(policy.step('gameplay', NO_PLAYER, 5)[0], 'scheduler_ready')
+
+    def test_rejects_spawn_validation_and_unknown_mode(self):
+        with self.assertRaises(ValueError):
+            se.Policy(readiness='anything')
+        with self.assertRaises(ValueError):
+            se.navigate(FakeGame([]), 30, policy=se.Policy(readiness='scheduler'), expect_spawn=[0, 0, 0])
+
+    def test_default_still_requires_player(self):
+        policy = se.Policy()
+        for i in range(5):
+            self.assertEqual(policy.step('gameplay', NO_PLAYER, i)[0], 'wait')
+
+
 if __name__ == '__main__':
     unittest.main()

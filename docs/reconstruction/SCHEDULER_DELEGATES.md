@@ -995,3 +995,46 @@ should have a separately named readiness contract using gameplay HUD, advancing
 engine state and current engine/job identity checks. They should not silently
 claim player readiness or relax the existing gate for player-dependent work.
 The player runtime-link failure remains an independent unresolved observation.
+
+### Scheduler-only readiness contract
+
+The startup navigator now has an explicit `--readiness scheduler` mode. It requires
+two consecutive recognized gameplay HUD samples with host readiness, advancing
+world steps, and no reported host fault. It never invokes `player.get` or
+`player.bind`. Its distinct outcome is `scheduler_ready`, with
+`scheduler_native_verified: true` and `gameplay_native_verified: false`; it does
+not publish a spawn position. Spawn validation is rejected in this mode.
+
+Default/player readiness remains unchanged. This scheduler gate establishes only
+HUD plus host progression; it is not a substitute for current engine-owner/job
+identity guards, code fingerprints, hook cleanup or continued-progress checks in
+the capture controller. The earlier failed player binding remains unresolved.
+
+### Successful same-request paired capture
+
+The [paired live receipt](../../native/snow_host/paired_capture_live_validation.json)
+records 14 main callbacks and 10 finalizers. Ten unique request keys (951..960)
+matched; eight complete pairs (952..959) lay within the common marked interval.
+Four unmatched main records and two paired boundary records remain explicit.
+No observations were rejected or ambiguous, and neither recorder dropped records.
+The QPC-marked shared interval was 0.4994697 seconds.
+
+Every matched request had ordered main return then finalizer entry, the same
+observed thread, and the expected accounting progression: main entry/return
+executions 1, outstanding 1, DONE; finalizer entry executions 0, outstanding 1,
+DONE; finalizer return executions 0, outstanding 1, UNSCHEDULED. This is now a
+same-request relationship within one verified process/session, rather than a
+comparison of separate runs. It still stops before the final outstanding decrement
+and does not instrument OS lock ownership or establish a general mutation phase.
+
+The controller independently reread both original bindings and observed engine
+steps advance from 963 to 965 after capture (948 before). Launcher cleanup passed
+for bottle stop, saves, settings and original DLL. No movement, pause or debugger
+was used. Readiness was explicitly `scheduler_ready`; player readiness was not
+claimed. The previous player-link rejection is not repaired or explained by this
+result, even though the host happened to report a bound player in this session.
+
+This supersedes the missing same-request correlation result. The previous disjoint
+record spans and pre-trigger player-readiness failure remain preserved as distinct
+failed attempts. Next instrumenting the final decrement requires another boundary;
+matching finalizer return to main execution does not make it a drain notification.

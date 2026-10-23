@@ -13,6 +13,11 @@ recorded but not required. Host reads are read-only; no pause, write or step.
 Every input and native sample is recorded, including which screen was showing
 when the player was first acquired.
 
+With --readiness scheduler, the HUD must instead agree with a ready, nonfaulted
+host and advancing world steps. This mode never reads/binds a player and reports
+scheduler_ready, not entered or player verification. The subsequent experiment
+must separately qualify its engine/job identities before installing probes.
+
 This skips menu interaction delay, not asset or world loading. Spawn location is
 whatever the profile's startup map closes onto; no map or spawn selection.
 The idle player's position at entry is recorded as spawn_position; --expect-spawn
@@ -51,6 +56,12 @@ def classify(text, legacy):
     return legacy(text)[0]
 
 
+def native_scheduler_ready(sample):
+    """HUD gating is handled by Policy; this does not qualify owner/job bindings."""
+    return bool(sample and sample.get('ready') and sample.get('advancing')
+                and not sample.get('faulted', False))
+
+
 def native_player_ready(sample):
     """Host ready, world stepping and player acquired with valid flags (IN_WORLD not required)."""
     return bool(sample and sample.get('ready') and sample.get('advancing') and sample.get('player_flags', 0) & 1)
@@ -60,7 +71,10 @@ class Policy:
     """Pure decision state: which existing transition to send, and when gameplay is proven."""
 
     def __init__(self, retry=RETRY_SECONDS, max_inputs=MAX_INPUTS_PER_STATE, confirmations=NATIVE_CONFIRMATIONS,
-                 intro_key=None, intro_interval=INTRO_INTERVAL_SECONDS, max_intro=MAX_INTRO_INPUTS, hands_off=()):
+                 intro_key=None, intro_interval=INTRO_INTERVAL_SECONDS, max_intro=MAX_INTRO_INPUTS, hands_off=(), readiness="player"):
+        if readiness not in ("player", "scheduler"):
+            raise ValueError("unknown readiness contract")
+        self.readiness = readiness
         self.retry, self.max_inputs, self.confirmations = retry, max_inputs, confirmations
         self.hands_off = frozenset(hands_off)  # screens another component handles; never send input
         self.intro_key, self.intro_interval, self.max_intro = intro_key, intro_interval, max_intro
@@ -78,9 +92,10 @@ class Policy:
         if native_player_ready(native) and native['player_flags'] & 2 and self.first_in_world_state is None:
             self.first_in_world_state = state
         if state == 'gameplay':
-            self.native_streak = self.native_streak + 1 if native_player_ready(native) else 0
+            ready = native_player_ready(native) if self.readiness == 'player' else native_scheduler_ready(native)
+            self.native_streak = self.native_streak + 1 if ready else 0
             if self.native_streak >= self.confirmations:
-                return 'entered', None
+                return ('entered' if self.readiness == 'player' else 'scheduler_ready'), None
             return 'wait', 'hud_without_native_confirmation'
         self.native_streak = 0
         if state == 'intro':
@@ -145,7 +160,7 @@ class Game:
         status = client.call('simulation.status')
         engine = status.get('engine') or {}
         step = engine.get('step')
-        sample = {'ready': bool(status.get('ready')), 'step': step,
+        sample = {'ready': bool(status.get('ready')), 'faulted': bool(status.get('faulted')), 'step': step,
                   'advancing': step is not None and self.last_step is not None and step != self.last_step
                                and not engine.get('held')}
         self.last_step = step
@@ -191,8 +206,11 @@ def spawn_matches(position, expected, tolerance):
 def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, max_frames=200,
              expect_spawn=None, spawn_tolerance=0.01, stop_at=None):
     policy = policy or Policy()
+    if policy.readiness == 'scheduler' and expect_spawn is not None:
+        raise ValueError('spawn validation requires player readiness')
     start = clock(); deadline = start + budget
     result = {'gameplay_hud_observed': False, 'gameplay_native_verified': False, 'gameplay_inputs_sent': False,
+              'readiness_contract': policy.readiness, 'scheduler_native_verified': False,
               'inputs': [], 'screens': [], 'outcome': 'budget_exhausted', 'intro_key': policy.intro_key,
               'title_first_t': None}
     for i in range(max_frames):
@@ -212,8 +230,8 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
             state = 'intro'  # a visible pre-title screen (videos, notices)
         # The player cannot exist before the title; skip refused reads until a menu transition,
         # a loading screen or a post-title screen (hands-off runs may send no menu input).
-        native = game.native(want_player=bool(policy.inputs or result.get('loading_seen')
-                                              or state in POST_TITLE_STATES))
+        native = game.native(want_player=policy.readiness == 'player' and bool(
+            policy.inputs or result.get('loading_seen') or state in POST_TITLE_STATES))
         t = round(clock() - start, 1)
         if stop_at is not None and state == stop_at:
             action, detail = 'stopped', None  # leave this screen to the caller, no input
@@ -224,6 +242,10 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
         print(json.dumps({**row, 'text': text[:120]}), flush=True)
         if state == 'gameplay':
             result['gameplay_hud_observed'] = True
+        if action == 'scheduler_ready':
+            result['scheduler_native_verified'] = True
+            result['outcome'] = 'scheduler_ready'
+            break
         if action == 'entered':
             result['gameplay_native_verified'] = True
             result['outcome'] = 'entered'
@@ -259,6 +281,8 @@ def main(argv=None):
     p.add_argument('budget', type=int, nargs='?', default=150)
     p.add_argument('--workspace', type=Path, default=Path(__file__).resolve().parents[2])
     p.add_argument('--port', type=int, default=47017)
+    p.add_argument('--readiness', choices=('player', 'scheduler'), default='player',
+                   help='Scheduler mode verifies HUD/world progress only; never claims player readiness')
     p.add_argument('--expect-spawn', help='x,y,z the idle player must occupy at entry (fails otherwise)')
     p.add_argument('--spawn-tolerance', type=float, default=0.01)
     p.add_argument('--stop-at', choices=['map'], help='Stop without input when this screen is recognized')
@@ -267,6 +291,8 @@ def main(argv=None):
     a = p.parse_args(argv)
     if not 30 <= a.budget <= 210:
         p.error('Navigation budget must be 30..210 seconds')
+    if a.readiness == 'scheduler' and a.expect_spawn:
+        p.error('--expect-spawn requires --readiness player')
     out = a.out.resolve(); out.mkdir(parents=True, exist_ok=False)
     game = Game(a.workspace.resolve(), out, a.port)
     expect = None
@@ -277,10 +303,10 @@ def main(argv=None):
     hands_off = [s for s in a.hands_off.split(',') if s]
     if any(s not in TRANSITIONS for s in hands_off):
         p.error('--hands-off accepts: ' + ','.join(sorted(TRANSITIONS)))
-    result = navigate(game, a.budget, policy=Policy(intro_key=INTRO_KEYS.get(a.intro_key), hands_off=hands_off),
+    result = navigate(game, a.budget, policy=Policy(intro_key=INTRO_KEYS.get(a.intro_key), hands_off=hands_off, readiness=a.readiness),
                       expect_spawn=expect, spawn_tolerance=a.spawn_tolerance, stop_at=a.stop_at)
     (out / 'navigation-result.json').write_text(json.dumps(result, indent=2) + '\n')
-    return 0 if result['outcome'] in ('entered', 'stopped_at_' + str(a.stop_at)) else 2
+    return 0 if result['outcome'] in ('entered', 'scheduler_ready', 'stopped_at_' + str(a.stop_at)) else 2
 
 
 if __name__ == '__main__':

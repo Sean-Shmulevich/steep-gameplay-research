@@ -323,3 +323,10 @@ installations succeed. It writes `<config>.main.trace.jsonl` and
 `joint_end_tick` markers. It restores both configured adapters, including partial
 installation cases, before closing/draining and writing output. No simultaneous
 atomic installation or hard wall-clock deadline is claimed.
+
+For engine/job-only experiments, `scripts/startup_entry.py --readiness scheduler`
+requires consecutive gameplay HUD and advancing, nonfaulted host samples but
+performs no player acquisition. It returns the distinct `scheduler_ready` outcome
+and does not claim player readiness or a spawn position. The default remains
+`--readiness player`; `--expect-spawn` requires that mode. The experiment controller
+must still qualify engine owner/job bindings before installing any probe.
