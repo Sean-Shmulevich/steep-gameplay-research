@@ -259,3 +259,34 @@ not establish the game's actual allocator failure policy or recovery behavior.
 The mode-zero payload path is therefore linked to concrete loading queue and
 publication fields. Native resource ownership, the consumer's full failure path,
 concurrent submission exclusion and shutdown still require separate proof.
+
+## Executable destruction batch
+
+[The batch model](../../engine/loading_destruction_batch.py) reconstructs
+`0x1193b80..0x1193caf`. Owner pending +0x288 is exchanged to zero after busy
++0x290 is set. The captured uint32 is interpreted as signed for the loop gate.
+Each iteration takes the ring lock +0x1d8, pops only if signed count +0x270 is
+positive, then unlocks before allocation lookup, virtual destruction with flag
+zero and allocator release. Metadata is captured before destruction. Allocation
+services, storage retention and synchronization remain caller responsibilities.
+
+The retained pointer is reset once per batch, not per iteration. Therefore:
+
+- A wholly empty ring with positive captured budget makes no destruction calls.
+- After a nonnull pop, an empty ring retains that pointer and repeats the
+  lookup/destruction/free sequence for each remaining iteration.
+- A subsequent null pop clears the retained pointer and suppresses subsequent
+  destruction calls while the ring remains empty.
+- Publication during destruction remains pending for the next batch; it does
+  not extend this batch's captured budget.
+- A captured count with the sign bit set is cleared without popping anything.
+
+[Original-instruction comparison](../../native/snow_host/loading_destruction_batch_validation.json)
+passes 144 cases with supplied lock, allocation and destruction services. It
+checks service order and pending/busy/ring state with wrapped indices, null
+slots, short queues and controlled publication during destruction. Synthetic
+objects remain readable after the supplied free operation. This proves repeated
+calls in the controlled shortage case, not an observed native double-free, a
+reachable gameplay mismatch or a recovery policy. The model's ring geometry is
+nonnegative and valid; native signed division at malformed indices is outside
+its contract. Callback exceptions and concurrent teardown remain unqualified.

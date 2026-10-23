@@ -1,0 +1,14 @@
+{
+  "evidence": "Original loading destruction batch with supplied synchronization, metadata lookup, destructors and allocator",
+  "cases": 144,
+  "state_and_service_order_match": true,
+  "routine_rva": "0x1193b80",
+  "routine_sha256": "e2a39b0e137785d5c593b69286b61c259074536da8130797cadb477b2967e649",
+  "model_sha256": "8829c6a2ed78e896a84060dd3602422db20a55a6af71e66173a740ec478f944e",
+  "limitations": [
+    "Synthetic retained tokens remain readable after supplied free; repeated calls are observed, not real double-free execution.",
+    "Ordinary valid ring geometry only; signed negative or overflowing indices are outside model contract.",
+    "No concurrent execution, live mismatch occurrence, native allocation failure or safe unloading proved.",
+    "Callback publication is controlled; destruction and allocation services are not reconstructed by this comparison."
+  ]
+}

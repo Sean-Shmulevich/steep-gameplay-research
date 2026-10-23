@@ -123,3 +123,11 @@ even without insertion. The consumer-scope model's worker.pending denotes this
 staged +0x28c field; worker.published denotes +0x288. Do not conflate those fields
 with completion or assume staging proves queue occupancy. No native failure
 recovery or resource-lifetime contract is supplied.
+
+Loading destruction batch: `process_loading_destructions` sets busy, captures and
+clears uint32 pending, and processes its signed-positive count. A valid retained
+ring uses null slots represented by None. Empty iterations retain the previous
+payload, including repeated destruction calls if the captured budget is too
+large. Supplied services perform synchronization, metadata lookup, destruction
+and storage release. This is a serial reconstruction, not a safe drain API;
+callback failure has no invented rollback or guaranteed busy reset.

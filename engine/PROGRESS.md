@@ -6637,3 +6637,10 @@ fields/events with supplied growth/locks. Three tests compose actual resize poli
 and preserve the empty-allocation-failure count mismatch. Linked staged +0x28c to
 the retirement handoff's published +0x288. No live launch; ownership and shutdown
 exclusion remain unresolved.
+
+Implemented the loading destruction batch and compared it with original
+instructions in 144 controlled cases. Queue shortage after a nonnull pop repeats
+lookup/destruction/free on the retained pointer; initial emptiness and later null
+pops differ. Pending publication during callbacks survives for the next batch.
+Synthetic supplied services preserve pointer readability, so this establishes
+call order without claiming a live double-free or safe resource teardown.
