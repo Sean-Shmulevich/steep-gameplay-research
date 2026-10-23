@@ -1856,3 +1856,43 @@ clear receivers and final tail all match. Lock and list-storage operations were
 substituted with observations. Neither wrapper interiors nor scheduler execution
 were included. Next is the selected wrapper's internal graph and how it connects
 to the already studied action graph and physics consumers.
+
+## Post-pad wrapper is the per-world AI stage
+
+The graph setup assigns the wrapper at graph+0xc840 the entry label
+`UpdateAIWorldIsPausedBranch` and terminal label `UpdateAIEndNode`. Its installed
+predicate callback is 0x8eab90, with world receiver obtained from graph+0:
+
+```text
+predicate(world):
+    return int32(world.field_1080) <= 0
+```
+
+This is a signed comparison, including negative values, not a bit test or merely
+`field == 0`. The label is corroborating context; it does not establish that the
+field has only two values or that the user-facing menu changes it. Callback
+registration clears callable tag bit 0 and retains bit 1 as in the other inspected
+registrations. The world-receiver pointer still requires proper callable decoding.
+
+[Registration/predicate validation](../../native/snow_host/input_post_pad_predicate_validation.json)
+executes 12 original assignment/name cases and six complete predicate cases,
+including signed endpoints. No calls were substituted. The surrounding graph
+construction supplies object storage and callback support registers. The test
+checks callback identity, world context, exact labels and predicate result; it
+does not execute branch-list selection or the AI body.
+
+A separate setup routine at 0x905250 begins by fetching this wrapper's entry and
+registering it to graph+0x1400. Its subsequent job configuration names include
+`UpdateAISetup`, `UpdateAIGatherForMultiThread`, `AssassinationSpotsGeneration`,
+`UpdateLimitCountLOD`, `PreUpdateAI`, `InteractionPreUpdateAI`,
+`UpdateAISingleThreaded`, `UpdateAIMultiThreaded`, `UpdateAIInteractionMT` and
+`UpdateAIWrapup`. Several edges involve virtual methods on world+0xff8;
+their concrete receiver and full branch topology still need tracing. The names
+are evidence of the per-world AI stage, not a decoded claim about each body's
+behavior or its relationship to snow input.
+
+The outer route is now identified as global AI -> input poll -> per-world AI
+-> AI after-update, subject to the previously stated graph/gate conditions.
+This corrects any interpretation of the immediate post-pad wrapper as the
+player motion or physics stage. The next stage after AI after-update, and the
+later action graph, are the remaining route to trace for input consumption.

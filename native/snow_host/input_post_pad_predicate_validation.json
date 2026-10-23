@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "registration_cases": 12,
+  "predicate_cases": 6,
+  "scope": "Original predicate assignment/name slices and complete signed world-state predicate",
+  "substitutions": [],
+  "supplied_inputs": [
+    "Synthetic graph/world/callable storage",
+    "Predicate and support registers from surrounding setup"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x906061",
+      "end_rva_exclusive": "0x9060f1",
+      "sha256": "945217a0f49a512ff20c4062b358b72f376aef22d536457f5b5f469b60420d41"
+    },
+    {
+      "start_rva": "0x906520",
+      "end_rva_exclusive": "0x90655c",
+      "sha256": "9d1a2c08abaa998b367d1971c737bec7a7e44ee3f958512a57fdebc541de326f"
+    },
+    {
+      "start_rva": "0x8eab90",
+      "end_rva_exclusive": "0x8eab9b",
+      "sha256": "6a0afaa8a50a639ff1a9de991a70ee3aa05ccb43b033f69185aa89c5ae41ad27"
+    }
+  ],
+  "limits": [
+    "Branch-list selection and body execution not tested",
+    "World +0x1080 writers not identified here",
+    "No live player attribution"
+  ],
+  "game_process": false
+}

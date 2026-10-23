@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Identified the post-pad wrapper as per-world UpdateAI. Its installed predicate
+is signed world.field_1080 <= 0. Twelve original assignment/name cases and six
+predicate cases pass without substitutions. Polling is followed by per-world
+AI before AI after-update; the immediate wrapper is not yet a motion/physics
+consumer. See [world AI identity](../docs/reconstruction/INPUT_UPDATE_ORDER.md#post-pad-wrapper-is-the-per-world-ai-stage).
+
 Resolved the post-pad stage adapter to each eligible world's graph wrapper
 at +0xc840. It chains worlds in handle order and keeps seed==tail when empty;
 the tail precedes the AI after-update graph. 121 original chain cases pass with
