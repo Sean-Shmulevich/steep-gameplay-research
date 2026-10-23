@@ -1,0 +1,42 @@
+{
+  "evidence": "Read-only live graphics job binding during startup",
+  "samples": [
+    {
+      "table_rva": "0x1e89618",
+      "execute_slot_rva": "0x65b1e0",
+      "delegate_target_rva": "0x656c20",
+      "invoker_rva": "0x8ab390",
+      "context_matches_owner": true,
+      "selector": 0
+    },
+    {
+      "table_rva": "0x1e89618",
+      "execute_slot_rva": "0x65b1e0",
+      "delegate_target_rva": "0x656c20",
+      "invoker_rva": "0x8ab390",
+      "context_matches_owner": true,
+      "selector": 0
+    },
+    {
+      "table_rva": "0x1e89618",
+      "execute_slot_rva": "0x65b1e0",
+      "delegate_target_rva": "0x656c20",
+      "invoker_rva": "0x8ab390",
+      "context_matches_owner": true,
+      "selector": 0
+    }
+  ],
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "No invocation capture or gate-entry timing.",
+    "Sequential reads are not atomic or a lifetime pin.",
+    "Private pointers omitted."
+  ]
+}

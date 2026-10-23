@@ -1,0 +1,22 @@
+{
+  "evidence": "Original concrete graphics-job dispatch and common invoker with synthetic callback targets",
+  "cases": 32,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x65b1e0",
+      "length": 116,
+      "sha256": "2e8ae64033cd66104b93c56d2edb3c306b2474293286ee4b1eb4988954892f4b"
+    },
+    {
+      "rva": "0x8ab390",
+      "length": 9,
+      "sha256": "c2b13b0a2d8635b4a691fc95c63ba2cf2f1482c419541597e898b96ad219cb93"
+    }
+  ],
+  "limitations": [
+    "Synthetic callbacks return normally; no exception/unload/concurrency proof.",
+    "Optional context-only nonempty records are not executed by this fixture.",
+    "Live table observation proves binding, not invocation timing or exactly-once execution."
+  ]
+}

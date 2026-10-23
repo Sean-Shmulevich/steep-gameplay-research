@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Live graphics job table resolved: slot +0x40 dispatches optional before/main/
+after delegates, masks context tags and ignores main callback return for branch
+selection. Three startup bindings agree; 32 connected original-instruction cases
+validate ordering and stack return. Before/after delegates are observation leads,
+not installed hooks. Cleanup passed; full suite 2095 tests, one skipped. Next
+qualify delegate ownership/publication and active-caller lifetime for observation.
+
 Connected branch dispatcher to the common delegate invoker in 16 original-code
 cases: low-two context tags are masked; only AL selects the two list-helper
 orders. Lock/predicate/helpers/unlock ordering validated with external services

@@ -57,3 +57,43 @@ no such predicate contract. To install a graphics-phase observer, first identify
 the concrete job table and its dispatch slot, follow that body into the delegate,
 and qualify owner lifetime and slot ownership. Keep an observation wrapper's
 calling convention tied to that confirmed route.
+
+
+## Concrete graphics dispatcher now identified
+
+The [live binding capture](../../native/snow_host/graphics_job_live_binding.json)
+qualifies the graphics job at engine owner +0x218. Three startup samples agree:
+table RVA `0x1e89618`, slot +0x40 target `0x65b1e0`, main delegate callback
+`0x656c20`, invoker `0x8ab390`, and masked context equal to the engine owner.
+Selector +0x5a was zero in those samples. This closes the concrete-table and
+upstream-decoding gaps above for this observed binding. It does not sample the
+callback's execution or establish selector stability across frame gates.
+
+```text
+graphics_job_dispatch(job):
+    if (job.before.context & ~3) != 0 or job.before.function != null:
+        job.before.invoker(&job.before.function, job.before.context & ~3)
+    job.main.invoker(&job.main.function, job.main.context & ~3)
+    if (job.after.context & ~3) != 0 or job.after.function != null:
+        tail_call job.after.invoker(&job.after.function, job.after.context & ~3)
+```
+
+The before, main and after delegates begin at job +0xf0, +0x198 and +0x110.
+Each record is 32 bytes. The main call is unconditional; its return is not used
+for branch selection. Optional eligibility checks function/context, not whether
+the invoker field is nonzero. A tag-only context with null function is skipped.
+Do not assume a context-only record is safe with every invoker implementation.
+
+A [32-case connected instruction check](../../native/snow_host/graphics_dispatch_validation.json)
+executes this concrete dispatcher and the common invoker. It varies all context
+tags, optional callback presence and callback return bytes. It verifies exact
+before/main/after ordering, decoded receivers and normal return stack balance.
+Synthetic callbacks supply no evidence about native mutation or exception safety.
+
+The before/after records are candidates for bounded phase observation. No native
+installation was attempted. An installer must preserve existing callbacks,
+qualify the full descriptor and owner, prevent concurrent inconsistent updates,
+and account for callers that already loaded an invoker. Image-vtable swapping
+rules do not automatically establish those owner-relative delegate guarantees.
+The read-only session stopped cleanly with saves/settings restored and original
+DLL verified. No private heap addresses are included in the public receipt.
