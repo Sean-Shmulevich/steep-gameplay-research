@@ -115,6 +115,17 @@ class NavigateTests(unittest.TestCase):
         self.assertIsNotNone(result['title_first_t'])
         self.assertEqual(result['outcome'], 'entered')
 
+    def test_intro_inputs_stop_once_loading_shows_without_title(self):
+        game = FakeGame([('intro', None)] * 2 + [('loading', None)] * 3 + [('offline_notice', ACQUIRED),
+                        ('map', ACQUIRED), ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)])
+        game.screen = lambda i, timeout, f=game.screen: (('LOADING, PLEASE WAIT', 'unknown')
+                                                        if game.frames[min(i, len(game.frames) - 1)][0] == 'loading'
+                                                        else f(i, timeout))
+        clock = Clock()
+        result = se.navigate(game, 200, clock=clock, sleep=clock.sleep, policy=se.Policy(intro_key=1, intro_interval=0))
+        self.assertEqual([x['state'] for x in result['inputs']], ['intro', 'intro', 'offline_notice', 'map'])
+        self.assertEqual(result['outcome'], 'entered')
+
     def test_no_intro_inputs_by_default_and_player_reads_deferred(self):
         frames = [('intro', None)] * 3 + [('title', None), ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)]
         result, game = self.run_frames(frames)

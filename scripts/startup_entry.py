@@ -201,7 +201,10 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
             text, state = '', 'capture_timeout'
         if state == 'title' and result['title_first_t'] is None:
             result['title_first_t'] = round(clock() - start, 1)
-        if state == 'unknown' and text.strip() and result['title_first_t'] is None and not policy.inputs:
+        if 'LOADING' in text.upper():
+            result['loading_seen'] = True  # an intro key may skip the title straight into loading
+        if (state == 'unknown' and text.strip() and result['title_first_t'] is None and not policy.inputs
+                and not result.get('loading_seen')):
             state = 'intro'  # a visible pre-title screen (videos, notices)
         # The player cannot exist before the title; skip refused reads until a menu transition.
         native = game.native(want_player=bool(policy.inputs))
