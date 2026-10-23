@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Implemented a vector-source refresh composition with explicit provider and
+processor callbacks. Five tests cover owner/configuration gates, lane selection
+before processing, retained analog sample amplitude, scalar selection and blocked
+source processing. The complete composed native reset/vector callback comparison
+is still pending; no active device binding or fresh sample is inferred.
+See [vector refresh adapter](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#vector-source-refresh-adapter).
+
 Exercised actual initial/subsequent claim CAS failures in eight controlled
 original-instruction interleavings. Another dispatch drains shared work between
 load and CAS; stale claim retries execute no duplicate callbacks. Consolidated

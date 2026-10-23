@@ -912,3 +912,39 @@ interleaving. It is not a hardware memory-model test, lock-contention test,
 concurrent registration test or exhaustive schedule exploration. The independent
 serial scheduler has no instruction-level CAS failure representation; no claim
 is made that its ordinary unit tests reproduce that instruction mechanism.
+
+
+## Vector-source refresh adapter
+
+[`refresh_vector_action`](../../engine/vector_action_refresh.py) composes the
+existing reset, source-selection and publication kernels for the vector-source
+subtype. It accepts explicit source configuration, ownership predicates,
+vector/scalar providers and a processor callback. It does not silently choose a
+processor, map a physical device or query the live game.
+
+The adapter preserves the decoded order: reset, optional-owner suppression,
+configuration presence, selected-source ownership/read, lane selection, optional
+processing, then raw/sample/direction/magnitude/status publication. Source blocking
+supplies zero but does not bypass processing. Missing configuration returns after
+reset, retaining previous raw input and status while sample/direction/magnitude
+remain cleared. The published sample retains analog amplitude; normalization
+applies to the separate direction field.
+
+The vector callback was re-inspected at RVA 0x4b21d0 for this composition. Its
+configuration-null branch returns before source reads; its lane branch precedes
+processing and its final stores match the existing publication kernel. Individual
+kernels have earlier validation, but this newly composed adapter has unit tests
+only so far. It is not yet a differential comparison of the complete native
+vector-source callback plus reset.
+
+The output includes an immutable byte snapshot and diagnostics stating whether
+evaluation, source selection and processing occurred. Snapshot layout is a
+build-specific inspection adapter, not a portable native object schema. Only
+finite float32 publication is supported. A caller-supplied RSQRT seed retains the
+existing numerical boundary; omission uses a labeled scalar approximation.
+External processor side effects, native locking, map traversal and input sample
+freshness remain outside the interface.
+
+```sh
+python3 -m unittest discover -s tests -p test_vector_action_refresh.py
+```
