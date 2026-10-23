@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Retained 24 distinct synthetic successor states from the 144 original-instruction
+cases as portable differential fixtures. The independent mixed scheduler matches
+all release/begin outcomes, including credit deferral and empty finalization;
+no runtime correction was necessary. Tests seed the release boundary explicitly,
+so they do not claim end-to-end native reservation or frame execution.
+See [portable successor fixtures](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#portable-differential-successor-fixtures).
+
 Replaced the completion test's successor-release stub with the original ordinary
 release and concrete category-successor begin path. All 144 composed cases pass,
 covering remaining holds, pending requests, credit gates and empty/nonempty

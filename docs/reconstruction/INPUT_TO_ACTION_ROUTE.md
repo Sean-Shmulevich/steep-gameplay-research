@@ -806,3 +806,29 @@ empty, alternate release is excluded, and no native concurrency is exercised.
 This removes the ordinary successor-release substitution from the tested
 worker/completion chain. It still does not execute the complete PreAI graph,
 the next gather, or actual source evaluation.
+
+
+## Portable differential successor fixtures
+
+The 144 native successor cases contain 24 distinct successor input/output
+combinations. Their decoded synthetic state is retained in
+[portable fixtures](../../tests/fixtures/action_refresh_successor.json), with no
+original object bytes, addresses or game payloads. Outcomes are collected from
+the emulated original instructions; duplicates across predecessor callback and
+reservation counts must agree before export.
+
+[The regression test](../../tests/test_action_refresh_successor_native.py) seeds
+the independent mixed scheduler at the ordinary-release boundary, then executes
+its release and concrete range begin. It compares hold/request/started counts,
+credit/deferred state, lifecycle state, queue membership and source-list clearing.
+All 24 outcomes match without a runtime change.
+
+```sh
+python3 -m unittest discover -s tests -p test_action_refresh_successor_native.py
+```
+
+Private model-state seeding in this test is deliberate and limited to fixture
+construction. It is not a public mod API. The portable test validates the
+release/begin portion, not the original worker/completion path, native locking,
+reservation accounting or a complete frame. Those have separately stated
+validation scopes above.

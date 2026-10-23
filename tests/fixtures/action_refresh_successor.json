@@ -1,0 +1,439 @@
+{
+  "scope": "Synthetic semantic fixtures from original category completion and normal successor release. No native memory payloads. Tests compare only successor release/begin in the independent model.",
+  "source_receipt": "../../native/snow_host/action_refresh_successor_validation.json",
+  "native_cases": 144,
+  "cases": [
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 7,
+        "credits": 1,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 7,
+        "credits": 1,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 0,
+        "started": 8,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 0,
+        "started": 8,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "SCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 8,
+        "credits": 0,
+        "deferred": true,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 0,
+        "started": 7,
+        "requested": 8,
+        "credits": 0,
+        "deferred": true,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 0,
+        "started": 8,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 0,
+        "started": 8,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "SCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credits": 1,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 7,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 7,
+        "credits": 1,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": false,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 0,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credits": 0,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 0
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credits": 1,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    },
+    {
+      "initial": {
+        "holds": 2,
+        "started": 7,
+        "requested": 8,
+        "credit_gate": true,
+        "credits": 1,
+        "remaining": 3
+      },
+      "expected": {
+        "holds": 1,
+        "started": 7,
+        "requested": 8,
+        "credits": 1,
+        "deferred": false,
+        "state": "UNSCHEDULED"
+      }
+    }
+  ]
+}
