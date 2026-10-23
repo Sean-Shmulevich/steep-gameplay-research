@@ -1293,3 +1293,26 @@ new adapter; no-op and disabled global routes compare against unchanged input.
 Three portable tests check fourth-lane participation/discard, vertical fallback
 and zero-input early return. The active global route, mode 1, actual basis owner
 and runtime mode selection remain unresolved.
+
+
+## Complete mode-3 history composition
+
+`update_mode3_history` in [the feature module](../../engine/action_history_features.py)
+now composes raw/magnitude/time histories, feature remapping and mode-3 conversion.
+Callers must supply the selected basis, opaque timestamp and curve. Selecting
+this API asserts mode 3; it does not discover the native mode or configuration.
+It returns a complete detached snapshot with curve/conversion diagnostics and
+explicit numerical policies.
+
+The [complete-history receipt](../../native/snow_host/action_complete_history_validation.json)
+executes the original outer updater, feature helper, conversion dispatcher and
+native trig together for 288 sequences of three updates each. Inputs cycle
+through vector, zero, vector to exercise retained history. All 864 updates match
+raw histories, magnitudes, timestamps and unaffected bytes exactly. All 30
+feature-history vectors agree within 3e-6 per lane; curve-call count/arguments
+and three conversion calls per update are checked.
+
+Only the curve virtual callback is substituted in this composed execution.
+Service mode, bases and clock storage are synthetic inputs. There is no context
+preamble, cache read, scheduler dispatch or live freshness proof in this test.
+The actual curve definition and feature-history consumers remain unresolved.

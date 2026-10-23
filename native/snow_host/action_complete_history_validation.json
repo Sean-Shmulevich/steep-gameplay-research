@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "sequences": 288,
+  "updates": 864,
+  "scope": "Complete original outer history helper, feature remapping, mode-3 coordinate conversion and native trig compared to composed independent adapters over three sequential updates",
+  "substitutions": [
+    "Curve virtual callback supplies gain times normalized angle"
+  ],
+  "setup": [
+    "Synthetic explicit service mode 3 and basis objects",
+    "Synthetic clock singleton with explicit uint64 times"
+  ],
+  "comparison": [
+    "All 30 feature-history vectors within 3e-6 per lane",
+    "Raw history, clipped magnitude history, timestamps and unaffected bytes exact",
+    "Curve-call count and arguments checked; three original conversions per update"
+  ],
+  "limits": [
+    "Scalar independent approximations, not bit-exact feature parity",
+    "Actual configured curve, mode/basis ownership and consumers not established",
+    "No native context preamble/cache reads, scheduler dispatch or live sample freshness"
+  ],
+  "game_process": false
+}

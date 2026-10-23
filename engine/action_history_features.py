@@ -62,3 +62,26 @@ def update_history_features(snapshot, raw_vector, *, convert, curve):
     return dict(snapshot=bytes(result), conversions=calls, signed_angle=angle,
                 curve_input=argument, curve_output=response,
                 numerical_policy='Derived scalar reciprocal seed and trigonometry; recovered flow and history layout; not native bit parity')
+
+
+def update_mode3_history(snapshot, raw_vector, *, now, primary, secondary, curve):
+    """Compose outer history and feature updates with explicitly selected mode 3.
+
+    Mode/basis and curve are caller assertions, not automatically discovered
+    configuration. Returns the complete snapshot and feature diagnostics.
+    """
+    from .action_vector_history import update_vector_history
+    from .action_history_conversion import convert_history_mode3
+    feature_result = None
+
+    def features(state, raw):
+        nonlocal feature_result
+        feature_result = update_history_features(state, raw,
+            convert=lambda value: convert_history_mode3(value, primary=primary,
+                                                        secondary=secondary)['output'],
+            curve=curve)
+        return feature_result['snapshot']
+
+    updated = update_vector_history(snapshot, raw_vector, now=now, update_features=features)
+    return dict(feature_result, snapshot=updated, conversion_mode=3,
+                conversion_policy='Explicit supplied basis; derived scalar mode-3 numerical adapter')

@@ -1,7 +1,7 @@
 import math
 import struct
 import unittest
-from engine.action_history_features import update_history_features
+from engine.action_history_features import update_history_features, update_mode3_history
 from engine.action_vector_history import update_vector_history
 
 
@@ -33,6 +33,17 @@ class HistoryFeatureTests(unittest.TestCase):
         result = update_history_features(self.state(.5), struct.pack('<4f', 1,0,0,0),
             convert=lambda _: [0,1,0,0], curve=lambda x:x)
         self.assertAlmostEqual(result['curve_input'], .5, places=6)
+
+    def test_complete_mode3_composition_rotates_features_but_not_raw_history(self):
+        result = update_mode3_history(self.state(), struct.pack('<4f', 0,2,0,0),
+            now=45, primary=[1,0,0,0], secondary=[0,1,0,0], curve=lambda x:x)
+        state = result['snapshot']
+        self.assertEqual(struct.unpack_from('<4f', state, 0x60), (0,2,0,0))
+        self.assertAlmostEqual(struct.unpack_from('<f', state, 0x100)[0], 1, places=6)
+        self.assertAlmostEqual(struct.unpack_from('<f', state, 0x240)[0], 1, places=6)
+        self.assertEqual(struct.unpack_from('<Q', state)[0], 45)
+        self.assertEqual(struct.unpack_from('<f', state, 0x2e0)[0], 1)
+        self.assertEqual(result['conversion_mode'], 3)
 
     def test_composes_with_outer_history_and_preserves_unrelated_fields(self):
         initial = self.state()

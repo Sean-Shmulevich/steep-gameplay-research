@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Composed outer history, feature remapping and original mode-3 conversion across
+864 updates in 288 sequences. Added update_mode3_history as a public detached
+composition. Raw/magnitude/time histories and untouched bytes match exactly;
+all 30 feature vectors agree within 3e-6. Only the curve callback is substituted
+in native execution; synthetic configuration is not a live binding claim.
+See [complete history composition](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#complete-mode-3-history-composition).
+
 Extended mode-3 conversion to nonplanar/four-lane inputs and implemented its
 finite mathematical adapter. W contributes to normalization but the final
 (2,2,2,0) multiplier clears output W, so XYZ need not have unit length. All 252
