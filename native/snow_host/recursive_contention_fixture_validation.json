@@ -1,0 +1,41 @@
+{
+  "evidence": "Authored Windows fixture using real OS threads and critical-section APIs under Wine; no game loaded",
+  "result": {
+    "passed": true,
+    "scenarios": 8,
+    "real_os_threads": true,
+    "game_loaded": false,
+    "fairness_claimed": false
+  },
+  "owner_recursion_depths": [
+    1,
+    2,
+    3,
+    8
+  ],
+  "waiter_counts": [
+    1,
+    2
+  ],
+  "checks": [
+    "Foreign-thread TryEnterCriticalSection refused while owner holds lock",
+    "Intermediate recursive releases do not permit acquisition",
+    "Final release permits bounded waiter completion",
+    "Protected section has at most one worker inside",
+    "Main thread can reacquire after all workers finish"
+  ],
+  "source_sha256": "212874d6c292abbc697159b6e5c17f087631ef23d66f025aeb08819d819e04c6",
+  "fixture_executable_sha256": "8d21525d822ceeff3f4c5b77ae0dc8c972d14da7f3751bee2123a6807bdb6935",
+  "compiler": "16.2.0",
+  "engine": "x64-sikarugir10.0_6-r21",
+  "observed_sync": "msync",
+  "launcher_exit": 0,
+  "bottle_idle_before": true,
+  "bottle_idle_after": true,
+  "limitations": [
+    "Authored fixture calls Windows APIs directly; game adapters and game objects not loaded.",
+    "Try-enter confirms competing owner; event readiness does not prove exact OS blocking arrival time.",
+    "Bounded scheduling scenarios are not fairness, stress, memory-order or arbitrary-game-lock-order proof.",
+    "No game lifetime, destructor safety or plugin unload qualification."
+  ]
+}

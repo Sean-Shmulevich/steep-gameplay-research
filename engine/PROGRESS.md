@@ -6596,3 +6596,12 @@ recursion depths 1/2/3/8 balance; only final ownership release reaches wake, and
 supplied successful wait returns allow ownership transfer. Wait/wake bodies and
 OS scheduling are excluded, so no native contention/fairness or unload claim.
 No live game or thread launch.
+
+### Authored real-thread Wine contention fixture passed
+
+Added a public Windows C fixture exercising actual critical-section APIs with
+one/two worker threads and owner recursion depths 1/2/3/8. All eight bounded
+scenarios pass, including try-enter refusal, partial-release exclusion, final
+handoff, exclusive worker ownership and main-thread reacquisition. Compiled with
+warnings as errors. Bottle idle before/after; no game loaded. This qualifies the
+platform primitive, not live game adapters, resource lifetime or unload safety.

@@ -3772,3 +3772,43 @@ remain excluded. No live threads or game were launched. This is not a native
 contention stress test, memory-order proof, global engine barrier or unload
 qualification. Native guard initialization and lifetime still require separate
 evidence before using this path for persistent mod submissions.
+
+## Authored real-thread critical-section fixture
+
+The authored source
+[`snow_recursive_contention_fixture.c`](../../native/snow_host/snow_recursive_contention_fixture.c)
+uses Windows critical-section and thread/event APIs directly. It contains no game
+code or payloads. Unlike the controlled emulator handoff, this fixture executes
+real thread acquisition, blocking/wakeup and release under Wine.
+
+The [runtime receipt](../../native/snow_host/recursive_contention_fixture_validation.json)
+records eight passing scenarios under `x64-sikarugir10.0_6-r21`, observed msync:
+owner recursion depths 1/2/3/8 with one/two competing threads. Each thread first
+confirms TryEnterCriticalSection refusal while the owner holds the lock. Partial
+recursive releases do not permit acquisition. After final release, each worker
+acquires exclusively, waits for its bounded release event, then leaves. An atomic
+inside counter detects overlapping protected sections. Main-thread reacquisition
+succeeds after all workers finish. Waits are bounded at five seconds; failure exits
+only the authored fixture process with a failed JSON result. Waiter order is not
+prescribed or treated as a fairness guarantee.
+
+Build with MinGW, then run the executable on Windows or the configured Wine
+runner. The optional first argument names the JSON output file:
+
+```sh
+x86_64-w64-mingw32-gcc -std=c11 -Wall -Wextra -Werror -O2 \
+  native/snow_host/snow_recursive_contention_fixture.c \
+  -o /tmp/snow_recursive_contention_fixture.exe
+```
+
+The fixture compiled without warnings, returned success, and left no fixture
+process. The bottle was idle before and returned idle afterwards. The experiment
+lock was used for launch. No game launch or game-memory modification occurred.
+
+This qualifies a platform primitive in the tested environment. It does not run
+the game adapters or establish their live target slots, initialize game locks,
+validate arbitrary game lock ordering, or pin resource lifetimes. Readiness is
+signaled after try-enter refusal but before blocking enter, so it is not an exact
+OS wait-entry timestamp. The earlier original-adapter emulator evidence and this
+API fixture answer different questions; neither supplies a global scheduler
+barrier or safe plugin unload contract.
