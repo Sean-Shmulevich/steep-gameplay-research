@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added an explicit motion-input batch interface around the recovered ingestion
+prefix and existing scheduler plans. Four separate action reads occur once per
+eligible preparation; every supplied substep uses the same immutable result.
+Tests cover source changes between substeps/next batch, release, suppression,
+alternate reads, invalid plans and callback failure. This is an authored API
+for the observed composition, not browser runtime replacement or full mode proof.
+
 BeforeSimulation input boundary measured live: both input transitions occurred
 inside the actor callback; 25 nonzero cases incremented the counter by one.
 All 583 bracketed physics samples matched callback-return input and counter.

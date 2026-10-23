@@ -851,3 +851,40 @@ float32(.001), otherwise clears air time and advances contact time. Trace rows
 include before/after contact state and the result includes `final_contact_state`.
 Explicit `air_time` alongside `contact_state` is rejected. Immersion geometry is
 still external; a synthetic contact flag is not silently converted into volume.
+
+### Motion input shared across a physics batch
+
+`motion_input_batch.prepare_motion_input_batch` composes the recovered ingestion
+prefix with a caller-supplied scheduler plan. The caller resolves the ingestion,
+alternate-action and X-sign gates and supplies the smoothing coefficient. Four
+action reads occur in recovered order, including separate reads of repeated
+IDs. `batch.execute(update)` supplies the same immutable ingestion result to
+each physics callback. A changed source is read at the next eligible preparation.
+
+```python
+from engine.motion_input_ingestion import ingest_motion_prefix
+from engine.motion_input_batch import prepare_motion_input_batch
+from engine.scheduler import schedule
+
+zero = bytes(16)
+previous = ingest_motion_prefix((zero,) * 4, flip_x=False,
+    counts=(0, 0), smoothed=(zero, zero), alpha=0.5)
+steps = schedule({}, 0.05, {'mode': 'fixed', 'fixed_dt': 0.01})
+batch = prepare_motion_input_batch(previous, steps,
+    ingestion_enabled=True, read_action=lambda action_id: zero,
+    alternate_enabled=False, actor_predicate=False, flip_x=False, alpha=0.5)
+observed = []
+batch.execute(lambda ordinal, elapsed, derivative, motion:
+    observed.append((ordinal, motion.primary_count)))
+assert observed == [(i, 0) for i in range(5)]
+```
+
+This example is synthetic. The API's batch composition is supported by the
+[live BeforeSimulation observation](../native/snow_host/before_input_boundary_live.json),
+not established for every mode. Gate selection and numerical ingestion rules
+remain separate. The interface does not replace the browser runtime's authored
+control mapping, invoke original-game functions, or implement the physics solver.
+A caller-requested zero-step batch still refreshes eligible input; this is an
+explicit interface choice without a corresponding live zero-step observation.
+Suppression preserves prior state without action reads. Callback failures stop
+execution and propagate; earlier callback side effects are not rolled back.
