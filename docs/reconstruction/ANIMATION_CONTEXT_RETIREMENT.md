@@ -2394,3 +2394,43 @@ using the embedded offset and same-build table identities. A caller trace must
 still prove the phase and any drain before removal. Other subsystem interfaces
 need their own receiver and lifetime evidence rather than inheriting this
 participant's semantics.
+
+
+## Read-only enclosing-owner qualification
+
+`engine.command_owner_observation.observe_command_owner` accepts a read callback
+and caller-verified, relocated build profiles. It reads both owner/participant
+globals, requires `participant == owner + embedded_offset`, checks the participant
+table and execute/prepare methods, and matches the owner's primary table and
+three lifecycle entries against a named profile. Two matching samples yield an
+identity; a mismatch, short read or changed identity yields no partial identity.
+The bound is 16 reads and 144 bytes. It performs no writes or native calls.
+
+The caller must establish process/build identity before supplying these profiles.
+Returned heap addresses are session-private. The reader does not traverse the
+manager registry; registration must be observed separately. Even when the two
+readers agree on a pointer, sequential observations do not prove an atomic join,
+prevent address reuse, pin object lifetime or establish callback execution.
+The method slots are identity checks, not a callable public mod API.
+
+Synthetic tests cover every read truncation, a valid owner replacement between
+samples, link/table/method mismatches and invalid profiles rejected before reads.
+
+
+### Live owner qualification result
+
+The [live owner receipt](../../native/snow_host/command_owner_live_observation.json)
+records three startup samples at host uptime 15.745, 17.003 and 17.213 seconds.
+All qualify the enclosing owner as `UIManagerGame`, with the same owner identity
+across samples. Each nearby registry observation contains one entry matching
+that owner's embedded participant. This resolves the exact derived type for
+this capture, without retroactively changing the earlier capture's evidence.
+
+The owner reader used 16 reads / 144 bytes each time. No movement, stepping or
+lifecycle calls were requested by the capture. The startup director subsequently
+reached gameplay entry; the samples themselves are startup evidence. Cleanup
+verified the stopped bottle, restored saves/settings and original DLL hash.
+Private heap addresses and raw observations remain outside the public package.
+
+The next missing evidence is lifecycle phase and callback drain, not owner name.
+No claim of safe native participant registration follows from this result.

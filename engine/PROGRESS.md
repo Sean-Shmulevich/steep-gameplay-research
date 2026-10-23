@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Read-only owner qualification API added and exercised live: three startup
+samples identify UIManagerGame and match its embedded participant to the sole
+nearby registry entry. Identity stable across samples; sequential reads do not
+pin lifetime or prove an atomic registry join. Capture cleanup all passed.
+Full suite: 2084 tests, one skipped. Next trace lifecycle phase / callback drain;
+owner identification is now resolved for this capture.
+
 Identified the observed participant's owner family as UIManager / UIManagerGame
 through named descriptors, matching object sizes and constructor tail thunks.
 This resolves owner names, not the previous live instance's exact derived type.

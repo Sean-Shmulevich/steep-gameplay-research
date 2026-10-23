@@ -1,0 +1,53 @@
+{
+  "evidence": "Live read-only enclosing-owner and nearby registry observations during startup",
+  "samples": [
+    {
+      "host_uptime_ms": 15745,
+      "owner_type": "UIManagerGame",
+      "owner_table_rva": "0x1e0f650",
+      "owner_status": "observed",
+      "owner_reads": 16,
+      "owner_bytes": 144,
+      "registry_status": "observed",
+      "registry_count": 1,
+      "participant_present": true
+    },
+    {
+      "host_uptime_ms": 17003,
+      "owner_type": "UIManagerGame",
+      "owner_table_rva": "0x1e0f650",
+      "owner_status": "observed",
+      "owner_reads": 16,
+      "owner_bytes": 144,
+      "registry_status": "observed",
+      "registry_count": 1,
+      "participant_present": true
+    },
+    {
+      "host_uptime_ms": 17213,
+      "owner_type": "UIManagerGame",
+      "owner_table_rva": "0x1e0f650",
+      "owner_status": "observed",
+      "owner_reads": 16,
+      "owner_bytes": 144,
+      "registry_status": "observed",
+      "registry_count": 1,
+      "participant_present": true
+    }
+  ],
+  "owner_identity_stable_across_samples": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Sequential owner and registry observations are not an atomic join or lifetime pin.",
+    "Samples precede demonstrated gameplay; launcher later reached entered state.",
+    "No movement, step, lifecycle invocation or native participant installation requested by capture.",
+    "Private heap addresses and raw memory excluded."
+  ]
+}
