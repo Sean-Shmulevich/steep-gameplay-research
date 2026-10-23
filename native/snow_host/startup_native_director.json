@@ -1,30 +1,109 @@
 {
   "kind": "startup_native_director",
   "date": "2026-10-23",
-  "summary": "a private in-process plugin closes the offline notice and skips the startup map through the game's own UI and flow calls; the navigator sends only Escape during the intros",
+  "summary": "a private in-process plugin posts the title's press-start command, closes the offline notice and skips the startup map through the game's own flow and UI calls; with it, startup needs no input at all",
   "navigator": "startup_entry.py --intro-key escape --hands-off offline_notice,map",
   "mechanism": {
     "map": "posts the game's own back-to-player flow event 1.5 s after the in-game flow event (same event the map's Back key posts)",
     "offline_notice": "from the notice page's own UI-thread update, 1.5 s after it is pushed, queues the UI manager's close-top-page command (the call a sibling information box makes on accept)",
-    "patching": "per-class vtable slot swaps only, restored on unload; code pages are not modified"
+    "patching": "per-class vtable slot swaps only, restored on unload; code pages are not modified",
+    "title": "1 s after the title flow event, calls the game's frontend command entry with the press-start command; it posts the same chart event the title posts itself when a user is already assigned"
   },
   "sessions": [
-    {"id": "x24", "ok": true, "inputs": ["intro", "intro", "intro"], "entered_t": 57.5, "player_flags": 1,
-     "spawn_position": [-2312.95581, -4273.34521, 2385.93262], "ended_by": "watchdog"},
-    {"id": "x25", "ok": true, "inputs": ["intro", "intro", "intro"], "entered_t": 61.1, "player_flags": 1,
-     "spawn_position": [-2312.95581, -4273.34521, 2385.93262], "ended_by": "stop",
-     "after_entry": {"step_samples": [3153, 3889], "position_unchanged": true, "gameplay_hud": true}}
+    {
+      "id": "x24",
+      "ok": true,
+      "inputs": [
+        "intro",
+        "intro",
+        "intro"
+      ],
+      "entered_t": 57.5,
+      "player_flags": 1,
+      "spawn_position": [
+        -2312.95581,
+        -4273.34521,
+        2385.93262
+      ],
+      "ended_by": "watchdog"
+    },
+    {
+      "id": "x25",
+      "ok": true,
+      "inputs": [
+        "intro",
+        "intro",
+        "intro"
+      ],
+      "entered_t": 61.1,
+      "player_flags": 1,
+      "spawn_position": [
+        -2312.95581,
+        -4273.34521,
+        2385.93262
+      ],
+      "ended_by": "stop",
+      "after_entry": {
+        "step_samples": [
+          3153,
+          3889
+        ],
+        "position_unchanged": true,
+        "gameplay_hud": true
+      }
+    },
+    {
+      "id": "x26",
+      "ok": true,
+      "inputs": [],
+      "intro_skip": false,
+      "entered_t": 78.4,
+      "player_flags": 1,
+      "spawn_position": [
+        -2312.95581,
+        -4273.34521,
+        2385.93262
+      ],
+      "ended_by": "stop",
+      "after_entry": {
+        "step_samples": [
+          6740,
+          7036
+        ],
+        "forward_key_0_5s": {
+          "player_flags": 3,
+          "position": [
+            -2344.54468,
+            -4282.34619,
+            2352.2644
+          ],
+          "speed_mps": 22.0
+        }
+      },
+      "note": "no key presses before gameplay; intros played in full (no Escape); title never seen by OCR",
+      "navigator": "startup_entry.py --hands-off title,offline_notice,map (no intro key)"
+    }
   ],
   "previous_best_entered_t": 78.3,
-  "screens_not_shown": ["startup map"],
-  "screens_shown_without_input": ["offline notice (about 1.5 s)"],
-  "still_needs_input": ["intros and title (Escape)"],
+  "screens_not_shown": [
+    "title (press-start posted 1 s after it is entered)",
+    "startup map"
+  ],
+  "screens_shown_without_input": [
+    "offline notice (about 1.5 s)"
+  ],
+  "still_needs_input": [],
   "failed_attempts_before_this": [
     "calling the notice's input handler from another thread: no player read afterwards (later traced to the navigator not reading the player in hands-off runs)",
     "accept action, cancel action and a replayed raw Enter (traced from a real press) on the UI thread: handler returned 0, notice stayed",
     "the notice's own close method is an empty stub for this box",
     "navigator bug: hands-off runs sent no menu input, so the player was never read; fixed by reading after a loading or post-title screen"
   ],
-  "cleanup": {"saves_restored": true, "settings_restored": true, "bottle_stopped": true, "original_dll_verified": true},
-  "limits": "two passes; build-specific; the plugin stays private; same map and spawn as the normal flow"
+  "cleanup": {
+    "saves_restored": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  },
+  "limits": "three passes (one fully input-free); build-specific; the plugin stays private; same map and spawn as the normal flow; the intro videos still play unless Escape is sent"
 }

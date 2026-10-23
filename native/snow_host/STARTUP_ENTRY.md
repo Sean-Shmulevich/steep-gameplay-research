@@ -145,10 +145,13 @@ navigation failures also shut down cleanly.
 
 ## Native director, 2026-10-23 ([receipt](startup_native_director.json))
 
-A private in-process plugin (build-specific, not published) now handles two screens
-through the game's own calls, using per-class vtable slot swaps that are restored on
+A private in-process plugin (build-specific, not published) now handles the title,
+the offline notice and the startup map through the game's own calls, using per-class vtable slot swaps that are restored on
 unload:
 
+- Title: 1 s after the title flow event it calls the game's frontend command entry
+  with the press-start command. That posts the same chart event the title posts
+  itself when a user is already assigned. The title is never seen.
 - Startup map: 1.5 s after the in-game flow event it posts the back-to-player flow
   event, the same event the map's Back key posts. The map never appears.
 - Offline notice: from the notice's own UI-thread update it queues the UI manager's
@@ -162,11 +165,16 @@ advancing after entry. A navigator bug was fixed along the way: hands-off runs n
 read the player, because reads waited for a menu input. They now also start after a
 loading or post-title screen.
 
+With the title handled as well (`--hands-off title,offline_notice,map`, no intro key),
+a third pass sent no input at all. The intros played in full, and gameplay was
+natively verified at 78.4 s at the same spawn. A 0.5 s forward key after entry moved
+the rider (in-world flag set, about 22 m/s), so control works without a real
+press-start.
+
 ## Open
 
 - Reliability: five full passes (two with Escape), one gate failure and one
   argument failure so far.
 - Choosing a different map or spawn (drop zone or helicopter on the startup map),
   and whether long-distance travel changes the startup spawn. Untested.
-- Native title transition without input (the title still needs Escape or Enter).
-  The press-start event has not been found yet.
+- The intro videos still play unless Escape is sent (about 20 s saved with Escape).
