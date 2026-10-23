@@ -118,3 +118,72 @@ Their setup labels are AfterPhysicUpdate and AfterPhysicUpdateMainActor, both
 named Ai::UpdateAfterPhysics. The event job registers graph+0x4768 as successor.
 These are static edges; request identity, live execution and complete graph
 ordering remain to be measured.
+
+
+## Timed-event producer connected to the Kino queue
+
+The earlier [runtime binding research](../systems/animations/runtime-binding/trace-recipe.md#timestamp-batch-append-and-metadata-interval-check)
+already identifies timed-track traversal, payload filtering and the parallel-array
+append. The newly inspected setup joins that producer to the Kino queue used by
+the event drain above. This is a static route, not a live event-production capture.
+
+Setup `0x140dd3000` resolves its owner's active handle and requests the component
+through `0x14139bd40`, using the type descriptor loaded from `0x142e908a8`.
+That is the same Kino descriptor global identified by the component research.
+The result is the fifth argument to `0x140ddaaf0`; the latter builds an evaluator
+configuration descriptor whose queue field is that component plus 0xf0.
+`0x140db3070` copies this field into evaluator+0x58. Do not confuse this with
+other functions that happen to use an offset of 0xf0 on different receivers.
+
+The readable route is:
+
+```python
+# Static caller relationship; component lookup must succeed on this path.
+owner = resolve_active_handle(binding.owner_handle)
+kino = lookup_component(binding.kino_cache, owner, KinoComponentType)
+evaluator = acquire_or_construct_evaluator()
+configure(evaluator, resource, owner, auxiliary_owner, kino, range_config)
+
+# Selected setup/initializer assignments, not the entire initialization routine.
+evaluator.owner = owner
+evaluator.auxiliary_context = auxiliary_owner.binding_context
+evaluator.event_queue = kino.event_queue
+evaluator.track_mask = 0xffff
+evaluator.event_mask = 0xffff
+evaluator.flags = set_low_two_bits(evaluator.flags, range_config)
+evaluator.flags |= 8  # enables the event-producing branch below
+
+# Existing timed-track traversal, when its other gates pass.
+for track in eligible_tracks:
+    for event in newly_due_events(track, evaluator.absolute_position):
+        advance_cursor_before_payload_checks(event)
+        if payload_gates_pass(event):
+            event.prepare(effective_mask)  # virtual slot 0x60
+            enqueue(evaluator.event_queue, event,
+                    evaluator.owner.field_60, evaluator.owner)
+
+# Separate scheduler dispatch on the component.
+for event, first_handle, second_handle in kino.event_queue:
+    event.deliver(resolve(first_handle), resolve(second_handle), 0)
+```
+
+The two enqueue arguments are not anonymous clip values on this path:
+`0x140db51b0` loads evaluator+0x40 as the second context and dereferences its
++0x60 field for the first context. `0x140db5370` passes those through to
+`0x140d2df10`, which creates retained handles in queue+0x90 and queue+0x120.
+The drain resolves those handles independently. The semantic type of field+0x60
+is deliberately left open here; this route alone does not prove it is the player,
+a motion object, or a world. Other callers can supply different contexts.
+
+[1,024 original-instruction setup cases](../../native/snow_host/kino_event_binding_validation.json)
+cover every initial flag byte and both values of the two configuration bits.
+They execute the setup and initializer prefix together, checking the embedded
+queue assignment, both context assignments, masks, and event-enable bit. Resource
+and range helpers are intercepted. Component lookup, later initialization,
+allocation, queue production and event callbacks are outside this fixture.
+
+This closes the static producer-to-consumer queue identity for this setup path.
+It does not identify event classes, prove this evaluator is active on the captured
+actor, or connect delivery to markup IDs 84/92. The next observation should identify
+a nonempty queue's event tables and handler calls, with owner and request identity,
+rather than search again for a generic three-array producer.

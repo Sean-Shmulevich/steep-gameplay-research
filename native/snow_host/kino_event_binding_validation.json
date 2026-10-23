@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "cases": 1024,
+  "evidence": "Original evaluator setup and initializer prefix with synthetic component, owner and configuration; resource/range helpers intercepted",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "d60eb0df39c40cc18b9706c368383fd5c9651230bd5e6b1e27d7edc60c07bde1",
+  "instruction_spans": [
+    {
+      "start_rva": "0xddaaf0",
+      "end_rva_exclusive": "0xddaba9",
+      "sha256": "287d53dd77e6325902d2dfcac2df6d2fe8e1ac57ac5bd9fc1a8d75c4698b693b"
+    },
+    {
+      "start_rva": "0xdb3070",
+      "end_rva_exclusive": "0xdb30e7",
+      "sha256": "b2fd56e799309a3fac4294f193059ebf9d241e0a4a1604c431faf20638952696"
+    }
+  ],
+  "verified": [
+    "Evaluator receives component embedded queue at +0xf0 through descriptor +0x18.",
+    "Recipient and auxiliary context are copied to evaluator +0x40/+0x48.",
+    "Both masks become 0xffff; configuration sets low two flag bits and event-dispatch bit3 is enabled."
+  ],
+  "limitations": [
+    "Component lookup/type identity is a separately inspected static caller relationship, not executed by this fixture.",
+    "Resource/range helpers are intercepted; later initializer behavior is not executed.",
+    "No event production, handler execution, motion change or live identity is proved by this fixture."
+  ]
+}
