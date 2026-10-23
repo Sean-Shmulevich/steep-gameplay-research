@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Controlled-release QPC windows now join host commands to recorded callbacks.
+Three live releases each contained one actor BeforeSimulation call and complete
+physics batches of 3, 3 and 2 substeps; request-token gaps were 8, 7 and 5.
+Input matched callback return. Probes restored/drained; final resume verification
+failed with step_not_resumed, so session acceptance remains incomplete. Cleanup
+passed. See [receipt](../native/snow_host/controlled_release_observation.json).
+Next: diagnose resume with state snapshots before changing recovery behavior.
+
 Controlled-step audit corrected a semantic risk: host Step values are last-run
 request identifiers, not execution counts. API now labels token-stability
 verification and explicitly reports execution_count_verified=false; legacy

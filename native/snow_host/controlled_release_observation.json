@@ -1,0 +1,75 @@
+{
+  "kind": "controlled_release_callback_observation",
+  "session_success": false,
+  "step_observations": [
+    {
+      "request_token_gap": 8,
+      "before_simulation_calls": 1,
+      "actor_physics_calls": 3,
+      "selected_substeps": 3,
+      "complete_ordinals": true,
+      "overlapping_boundary_calls": 0,
+      "callback_return_precedes_all_substeps": true,
+      "input_matches_callback_return": true
+    },
+    {
+      "request_token_gap": 7,
+      "before_simulation_calls": 1,
+      "actor_physics_calls": 3,
+      "selected_substeps": 3,
+      "complete_ordinals": true,
+      "overlapping_boundary_calls": 0,
+      "callback_return_precedes_all_substeps": true,
+      "input_matches_callback_return": true
+    },
+    {
+      "request_token_gap": 5,
+      "before_simulation_calls": 1,
+      "actor_physics_calls": 2,
+      "selected_substeps": 2,
+      "complete_ordinals": true,
+      "overlapping_boundary_calls": 0,
+      "callback_return_precedes_all_substeps": true,
+      "input_matches_callback_return": true
+    }
+  ],
+  "before_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 11,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "physics_probe": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 33,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 33,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 33,
+    "other_calls": 0
+  },
+  "resume_error": "failed: step_not_resumed",
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "One bounded session with three host releases; no universal exact-step guarantee.",
+    "Counts cover actor BeforeSimulation and actor physics, not every engine job.",
+    "One initial forward pulse prepares movement; no steering input was delivered during the three held releases.",
+    "Final resume failed verification despite restored/drained probes; cause unresolved.",
+    "QPC windows span host release attempt through post-rearm verification, not exact instruction timestamps.",
+    "Probes use bounded six/five-second observation windows; no dropped records reported."
+  ]
+}

@@ -1311,3 +1311,17 @@ require callback recording to establish actual execution count. `on_step` and
 The native acceptance fixture tests request gaps, wrap, no change, continued
 change and missing hold. The game adapter and capture plugin build with this
 clarification. No new live stepping experiment has validated execution count.
+
+Step records also provide `release_begin_qpc`, `rearm_verified_qpc` and
+`qpc_frequency`. The first timestamp precedes the release CAS; the second follows
+the post-rearm frame wait. They bracket the host operation, not the exact job
+entry or completion instruction. Correlate same-session QPC recorder events
+and exclude calls crossing the interval boundaries.
+
+A three-release live observation recorded one actor BeforeSimulation callback
+in each host interval, followed by complete actor-physics batches of 3, 3 and 2
+substeps. Their request-token gaps were 8, 7 and 5. The probes restored/drained
+with no drops. The final resume verification failed with `step_not_resumed`,
+so this is a partial session, not a passing stepping/recovery acceptance test.
+See [receipt](controlled_release_observation.json). Cleanup restored the bottle,
+saves, settings and original DLL. The resume failure needs a separate diagnosis.

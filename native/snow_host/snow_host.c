@@ -721,10 +721,12 @@ static int do_step(const Request *r, Out *o) {
         if (snow_adapter.cas_group(b.owner, cleared, held, &seen)) { put(o, "],\"error\":\"rearm_failed\",\"group\":"); put_group(o, seen); goto partial; }
         if (!ok) { put(o, "],\"error\":\"step_timeout\""); goto partial; }
         if (!wait_frames(&after, b.end_frame, 4, 1000)) { put(o, "],\"error\":\"frames_stalled\""); goto partial; }
+        LARGE_INTEGER verified; QueryPerformanceCounter(&verified);
         int one = snow_step_release_stable(b.step, released, after.step, SNOW_GROUP_HELD(after.group));
         exact += one; if (release_ms > max_release) max_release = release_ms;
-        put(o, "%s{\"step_before\":%u,\"step_released\":%u,\"step_after\":%u,\"end_frame_after\":%u,\"release_ms\":%.3f,\"exactly_one\":%s}",
-            n ? "," : "", b.step, released, after.step, after.end_frame, release_ms, one ? "true" : "false");
+        put(o, "%s{\"step_before\":%u,\"step_released\":%u,\"step_after\":%u,\"end_frame_after\":%u,\"release_ms\":%.3f,\"exactly_one\":%s,\"release_begin_qpc\":%llu,\"rearm_verified_qpc\":%llu,\"qpc_frequency\":%llu}",
+            n ? "," : "", b.step, released, after.step, after.end_frame, release_ms, one ? "true" : "false",
+            (unsigned long long)t0.QuadPart, (unsigned long long)verified.QuadPart, (unsigned long long)qpf.QuadPart);
         if (!one) { n++; put(o, "],\"error\":\"not_exactly_one\""); goto partial; }
         /* Observed release boundary: Step request token changed and hold is re-armed.
          * Exact execution count needs an independent callback recorder. */
