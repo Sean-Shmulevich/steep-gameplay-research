@@ -1,0 +1,70 @@
+{
+  "evidence": "Original allocator-front-end and context-selector instructions compared with independent policy models; external services supplied",
+  "context_selector_cases": 256,
+  "allocation_front_end_cases": 120,
+  "context_sizes": [
+    0,
+    1,
+    16,
+    384,
+    13312,
+    319488,
+    61680,
+    61681,
+    61682,
+    64527,
+    64528,
+    64529,
+    65535,
+    65536,
+    65537,
+    4294967295
+  ],
+  "selector_sources": [
+    11,
+    22,
+    33,
+    55
+  ],
+  "selector_results": [
+    0,
+    99
+  ],
+  "allocation_sizes": [
+    0,
+    384
+  ],
+  "alignment_arguments": [
+    0,
+    8,
+    16,
+    17,
+    4294967295
+  ],
+  "recovery_results": [
+    0,
+    256,
+    257
+  ],
+  "allocator_can_change_during_recovery": true,
+  "return_values_and_service_events_match": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "2ee8de5572d9985de09c598114ad6dec9aefcc2ae9c1a68409015a58b73ff8a3",
+  "spans": [
+    {
+      "rva": "0x115de60",
+      "length": 89,
+      "sha256": "6267cd9f1bc6d65b4a7eff55e294cc7d61a623f0a718f12a38b8bc7a4f2e828d"
+    },
+    {
+      "rva": "0x114a540",
+      "length": 169,
+      "sha256": "93f095a80a1016f6911459c4f85e53d60ca21d901e4910fb99bf8b4d2e08c435"
+    }
+  ],
+  "limitations": [
+    "Allocator virtual methods, resolver and recovery helper are supplied; their implementations and failure behavior are unresolved.",
+    "Context identities remain opaque values, not named allocator types.",
+    "No live allocation, memory alignment, deallocation or concurrency guarantee is established."
+  ]
+}

@@ -938,3 +938,10 @@ The manager request is 384 bytes with alignment argument 8. A null allocation
 skips construction and publishes the explicit fallback; it does not automatically
 assume a zero startup register. Native allocator behavior and destruction remain
 outside this reconstruction.
+
+`python3 -m engine.examples.allocation_policy_probe` adds the recovered context
+selector and allocator dispatch/retry policy to that startup composition. The
+example uses synthetic heap services and demonstrates a failed first allocation,
+one recovery, allocator reload and successful construction/publication.
+[allocation_policy.py](allocation_policy.py) implements the verified local policy;
+actual allocator objects, context identities and failure handling remain supplied.

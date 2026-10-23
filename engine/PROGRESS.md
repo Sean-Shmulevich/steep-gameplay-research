@@ -6454,3 +6454,14 @@ zero-RSI invariant is not proved. Added a runnable full startup composition.
 Eight public initialization tests and the 96-case full-byte constructor comparison
 pass. No live launch this pass. Allocator internals and eventual free/destruction
 remain open; these findings do not establish lifetime safety.
+
+### Allocation front end and context-selection policy implemented
+
+Recovered virtual allocation dispatch, zero-size behavior, one-retry recovery
+policy, allocator reload and context-selection arithmetic. Independent models
+match 256 original-instruction context cases and 120 allocation cases with supplied
+external services. Seven public unit tests and a synthetic startup composition
+pass. The composition demonstrates allocator replacement during recovery and
+request-size-dependent context choice without claiming a native heap mapping.
+No live launch. Resolver, virtual allocator methods, recovery internals and
+manager destruction/lifetime remain open.

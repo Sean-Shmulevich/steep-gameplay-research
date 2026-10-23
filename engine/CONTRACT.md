@@ -37,3 +37,11 @@ uint64 fallback corresponding to incoming RSI. The selected result goes to the
 publisher after normal return. Caller-supplied services own storage, lock/container
 behavior and cleanup; no live access, native failure policy, rollback, lifetime
 pin or concurrent publication safety is implied.
+
+Allocation policy: `select_allocation_context` consumes uint32 size/alignment and
+opaque uint64 context identities, preserving resolver precedence and unsigned
+low-16-bit comparison. `allocate_bytes` dispatches by alignment <=16, returns
+zero for size zero, and permits at most one retry based on the recovery result's
+low byte. It reloads the allocator on retry. All native heap methods, context
+resolution and recovery bodies remain supplied; Python argument validation and
+exception propagation are authored interfaces, not native failure guarantees.

@@ -1875,3 +1875,80 @@ constructor comparison still passes, along with eight public initialization test
 The remaining ownership boundary is now the allocator implementation, allocation
 metadata, failure policy, and eventual destruction/freeing path, rather than the
 manager's requested size or how its storage reaches construction and publication.
+
+## Allocator dispatch and context selection
+
+[allocation_policy.py](../../engine/allocation_policy.py) replaces two previously
+opaque boundaries with recovered local policy. It still supplies the actual
+allocator virtual methods, context resolver and failure-recovery helper.
+
+### Request dispatch and bounded retry
+
+The allocator front end at 0x114a540 returns zero immediately for a zero-byte
+request. Otherwise it reads the allocator through global 0x3308eb0 and its holder.
+Unsigned alignment arguments up to 16 select vtable slot +8, called with
+`(allocator, size, context)`. Larger arguments select slot +0x10, called with
+`(allocator, size, alignment, context)`. This is dispatch policy, not proof of
+the heap implementation or actual alignment of returned memory.
+
+```text
+allocate_bytes(size, alignment, context):
+    if size == 0: return null
+    retried = false
+    loop:
+        allocator = read_current_allocator()
+        if alignment <= 16:
+            result = allocator.allocate_default(size, context)
+        else:
+            result = allocator.allocate_aligned(size, alignment, context)
+        if result != null or retried: return result
+        decision = recover(1, size, 0, 0, 0)
+        if low_byte(decision) == 0: return null
+        retried = true
+```
+
+Only one recovery call and at most two allocation attempts occur on this normal
+return path. The allocator is read again after recovery, so caching the first
+receiver would change the observed behavior. A recovery return of 256 declines
+the retry; 257 permits it. The implementation of recovery at 0x1225c00 remains
+unresolved and may itself throw or terminate. No public retry API for native mods
+is implied.
+
+### Context arithmetic
+
+The context selector at 0x115de60 compares the supplied source token with two
+special globals. For either match it skips resolver 0x11601c0. Otherwise it calls
+that resolver with the original request arguments and returns a nonzero result
+immediately. If resolution is skipped or returns zero:
+
+```text
+threshold = uint32(size) >> 4
+if source == coarse_source:
+    threshold = threshold >> 2
+remaining_low16 = (-uint32(size)) & 65535
+return override_source if remaining_low16 < threshold else source
+```
+
+The comparison is strict and unsigned. For example, with the ordinary threshold,
+size 61681 gives equality and retains the source, whereas 61682 selects the
+override. With the coarse threshold the corresponding boundary is 64528/64529.
+These identities are opaque allocator inputs. The arithmetic does not establish
+which named heaps, pools or memory classes they represent.
+
+The [original-instruction comparison](../../native/snow_host/allocation_policy_validation.json)
+checks 256 context-selector cases and 120 dispatch cases against the independent
+models. It includes zero size, unsigned alignment boundaries, first/second
+allocation failures, low-byte recovery decisions and allocator replacement during
+recovery. Only the external services are substituted. Seven public unit tests
+cover the corresponding contract boundaries.
+
+Run `python3 -m engine.examples.allocation_policy_probe` to compose the policies
+with manager startup and construction. Its explicitly synthetic first allocator
+fails once, recovery selects a second allocator, and that allocator supplies the
+manager and four backing buffers. With the chosen synthetic context identities,
+the large primary ring selects a different context from the manager and smaller
+buffers. This illustrates the decoded arithmetic; it is not a live heap mapping.
+
+The next implementation boundaries are resolver 0x11601c0, the selected allocator
+vtable implementations, and recovery 0x1225c00. Manager destruction and ownership
+still need independent evidence; allocator policy alone does not establish them.
