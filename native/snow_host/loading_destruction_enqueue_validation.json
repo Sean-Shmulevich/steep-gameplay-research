@@ -1,0 +1,14 @@
+{
+  "evidence": "Original loading destruction producer with supplied growth and locks",
+  "cases": 48,
+  "state_and_service_order_match": true,
+  "routine_rva": "0x118d870",
+  "routine_sha256": "0a4db55c374fabb4d80d55c79fffcfac77515f2b2608d75445bbf8b0eacfa397",
+  "model_sha256": "4ff36443911b373336780aa37b9d109e4a427ded0201428831c3f0845f569018",
+  "limitations": [
+    "Growth and lock bodies supplied in instruction comparison; actual resize model composed in public tests.",
+    "Null/non-null payload tokens do not establish valid destructible objects.",
+    "Staging can increment without insertion; no native OOM recovery or count-conservation guarantee.",
+    "No concurrent producers, loading consumer or live game exercised."
+  ]
+}

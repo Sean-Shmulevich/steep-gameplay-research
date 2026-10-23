@@ -116,3 +116,10 @@ processing. Reentrancy is checked after two lock acquisitions. Pending transfer,
 signed wake-state update and signal precede clearing processing and unlocking.
 No concurrent CAS retry, native recursive-lock behavior, exception safety or
 receiving-worker completion is established.
+
+`loading_destruction_enqueue.enqueue_loading_destruction` models the mode-zero
+payload producer with supplied locks/growth. It increments raw uint32 staged count
+even without insertion. The consumer-scope model's worker.pending denotes this
+staged +0x28c field; worker.published denotes +0x288. Do not conflate those fields
+with completion or assume staging proves queue occupancy. No native failure
+recovery or resource-lifetime contract is supplied.

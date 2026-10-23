@@ -6628,3 +6628,12 @@ unique descriptors, budget accounting, wrapped cursor and temporary cleanup afte
 unlock all pass. Both serial/threaded admission tests pass with warnings-as-errors
 native builds. Retained synthetic storage, no consumer or teardown; native manager
 lifetime and execution-phase proof remain open. No game launched.
+
+### Mode-zero dispatch connected to executable loading insertion
+
+Implemented loading destruction producer's +1024 growth, slot insertion and
+unconditional staged increment. Forty-eight original-instruction cases match
+fields/events with supplied growth/locks. Three tests compose actual resize policy
+and preserve the empty-allocation-failure count mismatch. Linked staged +0x28c to
+the retirement handoff's published +0x288. No live launch; ownership and shutdown
+exclusion remain unresolved.

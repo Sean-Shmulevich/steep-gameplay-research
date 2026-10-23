@@ -110,3 +110,13 @@ For detailed pseudocode, source anchors and limitations, follow the matching
 sections in [resource/animation retirement](ANIMATION_CONTEXT_RETIREMENT.md) and
 [request-command lifecycle](REQUEST_COMMAND_LIFECYCLE.md). For the wider project,
 use the [scheduler roadmap](../../engine/SCHEDULER_ROADMAP.md).
+
+## Mode-zero loading producer
+
+The formerly supplied mode-zero dispatch has a local executable implementation:
+[`enqueue_loading_destruction`](../../engine/loading_destruction_enqueue.py).
+It inserts into the loading-owner ring and increments the staged word that the
+retirement consumer later transfers to the worker's published counter. See the
+[producer contract](LOADING_THREAD_LIFECYCLE.md#executable-loading-destruction-insertion)
+for field naming and signed/raw counter distinctions. This does not change the
+older joined-probe receipt scopes; those runs still supplied the dispatcher.

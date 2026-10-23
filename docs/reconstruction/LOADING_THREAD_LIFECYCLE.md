@@ -229,3 +229,33 @@ The operation schedule, one-object input and sufficient-capacity assumption are
 explicit fixture choices. Callback mutation, exceptions, concurrent producers,
 allocator failure and native shutdown exclusion remain outside the probe. An
 empty final trace state is not evidence of a safe native plugin unload.
+
+## Executable loading destruction insertion
+
+`engine.loading_destruction_enqueue.enqueue_loading_destruction` now implements
+producer `0x118d870..0x118d90f`. It holds loading-owner +0x1d8, attempts growth by
+1024 when ring capacity is no greater than count, re-reads the resulting header,
+and inserts only if space exists. The ring starts at owner +0x268. Its separate
+staged uint32 at +0x28c increments unconditionally before unlock, including a
+normal-return growth service that leaves the queue full. No payload-null gate is
+present in this producer. Returned insertion/growth diagnostics are authored.
+
+This is the mode-zero dispatcher called by the retirement consumer. Its staged
+word is the same +0x28c captured by the consumer's outer handoff and transferred
+to +0x288. The scope model's raw `worker.pending` input represents that staged
+word; it must not be confused with the loading consumer's published pending count.
+The existing signed counter helpers and this raw uint32 field model share the
+same bits; interpretation at signed loop gates remains explicit.
+
+The [producer comparison](../../native/snow_host/loading_destruction_enqueue_validation.json)
+checks 48 original-instruction cases with supplied locks/growth, including empty,
+full and available-space rings, replaced storage, staged wrap and null/non-null
+payload tokens. Fields, slot writes and service order match the model. Three
+public tests additionally compose it with the reconstructed resize implementation:
+wrapped growth preserves pointer order, while empty allocation failure leaves
+count zero but staged one. That test confirms the local counter mismatch; it does
+not establish the game's actual allocator failure policy or recovery behavior.
+
+The mode-zero payload path is therefore linked to concrete loading queue and
+publication fields. Native resource ownership, the consumer's full failure path,
+concurrent submission exclusion and shutdown still require separate proof.
