@@ -1,0 +1,429 @@
+{
+  "evidence": "Original game adapters and qualified Wine lock instructions with controlled virtual-thread scheduling at supplied wait/wake boundaries",
+  "scenarios": [
+    {
+      "owner_recursion": 1,
+      "waiters": 1,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            1,
+            1,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            0,
+            1,
+            72
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 1,
+      "waiters": 2,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            1,
+            1,
+            71
+          ]
+        },
+        {
+          "event": "wait_boundary",
+          "thread": 73,
+          "state": [
+            2,
+            1,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            1,
+            1,
+            72
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 72,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 73,
+          "state": [
+            0,
+            1,
+            73
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 2,
+      "waiters": 1,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            2,
+            2,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            0,
+            1,
+            72
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 2,
+      "waiters": 2,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            2,
+            2,
+            71
+          ]
+        },
+        {
+          "event": "wait_boundary",
+          "thread": 73,
+          "state": [
+            3,
+            2,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            1,
+            1,
+            72
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 72,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 73,
+          "state": [
+            0,
+            1,
+            73
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 3,
+      "waiters": 1,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            3,
+            3,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            0,
+            1,
+            72
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 3,
+      "waiters": 2,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            3,
+            3,
+            71
+          ]
+        },
+        {
+          "event": "wait_boundary",
+          "thread": 73,
+          "state": [
+            4,
+            3,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            1,
+            1,
+            72
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 72,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 73,
+          "state": [
+            0,
+            1,
+            73
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 8,
+      "waiters": 1,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            8,
+            8,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            0,
+            1,
+            72
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "owner_recursion": 8,
+      "waiters": 2,
+      "events": [
+        {
+          "event": "wait_boundary",
+          "thread": 72,
+          "state": [
+            8,
+            8,
+            71
+          ]
+        },
+        {
+          "event": "wait_boundary",
+          "thread": 73,
+          "state": [
+            9,
+            8,
+            71
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 71,
+          "state": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 72,
+          "state": [
+            1,
+            1,
+            72
+          ]
+        },
+        {
+          "event": "wake_boundary",
+          "thread": 72,
+          "state": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "event": "acquired_after_supplied_wait",
+          "thread": 73,
+          "state": [
+            0,
+            1,
+            73
+          ]
+        }
+      ],
+      "final_state": [
+        -1,
+        0,
+        0
+      ]
+    }
+  ],
+  "all_passed": true,
+  "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "wait_boundary_module_rva": "0x3a4a0",
+  "wake_boundary_module_rva": "0x3a450",
+  "limitations": [
+    "Wait/wake helper bodies and OS scheduler are supplied, not executed.",
+    "Synthetic TEBs, initialized spin-zero lock and controlled scheduling; no live threads or game launch.",
+    "Chosen waiter order is not evidence of fairness or native wake ordering.",
+    "Successful supplied wait return only; timeouts, errors, cancellation, lock destruction and exceptions untested.",
+    "This validates local ownership handoff arithmetic, not arbitrary engine concurrency or unload safety."
+  ]
+}

@@ -6587,3 +6587,12 @@ All 24 cases retain matching state/event order; nested guards reach depth two an
 all four locks finish unowned with recursion zero. Synthetic initialized locks,
 TEB and encoded target slots remain supplied. Contention, live lifetime and unload
 safety are not established. No game launch or live memory modification.
+
+### Controlled competing-thread lock handoff checked
+
+Eight emulator schedules run original game adapters plus qualified Wine lock
+instructions with independent virtual-thread contexts. One/two waiters and owner
+recursion depths 1/2/3/8 balance; only final ownership release reaches wake, and
+supplied successful wait returns allow ownership transfer. Wait/wake bodies and
+OS scheduling are excluded, so no native contention/fairness or unload claim.
+No live game or thread launch.

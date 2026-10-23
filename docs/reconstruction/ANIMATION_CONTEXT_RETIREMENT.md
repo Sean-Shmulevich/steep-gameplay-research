@@ -3741,3 +3741,34 @@ Contention, OS waits/wakes, lock destruction, exception unwinding, live guard
 initialization/lifetime and cross-thread memory ordering remain outside the
 experiment. Balanced recursion does not prove that concurrent resource mutation
 or plugin unload is safe. No live game was launched or modified in this pass.
+
+## Controlled competing-thread lock handoff
+
+The [handoff receipt](../../native/snow_host/recursive_lock_handoff_validation.json)
+extends recursion qualification with eight controlled schedules: owner depths
+1/2/3/8 and one/two waiting virtual threads. Original game adapters and the
+hash-matched Wine lock implementation execute with shared memory and independent
+synthetic register contexts, stacks and TEB identities.
+
+At Wine module RVA `0x3a4a0`, the fixture stops the competing thread at the wait
+helper entry. Its lock-count increment has already executed. It then runs the
+owner's original releases. Intermediate recursive releases reduce lock and
+recursion counts without reaching wake. The final owner release clears owner,
+decrements lock count and reaches wake helper entry `0x3a450` while waiters remain.
+That wake is supplied by the fixture. Only after a recorded wake does the fixture
+resume a waiting context with a supplied successful wait return. The original
+continuation installs that thread as owner with recursion count one.
+
+With two waiters, the first resumed thread's final release reaches another wake,
+and the second can then acquire. All eight schedules finish at lock count -1,
+recursion count zero and null owner, without orphaned simulated waiters or wake
+permits. The receipt records boundary and acquisition states. The order of
+resumed waiters is deliberately chosen by the test and proves no fairness rule.
+
+This removes uncertainty about local counter/owner changes under these controlled
+interleavings. It **does not execute wait/wake helper bodies or the OS scheduler**.
+Timeouts, wait errors, cancellation, spin paths, destruction and exception paths
+remain excluded. No live threads or game were launched. This is not a native
+contention stress test, memory-order proof, global engine barrier or unload
+qualification. Native guard initialization and lifetime still require separate
+evidence before using this path for persistent mod submissions.

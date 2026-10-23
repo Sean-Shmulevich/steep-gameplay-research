@@ -2079,3 +2079,9 @@ with the joined resource-retirement path in
 [the retirement lock receipt](ANIMATION_CONTEXT_RETIREMENT.md#joined-service-with-original-recursive-lock-implementation).
 This extends same-thread recursion evidence to that nested path; it does not
 supply the missing command-manager lifetime or cross-thread admission proof.
+
+A subsequent [controlled competing-thread handoff](ANIMATION_CONTEXT_RETIREMENT.md#controlled-competing-thread-lock-handoff)
+runs the qualified lock implementation through wait/wake boundaries with one or
+two synthetic waiting contexts. It verifies local ownership/counter transitions;
+OS wait/wake bodies and scheduling remain supplied. This does not close manager
+lifetime, concurrent producer/consumer correctness or native admission safety.
