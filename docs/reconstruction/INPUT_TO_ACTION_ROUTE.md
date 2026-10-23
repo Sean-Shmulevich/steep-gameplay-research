@@ -832,3 +832,39 @@ construction. It is not a public mod API. The portable test validates the
 release/begin portion, not the original worker/completion path, native locking,
 reservation accounting or a complete frame. Those have separately stated
 validation scopes above.
+
+
+## Controlled overlap of dispatch lifetimes
+
+The [interleaving receipt](../../native/snow_host/action_refresh_interleaving_validation.json)
+records 18 controlled instruction-emulation cases. A first original execution
+wrapper is stopped at one of three boundaries: final action callback entry,
+visitor return, or immediately before dispatch completion. Its CPU context and
+stack are retained while one or two other pre-reserved dispatches run against
+the same job memory on separate stacks. The first context is then restored.
+
+The first dispatch has claimed the whole range before each pause. Other
+dispatches find no remaining work and can transition the job to done, but the
+retained first execution keeps the execution count at one. No dependency release
+occurs during those other returns. Resuming the first dispatch completes each
+callback exactly once and then releases dependencies with executions zero and
+outstanding dispatches one. The wrapper finally leaves both counters zero.
+
+This exercises overlapping dispatch lifetimes, including another worker returning
+while the first has not yet evaluated its action callback. It goes beyond the
+previous serial-return fixtures, but does not execute simultaneous native
+threads. Lock calls are no-ops, switches occur outside lock regions, queue removal
+and dependency release are substituted, and synthetic TLS has no active context
+instrumentation. CAS contention, memory ordering and dynamic queue reservation
+are not validated.
+
+[The portable model test](../../tests/test_action_refresh_interleaving.py) reproduces
+the corresponding observable schedules in the independent scheduler. Its
+before-body boundary represents native callback entry; the two post-body native
+boundaries share one model representation because the model does not reproduce
+wrapper instructions. It compares remaining counts, done-versus-returned state,
+retained execution count, callback identity/order and successor readiness.
+
+```sh
+python3 -m unittest discover -s tests -p test_action_refresh_interleaving.py
+```

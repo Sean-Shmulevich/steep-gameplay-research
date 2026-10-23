@@ -1,0 +1,183 @@
+{
+  "status": "passed",
+  "cases": 18,
+  "scope": "Controlled instruction-level interleaving of original category dispatch wrappers sharing job memory with separate saved CPU contexts and stacks",
+  "base_receipt": "action_refresh_completion_validation.json",
+  "substitutions": [
+    "Locks are no-ops; switches occur outside lock regions",
+    "Queue removal sets done state",
+    "Dependency release records event and clears active flag",
+    "Action callback records invocation only; no original source evaluator"
+  ],
+  "rows": [
+    {
+      "callbacks": 1,
+      "reservations": 2,
+      "pause_boundary": "callback_entry",
+      "callbacks_at_pause": 0,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reservations": 2,
+      "pause_boundary": "visitor_return",
+      "callbacks_at_pause": 1,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reservations": 2,
+      "pause_boundary": "before_completion",
+      "callbacks_at_pause": 1,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reservations": 3,
+      "pause_boundary": "callback_entry",
+      "callbacks_at_pause": 0,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reservations": 3,
+      "pause_boundary": "visitor_return",
+      "callbacks_at_pause": 1,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 1,
+      "reservations": 3,
+      "pause_boundary": "before_completion",
+      "callbacks_at_pause": 1,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reservations": 2,
+      "pause_boundary": "callback_entry",
+      "callbacks_at_pause": 0,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reservations": 2,
+      "pause_boundary": "visitor_return",
+      "callbacks_at_pause": 3,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reservations": 2,
+      "pause_boundary": "before_completion",
+      "callbacks_at_pause": 3,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reservations": 3,
+      "pause_boundary": "callback_entry",
+      "callbacks_at_pause": 0,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reservations": 3,
+      "pause_boundary": "visitor_return",
+      "callbacks_at_pause": 3,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 3,
+      "reservations": 3,
+      "pause_boundary": "before_completion",
+      "callbacks_at_pause": 3,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reservations": 2,
+      "pause_boundary": "callback_entry",
+      "callbacks_at_pause": 0,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reservations": 2,
+      "pause_boundary": "visitor_return",
+      "callbacks_at_pause": 6,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reservations": 2,
+      "pause_boundary": "before_completion",
+      "callbacks_at_pause": 6,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reservations": 3,
+      "pause_boundary": "callback_entry",
+      "callbacks_at_pause": 0,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reservations": 3,
+      "pause_boundary": "visitor_return",
+      "callbacks_at_pause": 6,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    },
+    {
+      "callbacks": 6,
+      "reservations": 3,
+      "pause_boundary": "before_completion",
+      "callbacks_at_pause": 6,
+      "executions_after_other_returns": 1,
+      "release_executions": 0,
+      "release_outstanding": 1
+    }
+  ],
+  "limits": [
+    "Deterministic context switching, not native simultaneous threads or a memory-model proof",
+    "All dispatches pre-reserved; no native queue selection",
+    "Stable generation, maximal chunk, no profiling and inert shared synthetic TLS",
+    "No successor graph traversal or next-request proof"
+  ],
+  "game_process": false
+}

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated 18 controlled original-instruction interleavings with separate saved
+CPU contexts/stacks sharing category-job memory. Other dispatches can mark the
+job done while one callback is pending, but cannot release its successors until
+the retained execution returns. The independent scheduler matches corresponding
+observable schedules. No simultaneous native threads, CAS contention or memory
+ordering proof is claimed.
+See [controlled overlap](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#controlled-overlap-of-dispatch-lifetimes).
+
 Retained 24 distinct synthetic successor states from the 144 original-instruction
 cases as portable differential fixtures. The independent mixed scheduler matches
 all release/begin outcomes, including credit deferral and empty finalization;
