@@ -793,3 +793,89 @@ This closes the previously missing derived-input stage in the publication and
 root timestamp sections. Remaining upstream work is device virtual +0x90
 production, arbitration gates and source-query consumption. Scheduling relative
 to physics remains a separate unresolved join.
+
+
+## Initial-slot packet conversion
+
+The four initial caches use virtual +0x90 target `0x11bd1c0`. It reads slot
++0x244 through the same external query seen in readiness/fallback selection.
+The successful query supplies a 16-byte packet. The numeric consumers establish
+this local packet layout, without requiring an assumed external API name:
+
+| Packet bytes | Use |
+| --- | --- |
+| 0..3 | Not consumed by the conversion kernels below |
+| 4..5 | uint16 button bits |
+| 6, 7 | Two uint8 analog trigger values |
+| 8..15 | Four little-endian signed int16 axes |
+
+Axis conversion stores float32(axis/32767) into cache +0x1f0, +0x1f4, +0x200,
+and +0x204. It does not write Z/W, clamp, apply a deadzone, or combine axes.
+The value -32768 therefore produces approximately -1.0000305, whereas +32767
+produces exactly +1. Later processing may still alter these channels.
+
+When the supplied configuration pointer is non-null, helper `0x11bc880` maps
+32 configuration records of stride 0x41c. It reads kind at record+4 and code at
+record+8. For each output byte/scalar pair:
+
+```text
+if kind != 1 or code == 0:
+    pressed = 0
+    scalar = 0.0
+else:
+    mask = uint32(1 << ((code - 1) & 31))
+    if mask == 0x400 or mask == 0x800:
+        raw = packet[6 if mask == 0x400 else 7]
+        pressed = raw > 30
+        scalar = float32(raw / 255)
+    else:
+        pressed = (packet.button_bits & mask) == mask
+        scalar = 1.0 if pressed else 0.0
+```
+
+The x86 shift masks its count to five bits. Thus code 33 aliases code 1, and
+code 43 aliases trigger code 11. Values selecting bits 16..31 cannot be present
+in the uint16 packet button field. An unmapped output is explicitly cleared.
+Trigger analog values remain nonzero below the digital threshold; the digital
+comparison is strict, so 30 is false and 31 is true. These configuration codes
+are not semantic gameplay action names.
+
+[`action_slot_packet`](../../engine/action_slot_packet.py) exposes axis decoding
+and button mapping separately on detached snapshots, so a null native mapping
+configuration is not silently replaced by an invented default. Callers supply
+packet bytes and all 32 mapping pairs. These normalized values are dimensionless;
+no elapsed time or scheduling is involved in either conversion. The
+[packet receipt](../../native/snow_host/input_slot_packet_validation.json)
+compares 512 original axis-slice cases and 512 complete mapper cases without
+substituted calls. All cache bytes and float32 bits match across axis extrema,
+trigger threshold boundaries, shift wrapping and disabled mappings.
+
+### Query and connection-state gates
+
+Before querying, the callback calls common helper `0x1178910`, then copies its
+current buttons to previous. If global holder+0xd6 is zero and its cached
+query-success byte +0x834 is also zero, it calls virtual reset +0x118 and returns
+without polling. Otherwise it calls the slot query once and records:
+
+```text
+new_success = (query_status == 0)
+byte_834 = new_success
+byte_836 = old_success and not new_success
+byte_835 = not old_success and new_success
+```
+
+Failure resets the cache and returns. A new success zeros 24 bytes at +0x820,
+sets +0x834/+0x835 to 1, and calls another unresolved external helper with slot,
+value 1, and that buffer. A continuing success skips this initialization. The
+query's stack output is not initialized by this caller before the query; only
+the successful path consumes it. A portable polling implementation must not
+invent failed-query packet contents.
+
+After conversion and optional mapping, the callback prepares an output pair
+through gated arithmetic or zeros, calls another external helper, then calls
+`0x1173da0`, derived-direction generation and edge stamping. The output helper
+and `0x1173da0` remain unresolved, as do common-helper effects. Consequently the
+packet kernels establish an upstream producer, but concatenating them directly
+with the published tail does not yet prove complete original device-update
+behavior. Next: decode `0x1173da0` and the common helper before a full composed
+initial-slot update. Live scheduler placement remains separate.

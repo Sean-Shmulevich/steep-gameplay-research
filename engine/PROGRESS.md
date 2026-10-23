@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Recovered initial-slot packet conversion: signed axes /32767, config-driven
+buttons and triggers /255 with strict digital >30. Added raw-snapshot APIs;
+512 original axis slices and 512 full mapper cases match without substitutions.
+Documented connection/query gates. Common and post-mapping helpers still prevent
+a claim of complete device-update equivalence. See
+[slot conversion](../docs/reconstruction/INPUT_UPDATE_ORDER.md#initial-slot-packet-conversion).
+
 Closed the derived-input stage: XY pairs yield one digital direction above a
 strict 0.3f threshold, with Y winning magnitude ties. Added a composed selected
 publication -> direction generation -> edge timestamp API. All bytes match 737

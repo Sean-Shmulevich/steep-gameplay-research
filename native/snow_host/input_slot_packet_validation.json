@@ -1,0 +1,26 @@
+{
+  "evidence": "Initial-slot axis conversion slice and complete button mapping helper",
+  "axis_cases": 512,
+  "mapping_cases": 512,
+  "passed": true,
+  "comparison": "Every cache byte, including untouched lanes and float32 output bits",
+  "substitutions": [],
+  "spans": [
+    {
+      "start_rva": "0x11bd29a",
+      "end_rva_exclusive": "0x11bd302",
+      "sha256": "409cebb5384dfa910626162546c3504394f8b32111fc35fa7d9cc51941eec6b0"
+    },
+    {
+      "start_rva": "0x11bc880",
+      "end_rva_exclusive": "0x11bc976",
+      "sha256": "f9903611bb0aa6f0c8b6c4cb1f732b329bbd32595721310a03b9d227b52686c2"
+    }
+  ],
+  "limits": [
+    "Packet and synthetic configuration supplied",
+    "No external query, connection lifecycle or later processing executed",
+    "Physical control/action binding labels unresolved"
+  ],
+  "game_process": false
+}
