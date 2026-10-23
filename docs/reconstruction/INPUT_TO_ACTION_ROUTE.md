@@ -9,6 +9,8 @@ which substep consumes which player sample.
 StepPreWorlds: vector histories and ownership transitions
   -> Step: rebuild/register world-stage chains when its gate permits
   -> earlier world/engine stages
+  -> world PreAI: includes the registered manager refresh route
+  -> intervening world/engine stages
   -> AI global-update graph and its terminal
   -> UpdatePadManager: holder cycle and device/service polling
   -> world AI stage: eligible worlds in handle order
@@ -384,6 +386,58 @@ external predecessor to that setup job and returns category 5 at
 `job_owner+0x8f0`. These are inspected registration relations. The caller of
 that service method must still be joined before claiming a complete outer
 poll-to-refresh dependency chain.
+
+## Refresh belongs to the upstream world PreAI route
+
+The service slot-`0x50` caller is world-graph setup `0x908ae0`, at callsite
+`0x908e10`. This routine obtains the service from the same world's `+0xff8`.
+It connects world graph job `+0x390` to the service's before-AI setup job and
+connects the returned category-5 terminal to world graph job `+0x558`.
+The latter job already precedes the wrapper terminal at `graph+0xc6a8`.
+The graph's wrapper is at `+0xc698`; its setup labels include
+`UpdatePreAIGather`, `Ai::UpdatePreAI`, and `Ai::UpdatePreAISingleThreaded`.
+
+```text
+world PreAI wrapper entry
+  -> gather and prerequisite jobs
+  -> world graph +0x390
+  -> service before-AI setup
+  -> service category 4: includes manager refresh
+  -> service category 5
+  -> world graph +0x558
+  -> world PreAI terminal
+```
+
+This diagram shows the relevant registered dependencies, not every incoming
+hold or conditional branch. The primary work must be selected and all other
+prerequisites released for its callbacks to execute.
+
+Adapter `0x8eb640` links `world.graph+0xc698` into the outer world chain.
+Builder slice `0x68a6d8..0x68a738` uses stage seed `+0x2f8`, tail `+0x490`
+and the same signed-handle eligibility and list-order fold as the later world
+stages. The Step registration then connects that tail to stage seed `+0x14d8`.
+That stage's tail at `+0x1670` precedes engine job `+0x1f18`, which precedes
+the global AI provider entry. The previously validated global AI terminal
+precedes UpdatePadManager.
+
+[Extended outer graph validation](../../native/snow_host/input_pre_ai_to_poll_graph_validation.json)
+executes the original Step slice `0x69c786..0x69c8ac` in 16 relocated fixtures.
+It verifies eight outer registration edges through the Action seed, with
+locks and list mutations substituted as in the preceding graph tests. The
+PreAI interior and intervening world's stage interior are static joins, not
+executed by this test. Actual job dispatch is not exercised.
+
+The consequence is narrower than a latency measurement: this registered
+manager-refresh route is upstream of the named pad poll on the ordinary stage
+chain. The earlier post-pad world-AI-to-Action route remains valid, but it must
+not be used to place this particular action writer after polling. Additional
+polling calls, binding-triggered refresh and other writers remain possible.
+There is no established universal one-frame delay or one-poll-per-refresh rule.
+
+The next live capture should explicitly distinguish the PreAI refresh from
+UpdatePadManager and downstream ingestion. It must record the selected action's
+actual evaluation and sampled values; stage order alone does not establish
+which cached device sample was used.
 
 ## Next capture contract
 

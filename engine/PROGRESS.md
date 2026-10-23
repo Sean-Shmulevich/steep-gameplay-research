@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Placed the registered manager refresh in world PreAI, upstream of the named
+UpdatePadManager poll on the ordinary registered stage chain. The concrete
+world-service caller links category 4/5 between PreAI jobs. Sixteen extended
+outer registration cases passed with lock/list substitutions. This corrects
+the proposed writer placement, without claiming live sample age or frame lag.
+See [PreAI placement](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#refresh-belongs-to-the-upstream-world-preai-route).
+
 Validated the category callback job's complete claim/drain method in 294 cases,
 plus empty re-entry. The gather count is unclaimed work: atomic claims reduce
 it before callbacks run. Zero is therefore not a completion barrier. Static
