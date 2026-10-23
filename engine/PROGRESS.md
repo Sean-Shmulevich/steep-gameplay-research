@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Resolved both encoded targets live to Wine ntdll RtlEnterCriticalSection and
+RtlLeaveCriticalSection with stable slots and matching 32-byte module prefixes.
+One read-only scheduler-ready session; no movement, target invocation or command
+submission. Bottle stopped, saves/settings restored, original DLL verified.
+Composed original thunks and observed module routines pass recursion depths 1/2/3/8.
+18 serial original-producer cases validate an authored outer capacity guard that
+refuses full admission before the native counter increment. This does not qualify
+manager lifetime, competing producers, callback phase or exactly-once delivery.
+Live cleanup, original-instruction fixtures and repository checks passed. Runtime
+source was unchanged; the previously passing 2192-test suite was not rerun.
+
 Reduced both opaque publication/dispatch lock helpers to encoded target thunks.
 96 original-instruction cases validate fixed modular addends, dereferenced first
 argument, tail-transfer stack, flags and nonvolatile general-purpose registers

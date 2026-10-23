@@ -4,9 +4,10 @@ This guide connects the recovered command and request paths relevant to a future
 mod-command API. It describes one concrete callback caller and a shared downstream
 loading-request mechanism. The engine command queue and loading request owner
 are distinct objects. It is not a general safe-mutation API, a complete scheduler,
-or evidence of original-engine equivalence. All checks described here are static
-analysis or original-instruction emulation with labeled adapters, not live game
-validation of these request paths.
+or evidence of original-engine equivalence. Most checks described here are static
+analysis or original-instruction emulation with labeled adapters. The lock-target
+identification below adds one read-only live observation; queued request execution
+has not been validated live through this observer.
 
 ## Connected path
 
@@ -180,7 +181,8 @@ It does not contain or replay captured game memory.
 The inspected lock wrappers load a pointer and transfer into `.upx0` code. Those
 targets contain bytes in the analyzed image. Their section name and unusual
 control flow do not by themselves identify a packer, virtualization scheme or
-anti-debug mechanism. Native lock reentrancy remains unproved.
+anti-debug mechanism. The later live target identification and emulated recursion checks below qualify
+these specific helpers without proving general mutation safety.
 
 Run the portable C plumbing fixture through:
 
@@ -237,9 +239,64 @@ do not publish them as portable constants or raw memory captures.
 This reduces the next live check to reading those slots, decoding the targets,
 and resolving them against the process's current modules and exports. A lower
 user-address-range target is not proof of executable memory or API identity.
-The slot initialization/writer, actual target identity, native lock behavior and
-reentrancy remain open. In particular, do not add an outer recursive lock around
-publication based solely on the names `enter_helper` and `leave_helper`.
+The slot initialization/writer remains open. The live target resolution and
+recursion checks below supersede the earlier identity uncertainty for this one
+Wine build/session. Names alone would not have been sufficient.
+
+## Live lock identity and guarded publication
+
+A [read-only live session](../../native/snow_host/lock_target_live_validation.json)
+resolved the decoded targets to Wine `ntdll.dll` exports:
+
+| Helper | Exact export | Observed module RVA |
+| --- | --- | --- |
+| Enter | `RtlEnterCriticalSection` | `0x21fe0` |
+| Leave | `RtlLeaveCriticalSection` | `0x2b540` |
+
+The reader checked PID and creation identity on each request. Both decoded slots
+were stable before and after module resolution; each target's first 32 bytes
+matched its on-disk module implementation. This is one session at scheduler
+readiness, not a full in-memory module hash or a live callback/submission test.
+The probe did not call the targets or send movement input. The bottle stopped;
+saves/settings were restored and the original input DLL was verified.
+
+Windows critical sections permit repeated acquisition by the owning thread with
+one release required per acquisition. See [Microsoft's contract](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-entercriticalsection).
+For the observed Wine module specifically, the original game thunks composed with
+its actual lock implementation also pass [emulated recursion checks](../../native/snow_host/recursive_lock_validation.json)
+at depths 1/2/3/8. The fixture supplies a same-thread TEB and an initialized
+spin-zero critical section. Lock count, recursion count and owner balance on
+release. Contention, wait/wake, destruction and exception paths are excluded.
+
+This supports the following **authored admission policy**, also tested around
+the original producer in 18 serial instruction cases:
+
+```text
+# Preconditions: verified live build, ordinary producer route, retained manager,
+# valid initialized lock/array, retained descriptor context and callback module.
+acquire(manager.queue_lock)
+if manager.queue_count >= manager.queue_capacity:
+    release(manager.queue_lock)
+    return not_submitted_full     # Do not call the native producer.
+call_original_producer(manager, descriptor, alternate_route=false)
+# Producer recursively acquires/releases this same lock.
+release(manager.queue_lock)
+return submitted                 # Not a callback completion receipt.
+```
+
+Capacities 1/2/4 and 1 through 6 attempted submissions leave queue count and
+pending budget equal to the number admitted. This avoids the tested full-ring
+budget increment for **this submitting adapter** by refusing before the native
+call. It does not repair other producers that submit when full, establish exactly-
+once delivery, or prevent earlier counter/queue divergence. A concurrent consumer
+and lock destruction were not exercised. Counter transfers and all competing
+producers must still be audited before promising reliable publication.
+
+Do not acquire the separate dispatch lock as part of this guard. Lock ordering,
+manager lifetime, module pinning, and the thread/phase where callbacks execute
+remain separate requirements. The next native experiment can use this qualified
+recursive-lock identity to prepare a bounded, observation-only submission adapter;
+it must not infer permission to mutate gameplay or unload after one callback.
 
 ## Inspect the behavior without game files
 

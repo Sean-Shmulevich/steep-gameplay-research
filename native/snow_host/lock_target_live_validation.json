@@ -1,0 +1,47 @@
+{
+  "evidence": "One PID/creation-guarded read-only live Wine session resolves decoded helper targets to module exports",
+  "ok": true,
+  "session_count": 1,
+  "readiness": "scheduler_ready",
+  "input_sent": false,
+  "native_target_called_by_probe": false,
+  "resolved": {
+    "enter_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x21fe0",
+      "exports": [
+        "RtlEnterCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "329049c9b40cb61d9c1879399e3470eefc3904de3d9991911a6253aa8119f2d2"
+    },
+    "leave_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x2b540",
+      "exports": [
+        "RtlLeaveCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "980260d888d10762fda9f7a40b165d49dd1798c6bc3ce71e897c09ff731cebd7"
+    }
+  },
+  "stable_across_resolution": true,
+  "reader_calls": 10,
+  "targeted_read_bytes": 128,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "One session; no actual submission or recursive lock call made by the live probe.",
+    "Target code prefixes match corresponding module files; not a full in-memory module hash.",
+    "Slot stability is sequential observation, not an atomic snapshot.",
+    "Critical-section lifetime, manager generation, teardown ordering, deadlock freedom and callback completion remain unproved."
+  ]
+}
