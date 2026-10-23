@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Decoded the holder's bracketing helper as a raw input-cache field exchange,
+including scalar/vector slots used by the action source. Full snapshot bytes
+match 512 original cases, with 64 identical-pointer no-ops. Two holder calls
+reacquire their object pair, so restoration and atomicity are not assumed.
+Next: resolve nonzero selector indices and actual exchanged identities. See
+[cache exchange](../docs/reconstruction/INPUT_UPDATE_ORDER.md#cache-exchange-around-the-holder-cycle).
+
 Traced the holder-to-service-to-timestamp call chain and refresh-byte consumption.
 Documented repeated link reads, service-null behavior, initialization order and
 unknown callbacks. The direct upstream caller is conditional and is not proved

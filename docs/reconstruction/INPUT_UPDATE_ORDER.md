@@ -115,3 +115,55 @@ identify refresh-byte writers, and find indirect holder-cycle registration.
 The [static receipt](../../native/snow_host/input_update_order_evidence.json)
 records inspected span hashes and direct call sites. It is not an execution
 receipt or a scheduler-equivalence test.
+
+## Cache exchange around the holder cycle
+
+The previously unknown bracketing helper at RVA `0x1176be0` is now decoded as
+a field exchange. It immediately returns for identical object pointers.
+Otherwise it swaps selected fields between the two objects, with no calls,
+locks or allocation. The [independent raw-byte kernel](../../engine/action_cache_exchange.py)
+models distinct, disjoint object snapshots and preserves all float bit patterns.
+It does not model partial memory overlap or infer object lifetime.
+
+The exact exchanged half-open ranges are:
+
+| Range | Observed contents |
+|---|---|
+| +0x10 .. +0x50 | Two sets of 32 individual bytes |
+| +0x50 .. +0x60 | Two uint64 fields |
+| +0x60 .. +0x160 | 32 uint64 fields |
+| +0x160 .. +0x168 | One uint64 field |
+| +0x168 .. +0x1e8 | 32 four-byte scalar fields, moved without arithmetic |
+| +0x1f0 .. +0x210 | Two four-lane vectors |
+| +0x7c8 .. +0x7d8 | Two sets of eight bytes |
+| +0x7d8 .. +0x818 | Eight uint64 fields |
+
+These combine to three contiguous byte ranges in the portable kernel. Every
+other byte in the inspected span remains attached to its original object.
+The scalar/vector offsets overlap the cache layout used by the reconstructed
+vector-action source: scalar values at +0x168 and vectors at +0x1f0. This is a
+static layout connection. It does not identify the actual runtime objects
+selected by the two holder helper calls.
+
+The holder cycle therefore performs a cache exchange before its nested update
+and another afterward. Two exchanges of unchanged, identical pairs restore
+the original bytes. That observation must not be generalized to the real
+cycle: callbacks can change fields or selectors, and the holder reacquires
+both object pointers before the second exchange. An intervening field update
+may be transferred to the other object by the second exchange. A passive
+reader can also observe partially exchanged fields because no synchronization
+is present in this helper.
+
+The [exchange receipt](../../native/snow_host/input_cache_exchange_validation.json)
+records 512 complete original-routine cases without substituted calls,
+including 64 identical-pointer no-ops. Both complete 0x818-byte snapshots match,
+including bytes that should not change. Random raw patterns cover non-finite
+float encodings without interpreting them as numbers. Public tests also check
+that two detached exchanges restore both inputs.
+
+This supersedes the earlier unknown classification of helper_1176be0. The
+selectors at `0x115dd60` and `0x1161b90` use holder indices +0x230 and +0xd0;
+both have a zero-index branch returning holder.link_e8.object_at_8. Nonzero
+selection and caller lifetime still need reconstruction. These selector
+branches are the next static leads for determining which cache is exchanged
+when, before claiming a publication or synchronization boundary.

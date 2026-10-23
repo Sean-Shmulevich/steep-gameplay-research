@@ -1,0 +1,13 @@
+{
+  "evidence": "Complete original cache field exchange, no substituted calls",
+  "cases": 512,
+  "same_identity_cases": 64,
+  "passed": true,
+  "comparison": "Both full snapshot spans, including untouched bytes",
+  "limits": [
+    "Distinct disjoint objects or exactly identical pointer",
+    "Partially overlapping regions excluded",
+    "No atomicity or lifetime proof"
+  ],
+  "game_process": false
+}
