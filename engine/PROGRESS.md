@@ -2,11 +2,19 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live timing-history pair rejected as a single-update replay: one host release
+request spans six changed ring lanes and cursor advance 3 to 9, despite equal
+capped scalar outputs. Added authored transition comparator and boundary tests;
+resume and cleanup passed. Next: held-only history sampling without a release,
+then correlate timing preparation with world execution. See
+[timing transition evidence](../native/snow_host/timing_transition_observation.json).
+
+
 Added bounded physics timing/history observation API: two matching samples,
 at most 12 reads/658 bytes, qualified manager identity and <=64 ring lanes.
 Rechecked 12 producer field offsets and policy load; six synthetic tests pass,
-including every read failure and active/unused history distinctions. No live
-use yet. Next: attach observation to a qualified batch boundary and compare
+including every read failure and active/unused history distinctions. Initial validation was synthetic; live transition results are recorded above.
+Next: attach observation to a qualified producer boundary and compare
 selected policy/history with recorded timing rather than infer from outputs.
 
 Cross-referenced controlled releases with recovered subdivision arithmetic.

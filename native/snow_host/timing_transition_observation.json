@@ -1,0 +1,52 @@
+{
+  "evidence": "live observation plus authored transition analysis",
+  "before": {
+    "history_count": 10,
+    "history_write": 3,
+    "history_oldest": 3,
+    "history_capacity": 10,
+    "policy": 0,
+    "smoothing_enabled": true,
+    "retained": 0.0,
+    "consumed": 0.06666667014360428,
+    "frequency": 100.0,
+    "step_count": 7,
+    "elapsed": 0.009523809887468815
+  },
+  "after": {
+    "history_count": 10,
+    "history_write": 9,
+    "history_oldest": 9,
+    "history_capacity": 10,
+    "policy": 0,
+    "smoothing_enabled": true,
+    "retained": 0.0,
+    "consumed": 0.06666667014360428,
+    "frequency": 100.0,
+    "step_count": 7,
+    "elapsed": 0.009523809887468815
+  },
+  "changed_history_slots": 6,
+  "comparison": {
+    "status": "not_single_append",
+    "cursor_matches": false,
+    "untouched_slots_match": false,
+    "cursor_delta_mod_capacity": 6
+  },
+  "host_release_requests": 1,
+  "resume_completed": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Sequential matching samples are not atomic snapshots.",
+    "Cursor movement does not establish producer invocation count.",
+    "Equal capped scalar outputs do not establish a single timing update.",
+    "Whether timing history advances while world execution is held remains untested."
+  ]
+}

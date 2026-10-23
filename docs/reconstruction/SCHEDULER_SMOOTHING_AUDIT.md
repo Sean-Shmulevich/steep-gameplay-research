@@ -124,9 +124,32 @@ The producer's 12 timing-field offsets and external policy load were rechecked
 against the inspected instruction spans. See [reader validation](../../native/snow_host/physics_timing_reader_validation.json).
 Synthetic tests cover every read failure, owner/policy change, wrap order,
 unused versus active NaN lanes, capacity limit, and initialized zero-step state.
-The new reader has not yet been used live. Current world interval is an
+The reader has now been used live; see the transition check below. Current world interval is an
 observation, not a proved input to the already-produced batch. Retained state
 is sampled after or during whatever phase the caller selected, not reconstructed
 pre-update state. Returned pointers are private provenance; strip them from
 published receipts. Object lifetime and full-cycle mutation remain unresolved
 even when both samples agree.
+
+
+## Timing transition replay and observed cadence gap
+
+`engine.timing_transition_replay.replay_timing_transition(before, after)` accepts
+qualified reader timing dictionaries. It checks unchanged identities and policy,
+then requires the count/cursors and untouched ring lanes to match one append.
+Only then does it replay the recovered scheduler arithmetic and compare float32
+output bits. This is an authored consistency check: full ring cycles or other
+writers can alias a single append, so acceptance never proves execution count.
+
+The first live pair spanning one host release request is rejected: the full
+10-entry ring advanced from cursor 3 to 9 and six lanes changed. Both snapshots
+reported policy 0, smoothing enabled, frequency 100, seven substeps, and consumed
+time 0.06666667014360428. Equal capped outputs conceal the history difference;
+this pair cannot validate one producer invocation. Resume and cleanup succeeded.
+See [sanitized observation](../../native/snow_host/timing_transition_observation.json).
+
+Next experiment: sample the same qualified timing owner repeatedly while the
+world remains held, with no release command. Correlate request-token stability,
+EndFrame observations and sample timestamps with history changes. This tests
+whether timing preparation can advance independently of the held world; it does
+not assume a cursor delta equals an invocation count.
