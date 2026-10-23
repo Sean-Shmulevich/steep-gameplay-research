@@ -1444,3 +1444,55 @@ and bounded forwarding paths against a standalone baseline. Matching module name
 and offsets are insufficient to exclude a wrapper. No further attempt to remove
 execution from the constructor page is justified solely by these control results.
 Constructor ownership, caller and teardown remain unresolved.
+
+## Live protection API redirection found
+
+The [read-only API comparison](../../native/snow_host/protection_api_live_validation.json)
+finds a concrete difference from a standalone process in the same Wine runtime.
+The sampled 128-byte kernel32 and kernelbase VirtualProtect/VirtualProtectEx entry
+windows match the baseline. Kernel32's entry forwards to kernelbase after its
+self-LEA prefix. The ntdll NtProtectVirtualMemory entry and its Zw alias differ:
+both redirect through a private thunk into main-image code.
+
+The observed route is:
+
+```text
+ntdll protection entry
+    -> private forwarding thunk
+    -> main-image entry at RVA 0x3565850
+    -> wrapper at RVA 0x4122688
+```
+
+Both captured main-image windows match the analyzed image bytes. This is an
+observed redirection path, not a call trace proving which instructions ran during
+the earlier failed protection request. It does not identify who installed the
+redirection, or establish the source of the access-denied result by itself.
+No hook was changed, removed or bypassed. The game reached scheduler readiness
+and all session cleanup checks passed.
+
+The wrapper's selected effects are now explicit:
+
+```text
+intercepted_protection_request(process, address_ref, size_ref, new_flags, old_flags_ref):
+    context = read_global_context()
+    return downstream(context,
+                      process,
+                      address_ref,
+                      size_ref,
+                      uint32(new_flags),
+                      old_flags_ref)
+```
+
+The context source is RVA `0x3595838`; the downstream entry is `0x3caa03a`.
+The [64-case original-instruction fixture](../../native/snow_host/protection_wrapper_validation.json)
+checks the argument reshuffle, truncation of protection flags to 32 bits, return
+propagation and stack balance. The downstream routine is supplied by the fixture;
+its decision logic is not recovered. These tests do not dereference the synthetic
+pointer arguments or establish the context's type, ownership or lifetime.
+
+The current denial investigation should follow that downstream routine and the
+context it receives. The previous upstream Wine host-protection-failure lead
+remains possible only after accounting for this intervening main-image path.
+Do not attribute the result directly to Wine, macOS or a named protection product
+without the missing decision/forwarding evidence. The command-manager constructor
+caller remains a separate unresolved target of this instrumentation work.

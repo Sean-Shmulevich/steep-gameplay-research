@@ -18,6 +18,7 @@ def main():
     ap.add_argument('--command-manager-write-plugin', action='store_true', help='Build opt-in one-shot startup page-write experiment; steep adapter only')
     ap.add_argument('--command-manager-execute-plugin', action='store_true', help='Build opt-in one-shot constructor-page execution experiment; steep adapter only')
     ap.add_argument('--execution-control-plugin', action='store_true', help='Build opt-in execution observer control on an authored private allocation')
+    ap.add_argument('--protection-api-snapshot-plugin', action='store_true', help='Build opt-in read-only protection API entry snapshots')
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--cc', default='x86_64-w64-mingw32-gcc')
     args = ap.parse_args()
@@ -52,6 +53,8 @@ def main():
         build('plugins/execution_control.dll', ['examples/execution_control.c','snow_first_execute.c'], ['-shared'])
         (out/'fixtures').mkdir(exist_ok=True)
         build('fixtures/execution_control_image.dll', ['../../tests/fixtures/snow_first_execute_image.c'], ['-shared','-fno-toplevel-reorder'])
+    if args.protection_api_snapshot_plugin:
+        build('plugins/protection_api_snapshot.dll', ['examples/protection_api_snapshot.c'], ['-shared'])
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
     if args.delegate_capture_plugin:

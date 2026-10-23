@@ -525,3 +525,21 @@ It does not rewrite image code. A missing/invalid fixture records refusal with
 `page_available=0`, `armed=0`, `executed=0`. `allocated` refers only to the private
 control; use `page_available` for either source. Unsupported source names decline
 initialization. Each source needs a fresh process because the observer is one-shot.
+
+### Read-only protection API snapshots
+
+`--protection-api-snapshot-plugin` builds an optional inspection plugin. Enable
+`[snapshot] enabled=1` in `plugins/protection_api_snapshot.ini`. It writes
+`.ini.api.json` with six exported entry points: VirtualProtect/VirtualProtectEx
+from kernel32 and kernelbase, and NtProtectVirtualMemory/ZwProtectVirtualMemory
+from ntdll. It reads at most four 128-byte nodes per export and bounded indirect
+pointer slots. It never calls the inspected entry points or changes protection.
+
+The recognizer follows only entry E9, EB, FF25, 48FF25 and mov-rax/jmp-rax forms,
+optionally following the exact eight-byte lea-rsp-self prefix observed in Wine.
+Cycles, unreadable ranges and the node limit stop traversal. This is not a general
+control-flow decoder: ordinary prologues, calls and conditional branches stop it.
+Reads are sequential, not atomic against other threads. Missing exports remain
+explicit. Raw code bytes and absolute addresses must stay outside this repository.
+`tests/fixtures/snow_api_route_fixture.c` exercises the recognized forms and bounds
+using authored bytes that are never executed.

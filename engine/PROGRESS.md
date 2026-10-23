@@ -6331,3 +6331,14 @@ image code controls now work inside the game. The constructor denial therefore
 requires a more specific explanation than a blanket image/execution restriction.
 Next work is a read-only protection-API comparison, not another identical attempt
 on the constructor page. No new original-game execution or lifetime claim is made.
+
+### Protection denial investigation reaches a concrete main-image path
+
+Added bounded read-only API snapshots and ten authored routing fixtures. A live
+startup shows ntdll protection exports redirected through a private thunk into
+the main image; sampled kernel32/kernelbase entry windows match the standalone
+baseline. Both observed game-image windows match analyzed bytes. A 64-case
+original-instruction fixture recovers the wrapper's extra context argument and
+five-argument forwarding with unchanged return propagation. The downstream
+decision routine remains unresolved; no access-denied branch or constructor call
+is claimed. No hook was changed. Readiness, cleanup and standalone checks passed.

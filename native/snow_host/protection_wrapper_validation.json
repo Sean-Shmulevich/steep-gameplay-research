@@ -1,0 +1,278 @@
+{
+  "evidence": "Original wrapper instructions with a supplied downstream routine; live entry route separately observed",
+  "wrapper_rva": "0x4122688",
+  "callee_rva": "0x3caa03a",
+  "receiver_global_rva": "0x3595838",
+  "cases": [
+    {
+      "index": 0,
+      "passed": true
+    },
+    {
+      "index": 1,
+      "passed": true
+    },
+    {
+      "index": 2,
+      "passed": true
+    },
+    {
+      "index": 3,
+      "passed": true
+    },
+    {
+      "index": 4,
+      "passed": true
+    },
+    {
+      "index": 5,
+      "passed": true
+    },
+    {
+      "index": 6,
+      "passed": true
+    },
+    {
+      "index": 7,
+      "passed": true
+    },
+    {
+      "index": 8,
+      "passed": true
+    },
+    {
+      "index": 9,
+      "passed": true
+    },
+    {
+      "index": 10,
+      "passed": true
+    },
+    {
+      "index": 11,
+      "passed": true
+    },
+    {
+      "index": 12,
+      "passed": true
+    },
+    {
+      "index": 13,
+      "passed": true
+    },
+    {
+      "index": 14,
+      "passed": true
+    },
+    {
+      "index": 15,
+      "passed": true
+    },
+    {
+      "index": 16,
+      "passed": true
+    },
+    {
+      "index": 17,
+      "passed": true
+    },
+    {
+      "index": 18,
+      "passed": true
+    },
+    {
+      "index": 19,
+      "passed": true
+    },
+    {
+      "index": 20,
+      "passed": true
+    },
+    {
+      "index": 21,
+      "passed": true
+    },
+    {
+      "index": 22,
+      "passed": true
+    },
+    {
+      "index": 23,
+      "passed": true
+    },
+    {
+      "index": 24,
+      "passed": true
+    },
+    {
+      "index": 25,
+      "passed": true
+    },
+    {
+      "index": 26,
+      "passed": true
+    },
+    {
+      "index": 27,
+      "passed": true
+    },
+    {
+      "index": 28,
+      "passed": true
+    },
+    {
+      "index": 29,
+      "passed": true
+    },
+    {
+      "index": 30,
+      "passed": true
+    },
+    {
+      "index": 31,
+      "passed": true
+    },
+    {
+      "index": 32,
+      "passed": true
+    },
+    {
+      "index": 33,
+      "passed": true
+    },
+    {
+      "index": 34,
+      "passed": true
+    },
+    {
+      "index": 35,
+      "passed": true
+    },
+    {
+      "index": 36,
+      "passed": true
+    },
+    {
+      "index": 37,
+      "passed": true
+    },
+    {
+      "index": 38,
+      "passed": true
+    },
+    {
+      "index": 39,
+      "passed": true
+    },
+    {
+      "index": 40,
+      "passed": true
+    },
+    {
+      "index": 41,
+      "passed": true
+    },
+    {
+      "index": 42,
+      "passed": true
+    },
+    {
+      "index": 43,
+      "passed": true
+    },
+    {
+      "index": 44,
+      "passed": true
+    },
+    {
+      "index": 45,
+      "passed": true
+    },
+    {
+      "index": 46,
+      "passed": true
+    },
+    {
+      "index": 47,
+      "passed": true
+    },
+    {
+      "index": 48,
+      "passed": true
+    },
+    {
+      "index": 49,
+      "passed": true
+    },
+    {
+      "index": 50,
+      "passed": true
+    },
+    {
+      "index": 51,
+      "passed": true
+    },
+    {
+      "index": 52,
+      "passed": true
+    },
+    {
+      "index": 53,
+      "passed": true
+    },
+    {
+      "index": 54,
+      "passed": true
+    },
+    {
+      "index": 55,
+      "passed": true
+    },
+    {
+      "index": 56,
+      "passed": true
+    },
+    {
+      "index": 57,
+      "passed": true
+    },
+    {
+      "index": 58,
+      "passed": true
+    },
+    {
+      "index": 59,
+      "passed": true
+    },
+    {
+      "index": 60,
+      "passed": true
+    },
+    {
+      "index": 61,
+      "passed": true
+    },
+    {
+      "index": 62,
+      "passed": true
+    },
+    {
+      "index": 63,
+      "passed": true
+    }
+  ],
+  "wrapper_length": 94,
+  "wrapper_sha256": "56138992f54b8a559b6ab545500659c752c820f3e559846390ab4fca05a9071e",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "effects": [
+    "Loads an additional receiver from a global.",
+    "Forwards process, address pointer, size pointer, low 32 protection bits, and old-protection pointer after that receiver.",
+    "Returns the supplied downstream result without interpretation and restores stack balance."
+  ],
+  "limitations": [
+    "Downstream routine is supplied, not recovered or executed.",
+    "Does not establish the access-denied decision or receiver type/lifetime.",
+    "Synthetic pointer inputs are not dereferenced by the wrapper.",
+    "Live constructor call remains unobserved."
+  ]
+}

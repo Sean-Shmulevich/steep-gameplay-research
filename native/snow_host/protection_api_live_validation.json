@@ -1,0 +1,374 @@
+{
+  "evidence": "Read-only API entry snapshots in standalone Wine and one bounded game startup",
+  "entry_window_bytes": 128,
+  "maximum_nodes_per_export": 4,
+  "comparisons": [
+    {
+      "requested_module": "kernel32.dll",
+      "symbol": "VirtualProtect",
+      "entry_window_equal": true,
+      "baseline": [
+        {
+          "module": "kernel32.dll",
+          "module_offset": "10478",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rip_indirect",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "ebc67eb41f74c31b76caddb2d82f3471ca6a5c75229b4a94b2a7939b4c1b8d59"
+        },
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "732f0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "94d779444effe7cac612a7eff4c21c8b54e1f77df1aaa0c922d7f8858863fc5d"
+        }
+      ],
+      "live": [
+        {
+          "module": "kernel32.dll",
+          "module_offset": "10478",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rip_indirect",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "ebc67eb41f74c31b76caddb2d82f3471ca6a5c75229b4a94b2a7939b4c1b8d59"
+        },
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "732f0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "94d779444effe7cac612a7eff4c21c8b54e1f77df1aaa0c922d7f8858863fc5d"
+        }
+      ]
+    },
+    {
+      "requested_module": "kernel32.dll",
+      "symbol": "VirtualProtectEx",
+      "entry_window_equal": true,
+      "baseline": [
+        {
+          "module": "kernel32.dll",
+          "module_offset": "10490",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rip_indirect",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "3bee311bd9e8c3ec609611e284ae8ea9602131a24f8f801835f9afb63aa86070"
+        },
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "73400",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "f52f10044c9114487a0f1afba9314985ba6956955d87ad6f743be57e5716c3be"
+        }
+      ],
+      "live": [
+        {
+          "module": "kernel32.dll",
+          "module_offset": "10490",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rip_indirect",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "3bee311bd9e8c3ec609611e284ae8ea9602131a24f8f801835f9afb63aa86070"
+        },
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "73400",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "f52f10044c9114487a0f1afba9314985ba6956955d87ad6f743be57e5716c3be"
+        }
+      ]
+    },
+    {
+      "requested_module": "kernelbase.dll",
+      "symbol": "VirtualProtect",
+      "entry_window_equal": true,
+      "baseline": [
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "732f0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "94d779444effe7cac612a7eff4c21c8b54e1f77df1aaa0c922d7f8858863fc5d"
+        }
+      ],
+      "live": [
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "732f0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "94d779444effe7cac612a7eff4c21c8b54e1f77df1aaa0c922d7f8858863fc5d"
+        }
+      ]
+    },
+    {
+      "requested_module": "kernelbase.dll",
+      "symbol": "VirtualProtectEx",
+      "entry_window_equal": true,
+      "baseline": [
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "73400",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "f52f10044c9114487a0f1afba9314985ba6956955d87ad6f743be57e5716c3be"
+        }
+      ],
+      "live": [
+        {
+          "module": "kernelbase.dll",
+          "module_offset": "73400",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 8,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "f52f10044c9114487a0f1afba9314985ba6956955d87ad6f743be57e5716c3be"
+        }
+      ]
+    },
+    {
+      "requested_module": "ntdll.dll",
+      "symbol": "NtProtectVirtualMemory",
+      "entry_window_equal": false,
+      "baseline": [
+        {
+          "module": "ntdll.dll",
+          "module_offset": "e7d0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "0eed2b963fa0ab6c34e5e840fcc99ebdefa80ab6f6425002c0abf7bdee8382de"
+        }
+      ],
+      "live": [
+        {
+          "module": "ntdll.dll",
+          "module_offset": "e7d0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rel32",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "3fdb9a9ba09d9500568b4bb1ebd80da6d230d7fe0b10a8826cb71beddb86dfa5"
+        },
+        {
+          "module": "",
+          "module_offset": "0",
+          "read": 1,
+          "protection": 32,
+          "type": 131072,
+          "kind": "jmp_rip_indirect",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "b3b29c8d9503366285812a36dafa33273a129fd0cfbb899f53c2853b5e3574ef"
+        },
+        {
+          "module": "steep.exe",
+          "module_offset": "3565850",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rel32",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "e74099c6db6a28c72a3febdb83b70047db3357b05d460b8f41742815e8e35fa7"
+        },
+        {
+          "module": "steep.exe",
+          "module_offset": "4122688",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "9f0ad7146a5225b791b361bb679e0b6e58024af305e93808168d55dddaa4acc4"
+        }
+      ]
+    },
+    {
+      "requested_module": "ntdll.dll",
+      "symbol": "ZwProtectVirtualMemory",
+      "entry_window_equal": false,
+      "baseline": [
+        {
+          "module": "ntdll.dll",
+          "module_offset": "e7d0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "0eed2b963fa0ab6c34e5e840fcc99ebdefa80ab6f6425002c0abf7bdee8382de"
+        }
+      ],
+      "live": [
+        {
+          "module": "ntdll.dll",
+          "module_offset": "e7d0",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rel32",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "3fdb9a9ba09d9500568b4bb1ebd80da6d230d7fe0b10a8826cb71beddb86dfa5"
+        },
+        {
+          "module": "",
+          "module_offset": "0",
+          "read": 1,
+          "protection": 32,
+          "type": 131072,
+          "kind": "jmp_rip_indirect",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "b3b29c8d9503366285812a36dafa33273a129fd0cfbb899f53c2853b5e3574ef"
+        },
+        {
+          "module": "steep.exe",
+          "module_offset": "3565850",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "jmp_rel32",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "e74099c6db6a28c72a3febdb83b70047db3357b05d460b8f41742815e8e35fa7"
+        },
+        {
+          "module": "steep.exe",
+          "module_offset": "4122688",
+          "read": 1,
+          "protection": 32,
+          "type": 16777216,
+          "kind": "unrecognized_entry",
+          "prefix_bytes": 0,
+          "cycle": 0,
+          "limit": 0,
+          "sample_bytes": 128,
+          "sha256": "9f0ad7146a5225b791b361bb679e0b6e58024af305e93808168d55dddaa4acc4"
+        }
+      ]
+    }
+  ],
+  "synthetic_validation": {
+    "routing_cases": 10,
+    "disabled_plugin": "declines without output",
+    "null_arguments": "decline",
+    "enabled_plugin": "six resolved entries and readable followed nodes"
+  },
+  "cleanup": {
+    "ok": true,
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/examples/protection_api_snapshot.c": "c4b443935f16e57826a73f37343acc9411ad8c9dd5c03cc1846d730bb06ce24c",
+    "tests/fixtures/snow_api_route_fixture.c": "3570bcfa6f657d283df69e5ffc8e87798fa7343a59cd1f5ee030edf0b4272294",
+    "scripts/build_snow_host.py": "cf87ae9d68991fabeb4bddfca8f67f2a523f1d65e106a882cf9d5fb52f6c4812"
+  },
+  "interpretation": "NtProtectVirtualMemory and its Zw alias are redirected through a private thunk into main-image code during the sampled game startup. The sampled kernel32/kernelbase entry windows match the baseline.",
+  "game_image_nodes_match_analyzed_bytes": true,
+  "limitations": [
+    "Reads are sequential and captures are in separate processes.",
+    "Does not identify who installed the redirection or when.",
+    "Only selected entry windows and recognized unconditional forwarding forms are inspected.",
+    "No downstream branch returning access denied has been observed or decoded by this capture.",
+    "No hook was altered, bypassed or removed."
+  ]
+}
