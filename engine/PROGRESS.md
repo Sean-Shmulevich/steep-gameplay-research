@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live mode/gate qualification: all 700 BeforeSimulation boundary samples had
+mode 0 and permissive ingestion gates. Neither mode-specific preparation is
+selected by that observed mode. Repeated 583 matching physics samples across
+293 complete batches; two early samples excluded. Restore/drain/cleanup passed.
+See [mode receipt](../native/snow_host/before_input_mode_live.json). Next focus:
+controlled outer-step epochs with this recording, rather than treating helper
+A/B side effects as blockers for the observed mode-zero path.
+
 Resolved concrete actor preparation predicates: A is raw mode 9, B mode 5.
 Seventy original-leaf cases match the new predicate kernel without substituted
 calls. Other modes can ingest without either preparation. Preparation A's

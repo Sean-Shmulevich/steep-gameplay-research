@@ -2720,3 +2720,32 @@ the downstream guard, service notification and allocator behavior are external
 calls here. Both event conditions can occur in one invocation. The later skip
 read remains necessary because transitive effects have not been excluded.
 The actor slot 0x4b0 leaf returns byte `+0xfdc`; its semantic meaning is unknown.
+
+### Live mode-zero ingestion path
+
+A repeat moving-player capture added raw actor mode and the activity, controller
+block, motion-enable and ingestion-skip bytes to each BeforeSimulation entry/
+return observation. All 700 samples were valid and had mode 0, activity 1,
+controller block 0, motion enable 1 and skip 0. Controller handle pointer,
+payload pointer and status were rechecked within each sample. See
+[mode/gate receipt](../../native/snow_host/before_input_mode_live.json).
+
+Mode 0 satisfies neither concrete preparation predicate. Combined with the
+static control flow, these observations support focusing the tested riding
+path on ordinary ingestion rather than preparation A's event/timer branch or
+preparation B's pose-history branch. They do not prove values at every branch
+instruction, identify a portable sport enum, or rule out transient changes.
+
+Both input transitions again occurred inside BeforeSimulation. Twenty-four
+nonzero callback results incremented the primary counter by one. Of 585 actor
+physics samples, two were too early to compare; all remaining 583 matched the
+preceding callback's input and counter. Each of 293 complete batches used one
+distinct preceding callback result. Counts were 14 single-step, 270 two-step,
+seven three-step and two four-step batches. Both recorders restored and drained
+without drops; save/settings/original DLL cleanup passed.
+
+Preparation A/B remain relevant to broader reconstruction, but their unresolved
+transitive effects are not presently demonstrated blockers for the captured
+mode-zero input/substep relationship. The next scheduler experiment should
+exercise pause/outer-step behavior with this same boundary recording and verify
+exactly which input and callback epochs each requested step consumes.

@@ -1,0 +1,93 @@
+{
+  "before_events": 350,
+  "counters": 700,
+  "transitions": {
+    "consistent_with_one_ingestion": 350,
+    "nonzero_matches": 24,
+    "vector_changed_inside": 2
+  },
+  "comparison": {
+    "no_completed_parent": 2,
+    "match": 583
+  },
+  "physics_records": 585,
+  "counter_matches": 583,
+  "complete_batches": 293,
+  "batch_sizes": {
+    "2": 270,
+    "3": 7,
+    "1": 14,
+    "4": 2
+  },
+  "complete_batches_single_before_source": 293,
+  "distinct_before_sources": 293,
+  "kind": "before_simulation_mode_and_gate_capture",
+  "evidence": "Live sequential samples around actor callback, combined with inspected concrete mode predicates",
+  "gate_samples": 700,
+  "gate_histograms": {
+    "valid": {
+      "1": 700
+    },
+    "mode": {
+      "0": 700
+    },
+    "active": {
+      "1": 700
+    },
+    "enabled": {
+      "1": 700
+    },
+    "skip": {
+      "0": 700
+    },
+    "blocked": {
+      "0": 700
+    }
+  },
+  "input_coverage": {
+    "covered": true,
+    "key_down_inside": true,
+    "key_up_inside": true,
+    "intersecting_intervals": 49,
+    "game_acceptance": "unverified"
+  },
+  "before_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 350,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "physics_probe": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 585,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 585,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 585,
+    "other_calls": 0
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "interpretation": "Observed mode zero selects neither preparation predicate; sampled outer/skip gates permit ingestion.",
+  "limits": [
+    "Flags are sampled around the callback, not at each branch instruction; transient changes remain possible.",
+    "Controller handle pointer, payload and status were rechecked within each sample; no atomic snapshot or lifetime pin is claimed.",
+    "Mode zero is a raw value; sport-name enumeration was not recovered here.",
+    "Host binding is deliberately rejected during the installed slot wrapper and reacquired after restoration.",
+    "No live activation of preparations A or B established; their side effects remain open.",
+    "Two early physics records have no preceding captured callback and are excluded."
+  ]
+}
