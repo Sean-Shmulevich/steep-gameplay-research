@@ -1717,3 +1717,24 @@ records. A future collector must supply fresh action provenance from the
 selected player's chain and account for the combined read budget before enabling
 this optional channel. Repeated passive samples alone cannot close the live
 scheduler ordering question.
+
+## Native director startup and passive action-chain repeat
+
+A further live pass reached natively verified gameplay in 45.6 seconds without
+keyboard input, at the same spawn as the earlier director test. The simulation
+step counter advanced from 3131 to 5244 during observation. Both the action-chain
+and ramp collectors passed their identity and selected routine signature checks.
+See the [bounded receipt](../../native/snow_host/director_action_observation.json).
+
+Selected action 118 again contained vector and directional children. The
+directional branch used query IDs 65, 68, 87 and 83, followed by unused sentinels,
+and two enabled processor stages. Its active ramp configuration retained duration
+0.20000000298023224, axis mode 0 and two curve keys. The separate global gate was
+false; stage enablement alone does not establish that the ramp executed.
+
+This confirms the fast startup path supports the existing passive observers. It
+does not locate a history-sector action on the rider, prove input ingestion
+cadence, or validate the newest recorder ABI live. The run reused a previously
+passing host build. No input was sent and the observations were sequential, not
+atomic. Shutdown, save restoration, settings restoration and original DLL
+verification all passed.

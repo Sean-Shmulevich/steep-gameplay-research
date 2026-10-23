@@ -1,0 +1,94 @@
+{
+  "kind": "native_director_action_observation",
+  "evidence": "live, sequential bounded read-only observations after native director startup",
+  "startup": {
+    "elapsed_seconds": 45.6,
+    "inputs": [],
+    "native_gameplay_verified": true,
+    "spawn_position": [
+      -2312.95581,
+      -4273.34521,
+      2385.93262
+    ]
+  },
+  "simulation_step_samples": [
+    3131,
+    5244
+  ],
+  "action": {
+    "id": 118,
+    "chain_ok": true,
+    "ramp_ok": true,
+    "chain_requests": 212,
+    "ramp_requests": 219,
+    "families": [
+      "vector",
+      "directional"
+    ],
+    "directional_query_ids": [
+      65,
+      68,
+      87,
+      83,
+      65535,
+      65535,
+      65535,
+      65535
+    ],
+    "processor_stage_count": 2,
+    "all_stages_enabled": true,
+    "history_action_seen": false
+  },
+  "ramp": {
+    "global_gate": false,
+    "availability": "active_handle",
+    "duration": 0.20000000298023224,
+    "axis_mode": 0,
+    "axis_count": 2,
+    "keys": [
+      {
+        "x": 0.0,
+        "y": 0.0,
+        "incoming": [
+          -50.0,
+          0.0
+        ],
+        "outgoing": [
+          9.999999974752427e-07,
+          0.6855353116989136
+        ],
+        "mode": 2,
+        "semantic_hex": "0000000000000000000048c200000000bd3786353e7f2f3f02000000"
+      },
+      {
+        "x": 1.0,
+        "y": 1.0,
+        "incoming": [
+          0.6369339823722839,
+          0.890984058380127
+        ],
+        "outgoing": [
+          50.0,
+          0.0
+        ],
+        "mode": 2,
+        "semantic_hex": "0000803f0000803f1b0e233f8817643f000048420000000002000000"
+      }
+    ]
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Single additional startup pass; not a reliability estimate.",
+    "No steering input, execution tracing or producer/evaluator cadence measurement.",
+    "Stable sequential identity checks are not an atomic snapshot.",
+    "The selected action has vector and directional children; history-action applicability remains unproved.",
+    "Reused the previously passing session host build; this does not validate the newest probe ABI in game."
+  ]
+}
