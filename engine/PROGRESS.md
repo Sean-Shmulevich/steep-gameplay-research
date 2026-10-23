@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Extended vector refresh validation through original source selection, ownership
+predicates and masked cache getters: 2,880 comparisons pass without a supplied
+source result. Synthetic priority/mask layouts exercise precedence and last-entry
+suppression. Locks, processor and map enumeration remain supplied; upstream cache
+writers, timestamps and poll-to-refresh freshness are still unresolved.
+See [composed cache reads](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#source-ownership-and-cache-getters-in-the-composed-refresh).
+
 Validated the composed reset/vector-source adapter against original instructions
 in 1,440 cases, comparing all synthetic action bytes and processor-call ordering.
 No correction was needed. Source/cache internals and the processor remain supplied;

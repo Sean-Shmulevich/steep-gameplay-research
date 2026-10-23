@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "cases": 2880,
+  "scope": "Original reset, full vector callback, source helper, ownership predicates and masked cache getters compared with independent adapter",
+  "substitutions": [
+    "Map enumeration supplies one action",
+    "Cache locks are no-ops",
+    "Processor virtual callback halves lanes and records input"
+  ],
+  "coverage": [
+    "Source/lane modes, finite vectors and owner/configuration gates from prior composed test",
+    "All priority slots null; higher-priority other owner; self followed by other owner",
+    "Empty mask stack, nonnull tail, nonnull earlier entry with null tail"
+  ],
+  "numerics": "Original RSQRTPS estimate supplied to adapter for exact direction bytes",
+  "base_receipt": "vector_action_refresh_validation.json",
+  "limits": [
+    "Synthetic caches and owner/index layouts; no cache producers or timestamps",
+    "No native lock contention or concurrent writes",
+    "No actual configured processor or physical device mapping",
+    "No scheduler-integrated freshness proof"
+  ],
+  "game_process": false
+}

@@ -976,3 +976,28 @@ rely on that supplied seed.
 This closes the previously pending composed local comparison. It does not
 establish an active player binding, source-cache freshness, real processor-chain
 selection, asynchronous publication safety or scheduler-integrated evaluation.
+
+
+## Source ownership and cache getters in the composed refresh
+
+The [expanded cache receipt](../../native/snow_host/vector_refresh_cache_validation.json)
+executes the original source helper, ownership predicates and scalar/vector cache
+getters inside the same reset/vector callback test. All 2,880 cases match the
+independent composition's complete synthetic action bytes and source/processor
+call sequence. This removes the previous source-helper-result substitution.
+
+Synthetic source owners point to actual-layout cache and priority tables. The
+fixtures exercise all-null priority slots, a first other owner ahead of self,
+and self ahead of another owner. Mask stacks cover empty, a nonnull last entry,
+and an earlier nonnull entry followed by null. Thus the native path applies both
+ownership precedence and last-entry mask semantics before lane selection,
+processing and publication. An earlier nonnull mask does not suppress a read
+when the last entry is null.
+
+Map enumeration, cache locks and the processor callback remain substituted.
+Source ownership/cache objects are synthetic; the fixture does not execute their
+constructors or producers. Exact direction comparison still supplies the native
+RSQRT estimate. The new result establishes read-side composition, not device
+identity, timestamps, atomic cache publication or which polling cycle produced
+the selected sample. The next source-side gap is upstream cache production and
+its relation to the refresh/request timeline, rather than these cache getters.
