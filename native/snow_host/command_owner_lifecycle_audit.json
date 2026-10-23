@@ -1,0 +1,107 @@
+{
+  "evidence": "Static constructor, dispatch-table and lifecycle branch audit; not emulation or live execution",
+  "all_passed": true,
+  "instruction_checks": [
+    "0xa708c4",
+    "0x1b314e",
+    "0x1b3149",
+    "0x20d2d5",
+    "0x21d521",
+    "0xa7c70f",
+    "0x1c86ff",
+    "0x1bfec5",
+    "0xa7c717",
+    "0xa7c721",
+    "0xa77b75"
+  ],
+  "dispatch_slots": [
+    {
+      "table_rva": "0x1efbe68",
+      "slot": "0x0",
+      "target_rva": "0xa7c700"
+    },
+    {
+      "table_rva": "0x1efbe68",
+      "slot": "0x90",
+      "target_rva": "0xaaf760"
+    },
+    {
+      "table_rva": "0x1efbe68",
+      "slot": "0xc8",
+      "target_rva": "0xab68d0"
+    },
+    {
+      "table_rva": "0x1e0f650",
+      "slot": "0x0",
+      "target_rva": "0x1c86f0"
+    },
+    {
+      "table_rva": "0x1e0f650",
+      "slot": "0x90",
+      "target_rva": "0x20d2c0"
+    },
+    {
+      "table_rva": "0x1e0f650",
+      "slot": "0xc8",
+      "target_rva": "0x21d380"
+    }
+  ],
+  "spans": [
+    {
+      "rva": "0xa708a0",
+      "length": 59,
+      "sha256": "654c6638928a9d920151cd0f4f5b23fc6128f77e6f85407e791d0ff3f57e4fd5"
+    },
+    {
+      "rva": "0x1b3140",
+      "length": 26,
+      "sha256": "10bf050849d1d1bcbead72054c7b02a20fc18ab343577f83ae66ae0dcbe1402d"
+    },
+    {
+      "rva": "0x1efbe68",
+      "length": 208,
+      "sha256": "fbd835e4f5a29ed0ca7d8328c028f58a91a41b8bbec9377520e75690c2ecab6d"
+    },
+    {
+      "rva": "0x1e0f650",
+      "length": 208,
+      "sha256": "ebce0f53dfb5f73552dfb9b1b83fd56337df70a87a5712eb8a8324f40c48ba97"
+    },
+    {
+      "rva": "0xa7c700",
+      "length": 52,
+      "sha256": "c1010a6ce03d096c9cecd6e77587abf431c5db4b65ffc39f6a552cc04726b7a8"
+    },
+    {
+      "rva": "0x1c86f0",
+      "length": 52,
+      "sha256": "c9335ad16605c3079535b808b4b9c7573fdbcfa6c7080def02f1e044f80cf11f"
+    },
+    {
+      "rva": "0x1bfce0",
+      "length": 490,
+      "sha256": "5dc52dbf093b4316e0ad22eb60896973818097ad03f82ed8daef5077513d657f"
+    },
+    {
+      "rva": "0xa77a50",
+      "length": 1350,
+      "sha256": "6111acdda54e10c8a6b7badf1d4f4ba6a2159c7657cf06daf33c90a9753ac5e3"
+    },
+    {
+      "rva": "0x20d2c0",
+      "length": 26,
+      "sha256": "3ebe764df82d2fd9adaf593afc83005902986d4fbde8833a70cbf44429adc8a2"
+    },
+    {
+      "rva": "0x21d380",
+      "length": 422,
+      "sha256": "c3d0e2a58380e26e38b865f3dee3273813bda977256bdcdb317b56d9d0371bfe"
+    }
+  ],
+  "limitations": [
+    "Class names and RTTI are not established.",
+    "Registration/removal phase callers and executor exclusion remain unresolved.",
+    "No transitive claim that destructors cannot unregister through another helper.",
+    "A matching virtual slot at an arbitrary callsite does not identify its receiver."
+  ]
+}

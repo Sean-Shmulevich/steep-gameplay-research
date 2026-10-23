@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Owner lifecycle dispatch now tied to constructor-installed base/derived tables:
+registration +0x90, removal +0xc8, deleting destructor +0x00. Static audit passes
+11 instruction checks and six table entries. Derived registration calls base
+first; derived removal tails to base after cleanup. Destruction clears the
+participant global/container, distinct from manager-list removal. Caller phase,
+callback drain and removal-before-destruction ordering remain unresolved.
+
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
 Located exact participant register/remove wrappers through owner +0x4b8.

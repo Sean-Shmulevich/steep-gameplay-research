@@ -2304,3 +2304,55 @@ callback already holding it has returned. The owner methods' calling phases,
 serialization with executor traversal, and their ordering before destruction
 must be established before installing third-party participants. Those are now
 specific caller/lifetime targets rather than unknown registration functions.
+
+
+## Owner lifecycle dispatch and destruction boundary
+
+A [static lifecycle audit](../../native/snow_host/command_owner_lifecycle_audit.json)
+checks 11 instruction anchors and six dispatch entries. Constructor writes
+establish the tables directly; no RTTI or original class name is assumed.
+The derived constructor calls the base constructor before replacing its table.
+
+| Owner dispatch offset | Base target RVA | Derived target RVA | Observed role |
+| --- | --- | --- | --- |
+| `+0x00` | `0xa7c700` | `0x1c86f0` | Deleting destructor wrapper |
+| `+0x90` | `0xaaf760` | `0x20d2c0` | Registration-containing lifecycle method |
+| `+0xc8` | `0xab68d0` | `0x21d380` | Removal-containing lifecycle method |
+
+The base table is at RVA `0x1efbe68`; the derived table is at `0x1e0f650`.
+Their constructor anchors are `0xa708c4` and `0x1b314e`. These addresses identify
+this build only and are not plugin API constants.
+
+```text
+derived_registration(owner, argument):
+    base_registration(owner, argument)  # includes participant registration
+    perform_derived_setup(...)
+
+derived_removal(owner):
+    perform_derived_cleanup(...)
+    tail_call base_removal(owner)      # includes participant removal
+
+deleting_wrapper(owner, flags):
+    destroy_owner(owner)
+    if flags & 1:
+        deallocate(owner, owner_size)
+    return owner
+```
+
+The base deleting wrapper supplies size `0x4d8`; the derived wrapper supplies
+`0x550`. The derived destructor tails into the base destructor. Within base
+destruction, the embedded participant table is reset, its global pointer is
+cleared if it still points at this participant, and its pending container is
+cleared. Clearing that global pointer is distinct from removing the participant
+from the command manager's array.
+
+Registration/removal therefore have distinct dispatch entries from destruction.
+This does not prove that a destructor's transitive callees cannot perform
+additional unregistration. Nor does the derived cleanup order establish that
+callbacks have drained before cleanup starts. The next required link is the
+receiver-qualified caller of these lifecycle slots and its synchronization with
+the command executor. Generic calls through `+0xc8` occur across unrelated
+classes, so slot equality alone cannot identify a removal caller.
+
+This audit is static evidence. No live lifecycle observation, concurrency test,
+or safe third-party participant installation is claimed.
