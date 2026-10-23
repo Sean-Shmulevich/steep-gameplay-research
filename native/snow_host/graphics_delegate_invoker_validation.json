@@ -1,0 +1,21 @@
+{
+  "evidence": "Original graphics delegate invoker with synthetic target returning normally",
+  "cases": 8,
+  "all_passed": true,
+  "rva": "0x8ab390",
+  "length": 9,
+  "sha256": "c2b13b0a2d8635b4a691fc95c63ba2cf2f1482c419541597e898b96ad219cb93",
+  "contract": {
+    "input_rcx": "function_storage",
+    "input_rdx": "receiver",
+    "target": "qword at function_storage",
+    "target_rcx": "receiver unchanged",
+    "transfer": "tail jump preserving caller return address"
+  },
+  "limitations": [
+    "No live installation or writable-slot ownership proof.",
+    "Upstream delegate decoding and receiver-tag stripping not executed.",
+    "Synthetic null/arbitrary receivers establish forwarding only, not valid game receivers.",
+    "Target return type and exception behavior are not inferred."
+  ]
+}

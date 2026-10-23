@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Graphics phase delegate invocation adapter verified in eight original-instruction
+cases: function-storage + receiver arguments become a tail call with exact
+receiver bits and caller return address. Constructor links this adapter to the
+BeginGraphicFrame delegate at owner +0x3b0. Upstream context-tag decoding and
+owner-relative installation/lifetime remain open; existing image-slot installer
+cannot be assumed applicable. No native callback installation performed.
+
 Shared frame-service gates now modeled as two distinct reads. Sixteen original
 branch-pair cases confirm stable zero/nonzero selects one site, while supplied
 changes select both or neither. No native selector change is claimed. Qualified

@@ -2711,3 +2711,38 @@ not accepted as selector writers. Bulk initialization, aliasing, leaf wrappers
 and uninspected callers remain possible. A qualified live capture should record
 the owner and selector at both gates, together with entry counts, before an API
 exposes this service as an exactly-once frame hook.
+
+
+### Graphics delegate invocation adapter
+
+The constructor sequence that binds `Graphic::BeginGraphicFrame` also installs
+invoker RVA `0x8ab390`. It copies a 32-byte delegate to engine-loop owner +0x3b0:
+function pointer at +0x3b0, zero second word, context/tag word at +0x3c0, invoker
+at +0x3c8. These are build-specific observation anchors, not writable public API
+fields. The upstream interpretation of the context/tag word remains to be joined.
+
+The invoker itself has this exact local contract:
+
+```text
+invoke(function_storage, receiver):
+    target = *function_storage
+    tail_jump target(receiver)
+```
+
+At the x64 ABI boundary RCX initially holds function storage and RDX holds the
+receiver. The invoker saves the former in RAX, moves RDX to RCX and jumps through
+`[RAX]`. It does not mask receiver bits, allocate a frame, or add another return
+address. Any decoding of a tagged context must therefore occur upstream.
+
+An [eight-case original-instruction check](../../native/snow_host/graphics_delegate_invoker_validation.json)
+verifies forwarding to two synthetic targets with four receiver bit patterns,
+including null. The target sees the exact receiver bits and original stack
+pointer; its return reaches the original caller's return address. Null and
+arbitrary synthetic receivers are not valid-owner claims. No target return type,
+exception convention, safe delegate replacement or native unload proof follows.
+
+The existing snow update probe swaps an image-backed virtual slot, whereas this
+candidate is an owner-relative delegate. Its installer cannot simply be reused:
+owner lifetime, descriptor consistency and upstream context decoding need their
+own guards. Keep the existing plugin thread callbacks separate from any future
+engine-phase callback until this route is qualified end to end.
