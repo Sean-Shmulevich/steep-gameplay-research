@@ -537,6 +537,15 @@ references. Non-null associated objects and final-reference resource destruction
 have additional paths excluded from this fixture. Unoccupied slots are untouched.
 No descriptor callback is invoked; clearing is not draining by execution.
 
+The independent [disposal module](../../engine/command_disposal.py) implements
+this valid-ring contract with caller-supplied record cleanup and allocator
+services. It matches cleaned-slot effects, allocation events and final headers
+in all 200 original-instruction fixture cases. Seven public tests additionally
+check wrap order, borrowed storage, empty release, validation and supplied-service
+failures. Exception behavior is exposed as partial progress without rollback;
+native exception handling is not established. This module is not wired into a
+native shutdown hook and does not manufacture cancellation receipts.
+
 Consequences for an eventual mod API:
 
 - Admission and completion must remain distinct receipts. Removing an accepted
@@ -550,6 +559,7 @@ Consequences for an eventual mod API:
 ## Inspect the behavior without game files
 
 ```sh
+python3 -m engine.examples.command_disposal_probe
 python3 -m engine.examples.callback_command_probe
 python3 -m engine.examples.command_budget_probe
 python3 -m engine.examples.callback_followup_probe

@@ -6100,3 +6100,10 @@ Original clear/release instructions pass 200 serial valid-ring cases, including
 their callbacks. The [disposal contract](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#buffer-disposal-is-not-callback-delivery)
 therefore keeps admission separate from delivery. The actual manager destructor
 and its synchronization remain unlocated.
+
+### Runnable command disposal reconstruction
+
+Added `engine.command_disposal` and a synthetic wrapped-buffer example. The
+independent implementation matches original-instruction effects in 200 cases;
+seven public tests cover service ordering, retained allocation state and failure
+boundaries. No native shutdown hook or lifetime guarantee is claimed.

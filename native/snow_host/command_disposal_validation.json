@@ -2,6 +2,8 @@
   "evidence": "Original ring clear and buffer release instructions with synthetic allocator services",
   "all_passed": true,
   "cases": 200,
+  "independent_model_comparison_cases": 200,
+  "model_source_sha256": "1a227084a8d8feb4555a0732f1b2ac7a676e9d2d517f65290ab8fd89667030cc",
   "wrapped_cases": 70,
   "capacities": [
     1,
