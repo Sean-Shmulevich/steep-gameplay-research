@@ -48,7 +48,22 @@ static int qualify(uint64_t *invoker) {
        !read_at(binding.owner_global,&again,8) || again!=owner) return 0;
     *invoker=d[3];return 1;
 }
-uint32_t SnowDelegateProbe_ABIVersion(void) { return 2; }
+static void observe_job(void *storage,void *receiver,SnowDelegateJobState *out) {
+    SnowDelegateJobState s={0};uint64_t invoker;
+    uint32_t counters[6];uint8_t usage,selector;
+    /* A cached wrapper can be called after restoration. Both our wrapper and
+     * the original are acceptable; a third-party invoker is not qualified. */
+    if((uintptr_t)storage!=binding.owner+0x3b0 || (uintptr_t)receiver!=binding.owner ||
+       !qualify(&invoker) || (invoker!=binding.invoker && invoker!=(uintptr_t)&dispatch) ||
+       !read_at(binding.owner+0x218+0x4c,counters,sizeof counters) ||
+       !read_at(binding.owner+0x218+0x194,&usage,1) ||
+       !read_at(binding.owner+0x5a,&selector,1) ||
+       !qualify(&invoker) || (invoker!=binding.invoker && invoker!=(uintptr_t)&dispatch)) return;
+    s.executions=counters[0];memcpy(&s.outstanding,&counters[1],sizeof s.outstanding);
+    s.state=counters[2];s.started=counters[3];s.requested=counters[4];s.holds=counters[5];
+    s.usage=usage;s.selector=selector;s.valid=1;*out=s;
+}
+uint32_t SnowDelegateProbe_ABIVersion(void) { return 3; }
 size_t SnowDelegateProbe_RecordSize(void) { return sizeof(SnowDelegateRecord); }
 int SnowDelegateProbe_Configure(const SnowDelegateBinding *b) {
     int ok=0;uint64_t invoker;HMODULE module,other,pinned;
@@ -68,6 +83,7 @@ int SnowDelegateProbe_Configure(const SnowDelegateBinding *b) {
            (SnowDelegateOriginal)(uintptr_t)binding.invoker,clock_tick,thread_id)) {
         InterlockedExchange(&ready,-1);goto done;
     }
+    trace.observe=observe_job;
     slot=(void *volatile *)(uintptr_t)(binding.owner+0x3c8);
     InterlockedExchange(&ready,2);ok=1;
 done: ReleaseSRWLockExclusive(&control);return ok;

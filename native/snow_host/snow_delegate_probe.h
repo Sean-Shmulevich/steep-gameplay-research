@@ -6,7 +6,7 @@
 #else
 #define SNOW_DELEGATE_API
 #endif
-/* Experimental graphics-main ABI v2. Caller verifies build/code identity and
+/* Experimental graphics-main ABI v3. Caller verifies build/code identity and
  * guarantees owner storage remains allocated and unreused during Configure,
  * Install and Restore, and preserves the function/context ABI for cached callers.
  * Guards/CAS do NOT establish these lifetime and binding prerequisites.

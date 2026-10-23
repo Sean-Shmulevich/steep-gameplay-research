@@ -20,6 +20,12 @@ static int signature(uint64_t base,uint32_t rva,size_t n,uint64_t expected) {
     for(size_t i=0;i<n;i++)h=(h^bytes[i])*UINT64_C(1099511628211);
     return h==expected;
 }
+static void write_state(FILE *f,const SnowDelegateJobState *s) {
+    fprintf(f,"{\"valid\":%u,\"executions\":%u,\"outstanding\":%d,\"state\":%u,"
+        "\"started\":%u,\"requested\":%u,\"holds\":%u,\"usage\":%u,\"selector\":%u}",
+        (unsigned)s->valid,(unsigned)s->executions,(int)s->outstanding,(unsigned)s->state,
+        (unsigned)s->started,(unsigned)s->requested,(unsigned)s->holds,(unsigned)s->usage,(unsigned)s->selector);
+}
 static DWORD WINAPI capture(LPVOID unused) {
     (void)unused;ULONGLONG until=GetTickCount64()+180000;
     while(GetFileAttributesA(trigger)==INVALID_FILE_ATTRIBUTES) {
@@ -54,14 +60,15 @@ static DWORD WINAPI capture(LPVOID unused) {
     FILE *f=fopen(output,"w");
     if(f) {
         LARGE_INTEGER frequency;QueryPerformanceFrequency(&frequency);
-        fprintf(f,"{\"kind\":\"summary\",\"record_abi\":2,\"compatible\":%d,\"configured\":%d,\"installed\":%d,\"restored\":%d,\"drained\":%d,\"used\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"owner\":\"%llx\"}\n",
+        fprintf(f,"{\"kind\":\"summary\",\"record_abi\":3,\"compatible\":%d,\"configured\":%d,\"installed\":%d,\"restored\":%d,\"drained\":%d,\"used\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"owner\":\"%llx\"}\n",
             compatible,configured,installed,restored,drained,(unsigned long long)used,
             (unsigned long long)dropped,(unsigned long long)frequency.QuadPart,(unsigned long long)owner);
         if(drained)for(size_t i=0;i<used;i++) {
             SnowDelegateRecord r;if(!SnowDelegateProbe_Read(i,&r,sizeof r))break;
-            fprintf(f,"{\"kind\":\"record\",\"index\":%llu,\"storage\":\"%llx\",\"receiver\":\"%llx\",\"result\":\"%llx\",\"entry\":%llu,\"exit\":%llu,\"thread\":%llu,\"caller\":\"%llx\"}\n",
+            fprintf(f,"{\"kind\":\"record\",\"index\":%llu,\"storage\":\"%llx\",\"receiver\":\"%llx\",\"result\":\"%llx\",\"entry\":%llu,\"exit\":%llu,\"thread\":%llu,\"caller\":\"%llx\",\"before\":",
                 (unsigned long long)i,(unsigned long long)r.function_storage,(unsigned long long)r.receiver,
                 (unsigned long long)r.result,(unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick,(unsigned long long)r.thread,(unsigned long long)r.caller);
+            write_state(f,&r.before);fputs(",\"after\":",f);write_state(f,&r.after);fputs("}\n",f);
         }
         fclose(f);
     }

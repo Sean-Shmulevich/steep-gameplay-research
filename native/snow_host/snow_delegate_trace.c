@@ -6,7 +6,7 @@ int snow_delegate_trace_init(SnowDelegateTrace *t, SnowDelegateRecord *r, size_t
     SnowDelegateOriginal original, SnowDelegateClock clock, SnowDelegateClock thread_id) {
     if (!t || !original || !clock || !thread_id || (n && !r)) return 0;
     t->records=r; t->capacity=n; t->original=original;
-    t->clock=clock; t->thread_id=thread_id;
+    t->clock=clock; t->thread_id=thread_id; t->observe=NULL;
     atomic_init(&t->gate,0); atomic_init(&t->used,0); atomic_init(&t->dropped,0);
     return 1;
 }
@@ -27,8 +27,11 @@ uintptr_t snow_delegate_trace_call_from(SnowDelegateTrace *t, void *storage, voi
         memset(r,0,sizeof *r);
         r->caller=caller; r->function_storage=(uintptr_t)storage; r->receiver=(uintptr_t)receiver;
         r->thread=t->thread_id(); r->entry_tick=t->clock();
+        if(t->observe)t->observe(storage,receiver,&r->before);
         result=t->original(storage,receiver);
-        r->result=result; r->exit_tick=t->clock();
+        r->result=result;
+        if(t->observe)t->observe(storage,receiver,&r->after);
+        r->exit_tick=t->clock();
     }
     atomic_fetch_sub(&t->gate,1);
     return result;

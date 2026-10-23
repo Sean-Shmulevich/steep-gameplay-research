@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Added and live-validated guarded entry/return job observations (native record ABI
+3). All 48 graphics calls had executions=1, outstanding=1, state=DONE, usage=0,
+and selector=0 on both sides. Request counts advanced consecutively. This proves
+DONE/zero usage is not drain evidence for this observed job; main return precedes
+completion accounting. Synthetic model test reproduces that distinction without
+claiming the same live request producer. Six Windows adapter scenarios and three
+controller refusal cases passed; standalone build passed. Live restoration,
+continued simulation, saves/settings/original DLL cleanup passed. Worker completion
+and dependency-release observation remain next; no arbitrary-mod safety claim.
+Full suite passed: 2117 tests, one skipped; packaging/link checks passed.
+
 Live caller attribution passed: 43 graphics callback records, zero drops, all
 returning to the decoded main-delegate dispatcher call site. Original binding
 restored; simulation advanced afterward; launcher cleanup passed. This closes

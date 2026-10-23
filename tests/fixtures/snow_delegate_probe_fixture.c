@@ -7,7 +7,11 @@
 static void *owner_global;
 static uintptr_t table[16];
 static unsigned calls;
-static uintptr_t body(void *receiver) { assert(receiver==owner_global);calls++;return UINT64_C(0xfedcba9876543210); }
+static int invalidate;
+static uintptr_t body(void *receiver) { assert(receiver==owner_global);calls++;
+    ((uint32_t *)((unsigned char *)receiver+0x218+0x4c))[4]++;
+    if(invalidate)owner_global=NULL;
+    return UINT64_C(0xfedcba9876543210); }
 static uintptr_t invoker(void *storage,void *receiver) { return (*(uintptr_t (**)(void *))storage)(receiver); }
 static uintptr_t competitor(void *storage,void *receiver) { (void)storage;(void)receiver;return 5; }
 static void dispatch_method(void) {}
@@ -21,7 +25,7 @@ int main(int argc,char **argv) {
     size_t (*record_size)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_RecordSize");
     uint32_t (*abi)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ABIVersion");
     assert(configure&&install&&restore&&close_probe&&read_record&&record_size&&abi);
-    assert(abi()==2 && record_size()==sizeof(SnowDelegateRecord));
+    assert(abi()==3 && record_size()==sizeof(SnowDelegateRecord));
     owner_global=VirtualAlloc(NULL,0x1000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(owner_global);
     unsigned char *owner=owner_global;table[0x40/8]=(uintptr_t)&dispatch_method;
     *(uintptr_t *)(owner+0x218)=(uintptr_t)table;
@@ -39,8 +43,13 @@ int main(int argc,char **argv) {
         assert(close_probe(NULL,NULL));assert(!install());assert(restore());
         assert(d[3]==(uintptr_t)&invoker);puts("closed passed");return 0;
     }
+    uint32_t *counts=(uint32_t *)(owner+0x218+0x4c);
+    counts[0]=3;counts[1]=0xfffffffe;counts[2]=2;counts[3]=17;counts[4]=18;counts[5]=4;
+    owner[0x218+0x194]=1;owner[0x5a]=7;
+    invalidate=!strcmp(argv[2],"observation_invalid");
     assert(install());assert(!install());SnowDelegateOriginal cached=(SnowDelegateOriginal)d[3];
     assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==1);
+    owner_global=owner;invalidate=0;
     if(!strcmp(argv[2],"conflict")) {
         d[3]=(uintptr_t)&competitor;assert(!restore());assert(d[3]==(uintptr_t)&competitor);
         d[3]=(uintptr_t)cached;
@@ -55,6 +64,14 @@ int main(int argc,char **argv) {
     assert(close_probe(&used,&dropped));assert(used==1);
     SnowDelegateRecord r;assert(read_record(0,&r,sizeof r));
     assert(r.function_storage==(uintptr_t)d && r.receiver==(uintptr_t)owner && r.result==UINT64_C(0xfedcba9876543210));
+    assert(r.before.valid && r.before.executions==3 && r.before.outstanding==-2);
+    assert(r.before.state==2 && r.before.started==17 && r.before.requested==18 && r.before.holds==4);
+    assert(r.before.usage==1 && r.before.selector==7);
+    if(!strcmp(argv[2],"observation_invalid")) {
+        SnowDelegateJobState empty={0};assert(!memcmp(&r.after,&empty,sizeof empty));
+    } else {
+        assert(r.after.valid && r.after.requested==19 && r.after.executions==3 && r.after.outstanding==-2);
+    }
     MEMORY_BASIC_INFORMATION caller_info;
     assert(r.caller && VirtualQuery((void *)r.caller,&caller_info,sizeof caller_info));
     assert(caller_info.Type==MEM_IMAGE && caller_info.AllocationBase==GetModuleHandleA(NULL));

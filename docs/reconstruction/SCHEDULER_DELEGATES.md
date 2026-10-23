@@ -683,3 +683,61 @@ scheduler pause, or debugger attachment was used. The launcher stopped the game
 and verified saves, settings, and original DLL restoration. The next observation
 is job state before and after this now-attributed main call; completion accounting
 must still be distinguished from returning out of the main callback.
+
+## Entry/return job observations (record ABI 3)
+
+The authored recorder's optional observation provider runs immediately before and
+after forwarding the original main delegate, inside the reserved capture record.
+Closed or full captures forward without invoking the provider. Configuration is
+immutable after publication. Native record ABI 3 adds `before` and `after` fields;
+JSONL declares `record_abi: 3`. Clients must check ABI and record size.
+
+For the selected graphics binding, each observation checks the owner global,
+job table, dispatcher method, descriptor and acceptable invoker both before and
+after reading six consecutive counters at job +0x4c, usage at +0x194 and the
+owner frame-service selector at +0x5a. Expected invokers are the recorder and the
+original (restoration may occur during a call). A competing invoker is rejected.
+Counter meanings follow the dispatch/completion evidence above: executions,
+signed outstanding dispatches, state, started requests, requested requests, holds.
+The bytes are retained as raw unsigned usage/selector values, not inferred flags.
+
+`valid: 1` means these sequential reads and identity guards passed. It is not an
+atomic snapshot, a lock, or an owner-lifetime guarantee. On any guard/read failure,
+the observation stays zero with `valid: 0`; forwarding still occurs. Returning
+from the original main callback is not dispatcher completion: after-delegate,
+worker context restoration and completion accounting may still follow.
+
+Entry/exit timing now includes both observation providers, so it is not directly
+comparable to earlier instrumented callback durations. The provider uses bounded
+self-process reads without retries, game setters or scheduler locks. Operating
+system read latency remains outside a hard real-time guarantee. Raw caller and
+object pointers remain private.
+
+### Live entry/return accounting
+
+The [ABI 3 live receipt](../../native/snow_host/delegate_state_live_validation.json)
+contains 48 captured calls with zero drops and 96 successful guarded observations.
+Every caller was the previously verified graphics main-dispatch return site.
+Every before/after pair agreed: executions 1, outstanding dispatches 1, state 2
+(`DONE`), holds 0, usage byte 0 and frame-service selector 0. Started and requested
+counts matched and advanced consecutively from 2053 through 2100 across records.
+
+This directly demonstrates an active, non-drained job with state `DONE` and zero
+usage, including immediately after its main callback returned. It supports the
+reconstructed distinction between main-body return and worker-side completion.
+It does not capture the later decrements or prove the request producer. Selector
+zero is consistent with the earlier site's frame-service route; the graphics
+callback's entry alone does not prove that other site executed in that frame.
+
+The synthetic test `test_live_graphics_signature_is_not_a_drain_predicate` in
+[test_mixed_teardown_status.py](../../tests/test_mixed_teardown_status.py) reproduces
+this accounting signature with a dependency-requested callback. Its local
+teardown predicate is false while the execution and outstanding counters remain
+positive; only explicit dispatch completion drains them. This is a reconstruction
+comparison, not proof that the chosen synthetic producer is the live producer.
+
+Restore/drain succeeded, simulation steps advanced afterward from 2103 to 2124,
+and saves/settings/original DLL cleanup passed. No movement, pause, or debugger
+was used. Instrumented durations include both observation providers. The next
+missing live boundary is worker completion/finalization and its dependency
+release, rather than another idle poll or treating the main return as a drain.

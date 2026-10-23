@@ -1,0 +1,100 @@
+{
+  "status": "live_graphics_job_observation_passed",
+  "record_abi": 3,
+  "sessions": 1,
+  "configured_capture_ms": 500,
+  "record_count": 48,
+  "dropped": 0,
+  "caller_rvas": [
+    "0x65b223"
+  ],
+  "field_values": {
+    "before": {
+      "valid": [
+        1
+      ],
+      "executions": [
+        1
+      ],
+      "outstanding": [
+        1
+      ],
+      "state": [
+        2
+      ],
+      "holds": [
+        0
+      ],
+      "usage": [
+        0
+      ],
+      "selector": [
+        0
+      ]
+    },
+    "after": {
+      "valid": [
+        1
+      ],
+      "executions": [
+        1
+      ],
+      "outstanding": [
+        1
+      ],
+      "state": [
+        2
+      ],
+      "holds": [
+        0
+      ],
+      "usage": [
+        0
+      ],
+      "selector": [
+        0
+      ]
+    }
+  },
+  "matching_entry_return_pairs": 48,
+  "requests": {
+    "first": 2053,
+    "last": 2100,
+    "started_equals_requested": true,
+    "consecutive": true
+  },
+  "capture_span_seconds": 0.497379,
+  "observed_duration_microseconds": {
+    "min": 81.10000000000001,
+    "median": 99.8,
+    "max": 170.4
+  },
+  "engine_steps": {
+    "before": 2052,
+    "after": 2103,
+    "later": 2124
+  },
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "movement_input_sent": false,
+  "scheduler_pause_requested": false,
+  "debugger_attached": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_result_sha256": "64e82bb3441757a54b5845dfd3be6fc28680baa1247c2a938238e067639d4520",
+  "private_trace_sha256": "8b62440b9dfdc8a6263d07862f02788b95905200336506766b4a270a76bb663e",
+  "limitations": [
+    "Sequential guarded observations are not atomic snapshots or owner-lifetime pins.",
+    "Main callback return is before worker completion accounting; final decrement not captured here.",
+    "Zero usage does not identify the live request producer.",
+    "One gameplay window does not establish universal state, concurrency, or shutdown behavior.",
+    "Duration includes two observation providers and cannot be compared directly with ABI 1/2 measurements.",
+    "No physics/input association or safe arbitrary mutation/unload established."
+  ]
+}

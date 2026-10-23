@@ -44,3 +44,31 @@ class MixedTeardownStatusTests(unittest.TestCase):
             self.assertTrue(jobs['root']['usage'])
             self.assertFalse(jobs['graphics']['usage'])
             self.assertFalse(scheduler.teardown_wait_status('graphics')['would_wait'])
+
+    def test_live_graphics_signature_is_not_a_drain_predicate(self):
+        # Synthetic dependency setup reproduces the observed signature; it does
+        # not prove this is the live producer of the graphics request.
+        seen = []
+        def body(context, receiver):
+            seen.append(scheduler.teardown_wait_status('graphics'))
+        scheduler = MixedScheduler([
+            dict(id='root', kind='callback', successors=['graphics']),
+            dict(id='graphics', kind='callback', handler='observe')],
+            dict(observe=dict(version='synthetic-v1', callback=body)))
+        scheduler.submit('root')
+        root = scheduler.reserve('root')
+        scheduler.execute_callback(root)
+        scheduler.finish_dispatch(root)
+        graphics = scheduler.reserve('graphics')
+        scheduler.execute_callback(graphics)
+        returned = scheduler.teardown_wait_status('graphics')
+        self.assertEqual(seen, [returned])
+        self.assertEqual(returned['state'], 'DONE')
+        self.assertEqual(returned['executions'], 1)
+        self.assertEqual(returned['outstanding_dispatches'], 1)
+        self.assertFalse(returned['wait_enabled'])
+        self.assertFalse(returned['would_wait'])
+        scheduler.finish_dispatch(graphics)
+        finished = scheduler.teardown_wait_status('graphics')
+        self.assertEqual(finished['executions'], 0)
+        self.assertEqual(finished['outstanding_dispatches'], 0)

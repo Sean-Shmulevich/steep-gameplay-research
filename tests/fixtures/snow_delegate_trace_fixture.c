@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <sched.h>
 #include <string.h>
-static atomic_int entered,release_call,calls;
+static atomic_int entered,release_call,calls,observations;
 static atomic_uint_fast64_t ticks;
 static SnowDelegateTrace trace;
 static int storage, receiver, other;
@@ -17,6 +17,10 @@ static uintptr_t original(void *s,void *r) {
     }
     return (uintptr_t)r ^ UINT64_C(0xfedcba9876543210);
 }
+static void observe(void *s,void *r,SnowDelegateJobState *out) {
+    assert(s==&storage && r==&receiver);
+    out->valid=1;out->requested=atomic_fetch_add(&observations,1);
+}
 static void *worker(void *ignored) {
     (void)ignored;
     assert(snow_delegate_trace_call_from(&trace,&storage,&receiver,UINT64_C(0x123456789abcdef0))==((uintptr_t)&receiver ^ UINT64_C(0xfedcba9876543210)));
@@ -27,6 +31,7 @@ int main(void) {
     pthread_t thread;
     memset(&copy,0xa5,sizeof copy);unchanged=copy;
     assert(snow_delegate_trace_init(&trace,records,1,original,clock_tick,thread_id));
+    trace.observe=observe;
     assert(!snow_delegate_trace_read(&trace,0,&copy,sizeof copy));
     assert(!memcmp(&copy,&unchanged,sizeof copy));
     assert(!pthread_create(&thread,NULL,worker,NULL));
@@ -44,12 +49,16 @@ int main(void) {
     assert(copy.result==((uintptr_t)&receiver ^ UINT64_C(0xfedcba9876543210)));
     assert(copy.exit_tick>copy.entry_tick && copy.thread==7);
     assert(copy.caller==UINT64_C(0x123456789abcdef0));
+    assert(copy.before.valid && copy.after.valid && copy.before.requested==0 && copy.after.requested==1);
+    assert(atomic_load(&observations)==2);
     assert(!snow_delegate_trace_read(&trace,1,&copy,sizeof copy));
     assert(!snow_delegate_trace_read(&trace,0,&copy,sizeof copy-1));
     SnowDelegateTrace zero;
     assert(snow_delegate_trace_init(&zero,NULL,0,original,clock_tick,thread_id));
+    zero.observe=observe;
     assert(snow_delegate_trace_call(&zero,&storage,&other)==((uintptr_t)&other ^ UINT64_C(0xfedcba9876543210)));
     assert(atomic_load(&zero.dropped)==1 && atomic_load(&zero.used)==0);
+    assert(atomic_load(&observations)==2);
     snow_delegate_trace_close(&zero);assert(snow_delegate_trace_drained(&zero));
     assert(!snow_delegate_trace_read(&zero,0,&copy,sizeof copy));
     assert(!snow_delegate_trace_init(NULL,NULL,0,original,clock_tick,thread_id));

@@ -1,6 +1,6 @@
 {
   "status": "synthetic_windows_fixture_passed",
-  "abi_version": 2,
+  "abi_version": 3,
   "scenarios": [
     {
       "name": "normal",
@@ -21,14 +21,18 @@
     {
       "name": "closed",
       "passed": true
+    },
+    {
+      "name": "observation_invalid",
+      "passed": true
     }
   ],
   "compiler": "MinGW x86_64 Windows target",
   "runtime": "Wine on macOS",
   "source_hashes": {
-    "native/snow_host/snow_delegate_probe.c": "f2249c91ceb873edb052e95d0bd91393e5598d5301854126211c129843ccfd2d",
-    "native/snow_host/snow_delegate_trace.c": "1b5f905e892fa4031f23206cd917db5aca533031521b2fd42c5cbe194fdc2d2d",
-    "tests/fixtures/snow_delegate_probe_fixture.c": "5e4900384e914bb89af41f8d418442d6eb41eee0eca245848834ebc3cc9c1478"
+    "native/snow_host/snow_delegate_probe.c": "935eae3ee67683f0ce6b714ff3d64c548a93bef2a4a11703ca2c56ece5e39c2b",
+    "native/snow_host/snow_delegate_trace.c": "fb4c1e74c86c29a0821f231ae80b01bb12e8a16c32f9ca04ecab9de914f90ef5",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "d1408a7e7dd12be220a89ca7992f1c77c9724363a0c621e76be550d84b927b45"
   },
   "game_launched": false,
   "game_memory_modified": false,
@@ -38,5 +42,6 @@
     "Owner storage remains allocated throughout fixture. Native owner lifetime/exclusion not proved.",
     "Conflict scenarios are controlled sequential changes; concurrent original dispatch during install/restore not exercised."
   ],
-  "caller_provenance": "Nonzero return address resolves to fixture executable image in every captured scenario."
+  "caller_provenance": "Nonzero return address resolves to fixture executable image in every captured scenario.",
+  "observation_validation": "Before/after counter mapping and signed outstanding value checked; owner identity invalidated by original call produces zero invalid post-observation while forwarding succeeds."
 }

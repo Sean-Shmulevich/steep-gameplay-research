@@ -14,15 +14,27 @@
  */
 typedef uintptr_t (*SnowDelegateOriginal)(void *function_storage, void *receiver);
 typedef uint64_t (*SnowDelegateClock)(void);
+/* Sequential observation only: valid means guards/reads succeeded, not that
+ * the fields are atomic, that storage is pinned, or that teardown is safe. */
+typedef struct {
+    uint32_t valid, executions;
+    int32_t outstanding;
+    uint32_t state, started, requested, holds;
+    uint8_t usage, selector, reserved[2];
+} SnowDelegateJobState;
+typedef void (*SnowDelegateObserver)(void *, void *, SnowDelegateJobState *);
 typedef struct {
     uintptr_t function_storage, receiver, result, caller;
     uint64_t entry_tick, exit_tick, thread;
+    SnowDelegateJobState before, after;
 } SnowDelegateRecord;
 typedef struct {
     SnowDelegateRecord *records;
     size_t capacity;
     SnowDelegateOriginal original;
     SnowDelegateClock clock, thread_id;
+    /* Optional, set only before publishing. Same bounded/nonrecursive contract. */
+    SnowDelegateObserver observe;
     atomic_uint_fast64_t gate;
     atomic_size_t used, dropped;
 } SnowDelegateTrace;
