@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "evidence": "native fixture execution and Windows build/export inspection",
+  "game_process": false,
+  "checks": [
+    "Six native fixture tests passed",
+    "All smaller record sizes and an oversized declaration refused without destination changes",
+    "Invalid indices, null output and pre-close calls refused",
+    "Exact valid record copied",
+    "Windows host/probe/plugin and dynamic fixture compile",
+    "New ABI, size and sized-read exports present"
+  ],
+  "limits": [
+    "Windows dynamic fixture not run under Wine",
+    "Legacy unsized export still requires exact header/build",
+    "Valid pointer/allocation and lifetime remain caller obligations"
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_update_trace.c": "37f71d7b2b36b7fc15922ed20ddbbd12c564b8976d4c2d1f265572f42907fc29",
+    "native/snow_host/snow_update_trace.h": "40ddaba019564303affe367e78c38f1b341650f3dce41776fd9a2e8894e31fb2",
+    "native/snow_host/snow_update_probe.c": "f73d15f6a7afca1cb5396143085dfa78dbcefeb5eabaee7b02f6cc7ed1201a9e",
+    "native/snow_host/snow_update_probe.h": "b956fbb4efc47fbc53e76ccaf2b5ecd8c7ed50220248131e2923ca4104a39bd8",
+    "tests/fixtures/snow_update_trace_fixture.c": "424ba1cb35bb512c6fa17b1c9edfebfc4ce00558da4401486bc414c56165eed4"
+  }
+}

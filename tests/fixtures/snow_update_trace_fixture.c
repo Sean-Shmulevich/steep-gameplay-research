@@ -142,10 +142,30 @@ static void check_history(void) {
     assert(!rows[0].history_attempted && !rows[0].history_before_valid && !rows[0].history_after_valid);
     assert(!memcmp(&rows[0].history_before,&blank,sizeof blank));
 }
+static void check_sized_read(void) {
+    int actor=0;SnowUpdateRecord copy,sentinel;
+    memset(&sentinel,0xa5,sizeof sentinel);copy=sentinel;
+    mode=0;init(1);
+    assert(!snow_trace_read_record(&trace,0,&copy,sizeof copy));
+    snow_trace_call(&trace,&actor,.125f,.5f);
+    assert(!snow_trace_read_record(&trace,0,&copy,sizeof copy));
+    snow_trace_close(&trace);
+    for(size_t size=0;size<sizeof copy;size++) {
+        assert(!snow_trace_read_record(&trace,0,&copy,size));
+        assert(!memcmp(&copy,&sentinel,sizeof copy));
+    }
+    assert(!snow_trace_read_record(&trace,0,&copy,sizeof copy+1));
+    assert(!snow_trace_read_record(&trace,1,&copy,sizeof copy));
+    assert(!snow_trace_read_record(&trace,0,NULL,sizeof copy));
+    assert(!memcmp(&copy,&sentinel,sizeof copy));
+    assert(snow_trace_read_record(&trace,0,&copy,sizeof copy));
+    assert(!memcmp(&copy,&rows[0],sizeof copy));
+}
 int main(void) {
     check_attribution();
     check_motion();
     check_history();
+    check_sized_read();
     int actor=0;
     assert(!snow_trace_init(NULL,rows,1,original,read_state,clock_tick,thread_id));
     mode=1; init(128);

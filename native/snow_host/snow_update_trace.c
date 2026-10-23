@@ -78,3 +78,9 @@ void snow_trace_call_with_history(SnowUpdateTrace *t,void *actor,float elapsed,f
 }
 void snow_trace_close(SnowUpdateTrace *t) { atomic_fetch_or(&t->gate,CLOSED); }
 int snow_trace_drained(const SnowUpdateTrace *t) { return atomic_load(&t->gate)==CLOSED; }
+
+int snow_trace_read_record(const SnowUpdateTrace *t,size_t index,void *out,size_t size) {
+    if(!t || !out || size!=sizeof(SnowUpdateRecord) || !snow_trace_drained(t) ||
+       index>=atomic_load(&t->used) || index>=t->capacity) return 0;
+    memcpy(out,&t->records[index],sizeof(SnowUpdateRecord));return 1;
+}

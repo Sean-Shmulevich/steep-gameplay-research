@@ -48,7 +48,10 @@ int main(int argc,char **argv) {
     int (*configure)(const SnowUpdateBinding *,SnowUpdateOriginal)=(void *)GetProcAddress(dll,"SnowProbe_Configure");
     void (*dispatch)(void *,float,float)=(void *)GetProcAddress(dll,"SnowProbe_Dispatch");
     int (*close_probe)(size_t *,size_t *)=(void *)GetProcAddress(dll,"SnowProbe_Close");
-    int (*get)(size_t,SnowUpdateRecord *)=(void *)GetProcAddress(dll,"SnowProbe_ReadRecord");
+    int (*get)(size_t,void *,size_t)=(void *)GetProcAddress(dll,"SnowProbe_ReadRecordSized");
+    uint32_t (*abi)(void)=(void *)GetProcAddress(dll,"SnowProbe_ABIVersion");
+    size_t (*record_size)(void)=(void *)GetProcAddress(dll,"SnowProbe_RecordSize");
+    assert(abi && record_size && abi()==SNOW_PROBE_ABI_VERSION && record_size()==sizeof(SnowUpdateRecord));
     int (*install)(void)=(void *)GetProcAddress(dll,"SnowProbe_InstallSlot");
     int (*restore)(void)=(void *)GetProcAddress(dll,"SnowProbe_RestoreSlot");
     int (*counts)(SnowProbeDispatchCounts *)=(void *)GetProcAddress(dll,"SnowProbe_ReadDispatchCounts");
@@ -81,7 +84,7 @@ int main(int argc,char **argv) {
         uint32_t count=5;memcpy(job+0x1a4,&count,4);q(callable,callable_table);
         range_base=(uintptr_t)(records+32);q(records+56,actor);
     }
-    assert(motion_case ? configure_observed(&b,original,&profile,1) : (attributed ? configure_attributed(&b,original,&profile) : configure(&b,original))); assert(!configure(&b,original)); assert(!get(0,&r));
+    assert(motion_case ? configure_observed(&b,original,&profile,1) : (attributed ? configure_attributed(&b,original,&profile) : configure(&b,original))); assert(!configure(&b,original)); assert(!get(0,&r,sizeof r));
     assert(counts(&c) && c.selected_calls==0 && c.other_calls==0);
     assert(!counts(NULL));
     if(conflict) {
@@ -100,13 +103,13 @@ int main(int argc,char **argv) {
     assert(restore()==1);
     assert(counts(&c) && c.selected_calls==2 && c.other_calls==1);
     assert(close_probe(&used,&dropped)); assert(used==2 && dropped==0 && calls==3);
-    assert(get(1,&r) && r.before.valid==15 && r.after.valid==0);
+    assert(get(1,&r,sizeof r) && r.before.valid==15 && r.after.valid==0);
     if(motion_case) {
         SnowMotionObservation blank={0};
         assert(r.motion_attempted && r.motion_before_valid && !r.motion_after_valid);
         assert(!memcmp(&r.motion_after,&blank,sizeof blank));
     }
-    assert(get(0,&r) && !get(2,&r));
+    assert(get(0,&r,sizeof r) && !get(2,&r,sizeof r));
     assert(r.motion_attempted==(unsigned)motion_case);
     if(motion_case) {
         assert(r.motion_before_valid && r.motion_after_valid);
@@ -129,7 +132,7 @@ int main(int argc,char **argv) {
     assert(r.before.angular[1][0]==9 && r.after.angular[1][0]==9);
     assert(r.elapsed==.125f && r.derivative==.5f && r.after.request==7 && r.after.substep==2);
     SnowUpdateRecord saved=r; dispatch(actor,.125f,.5f); assert(calls==4);
-    assert(get(0,&r) && memcmp(&r,&saved,sizeof r)==0);
+    assert(get(0,&r,sizeof r) && memcmp(&r,&saved,sizeof r)==0);
     assert(FreeLibrary(dll)); /* pinned code must remain callable */
     dispatch(actor,.125f,.5f); assert(calls==5);
     assert(counts(&c) && c.selected_calls==4 && c.other_calls==1);

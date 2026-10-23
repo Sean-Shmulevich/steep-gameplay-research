@@ -87,4 +87,7 @@ void snow_trace_close(SnowUpdateTrace *);
 /* Records may be read only after this returns true. It does NOT permit unloading
  * the wrapper/context: a cached caller can still enter and forward to original. */
 int snow_trace_drained(const SnowUpdateTrace *);
+/* Exact-size copy after close+drain. Refusal leaves caller storage untouched.
+ * The caller still owns output allocation/lifetime and recorder lifetime. */
+int snow_trace_read_record(const SnowUpdateTrace *,size_t,void *,size_t);
 #endif

@@ -1144,3 +1144,27 @@ the combined fixture cross-compiles for Windows. No live resolver or probe
 configuration has been enabled. The previously observed player chain's vector
 and directional source types do not by themselves prove that this history-sector
 source is active; do not attach this reader to either of those other types.
+
+### Checking record compatibility before copying
+
+Probe ABI v7 now exports `SnowProbe_ABIVersion`, `SnowProbe_RecordSize` and
+`SnowProbe_ReadRecordSized(index, output, output_size)`. A dynamic caller should
+resolve these symbols, require version `SNOW_PROBE_ABI_VERSION` and record size
+`sizeof(SnowUpdateRecord)`, then pass that size on every read. A missing symbol
+or mismatch means the caller must rebuild/use the matching DLL, not guess the
+layout. These checks do not require capture to be configured.
+
+The sized API checks readiness, close/drain, index and exact buffer size before
+copying. Refusal leaves caller storage untouched. The caller remains responsible
+for supplying valid writable storage and preserving object lifetime. The legacy
+`SnowProbe_ReadRecord` symbol remains for exact-header callers and cannot detect
+a falsely sized allocation; new code should use the sized API. The capture plugin
+and dynamic Windows fixture now do so.
+
+The shared copy implementation is exercised by the native recorder fixture for
+every smaller size, an oversized buffer declaration, invalid index, null output,
+and calls before close/drain. A valid read matches the complete stored record.
+Six native fixture tests pass. The host, probe and capture plugin cross-compile,
+and the new exports are present in the Windows DLL. The dynamic Windows fixture
+also compiles, but was not executed under Wine during this pass. No game launch
+or shared Wine-session operation was performed.

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Hardened record copying after the v7 layout extension: explicit ABI/size queries
+and a sized read reject incompatible buffers before copying. Native fixture
+checks all smaller sizes plus invalid lifecycle/index cases; six fixtures pass.
+Windows host/probe/plugin and dynamic fixture build, with new exports verified.
+No Wine/game execution. Legacy unsized callers still require an exact matching
+build. See [record compatibility](../native/snow_host/README.md#checking-record-compatibility-before-copying).
+
 Validated history-sector source initialization in 24 original-instruction cases.
 Its virtual setup caches resolved configuration at +0xb0; evaluation does not
 re-resolve the handle each call. Passive readers therefore report cached settings,

@@ -68,7 +68,7 @@ static DWORD WINAPI capture(LPVOID ignored) {
         fprintf(f,"{\"kind\":\"summary\",\"installed\":%d,\"restored\":%d,\"drained\":%d,\"records\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"substep_available\":false,\"dispatch_counts_valid\":%d,\"selected_calls\":%llu,\"other_calls\":%llu}\n",
           installed,restored,drained,(unsigned long long)used,(unsigned long long)dropped,(unsigned long long)frequency.QuadPart,counts_valid,(unsigned long long)counts.selected_calls,(unsigned long long)counts.other_calls);
         if(drained) for(size_t i=0;i<used;i++) {
-            SnowUpdateRecord r; if(!SnowProbe_ReadRecord(i,&r)) break;
+            SnowUpdateRecord r; if(!SnowProbe_ReadRecordSized(i,&r,sizeof r)) break;
             fprintf(f,"{\"kind\":\"record\",\"index\":%llu,\"actor\":\"%llx\",\"thread\":%llu,\"entry\":%llu,\"exit\":%llu,\"elapsed\":",
               (unsigned long long)i,(unsigned long long)r.actor,(unsigned long long)r.thread,
               (unsigned long long)r.entry_tick,(unsigned long long)r.exit_tick);

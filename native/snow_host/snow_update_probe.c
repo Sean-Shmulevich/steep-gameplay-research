@@ -113,10 +113,14 @@ int SnowProbe_Close(size_t *used,size_t *dropped) {
     if(dropped) *dropped=atomic_load(&trace.dropped);
     return 1;
 }
+uint32_t SnowProbe_ABIVersion(void) { return SNOW_PROBE_ABI_VERSION; }
+size_t SnowProbe_RecordSize(void) { return sizeof(SnowUpdateRecord); }
+int SnowProbe_ReadRecordSized(size_t i,void *out,size_t size) {
+    if(InterlockedCompareExchange(&ready,2,2)!=2) return 0;
+    return snow_trace_read_record(&trace,i,out,size);
+}
 int SnowProbe_ReadRecord(size_t i,SnowUpdateRecord *out) {
-    if(!out || InterlockedCompareExchange(&ready,2,2)!=2 || !snow_trace_drained(&trace) ||
-       i>=atomic_load(&trace.used)) return 0;
-    *out=records[i]; return 1;
+    return SnowProbe_ReadRecordSized(i,out,sizeof *out);
 }
 
 /* Installer control calls are serialized; actor dispatch never takes this lock. */

@@ -28,6 +28,12 @@ SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
  * that a thread with a cached dispatch pointer cannot call later. */
 typedef struct { uint64_t selected_calls, other_calls; } SnowProbeDispatchCounts;
 SNOW_PROBE_API int SnowProbe_ReadDispatchCounts(SnowProbeDispatchCounts *);
+#define SNOW_PROBE_ABI_VERSION 7u
+/* Query before configure/copy. Sized reads reject incompatible record buffers. */
+SNOW_PROBE_API uint32_t SnowProbe_ABIVersion(void);
+SNOW_PROBE_API size_t SnowProbe_RecordSize(void);
+SNOW_PROBE_API int SnowProbe_ReadRecordSized(size_t,void *,size_t);
+/* Legacy exact-header entry point; prefer the sized API. */
 SNOW_PROBE_API int SnowProbe_ReadRecord(size_t, SnowUpdateRecord *);
 /* Explicit opt-in pointer replacement at actor_table+0x2c0. One install attempt.
  * Return 1 on success, 0 on refusal/conflict, -1 on page-protection failure.
