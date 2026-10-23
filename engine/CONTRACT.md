@@ -131,3 +131,9 @@ payload, including repeated destruction calls if the captured budget is too
 large. Supplied services perform synchronization, metadata lookup, destruction
 and storage release. This is a serial reconstruction, not a safe drain API;
 callback failure has no invented rollback or guaranteed busy reset.
+
+Allocation metadata: `lookup_allocation_metadata` partitions a uint64 address into
+high32 region selection and bits16..31 byte-tag selection. Tags other than 255
+select low7 entry bits; absent regions/tag255 use the unmasked default byte.
+Supplied readers own table retention, native storage aliases and concurrency.
+The returned opaque value is not allocation validity or payload-lifetime proof.

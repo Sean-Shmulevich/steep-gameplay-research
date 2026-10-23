@@ -11,6 +11,7 @@ from engine.holder_cleanup import cleanup_holder
 from engine.holder_pool_lookup import locate_holder_pool
 from engine.loading_destruction_enqueue import enqueue_loading_destruction
 from engine.loading_destruction_batch import process_loading_destructions
+from engine.allocation_metadata_lookup import lookup_allocation_metadata
 
 
 class WorkerView:
@@ -61,7 +62,12 @@ def run_probe(*, mode=0, references=0, processing=0, capacity=4):
             steps.append(consume_holder_step(r,payload_virtual48=lambda _:events.append(['virtual48']),
                 dispatch_payload=dispatch,append_output=append,cleanup_holder=cleanup))
         run_holder_consumer(reg,coordination,worker,lock=lock,unlock=unlock,process_one=step,signal=lambda:events.append(['signal']))
-    def lookup(p):events.append(['lookup',p['name']]);return 'allocation-info'
+    def lookup(p):
+        events.append(['lookup',p['name']])
+        # Synthetic address and populated region, independent of Python identity.
+        return lookup_allocation_metadata(0x300300,
+            read_region=lambda _:bytes(65536),read_entry=lambda _:'allocation-info',
+            default_index=lambda:0)
     result=run_retirement_service(registry,lock=lock,unlock=unlock,prepare=prepare,consume=consume,
         allocation_lookup=lookup,destroy_payload=lambda p,arg:events.append(['destroy',p['name'],arg]),
         free_storage=lambda p,info:events.append(['free',p['name'],info]))

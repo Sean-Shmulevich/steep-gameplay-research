@@ -1,12 +1,12 @@
 {
-  "evidence": "Original retirement wrapper through mode-zero insertion and separately invoked loading batch; leaf services supplied",
+  "evidence": "Original retirement wrapper through mode-zero insertion and separately invoked loading batch, including metadata lookup; remaining leaf services supplied",
   "cases": 24,
   "state_and_leaf_event_order_match": true,
-  "probe_sha256": "8e5c338e265810e33f1dd32aec0dadd71dd9df3fdf61265e78c5477e0321cdce",
+  "probe_sha256": "6f42933c4d0010e2e2782c9ae17f91f7f54caeef223d24a9cb5c0dcdb858aa24",
   "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
   "limitations": [
     "One synthetic holder, zero preparation budget, sufficient inline output, reserved token.",
-    "Native locks, signal, payload virtual/destructor and allocator lookup/free supplied; growth refusal supplied in zero-capacity cases.",
+    "Native locks, signal, payload virtual/destructor and allocator free supplied; allocation metadata lookup executes original instructions; growth refusal supplied in zero-capacity cases.",
     "The driver invokes the batch after retirement returns, an authored serial schedule; no native thread ordering, destructor effects, safe unload or global drain demonstrated."
   ]
 }

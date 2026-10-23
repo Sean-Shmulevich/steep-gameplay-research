@@ -6652,3 +6652,10 @@ The refused-growth scenario detaches the holder and ends with zero loading
 counters without destroying the payload. Zero counters therefore remain weaker
 than completed disposal. The driver uses an explicit serial schedule and supplied
 leaf services; it does not establish native ordering or safe unload.
+
+Reconstructed allocation metadata lookup: address high32 chooses a region table,
+bits16..31 choose its tag, and tag low7 or an unmasked default selects the result.
+Complete original leaf matches 16,448 synthetic cases without service stubs.
+Replaced supplied lookup in the connected retirement/loading comparison; all 24
+scenarios still match. Table registration/lifetime and final allocator release
+remain external; lookup does not validate objects or acquire locks.

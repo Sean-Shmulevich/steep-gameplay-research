@@ -156,3 +156,48 @@ cleanup, pool lookup, insertion and batch routines execute; leaf services and
 zero-capacity growth refusal are supplied. It checks service-event order and
 state both before and after the batch. Payload lifetime, real destructor effects,
 concurrent producer exclusion and safe plugin unloading remain unproved.
+
+## Allocation metadata selection
+
+[`lookup_allocation_metadata`](../../engine/allocation_metadata_lookup.py)
+reconstructs the complete leaf `0x1229bc0..0x1229c0d`. Its receiver supplies a
+first-level region-pointer table at +0x370. For an unsigned 64-bit payload address:
+
+```text
+region_pointer = region_table[address >> 32]
+if region_pointer != null:
+    tag = region_pointer[(address >> 16) & 65535]
+    if tag != 255:
+        return entries[tag & 127]
+return entries[default_byte]
+```
+
+Entries begin at receiver +0x378; the default byte is at +0x774. The default
+index is not masked. Address bits 0..15 are ignored, so this is a 64-KiB-region
+classification lookup, not a per-object header read. The returned pointer-sized
+value is captured before virtual destruction and passed to the allocator's
+release operation afterward. Its internal type and owner remain unresolved.
+The routine performs no payload dereference, null-payload rejection, bounds check
+or locking. Null or unregistered addresses are not automatically rejected.
+
+The layout requires care at raw edge values: entry index 127 begins at +0x770,
+so the default byte overlaps its pointer-sized storage. Do not construct two
+independent native fields and assume arbitrary values can coexist. The model
+uses supplied readers so actual storage aliases can be represented. Whether
+index 127 or defaults above the ordinary entry range occur in valid native
+allocations is not established by reading this function.
+
+[The complete-leaf comparison](../../native/snow_host/allocation_metadata_lookup_validation.json)
+checks 16,448 synthetic cases, covering every tag byte, absent regions, selected
+unmasked default indices, high-address partitions and low-address boundaries.
+It executes the original instructions without intercepted services and preserves
+the default/entry storage alias. This does not prove live table validity,
+registration, synchronization or object lifetime.
+
+The connected loading probe now uses this model, and its
+[24-case instruction comparison](../../native/snow_host/joined_retirement_loading_validation.json)
+executes the original lookup rather than returning supplied metadata. Earlier
+paragraphs describing supplied allocation services remain applicable to the
+allocator's final release operation; lookup itself is now reconstructed. The
+synthetic selected entry is stable during these joined runs. Real payload
+methods, region registration and allocator release remain external dependencies.

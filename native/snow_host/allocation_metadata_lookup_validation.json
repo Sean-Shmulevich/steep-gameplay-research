@@ -1,0 +1,13 @@
+{
+  "evidence": "Complete original allocation metadata lookup; no intercepted services",
+  "cases": 16448,
+  "return_values_match": true,
+  "routine_rva": "0x1229bc0",
+  "routine_sha256": "070b3040111260910868be9e6c20dd538a82e1b4cc75252c69790b865aec58a3",
+  "model_sha256": "6f15634e22db2adab6ce3aff63db3807d370caaf05de148661006d328c27355f",
+  "limitations": [
+    "Synthetic sparse region table, tag bytes and pointer-sized entries; actual region registration and metadata ownership not established.",
+    "All byte tags and selected default bytes exercised, including raw entry/default-storage alias; malformed native states are not declared valid allocations.",
+    "No locks, concurrent table mutation, allocation lifetime or native free implementation exercised."
+  ]
+}
