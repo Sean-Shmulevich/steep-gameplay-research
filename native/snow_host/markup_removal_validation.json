@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "evidence": "Original descriptor comparator and swap-last helper; synthetic storage, destructor intercepted",
+  "comparison_cases": 392,
+  "removal_cases": 7,
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "90d2e08e3c18e53a4ea585a57bb6276f66c875293618a34fb8286cdf750f272c",
+  "instruction_sha256": {
+    "0x1152e20": "22ec2a9612619da6bf2fb2bb72601c7e40f0ffa167013aa6c808660495bf5164",
+    "0x153dfc0": "76083b5299f1284bc671a97045c8b25828559075d25440b1f85e1ba0516276b2"
+  },
+  "limitations": [
+    "Full map search, final-vector deletion, link-count decrement and synchronization not executed.",
+    "No game listener registered or removed."
+  ]
+}

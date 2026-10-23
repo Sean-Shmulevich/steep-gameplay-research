@@ -750,6 +750,60 @@ qualified ownership. An upstream observation alone would not prove which
 listener fired. The recorder core remains useful for any route that establishes
 the actual five-argument callback boundary.
 
+### Native listener removal and identity
+
+The diagnostic-named removal routine at `0x14153e0a0` validates the markup ID,
+looks up its listener vector, scans descriptors, and removes the first match.
+The comparison helper at `0x141152e20` has these semantics, implemented in
+[`markup_listener_identity.py`](../../engine/markup_listener_identity.py):
+
+```python
+def same_listener(a, b):
+    ar, br = a.tagged_receiver & ~3, b.tagged_receiver & ~3
+    if ar == 0:
+        return br == 0 and a.function == b.function
+    return (ar == br and a.function == b.function
+            and a.adjustment == b.adjustment)
+```
+
+The thunk is ignored. Receiver tags are ignored. Adjustment is also ignored when
+both untagged receivers are null. Therefore a different thunk alone does not
+create a distinct subscription identity. A recorder subscription must use a
+unique function/receiver identity rather than borrowing a gameplay descriptor.
+
+Removal helper `0x14153dfc0` copies the last descriptor into the matched slot
+unless that slot is already last, calls the last entry's virtual destructor with
+argument zero, then decrements count. It preserves the destination entry's table.
+This is swap-last removal, not stable-order removal. If the vector becomes empty,
+the enclosing routine destroys/releases it and removes its map entry. Missing
+map entries and missing descriptors return without a removal.
+
+Paired routine `0x14153eba0` copies the supplied descriptor, calls removal, then
+tail-calls unlink at `0x14153eb10` regardless of whether a descriptor was found.
+For a valid ID with a positive link count, unlink decrements the count; invalid
+IDs or nonpositive counts take the diagnostic path. It does not report a matched
+subscription token. Consequently, blindly retrying paired removal can consume
+another user's link reference. Match/ownership and exactly-once cleanup must be
+part of any authored subscription API. Registration's first-link path also calls
+an external initializer; subscribing is not a universally passive operation.
+
+[Original-instruction validation](../../native/snow_host/markup_removal_validation.json)
+covers 392 comparator combinations and seven swap-last cases with one, two and
+four entries. Comparisons match the portable model; the removal cases preserve
+the expected surviving descriptors, including synthetic thunk values, and call
+the last entry destructor before decrementing count. Destruction is intercepted.
+Full map search, empty-vector cleanup, paired unlink and synchronization are
+static findings, not executed by those cases. Ten focused Python tests pass.
+
+A separate recorder subscription is now a concrete alternative to replacing an
+existing listener. It avoids restoring copied gameplay thunks, but still needs
+an established owner lifetime, a safe registration/removal execution boundary,
+exactly-once link accounting, and wrapper retention for in-flight dispatch. The
+inspected local registration/removal routines show no explicit synchronization;
+that does not prove their callers lack it. Trace their actual caller context
+before calling them live. Listener-order changes and callback-triggered mutation
+remain relevant to dispatcher behavior.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and

@@ -6857,3 +6857,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Inspected the listener growth and publication helpers. Growth copies complete descriptors, including any substituted thunk pointer, into a new allocation before destroying old entries and publishing storage.
 - Twelve original-instruction cases pass, nine relocating, with allocation/destruction/publication intercepted. Synthetic substituted thunks survive every copy. Separate static publication inspection identifies conditional old-storage release; no live growth claim.
 - This changes the next action: do not install a saved-slot-only listener hook. Qualify registration/growth/removal synchronization or a stable upstream boundary first. CAS restoration and module retention alone do not resolve copied hooks or allocation lifetime.
+
+### Native markup listener removal and identity
+
+- Found diagnostic-named removal, comparator, swap-last erase and paired unlink routines. Added portable comparison/first-match removal behavior with raw uint64 descriptor validation.
+- 392 original-instruction comparisons match the model; seven original erase cases confirm swap-last descriptor copying and destructor-before-count-decrement. Ten focused Python tests pass. Allocator/destructor and full map cleanup remain outside executed validation.
+- Thunk changes do not distinguish subscriptions. Paired removal unlinks even after no match, so cleanup cannot be blindly retried. A unique recorder subscription is a concrete alternative to replacing copied gameplay descriptors.
+- No live registration/removal. Next: trace caller synchronization and owner lifetime for the paired native subscription routines, then qualify exactly-once cleanup and in-flight dispatch before a live recorder subscription.
