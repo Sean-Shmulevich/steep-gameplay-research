@@ -1,0 +1,327 @@
+{
+  "status": "live_read_only_observation_passed",
+  "navigation": "entered",
+  "live_instruction_spans_matched": 3,
+  "observer_read_ranges_per_capture": 16,
+  "observer_bytes_per_capture": 2086,
+  "bindings": {
+    "root": {
+      "before": {
+        "function": {
+          "kind": "image",
+          "rva": 7726592
+        },
+        "invoker": {
+          "kind": "image",
+          "rva": 9089936
+        },
+        "context_tags": 0,
+        "receiver_relation": "owner",
+        "dispatch_policy": "optional",
+        "optional_eligible": true
+      },
+      "after": {
+        "function": {
+          "kind": "null"
+        },
+        "invoker": {
+          "kind": "null"
+        },
+        "context_tags": 0,
+        "receiver_relation": "null",
+        "dispatch_policy": "optional",
+        "optional_eligible": false
+      },
+      "reservation": {
+        "function": {
+          "kind": "null"
+        },
+        "invoker": {
+          "kind": "null"
+        },
+        "context_tags": 0,
+        "receiver_relation": "null",
+        "dispatch_policy": "optional",
+        "optional_eligible": false
+      },
+      "main": {
+        "function": {
+          "kind": "image",
+          "rva": 6646240
+        },
+        "invoker": {
+          "kind": "image",
+          "rva": 9089936
+        },
+        "context_tags": 0,
+        "receiver_relation": "owner",
+        "dispatch_policy": "unconditional",
+        "optional_eligible": null
+      }
+    },
+    "graphics": {
+      "before": {
+        "function": {
+          "kind": "null"
+        },
+        "invoker": {
+          "kind": "null"
+        },
+        "context_tags": 0,
+        "receiver_relation": "null",
+        "dispatch_policy": "optional",
+        "optional_eligible": false
+      },
+      "after": {
+        "function": {
+          "kind": "null"
+        },
+        "invoker": {
+          "kind": "null"
+        },
+        "context_tags": 0,
+        "receiver_relation": "null",
+        "dispatch_policy": "optional",
+        "optional_eligible": false
+      },
+      "reservation": {
+        "function": {
+          "kind": "null"
+        },
+        "invoker": {
+          "kind": "null"
+        },
+        "context_tags": 0,
+        "receiver_relation": "null",
+        "dispatch_policy": "optional",
+        "optional_eligible": false
+      },
+      "main": {
+        "function": {
+          "kind": "image",
+          "rva": 6646816
+        },
+        "invoker": {
+          "kind": "image",
+          "rva": 9089936
+        },
+        "context_tags": 0,
+        "receiver_relation": "owner",
+        "dispatch_policy": "unconditional",
+        "optional_eligible": null
+      }
+    }
+  },
+  "captures": [
+    {
+      "observations_equal": true,
+      "elapsed_seconds": 0.008249042002717033,
+      "samples": [
+        {
+          "byte58": 1,
+          "byte59": 0,
+          "frame_service_selector": 0,
+          "jobs": {
+            "root": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2047,
+              "requested": 2047,
+              "holds": 0,
+              "usage": true,
+              "local_teardown_would_wait": false
+            },
+            "graphics": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2047,
+              "requested": 2047,
+              "holds": 0,
+              "usage": false,
+              "local_teardown_would_wait": false
+            }
+          }
+        },
+        {
+          "byte58": 1,
+          "byte59": 0,
+          "frame_service_selector": 0,
+          "jobs": {
+            "root": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2047,
+              "requested": 2047,
+              "holds": 0,
+              "usage": true,
+              "local_teardown_would_wait": false
+            },
+            "graphics": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2047,
+              "requested": 2047,
+              "holds": 0,
+              "usage": false,
+              "local_teardown_would_wait": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "observations_equal": false,
+      "elapsed_seconds": 0.005515208991710097,
+      "samples": [
+        {
+          "byte58": 1,
+          "byte59": 0,
+          "frame_service_selector": 0,
+          "jobs": {
+            "root": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2055,
+              "requested": 2055,
+              "holds": 0,
+              "usage": true,
+              "local_teardown_would_wait": false
+            },
+            "graphics": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2055,
+              "requested": 2055,
+              "holds": 0,
+              "usage": false,
+              "local_teardown_would_wait": false
+            }
+          }
+        },
+        {
+          "byte58": 1,
+          "byte59": 0,
+          "frame_service_selector": 0,
+          "jobs": {
+            "root": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2056,
+              "requested": 2056,
+              "holds": 0,
+              "usage": true,
+              "local_teardown_would_wait": false
+            },
+            "graphics": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2056,
+              "requested": 2056,
+              "holds": 0,
+              "usage": false,
+              "local_teardown_would_wait": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "observations_equal": true,
+      "elapsed_seconds": 0.0030196660081855953,
+      "samples": [
+        {
+          "byte58": 1,
+          "byte59": 0,
+          "frame_service_selector": 0,
+          "jobs": {
+            "root": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2065,
+              "requested": 2065,
+              "holds": 0,
+              "usage": true,
+              "local_teardown_would_wait": false
+            },
+            "graphics": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2065,
+              "requested": 2065,
+              "holds": 0,
+              "usage": false,
+              "local_teardown_would_wait": false
+            }
+          }
+        },
+        {
+          "byte58": 1,
+          "byte59": 0,
+          "frame_service_selector": 0,
+          "jobs": {
+            "root": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2065,
+              "requested": 2065,
+              "holds": 0,
+              "usage": true,
+              "local_teardown_would_wait": false
+            },
+            "graphics": {
+              "table_rva": 32019992,
+              "executions": 0,
+              "outstanding_dispatches": 0,
+              "state": 0,
+              "started": 2065,
+              "requested": 2065,
+              "holds": 0,
+              "usage": false,
+              "local_teardown_would_wait": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "movement_input_sent": false,
+  "scheduler_mutations": false,
+  "debugger_attached": false,
+  "private_result_sha256": "6be94b5bad6f0104d96cc032e97e398bb52b45af7922dde109d9aeb7c60d4130",
+  "limitations": [
+    "Sequential polling, not callback-entry capture or atomic snapshot.",
+    "Root/graphics advancing requests do not prove either body executed in the observed intervals.",
+    "False local teardown predicate is not submission exclusion or permission to mutate/unload.",
+    "Usage differs by submission route; it is not a universal ever-executed flag."
+  ]
+}

@@ -447,3 +447,42 @@ redacted pointer changes, guard failure, short reads, bad method/build identity
 and external callbacks. It is intended to replace isolated unqualified field
 reads when testing lifecycle relationships. Native callback installation and
 outer ownership/destruction remain unresolved.
+
+## Live lifecycle inspection
+
+The [expanded live receipt](../../native/snow_host/engine_jobs_live_observation.json)
+records three successful uses of the bounded API after native startup reached
+gameplay. Three relevant instruction spans matched the analyzed image. All
+owner/table guards passed; each report used 16 ranges and 2086 bytes. The capture
+sent no movement input, installed no scheduler callback and attached no debugger.
+The startup director still performed its established native navigation actions.
+
+Both root and graphics request/started counters advanced. Across the six sweeps,
+the paired counts were 2047, 2047, 2055, 2056, 2065 and 2065. Both job states,
+execution counts and outstanding counts were zero at each sampled point. The
+root usage flag was true; the graphics usage flag was false in every sample.
+Selector +0x5a remained zero; the neighboring observed bytes +0x58/+0x59 were
+1/0, differing from their construction defaults. This does not identify their
+intervening writer or promise selector stability between observations.
+
+Root main was RVA `0x6569e0`, graphics main `0x656c20`, both with the common
+invoker and an owner-related receiver. Root before was nonempty and bound to
+`0x75e600`, whose inspected body is an immediate return. Root after/reservation
+and all three graphics optional delegates were empty by the dispatcher predicate.
+An occupied descriptor can therefore bind a no-op; emptiness alone does not
+explain what work a phase performs. None of these callbacks was observed at entry.
+
+The differing usage flags fit the established distinction between explicit
+submission and dependency-driven request propagation. A new two-cycle synthetic
+integration test demonstrates that distinction in MixedScheduler. It is a
+consistent explanation, not live proof of the graphics request producer.
+Neither false usage nor the false local teardown predicate proves a job never
+executes. Likewise zero sampled execution counters cannot establish that no body
+ran between samples. One paired capture detected changing raw observations;
+two were equal, with neither result establishing atomicity or lifetime pinning.
+
+The game stopped deliberately after capture. Bottle shutdown, save restoration,
+settings restoration and original-DLL verification all passed. Raw process
+identity and transport data remain private. The next useful execution capture
+should join these bindings to callback entry and exit, rather than infer active
+work or mutation permission from idle-looking polls.

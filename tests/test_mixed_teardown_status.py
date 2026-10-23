@@ -30,3 +30,17 @@ class MixedTeardownStatusTests(unittest.TestCase):
         self.assertTrue(status['wait_enabled'])
         self.assertFalse(status['would_wait'])
         self.assertEqual(status['outstanding_dispatches'], 0)
+
+    def test_dependency_requested_child_can_advance_without_usage_flag(self):
+        scheduler = MixedScheduler([
+            dict(id='root', kind='callback', successors=['graphics']),
+            dict(id='graphics', kind='callback')])
+        for cycle in (1, 2):
+            scheduler.submit('root')
+            scheduler.run_ready()
+            jobs = scheduler.snapshot()['jobs']
+            self.assertEqual(jobs['root']['requested'], cycle)
+            self.assertEqual(jobs['graphics']['requested'], cycle)
+            self.assertTrue(jobs['root']['usage'])
+            self.assertFalse(jobs['graphics']['usage'])
+            self.assertFalse(scheduler.teardown_wait_status('graphics')['would_wait'])

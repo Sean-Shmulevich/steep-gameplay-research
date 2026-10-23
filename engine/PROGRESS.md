@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Live bounded engine-job inspector passed three captures after native gameplay
+entry. Root and graphics requests advanced; root usage was true but graphics
+usage false. All sampled execution/outstanding counts were zero, demonstrating
+why usage and idle polls cannot be treated as universal execution/drain evidence.
+Root before binds an immediate-return routine; graphics optional delegates were
+empty. A two-cycle dependency test reproduces the usage distinction as a model,
+not a proven live producer. Capture sent no movement or scheduler mutation; saves,
+settings, bottle stop and original DLL cleanup all passed.
+
 Added bounded read-only engine-job inspection API: root/graphics methods and
 owner/table guards, reservation/before/main/after descriptors, selector, usage and
 dispatch accounting in two sweeps. At most 16 ranges / 2086 bytes; no raw heap
