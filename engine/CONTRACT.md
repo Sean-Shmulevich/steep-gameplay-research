@@ -158,3 +158,11 @@ ownership at span starts, scans inclusively through a high-bit terminator and
 dispatches uint32 byte length with reason2 while locked. Callback effects remain
 external. It clears raw record.field10 before unlocking, not region tags itself.
 This is a traversal model, not a native release or unload API.
+
+Region release fallback: `release_metadata_region` takes retained writable tags,
+uint64 address, uint32 size, byte flags and optional metadata record. It clears
+tags before a supplied context virtual operation and subtracts dispatched size
+from current uint64 field10 afterward. Bit0 bypasses tag/accounting edits. Zero
+size triggers inclusive terminator scanning when a record exists; nonzero size
+uses at least one tag and otherwise floor(size/65536). Nested registry locking is
+required when composed with the scanner. No actual OS release is implemented.

@@ -1,0 +1,24 @@
+{
+  "evidence": "Original complete region scanner and release fallback joined; initialized TLS, locks and context virtual supplied",
+  "cases": 10,
+  "tags_accounting_lock_depth_and_events_match": true,
+  "routines": [
+    {
+      "rva": "0x1229690",
+      "sha256": "eae6be4aa23470ac8aefd144104a4dd185e25328ede9b2558924485b4f2a431a"
+    },
+    {
+      "rva": "0x122bbc0",
+      "sha256": "393ce3123c65824999b342adf85358129e3d7ff96293dd07a54a11fa6ae7a19f"
+    }
+  ],
+  "model_sha256": {
+    "allocation_region_retirement.py": "8223dc1e76dc050b1753b4834bab2c3c0cf55179539f42876cb129a23ae339c4",
+    "allocation_region_release.py": "1331596d3d0bc5ecd24ec37d3edc5839c0009fdb0f99468a5216c63622fb7643"
+  },
+  "limitations": [
+    "Initialized TLS branch; initialization slow path not executed.",
+    "Context virtual release and locks supplied; no actual OS release, module lifetime or concurrent reclamation proof.",
+    "Synthetic cross-region and 4GiB-wrap cases establish tag/accounting behavior, not valid native allocation layouts."
+  ]
+}

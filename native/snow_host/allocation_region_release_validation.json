@@ -1,0 +1,13 @@
+{
+  "evidence": "Complete original region-release fallback; lock and context virtual bodies supplied",
+  "cases": 192,
+  "tags_accounting_and_events_match": true,
+  "routine_rva": "0x122bbc0",
+  "routine_sha256": "393ce3123c65824999b342adf85358129e3d7ff96293dd07a54a11fa6ae7a19f",
+  "model_sha256": "1331596d3d0bc5ecd24ec37d3edc5839c0009fdb0f99468a5216c63622fb7643",
+  "limitations": [
+    "Context virtual slot16 body supplied; actual OS/memory release and context ownership unproved.",
+    "Readable writable synthetic tables; no missing-table fault, concurrency or exception-unwind guarantee.",
+    "Flags tested0..3; bit0 controls this local branch but broader flag semantics remain unnamed."
+  ]
+}

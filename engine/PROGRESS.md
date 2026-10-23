@@ -6680,3 +6680,9 @@ checked only at the first tag, high-bit termination is inclusive, byte length is
 uint32, and callbacks execute under registry lock. Scanner-only inert callbacks
 leave tags intact; fallback122bbc0 is the next dependency and statically contains
 tag clearing plus nested locking before a context virtual operation.
+
+Reconstructed region release fallback in192 original-instruction cases and joined
+it to the full scanner in10 more. Tag clearing precedes context release, byte
+accounting follows it, and scanner/fallback nesting reaches lock depth two.
+Clearing prevents the inert-callback cross-region redispatch. Context virtual
+release, initialized-TLS slow path and concurrent reclamation remain external.

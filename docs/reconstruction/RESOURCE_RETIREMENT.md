@@ -375,3 +375,56 @@ with a nonnull record, writes tag bytes to255 before invoking a context object's
 virtual operation. This explains why scanner-only inert callbacks cannot stand
 in for the complete native release path. Full fallback execution and its context
 ownership are not included in the scanner receipt.
+
+## Region release fallback
+
+[`release_metadata_region`](../../engine/allocation_region_release.py)
+reconstructs `0x122bbc0..0x122bcfc`. It acquires the registration lock even when
+called from the already-locked scanner. The local flags contract is:
+
+```text
+lock(registry)
+if flags bit0 is clear:
+    cleared = 0
+    if record != null:
+        if size != 0:
+            clear max(1, size >> 16) consecutive tags to255
+        else:
+            clear through the first high-bit tag, inclusive
+        # Tag traversal can cross high32 region boundaries.
+    if size == 0:
+        size = uint32(cleared << 16)
+context.virtual_slot16(address, size, flags)
+if flags bit0 is clear and record != null:
+    record.field10 = uint64(record.field10 - size)
+unlock(registry)
+```
+
+Nonzero sizes use truncated tag counts with at least one iteration, not a rounded
+up span. Zero size means discover the span from tags, not necessarily a no-op.
+If the record is null, no tags are cleared and a supplied zero size stays zero.
+Flags with bit0 set bypass both tag clearing and accounting but still call the
+context operation under lock. The broader meanings of flag values remain open.
+
+Tags are cleared **before** the context call. Accounting is changed **after** it,
+using the field value then present, so callback changes are observed. This is
+concrete byte-count subtraction evidence for field+0x10, but does not prove its
+full owner-wide invariant. Unsigned underflow is preserved; there is no local
+ownership check or rollback on a failing context call. The context virtual body
+and its actual memory/OS operation remain unimplemented external services.
+
+[Fallback comparison](../../native/snow_host/allocation_region_release_validation.json)
+passes192 cases over sizes0/1/65535/65536/131071/131072, flags0..3, null/non-null
+records, ordinary/cross-region starts and callback accounting mutations. Full
+original routine executes, with locks and context virtual supplied; tag bytes,
+accounting and event order match.
+
+[Connected scanner/fallback comparison](../../native/snow_host/joined_region_retirement_validation.json)
+passes10 scenarios including mixed ownership, cross-region termination, callback
+index changes and a 4GiB span whose uint32 size wraps to zero. The latter reaches
+the fallback's terminator-based clearing path. The cross-region example dispatches
+once because the fallback clears the terminator before the next outer scan. The
+registry lock reaches depth two. This supersedes any interpretation of the older
+inert-callback duplicate as native duplicate release; that earlier receipt remains
+valid for its explicitly supplied callback behavior. Initialized TLS, locks and
+context release remain supplied, so this is not live reclamation proof.
