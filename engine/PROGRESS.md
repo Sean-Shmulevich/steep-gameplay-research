@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Graphics job lifecycle now has an explicit teardown contract: main invoker is
+cleared before an optional wait on state +0x54 and signed count +0x50; optional
+invokers clear afterward. The base constructor defaults the wait flag to zero.
+Thirty-six original-instruction cases pass, including fourteen simulated waits.
+A bounded reconstruction trace and five boundary tests pass. This establishes
+local ordering, not safe callback replacement or plugin unload. The separate
+slot +0x58 delegate runs after a state service and lock release; its caller and
+completion meaning remain open. Next qualify wait-flag writers and scheduler
+exclusion around destruction. No live run or game mutation in this pass.
+
 Live graphics job table resolved: slot +0x40 dispatches optional before/main/
 after delegates, masks context tags and ignores main callback return for branch
 selection. Three startup bindings agree; 32 connected original-instruction cases

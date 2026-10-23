@@ -1,0 +1,24 @@
+{
+  "evidence": "Original graphics deleting destructor and base teardown with intercepted list, lock and allocation services",
+  "cases": 36,
+  "waited_cases": 14,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x652c70",
+      "length": 63,
+      "sha256": "23216729672bf0d018e5d8082a3c6aaadbc67c2b08baa478710d590716971e03"
+    },
+    {
+      "rva": "0x11cb650",
+      "length": 111,
+      "sha256": "62d27b0041cb961cd106dfc43888c1aeb25e5fed72dd488d952de4f73990be99"
+    }
+  ],
+  "limitations": [
+    "Synthetic state changes at the second poll simulate release; no real concurrent writer was exercised.",
+    "Nested list teardown, lock destruction and deallocation are intercepted.",
+    "Default wait flag is established by separate static constructor inspection, not this fixture.",
+    "This does not prove callback replacement, plugin unload safety, or live graphics wait-flag state."
+  ]
+}

@@ -97,3 +97,74 @@ and account for callers that already loaded an invoker. Image-vtable swapping
 rules do not automatically establish those owner-relative delegate guarantees.
 The read-only session stopped cleanly with saves/settings restored and original
 DLL verified. No private heap addresses are included in the public receipt.
+
+## Job teardown contract
+
+Static inspection connects the live graphics table's deleting destructor at RVA
+`0x652c70` to base teardown `0x11cb650`. The relevant normal path is:
+
+```text
+graphics_job_destroy(job, flags):
+    job.main.invoker = null
+    job.table = base_job_table
+    if job.byte_194 != 0:
+        repeat:
+            state = read_u32(job + 0x54)
+            stack_locked_or_zero()  // ordering instruction, not the job lock
+            count = read_i32(job + 0x50)
+            if state == 0 and count <= 0: break
+            processor_pause()
+    job.completion.invoker = null  // +0x168
+    job.after.invoker = null       // +0x128
+    job.before.invoker = null      // +0x108
+    teardown_list(job + 0x70)
+    destroy_lock(job + 8)
+    if flags & 1: free_storage(job, 0x1b8)
+    return job
+```
+
+The base constructor at RVA `0x11c8c40` initializes +0x50/+0x54 to zero
+and the word at +0x194 to zero. It also clears the function, context and invoker
+fields of the before/after/completion delegates. It does not initialize every
+byte of those 32-byte records. This is a constructor default, not an observation
+of the live job's current wait policy. Subsequent writers remain to be qualified.
+
+The [36-case instruction check](../../native/snow_host/graphics_teardown_validation.json)
+executes both destructors with synthetic job storage. It varies the wait flag,
+state 0/1/2, count 0/1/-1 and deletion flag. Fourteen cases enter the busy loop
+and receive a synthetic releasing update on the second poll. List teardown,
+lock destruction and free are intercepted. It verifies main-invoker clearing
+before the wait, optional-invoker clearing afterward, helper arguments and
+return-stack balance. Negative count alone does not keep this local loop busy.
+
+The runnable [bounded trace model](../../engine/scheduler_job_teardown.py)
+accepts supplied state/count read pairs. Exhausting observations while busy
+reports an incomplete trace. It never invents a completed drain or runs native
+cleanup. For example:
+
+```python
+from engine.scheduler_job_teardown import teardown_trace
+trace = teardown_trace(True, [(1, 0), (0, 1), (0, 0)])
+assert trace['completed']
+```
+
+For modding, this rules out treating destructor entry as a general callback
+quiescence point. The main invoker is already cleared when the optional wait
+starts; the local dispatch reads that invoker unconditionally. The inspected
+paths therefore require an external lifecycle/order guarantee to prevent a
+concurrent dispatch from consuming the cleared descriptor. The wait itself uses
+two separate reads and a flag that starts disabled. Neither that loop nor a zero
+counter proves that all mod callbacks, cached pointers or queued work are gone.
+We have not established the protecting scheduler phase or enabled-flag writer.
+
+## Separate post-service delegate
+
+The same live graphics table's slot +0x58 targets RVA `0x67adf0`. It acquires
+job +8, calls `0x11d16f0`, releases job +8, then conditionally invokes the delegate
+at job +0x150 using the same function/context eligibility and tag masking rules.
+The inner routine itself acquires and releases job +8. If state +0x54 equals 1,
+it calls `0x11e7940` with the global service and job; otherwise it writes state 2.
+The locks' implementation and the helper's full effects are outside this local
+inspection. Do not call the +0x150 delegate an all-work-finished or unload-safe
+callback based on its position after this service. Its scheduling caller and
+relationship to active callbacks still need qualification.
