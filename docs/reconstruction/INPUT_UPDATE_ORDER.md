@@ -1269,9 +1269,9 @@ if source.field_b8 != null:
 The initializer does not simply copy an adapter pointer: it transfers handle
 ownership, resolves configuration, invokes type-specific setup, then optionally
 creates and initializes another object. There is no visible null check after
-the fallback before its virtual call. The semantics of virtual +0x38, the
-nested object, and the other three initialization variants remain open in this
-construction path. Do not substitute a borrowed pointer assignment for the
+the fallback before its virtual call. The following section resolves virtual
++0x38 for the vector/directional types. The nested object and other three
+initialization variants remain open in this construction path. Do not substitute a borrowed pointer assignment for the
 reference operations when designing an in-process API.
 
 ### Validation and remaining boundary
@@ -1290,3 +1290,64 @@ Next useful join: decode virtual +0x38 for the vector and directional types and
 follow the binding registry's consumer. That can connect selected resources to
 source configuration without assuming that a matching type proves player
 ownership. Exact device-ingestion versus physics-substep order remains separate.
+
+## Vector source configuration and cache reads
+
+Both the vector and directional main tables use virtual +0x38 = 0x4b1580.
+That callback resolves source.handle at +0x98 and stores the result at +0xb8.
+Consequently +0xb8 is the resolved source configuration in this setup path,
+not another runtime source object. Under stable handle state it aliases the
+configuration already stored at +0x90. The two resolutions occur separately;
+concurrent changes could invalidate that equality. The nested handle used by
+the shared initializer is therefore at configuration+0x28.
+
+For the vector source, configuration+0x30 selects acquisition mode and +0x34
+selects a lane operation. Helper 0x4b8ca0 first clears all four output lanes:
+
+```text
+out = [positive_zero, positive_zero, positive_zero, positive_zero]
+if mode in {0, 1}:
+    if low_byte(vector_gate(adapter, mode)) == 0:
+        out = read_cached_vector(adapter, mode)
+elif mode in {2, 3}:
+    index = 10 if mode == 2 else 12
+    if low_byte(scalar_gate(adapter, index)) == 0:
+        out.x = read_cached_scalar(adapter, index)
+# Other uint32 modes leave zero and do not query.
+
+# Caller 0x4b21d0 applies this before processor evaluation:
+if mode <= 1:  # unsigned comparison
+    if lane == 1:
+        out.y = positive_zero
+    elif lane == 2:
+        out.x = out.y
+        out.y = positive_zero
+# Z and W are preserved. Lane 2 is a copy, not an XY swap.
+```
+
+The vector read helper 0x4b8fe0 takes the cache pointer from adapter+0 and reads
+16 bytes at cache+0x1f0+16*mode on its permitted path. These are the same two
+vectors populated by the packet/deadzone/publication paths above. It inspects
+the ownership list under a lock: an empty list or a null final owner permits
+the cached read, while a non-null final owner produces zero. The lock is
+released before copying the vector, so this is not an atomic snapshot guarantee.
+The scalar helper 0x4b8e80 has a direct cache+0x168+4*index read when the owner
+list is empty. Its remaining branch and the preceding gate helpers are not
+included in this pass's behavioral validation. No physical stick or trigger
+names are inferred solely from these mode numbers.
+
+[select_vector_source](../../engine/action_vector_selection.py) exposes this
+acquisition/lane stage using explicit gate and reader callbacks. Its values are
+raw float32 bytes to preserve exact copy behavior, including signed zero and
+NaN payloads. Processor response, normalization and final sample publication
+remain subsequent stages. A null source configuration causes the original
+source evaluator to skip its update; callers must not replace that behavior
+with this helper's zero result for an unsupported mode.
+
+[Validation receipt](../../native/snow_host/input_vector_selection_validation.json):
+180 cases execute the original acquisition helper followed by the original
+caller lane-selection slice. All output bytes and callback sequences match the
+independent model across supported/unsupported modes, lane selections, gate
+results and distinct raw payloads. Gate and read callbacks were supplied;
+cache locking, ownership arbitration and hardware polling were not executed.
+The shared configuration callback and cache-address join are static findings.

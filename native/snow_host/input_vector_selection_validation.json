@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "cases": 180,
+  "scope": "Original vector acquisition helper followed by caller lane-selection slice, compared bitwise and callback-order-wise to independent model",
+  "substitutions": [
+    "Vector and scalar gate callbacks return supplied booleans",
+    "Vector and scalar read helpers return supplied raw payloads"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x4b8ca0",
+      "end_rva_exclusive": "0x4b8dc8",
+      "sha256": "aec2ec75848d9e75ac3031dca15d4a3ffc360ed37d360aa11d2bcd3a1bd7b627"
+    },
+    {
+      "start_rva": "0x4b21fb",
+      "end_rva_exclusive": "0x4b2235",
+      "sha256": "c26558bafe1b71e2232ed4087fee558272f897cd5f52d8c76891a39cc04a1171"
+    }
+  ],
+  "limits": [
+    "Cache locking and ownership gates not executed",
+    "No processor or final sample publication execution",
+    "No live game or scheduler order proof"
+  ],
+  "game_process": false
+}

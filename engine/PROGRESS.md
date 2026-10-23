@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved the shared vector/directional setup callback: +0xb8 holds source
+configuration. Connected vector modes 0/1 to the known cache vectors and modes
+2/3 to scalar indices 10/12. Added a raw-byte selection API; 180 original
+acquisition/lane cases match with query gates/readers supplied. Ownership gates
+and player/job attribution remain open. See
+[vector selection](../docs/reconstruction/INPUT_UPDATE_ORDER.md#vector-source-configuration-and-cache-reads).
+
 Joined all six source builders to concrete virtual tables and callbacks.
 Two exactly match previously observed vector/directional action source types.
 18 original builder cases pass with allocator/container/initializer substitutions
