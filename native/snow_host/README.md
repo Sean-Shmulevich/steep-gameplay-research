@@ -1084,3 +1084,32 @@ capture plugin do not enable a concrete history reader. The Python
 is the reference for the future native reader. Budgeting that reader, selecting
 the active action and exposing an opt-in configuration remain required before
 live use. No hook was installed or game launched for this change.
+
+### Native history-action reader
+
+`snow_history_observe` in `snow_history_observation.c` implements the passive
+history-action layout reader. The caller supplies an exact `SnowEntryRead`, a
+fresh action pointer, expected action table/evaluator and clock-global slots.
+It returns two samples in `SnowHistoryCapture`, bounded to 32 reads and 1,024
+requested bytes. Float fields remain raw uint32 bits, including NaN payloads.
+
+Return 1 means matching identity/settings receipts; 2 means those receipts differ;
+0 means invalid, unavailable or unsupported input and clears both samples.
+Dynamic equality is independent of identity equality. Changing clock values are
+retained, not treated as an identity failure. Both null clock-selection branches
+and the selected-object branch use the decoded accessor layout. Required zero
+pointers, empty threshold arrays, invalid channel and address overflow refuse
+capture. The byte reader remains responsible for rejecting inaccessible memory.
+
+The fixture checks both channels, clock fallbacks, identity mutation, dynamic
+changes, raw float bits, every read-failure position on the selected and fallback
+routes, and pointer overflow. Six native fixture tests pass and the new source
+compiles with MinGW C11 warnings treated as errors. This validates authored
+reader behavior against synthetic memory, not game execution.
+
+This supersedes the prior absence of a concrete native reader. The reader is
+not yet connected to probe configuration or a live actor-to-action resolver.
+A recorder callback may retain the second sample only after return 1, but must
+not discard the two-sample semantics when making temporal claims. Return 1 does
+not prove atomicity, ownership, producer execution or input freshness. No live
+capture, hook installation or game launch was performed.

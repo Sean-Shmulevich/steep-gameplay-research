@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Implemented the bounded native history-action reader. It preserves two dynamic
+samples and raw float bits, separates identity instability, and clears samples
+on failed reads. Six native fixtures pass and MinGW compilation succeeds. Caller
+provenance and probe enablement remain pending; no live game access. See
+[native reader](../native/snow_host/README.md#native-history-action-reader).
+
 Added an optional history-action callback channel to the native recorder.
 Five native fixture tests pass, including independent failure clearing, overflow
 and close forwarding. Windows host/probe/capture-plugin build passes. Record ABI

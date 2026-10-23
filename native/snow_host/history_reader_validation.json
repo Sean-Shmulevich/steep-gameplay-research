@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "evidence": "authored C fixture and Windows cross compilation",
+  "game_process": false,
+  "checks": [
+    "Six native fixture tests pass",
+    "Both channels and all clock-selection cases",
+    "Identity change versus dynamic clock change",
+    "Every failed read position for selected and fallback routes clears samples",
+    "Unsupported channel, empty threshold container, pointer overflow and wrong table refuse capture",
+    "Float bit patterns preserved",
+    "MinGW C11 -Wall -Wextra -Werror compilation"
+  ],
+  "limits": [
+    "Synthetic memory only",
+    "Caller must establish fresh action provenance and verified build",
+    "Not enabled in native probe configuration",
+    "No atomicity, lifetime or input-freshness proof"
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_history_observation.c": "db556799f1ed8936935d0ab225da1081e568b4bf042bd9323670319befba5649",
+    "native/snow_host/snow_history_observation.h": "3fde8802bf115b8e571659369930c8fa201d6493e25aa74a2bcacc36f4a77d7d",
+    "tests/fixtures/snow_history_observation_fixture.c": "185ac2128313ccb1b717075518f541a2d99b1e0d792576de0eb0ab2f94bc7335"
+  }
+}
