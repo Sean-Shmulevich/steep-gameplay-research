@@ -1,0 +1,60 @@
+{
+  "evidence": "PID/creation-guarded read-only live resolution of encoded lock initialization, enter and leave targets",
+  "ok": true,
+  "session_count": 1,
+  "readiness": "scheduler_ready",
+  "input_sent": false,
+  "native_target_called_by_probe": false,
+  "resolved": {
+    "enter_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x21fe0",
+      "exports": [
+        "RtlEnterCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "329049c9b40cb61d9c1879399e3470eefc3904de3d9991911a6253aa8119f2d2"
+    },
+    "leave_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x2b540",
+      "exports": [
+        "RtlLeaveCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "980260d888d10762fda9f7a40b165d49dd1798c6bc3ce71e897c09ff731cebd7"
+    },
+    "initialize_helper": {
+      "matching_module_count": 1,
+      "module": "kernel32.dll",
+      "rva": "0xe708",
+      "exports": [
+        "InitializeCriticalSectionEx"
+      ],
+      "module_sha256": "759faa48eede76d56dd0cbfabef09f7947ecd802187a5c49d76a3084259fe458",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "7d7b3ee7673ded0d9352bb952263a75bab2aa3d129e5452629912592a772185f"
+    }
+  },
+  "stable_across_resolution": true,
+  "reader_calls": 15,
+  "targeted_read_bytes": 192,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "One Wine session; no native Windows acceptance.",
+    "Code prefixes match module files, not full in-memory module hashes.",
+    "Sequential slot equality is not an atomic snapshot or lifetime guarantee.",
+    "Probe did not execute initialization, submit a command or test native lock contention/destruction."
+  ]
+}

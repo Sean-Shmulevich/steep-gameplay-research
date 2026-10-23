@@ -6114,3 +6114,11 @@ The existing live capture confirms the lock resides at manager+8 in all 20
 samples. A 48-case original-instruction fixture validates the initializer target
 decode and argument shape. The read-only target observer can optionally inspect
 that slot with a six-read / 48-byte bound; live API identity remains unverified.
+
+### Live lock initializer identification
+
+A bounded read-only Wine session resolves initialization to
+`kernel32!InitializeCriticalSectionEx`; enter/leave match the earlier ntdll
+exports. All three code prefixes match installed files and targets stay stable.
+Fifteen reads total 192 bytes. Cleanup verified saves/settings and original DLL.
+This closes target identity for that Wine build, not manager lifetime safety.

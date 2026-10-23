@@ -521,14 +521,43 @@ from its apparent argument shape alone.
 
 `observe_lock_targets(..., include_initializer=True)` now reads all three slots
 twice, at most six reads / 48 bytes. The default remains enter/leave only, four
-reads / 32 bytes. The next live observation can resolve the initialization target
-against loaded modules and exports without calling it or modifying the game.
+reads / 32 bytes. The subsequent live observation below resolves the initialization target
+against loaded modules and exports without calling it.
 
 No absolute constructor function pointer was found in the inspected mapped
 image. The bounded relative-displacement search within unwind-described code
 found singleton readers but no constructor reference or singleton writer. These
 search exclusions do not establish permanence or rule out indirect/transformed
 startup paths. Manager ownership and shutdown remain open.
+
+## Live initialization API identity
+
+A [read-only Wine session](../../native/snow_host/lock_initializer_live_validation.json)
+resolves the new initializer target exactly to `kernel32.dll!InitializeCriticalSectionEx`,
+module RVA `0xe708`. The first 32 target bytes match the installed module file.
+Enter and leave again resolve to the previously observed `ntdll` critical-section
+exports. All three slots remain equal across the before/after observations.
+
+Combined with the instruction fixture, the recovered call is:
+
+```text
+wrapper.pointer = wrapper + 8
+InitializeCriticalSectionEx(wrapper + 8, 4096, 0x02000000)
+return wrapper
+```
+
+The inspected MinGW-w64 14.0.0 `winnt.h` names `0x02000000` as
+`RTL_CRITICAL_SECTION_FLAG_DYNAMIC_SPIN`. That header label does not prove how
+this Wine implementation handles the flag or how many spins occur in practice.
+The wrapper does not test the API return value on the inspected normal-return
+path; the fixture supplies success and does not model initialization failure.
+
+The probe made 15 guarded reads totaling 192 bytes across encoded slots and code
+prefixes. It did not call these functions, send movement input or submit commands.
+The session stopped normally with saves/settings restored and the original DLL
+verified. This establishes API identity in the observed Wine build, not safe
+initialization or deletion of a live manager lock. Ownership, publication,
+destruction and synchronization with plugin submission remain open.
 
 ## Buffer disposal is not callback delivery
 

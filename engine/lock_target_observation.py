@@ -26,7 +26,7 @@ def observe_lock_targets(read, *, image_base, image_size, include_initializer=Fa
     """Read enter/leave twice, optionally initialization: four or six reads.
 
     Requests at most 32 bytes by default or 48 with initialization included.
-    No retry or writes. The extra target has not been identified live.
+    No retry or writes. API names must still be resolved for the current process.
 
     Stable equality is diagnostic, not an atomic snapshot or lifetime guarantee.
     A target in the usual lower 48-bit user range is not necessarily mapped,
