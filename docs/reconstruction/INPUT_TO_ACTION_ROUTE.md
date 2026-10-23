@@ -439,6 +439,35 @@ UpdatePadManager and downstream ingestion. It must record the selected action's
 actual evaluation and sampled values; stage order alone does not establish
 which cached device sample was used.
 
+## Composed PreAI registration validation
+
+[Complete PreAI setup validation](../../native/snow_host/action_refresh_preai_graph_validation.json)
+now executes original setup `0x908ae0` in sixteen relocated fixtures, including
+original service bridges `0x6757a0` and `0x675660`. It observes all eight
+registered edges and both terminal-clear receivers. Sixteen additional fixtures
+execute complete category-pair setup `0x699140` and its helper `0x643f90`,
+confirming setup -> category 4 -> category 5. The original name/configuration
+setters execute. Only lock and outgoing-list operations are substituted by
+observers. These 32 cases strengthen the earlier static interior join; they do
+not execute the assembled graph.
+
+Category-4 metadata selects the special range configuration. Original setup
+calls the chunk setter with `0x7fffffff`, leaves the tail threshold at zero,
+and assigns the clock pointer `world+0x1048`. Under the decoded claim rule,
+a positive valid signed count fits in one maximal claim. This is more specific
+than the generic small-chunk drain tests. Combined with descending source
+transfer and descending worker traversal, a stable initial category-4 list is
+visited in ascending source-slot order within that claim. This conclusion
+requires no concurrent population change, no additional appended records and
+successful callback return. It is not a global ordering guarantee for other
+categories or registration paths.
+
+The supplied fixtures use the constructor-supported service/range tables and
+ordinary successor nodes. Full construction, conditional execution, concurrent
+claims, original clock evaluation and live callback bodies remain outside this
+test. A count of zero is still only evidence that no records remain unclaimed;
+the maximal claim reduces it before running any action callbacks.
+
 ## Next capture contract
 
 Once live access is available, extend the existing request/substep recorder

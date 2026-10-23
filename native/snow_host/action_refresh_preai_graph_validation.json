@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "cases": 32,
+  "world_setup_cases": 16,
+  "category_pair_cases": 16,
+  "scope": "Complete original PreAI graph setup and category-4/5 pair setup, original service bridges and job configuration methods",
+  "substitutions": [
+    "Locks return without synchronization",
+    "Outgoing list clear/append record arguments rather than changing containers"
+  ],
+  "supplied_inputs": [
+    "Synthetic initialized world graph, conditional entry, world service and job owner",
+    "Constructor-supported service and range-job tables; ordinary successor nodes"
+  ],
+  "edges": [
+    "entry -> gather",
+    "gather -> single-threaded PreAI",
+    "gather -> PreAI",
+    "single-threaded PreAI -> world terminal",
+    "entry -> service earlier setup",
+    "service earlier terminal -> PreAI",
+    "PreAI -> action refresh setup",
+    "category 5 terminal -> single-threaded PreAI"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x699140",
+      "end_rva_exclusive": "0x6993b6",
+      "sha256": "c8923636b7bd7d46c79434452b5da134b3d4006ad62d0067ed204e684d4a8bfd"
+    },
+    {
+      "start_rva": "0x643f90",
+      "end_rva_exclusive": "0x6440ab",
+      "sha256": "60d6d620ea35c97ffa3b0ed68b902ea15e3e0174c9ac7efe3e577b322661d674"
+    },
+    {
+      "start_rva": "0x908ae0",
+      "end_rva_exclusive": "0x908e33",
+      "sha256": "2981d54e7eef38f0cf5a9c06d987f02c4c2d94e04dea5804b974071e351c9c4d"
+    },
+    {
+      "start_rva": "0x6757a0",
+      "end_rva_exclusive": "0x6757ef",
+      "sha256": "4fd21662b8bee86d482ca8f7b14b2ff36a65f1b9eb4fce5d5da319ae8d2245e4"
+    },
+    {
+      "start_rva": "0x675660",
+      "end_rva_exclusive": "0x6756af",
+      "sha256": "b66b5507d6cce07d3ee102720198bf1e24bc4ae7170f6d75531de6c5e9e04528"
+    }
+  ],
+  "limits": [
+    "Registration only: no worker dispatch or callback bodies",
+    "Conditional wrapper predicate and actual graph execution not exercised",
+    "No live sample freshness or global completion claim"
+  ],
+  "game_process": false
+}

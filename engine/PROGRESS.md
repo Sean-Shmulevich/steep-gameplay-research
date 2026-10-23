@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated complete PreAI graph setup and category-pair setup in 32 original
+instruction cases, including original service bridges and configuration setters.
+Category 4 selects maximal chunk size with threshold zero and world clock
+context, narrowing its callback ordering under stable-list assumptions. Graph
+execution and live publication timing remain untested.
+See [composed PreAI setup](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#composed-preai-registration-validation).
+
 Placed the registered manager refresh in world PreAI, upstream of the named
 UpdatePadManager poll on the ordinary registered stage chain. The concrete
 world-service caller links category 4/5 between PreAI jobs. Sixteen extended
