@@ -6741,3 +6741,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Extended the existing compiled command pipeline probe to carry concrete attachments through synthetic queue copy, transfer and cleanup.
 - Output separates ownership finalization, refusal cleanup, known synthetic invocations and bounded observation records. Repeated execution, disposal without invocation and two refusals remain distinct.
 - Public runner selects the SDK from the selected macOS developer directory without changing system settings. No live game or native lifetime claim.
+
+### Bound startup follow-up and focus live phase qualification
+
+- Continued original startup control past manager publication in 32 synthetic-state emulator cases to the next allocator-context entry: 24 factory-path cases request 24 bytes; eight direct-path cases request 88 bytes. No manager lifetime proof follows.
+- Recorded the boundary in `native/snow_host/manager_post_publication_validation.json`; no game launched.
+- Updated scheduler roadmap with the next bounded live milestone: harmless resident-plugin request with actual phase/thread/return observation, preceded by owner-boundary observation if manager exclusion is not yet established. Further allocator branching is deferred.

@@ -228,3 +228,36 @@ qualifies called and inlined wrapped cleanup at final-reference thresholds in240
 cases. It does not find the manager destructor or turn record disposal into a
 cancellation/completion receipt. Stable storage and supplied final-reference
 services remain explicit boundaries.
+
+## Next milestone: qualify one live engine-phase request
+
+The attachment owner and joined observation probe close authored API plumbing
+holes. Additional synthetic lifetime examples cannot establish native phase or
+manager retention. Prioritize one bounded, harmless live request over extending
+the allocator branch.
+
+Short term:
+
+1. Reuse the experiment lock and validated startup path; qualify the running
+   build and current manager/phase bindings before admission.
+2. Keep the plugin, descriptor context, recorder and finalizer code resident for
+   the whole session. This is an experimental constraint, not a proven native pin
+   or a hot-unload mechanism.
+3. Submit one harmless observation only where the engine's current owner/phase
+   provides a defensible manager lifetime. If that exclusion cannot be established,
+   first observe the proposed owner boundary without submitting.
+4. Record request ID, callback entry/return, actual thread, enclosing scheduler
+   observation, refusal and ownership cleanup separately. Capture loss or an empty
+   queue must not be interpreted as completion or unload permission.
+5. Keep the resulting live receipt separate from emulator and synthetic results.
+
+Medium term: qualify a scheduler-backed submission interface across normal play,
+map transitions and shutdown, with explicit invalid-state refusal and separate
+execution observation. Trace input, player-motion and animation consumers to
+establish where further mod operations belong. Hot unloading is a separate
+lifecycle requirement, not a prerequisite for the first resident-plugin test.
+
+The bounded post-publication startup trace found subsequent 24-byte factory and
+88-byte allocation paths, but no manager lifetime proof. Record those as leads;
+do not expand another allocator branch unless it answers the admission lifetime
+question or a concrete engine-reconstruction requirement.

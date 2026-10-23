@@ -2329,3 +2329,19 @@ not a new native telemetry measurement. Zero recorded deliveries alone does not
 prove nonexecution in a live capture, and finalization is not a completion event.
 The example does not free observation storage at attachment finalization or grant
 module unload permission.
+
+### Bounded continuation after manager publication
+
+`native/snow_host/manager_post_publication_validation.json` extends the earlier
+publication stop to the next allocator-context entry in 32 controlled emulator
+cases. Eight cases reach an 88-byte request returning to `0x411f003`. Twenty-four
+reach a 24-byte request through `0x8e4040` and factory `0x11928f0`; that factory
+receives `(67, 0, descriptor 0x2dfadd0)`. Both use argument 8 at context selection
+and the same allocator-source global. The next allocator itself is not executed.
+
+These are alternative observed continuations under supplied register/allocation
+states, not a recovered general branch predicate. The factory argument is 67,
+not the published manager pointer. Neither next request is evidence that manager
+storage has changed from 384 bytes, nor a demonstrated ownership pin. This bounded
+trace does not establish absence of an intervening ownership operation. Further
+startup expansion is deferred in favor of qualifying the live admission phase.

@@ -1,0 +1,27 @@
+{
+  "evidence": "Original-instruction continuation after manager publication to next allocator-context entry, with supplied manager allocation and construction responses",
+  "cases": 32,
+  "next_request_counts": {
+    "88": 8,
+    "24": 24
+  },
+  "alignment": 8,
+  "same_allocator_source_in_all_cases": true,
+  "factory_24_byte_path": {
+    "entry_rva": "0x8e4040",
+    "factory_rva": "0x11928f0",
+    "factory_argument_1": 67,
+    "factory_argument_2": 0,
+    "descriptor_rva": "0x2dfadd0"
+  },
+  "direct_88_byte_path_return_rva": "0x411f003",
+  "manager_lifetime_established": false,
+  "game_launched": false,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "Conditional path coverage uses synthetic startup register values and supplied manager allocation/constructor services.",
+    "No general branch predicate inferred from these cases.",
+    "Stops at the next allocation-context call; subsequent objects and lifetimes are not reconstructed.",
+    "No proof of manager retention, teardown exclusion or absence of intervening ownership operations."
+  ]
+}
