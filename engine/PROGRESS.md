@@ -6474,3 +6474,12 @@ instructions match the independent model for 19,370 supplied-table/query cases;
 four focused public tests pass. This explains which known manager requests can
 use the small table and which return to the outer fallback. No live launch or
 heap-method reconstruction. Destruction and concurrent ownership remain open.
+
+### Record final-reference branches reconstructed
+
+Extended the known disposal path with a separate record-cleanup model: associated
+object detachment/destruction, invoker clearing and ordered holder decrements with
+low-24-bit release gates. All 784 original-instruction comparisons match supplied
+release-service events and state, including holder aliases. Four public tests
+include buffer-disposal composition. No live launch. Final destruction-service
+bodies, manager shutdown and concurrent lifetime acquisition remain unresolved.

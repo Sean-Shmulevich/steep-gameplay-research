@@ -53,3 +53,11 @@ The source token is unused by the recovered routine. Zero means no context from
 this resolver and lets the caller apply its fallback. Argument validation is our
 Python interface, not recovered native failure behavior. Query implementations,
 heap identities, ownership and deallocation remain external.
+
+`command_record_cleanup.cleanup_record` models normal-return record retirement
+with detached dictionary references. It nulls the associated reference before its
+release, clears the invoker afterwards, then decrements holders at +0x10 and +8.
+Associated destruction uses old full count ==1; holder release uses new low24 ==0.
+Holder aliases are preserved and decremented twice. Supplied release services
+must preserve record/holder state. No concurrency or native lifetime pin is
+provided; repeated cleanup is not an idempotent operation.

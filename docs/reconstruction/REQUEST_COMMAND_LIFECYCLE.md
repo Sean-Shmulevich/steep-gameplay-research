@@ -2003,3 +2003,40 @@ entry, **if the outer selector does not bypass the resolver for a special source
 That entry may itself be zero, which also falls back. This closes the resolver's
 local policy gap; it does not prove the concrete allocator identities, free path,
 manager lifetime or safety of concurrent command submission.
+
+### Record final-reference cleanup
+
+The independent `engine/command_record_cleanup.py` now implements the local
+record helper at RVA `0x64cd40..0x64cdbf`, including branches excluded from the
+older ring-disposal fixture. Its normal-return sequence is:
+
+1. Atomically exchange the record's associated pointer at +0x60 with null.
+2. If nonnull, atomically decrement that object's uint32 count at +8. Call its
+   virtual method at +8 only if the **old full count equals 1**.
+3. Clear the record's invoker at +0x30. This happens after associated destruction.
+4. Decrement the uint32 status at +0xc of the holder referenced by record +0x10.
+   If the **new low 24 bits equal zero**, call the holder-release service at
+   `0x11a8a10`, with the context address `0x3301d80` and holder pointer.
+5. Apply the same holder rule to the pointer at record +8.
+
+The record's holder-pointer fields remain unchanged. If they alias, the same
+status is decremented twice, in sequence. This helper cannot safely be treated
+as an idempotent reset. Associated counts and holder status use different release
+conditions; a holder status such as `0x01000001` triggers release after decrement,
+whereas the same associated count does not. These are uint32 decrements, including
+wraparound; zero-count tests do not establish that underflow is valid ownership.
+
+The private instruction comparison covers **784 cases** with null/non-null
+associated references, seven count/status values, and aliased/distinct holders.
+It checks counter state, cleared fields, retained pointer fields, service order
+and field values observed at the service calls. Final virtual destruction and
+holder-release bodies are supplied. Receipt:
+`native/snow_host/command_record_cleanup_validation.json`.
+Four public tests include composition with the existing buffer-disposal module.
+
+This model is serial. Original locked decrements/exchange do not by themselves
+establish safe concurrent acquisition or a native lifetime pin. The supplied
+services are required to return normally without mutating the modeled record or
+holder state. Python exceptions expose partial progress without rollback; native
+unwinding is not established. No descriptor invoker is called. Neither this helper
+nor its composition locates the manager destructor or authorizes plugin unload.

@@ -1,0 +1,27 @@
+{
+  "evidence": "Original record cleanup compared with serial independent model; final release services supplied",
+  "cases": 784,
+  "reference_values": [
+    0,
+    1,
+    2,
+    16777215,
+    16777216,
+    16777217,
+    4294967295
+  ],
+  "null_associated_and_aliased_holders_covered": true,
+  "state_and_service_order_match": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "8a68eb585bf54be08abc6d4a78355a2c18030802f00633906493097e8e28066e",
+  "span": {
+    "rva": "0x64cd40",
+    "length": 127,
+    "sha256": "8caf9d580084dda8230e0020ab64a6b409263135bb5428d0155af4844b2f5581"
+  },
+  "limitations": [
+    "Final associated-object virtual destructor and holder release service are supplied, not reconstructed.",
+    "Serial execution only; no concurrent acquisition, native lifetime pin or manager shutdown demonstrated.",
+    "Zero counts exercise instruction wraparound, not valid reference ownership."
+  ]
+}
