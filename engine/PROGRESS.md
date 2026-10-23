@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live ramp-gate observation: 736 valid samples around 368 selected action
+evaluations were zero, consistent with the recovered time-shaping bypass.
+All 606 actor-input samples matched preceding publication, including 51
+nonzero samples. Coverage, restoration and cleanup passed. This narrows the
+missing-ramp question; exact ingestion execution/cadence and gate writer remain
+open. See [gate receipt](../native/snow_host/ramp_bypass_live_observation.json).
+
 Input-driven capture acceptance now requires same-key OS delivery timestamps,
 matching QPC frequency, both endpoints inside physics coverage, and an
 intersecting update. The saved late-input trace fails; the armed trace passes

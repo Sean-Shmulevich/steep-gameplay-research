@@ -1,0 +1,61 @@
+{
+  "kind": "lateral_publication_with_ramp_global_gate",
+  "evidence": "Live bounded observation plus inspected static bypass branch",
+  "selected_parent_events": 368,
+  "gate_samples": 736,
+  "gate_false_samples": 736,
+  "gate_manager_identities": 1,
+  "all_class_gate_samples": 9498,
+  "gate_samples_per_selected_event": 2,
+  "gate_samples_enclosed_by_parent_event": true,
+  "strict_comparison_counts": {
+    "match": 606
+  },
+  "nonzero_motion_samples": 51,
+  "input_coverage": {
+    "covered": true,
+    "key_down_inside": true,
+    "key_up_inside": true,
+    "intersecting_intervals": 51,
+    "game_acceptance": "unverified"
+  },
+  "update_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 606,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 606,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 606,
+    "other_calls": 0
+  },
+  "action_summary": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 4749,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "root_endpoint_identity_equal": true,
+  "cleanup": {
+    "ok": true,
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "interpretation": "Observed global flag is consistent with the recovered ramp bypass branch; full-axis keyboard output does not require a missing ramp model.",
+  "limits": [
+    "Gate sampled before and after parent evaluation, not at the ramp branch instruction.",
+    "Transient gate changes within evaluation remain possible; reads are sequential, not atomic.",
+    "Gate writer and keyboard/controller selection policy are unresolved.",
+    "Current ramp callback execution and live ramp routine bytes were not independently captured in this run.",
+    "Comparison uses the untransformed-vector hypothesis; actor X-sign gate was not sampled.",
+    "One lateral keyboard pulse, one running configuration; no general controller-response conclusion."
+  ]
+}

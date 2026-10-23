@@ -1999,3 +1999,32 @@ agree at the endpoints, injected keys were released, and save/settings/original
 DLL checks passed. The ready/trigger handshake fixes the prior coverage failure;
 it does not make delivery deterministic in simulation time. Publication values
 still do not directly timestamp the ingestion copy instruction.
+
+## Global ramp gate during lateral publication
+
+A bounded live keyboard test sampled the input-manager ramp gate before and
+after each selected composite evaluation, alongside parent publication and
+actor physics input. All 736 gate samples across 368 evaluations were valid
+and zero. Each evaluator interval contained exactly two gate samples, with one
+manager identity observed throughout. These are sequential observations, not
+an atomic snapshot or a trace of the ramp branch itself.
+
+The inspected ramp entry copies its four input lanes to working output, tests
+the global enable byte and returns that unchanged output when the byte is zero.
+It does not update ramp timers or the saved clock on this bypass path. Thus the
+observed immediate full-left output is consistent with disabled time shaping.
+Here “ramp” means gradual control response over time, unrelated to terrain.
+
+All 606 actor-input samples matched the preceding completed parent publication
+under the untransformed-vector hypothesis; 51 were nonzero. Both OS delivery
+reports fell within physics coverage, with 51 intersecting update intervals.
+Both recorders reported no drops, restored their slots and drained. Root lookup
+identities matched at the endpoints; cleanup restored saves/settings and
+verified the original DLL. See the [sanitized receipt](../../native/snow_host/ramp_bypass_live_observation.json).
+
+This does not prove the flag remained zero at every instruction inside the
+evaluation, establish the writer of the gate, or describe gamepad behavior.
+The live ramp callback bytes and its execution were not independently captured
+in this pass. Next scheduler target: observe the ingestion boundary itself
+and distinguish its cadence from actor physics substeps. Gate writer/device
+policy remains a separate input-system lead.
