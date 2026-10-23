@@ -9,6 +9,9 @@ int snow_action_trace_init(SnowActionTrace *t,SnowActionRecord *r,size_t n,
     return 1;
 }
 void snow_action_trace_call(SnowActionTrace *t,void *action) {
+    snow_action_trace_call_observed(t,action,NULL,NULL);
+}
+void snow_action_trace_call_observed(SnowActionTrace *t,void *action,SnowActionRead read,void *context) {
     uint_fast64_t g=atomic_load(&t->gate);
     for(;;) {
         if((g&CLOSED) || g==CLOSED-1) {t->original(action);return;}
@@ -23,7 +26,16 @@ void snow_action_trace_call(SnowActionTrace *t,void *action) {
         SnowActionRecord *r=&t->records[slot];
         memset(r,0,sizeof *r);r->action=(uintptr_t)action;
         r->thread=t->thread_id();r->entry_tick=t->clock();
+        if(read) {
+            r->sample_attempted=1;
+            r->before_valid=read(context,action,&r->before)==1;
+            if(!r->before_valid)memset(&r->before,0,sizeof r->before);
+        }
         t->original(action);
+        if(read) {
+            r->after_valid=read(context,action,&r->after)==1;
+            if(!r->after_valid)memset(&r->after,0,sizeof r->after);
+        }
         r->exit_tick=t->clock();
     }
     atomic_fetch_sub(&t->gate,1);

@@ -7,20 +7,25 @@ static SnowActionTrace trace;
 static SnowActionRecord records[CAPACITY];
 static LONG ready;
 static uint64_t slot_address;
+static SnowActionRead observe;
+static void *observe_context;
 static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
     (void)ctx;SIZE_T got=0;
     return ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)at,dst,n,&got) && got==n;
 }
 static uint64_t ticks(void) {LARGE_INTEGER q;QueryPerformanceCounter(&q);return q.QuadPart;}
 static uint64_t thread_id(void) {return GetCurrentThreadId();}
-uint32_t SnowActionProbe_ABIVersion(void) {return 1;}
+uint32_t SnowActionProbe_ABIVersion(void) {return 2;}
 size_t SnowActionProbe_RecordSize(void) {return sizeof(SnowActionRecord);}
 uint64_t SnowActionProbe_ClockFrequency(void) {LARGE_INTEGER q;return QueryPerformanceFrequency(&q)?(uint64_t)q.QuadPart:0;}
 int SnowActionProbe_Configure(uint64_t address,SnowActionOriginal original) {
+    return SnowActionProbe_ConfigureObserved(address,original,NULL,NULL);
+}
+int SnowActionProbe_ConfigureObserved(uint64_t address,SnowActionOriginal original,SnowActionRead reader,void *context) {
     HMODULE pinned;
     if(!address || (address&7) || !original)return 0;
     if(InterlockedCompareExchange(&ready,1,0)!=0)return 0;
-    slot_address=address;
+    slot_address=address;observe=reader;observe_context=context;
     if(!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,
        (LPCSTR)(uintptr_t)&SnowActionProbe_Configure,&pinned) ||
        !snow_action_trace_init(&trace,records,CAPACITY,original,ticks,thread_id)) {
@@ -30,7 +35,7 @@ int SnowActionProbe_Configure(uint64_t address,SnowActionOriginal original) {
 }
 void SnowActionProbe_Dispatch(void *action) {
     /* Must never be published before successful configuration. */
-    if(InterlockedCompareExchange(&ready,2,2)==2)snow_action_trace_call(&trace,action);
+    if(InterlockedCompareExchange(&ready,2,2)==2)snow_action_trace_call_observed(&trace,action,observe,observe_context);
 }
 int SnowActionProbe_Close(size_t *used,size_t *dropped) {
     if(InterlockedCompareExchange(&ready,2,2)!=2)return 0;

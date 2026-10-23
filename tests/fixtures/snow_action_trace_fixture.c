@@ -25,6 +25,31 @@ static void init(size_t n) {
     atomic_store(&calls,0);atomic_store(&ticks,0);
 }
 static void *worker(void *p) {snow_action_trace_call(&trace,p);return NULL;}
+static unsigned sample_calls;
+static int sample_status[2];
+static int sample(void *context,void *action,SnowActionSample *out) {
+    assert(context==&trace);memset(out,0xa5,sizeof *out);
+    out->vector_bits[0]=*(unsigned *)action;
+    return sample_status[sample_calls++%2];
+}
+static void sample_checks(void) {
+    unsigned value=0;SnowActionSample zero={0};mode=0;
+    for(unsigned mask=0;mask<4;mask++) {
+        init(1);sample_calls=0;sample_status[0]=mask&1?1:0;sample_status[1]=mask&2?1:2;
+        snow_action_trace_call_observed(&trace,&value,sample,&trace);
+        assert(records[0].sample_attempted && sample_calls==2);
+        assert(records[0].before_valid==(unsigned)(sample_status[0]==1));
+        assert(records[0].after_valid==(unsigned)(sample_status[1]==1));
+        if(records[0].before_valid)assert(records[0].before.vector_bits[0]==value-1);
+        else assert(!memcmp(&records[0].before,&zero,sizeof zero));
+        if(records[0].after_valid)assert(records[0].after.vector_bits[0]==value);
+        else assert(!memcmp(&records[0].after,&zero,sizeof zero));
+        snow_action_trace_call_observed(&trace,&value,sample,&trace);
+        snow_action_trace_close(&trace);
+        snow_action_trace_call_observed(&trace,&value,sample,&trace);
+        assert(sample_calls==2 && atomic_load(&calls)==3);
+    }
+}
 int main(void) {
     unsigned value=0;SnowActionRecord out,unchanged;
     memset(&unchanged,0xa5,sizeof unchanged);out=unchanged;
@@ -67,5 +92,6 @@ int main(void) {
         assert(out.exit_tick>out.entry_tick);
         for(unsigned j=0;j<i;j++)assert(records[j].action!=out.action);
     }
+    sample_checks();
     puts("PASS: action events, nested order, overflow, late forwarding, close/drain and sized reads");
 }

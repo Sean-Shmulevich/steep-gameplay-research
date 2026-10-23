@@ -1202,7 +1202,7 @@ and export of evaluator events alongside the update trace.
 ### Action probe DLL and guarded slot installer
 
 The build script also produces `snow_action_probe.dll`. Its separate experimental
-ABI 1 exports configure, install, restore, close, sized record reads, ABI/record
+ABI 2 exports configure, install, restore, close, sized record reads, ABI/record
 size queries and QPC frequency. Configuration supplies a verified slot address
 and original void evaluator. No game offsets or selected action are built in.
 Installation accepts an aligned nonexecutable committed image slot only when
@@ -1223,3 +1223,26 @@ forwarding, captured records, restoration and late dispatch after close. This is
 not a live game hook result. Game signature qualification, class-slot selection,
 player attribution, and combined action/update capture remain open. See
 [action probe validation](action_probe_validation.json).
+
+### Optional action publication samples
+
+Action-probe ABI 2 extends each event with an attempted flag, independent
+before/after validity flags, and `SnowActionSample` values containing four raw
+uint32 vector lanes and an active byte. Rebuild direct readers and query both
+ABI and record size before copying. Existing unsampled configuration remains
+available and leaves the optional fields zero.
+
+`SnowActionProbe_ConfigureObserved` accepts an explicit bounded, non-mutating,
+thread-safe reader and context. The portable recorder counterpart is
+`snow_action_trace_call_observed`. A return value of exactly 1 accepts a sample;
+all other returns clear that sample, including partially written data. Failed
+reads never suppress original evaluation. Overflow and closed capture skip
+observation while preserving forwarding. Event timestamps enclose both samples
+and evaluation, so they include reader overhead.
+
+These are authored recording interfaces. They do not encode a game layout,
+resolve a selected player, or guarantee atomic snapshots. A live parent reader
+must validate the parent type and explain its source fields. Before/after values
+show observed publication state, not the exact store instruction or ingestion
+time. Native fixtures cover all four validity combinations and forwarding, and
+the Windows DLL fixture checks actual before/after samples through ABI 2.

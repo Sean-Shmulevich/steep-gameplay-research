@@ -15,8 +15,18 @@
 typedef void (*SnowActionOriginal)(void *);
 typedef uint64_t (*SnowActionClock)(void);
 typedef struct {
+    uint32_t vector_bits[4];
+    uint8_t active;
+} SnowActionSample;
+/* Return exactly 1 for a valid sample. Reader must be bounded, non-mutating,
+ * thread-safe and return normally. Invalid partial output is discarded.
+ * Caller owns type/identity guards; no game addresses are built into tracing. */
+typedef int (*SnowActionRead)(void *context,void *action,SnowActionSample *);
+typedef struct {
     uintptr_t action;
     uint64_t entry_tick, exit_tick, thread;
+    uint32_t sample_attempted, before_valid, after_valid;
+    SnowActionSample before, after;
 } SnowActionRecord;
 typedef struct {
     SnowActionRecord *records;
@@ -29,6 +39,7 @@ typedef struct {
 int snow_action_trace_init(SnowActionTrace *,SnowActionRecord *,size_t,
                           SnowActionOriginal,SnowActionClock,SnowActionClock);
 void snow_action_trace_call(SnowActionTrace *,void *);
+void snow_action_trace_call_observed(SnowActionTrace *,void *,SnowActionRead,void *);
 void snow_action_trace_close(SnowActionTrace *);
 int snow_action_trace_drained(const SnowActionTrace *);
 /* Exact-size copy only after close and drain; refusal leaves output untouched.

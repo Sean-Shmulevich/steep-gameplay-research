@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "evidence": "authored native fixture and Windows DLL fixture under Wine",
+  "action_probe_abi": 2,
+  "game_process": false,
+  "native_checks": [
+    "Independent before/after acceptance and clearing for return 0, 1 and 2",
+    "Correct samples around original synthetic mutation",
+    "Overflow and closed capture skip readers but forward original",
+    "Existing nested/concurrent/close/drain/sized-read checks retained"
+  ],
+  "windows_modes": [
+    "normal",
+    "competing_pointer"
+  ],
+  "windows_checks": [
+    "ConfigureObserved export and ABI/size query",
+    "Before/after vector and active byte through actual DLL dispatch",
+    "Slot restoration and late forwarding"
+  ],
+  "limits": [
+    "No live game object sampled",
+    "Caller must supply guarded reader and live attribution",
+    "Event timing includes observation overhead; values are not an atomic cross-system snapshot"
+  ]
+}

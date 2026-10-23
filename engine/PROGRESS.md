@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added optional before/after vector-bit and active-byte samples to evaluator
+records; action probe ABI is now 2. Invalid reads clear independently, original
+evaluation always forwards, and overflow/close skip observation. Seven native
+fixtures and normal/conflict Windows DLL fixtures pass. Live guarded parent
+reader remains next. See [sample validation](../native/snow_host/action_sample_validation.json).
+
 Reconfirmed the existing static ingestion copy and narrowed the next live source
 to composite-parent publication, rather than directional-child return. Three
 double-substep groups retain positive ingestion counters across both updates.
