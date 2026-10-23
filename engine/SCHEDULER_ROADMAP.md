@@ -317,3 +317,17 @@ matched phase and snow-update observations, rather than adding more idle samples
 Acquire selected-player provenance and preserve invalid/transition samples before
 using this channel to infer response timing or force equations. This read-only
 integration does not authorize setters at the phase.
+
+### Input interval now overlaps an observed motion transition
+
+The paced capture now spans accepted OS key reports and a stationary-to-moving
+body sequence. See [the live input findings](../docs/reconstruction/SCHEDULER_DELEGATES.md#live-input-interval-and-moving-body-observations).
+The acquisition joins boxed ownership to registry membership, but still lacks an
+independent selected-player proof. Do not infer ingestion latency from the first
+nonzero velocity sample or decode the changing gate from correlation alone.
+
+Next: trace the selected-player/input-owner relationship and action-state writer,
+then observe that state alongside the snow job's entry and completion. The useful
+deliverable is an evidenced input-to-job-to-body chain with explicit counter
+domains and stale-object behavior. Additional idle sampling or arbitrary setters
+would not close that gap.

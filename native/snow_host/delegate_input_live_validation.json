@@ -1,0 +1,285 @@
+{
+  "evidence": "One live Wine session with paced engine-phase observations and gated OS scan-code delivery; derived summaries only",
+  "requests_returned": 16,
+  "valid_sample_masks": [
+    7
+  ],
+  "all_before_after_physics_payloads_equal": true,
+  "pending_impulse_zero_all_samples": true,
+  "qpc_frequency": 10000000,
+  "report_relative_group_counts": {
+    "before_down_report": 4,
+    "inside_reported_hold": 4,
+    "after_up_report": 8,
+    "overlaps_report_boundary": 0
+  },
+  "reported_hold_seconds": 0.4965341,
+  "scan_raw": 17,
+  "delivery_mode": "sendinput",
+  "input_api_reports_accepted": true,
+  "boxed_actor_matches_registry": true,
+  "selected_player_independently_proved": false,
+  "input_ingestion_proved": false,
+  "causal_response_proved": false,
+  "substep_attributed": false,
+  "observations": [
+    {
+      "request_id": 101,
+      "relative_entry_seconds": 0.0,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 102,
+      "relative_entry_seconds": 0.0965127,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 103,
+      "relative_entry_seconds": 0.2052818,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 104,
+      "relative_entry_seconds": 0.3020709,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 105,
+      "relative_entry_seconds": 0.4048757,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 106,
+      "relative_entry_seconds": 0.4998533,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 107,
+      "relative_entry_seconds": 0.6096035,
+      "main_speed_body_units": 0.0,
+      "rider_speed_body_units": 0.0,
+      "gates": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "preconsume_counter": 0
+    },
+    {
+      "request_id": 108,
+      "relative_entry_seconds": 0.7115182,
+      "main_speed_body_units": 0.4777806674934577,
+      "rider_speed_body_units": 0.8522472454753137,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -8
+    },
+    {
+      "request_id": 109,
+      "relative_entry_seconds": 0.8037884,
+      "main_speed_body_units": 0.7055138375368791,
+      "rider_speed_body_units": 0.46613173815400355,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -19
+    },
+    {
+      "request_id": 110,
+      "relative_entry_seconds": 0.9096987,
+      "main_speed_body_units": 1.2541582980901977,
+      "rider_speed_body_units": 1.0834011840818907,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -30
+    },
+    {
+      "request_id": 111,
+      "relative_entry_seconds": 1.0035096,
+      "main_speed_body_units": 1.2319645382682165,
+      "rider_speed_body_units": 1.5929251324489628,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -40
+    },
+    {
+      "request_id": 112,
+      "relative_entry_seconds": 1.1137265,
+      "main_speed_body_units": 1.7998104294456772,
+      "rider_speed_body_units": 2.06142902509522,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -52
+    },
+    {
+      "request_id": 113,
+      "relative_entry_seconds": 1.2136719,
+      "main_speed_body_units": 2.23384991863767,
+      "rider_speed_body_units": 2.456396621529256,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -63
+    },
+    {
+      "request_id": 114,
+      "relative_entry_seconds": 1.3142084,
+      "main_speed_body_units": 2.7079208815919706,
+      "rider_speed_body_units": 2.850756346532798,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -74
+    },
+    {
+      "request_id": 115,
+      "relative_entry_seconds": 1.4151193,
+      "main_speed_body_units": 3.158329720715287,
+      "rider_speed_body_units": 3.2500026544907983,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -85
+    },
+    {
+      "request_id": 116,
+      "relative_entry_seconds": 1.5172373,
+      "main_speed_body_units": 3.5773756045672758,
+      "rider_speed_body_units": 3.6373054091429435,
+      "gates": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "preconsume_counter": -96
+    }
+  ],
+  "callback_records": 206,
+  "callback_threads": 5,
+  "dropped": 0,
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "sources": {
+    "native/snow_host/examples/delegate_capture.c": "71fee255dc93736765c39c0f4ae519e579a555a3ceff9c1c090a9d305b320df2",
+    "native/snow_host/snow_delegate_probe.c": "40929f4a4d4e09b83c941bf203233407ae8cb49a5daa00ed756e73d73b1302aa",
+    "native/snow_host/snow_update_snapshot.c": "f8a17114cd7867ff5ef873eb7ffe81da4c5948a6a52764fe8969e75b6171497f",
+    "engine/phase_input_observation.py": "bfeda5393837bca6b34459723f8be47b150ae9252cdecf6722f3f6170d81888a"
+  },
+  "private_evidence_sha256": {
+    "delegate-capture-result.json": "2a70e71ab9c984bfd1b0b61d3dc59b4c3e4a3f4e2b69ac5aeddc1902550d9494",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "report-relative-analysis.json": "ae8d98d462ce4b80be4716ba7211600ac19d137040e9cc9f97bc92568a381912",
+    "boxed-provenance.json": "c00b89c519fad1b74e736513cfd96e459812501eaff837760d231cbc233069ad",
+    "input-events.jsonl": "c30d5fcfcd6e59d76579c0a01064cb436fe402371ad33db744002e6b193db2a6"
+  },
+  "limitations": [
+    "OS reports are timestamped after API return; they do not identify engine ingestion or exact input latency.",
+    "Velocity magnitudes are calculated from sampled body fields, not independently measured travel speed.",
+    "Gate and preconsume-counter changes are correlated observations, not decoded semantics.",
+    "Before/after equality is consistent with downstream physics scheduling; it does not establish global quiescence.",
+    "Ownership join does not independently identify the selected local player.",
+    "Private gated helper was exercised live but is not shipped in this public package.",
+    "No map-transition, lifetime-retention, mutation or unload qualification."
+  ],
+  "earlier_attempt": {
+    "result": "All sixteen requests preceded key-down report; helper startup missed observation interval.",
+    "cleanup": {
+      "ok": true,
+      "ended_by": "stop",
+      "bottle_stopped": true,
+      "saves_restored": true,
+      "settings_restored": true,
+      "original_dll_verified": true
+    },
+    "independent_post_capture_checks_completed": false,
+    "evidence_sha256": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794"
+  },
+  "private_helper_source_sha256": "e71601031f7e4a37483ce2ad97f95e8f743702f9cff155afeaf3bfd18f30e583",
+  "plugin_sha256": "8f2af7ea0efb419d928bc41b431ddb512f22c1c483067a39d9500bd7f718bb8a"
+}

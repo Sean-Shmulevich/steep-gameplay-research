@@ -1310,3 +1310,57 @@ not prove every use of the extracted mass tuning, nor universal values across
 sports or character configurations. The capture records 99 callbacks with no
 drops, independently verifies slot restoration and continued engine progress,
 and verifies bottle/save/settings/original-DLL cleanup.
+
+## Timed input observation
+
+The capture controller supports optional `request_interval_ms` spacing, allowing
+16 observations to span a stimulus rather than clustering into the first frames.
+The polling interval schedules admission attempts after receipt collection; it
+is not a game timestep or deterministic input clock. Late polls do not catch up
+with a burst, and any submission refusal stops the sequence.
+
+`engine.phase_input_observation.correlate_input_reports` groups returned request
+intervals relative to a matched down/up pair of accepted OS delivery reports.
+It requires matching caller-supplied session/clock domains, valid frequencies,
+a stable target/key/mode, and a complete release report. Boundary overlaps remain
+explicit, and repeated IDs are preserved by record index. It rejects non-returned
+receipts rather than using their zero/partial times as execution observations.
+
+The report timestamps are taken after the delivery API returns. A request before
+a down report is not necessarily before actual input delivery. These groups are
+report-relative observations, not an input-ingestion or causal-latency proof.
+Caller provenance remains external; the analyzer cannot verify a live process.
+Use `python3 -m engine.phase_input_observation input.json` with `receipts`,
+`delivery`, `request_domain` and `input_domain` fields for a portable, address-free
+correlation report. Domains contain `session_id`, `clock_id` and
+`ticks_per_second`; receipts contain `id`, `outcome=1`, `entry` and `exit`.
+
+### Live input interval and moving-body observations
+
+The [timed-input receipt](../../native/snow_host/delegate_input_live_validation.json)
+records a roughly 497 ms reported hold of raw scan code 17. A first attempt missed
+the observation interval because the input helper started too late. The second
+attempt warmed the helper before capture and released it through a bounded file
+gate. Both attempts verified outer cleanup; only the second completed independent
+post-capture restoration and progress checks.
+
+The second capture returns 16 requests: four before the down report, four inside
+the reported hold, and eight after the up report. All 32 physics samples have
+valid mask 7. It records 206 callbacks across five threads, with zero drops.
+The boxed ownership route and world registry resolve to the same snow actor;
+an independent selected-local-player relationship remains unproved.
+
+Requests 101 through 107 have zero main/rider velocity. Request 108, inside the
+reported hold, has velocity magnitudes about 0.478 and 0.852 in body units. At that
+sample the second gate changes from 1 to 0 and the signed preconsume counter is
+-8. By request 116, magnitudes are about 3.577 and 3.637, and the counter is -96.
+These are derived magnitudes of body fields, not independently measured travel
+speed. Pending impulse stays zero in every sample. Every before/after physics
+payload pair is equal, while successive requests show evolving state.
+
+This establishes a moving-body observation sequence overlapping OS input reports.
+It does not establish input ingestion, the cause or meaning of the gate change,
+or an exact response delay. Zero pending impulse at these sparse phase samples
+does not show that no impulse occurred between them. The next investigation
+should join the selected-player/input owner to its action-state writer and the
+downstream snow job, preserving job-specific counters and completion boundaries.

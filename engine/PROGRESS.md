@@ -6777,3 +6777,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Live: 16 returned requests, 32 valid physics samples, 99 callback records and zero drops. Fresh unique registered snow-actor acquisition; independent selected-player proof remains open. Rider present, no substep attribution; physics counter stable across callbacks and incrementing between requests.
 - Idle baseline has zero main velocity/pending impulse and inverse masses about 0.17580873 main / 0.05 rider. Engine and physics job counters differ by a session-local 252; they are not interchangeable IDs.
 - Independent slot restoration and engine progress verified; bottle, saves, settings and original DLL restored. Active-motion response, map transitions, object retention and mutation permission remain open.
+
+### Timed input and moving-body observations
+
+- Added paced request admission to the capture plugin and a portable report-relative input/request correlator. It rejects failed or mismatched delivery, invalid clock domains and non-returned receipts, and preserves boundary overlaps.
+- Live gated capture: 16 returned requests distributed 4 before, 4 during and 8 after OS down/up reports. All 32 physics samples valid; 206 callbacks, five threads, zero drops. Restoration, continued engine progress and outer cleanup verified.
+- Main/rider velocity first becomes nonzero at request 108 during the reported hold; the second gate changes and the preconsume counter becomes negative. Subsequent samples show increasing speed overall. Paired samples remain equal across each engine callback; pending impulse remains zero at sampled points.
+- Boxed ownership and registry routes agree on the actor. Selected-player identity, engine input ingestion and causal response timing remain open. Earlier helper-startup miss is retained as negative evidence. Private traces/helper stay excluded; public receipt contains derived summaries and hashes.

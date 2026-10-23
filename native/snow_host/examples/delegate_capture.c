@@ -11,7 +11,7 @@
 #include "snow_delegate_probe.h"
 static char trigger[MAX_PATH],output[MAX_PATH],config_path[MAX_PATH];
 static int physics_requested;
-static unsigned duration,request_id,request_count=1;
+static unsigned duration,request_id,request_count=1,request_interval_ms;
 static SnowDelegateSite site=SNOW_DELEGATE_GRAPHICS_MAIN;
 static const char *site_name="graphics";
 static volatile LONG cancelled;
@@ -89,16 +89,23 @@ static DWORD WINAPI capture(LPVOID unused) {
         installed=SnowDelegateProbe_Install();
         if(installed) {
             until=GetTickCount64()+duration;
+            ULONGLONG next_request=GetTickCount64()+request_interval_ms;
             while(GetTickCount64()<until && !InterlockedCompareExchange(&cancelled,0,0)) {
                 if(request_count>1 && collected<submitted) {
                     SnowObservationReceipt outcome=SnowDelegateProbe_CollectPhysics(&requests[collected],&physics[collected]);
                     if(outcome) {
                         outcomes[collected++]=outcome;
-                        if(outcome==SNOW_OBSERVATION_RETURNED && submitted<request_count) {
-                            last_submit=SnowDelegateProbe_SubmitObservation((uint64_t)request_id+submitted);
-                            if(last_submit==SNOW_OBSERVATION_ACCEPTED)++submitted;
-                        }
+
                     }
+                }
+                if(request_count>1 && collected==submitted && submitted<request_count &&
+                   collected && outcomes[collected-1]==SNOW_OBSERVATION_RETURNED &&
+                   last_submit!=SNOW_OBSERVATION_STALE_BINDING && last_submit!=SNOW_OBSERVATION_CLOSED &&
+                   GetTickCount64()>=next_request) {
+                    last_submit=SnowDelegateProbe_SubmitObservation((uint64_t)request_id+submitted);
+                    if(last_submit==SNOW_OBSERVATION_ACCEPTED) {
+                        ++submitted;next_request=GetTickCount64()+request_interval_ms;
+                    } else break; /* Explicit refusal, never busy-loop retry. */
                 }
                 Sleep(1);
             }
@@ -198,6 +205,8 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     request_count=GetPrivateProfileIntA("capture","request_count",1,api->config_path);
     if(!request_count || request_count>16 || (request_count>1 && !request_id))return 1;
     if(request_id && site!=SNOW_DELEGATE_ENGINE_MAIN)return 1;
+    request_interval_ms=GetPrivateProfileIntA("capture","request_interval_ms",0,api->config_path);
+    if(request_interval_ms>1000)return 1;
     duration=GetPrivateProfileIntA("capture","milliseconds",500,api->config_path);
     if(duration<100 || duration>2000)return 1;
     snprintf(trigger,sizeof trigger,"%s.trigger",api->config_path);

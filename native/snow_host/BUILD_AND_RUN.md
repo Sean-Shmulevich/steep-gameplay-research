@@ -800,3 +800,19 @@ pending impulse, gates, preconsume counter and physics-job counter. This is not 
 pose/position reader and not an atomic snapshot. Link checks neither retain the
 actor nor detect address reuse. Build/link `snow_update_snapshot.c` with delegate
 probe users; the public build script now includes it.
+
+### Spacing observations across an input interval
+
+`request_interval_ms=100` spaces admission attempts in a repeated capture; zero
+preserves immediate resubmission. Accepted range is 0–1000 ms. Each next request
+still waits for the previous receipt, and a refusal stops the sequence. Missed
+time is not replayed as a burst. This is host polling, not deterministic frame
+scheduling; callback execution intervals may jitter. The capture duration remains
+bounded at two seconds, so a long interval can yield fewer requests than requested.
+Always check submitted/collected counts and recorded timestamps.
+
+For timed input, warm the input helper and verify target/focus before capture,
+then release a bounded readiness gate. Starting a fresh helper after capture can
+spend the entire observation window in process startup. Preserve key-down/up API
+reports and their clock provenance, plus explicit key-release cleanup. OS delivery
+reports do not prove that the game consumed the input at those timestamps.
