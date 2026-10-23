@@ -65,6 +65,13 @@ cleanup. The current adapter uses original record-copy/cleanup helpers and relea
 the queue lock before cleanup, matching original publication in 54 serial cases. Native manager lifetime,
 competing producers and callback execution phase remain open. See [encoded lock targets](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#encoded-lock-wrapper-targets).
 
+The corrected admission and observer now pass 72 connected original-instruction
+cases through preparation/consumption/dispatch, with no records for refused IDs
+and one per admitted ID in the serial fixture. This is not live callback delivery.
+The consumer also acquires the resource cleanup lock under the queue lock at
+supplied reference boundaries, so qualify lock order by path rather than assuming
+all cleanup is unlocked. Manager ownership searches remain inconclusive.
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain

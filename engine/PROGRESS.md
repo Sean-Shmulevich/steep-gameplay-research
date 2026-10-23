@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Connected corrected compiled admission and observer through original preparation,
+counted consumer, dispatcher and cleanup in 72 serial cases. Admitted IDs each
+produce one observation; refused IDs and a second empty drain produce none. Native
+consumer cleanup enters the resource helper under queue lock in 144 supplied
+boundary occurrences, narrowing earlier producer-specific lock-order conclusions.
+Broadened singleton search includes nearby globals and leaf wrappers without unwind
+entries; no manager ownership mechanism established. No game launch or live delivery.
+Original-instruction integration and repository checks passed; runtime source is
+unchanged, so the previously passing 2193-test suite was not rerun.
+
 Corrected native admission lock ordering. Original temporary-holder cleanup can
 acquire a resource-manager lock at low-24-bit count boundaries, even with payload
 destruction suppressed. The initial outer-lock/full-producer adapter retained the

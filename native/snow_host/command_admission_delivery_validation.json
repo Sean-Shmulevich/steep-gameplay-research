@@ -1,0 +1,39 @@
+{
+  "evidence": "Compiled corrected admission and observer connected through original preparation prefix, counted consumer, dispatcher and cleanup with observed Wine critical-section routines",
+  "cases": 72,
+  "all_passed": true,
+  "consumer_resource_releases_under_queue_lock": 144,
+  "queue_capacities": [
+    1,
+    2,
+    4
+  ],
+  "submissions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "context_tags": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "one_delivery_per_admitted_id_in_cases": true,
+  "no_delivery_for_refused_ids_in_cases": true,
+  "source_overwritten_after_submission": true,
+  "second_empty_drain_creates_no_records": true,
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+  "adapter_dll_sha256": "b633d355cfb2e75ac518c7408121ab7c61d6097e7b6d0ae2f398e273f9938cca",
+  "limitations": [
+    "Serial fixture with retained manager, array, callback owners and code; not a native lifetime proof.",
+    "Synthetic TEB, identity check, clock and thread provider; no live callback phase identity.",
+    "Preparation stops after empty participant traversal; later preparation services excluded.",
+    "No other producer or concurrent counter transfer during publication; no universal exactly-once guarantee.",
+    "Default-holder suppression bit is supplied; destruction, exception and wait/wake paths excluded."
+  ]
+}

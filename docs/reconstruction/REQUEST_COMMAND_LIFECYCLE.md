@@ -369,6 +369,43 @@ singleton found readers but no direct writer. That does not establish permanent
 storage or exclude indirect writers/destructors. Manager teardown, competing
 producers, counter transfers and callback phase remain live-integration gates.
 
+## Connected admission-to-observation validation
+
+The [connected compiled pipeline receipt](../../native/snow_host/command_admission_delivery_validation.json)
+joins the current C admission adapter and C observer through original preparation,
+counted consumption, dispatch and record cleanup. The lock helpers run through the
+observed Wine critical-section implementation with a supplied TEB/thread identity.
+
+Across 72 serial cases (capacities 1/2/4, 1 through 6 attempted submissions and all
+four context tag values), each admitted request ID produces one captured callback;
+refused IDs produce none. Overwriting the descriptor source after publication does
+not change delivery. A second zero-budget drain creates no new records. Every
+record has the expected kind-3 dispatcher return site and receiver. Callback clock
+and thread probes execute with the dispatch lock held and the queue lock released.
+All queue/resource/dispatch lock states return to their initial unlocked state.
+
+This is an end-to-end **local instruction composition**, not live callback delivery
+or a universal exactly-once contract. The fixture retains all owners/code, starts
+with empty queues and includes no competing producers or interleaved counter
+transfers. Preparation stops after its empty participant traversal. Clock, thread
+provider and binding validator are supplied; actual engine phase is not identified.
+
+The integrated consumer additionally reaches the resource-release helper with the
+queue lock held in 144 supplied boundary occurrences. Earlier producer-only
+fixtures did not exercise this path. Consequently:
+
+- Releasing the producer's temporary record after unlocking preserves that
+  producer's local order; it is not a global engine prohibition on nested locks.
+- The old outer-producer wrapper changed a local order, but these results do not
+  establish that it caused a deadlock or introduced a globally new lock edge.
+- Native consumption requires a broader lock-order graph and lifetime analysis.
+
+The manager ownership search also now includes nearby globals and leaf wrappers
+missing from unwind metadata. A descriptor wrapper at `0x653620` merely remaps
+arguments, reloads the singleton and tail-calls the producer. It provides no pin
+or generation token. No manager writer/lifetime mechanism was established by
+these bounded searches; absence from the search is not evidence of permanence.
+
 ## Inspect the behavior without game files
 
 ```sh
