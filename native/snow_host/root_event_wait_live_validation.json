@@ -1,0 +1,58 @@
+{
+  "evidence": "PID/creation-guarded live resolution of root-event wait target",
+  "ok": true,
+  "session_count": 1,
+  "resolved": {
+    "enter_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x21fe0",
+      "exports": [
+        "RtlEnterCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "329049c9b40cb61d9c1879399e3470eefc3904de3d9991911a6253aa8119f2d2"
+    },
+    "leave_helper": {
+      "matching_module_count": 1,
+      "module": "ntdll.dll",
+      "rva": "0x2b540",
+      "exports": [
+        "RtlLeaveCriticalSection"
+      ],
+      "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "980260d888d10762fda9f7a40b165d49dd1798c6bc3ce71e897c09ff731cebd7"
+    },
+    "wait_candidate": {
+      "matching_module_count": 1,
+      "module": "kernel32.dll",
+      "rva": "0x10568",
+      "exports": [
+        "WaitForSingleObject"
+      ],
+      "module_sha256": "759faa48eede76d56dd0cbfabef09f7947ecd802187a5c49d76a3084259fe458",
+      "code_prefix_matches_file": true,
+      "code_prefix_sha256": "9284e9ffaeafbe0e45fcfdc0db4b882760bc954b24ed7f3cc5e239404aa85296"
+    }
+  },
+  "stable_across_resolution": true,
+  "reader_calls": 15,
+  "targeted_read_bytes": 192,
+  "native_wait_called_by_probe": false,
+  "input_sent": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "One Wine session; code-prefix match not full module hash.",
+    "Sequential observation does not prove lifetime or wait completion.",
+    "Probe resolved the target only and did not execute it."
+  ]
+}

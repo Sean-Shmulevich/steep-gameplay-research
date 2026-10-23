@@ -4,7 +4,7 @@
   "cases": 48,
   "rva": "0x662570",
   "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
-  "model_sha256": "dc43633115344c762a9f1d7056d613c041a2dba0cef1b890bbd69774f649c01f",
+  "model_sha256": "2e22d32f7a56ad745b19a1da4b12bb50412b53bf01a91ddb228b98fe9616ecf9",
   "verified": [
     "Owner loaded after initial virtual service, including changed global owner.",
     "Flag stores precede event reset.",

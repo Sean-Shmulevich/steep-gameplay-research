@@ -1,0 +1,18 @@
+{
+  "evidence": "Original root-cycle callback, event signal/wait thunks and outer wait routine with supplied services compared to independent model",
+  "all_passed": true,
+  "completion_cases": 18,
+  "wait_cases": 4,
+  "callback_rva": "0x662440",
+  "wait_rva": "0x6a5230",
+  "wait_slot_rva": "0x3ee3be4",
+  "wait_addend": "0x7ac81225",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "2e22d32f7a56ad745b19a1da4b12bb50412b53bf01a91ddb228b98fe9616ecf9",
+  "limitations": [
+    "Service bodies, job submission and event API targets supplied; no real scheduling or waiting.",
+    "Post-service byte_46 gate validated; writer and whole graph completion unresolved.",
+    "No concurrent memory ordering or whole-engine quiescence established.",
+    "Return values are supplied branch probes, not observed native event failure states."
+  ]
+}

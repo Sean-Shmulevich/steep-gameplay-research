@@ -25,3 +25,38 @@ def submit_root_sequence(*, prepare_service, read_owner, reset_event,
     if owner['byte_58'] == 0:
         prepare_graph(owner)
     return submit_job(owner['root_job'])
+
+
+def finish_root_cycle(owner, *, barrier, current_context, service_context,
+                      finish_service, service_global, prepare_next_cycle,
+                      submit_job, signal_event):
+    """Recovered callback sequence; byte_46 selects resubmit versus signal.
+
+    See Root cycle completion and event wait in REQUEST_COMMAND_LIFECYCLE.md.
+    barrier represents the native locked operation; Python supplies no native
+    memory-order guarantee. All service bodies and callback eligibility remain
+    external. The branch reads byte_46 after prepare_next_cycle returns.
+    """
+    barrier()
+    context = current_context()
+    if context is not None:
+        service_context(context)
+    finish_service()
+    service_global()
+    prepare_next_cycle(owner)
+    if owner['byte_46'] == 0:
+        return submit_job(owner['root_job'])
+    return signal_event(owner['event'])
+
+
+def wait_root_event(*, read_owner, wait):
+    """Read owner once, wait on its event, clear byte_0 after normal return.
+
+    wait(event, timeout) is supplied. The uint32 timeout is 0xffffffff. The native
+    wrapper does not test the wait result before clearing byte_0. This is not
+    proof of successful completion, whole-engine quiescence or safe code unload.
+    """
+    owner = read_owner()
+    result = wait(owner['event'], 0xffffffff)
+    owner['byte_0'] = 0
+    return result

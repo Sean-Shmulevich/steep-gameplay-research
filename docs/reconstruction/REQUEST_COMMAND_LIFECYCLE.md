@@ -649,6 +649,72 @@ receiver's slot `+8`, then calls `0x6a5230`. This supplies a next caller/phase
 lead; those surrounding services and the outer function are not validated by
 the 48-case fixture.
 
+## Root cycle completion and event wait
+
+The caller following root submission reaches `0x6a5230`. It reads the same owner
+singleton, passes the event holder at `owner + 0x48` to wrapper `0x1c3d410`, then
+clears owner byte zero after that call returns. The wrapper loads the handle and
+sets timeout `0xffffffff`. A [read-only live check](../../native/snow_host/root_event_wait_live_validation.json)
+resolves its encoded target to `kernel32!WaitForSingleObject`, module RVA
+`0x10568`, with matching code prefix. The target is decoded as
+`u64(read_u64(image_base + 0x3ee3be4) + 0x7ac81225)`.
+
+The graph setup references callback body `0x662440`, copying its descriptor into
+owner `+0x4f60`, within the embedded job beginning at `+0x4dc8`. That callback's
+normal-return path is:
+
+```text
+finish_root_cycle(owner):
+    locked_memory_barrier()
+    context = current_context()
+    if context != null: service_context(context)
+    global_service.virtual_slot_8()
+    service_other_global()
+    prepare_next_cycle(owner)
+    if owner.byte_0x46 == 0:
+        return submit_job(owner + 0x60)
+    return SetEvent(read_pointer(owner + 0x48))
+
+wait_root_event():
+    owner = read(owner_singleton)
+    result = WaitForSingleObject(read_pointer(owner + 0x48), 0xffffffff)
+    owner.byte_0 = 0
+    return result
+```
+
+`prepare_next_cycle` names the still-partially-decoded `0x658660` service, which
+updates job relationships and samples another global flag. Its full effects are
+not replaced by an invented completion test. The stop-byte test follows all
+services, and the wait clears the originally captured owner's byte even if the
+global pointer changes during the call. There is no check of the wait result in
+this wrapper. Native wait failure has not been observed.
+
+The [independent implementation](../../engine/frame_submission.py) exposes these
+sequences with explicit service adapters. An [original-instruction fixture](../../native/snow_host/root_cycle_validation.json)
+checks 18 callback cases and four wait cases, including optional context service,
+zero/nonzero post-service stop bytes, supplied returns and owner-global changes.
+The original signal and wait thunks execute against synthetic API targets;
+service and job bodies are intercepted. The original root-submission comparison
+still passes all 48 cases with this module revision.
+
+This closes a local submit/resubmit/signal/wait connection. It does not fully explain
+the stop request, prove every dependency completed before the callback,
+qualify the graph's phase relative to physics, or establish manager lifetime and
+plugin unload safety. The wait wrapper has no job-pumping loop, but neither that
+fact nor the resolved API rules out worker execution elsewhere.
+
+A subsequent bounded writer scan finds `0x6652b8` storing one to `+0x46`
+after loading the same owner singleton. Its containing routine `0x665250` calls
+several services first, sets a separate global byte, and checks the owner pointer
+for null before storing. This establishes a static writer lead; its upstream
+trigger and preceding service effects are not validated by the cycle fixture.
+Another write at `0x655e0d` uses a different, unqualified receiver and is not
+assigned to this owner merely because the offset matches.
+
+The live target check used 15 guarded reads / 192 bytes and did not wait, signal,
+submit work or send movement input itself. The game stopped normally and cleanup
+verified saves/settings restoration and the original DLL.
+
 ## Buffer disposal is not callback delivery
 
 The constructor's auxiliary-buffer cleanup leads to clear routine `0x658470`

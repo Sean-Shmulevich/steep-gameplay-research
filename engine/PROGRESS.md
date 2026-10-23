@@ -6138,3 +6138,12 @@ job submission research. `engine.frame_submission` preserves the late owner
 read, flag stores, post-event graph gate and root submission order; 48 original
 instruction cases match supplied-service model effects. The outer caller phase
 and lifetime remain unresolved; this is not command-manager shutdown.
+
+### Root resubmit/signal/wait connection
+
+Connected root submission to a graph-referenced callback that either resubmits
+the root or signals the owner event. The caller waits through a live-resolved
+`WaitForSingleObject` target and clears its active byte without testing the
+return. Eighteen callback and four wait instruction cases match the independent
+model; the 48 submission cases still pass. Stop-byte writer, complete dependency
+ordering and owner lifetime remain unresolved.

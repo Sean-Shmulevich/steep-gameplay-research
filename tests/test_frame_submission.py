@@ -42,3 +42,34 @@ class RootSubmissionTests(unittest.TestCase):
                 reset_event=fail, prepare_graph=lambda owner: self.fail('graph ran'),
                 submit_job=lambda job: self.fail('submission ran'))
         self.assertEqual((owner['byte_0'], owner['byte_46']), (1, 0))
+
+    def test_completion_gate_is_read_after_services(self):
+        from engine.frame_submission import finish_root_cycle
+        for stop, expected in ((0, 'submit'), (1, 'signal'), (255, 'signal')):
+            owner = dict(byte_46=1, root_job='root', event='event'); events = []
+            def prepare(owner):
+                events.append('prepare_next'); owner['byte_46'] = stop
+            result = finish_root_cycle(owner,
+                barrier=lambda: events.append('barrier'),
+                current_context=lambda: 'context',
+                service_context=lambda c: events.append(c),
+                finish_service=lambda: events.append('finish'),
+                service_global=lambda: events.append('global'),
+                prepare_next_cycle=prepare,
+                submit_job=lambda job: events.append('submit') or 7,
+                signal_event=lambda event: events.append('signal') or 9)
+            self.assertEqual(events, ['barrier', 'context', 'finish', 'global', 'prepare_next', expected])
+            self.assertEqual(result, 7 if stop == 0 else 9)
+
+    def test_wait_result_not_checked_and_owner_not_reloaded(self):
+        from engine.frame_submission import wait_root_event
+        for status in (0, 0x102, 0xffffffff):
+            first = dict(byte_0=1, event='first'); second = dict(byte_0=1, event='second')
+            current = [first]
+            def wait(event, timeout):
+                self.assertEqual((event, timeout), ('first', 0xffffffff))
+                self.assertEqual(first['byte_0'], 1)
+                current[0] = second
+                return status
+            self.assertEqual(wait_root_event(read_owner=lambda: current[0], wait=wait), status)
+            self.assertEqual((first['byte_0'], second['byte_0']), (0, 1))
