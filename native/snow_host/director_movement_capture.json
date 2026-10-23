@@ -1,0 +1,75 @@
+{
+  "kind": "native_director_movement_capture",
+  "evidence": "live sequential host polling around bounded OS input delivery",
+  "startup_seconds": 45.4,
+  "startup_inputs": [],
+  "capture": {
+    "ok": true,
+    "method": "sequential host polling; OS input delivery; no evaluator events",
+    "helper_launch_seconds": 2.0161327500245534,
+    "input_exit": 0,
+    "keys_released": true,
+    "samples": 95,
+    "baseline_samples": 19,
+    "max_distance_from_initial": 71.69411612615,
+    "max_speed": 25.92033713801804,
+    "first_step": 1689,
+    "last_step": 2552
+  },
+  "baseline_max_speed": 0.0,
+  "input": {
+    "scan_code": 17,
+    "virtual_key": 87,
+    "requested_hold_ms": 500,
+    "deliveries": [
+      {
+        "key_up": false,
+        "cleanup": false,
+        "foreground_verified_at_delivery": true,
+        "api_reported_sent": 1,
+        "qpc_ticks": 2493685623901,
+        "qpc_frequency": 10000000
+      },
+      {
+        "key_up": true,
+        "cleanup": true,
+        "foreground_verified_at_delivery": true,
+        "api_reported_sent": 1,
+        "qpc_ticks": 2493690594914,
+        "qpc_frequency": 10000000
+      }
+    ]
+  },
+  "initial_position": [
+    -2312.95581,
+    -4273.34521,
+    2385.93262
+  ],
+  "final_position": [
+    -2360.07104,
+    -4285.89258,
+    2333.37061
+  ],
+  "final_velocity": [
+    -13.5255842,
+    -3.48164678,
+    -21.8357639
+  ],
+  "final_player_flags": 3,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "OS delivery and observed movement do not identify the action evaluator or exact input-ingestion time.",
+    "Host samples use request/response monotonic intervals; no calibrated mapping to helper QPC in this capture.",
+    "Player state and scheduler status are sequential reads, not one atomic snapshot.",
+    "No physics substep or evaluator event capture; no deterministic replay claim.",
+    "No manual input was requested; unrelated external user input is not instrumented.",
+    "One pulse from the saved spawn; no repeatability or terrain-independent force inference."
+  ]
+}

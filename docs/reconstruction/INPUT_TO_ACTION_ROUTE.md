@@ -1761,3 +1761,24 @@ publication. An active flag can survive a suppressed refresh, and zero magnitude
 can result from reset alone. Neither is an execution counter. This validation
 does not establish that the selected live rider action uses this history family,
 nor does it execute native map enumeration or manager scheduling.
+
+## Live forward pulse with recording before delivery
+
+A separate native-director session recorded 95 sequential host samples over about
+ten seconds. All 19 baseline samples before the helper launch had zero linear
+velocity. The helper then delivered scan 17 / virtual key 87 for a requested
+500 ms hold, with foreground verification and successful key-down/key-up reports.
+The rider displaced 71.694 units and reached a sampled speed of 25.920 units/s.
+The simulation counter advanced from 1689 to 2552; the final player flags were 3
+and velocity remained nonzero after release. See the
+[movement receipt](../../native/snow_host/director_movement_capture.json).
+
+This establishes a practical startup, baseline, input, movement and release
+capture path. It does not identify the evaluator responsible or measure its
+position within physics scheduling. Input reports include QPC timestamps and
+frequency, but this host polling capture used monotonic request/response times
+without a clock calibration. Do not subtract these different clock values to
+claim ingestion latency. Player and scheduler reads are also sequential.
+
+The game was stopped after capture; save/settings restoration and original DLL
+verification passed. The earlier action-chain run remains idle-only evidence.
