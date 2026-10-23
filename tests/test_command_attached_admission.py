@@ -17,6 +17,7 @@ class AttachedAdmissionTests(unittest.TestCase):
             subprocess.run([cc, '-std=c11', '-Wall', '-Wextra', '-Werror',
                 '-I', str(ROOT/'native/snow_host'),
                 str(ROOT/'native/snow_host/snow_command_admission.c'),
+                str(ROOT/'native/snow_host/snow_command_attachment.c'),
                 str(ROOT/'tests/fixtures/snow_command_attached_admission_fixture.c'),
                 '-o', exe], check=True, capture_output=True, text=True, timeout=30)
             subprocess.run([exe], check=True, capture_output=True, timeout=10)

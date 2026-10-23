@@ -6728,3 +6728,10 @@ original copy retains queued ownership and temporary cleanup releases transferre
 ownership after unlock.24 compiled Windows x64/original-helper cases pass, including
 controlled early queue cleanup. Public host fixtures pass ownership and refusal
 cases. This is not wired into a live host API and does not pin manager or modules.
+
+### Authored attachment owner for experimental native admission
+
+- Added `snow_command_attachment.h/.c`: inspected reference/vtable prefix with authored context/finalizer, initial ownership and explicit caller release on refusal.
+- Compiled Windows x64 implementation joined to original copy/cleanup in 24 emulator cases, including finalization before submission return. Receipt: `native/snow_host/authored_attachment_validation.json`.
+- Host admission fixture now uses the concrete owner and tests refusal release, zero rejection and a finalizer that frees its object.
+- No live game run, module pin, execution receipt or safe unload claim; installation and manager lifetime qualification remain open.

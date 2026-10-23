@@ -2274,3 +2274,38 @@ unchanged ownership on refusal. Existing serial and competing-producer admission
 tests still pass. An obsolete private validator using the old six-field binding
 layout rejects the current eight-field binding; it is superseded by the existing
 copy/cleanup and delivery validators, not evidence of a new runtime failure.
+
+### Authored command attachment implementation
+
+`snow_command_attachment.h/.c` provides caller-owned storage with the inspected
+associated-object prefix: vtable at byte zero, uint32 reference count at byte
+8, and destruction in vtable slot 8. Context and finalizer fields after that
+prefix are our design. Initialization creates one reference before publication;
+initialization is not safe on an already live object. Native copy/cleanup retain
+and release the prefix as described above. Fields remain immutable while retained,
+except for the count changed by ownership operations.
+
+Use `snow_command_attachment_init` with a finalizer, then submit with
+`snow_command_admit_attached`. SUBMITTED consumes the caller's reference. On any
+refusal, the caller retains it and can retry or call
+`snow_command_attachment_release`. The release helper uses atomic decrement via
+CAS; rejecting zero is authored defensive policy, not original behavior or a
+stale-pointer check. It requires an owned reference and retained storage. There
+is deliberately no borrowed-pointer retain operation.
+
+A finalizer receives the attachment and its context and may free storage. It can
+run on a consumer thread, including before submission returns. It must return
+normally and its module must remain loaded through return. The implementation
+does not access the attachment after the callback. Finalization reports ownership
+release, **not execution or completion**. It does not establish safe module unload,
+manager lifetime, descriptor-context association, or live admission qualification.
+
+`native/snow_host/authored_attachment_validation.json` records 24 controlled cases
+connecting compiled Windows x64 initialization, admission, destruction wrapper,
+and refusal release with original command copy/cleanup instructions. The leaf
+finalizer, lock and binding check are supplied. Cases include consumer cleanup
+before producer temporary cleanup and rejection without ownership transfer.
+This is emulation evidence, not a game session. The host fixture separately checks
+actual freeing in a finalizer. Link `snow_command_attachment.c` alongside
+`snow_command_admission.c` when using this interface; it is not automatically
+installed as a host/plugin export.
