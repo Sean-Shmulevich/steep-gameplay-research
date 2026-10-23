@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Connected teardown wait policy to submission: job +0x194 is the existing `usage`
+flag set after synchronous begin, on every normal submit path. Eighteen original
+instruction cases pass. MixedScheduler now exposes read-only teardown_wait_status
+using usage, state and outstanding dispatches, with two integration tests spanning
+submission, callback return, dispatch bookkeeping, empty ranges and resubmission.
+Traced the slot +0x58 service to stable-order queue removal and DONE transition;
+its delegate is not evidence of a full dispatch drain. Next qualify its callers
+and destruction exclusion. Full suite passed: 2102 tests, one skipped. Packaging
+and link checks passed. No live game changes in this pass.
+
 Graphics job lifecycle now has an explicit teardown contract: main invoker is
 cleared before an optional wait on state +0x54 and signed count +0x50; optional
 invokers clear afterward. The base constructor defaults the wait flag to zero.

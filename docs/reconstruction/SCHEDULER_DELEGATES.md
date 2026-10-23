@@ -168,3 +168,68 @@ The locks' implementation and the helper's full effects are outside this local
 inspection. Do not call the +0x150 delegate an all-work-finished or unload-safe
 callback based on its position after this service. Its scheduling caller and
 relationship to active callbacks still need qualification.
+
+## Submission enables the teardown wait
+
+The writer at RVA `0x11e2d06` belongs to the submission routine `0x11e2ca0`,
+whose request/begin behavior is already reconstructed in
+[MixedScheduler](../../engine/mixed_scheduler.py) and the
+[request reducers](REQUEST_STATE_MODEL.md). This closes the previous unknown
+writer relationship for this submission path:
+
+```text
+submit(job):
+    capture_notification_generation()
+    lock(job + 8)
+    if job.state == UNSCHEDULED:
+        job.requested += 1
+        if job.holds == 0: job.virtual_begin()
+    scheduled = job.state == SCHEDULED  // reread after possible begin
+    job.byte_194 = 1
+    unlock(job + 8)
+    service_notification_generation()
+    return scheduled
+```
+
+Profiling calls surround this body under a separate global switch. The wait flag
+is set even when no request is incremented, and even when a synchronous empty
+begin returns the job to UNSCHEDULED. It is set after the virtual begin returns.
+The native comparison precedes the flag store; the saved boolean is returned
+after unlocking and notification service. The [18-case instruction check](../../native/snow_host/submit_lifetime_validation.json)
+varies initial states, holds and begin-result states. It checks the write order,
+request count and returned boolean with profiling disabled and external services
+intercepted. This identifies one writer, not every submission path or flag reset.
+
+`MixedScheduler` already represented this flag as `usage`; no new native flag is
+invented. Its new `teardown_wait_status(name)` connects that existing field to
+the destructor predicate and reports state and outstanding dispatches separately
+from executions. It is read-only and does not destroy a job. Integration tests
+cover queued state with no dispatch yet, callback return before final dispatch
+accounting, final drain, immediate empty-range completion and later resubmission.
+A false `would_wait` result is an instantaneous serial observation, not a permit
+to unload, mutate native descriptors or prevent future requests.
+
+## Queue removal behind the post-service path
+
+The previously opaque helper `0x11e7940` chooses a category queue from job +0x40.
+When the low 32-bit affinity mask at +0x38 is nonzero, its least significant set
+bit selects an entry in service +0x6c0. A nonnull entry selects that worker's
+queue at `worker +0xd0 + category*0x240`. Otherwise the route falls back to
+`service + category*0x240`. The category is sign-extended; valid category bounds
+are a caller invariant, not checked here.
+
+Under the selected queue lock, helper `0xe30420` searches the pointer array at
+queue +0x30 for this job. If found, `0x115b920` shifts the following entries down
+and decrements the count, preserving their order. A miss leaves the array alone.
+The caller ignores that helper's success byte. If job byte +0x170 is nonzero,
+it decrements service +0x8dc regardless of whether removal succeeded. It then
+sets job state to DONE and unlocks the queue. Queue membership and accounting
+consistency are therefore required invariants, not repaired by this routine.
+
+This is static inspection, not a connected emulation of the removal chain.
+The ordinary begin path already called this operation `remove_from_queue`;
+see [begin paths](SCHEDULER_BEGIN_PATHS.md). The new connection is to graphics
+slot +0x58 through `0x11d16f0`. That route can transition to DONE without waiting
+for every outstanding dispatch. Its optional +0x150 delegate must not be exposed
+as an all-dispatches-drained notification. The outer lifecycle exclusion and
+actual callers of slot +0x58 remain open.

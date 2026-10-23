@@ -1,0 +1,17 @@
+{
+  "evidence": "Original submission routine with synthetic begin, lock and notification services",
+  "cases": 18,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x11e2ca0",
+      "length": 176,
+      "sha256": "43fb2936e501bb96ff60431d42380bf01fd28c94d0a2ca70bab7c5dc85f10003"
+    }
+  ],
+  "limitations": [
+    "Profiling branch disabled in fixture.",
+    "Begin callback supplies final state; dependency and queue effects not executed.",
+    "No native concurrency or teardown exclusion proof."
+  ]
+}

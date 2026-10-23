@@ -444,6 +444,20 @@ class MixedScheduler:
                 worker_index=None, helper_id=helper_id, route='helper')
             return token
 
+    def teardown_wait_status(self, name):
+        """Inspect the local destructor predicate without destroying anything.
+
+        See SCHEDULER_DELEGATES.md, "Submission enables the teardown wait".
+        This serial observation is not permission to unload a native plugin.
+        """
+        job = self._job(name)
+        would_wait = job['usage'] and (
+            job['state'] != requests.UNSCHEDULED or job['outstanding_dispatches'] > 0)
+        return dict(wait_enabled=job['usage'], would_wait=bool(would_wait),
+                    state=job['state'], executions=job['executions'],
+                    outstanding_dispatches=job['outstanding_dispatches'],
+                    scope='local teardown predicate; no submission exclusion or unload permission')
+
     def helper_wait_status(self, name):
         """Owned serial observation of the helper's two distinct predicates."""
         job = self._job(name)
