@@ -961,3 +961,9 @@ Run `python3 -m engine.examples.holder_consumption_probe` to compare consumed qu
 entries with successful versus refused holder cleanup. It composes consumer,
 cleanup and pool lookup and reports queue state separately from recycling.
 Synthetic payload services and descriptors do not establish completed disposal.
+
+Run `python3 -m engine.examples.retirement_service_probe` for the joined retirement
+service checkpoint, including preparation, consumption, cleanup, pool recycling,
+worker handoff and post-unlock payload destruction calls. It prints distinct mode,
+retention and reentrancy outcomes. Objects and leaf services remain synthetic;
+the original-instruction receipt documents the exact bounded comparison scope.

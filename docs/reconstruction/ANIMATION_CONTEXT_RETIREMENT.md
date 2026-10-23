@@ -3678,3 +3678,37 @@ wrap/signaling, a nested supplied callback observing the processing gate, and ze
 pending work preserving word208. Native recursive-lock semantics, contention and
 exception unwinding remain unproved. Item bodies have separate validations; this
 comparison does not claim a full concurrent service execution. No live launch.
+
+## Joined retirement-service checkpoint
+
+Run `python3 -m engine.examples.retirement_service_probe`. This composes the
+wrapper, captured-budget preparation, consumer scope, per-item processing,
+cleanup and pool lookup. JSON separates service events, local recycling,
+post-unlock destructor/free calls, worker handoff and supplied lock depth.
+The CLI prints mode-one, mode-zero, retained-reference and reentrant cases.
+The independent Python composition uses synthetic objects and leaf services.
+
+The [joined receipt](../../native/snow_host/joined_retirement_service_validation.json)
+compares 24 original-instruction executions starting at `0x1198820`. Preparation,
+consumer scope/item body, cleanup and pool lookup execute their original
+instructions together; none is replaced by a stub. Cases vary modes 0/1/2,
+reference gate, processing gate and pending worker count. They use zero
+preparation budget, one synthetic holder, sufficient inline output capacity and
+a reserved token. Original event order and final holder, queue, pool, coordination
+and worker fields match the probe. Only locks/signal, payload operations and
+allocator lookup/free are supplied. Three public tests verify the joined outcomes.
+
+This is stronger than isolated arithmetic comparisons, but remains serial and
+bounded. Mode zero dispatches without this wrapper destroying the payload;
+mode one collects then destroys after releasing guards. Mode two can collect
+without this wrapper's mode-one destruction loop, so no universal disposal result
+is assigned to that mode. Retained references skip payload handling. Reentrant
+entry leaves the queue pending. No original resource effects or global completion
+are inferred from these cases.
+
+The composition also exposes nested acquisitions: wrapper then consumer acquire
+the same global-owner +0x1d8 and registry +0xb8 guards; preparation reacquires the
+registry guard. The supplied serial lock tracker reaches depth two and returns
+to zero. This is a call-order observation, not proof of native recursive-lock
+semantics or an authorization to substitute a nonrecursive mutex. Those guard
+implementations and contention behavior are the next synchronization boundary.

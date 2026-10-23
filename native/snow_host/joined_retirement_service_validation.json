@@ -1,0 +1,12 @@
+{
+  "evidence": "Original wrapper, zero-budget preparation, consumer outer/inner, cleanup and pool lookup executed together; leaf services supplied",
+  "cases": 24,
+  "state_and_leaf_event_order_match": true,
+  "probe_sha256": "26c17066e34fb5ac398ff290682c7c88c56af300948562ed500961fc854be762",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "One synthetic holder, zero preparation budget, sufficient inline output, reserved token.",
+    "Native locks, signal, payload virtual/destructor/dispatch and allocator lookup/free supplied.",
+    "No original destructor effects, concurrent ownership, output growth or global scheduler drain demonstrated."
+  ]
+}

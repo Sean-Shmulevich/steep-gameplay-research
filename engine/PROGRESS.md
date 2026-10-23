@@ -6569,3 +6569,12 @@ normalization, dynamic item-loop boundary and pending-to-worker transfer with
 conditional signal. Ninety original empty-ring function cases match state/events;
 three public tests include serial nested-gate behavior. Native lock semantics,
 concurrency and receiving-worker completion remain unresolved. No live launch.
+
+### Joined retirement-service checkpoint validated
+
+Composed six reconstructed components in one runnable probe. Twenty-four original
+wrapper executions match preparation/consumer/cleanup/pool state and leaf event
+order without stubbing those middle routines. Three public integration tests
+cover mode-one destruction, mode-zero dispatch and retained/reentrant refusal.
+Nested guard acquisitions are visible; native guard semantics and contention
+remain the next synchronization boundary. No live game launched.
