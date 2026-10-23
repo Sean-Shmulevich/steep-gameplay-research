@@ -2088,3 +2088,44 @@ only if it equals this embedded participant, and calls the container helper.
 These paths do not yet prove removal from the command manager's participant list.
 The next join is between this participant singleton, manager-list registration,
 and owner teardown, followed by decoding the participant's target operation.
+
+
+## Participant execution bypasses re-deferral
+
+Following the observed participant singleton identifies a producer at RVA
+`0xa7d870`. If the participant singleton is absent it returns immediately.
+Otherwise it obtains the supplied object's holder at +0x180 (or a default holder
+for null input), retains it, and passes it to insertion helper `0xacacf0` on the
+participant's embedded container. The helper releases that temporary holder
+reference on either insertion-result branch. The internal container publication
+and synchronization helpers remain unclassified; this is not a generic mod queue.
+
+The participant's execution target `0x89f730` has a concrete reentrancy rule.
+After its eligibility and ancestor/target-selection work, it calls a getter
+that reads the command manager's execution byte at +0xbc. The selected branch is:
+
+```text
+if manager.executing_byte != 0 and bypass_defer == 0:
+    enqueue_selected_target(selected_target)
+else:
+    apply_operation(selected_target, selected_ancestor, local_zero_word)
+```
+
+The observed participant invokes this target with argument bytes `(0, 1)`;
+the third argument supplies `bypass_defer`. Thus execution of deferred work takes
+the immediate branch even while the manager's executing byte is set. The byte
+is a deferral predicate for this route, not a mutual-exclusion primitive or a
+universal rule for every engine mutation. The complete recursive operation and
+its exact high-level purpose remain unresolved.
+
+`engine.command_mutation_route.select_command_mutation_route` implements this
+local branch for uint8 inputs. The [16-case receipt](../../native/snow_host/command_mutation_route_validation.json)
+executes the original branch and actual byte getter with values 0, 1, 2 and 255
+for each flag. Enqueue/apply bodies are intercepted; all choices match the
+independent function. This does not validate prior target selection, mutation,
+container lifetime, or registration/removal from the command manager.
+
+This gives an end-to-end structural join from executor -> concrete participant
+-> guarded operation -> deferred producer -> participant container. It is not
+an observed execution trace. Next decode container publication/clearing and the
+selected operation, while separately locating manager-list membership writers.

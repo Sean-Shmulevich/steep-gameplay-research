@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined concrete participant execution back to its deferred producer: target
+operation defers when manager executing byte is nonzero unless bypass_defer is
+set; participant passes bypass=1. Sixteen original branch/getter cases match
+new pure routing function. Producer retains object holder and insertion helper
+releases its temporary reference on both result branches. Container internals,
+full operation semantics and manager-list registration/removal remain open.
+
+
 Live command-manager reader observed one stable participant in three startup
 samples. No-op prepare and handle-iteration execute methods identified; table
 references locate embedded owner +0x4b8 construction and singleton-clearing teardown.

@@ -1,0 +1,103 @@
+{
+  "evidence": "Original branch and execution-byte getter emulated; mutation and enqueue bodies intercepted",
+  "cases": [
+    {
+      "executing": 0,
+      "bypass": 0,
+      "route": "immediate"
+    },
+    {
+      "executing": 0,
+      "bypass": 1,
+      "route": "immediate"
+    },
+    {
+      "executing": 0,
+      "bypass": 2,
+      "route": "immediate"
+    },
+    {
+      "executing": 0,
+      "bypass": 255,
+      "route": "immediate"
+    },
+    {
+      "executing": 1,
+      "bypass": 0,
+      "route": "defer"
+    },
+    {
+      "executing": 1,
+      "bypass": 1,
+      "route": "immediate"
+    },
+    {
+      "executing": 1,
+      "bypass": 2,
+      "route": "immediate"
+    },
+    {
+      "executing": 1,
+      "bypass": 255,
+      "route": "immediate"
+    },
+    {
+      "executing": 2,
+      "bypass": 0,
+      "route": "defer"
+    },
+    {
+      "executing": 2,
+      "bypass": 1,
+      "route": "immediate"
+    },
+    {
+      "executing": 2,
+      "bypass": 2,
+      "route": "immediate"
+    },
+    {
+      "executing": 2,
+      "bypass": 255,
+      "route": "immediate"
+    },
+    {
+      "executing": 255,
+      "bypass": 0,
+      "route": "defer"
+    },
+    {
+      "executing": 255,
+      "bypass": 1,
+      "route": "immediate"
+    },
+    {
+      "executing": 255,
+      "bypass": 2,
+      "route": "immediate"
+    },
+    {
+      "executing": 255,
+      "bypass": 255,
+      "route": "immediate"
+    }
+  ],
+  "all_passed": true,
+  "model_compared": true,
+  "spans": [
+    {
+      "rva": "0x89f862",
+      "length": 46,
+      "sha256": "86dfc6c7dd199c22a573c0f1b80b84a2488ef7044d9028ff05f9cea370a70c36"
+    },
+    {
+      "rva": "0x674bb0",
+      "length": 15,
+      "sha256": "c9e0ffa8bc26288030af9919cdab2b31521b4dfa9835e222d722bafa508d40b7"
+    }
+  ],
+  "limitations": [
+    "Prior target eligibility/ancestor selection is not executed.",
+    "No actual object mutation, queue insertion, registration, lifetime or concurrent execution is validated."
+  ]
+}
