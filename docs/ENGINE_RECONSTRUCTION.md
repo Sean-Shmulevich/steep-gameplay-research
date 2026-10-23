@@ -125,3 +125,11 @@ For a scoped module, completeness means its agreed behavior and dependencies are
 - [Asset interface review](reconstruction/research/assets.md)
 - [Scheduler and publication contracts](reconstruction/research/scheduler.md)
 - [Shared motion and snow action storage](reconstruction/research/input-probes.md)
+
+## Resource lifetime implementation checkpoint
+
+The [resource retirement guide](reconstruction/RESOURCE_RETIREMENT.md) maps the
+implemented preparation, queue, cleanup, pool and post-unlock service components.
+It links runnable probes and separates instruction comparisons, simulated lock
+handoffs and real-thread platform fixtures. Native object lifetime and callback
+completion remain explicit integration requirements.

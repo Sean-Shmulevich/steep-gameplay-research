@@ -6605,3 +6605,18 @@ scenarios pass, including try-enter refusal, partial-release exclusion, final
 handoff, exclusive worker ownership and main-thread reacquisition. Compiled with
 warnings as errors. Bottle idle before/after; no game loaded. This qualifies the
 platform primitive, not live game adapters, resource lifetime or unload safety.
+
+### Retirement integration and navigation checkpoint
+
+Added a concise subsystem guide mapping nine implementation stages, runnable
+probes, evidence scopes and the remaining native ownership contracts. Linked it
+from the system index, engine reconstruction guide and runtime README.
+
+The full public suite ran 2,286 tests successfully with one optional dependency
+skip. The skipped Win64 entry-thunk test then passed separately using the existing
+pefile/unicorn analysis dependencies. An initial run had 13 native build errors:
+selected Xcode's linker could not parse the newer Command Line Tools SDK's
+architecture records. A process-local matching SDK selection resolved them; no
+source or system configuration change was needed. These tests validate the
+independent implementation and authored fixtures, not full original-engine
+coverage. No game launch in this checkpoint.

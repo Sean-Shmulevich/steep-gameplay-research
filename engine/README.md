@@ -967,3 +967,19 @@ service checkpoint, including preparation, consumption, cleanup, pool recycling,
 worker handoff and post-unlock payload destruction calls. It prints distinct mode,
 retention and reentrancy outcomes. Objects and leaf services remain synthetic;
 the original-instruction receipt documents the exact bounded comparison scope.
+
+For a concise implementation map and evidence boundaries across these probes,
+see [Resource retirement reconstruction](../docs/reconstruction/RESOURCE_RETIREMENT.md).
+
+If macOS native fixture linking reports an unknown architecture in an SDK `.tbd`
+file, first check that the compiler and SDK belong to the same selected developer
+toolchain. A process-local SDK selection can avoid a mismatched Command Line Tools
+SDK without changing system settings:
+
+```sh
+SDKROOT="$(env DEVELOPER_DIR="$(xcode-select -p)" xcrun --sdk macosx --show-sdk-path)" \
+  python3 -m unittest discover -s tests
+```
+
+The optional Win64 entry-thunk test additionally needs MinGW, `pefile` and
+`unicorn` on the Python path. A skipped optional test is not a passing execution.

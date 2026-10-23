@@ -17,6 +17,8 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 
 ## Scheduler reconstruction
 
+- [Resource retirement implementation and evidence map](reconstruction/RESOURCE_RETIREMENT.md)
+
 - [ActionKit resource pointer cache](reconstruction/ACTION_KIT_CACHE.md)
 
 - [Central impulse and rotation-preserving boost](reconstruction/CENTRAL_IMPULSE.md)
