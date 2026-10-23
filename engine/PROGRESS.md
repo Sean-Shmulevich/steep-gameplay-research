@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Input caller copies current caches to previous before polling and edge stamping.
+Device poll helpers match 144 original cases, preserving partial failed writes
+and reacquisition-without-repoll behavior. Reactivation also clears the cutoff,
+so owner release is not its only writer. Full caller gates and scheduler
+placement remain open. See [poll/copy order](../docs/reconstruction/MOTION_MEMBERSHIP_OBSERVATION.md#input-cache-polling-and-copy-order).
+
 Cached input edge timestamps reconstructed: 512 complete original-updater
 cases match all arrays and clock fields. Held keys retain timestamps; ordinary
 and special-byte zero-to-nonzero edges refresh them. Secondary stamps read the

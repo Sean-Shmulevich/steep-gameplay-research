@@ -1,0 +1,15 @@
+{
+  "evidence": "Original two device polling helpers with supplied virtual device methods",
+  "cases": 144,
+  "passed": true,
+  "comparison": "Exact buffer bytes, boolean status and device call order/count",
+  "substitutions": [
+    "Device GetState and Acquire behavior"
+  ],
+  "limits": [
+    "No physical input device or OS integration",
+    "Original unbounded retry loop represented by explicit finite fixtures",
+    "Null output pointer path excluded"
+  ],
+  "game_process": false
+}

@@ -2527,3 +2527,51 @@ nonzero again. Other cache resets or writers could alter that sequence, so
 physical re-press requirements and specific menu behavior remain unproved.
 Next: trace the updater's callers and current/previous cache-copy order to
 place these transitions relative to action queries and simulation work.
+
+### Input cache polling and copy order
+
+The inspected direct caller of the edge timestamp updater is RVA `0x11785c0`.
+After preliminary calls/initialization, it copies 256 current key bytes to the
+previous-key array and the 20-byte current packet to the previous packet.
+It then follows focus/device/service gates. The ordinary enabled route polls
+current caches before calling the timestamp updater at `0x1178867`. Later it
+compares current/previous keys and packets and sends change notifications.
+This establishes ordering inside this caller, not its placement relative to
+physics jobs or every effect of the preliminary calls.
+
+The caller also contains paths that clear input and return without stamping.
+A disabled-service reactivation branch clears both key arrays, both packets
+and the freshness cutoff, then exits. This is an additional cutoff writer,
+superseding any interpretation of ownership release as the only runtime
+writer. It makes a physical re-press requirement conditional on which reset
+path runs. Focus/API identity and full reactivation conditions remain open.
+
+[`poll_device_cache`](../../engine/action_device_poll.py) reconstructs the two
+polling helpers, RVAs `0x1178020` and `0x1178090`, with explicit callbacks for
+virtual device methods. Ordinary polling clears only the first eight of 256
+output bytes; packet polling clears all 20 bytes. An absent device returns
+false after that initialization. A present device receives one state-read
+call at vtable+0x48. Any HRESULT with its high bit clear returns true, including
+nonzero success codes.
+
+On failure, the helper calls vtable+0x38 and repeats that reacquisition call
+while its return equals `0x8007001e`. It then returns false. It does not issue
+another state-read call during this invocation, and it does not undo partial
+buffer writes made by a failed read. Thus ordinary keyboard tail bytes can
+remain stale if the device does not overwrite them. The higher caller does
+not branch on the ordinary poll helper's returned boolean at this call site;
+other gates and clearing paths still affect subsequent processing.
+
+The portable helper makes the external device effects explicit: get_state may
+modify a detached bytearray and returns HRESULT bits. Reacquisition has a
+caller-selected attempt limit, default 64, and raises on exhaustion. This is
+an inspector safeguard; the original loop has no bound here. No synchronization,
+OS integration or physical device identity is implied.
+
+The [polling receipt](../../native/snow_host/device_poll_validation.json)
+records 144 original-helper comparisons of exact output bytes, boolean status
+and device call order/count. Cases cover absent devices, success/failure,
+partial/full/no device writes and repeated reacquisition. Only virtual device
+calls are supplied. The null output-pointer route is excluded from the public
+buffer API. Next: trace callers of `0x11785c0` and the cache notification path
+to connect this local order with action evaluation and scheduler generations.
