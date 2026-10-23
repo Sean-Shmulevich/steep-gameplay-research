@@ -37,9 +37,9 @@ original-DLL hash check apply to both.
 | startup map (region overview, drop zones) | input | map key (closes the map) |
 | gameplay HUD | | |
 
-The startup map is closed rather than confirmed. Closing it leaves the rider
-where the profile spawns. Choosing a drop zone there could later give a
-repeatable spawn, but this is untested.
+The startup map is closed rather than confirmed. Closing it leaves the rider at
+the profile's spawn, which is repeatable (see below). Choosing a drop zone there
+could give a different, chosen spawn; this is untested.
 
 ## Static findings (no launch)
 
