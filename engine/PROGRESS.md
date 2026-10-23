@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Connected the native history reader to the recorder through a fresh resolver
+callback, bracketed around each observation. Reader/recorder integration fixtures
+pass, including changed resolution and late forwarding; combined Windows fixture
+build passes. Actual player-to-history-action resolution remains unimplemented
+and the known live vector/directional children are not assumed to be this type.
+See [resolver adapter](../native/snow_host/README.md#fresh-resolution-history-recorder-adapter).
+
 Implemented the bounded native history-action reader. It preserves two dynamic
 samples and raw float bits, separates identity instability, and clears samples
 on failed reads. Six native fixtures pass and MinGW compilation succeeds. Caller

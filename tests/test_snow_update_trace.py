@@ -35,6 +35,7 @@ class SnowUpdateTraceTests(unittest.TestCase):
             subprocess.run([cc, '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror',
                             '-pthread', '-I', str(source), str(source/(name+'.c')),
                             str(ROOT/('tests/fixtures/'+name+'_fixture.c')),
+                            *([str(source/'snow_update_trace.c')] if name=='snow_history_observation' else []),
                             '-o', str(exe)], check=True, capture_output=True, text=True, timeout=60)
             result = subprocess.run([str(exe)], check=True, capture_output=True, text=True, timeout=10)
             self.assertIn('PASS:', result.stdout)

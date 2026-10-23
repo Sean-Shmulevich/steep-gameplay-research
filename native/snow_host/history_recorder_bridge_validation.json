@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "evidence": "authored native reader-recorder integration fixture",
+  "game_process": false,
+  "checks": [
+    "Fresh resolver bracket around each two-sample observation",
+    "Changed/failed resolution clears output",
+    "Configuration instability and read failure rejected",
+    "Dynamic clock changes accepted",
+    "Actual reader callback used by actual recorder before and after authored original",
+    "Four resolver calls per fully observed actor callback; none on late closed forwarding",
+    "Six native fixture tests pass",
+    "Combined Windows fixture cross-compiles with warnings as errors"
+  ],
+  "limits": [
+    "Resolver is synthetic fixture code, not a live actor action-chain implementation",
+    "No active player history-sector source established",
+    "No native hook installation or game access",
+    "Two matching resolutions do not provide lifetime or atomicity guarantees"
+  ],
+  "source_sha256": {
+    "native/snow_host/snow_history_observation.c": "aa4fc4eba3f665a0ccac01d4278ae48879b98e5eec34226bd9f8344445aa5daf",
+    "native/snow_host/snow_history_observation.h": "c3570f6cda9be775f0c73edaac19ee1fa741036c6a90ff8400c23976d689f9eb",
+    "tests/fixtures/snow_history_observation_fixture.c": "5b0bd0c8223d4b3d719e6ad1e4d37a74c29b2e2b3edfc8a028ce01b2f584d23d"
+  }
+}

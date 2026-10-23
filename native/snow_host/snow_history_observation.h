@@ -15,4 +15,20 @@ typedef struct {
  * Caller verifies build and resolves fresh action provenance before each call.
  * No game calls, writes, polling or native recorder enablement. */
 int snow_history_observe(SnowEntryRead,void *,const SnowHistoryProfile *,SnowHistoryCapture *);
+/* Resolver must establish current actor-to-action provenance, not return a
+ * saved action pointer. It is bounded, non-mutating, thread-safe and returns
+ * exactly 1 with a nonzero action. Its read budget is additional to the reader.
+ * All callbacks/context must remain alive under the recorder lifetime contract. */
+typedef int (*SnowHistoryResolve)(void *,void *,uint64_t *);
+typedef struct {
+    SnowEntryRead read;
+    void *read_context;
+    SnowHistoryResolve resolve;
+    void *resolve_context;
+    uint64_t table,callback,receiver_slot,fallback_clock_slot;
+} SnowHistoryTraceContext;
+/* Matches SnowUpdateHistoryRead. Resolves before and after a two-sample read;
+ * returns only the second sample when identities and action resolution agree.
+ * Invalid output is zeroed. This is observer plumbing, not a game resolver. */
+int snow_history_trace_read(void *,void *,SnowHistoryActionObservation *);
 #endif

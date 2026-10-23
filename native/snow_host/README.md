@@ -1113,3 +1113,34 @@ A recorder callback may retain the second sample only after return 1, but must
 not discard the two-sample semantics when making temporal claims. Return 1 does
 not prove atomicity, ownership, producer execution or input freshness. No live
 capture, hook installation or game launch was performed.
+
+### Fresh-resolution history recorder adapter
+
+`snow_history_trace_read` matches the recorder's `SnowUpdateHistoryRead` callback.
+Its `SnowHistoryTraceContext` contains the exact reader, a caller-supplied actor-
+to-action resolver, expected table/evaluator and clock-global slots. It contains
+no retained action pointer. The resolver runs before the two-sample read and
+again afterward; both must return the same nonzero action with return code 1.
+The observation must also have matching identities/settings. Only then does the
+adapter copy the second sample into the recorder. Every refusal clears output.
+
+This adapter deliberately discards the first dynamic sample when filling one
+recorder boundary. Use `snow_history_observe` directly when both observations
+are needed. Neither matching resolver calls nor matching identities provide
+lifetime protection, detect ABA, prove active ownership or count inner execution.
+The resolver contract must be implemented from fresh chain evidence; returning a
+cached pointer would violate it.
+
+A before/after actor record can therefore cost up to 64 memory reads / 2,048
+requested bytes for this channel, plus up to four resolver invocations and their
+separate read budget. Existing attribution/motion observations add their own
+cost. These are bounds, not a measured safe live capture rate.
+
+The native integration fixture runs the real reader through the real recorder
+around an authored original callback. It checks four resolver calls, before/after
+clock values, late forwarding without observations, changing resolution,
+configuration instability and failed reads. Six native fixture tests pass and
+the combined fixture cross-compiles for Windows. No live resolver or probe
+configuration has been enabled. The previously observed player chain's vector
+and directional source types do not by themselves prove that this history-sector
+source is active; do not attach this reader to either of those other types.

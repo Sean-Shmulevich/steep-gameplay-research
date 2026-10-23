@@ -22,7 +22,56 @@ static void setup(void) {
     put(0xa050,100,8);put(0xb008,200,8);
     put(0x2010,9000,8);put(0x21b0,0x7fc01234,4); /* Preserve NaN payload as bits. */
 }
+static unsigned resolves;
+static int resolver_mode;
+static int resolve_action(void *ctx,void *actor,uint64_t *out) {
+    assert(ctx==(void *)0x10 && actor==(void *)0x20);resolves++;
+    *out=0x1000;
+    if(resolver_mode==1 && resolves==2)*out=0x1100;
+    if(resolver_mode==2)return 0;
+    return 1;
+}
+static void check_trace_reader(void) {
+    SnowHistoryTraceContext ctx={read_mem,0,resolve_action,(void *)0x10,0x5000,0x6000,0x7000,0x7008};
+    SnowHistoryActionObservation out,zero={0};
+    setup();resolves=0;resolver_mode=0;
+    assert(snow_history_trace_read(&ctx,(void *)0x20,&out)==1 && resolves==2);
+    assert(out.action==0x1000 && out.clock_ticks==100);
+    setup();resolves=0;resolver_mode=1;
+    assert(!snow_history_trace_read(&ctx,(void *)0x20,&out));
+    assert(!memcmp(&out,&zero,sizeof out));
+    setup();resolves=0;resolver_mode=2;
+    assert(!snow_history_trace_read(&ctx,(void *)0x20,&out) && !reads && resolves==1);
+    setup();resolves=0;resolver_mode=0;mutate=1;
+    assert(!snow_history_trace_read(&ctx,(void *)0x20,&out) && resolves==1);
+    setup();resolves=0;resolver_mode=0;mutate=2;
+    assert(snow_history_trace_read(&ctx,(void *)0x20,&out)==1 && out.clock_ticks==reads);
+    setup();resolves=0;resolver_mode=0;fail_at=1;
+    assert(!snow_history_trace_read(&ctx,(void *)0x20,&out) && !memcmp(&out,&zero,sizeof out));
+}
+static unsigned original_calls;
+static void original(void *actor,float elapsed,float derivative) {
+    assert(actor==(void *)0x20 && elapsed==1 && derivative==2);
+    original_calls++;put(0xa050,101,8);
+}
+static void snapshot(void *actor,SnowUpdateSnapshot *out) {(void)actor;out->valid=1;}
+static uint64_t tick(void) {return 1;}
+static void check_recorder_integration(void) {
+    SnowUpdateTrace trace;SnowUpdateRecord row;
+    SnowHistoryTraceContext ctx={read_mem,0,resolve_action,(void *)0x10,0x5000,0x6000,0x7000,0x7008};
+    setup();resolves=0;resolver_mode=0;original_calls=0;
+    assert(snow_trace_init(&trace,&row,1,original,snapshot,tick,tick));
+    snow_trace_call_with_history(&trace,(void *)0x20,1,2,0,0,0,0,snow_history_trace_read,&ctx);
+    snow_trace_close(&trace);assert(snow_trace_drained(&trace));
+    assert(row.history_attempted && row.history_before_valid && row.history_after_valid);
+    assert(row.history_before.clock_ticks==100 && row.history_after.clock_ticks==101);
+    assert(resolves==4 && original_calls==1);
+    snow_trace_call_with_history(&trace,(void *)0x20,1,2,0,0,0,0,snow_history_trace_read,&ctx);
+    assert(resolves==4 && original_calls==2);
+}
 int main(void) {
+    check_trace_reader();
+    check_recorder_integration();
     SnowHistoryCapture c;setup();assert(snow_history_observe(read_mem,0,&profile,&c)==1);
     unsigned total=reads;assert(c.reads==reads && reads<=32 && c.bytes<=1024);
     assert(c.identities_match && c.dynamic_equal && c.samples[0].clock_ticks==100);

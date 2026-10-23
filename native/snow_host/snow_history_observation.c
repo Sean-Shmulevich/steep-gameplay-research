@@ -76,3 +76,17 @@ int snow_history_observe(SnowEntryRead read,void *ctx,const SnowHistoryProfile *
         !memcmp(x->history_c_bits,y->history_c_bits,sizeof x->history_c_bits);
     return out->identities_match?1:2;
 }
+
+int snow_history_trace_read(void *context,void *actor,SnowHistoryActionObservation *out) {
+    if(!out)return 0;
+    memset(out,0,sizeof *out);
+    const SnowHistoryTraceContext *c=context;
+    if(!c || !c->read || !c->resolve || !actor)return 0;
+    uint64_t before=0,after=0;
+    if(c->resolve(c->resolve_context,actor,&before)!=1 || !before)return 0;
+    SnowHistoryProfile p={before,c->table,c->callback,c->receiver_slot,c->fallback_clock_slot};
+    SnowHistoryCapture capture;
+    if(snow_history_observe(c->read,c->read_context,&p,&capture)!=1)return 0;
+    if(c->resolve(c->resolve_context,actor,&after)!=1 || after!=before)return 0;
+    *out=capture.samples[1];return 1;
+}
