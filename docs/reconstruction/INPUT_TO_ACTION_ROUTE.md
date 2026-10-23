@@ -1859,3 +1859,35 @@ ends. It is not continuous binding verification: transient replacement or reuse
 between observations remains possible. It also does not identify the enclosing
 scheduler job, establish physics substep ordering, or prove ingestion timing.
 The next experiment needs concurrent actor-update events in the same QPC domain.
+
+## Concurrent evaluator and actor-update ordering
+
+A combined live run records the selected directional evaluator and the rider's
+actor update inside the same game process using QPC frequency 10,000,000. Action
+binding roots and child identity tuples agree before and after capture. Both
+hooks restore and drain successfully; neither recorder reports dropped records.
+See the [temporal join receipt](../../native/snow_host/live_action_physics_join.json).
+
+The trace contains 575 selected evaluator events and 224 actor-update intervals.
+All 224 updates fit strictly between a completed selected evaluation and the next
+selected evaluation, with no overlap. There are 212 occupied evaluation gaps:
+200 contain one update and 12 contain two. Every update has valid job attribution,
+direct batch-frame decoding and motion observations. The measured gap from the
+preceding evaluator exit to actor-update entry ranges from 0.904 to 4.388 ms,
+median 1.427 ms; this includes scheduling and observation overhead, not input
+latency.
+
+Every two-update group shares one request, reports selected count 2, and advances
+its directly decoded substep ordinal from 0 to 1. Both substeps see identical
+ingested-input bits, with no selected evaluator call between them. The before
+and after ingested-input samples also agree within all 224 updates. This is live
+evidence that the selected action need not reevaluate for every actor substep.
+It does not prove an upstream producer never rewrote an identical value.
+
+Remaining boundary: identify the actual input-copy operation and correlate its
+source payload with these events. Temporal precedence alone is not dataflow.
+The actor-update entry is not the entire world solver boundary. The old export
+summary has a hardcoded `substep_available: false`; use each record's validated
+`frame_valid`, ordinal and selected count for the direct evidence here. The
+runner verified movement, key release, both restorations and final save/settings
+cleanup. Generalization requires more inputs, sports and scheduling conditions.

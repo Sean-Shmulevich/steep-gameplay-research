@@ -1,0 +1,77 @@
+{
+  "update_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 224,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 224,
+    "other_calls": 0
+  },
+  "selected_action_events": 575,
+  "updates": 224,
+  "update_action_overlaps": 0,
+  "updates_between_adjacent_evaluations": 224,
+  "updates_per_occupied_action_gap": {
+    "1": 200,
+    "2": 12
+  },
+  "action_exit_to_update_entry_seconds": {
+    "min": 0.0009037,
+    "median": 0.0014269,
+    "max": 0.0043883
+  },
+  "attributed": 224,
+  "frame_valid": 224,
+  "motion_valid": 224,
+  "update_threads": 10,
+  "action_threads": 10,
+  "kind": "live_action_physics_temporal_join",
+  "evidence": "concurrent in-process QPC evaluator and actor-update instrumentation",
+  "selected_action_id": 118,
+  "root_identity_fields_equal": true,
+  "child_identity_tuples_equal": true,
+  "action_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 5175,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "paired_substeps": {
+    "groups": 12,
+    "ordinals": [
+      0,
+      1
+    ],
+    "selected_count": 2,
+    "all_pairs_same_request": true,
+    "all_pairs_same_ingested_input_bits": true,
+    "intervening_selected_evaluations": 0
+  },
+  "ingested_input_unchanged_within_updates": 224,
+  "player_moved": true,
+  "keys_released": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "One instrumented live run, not an invariant for all modes and inputs.",
+    "Endpoint binding checks do not guarantee continuous object lifetime.",
+    "Temporal bracketing does not prove a data dependency or identify input-copy instruction.",
+    "Identical input bits do not prove the producer never rewrote the same value.",
+    "Actor update entry is not the complete physics-world solver boundary.",
+    "The legacy summary substep_available flag is false; per-record frame_valid and decoded ordinal/count are the direct substep evidence.",
+    "Recorder overhead affects timings; reported lag is not input latency."
+  ]
+}

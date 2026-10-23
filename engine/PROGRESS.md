@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Combined live capture joins 575 selected evaluator calls with 224 attributed
+actor updates, no drops. All updates lie between adjacent evaluations; 12
+requests contain two directly decoded substeps with unchanged ingested bits and
+no intervening selected evaluation. Both hooks restored/drained and movement
+verified. Input-copy instruction/dataflow and broader generality remain open.
+See [temporal join](../native/snow_host/live_action_physics_join.json).
+
 Repeated live capture with selected-action lookup before/after: root and child
 identities agree, and the directional child matches 518 evaluator calls. All
 4,662 class records form 518 nine-action groups with no drops. Movement and
