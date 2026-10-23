@@ -61,3 +61,11 @@ Associated destruction uses old full count ==1; holder release uses new low24 ==
 Holder aliases are preserved and decremented twice. Supplied release services
 must preserve record/holder state. No concurrency or native lifetime pin is
 provided; repeated cleanup is not an idempotent operation.
+
+`holder_release_queue.release_holder_to_queue` models serial valid-ring behavior
+with caller-supplied lock, growth, cleanup and post-unlock services. Bit 24 is set
+before growth. Growth return values are ignored; current header capacity controls
+insertion. Failed normal-return growth can leave a flagged, unqueued holder and
+still trigger post-unlock service. Diagnostic insertion receipts are authored,
+not native return values or disposal receipts. No concurrent or exception-safety
+contract is supplied.

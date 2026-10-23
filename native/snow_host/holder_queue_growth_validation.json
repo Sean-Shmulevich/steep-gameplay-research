@@ -1,0 +1,39 @@
+{
+  "evidence": "Original holder release instructions with supplied normal-return growth, locks and services",
+  "cases": 144,
+  "state_and_service_order_match": true,
+  "initial_rings": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      4,
+      4,
+      3
+    ],
+    [
+      4,
+      2,
+      3
+    ]
+  ],
+  "growth_results": [
+    "unchanged capacity",
+    "replacement storage with capacity eight and tail zero"
+  ],
+  "routine_rva": "0x11a8a10",
+  "routine_sha256": "fc36d0e4b67c9277f458e134618eb4b292209fa5da566ccaea578c69c7e5dbcc",
+  "model_sha256": "75707929407a9fcd544e50e69de99f0b8eeb676031828751bb6acca22be99415",
+  "limitations": [
+    "Growth implementation and native allocation failure behavior are supplied.",
+    "No concurrent mutations, lock internals, consumer execution or disposal completion tested.",
+    "Flags set without insertion are proved for supplied unchanged-capacity growth; occurrence in live game is not established."
+  ]
+}

@@ -3323,3 +3323,41 @@ category 1, where auxiliary preparation ends the pass with categories 2 and 3
 still pending. No native threading or submission safety is implied. See the
 [consolidated lifecycle guide](REQUEST_COMMAND_LIFECYCLE.md) for the connected
 contracts, executable entry points and remaining release gates.
+
+## Holder queue growth and failed insertion
+
+`engine.holder_release_queue.release_holder_to_queue` extends the earlier
+stable-capacity route with supplied growth, lock and post-unlock services. It
+models the same routine at `0x11a8a10`, not a new native entry point. Its ring
+fields are storage +0, count +8, tail +0xc, head +0x10 and capacity +0x14 at
+registry +0x98. The accepted serial contract uses valid nonnegative ring fields.
+
+On the enqueue route the routine sets holder status bit 24 first. If capacity
+is no greater than count, it calls `0x11af100(ring, uint32(capacity+0x4000), 1)`.
+It then reloads count and capacity. Only positive available space permits storing
+the holder, incrementing count and advancing tail modulo capacity. Storage and
+tail are also read after the supplied growth call. The growth return register
+is not checked. The helper's allocation strategy and exception behavior remain
+unresolved.
+
+If a normal-return growth service leaves the ring full, **bit 24 remains set but
+no holder is inserted**. The routine still checks registry mode and may classify
+the current thread and run the post-unlock service. Thus neither the flag nor the
+service call proves successful queue insertion. A subsequent stable-input release
+with that flag already set skips growth and insertion. This does not prove a live
+allocation failure causes permanent retention: actual growth failure policy and
+other flag-reset paths remain unknown.
+
+The [growth comparison receipt](../../native/snow_host/holder_queue_growth_validation.json)
+covers 144 original-instruction cases: zero/full/available capacity, unchanged or
+replaced storage on growth, three modes, two thread classifications and three
+status gates. Counter/header changes, slot writes, flags and exact service order
+match the model. Four public tests cover failed insertion, replacement storage,
+existing capacity and repeated release after failure. Growth, locks and external
+services are supplied. No live game or native failure injection was used.
+
+The returned `enqueued`, `growth_requested` and `post_unlock_service` values are
+our diagnostic interface. The original routine supplies no equivalent admission
+receipt here. These diagnostics do not mean payload destruction or scheduler
+callback completion. Supplied service exceptions expose partial progress; no
+native exception unwinding or guaranteed unlock-on-error behavior is claimed.

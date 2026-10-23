@@ -2040,3 +2040,10 @@ services are required to return normally without mutating the modeled record or
 holder state. Python exceptions expose partial progress without rollback; native
 unwinding is not established. No descriptor invoker is called. Neither this helper
 nor its composition locates the manager destructor or authorizes plugin unload.
+
+The holder-release service used above is the same routine covered by
+[deferred-holder routing](ANIMATION_CONTEXT_RETIREMENT.md#holder-release-versus-scheduler-callback-drain)
+and the [growth boundary](ANIMATION_CONTEXT_RETIREMENT.md#holder-queue-growth-and-failed-insertion).
+A record reaching its low-24-bit release threshold may therefore queue later work
+rather than complete disposal. The growth model separately reports whether that
+queue insertion actually happened; setting the holder flag is insufficient.

@@ -6483,3 +6483,12 @@ low-24-bit release gates. All 784 original-instruction comparisons match supplie
 release-service events and state, including holder aliases. Four public tests
 include buffer-disposal composition. No live launch. Final destruction-service
 bodies, manager shutdown and concurrent lifetime acquisition remain unresolved.
+
+### Holder queue growth boundary modeled
+
+Connected record release to the existing deferred-holder routing research and
+extended the route with supplied capacity growth. All 144 original-instruction
+cases match state, slot writes and service order. Four public tests cover failed
+insertion, replacement storage, available capacity and retry suppression by the
+queued flag. Bit 24 and the post-unlock service do not imply insertion. Native
+growth internals and failure policy remain unresolved. No live launch.
