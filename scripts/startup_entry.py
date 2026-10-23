@@ -35,6 +35,7 @@ ENTER, MAP_KEY, ESCAPE = 28, 50, 1
 INTRO_KEYS = {'enter': ENTER, 'escape': ESCAPE}
 # Existing transitions only; same keys as the original navigator.
 TRANSITIONS = {'title': ENTER, 'offline_notice': ENTER, 'tutorial': ENTER, 'map': MAP_KEY}
+POST_TITLE_STATES = frozenset({'offline_notice', 'tutorial', 'map', 'gameplay'})
 RETRY_SECONDS = 5.0      # same screen still showing after an input
 MAX_INPUTS_PER_STATE = 4
 NATIVE_CONFIRMATIONS = 2  # consecutive native samples agreeing with the HUD
@@ -209,8 +210,10 @@ def navigate(game, budget, clock=time.monotonic, sleep=time.sleep, policy=None, 
         if (state == 'unknown' and text.strip() and result['title_first_t'] is None and not policy.inputs
                 and not result.get('loading_seen')):
             state = 'intro'  # a visible pre-title screen (videos, notices)
-        # The player cannot exist before the title; skip refused reads until a menu transition.
-        native = game.native(want_player=bool(policy.inputs))
+        # The player cannot exist before the title; skip refused reads until a menu transition,
+        # a loading screen or a post-title screen (hands-off runs may send no menu input).
+        native = game.native(want_player=bool(policy.inputs or result.get('loading_seen')
+                                              or state in POST_TITLE_STATES))
         t = round(clock() - start, 1)
         if stop_at is not None and state == stop_at:
             action, detail = 'stopped', None  # leave this screen to the caller, no input

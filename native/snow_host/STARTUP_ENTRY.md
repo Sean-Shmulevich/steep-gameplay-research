@@ -143,11 +143,30 @@ up after its 75 s limit. The runner then failed the session and cleaned up:
 settings restored, bottle stopped and original DLL verified. Two earlier
 navigation failures also shut down cleanly.
 
+## Native director, 2026-10-23 ([receipt](startup_native_director.json))
+
+A private in-process plugin (build-specific, not published) now handles two screens
+through the game's own calls, using per-class vtable slot swaps that are restored on
+unload:
+
+- Startup map: 1.5 s after the in-game flow event it posts the back-to-player flow
+  event, the same event the map's Back key posts. The map never appears.
+- Offline notice: from the notice's own UI-thread update it queues the UI manager's
+  close-top-page command. Replaying the accept action, or a raw Enter traced from a
+  real key press, did nothing outside real input dispatch.
+
+The navigator runs with `--hands-off offline_notice,map` and only sends Escape during
+the intros. Two live passes entered gameplay at 57.5 s and 61.1 s (previously
+78.3 s). Both were natively verified at the usual spawn, and the step counter kept
+advancing after entry. A navigator bug was fixed along the way: hands-off runs never
+read the player, because reads waited for a menu input. They now also start after a
+loading or post-title screen.
+
 ## Open
 
 - Reliability: five full passes (two with Escape), one gate failure and one
   argument failure so far.
 - Choosing a different map or spawn (drop zone or helicopter on the startup map),
   and whether long-distance travel changes the startup spawn. Untested.
-- Native flow transitions (title, offline notice, map) without input. Not
-  attempted.
+- Native title transition without input (the title still needs Escape or Enter).
+  The press-start event has not been found yet.

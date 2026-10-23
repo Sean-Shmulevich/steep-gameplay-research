@@ -132,6 +132,14 @@ class NavigateTests(unittest.TestCase):
         self.assertEqual([x['state'] for x in result['inputs']], ['intro', 'intro', 'offline_notice', 'map'])
         self.assertEqual(result['outcome'], 'entered')
 
+    def test_hands_off_run_reads_player_without_menu_inputs(self):
+        frames = [('intro', None), ('loading', None), ('offline_notice', ACQUIRED),
+                  ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)]
+        result, game = self.run_frames(frames, policy=se.Policy(hands_off=['offline_notice', 'map']))
+        self.assertEqual(result['inputs'], [])
+        self.assertEqual(game.player_reads, [False, True, True, True, True])  # from loading on
+        self.assertEqual(result['outcome'], 'entered')
+
     def test_no_intro_inputs_by_default_and_player_reads_deferred(self):
         frames = [('intro', None)] * 3 + [('title', None), ('gameplay', ACQUIRED), ('gameplay', ACQUIRED)]
         result, game = self.run_frames(frames)
