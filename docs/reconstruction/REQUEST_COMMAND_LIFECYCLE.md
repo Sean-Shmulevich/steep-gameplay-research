@@ -768,6 +768,59 @@ This removes the unknown local stop-byte writer. It does not establish a general
 mod shutdown API or show that all cached callbacks, other queues and workers are
 quiescent when this event becomes signaled.
 
+## Application-close evidence and handshake scope
+
+The stop connection above must not be mistaken for a reusable per-frame barrier.
+New window-message evidence ties the persistent request byte to application-close
+handling. The [original-instruction route fixture](../../native/snow_host/root_close_route_validation.json)
+executes 160 message-table cases, 16 close-gate cases and three complete passive
+setter cases. It does not close a live window or execute the full close services.
+
+The dispatch prefix at `0xccf14` selects the branch at `0xccfa4` only for message
+`0x10` among values 1 through `0xa0`. The installed MinGW-w64 `winuser.h` defines
+that value as `WM_CLOSE`. The branch's recovered gates are:
+
+```text
+on_close_branch(cookie):
+    if global_gate_u32 != 0:
+        return 0
+    if cookie != 0xc0ffee:
+        delegate_close_service(window)
+        return 0
+    # Special close sequence follows. It calls other unresolved services,
+    # writes additional state, then calls the passive request setter.
+
+set_global_stop_request():
+    global_request_byte = 1
+```
+
+The cookie is compared with the value captured from the incoming `R8` argument;
+it is not a newly proposed public API or proof that ordinary user close directly
+runs the special sequence. That sequence's static call at `0xccffb` reaches the
+complete passive setter `0x68c620`. Unlike `request_root_stop`, this setter only
+stores the global byte: no owner dereference, job submission or event signal.
+
+Two message-processing-shaped routines at `0xcd690` and `0x67dca0` compare a
+stack-record field at offset eight with `0x12` (`WM_QUIT` in the same header).
+The former calls the passive setter; the latter writes the request byte directly.
+Their encoded message API targets have not been resolved here, so this is static
+message-layout evidence, not a live message-pump proof. The second routine is
+called by `0x69d6a0`; that same caller subsequently invokes command preparation
+`0x67ced0` on the command-manager singleton. This connects message processing
+and command preparation in one inspected caller without proving its entire phase.
+
+A bounded scan for common direct RIP-relative byte stores finds the existing
+three set-to-one sites and no clear-to-zero site for the global request byte.
+This does not exclude register-relative writes, bulk initialization, transformed
+code or another lifecycle. The separate owner stop byte is explicitly cleared by
+root submission, but that does not establish reset of this global request.
+
+The strongest supported interpretation is an application-stop handshake with
+root resubmission until stop is requested. A reusable restart, one-physics-step
+barrier, full engine shutdown and mod unload boundary remain unproved. The models
+retain descriptive root/cycle names and must not be used to imply those broader
+semantics.
+
 ## Buffer disposal is not callback delivery
 
 The constructor's auxiliary-buffer cleanup leads to clear routine `0x658470`

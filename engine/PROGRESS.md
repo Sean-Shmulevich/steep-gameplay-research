@@ -6155,3 +6155,11 @@ late owner lookup and repeated optional receiver lookup. Twelve instruction case
 match `engine.root_stop`; a public composed test connects request to later event
 signal and wait return. Input mapping, flag reset, complete prerequisite services
 and engine-wide quiescence remain unresolved.
+
+### Application-close scope correction
+
+Window-message dispatch reaches the stop-request path through a gated WM_CLOSE
+branch; message-shaped routines compare WM_QUIT before setting the same global
+byte. A 179-case original-instruction fixture validates dispatch, gates and the
+passive setter. This supports application-stop semantics, not a reusable per-frame
+barrier. Global request reset and restart remain unproved.

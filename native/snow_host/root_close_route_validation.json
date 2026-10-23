@@ -1,0 +1,98 @@
+{
+  "evidence": "Original window-message dispatch prefix, close gates and passive request setter under synthetic inputs",
+  "all_passed": true,
+  "dispatch_cases": 160,
+  "close_messages": [
+    16
+  ],
+  "close_gate_cases": [
+    {
+      "gate": 0,
+      "cookie": 0,
+      "path": "delegate_close_service"
+    },
+    {
+      "gate": 0,
+      "cookie": 1,
+      "path": "delegate_close_service"
+    },
+    {
+      "gate": 0,
+      "cookie": 12648430,
+      "path": "special_close_sequence"
+    },
+    {
+      "gate": 0,
+      "cookie": 12648431,
+      "path": "delegate_close_service"
+    },
+    {
+      "gate": 1,
+      "cookie": 0,
+      "path": "return_zero"
+    },
+    {
+      "gate": 1,
+      "cookie": 1,
+      "path": "return_zero"
+    },
+    {
+      "gate": 1,
+      "cookie": 12648430,
+      "path": "return_zero"
+    },
+    {
+      "gate": 1,
+      "cookie": 12648431,
+      "path": "return_zero"
+    },
+    {
+      "gate": 2,
+      "cookie": 0,
+      "path": "return_zero"
+    },
+    {
+      "gate": 2,
+      "cookie": 1,
+      "path": "return_zero"
+    },
+    {
+      "gate": 2,
+      "cookie": 12648430,
+      "path": "return_zero"
+    },
+    {
+      "gate": 2,
+      "cookie": 12648431,
+      "path": "return_zero"
+    },
+    {
+      "gate": 4294967295,
+      "cookie": 0,
+      "path": "return_zero"
+    },
+    {
+      "gate": 4294967295,
+      "cookie": 1,
+      "path": "return_zero"
+    },
+    {
+      "gate": 4294967295,
+      "cookie": 12648430,
+      "path": "return_zero"
+    },
+    {
+      "gate": 4294967295,
+      "cookie": 12648431,
+      "path": "return_zero"
+    }
+  ],
+  "passive_setter_cases": 3,
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "Window callback calling convention and external API identities not executed in this fixture.",
+    "Special close sequence after its gate is statically inspected, not executed.",
+    "Message names matched against installed MinGW-w64 headers; no live window close sent.",
+    "No complete input mapping, flag reset, restart or shutdown success established."
+  ]
+}
