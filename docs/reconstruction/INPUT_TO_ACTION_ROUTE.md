@@ -5,6 +5,25 @@ holder poll to the previously studied world action wrapper. This is a static
 registration result with bounded instruction emulation, not a live proof of
 which substep consumes which player sample.
 
+## Current reconstruction boundary
+
+The sections below retain the evidence trail, including earlier questions that
+later sections resolve. Current conclusions are:
+
+| Part | Established scope | Remaining boundary |
+| --- | --- | --- |
+| Registration and placement | Manager refresh stored in category 4; concrete worker and world PreAI edges identified | Live selected-world/request identity and additional refresh paths |
+| Claim and callback execution | Original worker, visitor, clock and invoker execute in bounded composed tests | Actual source evaluator/device-cache freshness |
+| Completion and successors | Original completion/release gates tested; independent successor model matches semantic fixtures | Native locks, real simultaneous threads, exceptional paths |
+| Claim contention | Saved CPU contexts exercise actual failed CAS and retry with shared job memory | Hardware memory ordering and dynamic reservation races |
+| Next request | Conditional ordinary graph argument joins PreAI through Action to EndFrame | Full graph execution, alternate modes, external mutators |
+| Runnable reconstruction | Reset/traversal adapters and two-request scheduler probe | Native map enumeration, complete context/evaluator integration |
+
+Thus local category execution is no longer an unidentified scheduler connection.
+The highest-value live check is a correlated request trace from actual manager
+evaluation through player ingestion, with completion and next-gather identity.
+Local tests cannot establish the age of the device sample being consumed.
+
 ```text
 StepPreWorlds: vector histories and ownership transitions
   -> Step: rebuild/register world-stage chains when its gate permits
@@ -868,3 +887,28 @@ retained execution count, callback identity/order and successor readiness.
 ```sh
 python3 -m unittest discover -s tests -p test_action_refresh_interleaving.py
 ```
+
+
+## Stale claim retry under controlled contention
+
+The [claim-contention receipt](../../native/snow_host/action_refresh_claim_contention_validation.json)
+records eight original-instruction interleavings. A dispatch stops immediately
+before either its initial or subsequent `lock cmpxchg`, retaining a positive
+expected remaining count in its CPU context. Another pre-reserved dispatch runs
+against shared memory, claims the remaining callbacks and returns. Restoring the
+first context makes its stale compare-and-swap fail naturally; the fixture does
+not force the flags or patch the instruction result.
+
+Both retry branches load the observed count returned by CAS. With that count now
+zero, the stale dispatch performs no duplicate callbacks and returns through
+normal completion. Every callback executes exactly once, in the expected order
+for these fixtures, and successors release only after both dispatches return.
+The test covers one/three/six callbacks with maximal chunk or chunk one, plus
+subsequent-claim failures with three/six callbacks at chunk one. Chunk one is a
+synthetic configuration probe; the decoded category setup uses maximal chunk.
+
+This is evidence for the original claim retry instructions under controlled
+interleaving. It is not a hardware memory-model test, lock-contention test,
+concurrent registration test or exhaustive schedule exploration. The independent
+serial scheduler has no instruction-level CAS failure representation; no claim
+is made that its ordinary unit tests reproduce that instruction mechanism.

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Exercised actual initial/subsequent claim CAS failures in eight controlled
+original-instruction interleavings. Another dispatch drains shared work between
+load and CAS; stale claim retries execute no duplicate callbacks. Consolidated
+the input-route boundary and corrected the roadmap's old registry-24 membership
+summary to the existing registry-25 live observation. Hardware concurrency and
+live input freshness remain unproved.
+See [claim contention](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#stale-claim-retry-under-controlled-contention).
+
 Validated 18 controlled original-instruction interleavings with separate saved
 CPU contexts/stacks sharing category-job memory. Other dispatches can mark the
 job done while one callback is pending, but cannot release its successors until

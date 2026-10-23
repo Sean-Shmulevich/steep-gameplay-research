@@ -14,10 +14,12 @@ Scheduler reconstruction is the current primary goal. The independent runtime is
 | Mode writes | Named stages copy global flags; guarded clear preserves the ordinary owner predicate value | Exhaustive writers and cross-thread visibility |
 | Provider chains | Both AI provider entry-to-terminal graphs and concrete owner/getters | Callback workloads, receiver populations and later perception rewiring |
 | Event control | Request byte, end-frame branch, restart operation, exact handle consumer and outer caller order | Protected platform targets/status, outer interface implementation and owner destruction |
-| Input | Three repopulation callbacks, two-axis publication and fallback pass-through processor | Active player binding, configured alternatives and device-to-substep freshness |
-| Membership | Indexed registry insertion/deduplication, entry 24, gather and range-claim behavior | Selected player/world/request identity and receiver lifetime |
+| Input | Repopulation callbacks, PreAI category registration, composed claim/worker/completion/release tests, reset adapter and portable differential fixtures | Active configured alternatives, actual device-sample age and player substep correlation |
+| Membership | Indexed insertion/deduplication; prior live player observation in BeforeSimulation registry 25, with registry 24 empty in that capture | Identity across later sessions, gated inner ingestion and request-correlated sample freshness |
 
 The EndFrame result is a specific storage-ordering proof for the inspected ordinary action route. The next root may be submitted while EndFrame itself still has positive execution/outstanding accounting. It is not a universal idle point or permission to replace arbitrary engine state.
+
+The [current input-route boundary](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#current-reconstruction-boundary) distinguishes completed category joins from the remaining live and concurrency checks. Controlled CPU-context interleavings exercise callback overlap and failed claim CAS; they do not establish native thread safety.
 
 ## Evidence guide
 

@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "scope": "Original claim compare-and-swap failure caused by another emulated dispatch changing shared remaining count between load and CAS",
+  "base_receipt": "action_refresh_completion_validation.json",
+  "rows": [
+    {
+      "callbacks": 1,
+      "chunk_size": 1,
+      "claim": "initial",
+      "stale_expected_count": 1,
+      "failed_cas_retries": 1,
+      "callback_count": 1
+    },
+    {
+      "callbacks": 1,
+      "chunk_size": 2147483647,
+      "claim": "initial",
+      "stale_expected_count": 1,
+      "failed_cas_retries": 1,
+      "callback_count": 1
+    },
+    {
+      "callbacks": 3,
+      "chunk_size": 1,
+      "claim": "initial",
+      "stale_expected_count": 3,
+      "failed_cas_retries": 1,
+      "callback_count": 3
+    },
+    {
+      "callbacks": 3,
+      "chunk_size": 2147483647,
+      "claim": "initial",
+      "stale_expected_count": 3,
+      "failed_cas_retries": 1,
+      "callback_count": 3
+    },
+    {
+      "callbacks": 6,
+      "chunk_size": 1,
+      "claim": "initial",
+      "stale_expected_count": 6,
+      "failed_cas_retries": 1,
+      "callback_count": 6
+    },
+    {
+      "callbacks": 6,
+      "chunk_size": 2147483647,
+      "claim": "initial",
+      "stale_expected_count": 6,
+      "failed_cas_retries": 1,
+      "callback_count": 6
+    },
+    {
+      "callbacks": 3,
+      "chunk_size": 1,
+      "claim": "subsequent",
+      "stale_expected_count": 2,
+      "failed_cas_retries": 1,
+      "callback_count": 3
+    },
+    {
+      "callbacks": 6,
+      "chunk_size": 1,
+      "claim": "subsequent",
+      "stale_expected_count": 5,
+      "failed_cas_retries": 1,
+      "callback_count": 6
+    }
+  ],
+  "substitutions": [
+    "Locks are no-ops; switches occur outside lock regions",
+    "Queue removal sets done state",
+    "Dependency release records counters",
+    "Action callback records identity"
+  ],
+  "limits": [
+    "Controlled sequential CPU contexts, not simultaneous native threads or hardware memory-order testing",
+    "Two pre-reserved dispatches; selector not executed",
+    "Chunk size one is a synthetic configuration probe; maximal chunk matches decoded category setup",
+    "Stable generation and inert synthetic TLS; no contention on job locks or dependency counters"
+  ],
+  "game_process": false
+}
