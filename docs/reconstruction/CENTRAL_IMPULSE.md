@@ -357,6 +357,65 @@ displacements; it is not a complete writer inventory and unrelated object types
 can use the same offset. The next live attribution needs a callback identity or
 state transition, rather than labeling this byte a key, contact, or crash flag.
 
+### State-dispatch routes to gate release
+
+The two release callbacks have direct callers in nested state dispatch. The
+portable [route selector](../../engine/snow_block_route.py) reconstructs the local
+branch predicates, using authored labels A/B rather than guessed gameplay names.
+Inputs are raw uint32 event code, outer state and, when needed, inner state.
+The inspected handler stores event code at `+8`, owner at `+0x10`, and the owner
+stores outer state at `+0x18` and its child at `+0x20`. The child's `+0x18` is
+the inner state; its `+0x20` supplies the deeper callback receiver.
+
+| Variant | Event code | Outer state | Inner state | Selected callback | Receiver |
+| --- | --- | --- | --- | --- | --- |
+| A | 0 | 1 | Not read | External outer-one callback | Owner's child |
+| A | 0 | 0 | 5 | Unconditional block release | Child's child |
+| B | 0 | 0 | 0 | External inner-zero callback | Child's child |
+| B | 0 | 0 | 1 | Block release requiring `fc9` | Child's child |
+| B | 0 | 0 | 5 | Unconditional block release | Child's child |
+| Either | Other combinations | | | No callback in this fragment | None |
+
+```python
+def select_route(variant, event_code, outer_state, inner_state):
+    if event_code != 0:
+        return None
+    if variant == "A" and outer_state == 1:
+        return "outer_one_callback", 1
+    if outer_state != 0:
+        return None
+    if inner_state == 5:
+        return "release_block", 2
+    if variant == "B" and inner_state == 1:
+        return "release_block_if_fc9", 2
+    if variant == "B" and inner_state == 0:
+        return "inner_zero_callback", 2
+    return None
+```
+
+The native branch marks its local handled result after calling the selected
+callback, even if that callback's own byte guard causes no mutation. Therefore
+route selection, callback execution and gate clearing are separate observations.
+The surrounding routine acquires an owner-thread/depth lock, tracks active
+dispatch and checks pending flags afterward. This selector neither implements
+that lifecycle nor grants permission to invoke callbacks from another thread.
+
+[Ninety original-instruction branch cases](../../native/snow_host/snow_gate_dispatch_validation.json)
+match the selector's callback, receiver depth and native handled result across
+both variants, event codes 0/1/UINT32_MAX, outer states 0/1/2 and inner states
+0/1/5/6/UINT32_MAX. Synthetic callback interception isolates dispatch; it does not
+validate locking, pending transitions or the external callback effects.
+The earlier 16-case check separately validates the two release callbacks' local
+guards. No live trace yet joins these two layers for the observed transition.
+
+Build-specific branch anchors are `0x1405364bf..0x1405364f5` and
+`0x14053713f..0x140537185`. External callback anchors are `0x140536680` and
+`0x1405372b0`. A useful next observation records handler identity, nested state
+codes and callback entry/return alongside the actor gate and physics-job identity.
+Do not equate event code zero or state five with a named input or sport without
+following their producers. Existing input-ingestion evidence remains a separate
+join, not proof that keyboard delivery directly invokes either handler.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

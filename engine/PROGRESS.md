@@ -6791,3 +6791,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Decoded two owner callbacks that clear the byte, invoke a physics-side helper, reload the actor and clear an additional byte. One callback also requires the fourth wrapper gate. Published pseudocode preserves pointer reloads and leaves helper effects external.
 - Sixteen original-instruction cases pass with synthetic objects, the actual virtual getter and an intercepted external helper. They include noncanonical true byte values. No live writer attribution, complete writer inventory or safe setter API is claimed.
 - Reconciled the next step with the existing mode-zero BeforeSimulation/input capture: reuse its proven observation route to join the new gate transition and resident phase requests, rather than repeating the older ingestion investigation.
+
+### Nested dispatch reaching the block-release callbacks
+
+- Traced direct callers to two state-dispatch fragments. Both require raw event code zero. The unconditional release is selected for outer state zero / inner state five; variant B also selects the guarded release at inner state one. Other callbacks remain explicit external behavior.
+- Added a portable selector with conditional inner-state dependency and descriptive receiver depth. It preserves variant differences without inventing event/sport/state names or implementing the surrounding lock lifecycle.
+- Ninety isolated original-instruction cases match callback selection, receiver and handled result. The callbacks were intercepted, so this qualifies dispatch separately from the prior release-body tests. Live writer attribution and pending-transition behavior remain open.

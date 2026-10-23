@@ -1,0 +1,16 @@
+{
+  "evidence": "Isolated original branch fragments compared with portable selector; callbacks intercepted",
+  "cases": 90,
+  "passed": true,
+  "synthetic_objects": true,
+  "locking_validated": false,
+  "callback_effects_validated": false,
+  "live_writer_identified": false,
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "model_sha256": "c321a126fb8257f9f28cfc04522d6b95da631ebd5011fac0458d19255aa37bf6",
+  "private_check_script_sha256": "04d766553d4f37c93c32130121cd9cc5d0824629b785d930abcb30933941311c",
+  "fragment_hashes": {
+    "0x5364bf": "2fec6ba39413a3ff9f280324155763f613ec159047f1ea32d15bcf2bb31e3ef3",
+    "0x53713f": "8214c896ba78e213feac1815849decb8b86fd44b59ab1a5d961f0366a21a66cc"
+  }
+}
