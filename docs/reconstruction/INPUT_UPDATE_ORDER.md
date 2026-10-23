@@ -1351,3 +1351,65 @@ independent model across supported/unsupported modes, lane selections, gate
 results and distinct raw payloads. Gate and read callbacks were supplied;
 cache locking, ownership arbitration and hardware polling were not executed.
 The shared configuration callback and cache-address join are static findings.
+
+## Two ownership gates before source evaluation
+
+Vector gate 0x957e70 and scalar gate 0x9588c0 read the same global table owner,
+then select a record using the adapter's uint32 offset at +8 and the signed
+query index. They scan seven qwords from high address to low address:
+
+```text
+record_index = uint32(adapter.offset) + 8 * int32(query_index)
+top = global_table + family_base + 0xe8 * record_index
+for i in 0..6:
+    owner = read_qword(top - 8*i)
+    if owner != null:
+        return owner != adapter
+return false
+```
+
+Family base is 0xf050 for vectors and 0x850 for scalars. The first nonzero
+entry wins; lower entries are not examined after a match. A matching adapter
+therefore permits the query even if a lower entry names another owner. The
+result is a low-byte boolean. These functions contain no lock or bounds check.
+Their callers here supply vector indices 0/1 or scalar indices 10/12; the
+address expression is evidence, not permission to query arbitrary indices.
+The seven entries' writer and semantic priority names remain unresolved.
+
+After this gate permits a query, the raw reader applies a different rule:
+
+```text
+cache = adapter.cache
+lock(cache.owner_lock)
+if cache.owner_count == 0:
+    permitted = true
+else:
+    permitted = (cache.owners[cache.owner_count - 1] == null)
+unlock(cache.owner_lock)
+if not permitted:
+    return positive_zero_payload
+return cached_payload  # scalar or vector; read after unlock
+```
+
+Scalar helper 0x4b8e80 and vector helper 0x4b8fe0 both use this rule. Their
+owner list is cache+0x248, uint16 count +0x252 and lock +0x2e8. Crucially, this
+second gate does **not** compare the last owner with the requesting adapter.
+Any nonzero final owner suppresses the raw read, including that same adapter.
+A null final entry permits the read regardless of earlier entries.
+
+[Ownership APIs](../../engine/action_input_ownership.py) model these two
+snapshot decisions separately. They can supply the gates/readers of
+[vector selection](../../engine/action_vector_selection.py), but do not promise
+native synchronization or pointer lifetime. The raw cache copy occurs after
+unlock; snapshot consistency and changes between the two gates remain open.
+
+[Composed validation](../../native/snow_host/input_ownership_validation.json)
+executes the original acquisition helper, actual priority gates, actual raw
+readers and lane-selection slice together. All 2,880 cases match the independent
+models, covering four modes, four adapter offsets, every position of the first
+nonzero priority entry with matching/foreign identities, the empty priority
+table, four cache ownership arrangements and three lane choices. Lock/unlock
+calls alone were substituted; their arguments and order were checked. All
+other query/read branches ran against stable synthetic memory. This supersedes
+the earlier selection test's supplied-gate/read limitation for these composed
+cases, without proving concurrency safety, live ownership or scheduler order.

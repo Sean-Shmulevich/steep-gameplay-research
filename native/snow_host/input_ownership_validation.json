@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "cases": 2880,
+  "scope": "Original vector acquisition, both priority gates, raw scalar/vector readers and caller lane-selection slice composed against independent models",
+  "substitutions": [
+    "Lock and unlock calls return without synchronization; arguments and order checked"
+  ],
+  "fixture": "Stable synthetic configuration, cache, priority entries and ownership lists",
+  "spans": [
+    {
+      "start_rva": "0x957e70",
+      "end_rva_exclusive": "0x957eb4",
+      "sha256": "4816d05ff932095dd1920aebb966028251bbfc36bf1162cda13bd0dfeebd5c66"
+    },
+    {
+      "start_rva": "0x9588c0",
+      "end_rva_exclusive": "0x958904",
+      "sha256": "28aadb321a616a7c49694980f3befa50fa91fb50be372165edf3bb3445cd3497"
+    },
+    {
+      "start_rva": "0x4b8e80",
+      "end_rva_exclusive": "0x4b8f22",
+      "sha256": "2ee5f85a158aaa3012bc6b802b1a61c8deeea274800a1656a302d2f9a4d67304"
+    },
+    {
+      "start_rva": "0x4b8fe0",
+      "end_rva_exclusive": "0x4b908f",
+      "sha256": "51356fd9a0321ac2e3267207be403304de5c17bf50535e43d0b496310bf42d89"
+    },
+    {
+      "start_rva": "0x4b8ca0",
+      "end_rva_exclusive": "0x4b8dc8",
+      "sha256": "aec2ec75848d9e75ac3031dca15d4a3ffc360ed37d360aa11d2bcd3a1bd7b627"
+    },
+    {
+      "start_rva": "0x4b21fb",
+      "end_rva_exclusive": "0x4b2235",
+      "sha256": "c26558bafe1b71e2232ed4087fee558272f897cd5f52d8c76891a39cc04a1171"
+    }
+  ],
+  "limits": [
+    "No concurrent mutation or lock correctness proof",
+    "Priority table writers and semantic priority levels unresolved",
+    "No live player or substep timing proof"
+  ],
+  "game_process": false
+}

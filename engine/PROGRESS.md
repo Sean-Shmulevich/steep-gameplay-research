@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Closed both vector/scalar read gates: first nonzero of seven priority owners
+must match the adapter; separately, any nonzero final cache owner blocks the
+raw read. Added independent ownership APIs. 2,880 composed original cases pass
+with only lock/unlock substituted. Priority writers, concurrent safety and
+player/substep attribution remain open. See
+[ownership gates](../docs/reconstruction/INPUT_UPDATE_ORDER.md#two-ownership-gates-before-source-evaluation).
+
 Resolved the shared vector/directional setup callback: +0xb8 holds source
 configuration. Connected vector modes 0/1 to the known cache vectors and modes
 2/3 to scalar indices 10/12. Added a raw-byte selection API; 180 original
