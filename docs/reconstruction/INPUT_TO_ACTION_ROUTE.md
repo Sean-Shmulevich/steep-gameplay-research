@@ -1678,3 +1678,42 @@ timer's ticks even when the float interval changes. These are composed local
 arithmetic consequences, not proof that all game jobs stop during pause or that
 the selected clock remains the same across evaluations. The fallback record's
 producer and live selected-object changes remain separate observation questions.
+
+## Passive history-action capture contract
+
+The existing native `SnowUpdateRecord` records actor state, job/frame attribution
+and optional motion observations around an actor call. It does not record this
+history-sector action's configuration, history times, timer state or selected
+clock. A motion before/after difference is therefore insufficient to attribute
+freshness to this particular source.
+
+[Passive observer](../../engine/action_history_observation.py) supplies a bounded
+read-only building block. Callers provide a current action pointer, verified
+build-specific table/callback identities, receiver and fallback-clock global
+slots, and an exact byte reader. It performs at most 32 reads and 1,024 requested
+bytes across two samples. It checks the action type, follows the configuration
+and source, bounds the channel to the two decoded histories, and records:
+
+- Source/configuration identities, channel and timing/direction settings.
+- Reference vector and first magnitude-threshold value/container identity.
+- Three recent history timestamps, newest feature B/C and magnitude bit patterns.
+- Published action flag/magnitude, previous predicate and two timer timestamps.
+- Receiver, selected object, selected clock-record identity and divided ticks.
+
+Both samples are retained. `observed` means the compared identities/settings
+match, even if dynamic values differ; `unstable` means those identities/settings
+changed. Equal dynamic values are reported separately. Neither result proves
+atomicity, lifetime, absence of ABA changes, action execution or input freshness.
+The result explicitly sets those proof flags false. Addresses and raw field
+bits in a real receipt are private-session evidence, not public fixture data.
+Short reads, unavailable required pointers/thresholds and unsupported types or
+channels refuse the observation. No remote code is called or modified.
+
+Tests cover changing clocks, fallback selection, configuration mutation,
+unsupported channels and every short-read position. This module is not wired
+into the native recorder and was not run against the game. Ownership-slot
+sampling and producer/evaluator entry counts still need their own correlated
+records. A future collector must supply fresh action provenance from the
+selected player's chain and account for the combined read budget before enabling
+this optional channel. Repeated passive samples alone cannot close the live
+scheduler ordering question.
