@@ -1216,3 +1216,53 @@ constructor entry/return. The captured RBP and RBX values provide concrete
 locations for bounded operand/stream snapshots in a future experiment; pointers
 must be obtained anew each session. No earlier call stack can be reconstructed
 by reading those old addresses after the faulting thread has continued.
+
+
+## Publication operands and stream captured before retry
+
+The first-write observer now supports up to three configured context-relative
+windows, each at most 128 bytes with offsets limited to +/-4096. Configuration
+must precede arming. It queries each range, refuses guarded/no-access or incomplete
+regions, and marks failed reads invalid with zero-filled storage. These are
+sequential reads while the faulting thread is stopped, not an atomic snapshot of
+other threads. Record consumers must rebuild with the changed internal header;
+no stable binary record ABI is claimed.
+
+The [ten-case fixture receipt](../../native/snow_host/first_write_windows_fixture_validation.json)
+checks pre-write target bytes, native-stack reading, unreadable ranges, invalid
+configuration, restoration and concurrent writers on private and image pages.
+
+The [next live capture](../../native/snow_host/manager_publication_windows_live_validation.json)
+read 64 bytes at RBP-16, 32 bytes at RBX-16 and 128 bytes at RSP before retrying the
+same exact singleton store. All three windows were valid. The first two operand
+qwords matched the destination global and captured source register; the later
+singleton read also matched that value. This connects the static two-operand store
+prefix to actual operand data at the publication point.
+
+The captured stream window matched the static image. Its word at RBX-4, combined
+with the captured rolling key, predicts handler `0x40d1d30` under the validated
+local decoder. The earlier missing-live-stream caveat is closed for this capture;
+actual successor execution is still unobserved. Initial/final protection was
+WRITECOPY and the session passed saves/settings/original-DLL cleanup.
+
+Several captured native-stack and operand-window words lie within the image.
+Two point to small callback wrappers whose local behavior is inspectable:
+
+```text
+wrapper A:
+    receiver = read_pointer(global_receiver_slot)
+    tail_call(virtual_function(receiver, byte_offset=0x40), receiver, remaining_arguments)
+
+wrapper B:
+    descriptor = address_of_global_descriptor
+    receiver = descriptor.packed_context & ~3
+    tail_call(descriptor.invoker, descriptor, receiver, false)
+```
+
+Wrapper A is at RVA `0x702430`, with receiver slot `0x330fe98`. Wrapper B begins
+at `0x702440` and routes through `0x124d770`; its descriptor is `0x330fec0`,
+context `+0x10` and invoker `+0x18`. These are static effects of candidates found
+in a bounded stack window. Neither wrapper has been established as an allocator,
+a manager constructor caller or a frame in an unwound native call stack. Data
+addresses and stale function values can also appear on a stack. Their runtime
+receiver/descriptor identities are leads for a later focused observation.

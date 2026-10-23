@@ -6264,3 +6264,14 @@ Two hundred original-instruction cases match its integer effects, including
 upper-key preservation and native stack balance. A successor predicted from saved
 registers plus the static stream remains explicitly unverified live. This is
 startup dispatch machinery, not scheduler coverage or recovered allocation history.
+
+
+### Live publication operand and stream snapshots
+
+Added bounded pre-retry windows to the first-write observer. Ten Wine fixture
+cases pass, including invalid ranges and preservation of pre-write target bytes.
+A live capture read 224 bytes across operand, stream and native stack windows;
+the two store operands matched the singleton destination and published pointer.
+Captured stream bytes agree with the static image and support the decoded next
+handler calculation, still without proving successor execution. Callback-wrapper
+values on the stack remain candidates, not an allocation call stack. Cleanup passed.

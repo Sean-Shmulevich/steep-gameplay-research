@@ -422,3 +422,12 @@ READWRITE restore. See the
 adds an image-backed fixture; see the copy-on-write section in the command
 lifecycle guide. The separate initial-protection field remains zero
 on this refused branch; it is not an observed protection value.
+
+
+The startup write controller now includes three pre-retry context-relative memory
+windows in its private JSON output: RBP-16 for 64 bytes, RBX-16 for 32 bytes and
+RSP for 128 bytes. Each has an explicit validity flag. Bytes are collected in the
+fault handler before protection restoration; instruction-byte output remains a
+separate later read. Do not treat stack words as a call stack, or invalid windows
+as zero-valued game data. The generic observer permits at most three 128-byte
+windows and refuses reconfiguration after arming.

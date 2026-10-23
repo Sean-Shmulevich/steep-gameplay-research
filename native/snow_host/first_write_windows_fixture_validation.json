@@ -1,0 +1,74 @@
+{
+  "evidence": "Bounded first-write window capture in synthetic Windows/Wine fixtures",
+  "cases": [
+    {
+      "image": false,
+      "scenario": "normal",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "readonly",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "normal",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "readonly",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "concurrent",
+      "returncode": 0
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_first_write.c": "12bedb9b0c8fc7b3b84a4bd734738454aeae803cebb942f896847fa7288c7ca4",
+    "native/snow_host/snow_first_write.h": "bfcae0cf5e93a37305f1d0557a7bf57e7a47848f442c8ebe5c0d5c5d8a3d8407",
+    "tests/fixtures/snow_first_write_fixture.c": "e45eb030357dfefe7ebb5289c84084044cde3abee8970800fa1958ea51ccda08"
+  },
+  "checks": [
+    "Reads fault-address bytes before the trapped write retries.",
+    "Reads native stack at captured RSP.",
+    "Unreadable private-page window remains invalid and zero-filled.",
+    "Rejects excessive window count, null specs, oversized read and out-of-range offset.",
+    "Reconfiguration after arming refuses.",
+    "Private and WRITECOPY image restoration, cancellation, foreign faults and concurrent writes remain covered."
+  ],
+  "game_launched": false,
+  "limitations": [
+    "Windows are sequential reads, not atomic against other threads.",
+    "Concurrent cancellation and OS read/protection failures are not exhaustively injected.",
+    "Synthetic register-source coverage directly checks fault address and RSP; RBP/RBX publication windows require live validation."
+  ]
+}

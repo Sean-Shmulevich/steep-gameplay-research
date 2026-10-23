@@ -1,0 +1,80 @@
+{
+  "status": "publication_fault_windows_captured",
+  "writer_rva": "0x40c2369",
+  "exact_singleton_write": true,
+  "windows": [
+    {
+      "source": "rbp",
+      "offset": -16,
+      "size": 64,
+      "valid": true
+    },
+    {
+      "source": "rbx",
+      "offset": -16,
+      "size": 32,
+      "valid": true
+    },
+    {
+      "source": "rsp",
+      "offset": 0,
+      "size": 128,
+      "valid": true
+    }
+  ],
+  "total_snapshot_bytes": 224,
+  "operand_destination_matches_singleton": true,
+  "operand_value_matches_source_register_and_later_singleton": true,
+  "stream_window_matches_analyzed_image": true,
+  "predicted_next_handler_rva": "0x40d1d30",
+  "next_handler_execution_observed": false,
+  "native_stack_image_range_candidates": [
+    {
+      "qword_index": 0,
+      "rva": "0x330d460"
+    },
+    {
+      "qword_index": 4,
+      "rva": "0x330d460"
+    },
+    {
+      "qword_index": 9,
+      "rva": "0x702430"
+    },
+    {
+      "qword_index": 10,
+      "rva": "0x702440"
+    },
+    {
+      "qword_index": 11,
+      "rva": "0x330d360"
+    },
+    {
+      "qword_index": 12,
+      "rva": "0x3cdbde2"
+    }
+  ],
+  "initial_protection": 8,
+  "final_protection": 8,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/snow_first_write.c": "12bedb9b0c8fc7b3b84a4bd734738454aeae803cebb942f896847fa7288c7ca4",
+    "native/snow_host/snow_first_write.h": "bfcae0cf5e93a37305f1d0557a7bf57e7a47848f442c8ebe5c0d5c5d8a3d8407",
+    "native/snow_host/examples/command_manager_write.c": "3ae19ad7c8536b045726b216c77a2dec0ed8f959219ec39f7b0b037e599f7f32"
+  },
+  "plugin_sha256": "9cb90f5df20ec8d4654a77ef16169a90ad18954b594951f555b89dac2e0b4ccb",
+  "private_output_sha256": "f2ea26017bd14934b1985f66e5c7bfb1d958ebc69590bf1d3126d70654e40918",
+  "limitations": [
+    "Snapshots are bounded sequential reads before retry; other threads are not suspended.",
+    "Image-range stack words are candidates, not an unwound call stack or proof of active calls.",
+    "Captured stream supports a conditional successor calculation, not an observed successor execution.",
+    "Operand producer, constructor/allocator, ownership and teardown remain unknown."
+  ]
+}
