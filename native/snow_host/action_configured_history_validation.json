@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "sequences": 256,
+  "updates": 768,
+  "maximum_feature_lane_error": 2.384185791015625e-07,
+  "scope": "Original outer history, feature helper, mode-3 conversion, configured virtual curve evaluator and native trig execute together",
+  "substitutions": [],
+  "setup": [
+    "Synthetic service selects mode 3 with explicit primary and secondary bases",
+    "Synthetic clock singleton with explicit timestamps",
+    "Constructor-derived knots and thresholds installed into synthetic inline curve storage; constructor not executed in this experiment"
+  ],
+  "comparison": [
+    "Raw, magnitude and timestamp histories exact",
+    "All 30 feature vectors within 3e-6",
+    "Curve argument and call count; three conversions per update",
+    "Native curve metadata and detached adapter tail remain unchanged"
+  ],
+  "coverage": [
+    "Both channels and both constructor flag values",
+    "16 vectors including near-center, knot-angle, opposite and signed directions, Z and W components",
+    "Four primary bases including vertical fallback",
+    "Input, release, repeated input sequences"
+  ],
+  "limits": [
+    "No live mode, flag, basis or channel binding proof",
+    "No scheduler or cache polling in this experiment",
+    "Scalar SIMD/trig approximations remain; no bit-exact feature claim",
+    "Concurrent mutation and degenerate/nonfinite inputs excluded"
+  ],
+  "game_process": false,
+  "spans": [
+    {
+      "start_rva": "0x9842a0",
+      "end_rva_exclusive": "0x98442b",
+      "sha256": "6787c42a1be6d51e35570357a7287998bfd7cace3f1d47fc7c4a2df286699b87"
+    },
+    {
+      "start_rva": "0x9599a0",
+      "end_rva_exclusive": "0x959eef",
+      "sha256": "2e017f8346764b51a52692d8ad36c4a076ac567828bf739e2a1196bee38309f9"
+    },
+    {
+      "start_rva": "0x7db490",
+      "end_rva_exclusive": "0x7db846",
+      "sha256": "c5a25602ed3c8851cd1556b5de1cc72b781d244330ff004a98fe8e114da10ec0"
+    },
+    {
+      "start_rva": "0x971190",
+      "end_rva_exclusive": "0x9713ed",
+      "sha256": "7dedc6afe6777d24c9490af68af81b80060b3120724be75dbfb53b166944dfcd"
+    }
+  ]
+}

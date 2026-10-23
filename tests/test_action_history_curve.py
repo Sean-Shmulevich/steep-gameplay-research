@@ -1,6 +1,7 @@
 import math
+import struct
 import unittest
-from engine.action_history_curve import history_curve_config, evaluate_history_curve
+from engine.action_history_curve import history_curve_config, evaluate_history_curve, initial_history_snapshot
 from engine.action_sample import f32
 
 
@@ -30,3 +31,29 @@ class HistoryCurveTests(unittest.TestCase):
         with self.assertRaises(ValueError): evaluate_history_curve(0, ((0,0),(0,1)))
         with self.assertRaises(ValueError): evaluate_history_curve(float('nan'), points)
         with self.assertRaises(ValueError): history_curve_config(True)
+
+
+class ConfiguredHistoryCompositionTests(unittest.TestCase):
+    def test_defaults_drive_history_and_release_without_changing_raw_input(self):
+        from engine.action_history_features import update_mode3_history
+        for channel in (0, 1):
+            config = history_curve_config(channel)
+            state = initial_history_snapshot(channel)
+            angle = math.pi / 6
+            raw = struct.pack('<4f', math.sin(angle), math.cos(angle), 0, 0)
+            outputs = []
+            for now, payload in ((50, raw), (51, bytes(16)), (52, raw)):
+                result = update_mode3_history(state, payload, now=now,
+                    primary=(0,1,0,0), secondary=(1,0,0,0),
+                    curve=lambda x: evaluate_history_curve(x, config['points']))
+                state = result['snapshot']
+                outputs.append(struct.unpack_from('<4f', state, 0x240))
+                self.assertEqual(state[0x60:0x70], payload)
+                self.assertEqual(struct.unpack_from('<Q', state)[0], now)
+                self.assertEqual(state[0x308:], bytes(0x3c0-0x308))
+            expected_angle = math.pi / (9 if channel == 0 else 6)
+            self.assertAlmostEqual(outputs[0][0], math.sin(expected_angle), places=6)
+            self.assertEqual(outputs[1], (0,0,0,0))
+            self.assertEqual(outputs[0], outputs[2])
+            self.assertEqual(struct.unpack_from('<3Q', state), (52,51,50))
+            self.assertEqual(struct.unpack_from('<4f', state, 0x260), outputs[0])

@@ -3,6 +3,7 @@
 Evidence: INPUT_TO_ACTION_ROUTE.md, Constructor-selected history curves.
 Channel and constructor flag are explicit; no live configuration is inferred.
 """
+import struct
 from .action_sample import f32
 
 
@@ -44,3 +45,16 @@ def evaluate_history_curve(value, points):
             slope = f32(f32(y1-y0) / f32(x1-x0))
             result = f32(f32(f32(value-x0) * slope) + y0)
     return result
+
+
+def initial_history_snapshot(channel, *, alternate_center=False):
+    """Create detached zero histories with the selected constructor threshold.
+
+    Native pointers and auxiliary containers are omitted, left zero. Curve knots
+    remain in history_curve_config rather than being encoded as process memory.
+    This is adapter state, not a native object suitable for writing into a game.
+    """
+    config = history_curve_config(channel, alternate_center=alternate_center)
+    state = bytearray(0x3c0)
+    struct.pack_into('<f', state, 0x50, config['threshold'])
+    return bytes(state)

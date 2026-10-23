@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated the complete history path with constructor-derived curves and no
+substituted function calls in the tested native path: 768 updates, 256 sequences.
+Raw/magnitude/time histories match exactly; maximum feature-lane error is
+2.384185791015625e-7. Added detached history initialization and a runnable configured
+history example. Twelve portable history tests pass. Synthetic configuration and
+live scheduler/sample-age boundaries remain explicit. See
+[configured history composition](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#complete-history-with-constructor-defaults).
+
 Identified and implemented constructor-selected history curves. Channel zero
 uses a nonlinear radians response with two near-center variants; channel one
 maps normalized angle to radians. Original parent construction and append calls

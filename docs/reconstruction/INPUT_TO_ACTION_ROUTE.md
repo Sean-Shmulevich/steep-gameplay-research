@@ -1389,3 +1389,43 @@ both channels and flag values, uniform samples, knots and neighboring float32
 values. Eleven portable history tests also pass. This closes a constructor
 configuration dependency, not device freshness, gameplay binding, scheduler
 cadence or live deterministic stepping.
+
+## Complete history with constructor defaults
+
+The curve evaluator now runs inside the original outer-history, feature and
+mode-3 conversion chain in [configured history validation](../../native/snow_host/action_configured_history_validation.json).
+There are no substituted function calls in this tested path. The experiment
+installs constructor-derived knots and thresholds into synthetic storage rather
+than executing the constructor, and supplies explicit service, basis and clock
+objects. This remains offline instruction execution, not a live scheduler test.
+
+All 768 updates across 256 three-update sequences pass. Both channels, both
+constructor flag values, four bases and 16 vectors cover input, release and
+repeated input. Vectors include center-adjacent angles, knot angles, signed and
+opposite directions, and nonzero Z/W components. Raw, magnitude and timestamp
+histories match exactly; all 30 feature vectors agree within 3e-6, with observed
+maximum lane error 2.384185791015625e-7. Curve invocation count/argument and three
+conversion calls per update are checked. Native curve metadata remains unchanged.
+
+`initial_history_snapshot` creates detached adapter state with zero histories
+and the selected threshold. It deliberately omits native pointers and auxiliary
+containers. It must never be used as a native object to write into the game.
+The separate curve configuration supplies knots to the existing callback API.
+
+Run the [configured history example](../../engine/examples/configured_history_probe.py):
+
+```sh
+python3 -m engine.examples.configured_history_probe
+```
+
+It applies a synthetic 30-degree direction, release and repeated direction to
+both channels with an explicit identity heading basis. The first channel maps
+the direction to approximately 20 degrees, the second to 30 degrees. Release
+inserts zero features while retaining older entries. Output includes curve
+arguments, radians, mapped directions and recent opaque timestamps. This is a
+runnable local reconstruction, not proof that these channels control a particular
+stick or player action.
+
+The next scheduler question remains the consuming job and sample age. Closing
+these local numerical dependencies does not establish ingestion order relative
+to physics substeps, live configuration ownership or safe global quiescence.
