@@ -1,0 +1,27 @@
+{
+  "evidence": "Original ring clear and buffer release instructions with synthetic allocator services",
+  "all_passed": true,
+  "cases": 200,
+  "wrapped_cases": 70,
+  "capacities": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "clear_rva": "0x658470",
+  "release_rva": "0x66b6a0",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "verified": [
+    "Exactly occupied slots have invokers cleared and two retained holder references released.",
+    "No descriptor invoker executed.",
+    "Count and read/write cursors reset; release also nulls pointer and capacity.",
+    "Owned storage invokes allocator lookup then free; borrowed storage is not freed.",
+    "Ownership byte ends at one in both paths."
+  ],
+  "limitations": [
+    "Not a located manager destructor or proven shutdown call path.",
+    "Serial valid ring states, associated references null and holder counts above destruction threshold.",
+    "No native allocator, resource destruction, concurrent mutation, lock acquisition or exceptions tested."
+  ]
+}

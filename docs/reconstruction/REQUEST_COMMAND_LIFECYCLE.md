@@ -494,6 +494,59 @@ remain candidates. The next ownership search can now start from this constructor
 and its buffer teardown counterparts, rather than only singleton readers.
 No lifetime pin or safe native publication point follows from initialization alone.
 
+## Buffer disposal is not callback delivery
+
+The constructor's auxiliary-buffer cleanup leads to clear routine `0x658470`
+and release routine `0x66b6a0`. These establish local buffer behavior, not the
+manager's destructor: the bounded relative-call/jump search found the constructor
+calling release, and release calling clear, but no manager shutdown caller.
+
+The [original-instruction disposal fixture](../../native/snow_host/command_disposal_validation.json)
+checks 200 valid ring states at capacities 1, 2, 4 and 8, including 70 wrapped
+cases. It exercises every read cursor and occupancy from empty through full,
+with both owned and borrowed backing storage. Allocator lookup/free are synthetic;
+record cleanup executes original instructions with null associated references
+and holder counts above their destruction threshold.
+
+Recovered equivalent pseudocode for valid ring states:
+
+```text
+clear_records(ring):
+    first_count = min(ring.count, ring.capacity - ring.read)
+    for index in [ring.read, ring.read + first_count):
+        cleanup_record(ring.array[index])
+    for index in [0, ring.count - first_count):
+        cleanup_record(ring.array[index])
+    ring.write = 0
+    ring.read = 0
+    ring.count = 0
+
+release_buffer(ring):
+    clear_records(ring)
+    if ring.owns_storage and ring.array != null:
+        allocation_info = allocator_lookup(ring.array)
+        allocator_free(ring.array, allocation_info)
+    ring.owns_storage = true
+    ring.array = null
+    ring.capacity = 0
+```
+
+The second segment in clear is inlined cleanup rather than another call to the
+cleanup helper. Both segments clear the invoker and release the two holder
+references. Non-null associated objects and final-reference resource destruction
+have additional paths excluded from this fixture. Unoccupied slots are untouched.
+No descriptor callback is invoked; clearing is not draining by execution.
+
+Consequences for an eventual mod API:
+
+- Admission and completion must remain distinct receipts. Removing an accepted
+  record through disposal does not constitute callback completion.
+- These helpers do not supply a plugin-context destruction callback. Do not free
+  callback state or unload plugin code merely because the queue appears empty.
+- A future shutdown adapter needs the actual owner lifecycle, synchronization and
+  explicit cancellation accounting. This local helper does not establish where
+  that adapter may safely run or whether shutdown uses this helper at all.
+
 ## Inspect the behavior without game files
 
 ```sh

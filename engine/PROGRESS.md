@@ -6092,3 +6092,11 @@ validate allocation sizes, initialized fields and synthetic null-allocation
 results. See [the initialization contract](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#command-manager-initialization-contract).
 Native caller/publication, destruction and lifetime pinning remain unresolved;
 this does not enable unrestricted plugin command submission.
+
+### Command buffer disposal contract
+
+Original clear/release instructions pass 200 serial valid-ring cases, including
+70 wraps and owned/borrowed storage. Disposal releases records without invoking
+their callbacks. The [disposal contract](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#buffer-disposal-is-not-callback-delivery)
+therefore keeps admission separate from delivery. The actual manager destructor
+and its synchronization remain unlocated.
