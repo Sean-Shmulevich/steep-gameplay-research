@@ -6700,3 +6700,10 @@ Joined scanner/fallback/context original execution matches20 scenarios with
 supplied external target returns0/1; bookkeeping is identical for both. The
 fixture explicitly labels authored tag placement and lifecycle order. No actual
 release, live API identity or safe unload is inferred from completed bookkeeping.
+
+Returned to the command lifetime milestone. Expanded ring-disposal comparison to
+240 cases using original called/inlined record cleanup and allocation metadata
+lookup, including associated/holder final-reference thresholds. Wrapped and
+nonwrapped cleanup order matches; header resets only after record services return.
+Native manager destruction remains unlocated. Roadmap now explicitly separates
+remaining allocator internals from command-phase/lifetime qualification.

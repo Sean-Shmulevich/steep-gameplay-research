@@ -212,3 +212,19 @@ gap, not the native manager lifetime, stale-generation or phase qualification.
 The [resource retirement guide](../docs/reconstruction/RESOURCE_RETIREMENT.md)
 separately maps the now-connected cleanup/destruction evidence; queue emptiness
 still does not authorize unloading.
+
+### Ownership follow-up after allocation reconstruction
+
+The allocation/retirement branch now has runnable local lifecycle probes and
+instruction comparisons through region clearing and one concrete context policy.
+It still does not pin the command manager, queued callback context or plugin
+module. Keep its remaining OS release details independent of the engine-phase
+command milestone. The next native proof should establish the manager's retained
+lifetime across admission and callback return, or identify an owner-provided
+lifetime mechanism; allocator bookkeeping cannot substitute for either.
+
+The [expanded command disposal comparison](../native/snow_host/command_disposal_boundaries_validation.json)
+qualifies called and inlined wrapped cleanup at final-reference thresholds in240
+cases. It does not find the manager destructor or turn record disposal into a
+cancellation/completion receipt. Stable storage and supplied final-reference
+services remain explicit boundaries.

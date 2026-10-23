@@ -1,0 +1,33 @@
+{
+  "evidence": "Original ring release, called/inlined record cleanup and metadata lookup joined; final-reference services and allocator free supplied",
+  "cases": 240,
+  "state_and_service_order_match": true,
+  "routines": [
+    {
+      "rva": "0x66b6a0",
+      "sha256": "8c7aea26f6d075c52c881cb91c9381f82b154bcf621257aa176aa48d2d178959"
+    },
+    {
+      "rva": "0x658470",
+      "sha256": "0b250f3e677b02f690efda9e87e0907f98da9685b452caca0bd13636106455ef"
+    },
+    {
+      "rva": "0x64cd40",
+      "sha256": "ea42e945cc29f77b39e3ea5b4f6df942ee00df8cc31d4463deeadfb34a697983"
+    },
+    {
+      "rva": "0x1229bc0",
+      "sha256": "070b3040111260910868be9e6c20dd538a82e1b4cc75252c69790b865aec58a3"
+    }
+  ],
+  "models": {
+    "command_disposal.py": "1a227084a8d8feb4555a0732f1b2ac7a676e9d2d517f65290ab8fd89667030cc",
+    "command_record_cleanup.py": "827495eee6912720d979ab066b69636cbeaf64a80883d006f6358032e4ccdeb3",
+    "allocation_metadata_lookup.py": "6f15634e22db2adab6ce3aff63db3807d370caaf05de148661006d328c27355f"
+  },
+  "limitations": [
+    "Stable retained ring/header and synthetic records; no concurrent submissions or reentrant disposal.",
+    "Associated destructor, final-holder release and allocator free bodies supplied; invoking them does not prove downstream disposal completion.",
+    "Manager destructor and shutdown caller remain unlocated; ring clearing does not alter manager published command budget."
+  ]
+}

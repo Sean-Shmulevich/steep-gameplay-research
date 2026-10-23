@@ -2114,3 +2114,29 @@ not execute the original producer, validate Windows ABI, repair competing native
 producers' full-queue behavior, or establish a safe live submission phase. It
 strengthens the authored adapter's capacity/accounting behavior with competing
 host producers; native lifetime and admission qualification remain open.
+
+## Buffer disposal at final-reference boundaries
+
+[The expanded disposal comparison](../../native/snow_host/command_disposal_boundaries_validation.json)
+executes ring release `0x66b6a0`, ring clear `0x658470`, record cleanup
+`0x64cd40` and allocation metadata lookup `0x1229bc0` together in240 cases.
+Unlike the earlier retained-reference fixture, it crosses associated-object and
+holder final-reference thresholds. It varies all four read positions, count0..4,
+owned/borrowed storage, null/one/two associated references and holder count1/2.
+
+The first contiguous segment calls the record cleanup helper; the wrapped segment
+contains equivalent cleanup inline. Both match `cleanup_record` in logical read
+order. Associated reference removal precedes its possible destructor, invoker
+clearing follows it, and holder+0x10 release precedes holder+0x08. Supplied services
+observe the original ring count/read index throughout record cleanup. The ring
+header resets only after those calls return. Metadata lookup and owned-storage
+free follow that reset; borrowed storage still releases its occupied records.
+No record invoker runs in this path.
+
+Associated destructors, final-holder release bodies and allocator free remain
+supplied. Their invocation is not a downstream completion receipt. The comparison
+assumes retained storage, stable ring headers and no concurrent submission or
+reentrant disposal. It does not locate manager destruction or establish that
+these helpers run during shutdown. Ring clearing does not decrement the manager's
+separate published budget. The next native ownership milestone remains a bounded
+manager-lifetime and command-delivery contract, not further allocator internals.

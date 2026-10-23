@@ -43,3 +43,30 @@ class RecordCleanupTests(unittest.TestCase):
         release_buffer(ring,cleanup=cleanup,allocation_lookup=lambda _:'info',free=free)
         self.assertEqual(events,['destroy','holder','free'])
         self.assertIsNone(r['invoker']); self.assertEqual(ring['count'],0)
+
+    def test_wrapped_disposal_runs_final_reference_services_before_header_reset(self):
+        from engine.command_disposal import release_buffer
+        records = [dict(associated={'count': 1}, invoker='never-called',
+                        holder_10={'status': 1, 'name': '10'},
+                        holder_08={'status': 1, 'name': '08'}) for _ in range(4)]
+        ring = dict(storage=records, capacity=4, count=3, read=3, write=2,
+                    owns_storage=False)
+        events = []
+        def cleanup(storage, index):
+            self.assertEqual((ring['count'], ring['read']), (3, 3))
+            def destroy(_):
+                self.assertIsNone(storage[index]['associated'])
+                self.assertEqual(storage[index]['invoker'], 'never-called')
+                events.append((index, 'associated'))
+            def release(holder):
+                self.assertIsNone(storage[index]['invoker'])
+                events.append((index, holder['name']))
+            cleanup_record(storage[index], destroy_associated=destroy,
+                           release_holder=release)
+        release_buffer(ring, cleanup=cleanup,
+                       allocation_lookup=lambda _: self.fail('borrowed storage'),
+                       free=lambda *_: self.fail('borrowed storage'))
+        self.assertEqual(events, [(i, event) for i in (3, 0, 1)
+                                 for event in ('associated', '10', '08')])
+        self.assertEqual(records[2]['invoker'], 'never-called')
+        self.assertEqual((ring['count'], ring['read'], ring['write']), (0, 0, 0))
