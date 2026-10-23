@@ -7,7 +7,7 @@
   "callback_effects_validated": false,
   "live_writer_identified": false,
   "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
-  "model_sha256": "c321a126fb8257f9f28cfc04522d6b95da631ebd5011fac0458d19255aa37bf6",
+  "model_sha256": "adde56174f6dda0af76257d1e3c9b6c00b7bdc10923231659daf8860222943b8",
   "private_check_script_sha256": "04d766553d4f37c93c32130121cd9cc5d0824629b785d930abcb30933941311c",
   "fragment_hashes": {
     "0x5364bf": "2fec6ba39413a3ff9f280324155763f613ec159047f1ea32d15bcf2bb31e3ef3",

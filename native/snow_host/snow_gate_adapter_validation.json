@@ -1,0 +1,21 @@
+{
+  "evidence": "Original actor adapter with dispatch and state guard intercepted",
+  "cases": 8,
+  "passed": true,
+  "gate_values": [
+    0,
+    1,
+    2,
+    255
+  ],
+  "initial_output_values": [
+    0,
+    123
+  ],
+  "guard_always_called": true,
+  "output_not_reset_by_adapter": true,
+  "transitive_effects_validated": false,
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "f627cb3ec227ce838fdef159e08a230f7f0791df09c6e4d9015472ca5d2df461",
+  "adapter_bytes_sha256": "7ea8551119bbdd92c6281b5423fcdab2b7d11ed7c6cb89fc707ea5c7953bc6eb"
+}

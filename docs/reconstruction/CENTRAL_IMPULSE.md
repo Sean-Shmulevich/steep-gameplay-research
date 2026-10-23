@@ -359,15 +359,21 @@ state transition, rather than labeling this byte a key, contact, or crash flag.
 
 ### State-dispatch routes to gate release
 
+Correction: the initial dispatch note called the top-level `+8` field an event
+code. It is the embedded motion machine's current mode, as established by its
+[commit routine](MOTION_MEMBERSHIP_OBSERVATION.md#guard-can-return-a-decision-from-the-previous-state).
+The selector's parameter is now `current_mode`. Its branch predicates are
+unchanged; no input-event producer was identified by the previous pass.
+
 The two release callbacks have direct callers in nested state dispatch. The
 portable [route selector](../../engine/snow_block_route.py) reconstructs the local
 branch predicates, using authored labels A/B rather than guessed gameplay names.
-Inputs are raw uint32 event code, outer state and, when needed, inner state.
-The inspected handler stores event code at `+8`, owner at `+0x10`, and the owner
+Inputs are raw uint32 current mode, outer state and, when needed, inner state.
+The inspected handler stores current mode at `+8`, owner at `+0x10`, and the owner
 stores outer state at `+0x18` and its child at `+0x20`. The child's `+0x18` is
 the inner state; its `+0x20` supplies the deeper callback receiver.
 
-| Variant | Event code | Outer state | Inner state | Selected callback | Receiver |
+| Variant | Current mode | Outer state | Inner state | Selected callback | Receiver |
 | --- | --- | --- | --- | --- | --- |
 | A | 0 | 1 | Not read | External outer-one callback | Owner's child |
 | A | 0 | 0 | 5 | Unconditional block release | Child's child |
@@ -377,8 +383,8 @@ the inner state; its `+0x20` supplies the deeper callback receiver.
 | Either | Other combinations | | | No callback in this fragment | None |
 
 ```python
-def select_route(variant, event_code, outer_state, inner_state):
-    if event_code != 0:
+def select_route(variant, current_mode, outer_state, inner_state):
+    if current_mode != 0:
         return None
     if variant == "A" and outer_state == 1:
         return "outer_one_callback", 1
@@ -402,7 +408,7 @@ that lifecycle nor grants permission to invoke callbacks from another thread.
 
 [Ninety original-instruction branch cases](../../native/snow_host/snow_gate_dispatch_validation.json)
 match the selector's callback, receiver depth and native handled result across
-both variants, event codes 0/1/UINT32_MAX, outer states 0/1/2 and inner states
+both variants, current modes 0/1/UINT32_MAX, outer states 0/1/2 and inner states
 0/1/5/6/UINT32_MAX. Synthetic callback interception isolates dispatch; it does not
 validate locking, pending transitions or the external callback effects.
 The earlier 16-case check separately validates the two release callbacks' local
@@ -412,9 +418,51 @@ Build-specific branch anchors are `0x1405364bf..0x1405364f5` and
 `0x14053713f..0x140537185`. External callback anchors are `0x140536680` and
 `0x1405372b0`. A useful next observation records handler identity, nested state
 codes and callback entry/return alongside the actor gate and physics-job identity.
-Do not equate event code zero or state five with a named input or sport without
+Do not equate current mode zero or state five with a named input or sport without
 following their producers. Existing input-ingestion evidence remains a separate
 join, not proof that keyboard delivery directly invokes either handler.
+
+### Actor entry route and reuse of the motion observer
+
+Two inspected entry adapters resolve the dispatcher as `actor+0x1010`, the same
+embedded object observed by `snow_motion_observe`. Adapter A tail-calls dispatch
+A. Adapter B calls dispatch B only when actor byte `+0xfe4` is zero, then always
+calls the existing state guard with output address `actor+0xfe5`:
+
+```python
+def actor_adapter_b(actor):
+    if actor.byte_fe4 == 0:
+        dispatch_b(actor.motion)
+    state_guard(actor.motion, output_byte=actor.byte_fe5_address)
+```
+
+The final guard may service pending state changes after saving its result, as
+the earlier integrated guard/commit tests establish. It is not a pure query and
+the adapter does not reset the output byte before calling it. Skipping dispatch
+B therefore does not make the entire adapter side-effect-free.
+
+[Eight isolated adapter cases](../../native/snow_host/snow_gate_adapter_validation.json)
+execute its original instructions with dispatch and guard intercepted. Gate values
+0/1/2/255 and initial output bytes 0/123 confirm conditional dispatch, unconditional
+guard call, both receiver arguments, and preservation of the output byte before
+the guard. Transitive dispatch/guard effects are excluded from this check.
+
+The existing bounded motion reader already records `current_mode`, `state_mode`
+and `child_mode` with `state_observed` and `child_observed` availability flags.
+Those are respectively the selector's current, outer and inner fields. Follow
+the selector's conditional dependencies: a top-level nonzero mode skips without
+requiring child data; top-level zero requires the first state, and first-state
+zero requires the next level. Never substitute zero for an unavailable level.
+The reader's stable sequential observations do not prove the state at a callback
+instruction or pin objects across dispatch. Continuous writer attribution still
+requires callback entry/return evidence.
+
+Static anchors: adapter A `0x140536460`, adapter B `0x1405370b0`, final guard
+`0x14052c4a0`. An upstream component callback at `0x1405c74f0` takes a low-byte
+boolean argument, resolves components through an entity, and chooses adapter B
+for its true branch or another motion dispatcher for false. This is a concrete
+caller lead, not yet a named input binding. Its component queries, alternate
+branch and fallback effects remain external to the route selector.
 
 The tagged-record visitor supplies the caller relationship:
 

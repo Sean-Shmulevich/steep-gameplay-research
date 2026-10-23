@@ -6794,6 +6794,12 @@ cases. This is not wired into a live host API and does not pin manager or module
 
 ### Nested dispatch reaching the block-release callbacks
 
-- Traced direct callers to two state-dispatch fragments. Both require raw event code zero. The unconditional release is selected for outer state zero / inner state five; variant B also selects the guarded release at inner state one. Other callbacks remain explicit external behavior.
+- Traced direct callers to two state-dispatch fragments. Both require top-level current mode zero. The unconditional release is selected for outer state zero / inner state five; variant B also selects the guarded release at inner state one. Other callbacks remain explicit external behavior.
 - Added a portable selector with conditional inner-state dependency and descriptive receiver depth. It preserves variant differences without inventing event/sport/state names or implementing the surrounding lock lifecycle.
 - Ninety isolated original-instruction cases match callback selection, receiver and handled result. The callbacks were intercepted, so this qualifies dispatch separately from the prior release-body tests. Live writer attribution and pending-transition behavior remain open.
+
+### Dispatch ownership correction and actor entry
+
+- Corrected the former event-code label to the motion machine's current mode, supported by the existing commit routine and actor-to-embedded-motion adapters. Portable selector renamed accordingly; 90 original-instruction comparisons rerun successfully.
+- Adapter B conditionally invokes dispatch when actor byte `fe4` is clear, then always runs the existing state guard with output `fe5`. That guard can service pending transitions; the complete adapter is not a read-only predicate.
+- Mapped the selector inputs to the existing bounded motion reader's mode/availability fields. No new state sampler is needed. Documented the upstream boolean component callback as a caller lead, without assigning a keyboard or gameplay action name.
