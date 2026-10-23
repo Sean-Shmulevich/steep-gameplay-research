@@ -104,7 +104,7 @@ def main():
     parser.add_argument('--steps', type=int, default=10, help='World steps for --experiment host (1..60)')
     parser.add_argument('--plan', choices=['demo', 'acceptance', 'stress', 'speed', 'fast', 'animation', 'animation-motion', 'cached-parent', 'work-packet', 'action-observe', 'composite-observe', 'source-observe', 'chain-observe', 'ramp-observe', 'update-capture'], default='demo', help='Host experiment; cached-parent performs read-only animation observations after binding')
     parser.add_argument('--navigator', choices=['ocr', 'native', 'native-intro'], default='ocr', help='Startup navigation: existing OCR navigator, or scripts/startup_entry.py gated by the startup-loaded host (native-intro also tries --intro-key on pre-title screens)')
-    parser.add_argument('--intro-key', choices=['enter', 'escape'], default='enter', help='Key for --navigator native-intro')
+    parser.add_argument('--intro-key', choices=['enter', 'escape'], default='escape', help='Key for --navigator native-intro (Escape skips the intros; Enter does not)')
     parser.add_argument('--expect-spawn', metavar='X,Y,Z', help='With a native navigator: fail unless the idle player spawns here (tolerance 0.01)')
     parser.add_argument('--capture-steering', action='store_true', help='Opt-in 700 ms scan-30 pulse during a five-second motion capture')
     parser.add_argument('--observe-motion', action='store_true', help='Opt-in bounded before/after motion observations for update-capture')

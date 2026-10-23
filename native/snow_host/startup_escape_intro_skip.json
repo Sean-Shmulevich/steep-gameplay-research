@@ -1,0 +1,63 @@
+{
+  "kind": "startup_escape_intro_skip",
+  "date": "2026-10-23",
+  "command": "run_late_load.py --experiment host --load-at startup --navigator native-intro --intro-key escape --expect-spawn=-2312.95581,-4273.34521,2385.9326 --plan demo",
+  "runs": [
+    {
+      "escape_presses": 4,
+      "presses_t": [
+        35.1,
+        41.5,
+        48.5,
+        55.1
+      ],
+      "loading_seen_t": 55.1,
+      "title_seen": false,
+      "entered_t": 85.3,
+      "note": "last press landed on the loading screen (harmless); guard added afterwards"
+    },
+    {
+      "escape_presses": 4,
+      "presses_t": [
+        35.2,
+        41.1,
+        47.5,
+        53.9
+      ],
+      "loading_seen_t": 60.4,
+      "title_seen": false,
+      "entered_t": 89.1,
+      "note": "with the loading guard"
+    }
+  ],
+  "finding": "Escape skips the logo videos, notices and the press-any-key title; loading starts about 25 s earlier; Enter skips nothing",
+  "baseline_entered_t_without_intro_skip": [
+    109.8,
+    120.6
+  ],
+  "remaining_inputs": [
+    "Enter on the offline notice",
+    "map key on the startup map"
+  ],
+  "spawn_matches_expected": [
+    true,
+    true
+  ],
+  "demo_ok": [
+    true,
+    true
+  ],
+  "stable_20_seconds": [
+    true,
+    true
+  ],
+  "host_commands_failed": [
+    4,
+    0
+  ],
+  "cleanup": {
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_verified": true
+  }
+}

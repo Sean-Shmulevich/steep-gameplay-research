@@ -6,6 +6,15 @@ interaction only. It skips no asset or world loading and selects no map or spawn
 
 ## Command
 
+Recommended (fastest, repeatable spawn enforced):
+
+```sh
+python3 scripts/run_late_load.py --experiment host --load-at startup --navigator native-intro \
+    --intro-key escape --expect-spawn=-2312.95581,-4273.34521,2385.9326 --plan demo
+```
+
+Without the intro skip:
+
 ```sh
 python3 scripts/run_late_load.py --experiment host --load-at startup --navigator native --plan demo
 # prerequisites only, no launch:
@@ -94,8 +103,8 @@ screens. Nothing was skipped: each video and notice still showed in order. It
 took 45.9 s from the first visible screen to the title, compared with 46.5 and
 44.6 s without the presses, and the engine step count at the title matched (about
 4,400 to 4,500). The title then advanced normally and the whole run passed (demo,
-stability and cleanup). Pressing Enter does not shorten the intros; Escape and
-other keys are untested. Deferring player reads cut the host's refused commands
+stability and cleanup). Pressing Enter does not shorten the intros; Escape does
+(below). Deferring player reads cut the host's refused commands
 from 44 to 4.
 
 ## Repeatable spawn, 2026-10-22 ([receipt](startup_spawn_check.json))
@@ -114,11 +123,22 @@ This makes the spawn repeatable for this profile, not selectable. Sessions that
 travel elsewhere (helicopter, drop zone) before an autosave are untested and
 could move it. Other maps or spawns are not supported.
 
+## Escape skips the intros, 2026-10-23 ([receipt](startup_escape_intro_skip.json))
+
+In two runs with `--intro-key escape`, four Escape presses on the visible
+pre-title screens skipped the logo videos, the notices and the title, so no title
+was ever seen. Loading began by 55 to 60 s, and gameplay was confirmed at 85 and
+89 s, compared with 110 to 121 s without skipping. Both runs matched the expected
+spawn and passed demo, stability and cleanup. The skip uses the game's own key
+handling; no initialization was bypassed. The only inputs left are Enter on the
+offline notice and the map key. In the first run one press landed on the loading
+screen, which was harmless. Intro presses now stop as soon as loading text
+appears, and the second run confirmed that.
+
 ## Open
 
-- Reliability: three full passes, one gate failure and one argument failure so far.
-- Intro videos (about 45 s): Enter does not skip them. Escape is untested; the
-  native-intro mode stays only as a recorded experiment.
+- Reliability: five full passes (two with Escape), one gate failure and one
+  argument failure so far.
 - Choosing a different map or spawn (drop zone or helicopter on the startup map),
   and whether long-distance travel changes the startup spawn. Untested.
 - Native flow transitions (title, offline notice, map) without input. Not

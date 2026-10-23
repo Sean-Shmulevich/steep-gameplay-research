@@ -4803,3 +4803,9 @@ Repeatable spawn: the idle player entered at the same position in ten sessions.
 `--expect-spawn=X,Y,Z` now enforces it, and a third native pass matched exactly.
 It is repeatable for this profile, not selectable; long-distance travel before an
 autosave is untested. See the [spawn receipt](../native/snow_host/startup_spawn_check.json).
+
+Escape intro skip: Escape presses on the pre-title screens skip the videos,
+notices and title. Two runs entered gameplay at 85 and 89 s (baseline 110 to
+121 s) with the expected spawn, demo, stability and cleanup all passing.
+Recommended: `--navigator native-intro --intro-key escape --expect-spawn=...`. See
+the [receipt](../native/snow_host/startup_escape_intro_skip.json).
