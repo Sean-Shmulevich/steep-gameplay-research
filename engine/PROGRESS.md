@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Reconciled the polling-to-action route with the earlier live BeforeSimulation
+study. The actor callback already completed before PhysicsWorldStep in 701
+matching standing-state requests; its inner gated ingestion and action sample
+freshness remain open. Corrected stale summaries and specified a correlated
+poll/evaluation/ingestion/snow capture contract. This pass adds no live evidence.
+See [the joined route](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#joining-the-player-route-already-observed).
+
 Connected the registered outer route from UpdatePadManager through world AI,
 AI after-update and world AfterUpdate to the known UpdateAction wrapper.
 Validated three consecutive builders in 121 cases and the extended outer

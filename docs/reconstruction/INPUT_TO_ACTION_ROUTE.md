@@ -76,6 +76,68 @@ or validate concurrent container mutation. The two tests establish the outer
 edge identities and per-stage list construction separately; their synthetic
 fixtures are not a captured game frame.
 
+## Joining the player route already observed
+
+The inner player route is not an unplaced callback. The earlier
+[membership and execution study](MOTION_MEMBERSHIP_OBSERVATION.md#order-against-physicsworldstep)
+identified the selected actor in world registry entry 25, gathered into
+`Physic::BeforeSimulation`. Its installed thunk calls receiver slot `0x270`,
+which selects the player update for that actor. Registry entry 24,
+`PreBeforeSimulation`, was empty in that observation.
+
+The registered inner route and its gated consumer are:
+
+```text
+world UpdateAction conditional wrapper
+  -> active primary physics prerequisites
+  -> Physic::PreBeforeSimulation
+  -> Physic::BeforeSimulation
+       selected actor virtual motion update
+         -> activity/controller/motion-enabled gates
+         -> motion preparation and post-preparation skip gate
+         -> action ingestion, if those gates pass
+  -> PhysicsWorldStep
+       -> eligible substeps
+            -> snow action sampling or the selected override/source branch
+```
+
+This expands the relevant part of the wrapper, not all its branches or jobs.
+The outer chain above is static registration/emulation evidence. The earlier
+live entry/exit study separately recorded 701 requests in a standing state:
+all 3,505 receiver calls returned before the matching PhysicsWorldStep callback
+entered. The actor entered and returned once per request. These were not live
+captures of the newly reconstructed polling chain, nor proof that the actor's
+inner ingestion call ran.
+
+The [192-case gate validation](MOTION_MEMBERSHIP_OBSERVATION.md#motion-ingestion-gates-original-instruction-validation)
+explains that remaining distinction. Preparation happens before the skip test;
+a gate snapshot at outer callback entry cannot establish ingestion execution.
+Source callbacks and their sample writes are also already decoded, including
+[directional publication](MOTION_MEMBERSHIP_OBSERVATION.md#directional-source-through-action-publication).
+The missing result is their invocation and publication timing for the selected
+action in the same request, not the existence of a local vector writer.
+
+## Next capture contract
+
+Once live access is available, extend the existing request/substep recorder
+rather than repeating the membership experiment. This is a proposed experiment,
+not a recovered engine interface or a completed capture.
+
+| Event | Correlation and value to record | Question answered |
+| --- | --- | --- |
+| Named pad task return | holder/cache identity, request context if available, monotonic event sequence | Which completed poll precedes the consumer? |
+| Selected action evaluation return | action identity and processed sample, caller identity, thread and sequence | Did this action callback publish, and from which caller? |
+| Actual ingestion entry/return | actor/motion/action identity, request, consumed values | Did the inner call run despite its gates? |
+| Snow sampling within a substep | same world/request, substep ordinal, source branch and sampled value | Does snow read that action again or use an override? |
+
+Callback return is an observation point, not an atomic publication guarantee.
+Instrument the proven sample-writing sites if nested callbacks or concurrent
+writes make a return observation ambiguous. A recorder sequence is our event
+ordering aid; it must not be presented as an original sample-generation field.
+Matching values alone cannot distinguish a fresh equal sample from an old one.
+Retain dropped-record counts and reject completeness claims for incomplete
+windows. Preserve receiver identity checks and callback restoration safeguards.
+
 ## Remaining input-to-physics questions
 
 - Which UpdateAction receivers evaluate the active player's source chain, and
@@ -84,7 +146,9 @@ fixtures are not a captured game frame.
   multi-substep frames and paused/bypass routes.
 - Whether another polling call updates the cache between the named task and a
   consumer. The conditional direct polling route still exists.
-- Whether the player's selected world/actor is present in the constructed list.
+- Whether the selected world and actor match the outer stage and inner batch
+  in a new correlated capture. Earlier membership proves one observed state,
+  not every rebuilt list.
 - The world AfterUpdate interior and any additional side effects between polling
   and Action. Its name and wrapper offset do not answer this.
 

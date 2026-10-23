@@ -88,17 +88,20 @@ Established for this state:
 
 - the selected player's actor, by exact pointer, is in entry 25 and in `BeforeSimulation`'s gathered storage at the same index;
 - that batch's installed callback dispatches slot `0x270`, which is the traced player update that reaches action ingestion;
-- the earlier candidate `PreBeforeSimulation` carried no receivers this session.
+- the earlier candidate `PreBeforeSimulation` carried no receivers this session;
+- the entry probe observed per-request actor callback invocation;
+- the entry/exit probe measured its completion before PhysicsWorldStep in 701 of 701 matching requests.
 
 Not established:
 
-- (now shown by the entry probe) per-request invocation of the actor's callback;
-- (now measured) the order of that invocation against `PhysicsWorldStep`: completed before the step's entry in 701 of 701 requests;
 - that the actor's gates (activity, controller, actor `+0x1fd` skip) passed inside the call;
 - riding or other gameplay states: the player had just spawned and no input was sent;
 - input freshness: who writes the action payload and when it is published.
 
-`callback_execution_established`, `input_freshness_established` and `safe_to_step_established` remain false in every output.
+The passive membership reader leaves `callback_execution_established`,
+`input_freshness_established` and `safe_to_step_established` false in its outputs.
+Those flags describe what that reader alone can establish. They do not negate
+the separate entry/exit probe results above or establish inner ingestion execution.
 
 ## Reader and validation
 
