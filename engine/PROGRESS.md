@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Added native two-argument delegate recorder core for callback-entry evidence.
+It forwards original storage/receiver and integer result, uses bounded atomic
+capture, continues forwarding after close, and exposes records only after drain.
+Threaded native fixture passed; Windows x64 object cross-compilation passed.
+No game hook installed. Heap-owned invoker publication cannot inherit the existing
+image-vtable installer's lifetime assumptions; native adapter/restore and live
+ABI validation remain next steps. Full suite passed: 2116 tests, one skipped;
+packaging/link checks passed.
+
 Live bounded engine-job inspector passed three captures after native gameplay
 entry. Root and graphics requests advanced; root usage was true but graphics
 usage false. All sampled execution/outstanding counts were zero, demonstrating

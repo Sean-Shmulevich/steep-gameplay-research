@@ -486,3 +486,41 @@ settings restoration and original-DLL verification all passed. Raw process
 identity and transport data remain private. The next useful execution capture
 should join these bindings to callback entry and exit, rather than infer active
 work or mutation permission from idle-looking polls.
+
+## Native delegate recorder core
+
+The authored [C recorder](../../native/snow_host/snow_delegate_trace.c) and
+[header](../../native/snow_host/snow_delegate_trace.h) support the inspected
+invoker's two-argument shape: function-storage address and decoded receiver.
+The caller supplies the original invoker. The recorder forwards both arguments
+without dereferencing either, records entry/exit ticks and thread identity, and
+returns the original integer result unchanged. No float/vector return contract
+is asserted. Graphics dispatch ignores that result; this is not a replacement
+for an arbitrary unknown callback ABI.
+
+Capture uses an atomic closed-bit/active-count gate and bounded, nonwrapping
+record reservations. A call admitted before close completes its record. Calls
+after close still forward but do not write records. Full capacity drops capture,
+not the underlying call. Records are available only after close plus capture
+drain. Callback code, recorder state, records and function providers must remain
+alive for all possible callers, including cached callers after close. There is
+no reset/reopen operation, exception containment or native unload permission.
+Addresses in the internal record are private session provenance, not public data.
+
+The native pthread fixture holds one original call active, closes capture, makes
+a late forwarding call, then releases and joins the first caller. It verifies
+argument identity, a full-width integer result, entry/exit timing, unchanged
+output on refused reads, close/drain behavior and zero-capacity forwarding. The
+core also compiles as a Windows x64 object with MinGW. This checks portable
+recording mechanics and compilation; it does not prove the Windows live ABI or
+install anything in the game.
+
+The existing actor-vtable installer cannot be reused unchanged. It requires a
+nonexecutable image-backed slot whose module can be pinned. The graphics main
+invoker lives at owner +0x3c8 inside a heap-owned delegate. Replacing only that
+aligned qword is a candidate publication strategy that avoids rewriting all
+32 descriptor bytes, but compare/exchange alone does not pin the owner or prove
+the function/context binding remained compatible. A native adapter still needs
+qualified binding checks, a stated owner-lifetime window, retained forwarding
+code/configuration, conflict-aware restoration and a bounded capture controller.
+No DLL wrapper, installer or live capture using this new core is claimed yet.
