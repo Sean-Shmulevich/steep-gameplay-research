@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Live parent-publication capture: all 182 actor-input samples match the preceding
+parent publication bit-for-bit, including 17 nonzero samples; all 328 selected
+parent samples valid, no drops. Both hooks restored and cleanup passed. Forward
+input covers only two vectors; lateral/ramp/sign behavior and direct copy-event
+observation remain open. Corrected substep summary also verified live. See
+[parent/input match](../native/snow_host/live_parent_input_match.json).
+
 Added optional before/after vector-bit and active-byte samples to evaluator
 records; action probe ABI is now 2. Invalid reads clear independently, original
 evaluation always forwards, and overflow/close skip observation. Seven native

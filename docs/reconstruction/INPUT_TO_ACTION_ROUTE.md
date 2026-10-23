@@ -1920,3 +1920,33 @@ writer or prove this for other scheduler modes.
 The update plugin now derives its summary availability flag from drained records
 with valid attribution and batch frames, and exports their count. Historical
 receipts retain their original stale flag; their per-record evidence is unchanged.
+
+## Live composite publication matches actor input
+
+A subsequent combined capture instruments the composite parent's evaluator rather
+than its directional child. The private reader brackets the action table identity
+around exact reads of sample bytes and status. Every selected-parent event has
+valid before/after observations; the lookup roots and child identities agree
+before and after capture. See the
+[parent/input receipt](../../native/snow_host/live_parent_input_match.json).
+
+The trace contains 328 selected-parent events and 182 actor updates. For every
+update, the latest completed parent event precedes update entry, and no subsequent
+parent evaluation overlaps that update. All four published vector lanes match
+the motion primary input at update entry bit-for-bit: 182 matches, zero failures,
+including 17 nonzero samples. This forward-pulse test produces only two distinct
+parent vectors, so it is not a general mapping or sign test. The zero samples
+follow release; zero equality alone would be weak evidence without the nonzero
+matches and the previously decoded lookup/view/copy path.
+
+Both probes report zero drops and successful restoration/drain. The corrected
+update summary now reports substep availability and 182 direct substep records,
+consistent with the per-record frame evidence. Player movement, key release,
+saves/settings restoration and original DLL verification pass.
+
+This supplies live value consistency for the static parent-to-motion path. It
+does not observe the copy instruction itself or exclude an intermediate identical
+publication. Next useful variations are lateral input with changing ramp output,
+release decay, and the actor's X-sign gate, while keeping the parent/actor trace
+and identity checks. Those distinguish a transformed value from coincidental
+agreement on constant zero/forward vectors.

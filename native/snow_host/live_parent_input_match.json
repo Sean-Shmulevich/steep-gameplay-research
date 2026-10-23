@@ -1,0 +1,63 @@
+{
+  "parent_events": 328,
+  "valid_after": 328,
+  "valid_before": 328,
+  "distinct_published_vectors": 2,
+  "comparisons": {
+    "bit_exact": 182,
+    "nonzero_bit_exact": 17,
+    "other": 165
+  },
+  "mismatches": [],
+  "update_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 182,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 182,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 182,
+    "other_calls": 0
+  },
+  "kind": "live_parent_publication_input_comparison",
+  "evidence": "concurrent parent evaluator publication samples and actor-update motion observations",
+  "selected_action_id": 118,
+  "root_identity_fields_equal": true,
+  "child_identity_tuples_equal": true,
+  "request_group_sizes": {
+    "1": 8,
+    "3": 4,
+    "2": 81
+  },
+  "requests_using_one_preceding_parent_event": 93,
+  "action_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 4564,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "keys_released": true,
+  "player_moved": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Forward input only; two distinct published vectors.",
+    "No direct observation of the copy instruction. Static path and live sample agreement are separate evidence.",
+    "X inversion, lateral ramping and alternate-action branch not exercised.",
+    "Endpoint binding checks do not guarantee uninterrupted identity.",
+    "Instrumentation overhead affects schedule and observed timings.",
+    "The latest completed parent publication is a temporal candidate; matching values do not prove exclusive causation."
+  ]
+}
