@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Compact participant first/next iteration reconstructed and compared against 100
+original-instruction cases without helper substitution on covered paths. Iteration
+uses unsigned key cursors, not stable entry positions; preserves exhaustion cursor
+writes and max wrap. Serial mutation tests show lower insertions skipped/higher
+insertions visible. No concurrent publication safety or tag-7 traversal claim.
+Next join submission serialization and container clear with participant lifetime.
+
+
 Participant container compact branch is a sorted unique uint64 key set, not
 FIFO: duplicate holder keys coalesce. Logical model matches 27 original insertion
 cases, including unsigned extremes and 30/31-key boundaries. New-key promotion

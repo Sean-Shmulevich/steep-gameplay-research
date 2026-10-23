@@ -1,0 +1,33 @@
+{
+  "evidence": "Original first/next, membership and compact lookup instructions emulated without helper substitution on covered paths",
+  "cases": 100,
+  "all_passed": true,
+  "model_compared": true,
+  "spans": [
+    {
+      "rva": "0x108ab90",
+      "length": 130,
+      "sha256": "1a167965e20716a4bb69ccae66d97a380d56e7ca94d09c6e1a5301af51886d6c"
+    },
+    {
+      "rva": "0x108ad70",
+      "length": 8190,
+      "sha256": "832efcfa193b99d33b0b1086c5fe152e00e9ffe6933335ab656226693f40daa0"
+    },
+    {
+      "rva": "0x108d3b0",
+      "length": 1818,
+      "sha256": "d4f35f466114c3808e058d3a0cd7b4586c89bfbdad804c435a139d2265c945d6"
+    },
+    {
+      "rva": "0x1099a00",
+      "length": 54,
+      "sha256": "44c48761f30f1173a23b244d870d28220e7d53a81be756c55a0f9b1d46474b9e"
+    }
+  ],
+  "limitations": [
+    "Only zero/compact tag-6 representation; tag-7 traversal excluded.",
+    "Immutable synthetic storage within each call; no concurrency or object lifetime guarantee.",
+    "Instruction spans include unexecuted branches; only selected paths are validated."
+  ]
+}

@@ -2173,3 +2173,43 @@ around each execution callback does not prove a queued holder remains owned for
 the entire deferred interval. That lifetime must come from another owner or
 contract; it is unresolved. Do not infer persistent retain semantics merely from
 the fact that the key denotes a holder.
+
+
+## Compact key iteration and mutation boundary
+
+The participant begins with cursor zero and invokes the first/seek helper.
+For compact tag 6, first returns the cursor unchanged if that exact key exists;
+otherwise it delegates to next. Next increments the uint64 cursor, then seeks
+the first key greater than or equal to that incremented value. Thus normal next
+visits keys strictly above the previous key, in unsigned address order.
+
+```text
+first(keys, cursor):
+    if cursor in keys: return found, cursor
+    return next(keys, cursor)
+next(keys, cursor):
+    if container is empty: return exhausted, cursor
+    previous = cursor
+    cursor = uint64(cursor + 1)
+    if previous == UINT64_MAX: return exhausted, cursor
+    key = unsigned_lower_bound(keys, cursor)
+    if key exists: return found, key
+    return exhausted, cursor
+```
+
+`engine.command_compact_set.compact_command_seek` preserves the output-cursor
+write even on nonempty exhaustion; a maximum cursor wraps to zero and ends.
+The [100-case instruction comparison](../../native/snow_host/command_compact_iteration_validation.json)
+executes original first/next, membership and compact lookup code without helper
+substitution on covered paths. Empty and compact sets, zero and high-bit keys,
+31 entries, absent cursors and uint64 exhaustion all match. The larger tag-7
+traversal and native concurrent mutation are not validated.
+
+Because each call searches the currently supplied set by value, this is not an
+immutable snapshot traversal. In serial synthetic changes between calls, a newly
+inserted key below the cursor is skipped, while a higher key can be visited.
+Removing the current key does not prevent seeking the next greater key. Those
+logical effects do not grant permission to mutate native storage concurrently;
+allocation and iterator exclusion remain unresolved. The observed participant
+clears its container after traversal, so publication during traversal must be
+understood before treating it as a reliable general mod-command mechanism.
