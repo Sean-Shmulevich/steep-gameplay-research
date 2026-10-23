@@ -879,3 +879,71 @@ packet kernels establish an upstream producer, but concatenating them directly
 with the published tail does not yet prove complete original device-update
 behavior. Next: decode `0x1173da0` and the common helper before a full composed
 initial-slot update. Live scheduler placement remains separate.
+
+
+## Analog radial deadzone and magnitude limit
+
+Post-mapping helper `0x1173da0` shapes both four-lane vectors using the same
+float32 deadzone from cache+0x210. This resolves a later stage explicitly left
+open in the packet conversion section: raw axes are unclamped at conversion,
+but the subsequent vector stage can zero, rescale or normalize them.
+
+Let v=(x,y,z,w), d be the supplied deadzone, and f denote float32 rounding.
+The original squared-length reduction is:
+
+```text
+s[i] = f(v[i] * v[i])
+q = f(f(s[0] + s[2]) + f(s[1] + s[3]))
+if f(d*d) > q:
+    output = (0, 0, 0, 0)
+elif q > 1:
+    r = SIMD_reciprocal_sqrt_estimate(q)
+    factor = f(f(3 - f(f(r*q)*r)) * f(0.5*r))
+    output[i] = f(factor * v[i])
+elif d > 0 and d < 1:
+    length = f(sqrt(q))
+    scale = f(f(f(length-d) / f(1-d)) / length)
+    output[i] = f(scale * v[i])
+else:
+    output = v
+```
+
+All four lanes participate, unlike derived digital directions, which inspect
+only XY. No lane is silently cleared here. The first branch precedes magnitude
+limiting, so an unusually large or negative deadzone still affects its squared
+comparison. Deadzone is not clamped. For ordinary 0<d<1, values inside the
+radius are zeroed; the interval from d to 1 is rescaled to magnitude 0..1; values
+above magnitude 1 are approximately normalized. Equality at the deadzone reaches
+the remapping branch and produces zero for ordinary finite cases. There is no
+history, elapsed time or smoothing state in this helper.
+
+[`shape_slot_vector` and `shape_slot_cache`](../../engine/action_slot_deadzone.py)
+implement this local arithmetic with explicit finite inputs. The cache adapter
+reads d at +0x210 and changes only the vectors at +0x1f0/+0x200. Its default
+reciprocal-square-root seed is rounded 1/sqrt(q), a numerical substitute. The
+API accepts an explicit `rsqrt_estimate` callback for matching a target SIMD seed.
+The Newton refinement and subsequent operations retain float32 rounding order.
+No original SIMD bit-equivalence claim applies to the default seed.
+
+Nonfinite inputs/intermediates, overflow and a zero divisor produced by
+underflow are rejected. In particular, a tiny positive d can have f(d*d)==0;
+with a zero vector, the native remapping branch can reach division by zero.
+The portable finite model reports that boundary instead of silently inventing
+an output. Processor floating-point flags and traps are not modeled.
+
+The [deadzone receipt](../../native/snow_host/input_slot_deadzone_validation.json)
+compares 945 complete original-helper executions and all cache bytes. The
+comparison supplies observed original RSQRT seeds for 1,580 normalization
+vectors; no native calls are substituted. Cases include zero vectors, deadzone
+equality, ordinary remapping, magnitude limiting, nonzero W, negative/large
+deadzones and randomized finite lanes. The public tests separately check the
+explicit underflow rejection. These results establish local arithmetic, not
+active player tuning, all exceptional inputs, or the full polling callback.
+
+The known initial-slot success path is now packet axes -> optional configured
+button/trigger mapping -> radial shaping -> derived directions -> edge stamps,
+with additional unresolved output/common-helper effects around those stages.
+The root later copies the selected cache and regenerates directions/stamps using
+its own history. Do not collapse device and root histories into one cache.
+Next: trace the deadzone writer and common helper to establish actual defaults
+and remaining side effects before composing a complete device update.

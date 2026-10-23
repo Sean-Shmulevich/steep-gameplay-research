@@ -1,0 +1,20 @@
+{
+  "evidence": "Complete original four-lane radial deadzone helper",
+  "cases": 945,
+  "normalization_vectors": 1580,
+  "passed": true,
+  "comparison": "Every cache byte and float32 result bit",
+  "substitutions": [],
+  "portable_comparison_inputs": [
+    "Observed original RSQRT seed supplied to independent reconstruction"
+  ],
+  "start_rva": "0x1173da0",
+  "end_rva_exclusive": "0x1173eb0",
+  "sha256": "394212dec986632e19c569b89c6e6907371d9997eff8bf16339a8bec54b4bb4a",
+  "limits": [
+    "Finite tested values only; nonfinite and overflow rejected by portable API",
+    "Default reciprocal-sqrt seed is a numerical substitute",
+    "No proof of active player deadzone value or caller configuration"
+  ],
+  "game_process": false
+}

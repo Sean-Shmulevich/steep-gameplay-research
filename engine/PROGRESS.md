@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved post-mapping radial shaping: explicit four-lane deadzone, remapping
+and magnitude normalization. 945 full original-helper cases match with observed
+RSQRT seeds; default portable seed remains labeled a substitute. Active deadzone
+configuration and common-helper effects remain open. See
+[analog radial shaping](../docs/reconstruction/INPUT_UPDATE_ORDER.md#analog-radial-deadzone-and-magnitude-limit).
+
 Recovered initial-slot packet conversion: signed axes /32767, config-driven
 buttons and triggers /255 with strict digital >30. Added raw-snapshot APIs;
 512 original axis slices and 512 full mapper cases match without substitutions.
