@@ -1552,3 +1552,48 @@ boolean combinations, modes 0/1/2/3, zero/epsilon/positive delays, repeat gating
 clock thresholds and suppression. Eighteen portable history tests pass. Missing
 configuration, the selected-world clock branch, composition with the actual
 direction reader, active player binding and physics-substep timing remain open.
+
+## Composed history action evaluation
+
+[Configured action adapter](../../engine/action_history_action.py) composes the
+history predicate and timing adapter into detached action-snapshot evaluation.
+It preserves unrelated bytes and writes the native result flag, cached predicate,
+published magnitude and timestamps. Channel/history selection is explicit at the
+API boundary. Missing configuration/resource lookup and manager reset traversal
+are not included.
+
+Ownership is observed twice in native order: before the direction test and before
+magnitude publication. The adapter uses a callback for each observation. A change
+between these observations can therefore suppress magnitude without cancelling
+an already computed event, or permit magnitude after a suppressed predicate.
+Portable tests cover these combinations as supplied observations; they do not
+establish that such changes occur in the game.
+
+[Composed action validation](../../native/snow_host/action_history_action_validation.json)
+executes the original configured evaluator, channel wrapper, ownership lookup,
+direction reader, native acos and clock accessor together with no substituted
+function calls. All 1,800 evaluations across 360 five-evaluation sequences match
+the entire 0xe0-byte action snapshot and every clock read. Histories, configuration,
+registry and clocks are synthetic. The observation hook changes clock data for
+each read, without replacing the clock accessor.
+
+The sequences cover two channels, selectors 0 through 4, timing modes 0 through 3,
+and empty/self/other top ownership slots. Hold, direction change, release and
+re-entry retain the same action state across evaluations. Clock cases execute:
+
+1. Null global receiver, using fallback clock `+8`.
+2. Present receiver but null selected-world pointer, using the same fallback.
+3. Present selected-world object, using its clock field `+0x1050`.
+
+Competing clock fields deliberately contain different values, so a wrong branch
+would change the observed timestamp/result. This resolves the previously untested
+selected-world branch as local behavior. It does not identify the live world's
+object or establish its cadence.
+
+Twenty portable history tests pass. This closes the local history-to-configured-
+action composition for the tested domain. The original history producer is not
+executed in this particular receipt; it has separate composed validation above.
+The native registry is stable during each evaluation, classifier inputs here are
+finite planar axes, and the missing-configuration route remains excluded. The
+remaining scheduler connection is the selected player's consuming job and input
+age relative to its physics substeps, not an unidentified local timing predicate.

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Composed history classification, timing and publication into a detached action
+adapter. All 1,800 original configured-action evaluations across 360 sequences
+match complete action snapshots and clock reads, with no substituted calls.
+Original ownership lookup and both clock fallback conditions plus selected-world
+clock execute. Twenty portable history tests pass. Synthetic state and stable
+registry do not establish live player binding or substep freshness. See
+[composed history action](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#composed-history-action-evaluation).
+
 Implemented and differentially validated history action timing: 768 original
 configured evaluator cases match rising/held/falling gates, timestamps, distinct
 clock reads and magnitude suppression. The original clock fallback executes;

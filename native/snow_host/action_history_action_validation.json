@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "sequences": 360,
+  "evaluations": 1800,
+  "scope": "Original configured action, channel wrapper, ownership lookup, sector reader, native acos and clock accessor execute together",
+  "substitutions": [],
+  "game_process": false,
+  "setup": [
+    "Synthetic histories, owner registry, action configuration and clocks",
+    "Original clock accessor reads synthetic data; observation hook advances chosen clock value per call",
+    "Competing clock values intentionally disagree"
+  ],
+  "coverage": [
+    "Two channels, five direction selectors, four timing modes",
+    "Empty/self/other top ownership slots",
+    "Null global receiver, null selected world, and selected-world clock branches",
+    "Five-evaluation sequences retain action state across hold, direction change, release and re-entry"
+  ],
+  "comparison": [
+    "Entire 0xe0-byte action snapshot exact after each evaluation",
+    "Number, order and values of clock reads exact"
+  ],
+  "limits": [
+    "History producer and scheduler not executed in this receipt",
+    "Stable registry during each evaluation; dynamic ownership is only covered by independent adapter tests",
+    "Finite planar axis inputs; general classifier numerical boundary remains",
+    "No live selected player, world identity or substep freshness claim",
+    "Missing configuration path excluded"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x4b2a20",
+      "end_rva_exclusive": "0x4b2cfa",
+      "sha256": "e05ff4f6c7042b3b290170ae77996929806bf11cc3f6fc662ec3420bb1e0775d"
+    },
+    {
+      "start_rva": "0x48b710",
+      "end_rva_exclusive": "0x48b778",
+      "sha256": "61e072e4aede36e628b4ac301a4b75db264b6bdac738d68ac10b3e4dffc5fd23"
+    },
+    {
+      "start_rva": "0x957e70",
+      "end_rva_exclusive": "0x957eb4",
+      "sha256": "4816d05ff932095dd1920aebb966028251bbfc36bf1162cda13bd0dfeebd5c66"
+    },
+    {
+      "start_rva": "0x9760a0",
+      "end_rva_exclusive": "0x976290",
+      "sha256": "3484f30b97204e9b2213a92a6f9fce616b2ef33a7688883602a3c93269308404"
+    },
+    {
+      "start_rva": "0x478fe0",
+      "end_rva_exclusive": "0x47900c",
+      "sha256": "a538d3ae42b4679c9dbd873032c04fa2a5aae6480cbe2f94fb95e870c2b66dcb"
+    }
+  ]
+}
