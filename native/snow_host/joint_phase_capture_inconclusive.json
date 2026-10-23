@@ -1,0 +1,51 @@
+{
+  "status": "joint_capture_inconclusive_nonoverlapping_records",
+  "sessions": 1,
+  "correlation": {
+    "schema": "graphics-phase-correlation-v1",
+    "pairs": [],
+    "pair_count": 0,
+    "observed_capture_windows_overlap": false,
+    "rejected_main": 0,
+    "rejected_finalizer": 0,
+    "ambiguous_requests": [],
+    "unmatched_main": 17,
+    "unmatched_finalizer": 56,
+    "clock_frequency": 10000000,
+    "session_identity_source": "caller assertion",
+    "atomic_snapshot": false,
+    "outstanding_decrement_observed": false,
+    "native_mutation_authorized": false
+  },
+  "main_requests": {
+    "first": 1868,
+    "last": 1884,
+    "records": 17
+  },
+  "finalizer_requests": {
+    "first": 1885,
+    "last": 1940,
+    "records": 56
+  },
+  "plugin_reported_restoration": true,
+  "plugin_reported_drain": true,
+  "live_postcapture_slot_readback": false,
+  "continued_simulation_check": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_result_sha256": "91577604d3e88765d9b68cea6bdffa5b37a117530ee9eb2ac21939a14e4aaf9e",
+  "limitations": [
+    "Independent trigger files do not establish synchronized installation or overlapping recording.",
+    "Observed record spans were disjoint; actual install/restore timestamps were not recorded.",
+    "The assertion on missing pairs ended the controller before post-capture slot readback and simulation-progress checks.",
+    "Plugin summaries reported restoration/drain; launcher cleanup passed, but this is not full live post-capture verification.",
+    "No same-request phase relationship or outstanding decrement established by this session."
+  ],
+  "next_action": "Use one controller to install both probes before starting a shared capture interval; perform cleanup/readback before asserting analytical success."
+}

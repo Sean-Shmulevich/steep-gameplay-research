@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Added bounded private-trace correlation API/CLI with session, owner, clock, caller,
+ABI and capture-integrity checks; duplicate/changing keys are never guessed into
+pairs. First live dual-plugin attempt was inconclusive: 17 main records and 56
+finalizer records covered disjoint requests, yielding zero pairs. Plugin summaries
+reported restore/drain and launcher cleanup passed; an early analysis assertion
+prevented external post-capture readback/progress checks. Next use one controller
+to install both before a common interval and perform cleanup verification before
+asserting analysis success. Failed attempt retained; no same-request claim.
+Full suite passed: 2126 tests, one skipped; packaging/link checks passed.
+
 Built and live-validated bounded finalizer capture controller. Eight selected
 calls all returned through the decoded worker-completion call site: entry had
 executions=0/outstanding=1/DONE; return had 0/1/UNSCHEDULED. This closes live

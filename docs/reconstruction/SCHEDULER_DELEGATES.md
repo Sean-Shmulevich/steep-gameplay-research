@@ -903,3 +903,54 @@ body entry/return (executions 1, outstanding 1), finalizer entry (0, 1, DONE), a
 finalizer return (0, 1, UNSCHEDULED). These were separate sessions, not correlated
 records from the same request. Both zero executions and UNSCHEDULED can therefore
 coexist with unfinished outstanding-dispatch accounting on the observed path.
+
+## Same-request phase correlation
+
+The authored [correlation API](../../engine/scheduler_capture_correlation.py)
+accepts two private envelopes with `session`, `image_base`, and `rows` (the full
+JSONL summary followed by records). The session token must be supplied by a
+controller that verified the same process and creation identity; the file analyzer
+cannot establish that identity itself. The selected owner and QPC frequency must
+also match. It supports main recorder ABI 3 and finalizer recorder ABI 1 only.
+
+```sh
+python3 -m engine.scheduler_capture_correlation main-envelope.json finalizer-envelope.json
+```
+
+Both capture lifecycles must report successful restoration/drain, complete bounded
+record counts and zero drops. Every record's storage, receiver and caller must
+match the selected binding and decoded return site. Before/after job observations
+must be valid and retain one equal started/requested value to supply a correlation
+key. Duplicate keys are ambiguous and never paired; invalid or changing keys are
+rejected observations. Unmatched window-edge records remain explicit.
+
+For each unique matched request the report exposes observed timestamp order,
+thread equality, the gap in common clock ticks, and agreement with the previously
+observed accounting progression. Mismatches remain false flags, not silently
+removed records. Output omits process identity and raw pointers. Request-sorted
+output is not an inferred chronological ordering across counter wrap. Timestamp
+order alone does not prove causality, OS-lock ownership, the final outstanding
+count decrement, or permission to mutate game state. Owner/request reuse without
+an observable duplicate remains a lifetime limitation of the capture guards.
+
+### First joint attempt: disjoint record spans
+
+The [joint attempt receipt](../../native/snow_host/joint_phase_capture_inconclusive.json)
+preserves an inconclusive result. Independent trigger files produced 17 main
+records (requests 1868..1884) and 56 finalizer records (1885..1940). The analyzer
+reported no rejected/ambiguous observations, but zero paired requests and disjoint
+observed record spans. No same-request relationship was established. The
+`observed_capture_windows_overlap` field compares record timestamp extents; it
+is not a measurement of actual installation windows.
+
+Both plugin summaries reported successful restoration and drain, and launcher
+cleanup passed. However, the controller asserted a minimum pair count before its
+post-capture readback/progress checks, so those checks did not run. The public
+receipt distinguishes plugin-reported restoration from live external verification.
+A revised controller must perform cleanup/readback before analytical assertions.
+
+The next capture should use a single worker that configures both probes, installs
+both, then starts one shared interval and restores both. Independent trigger
+files are insufficient synchronization. The correlator must continue preserving
+unmatched edges and refusing guessed pairings; increasing the nominal durations
+alone would not establish synchronized start.
