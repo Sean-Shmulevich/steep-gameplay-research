@@ -1,0 +1,112 @@
+{
+  "evidence": "Authored execution-page observer in synthetic Windows x64 fixtures under Wine 10 Sikarugir on macOS",
+  "cases": [
+    {
+      "image": false,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "rw",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "rwx",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "self",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "rw",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "rwx",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "self",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "concurrent",
+      "returncode": 0
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_first_execute.c": "458d0125e29aa34e1539c939d8b3c4996640195f419ed53e0012809c136004f9",
+    "native/snow_host/snow_first_execute.h": "1146c07b52b0ed412e225c60a59bbe75170ca70cd64e909a20e25c9ebaaacdcf",
+    "tests/fixtures/snow_first_execute_fixture.c": "dfaf96ef66f0494272c3b22f1eb3998cf90163a2b95d1fc6ae88fd4037c49671",
+    "tests/fixtures/snow_first_execute_image.c": "86e0e58112cc3c009efd77b1ae042a887f59ac22d3a1f3f356e9f9a1d2eabd28"
+  },
+  "checks": [
+    "Cold and previously executed RX functions trap before execution and return the expected authored result after restoration.",
+    "Neighbor entry on the same page wins and is identified exactly.",
+    "Sixteen concurrent callers complete with one retained capture.",
+    "Cancellation restores execution without producing a capture.",
+    "Unsupported writable protections and observer own-module pages refuse.",
+    "Queried protection is unchanged on refusal, including Wine image copy-on-write normalization.",
+    "Foreign software-raised faults are forwarded; subsequent calls preserve the recorded context.",
+    "Captured RSP stack window is readable; this is not a stack unwind.",
+    "Final protection is RX, authored function bytes are unchanged, and fixture DLL file hash is unchanged."
+  ],
+  "fixture_correction": "Initial image RW refusal assertion compared the query with the requested flag. Wine reported copy-on-write. The corrected fixture records the actual pre-arm protection and requires it to remain unchanged. Observer code did not change for this correction.",
+  "game_launched": false,
+  "limitations": [
+    "No game constructor observation yet.",
+    "No native Windows runtime validation.",
+    "No exhaustive cancellation race or restoration-failure injection.",
+    "Neighboring code can consume the one-shot capture.",
+    "Page protection changes and exception handling perturb execution timing.",
+    "No manager ownership, destruction or scheduling guarantee follows from these fixture results."
+  ]
+}

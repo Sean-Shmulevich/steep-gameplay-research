@@ -6285,3 +6285,14 @@ local success/failure branches with supplied allocators. Its notification-array
 path is not evidence of command-manager allocation or teardown. This prevents
 using a similarly situated global as a false lifetime pin and redirects the
 ownership investigation toward the known manager constructor's caller.
+
+### Constructor execution observation prepared
+
+Added an authored one-shot execution-page observer with register and bounded stack
+capture. It restores RX before retrying the original instruction, refuses its own
+module and unsupported protections, and retains handler/code until process exit.
+Sixteen synthetic Wine fixture cases passed for cold/warm code, neighbor entry,
+cancellation, refusal and concurrent callers on private and DLL-backed pages.
+Receipt: `native/snow_host/first_execute_fixture_validation.json`. This prepares a
+constructor-caller experiment; no new game execution or manager lifetime claim
+is made by the implementation.

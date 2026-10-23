@@ -431,3 +431,28 @@ fault handler before protection restoration; instruction-byte output remains a
 separate later read. Do not treat stack words as a call stack, or invalid windows
 as zero-valued game data. The generic observer permits at most three 128-byte
 windows and refuses reconfiguration after arming.
+
+### First-execution diagnostic fixture
+
+`snow_first_execute.c` is an authored one-shot RX-page observer. Its contract and
+limitations are in `snow_first_execute.h` and the constructor-observer section of
+[command lifecycle research](../../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md).
+It is not enabled in the host or wired to a game page by default.
+
+Build the standalone Windows fixture outside this repository:
+
+```sh
+x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror \
+  -I native/snow_host native/snow_host/snow_first_execute.c \
+  tests/fixtures/snow_first_execute_fixture.c -o /tmp/first-execute.exe
+x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror \
+  -fno-toplevel-reorder -shared tests/fixtures/snow_first_execute_image.c \
+  -o /tmp/first-execute-image.dll
+```
+
+Run `first-execute.exe CASE` in Windows or your configured Wine environment.
+Cases are `cold`, `warm`, `neighbor`, `cancel`, `rw`, `rwx`, `self`, `concurrent`.
+An optional second argument is the Windows path to `first-execute-image.dll`;
+this exercises image-backed code instead of a private executable page. Each case
+needs a fresh process because the observer deliberately permits only one arm.
+No game files are required. The fixture retains its watched allocation until exit.

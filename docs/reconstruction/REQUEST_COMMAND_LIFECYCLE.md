@@ -1322,3 +1322,43 @@ operand and pushing it onto the operand stack. That is not itself a native
 allocator call, and forward decoding does not reconstruct the missing history.
 A focused observation of the already identified command-manager constructor's
 entry/return is the more direct next lead for its caller and allocation context.
+
+## Constructor execution observer contract
+
+The authored `snow_first_execute` diagnostic prepares a direct observation of
+constructor RVA `0x647650`. It is not a recovered engine routine. It accepts one
+committed `PAGE_EXECUTE_READ` private or image page, removes execute permission
+while preserving reads, and captures the first execution access violation on
+that page. The handler records the instruction, register context, thread, QPC
+and up to 128 stack bytes at RSP, then restores RX before retrying the instruction.
+No instruction bytes or registers are changed. The captured instruction has not
+executed yet; the stack bytes are not an unwound call stack.
+
+The caller must retain the page until process exit, exclude other protection
+changes and serialize controller operations. The observer rejects its own module
+and all protections other than RX. Its module and handler remain resident until
+process exit. Do not apply it to OS/observer dependencies needed by the exception
+handler. An external watchdog is still required. Cancellation restores RX when
+no capture has won; it returns false while another thread is restoring. This is
+one-shot instrumentation, not an unloadable hook or a scheduling barrier.
+
+The synthetic fixture covers cold and previously executed functions, a neighboring
+entry on the same page, cancellation, RW/RWX refusal, own-module refusal and
+16 concurrent callers. It also checks that unrelated software-raised faults are
+forwarded, the captured record stays unchanged after subsequent execution, and
+function results and authored instruction bytes remain intact. The same cases
+can run against a separate authored DLL. Writable image-page requests may be
+reported as copy-on-write protection under Wine; refusal checks compare queried
+protection before and after arming, not only the requested flag. These checks qualify tooling under the
+tested runtime, not constructor execution or manager lifetime in the game.
+
+For a game experiment, first validate the constructor fingerprint and current
+page protection. Arm before initialization, bound the wait and restore on timeout.
+Classify the captured RVA before interpreting registers. A neighboring function
+may execute first, and a return-looking stack word is only a caller candidate.
+Constructor entry, successful return, singleton publication and destruction are
+separate events; this observer alone does not establish the latter three.
+
+[Fixture validation receipt](../../native/snow_host/first_execute_fixture_validation.json):
+16 cases passed under Wine. No game constructor capture has been attempted with
+this observer yet. Native Windows and injected restoration failures remain untested.
