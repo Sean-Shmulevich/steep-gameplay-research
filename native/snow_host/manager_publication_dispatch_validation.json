@@ -1,0 +1,82 @@
+{
+  "evidence": "Original instruction fragments compared with authored Python decoder on synthetic inputs",
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "cases_passed": 200,
+  "synthetic_boundary_vectors": [
+    {
+      "encoded_word": 0,
+      "rolling_key": 0,
+      "expected": {
+        "stream_bytes_consumed": 4,
+        "decoded_word": 2758852950,
+        "handler_delta": -1536114346,
+        "rolling_key": 2758852950
+      }
+    },
+    {
+      "encoded_word": 4294967295,
+      "rolling_key": 0,
+      "expected": {
+        "stream_bytes_consumed": 4,
+        "decoded_word": 2758852951,
+        "handler_delta": -1536114345,
+        "rolling_key": 2758852951
+      }
+    },
+    {
+      "encoded_word": 0,
+      "rolling_key": 18446744073709551615,
+      "expected": {
+        "stream_bytes_consumed": 4,
+        "decoded_word": 2758852951,
+        "handler_delta": -1536114345,
+        "rolling_key": 18446744070950698664
+      }
+    },
+    {
+      "encoded_word": 4294967295,
+      "rolling_key": 18446744073709551615,
+      "expected": {
+        "stream_bytes_consumed": 4,
+        "decoded_word": 2758852950,
+        "handler_delta": -1536114346,
+        "rolling_key": 18446744070950698665
+      }
+    }
+  ],
+  "spans": [
+    {
+      "rva": "0x40c236c",
+      "length": 25,
+      "sha256": "c5e35e2a4a4387de396ba0d5b439e13593052969f2e7bdeeb2a281d5b56bf74e"
+    },
+    {
+      "rva": "0x40d8cc2",
+      "length": 18,
+      "sha256": "dc2c519832b3e12febeff9f3b9efed4c6157d5909bb4d6d6784fac755a126268"
+    },
+    {
+      "rva": "0x4023edf",
+      "length": 7,
+      "sha256": "0355e536d50504b47537e7e9add7eab407448bdd184603817a27976550071051"
+    },
+    {
+      "rva": "0x3fc540c",
+      "length": 83,
+      "sha256": "93accb8cb08138efa9e268d4e90993af76faa85a2798ce2c8942fa3292a09ef6"
+    },
+    {
+      "rva": "0x4036100",
+      "length": 3,
+      "sha256": "7a65d4f85361a70d7081b7513041e3cf6a33ec033d18589731bef53fa3c14979"
+    }
+  ],
+  "model_sha256": "bb51c216dd53916ef78a79c5f2209eb62e093927e8cbd370d19334753bd1bb24",
+  "game_launched": false,
+  "limitations": [
+    "Only this handler tail, not a universal engine/VM decoder.",
+    "Operand production and earlier allocation calls are not reconstructed.",
+    "Flags and incidental register mutations are not modeled; key, stream advance, signed displacement, target and balanced stack are checked.",
+    "Synthetic stream words and supplied initial registers; no new live successor execution observed."
+  ]
+}

@@ -6254,3 +6254,13 @@ register. Protection restoration and session cleanup passed. A 32-case original
 instruction fixture decodes the preceding generic two-operand store prefix.
 This explains the direct-reference search miss. Operand production, allocation
 ownership and teardown remain open; no command submission was attempted.
+
+
+### Publication dispatch arithmetic decoded
+
+Decoded the local rolling-key/signed-handler-displacement sequence after the
+observed generic store and exposed an address-free Python inspection function.
+Two hundred original-instruction cases match its integer effects, including
+upper-key preservation and native stack balance. A successor predicted from saved
+registers plus the static stream remains explicitly unverified live. This is
+startup dispatch machinery, not scheduler coverage or recovered allocation history.

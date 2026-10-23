@@ -1169,3 +1169,50 @@ The next ownership lead is the producer of these two operands and the constructo
 or allocator that produced the stored pointer. The captured writer closes the
 publication-address gap, but it provides no retain/release protocol or teardown
 exclusion. Safe native command submission remains a separate unmet requirement.
+
+
+## Publication-store dispatch decoder
+
+The observed store's following dispatch sequence has now been expressed by
+`engine.command_publication_dispatch.decode_store_dispatch`. This is a local
+startup dispatch decoder, not the physics/job scheduler and not a universal
+engine decoder. Direct jumps split its implementation across several fragments.
+The selected integer effects are:
+
+```text
+stream_pointer -= 4
+v = read_u32(stream_pointer) XOR low32(rolling_key)
+v = u32(v + 1)
+v = byte_swap32(v XOR 0x73640df2)
+v = u32(v + 1) XOR 0x50486a2a
+v = byte_swap32(u32(v - 1))
+v = u32(-u32(v - 0x017f06f9))
+rolling_key = rolling_key XOR zero_extend64(v)
+handler_pointer = u64(handler_pointer + sign_extend32(v))
+transfer_control(handler_pointer)
+```
+
+The key update is performed through a temporary stack copy in the inspected
+instructions. Other temporary mutations of the key register are overwritten by
+restoring that copy; including those temporary mutations in the final key would
+be incorrect. The final push/return transfer balances the native stack pointer.
+Register flags and unrelated incidental mutations are outside the Python model.
+
+A [200-case original-instruction comparison](../../native/snow_host/manager_publication_dispatch_validation.json)
+checks the decoder against synthetic words/keys and varied other registers. It
+verifies the signed displacement, next handler, updated full-width key, four-byte
+stream advance and balanced stack. Public tests include the independently checked
+boundary vectors and upper-key preservation.
+
+Combining the saved live register context with the **static image's** stream word
+predicts next handler RVA `0x40d1d30`, whose inspected prefix begins an eight-byte
+stream read. This is a conditional prediction: the stream word was not captured
+in that live record, and no successor execution was observed. It must not be
+reported as a live trace or as the allocator that produced the manager.
+
+Forward dispatch does not recover past execution. To reach the allocation owner,
+new evidence must establish the stream/operand state at publication or a native
+constructor entry/return. The captured RBP and RBX values provide concrete
+locations for bounded operand/stream snapshots in a future experiment; pointers
+must be obtained anew each session. No earlier call stack can be reconstructed
+by reading those old addresses after the faulting thread has continued.
