@@ -1,0 +1,48 @@
+{
+  "evidence": "Selected queue tail, concrete graphics reservation/dispatch, common invoker and ordinary completion in authored serial driver",
+  "cases": 8,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x11d8238",
+      "length": 30,
+      "sha256": "b87a42d72188aa2c0ce03cb23298931cdf04c503b890b43558d4c13a1850d0a9"
+    },
+    {
+      "rva": "0x67adf0",
+      "length": 99,
+      "sha256": "85c8721e6e67330421f6e3c88b1bf77b89ce0df939db95369dc04590075d8b50"
+    },
+    {
+      "rva": "0x11d16f0",
+      "length": 86,
+      "sha256": "89b528b2c7149d9004972b00bf4d67e7a507e38fa4e31ff756c7a4a95cd26f6e"
+    },
+    {
+      "rva": "0x65b1e0",
+      "length": 116,
+      "sha256": "2e8ae64033cd66104b93c56d2edb3c306b2474293286ee4b1eb4988954892f4b"
+    },
+    {
+      "rva": "0x8ab390",
+      "length": 9,
+      "sha256": "c2b13b0a2d8635b4a691fc95c63ba2cf2f1482c419541597e898b96ad219cb93"
+    },
+    {
+      "rva": "0x11e2d70",
+      "length": 171,
+      "sha256": "1877fddd9c59e7a7eddee73f440834efc81f1784d26b543697b88200acd00075"
+    },
+    {
+      "rva": "0x11d1670",
+      "length": 123,
+      "sha256": "1a91ff93e0f55c64247ba8d459ff0f21064ce670612d81c7404b18143c902586"
+    }
+  ],
+  "limitations": [
+    "Selection prefix omitted; category lock supplied as held at selected tail entry.",
+    "Lock services, queue removal/state change and dependency release are intercepted.",
+    "Driver omits worker TLS, profiling and notifications.",
+    "No real locking, concurrent execution, native registration or unload safety proof."
+  ]
+}

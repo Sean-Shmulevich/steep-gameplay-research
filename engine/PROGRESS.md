@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Resolved the graphics slot +0x58 caller as the queue reservation tail, joining
+older engine-loop research to the concrete live table. The optional reservation
+delegate runs with dispatch counts incremented and DONE set, after job-lock
+release but before outer category-queue unlock. Eight connected instruction
+cases validate reservation through body dispatch and finalization. Added distinct
+reservation_handler support to the reconstructed registry and probe, with three
+integration tests. No native lock or hook installation claim. The remaining
+lifecycle gap is outer destruction/submission exclusion, not this caller identity.
+Full suite passed: 2108 tests, one skipped. Probe and packaging/link checks passed.
+
 Graphics before/main/after dispatch now connects to worker completion and ordinary
 finalization in 64 original-instruction cases. After runs before execution-count
 decrement; dependency release precedes final outstanding-count decrement. Added

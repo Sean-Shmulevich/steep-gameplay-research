@@ -59,7 +59,7 @@ class MixedScheduler:
         allowed = {'id', 'kind', 'successors', 'credit_recipients', 'secondary', 'secondary_credits',
                    'handler', 'predicate', 'condition', 'receivers', 'chunk_size', 'tail_threshold',
                    'max_concurrency', 'credit_gate', 'credits', 'front_insert', 'early_exit_enabled',
-                   'before_handler', 'after_handler'}
+                   'before_handler', 'after_handler', 'reservation_handler'}
         self._definitions, self._jobs, self._lists = {}, {}, {}
         for original in definitions:
             if not isinstance(original, dict) or set(original) - allowed:
@@ -72,9 +72,9 @@ class MixedScheduler:
                 raise ValueError('conditional-only fields on other job')
             if kind not in ('range', 'callback') and 'handler' in spec:
                 raise ValueError('body handler requires executable job kind')
-            if kind != 'callback' and any(key in spec for key in ('before_handler', 'after_handler')):
-                raise ValueError('before/after handlers require callback job kind')
-            for key in ('handler', 'predicate', 'before_handler', 'after_handler'):
+            if kind != 'callback' and any(key in spec for key in ('before_handler', 'after_handler', 'reservation_handler')):
+                raise ValueError('phase handlers require callback job kind')
+            for key in ('handler', 'predicate', 'before_handler', 'after_handler', 'reservation_handler'):
                 if key in spec and spec[key] not in self._handlers:
                     raise ValueError('unresolved versioned handler')
             if kind == 'conditional':
@@ -382,7 +382,7 @@ class MixedScheduler:
         return [name for name in self._queue if self._jobs[name]['state'] == requests.SCHEDULED
                 and self._jobs[name]['executions'] < self._definitions[name]['max_concurrency']]
 
-    def reserve(self, name=None, *, worker_index=None):
+    def reserve(self, name=None, *, worker_index=None, context=None):
         """Ordinary queue route; optional policy disallows a forced nonwinner."""
         self._validate_worker(worker_index)
         if self._worker_busy(worker_index):
@@ -415,6 +415,14 @@ class MixedScheduler:
                 job['state'] = requests.DONE
                 self._remove_queued(name)
                 self._emit('mixed_callback_done_on_reservation', job=name, dispatch=token.dispatch)
+                if 'reservation_handler' in self._definitions[name]:
+                    self._emit('mixed_callback_reservation_enter', job=name,
+                               dispatch=token.dispatch,
+                               executions=job['executions'],
+                               outstanding_dispatches=job['outstanding_dispatches'],
+                               native_lock_context='category queue held; job locks released')
+                    self._invoke(self._definitions[name]['reservation_handler'], context)
+                    self._emit('mixed_callback_reservation_return', job=name, dispatch=token.dispatch)
             return token
 
     def reserve_helper(self, name, *, helper_id):
@@ -596,7 +604,7 @@ class MixedScheduler:
 
     def dispatch_next(self, context=None, *, worker_index=None):
         with self._operation():
-            token = self.reserve(worker_index=worker_index)
+            token = self.reserve(worker_index=worker_index, context=context)
             if token is None:
                 return False
             name = self._dispatch(token)['job']

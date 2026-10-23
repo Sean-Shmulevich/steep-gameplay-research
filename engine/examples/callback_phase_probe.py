@@ -14,10 +14,11 @@ def probe():
             observations.append(dict(phase=phase, **scheduler.teardown_wait_status('frame')))
         return dict(version='synthetic-v1', callback=observe)
     scheduler = MixedScheduler([
-        dict(id='frame', kind='callback', before_handler='before', handler='main',
+        dict(id='frame', kind='callback', reservation_handler='reservation',
+             before_handler='before', handler='main',
              after_handler='after', successors=['dependent']),
         dict(id='dependent', kind='terminal')],
-        {phase: handler(phase) for phase in ('before', 'main', 'after')})
+        {phase: handler(phase) for phase in ('reservation', 'before', 'main', 'after')})
     scheduler.submit('frame')
     token = scheduler.reserve('frame')
     scheduler.execute_callback(token)

@@ -231,8 +231,8 @@ The ordinary begin path already called this operation `remove_from_queue`;
 see [begin paths](SCHEDULER_BEGIN_PATHS.md). The new connection is to graphics
 slot +0x58 through `0x11d16f0`. That route can transition to DONE without waiting
 for every outstanding dispatch. Its optional +0x150 delegate must not be exposed
-as an all-dispatches-drained notification. The outer lifecycle exclusion and
-actual callers of slot +0x58 remain open.
+as an all-dispatches-drained notification. The reservation caller is resolved in the section below. Outer lifecycle
+exclusion remains open.
 
 ## Dispatch phases versus finalization
 
@@ -285,5 +285,73 @@ without invented completion, and rejected bindings/job kinds.
 
 A scoped search of indirect slot +0x58 calls in scheduler-region functions found
 several profiling and unrelated object calls, but no newly qualified graphics-job
-caller. Do not identify those solely from their slot offset. The actual caller
-of the separate +0x150 delegate and outer destruction exclusion remain open.
+caller. Do not identify those solely from their slot offset. The reservation caller is resolved below. Outer destruction exclusion remains
+open.
+
+## Reservation callback and category lock ownership
+
+The selected-job tail at RVA `0x11d8238` increments outstanding dispatches at
++0x50 and executions at +0x4c, then invokes slot +0x58 at `0x11d8246`.
+Only afterward does it release the category queue lock. With the observed
+ordinary graphics table, that slot is `0x67adf0`, the previously described
+post-service delegate path. Thus its +0x150 delegate is the optional reservation
+callback, not a completion notification. This connects the concrete binding to
+[the already documented callback reservation route](ENGINE_LOOP_HANDSHAKE.md#callback-jobs-become-done-on-reservation).
+The earlier unresolved-caller statements are superseded for this queue route.
+
+```text
+selected_job_tail(job, category_queue):  // category lock already held
+    atomic_increment(job.outstanding_dispatches)
+    atomic_increment(job.executions)
+    job.on_reservation():
+        lock(job)
+        lock(job)  // nested state-service call
+        if job.state == SCHEDULED:
+            remove_from_queue_and_mark_done(job)
+        else:
+            job.state = DONE
+        unlock(job)
+        unlock(job)
+        invoke_optional_reservation_delegate(job)
+    unlock(category_queue)
+    return job
+```
+
+The removal helper has its own queue locking, described above. The pseudocode
+abbreviates that helper and does not claim the queue selected by removal always
+aliases the outer category container. Valid routing and lock implementation are
+separate native invariants. The reservation delegate runs after the two local
+job-lock acquisitions have been released, but before the outer queue unlock.
+Earlier wording that merely said "after lock release" was insufficient for
+choosing a mod execution phase.
+
+An [eight-case connected instruction check](../../native/snow_host/graphics_reservation_validation.json)
+executes the selected tail, concrete reservation method, nested state service,
+graphics body dispatcher, common invoker, completion and ordinary finalizer.
+All four context tags and optional reservation presence are tested. The category
+lock is supplied as held on entry; lock services, removal/state change and
+dependency release are intercepted. The fixture observes:
+
+```text
+account dispatch -> mark DONE -> optional reservation -> outer queue unlock
+-> before -> main -> after -> dependency release -> final accounting return
+```
+
+Counts are one during reservation and all body phases. Dependency release sees
+zero executions and one outstanding dispatch. The final state has both counts
+zero and is UNSCHEDULED. This is serial instruction evidence, not live concurrent
+lock validation. A scoped search initially missed the connection because the
+selected tail has a separate function-table range and no local state +0x54
+access; searches requiring both properties in one range exclude this caller.
+
+The reconstruction now accepts `reservation_handler` for callback jobs, resolved
+through the same versioned registry. `reserve(..., context=...)` supplies the
+context; `dispatch_next(context)` forwards it. The handler runs after the
+reconstructed job becomes DONE and leaves the queue, before reserve returns.
+Its trace labels the native lock context. The Python scheduler does not implement
+those native locks, and this field is not authorization to install an arbitrary
+mod callback under a game queue lock. Keep reservation separate from body-phase
+hooks. Failure uses the existing authored fail-stop policy without pretending
+the reserved dispatch completed. Three tests cover phase order and counters,
+context forwarding, failed reservation and incompatible job kinds. The runnable
+`callback_phase_probe` now includes reservation as its first observation.
