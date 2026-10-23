@@ -1,5 +1,17 @@
 # Reconstruction progress and next work
 
+Decoded the executor's primary command ring drain and quota helper. Return means
+processed work, not readiness. Default quota is one; occupancy above 3/4 increases
+it, a separate flag selects sampled count, and a mode byte bypasses quota/time.
+The strict 10 ms check occurs after dispatch. All 96 original drain/quota cases
+matched the serial model, including ring wrap and exact threshold boundaries.
+Another 128 quota-only comparisons passed across signed/wrapping boundaries.
+Queue lock is released before dispatch, whose own locks remain separate. Added a
+composed executor example showing ordinary primary work suppressing service C.
+No game launch or native submission permission; dispatcher producers/ABI remain next.
+Full suite passed: 2148 tests, one skipped; example and repository checks passed.
+
+
 Reconstructed the complete command executor control flow with opaque service
 interfaces and dynamic participant-end reloads. All 96 original-instruction
 comparisons passed, including a supplied recursive callback: inner return clears

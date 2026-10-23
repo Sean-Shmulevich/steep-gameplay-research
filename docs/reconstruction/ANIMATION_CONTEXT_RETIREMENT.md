@@ -1956,8 +1956,8 @@ execute_engine_commands(manager):
     manager.executing_byte = 1
     flush_hierarchy_commands(manager)
     service_A(manager)
-    ready = service_B(manager)
-    if not ready or global_state.flag52 != 0:
+    did_work = service_B(manager)  # primary queue drain, decoded below
+    if not did_work or global_state.flag52 != 0:
         service_C(manager)
     service_D(manager.embedded58)
     global_service.virtual60()
@@ -2800,3 +2800,87 @@ The Python adapter has an explicit callback budget to stop malformed synthetic
 traversals. That limit is authored. Exceptions and budget exhaustion do not clear
 the byte through an invented `finally` block; original exception unwinding remains
 unverified. This pass neither installs a participant nor launches the game.
+
+## Primary command queue budget
+
+The executor's former opaque service B, RVA `0x664310`, drains a concrete ring
+queue. Its return byte means **at least one record was processed**. The earlier
+pseudocode variable `ready` did not establish readiness and is now `did_work`.
+The primary ring has backing pointer manager +0x100, signed count +0x108, read
+index +0x110, capacity +0x114 and lock +0xc0. Records are 0x68 bytes. The consumer
+copies and retains a record, advances the ring and decrements its count under the
+lock, releases that lock, then calls dispatcher RVA `0x662a60` on the retained
+local record. That dispatcher has additional locking and is not a free-standing
+unlocked mod callback. The payload ownership and concrete command handlers remain
+separate from the drain-policy reconstruction.
+
+Quota helper RVA `0x66e360` samples count/capacity under the same queue lock.
+For ordinary nonnegative sizes without arithmetic overflow:
+
+```text
+quota = 1
+if count * 4 > capacity * 3:
+    quota = count - floor(capacity / 2)
+if separate_configuration.flag19b9 != 0:
+    quota = count
+```
+
+The implementation preserves the actual signed 32-bit comparison and wrapping
+arithmetic. The override's user-facing meaning is unknown. It is a separate flag
+from the mode byte used by the consumer. The policy snapshots the quota first,
+then samples global mode byte +0x52 and the starting clock.
+
+```text
+did_work = false
+repeat:
+    available, retained_record = pop_under_queue_lock()
+    keep_going = available
+    if available:
+        dispatch_after_queue_unlock(retained_record)
+        did_work = true
+        if sampled_mode_byte == 0:
+            elapsed = uint64(now_ticks - start_ticks)
+            microseconds = uint64(elapsed * 1000000) / clock_frequency
+            if microseconds > 10000:
+                keep_going = false
+    quota = uint32(quota - 1)
+    if not keep_going: break
+    if sampled_mode_byte == 0 and quota == 0: break
+return did_work
+```
+
+The time check occurs after each processed command. Exactly 10,000 microseconds
+still allows another attempt; a slow command can exceed the budget. Nonzero mode
+bypasses both time and quota limits and continues until a pop finds no record.
+It does not establish a hard deadline or termination with concurrent producers.
+An initial zero quota still permits one attempt and then wraps on decrement;
+it is not a gate that disables processing.
+
+[96 full original-drain comparisons](../../native/snow_host/command_primary_drain_validation.json)
+match `engine.command_drain`: empty/nonempty queues, the exact 3/4 threshold,
+odd capacities, wraparound read indices, override/mode combinations and times
+9,999/10,000/10,001 microseconds. Original quota and drain instructions run;
+clock/lock services, record cleanup and dispatch bodies are intercepted. Another
+128 quota-only instruction comparisons cover signed and wrapping arithmetic. Dispatch
+observations occur after the queue-lock release in every populated case. These
+checks do not establish native lifetime management or concurrent correctness.
+
+The outer executor invokes service C only if primary processing returned false
+or a fresh global mode read is nonzero. Thus ordinary primary work suppresses
+service C for that invocation even when primary records remain queued. Static
+inspection identifies C's separate ring at manager +0x160, with its lock at
++0x120, and the same dispatcher. Its full policy and producer routing still need
+qualification. Do not infer priority names or starvation guarantees from this
+local branch alone. The fresh outer mode read can differ from B's saved mode.
+
+Run the composed payload-free example:
+
+```sh
+python3 -m engine.examples.command_budget_probe
+```
+
+The example connects the recovered primary policy to the outer executor and
+records when opaque service C is admitted. It supplies synthetic commands and
+clocks; it does not submit commands to the original game. The dispatcher contains
+indirect callback cases, a promising next lead, but their producer, receiver ABI
+and lifetime must be established before exposing a native mod command API.

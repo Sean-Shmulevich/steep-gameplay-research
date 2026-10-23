@@ -1,0 +1,28 @@
+{
+  "evidence": "Original primary drain and quota instructions compared to authored serial policy with synthetic queues and intercepted platform/record services",
+  "cases": 96,
+  "quota_arithmetic_cases": 128,
+  "all_passed": true,
+  "dispatch_outside_queue_lock": true,
+  "quota_threshold_strict": true,
+  "time_threshold_microseconds": 10000,
+  "spans": [
+    {
+      "rva": "0x664310",
+      "length": 691,
+      "sha256": "ab121ee8180863ba7b8123ddd86e4a8c657dcaa4e2586accbc55ff69d54c4d96"
+    },
+    {
+      "rva": "0x66e360",
+      "length": 130,
+      "sha256": "af88887722927aeb15fafb39fdaabf1381b133c066c86387f79bbcd5d824a7c2"
+    }
+  ],
+  "limitations": [
+    "Lock services are tracked callbacks, not actual concurrent locks.",
+    "Record cleanup and dispatch bodies are intercepted; holder counts use retained synthetic objects and do not validate native ownership.",
+    "Clock frequency and values are supplied; no live latency or hard deadline established.",
+    "Mode and override flags remain constant during each case.",
+    "Full drain cases use valid small queues; separate quota-only cases cover uint32 overflow and signed comparisons."
+  ]
+}

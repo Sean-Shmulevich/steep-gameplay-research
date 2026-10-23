@@ -14,6 +14,7 @@ def execute_commands(manager, *, services, read_slot, invoke, read_global_flag,
     manager contains executing_byte, array (integer slot base), count (uint16),
     and embedded (opaque service-D receiver). services maps hierarchy/A/B/C/D/
     global to callables. B returns an integer; only its low byte is tested.
+    B is the primary queue drain; its result means at least one record processed.
     read_global_flag is called only when that byte is nonzero. Global takes no
     arguments; D receives embedded; the other services receive manager.
 
@@ -34,8 +35,8 @@ def execute_commands(manager, *, services, read_slot, invoke, read_global_flag,
     manager['executing_byte'] = 1
     services['hierarchy'](manager)
     services['A'](manager)
-    ready = services['B'](manager)
-    if not (ready & 255) or read_global_flag() != 0:
+    did_work = services['B'](manager)
+    if not (did_work & 255) or read_global_flag() != 0:
         services['C'](manager)
     services['D'](manager['embedded'])
     services['global']()
