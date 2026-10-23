@@ -431,6 +431,69 @@ The session stopped normally; saves/settings were restored and the original DLL
 verified. Private-allocation lifetime and callback phase remain open. An empty
 queue during this interval does not by itself establish safe native submission.
 
+## Command-manager initialization contract
+
+Searching for the live capacity, 3072, identifies a constructor-shaped routine
+at RVA `0x647650`. Its layout matches the observed manager across both budget
+pairs, the primary ring, participant container, execution flag and auxiliary
+buffers. This is a static layout attribution, not a captured native constructor
+call or proof of singleton ownership.
+
+The [constructor fixture](../../native/snow_host/command_constructor_validation.json)
+executes the original constructor and ring-allocation helpers in five cases:
+all allocations succeed, then each of four allocations independently returns
+null. Lock initialization, allocator services, container initialization and empty
+buffer cleanup are synthetic. Every case returns the receiver; this does not
+establish that the native allocator returns null rather than throwing or exiting.
+
+Recovered initialization, with descriptive names chosen for this reconstruction:
+
+```text
+initialize(manager):
+    initialize_lock_wrapper(manager + 0x00)
+    zero_ring_header(manager + 0x30)       // pointer and four u32 fields
+    allocate_primary_ring(manager + 0x30, 3072, record_bytes=104)
+    manager.active = 0                   // +0x50
+    manager.deferred = 0                 // +0x54
+
+    initialize_lock_wrapper(manager + 0x58)
+    zero_ring_header(manager + 0x88)
+    allocate_secondary_ring(manager + 0x88, 4, record_bytes=16)
+    manager.secondary_active = 0         // +0xa8
+    manager.secondary_deferred = 0       // +0xac
+    initialize_container(manager + 0xb0, 0)
+    manager.executing = false            // +0xbc
+
+    initialize_lock_wrapper(manager + 0xc0)
+    initialize_container(manager + 0xf0, 0)
+    initialize_empty_buffer(manager + 0x100, ownership_byte=1)
+    initialize_lock_wrapper(manager + 0x120)
+    initialize_container(manager + 0x150, 0)
+    initialize_empty_buffer(manager + 0x160, ownership_byte=1)
+    allocate_buffer(manager + 0x100, 128 * 104)
+    allocate_buffer(manager + 0x160, 128 * 104)
+    return manager
+```
+
+The primary ring helper at `0x659170` requests `capacity * 104` bytes, writes
+its returned pointer, and sets capacity to the requested value on success or zero
+on null. Successful allocation sets the byte at ring-header `+0x18` to one.
+The four allocation sizes are 319,488, 64, 13,312 and 13,312 bytes. The primary
+request fits the previously observed 327,680-byte containing region; region
+size still does not identify the allocator or an exact allocation boundary.
+
+The lock-wrapper initializer's visible prefix stores `wrapper + 8` into the
+wrapper's first pointer before calling an encoded target. This suggests inline
+critical-section storage, but the target's initialization semantics were not
+executed by this fixture. Do not infer a separate lock allocation merely from a
+memory-region report.
+
+A bounded direct-relative-call search found no caller of this constructor in the
+inspected image. Indirect calls, transformed call paths and startup-only code
+remain candidates. The next ownership search can now start from this constructor
+and its buffer teardown counterparts, rather than only singleton readers.
+No lifetime pin or safe native publication point follows from initialization alone.
+
 ## Inspect the behavior without game files
 
 ```sh

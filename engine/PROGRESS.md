@@ -6083,3 +6083,12 @@ opt-in `--navigator native|native-intro`, `--intro-key` and `--expect-spawn`.
 The default `--navigator ocr` path is unchanged. The full suite passes (1,910
 tests) with `SDKROOT=.../MacOSX26.5.sdk`; the default 27.0 SDK fails six
 native-compile fixtures at link time, which is environmental.
+
+### Command-manager initialization attribution
+
+The live 3072-entry capacity led to a constructor layout matching both queue
+budgets and the auxiliary containers. Five original-instruction emulator cases
+validate allocation sizes, initialized fields and synthetic null-allocation
+results. See [the initialization contract](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#command-manager-initialization-contract).
+Native caller/publication, destruction and lifetime pinning remain unresolved;
+this does not enable unrestricted plugin command submission.
