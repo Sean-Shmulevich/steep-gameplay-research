@@ -933,9 +933,9 @@ applies to the separate direction field.
 The vector callback was re-inspected at RVA 0x4b21d0 for this composition. Its
 configuration-null branch returns before source reads; its lane branch precedes
 processing and its final stores match the existing publication kernel. Individual
-kernels have earlier validation, but this newly composed adapter has unit tests
-only so far. It is not yet a differential comparison of the complete native
-vector-source callback plus reset.
+kernels have earlier validation. The composed reset/vector callback comparison
+is now recorded in the differential section below; source/cache internals and
+processor execution remain supplied boundaries.
 
 The output includes an immutable byte snapshot and diagnostics stating whether
 evaluation, source selection and processing occurred. Snapshot layout is a
@@ -948,3 +948,31 @@ freshness remain outside the interface.
 ```sh
 python3 -m unittest discover -s tests -p test_vector_action_refresh.py
 ```
+
+
+## Differential reset and vector callback validation
+
+The [composed vector receipt](../../native/snow_host/vector_action_refresh_validation.json)
+records 1,440 cases executing the original reset enumerator and vector-source
+callback together. Every case compares all 192 bytes of the synthetic action
+against `refresh_vector_action`, plus the source-helper and processor call
+sequence. No adapter correction was required.
+
+Coverage combines source kinds 0/1/2/3/unknown, three lane modes, zero/analog/small/
+3-4 vector inputs, owner suppression, missing source configuration, source
+blocking, and absent/enabled/bypassed processor configuration. Native handle
+selection and processor-call gating execute as original instructions. The
+substituted processor halves each lane, making processing distinguishable from
+bypass and exposing whether lane selection happened first.
+
+The native source helper is supplied a synthetic vector/scalar/blocked-zero
+result; its underlying ownership and cache reads do not execute. The map
+enumerator supplies one synthetic action. For direction byte parity, the test
+observes the native RSQRTPS seed and supplies it to the independent publication
+kernel. This tests the refinement/publication operations without claiming to
+reproduce seed generation on every CPU. Sample, magnitude and status do not
+rely on that supplied seed.
+
+This closes the previously pending composed local comparison. It does not
+establish an active player binding, source-cache freshness, real processor-chain
+selection, asynchronous publication safety or scheduler-integrated evaluation.

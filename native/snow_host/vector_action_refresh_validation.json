@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "cases": 1440,
+  "scope": "Original reset enumerator calling original vector-source callback compared against independent composed adapter; all 192 synthetic action bytes and processor call sequence",
+  "substitutions": [
+    "Map enumeration supplies one action",
+    "Vector source helper supplies configured synthetic vector/scalar or blocked zero; its ownership/cache internals are not executed",
+    "Processor virtual callback halves lanes and records input"
+  ],
+  "coverage": [
+    "Kinds 0,1,2,3 and unknown99",
+    "Lane modes 0,1,2",
+    "Zero, analog, small and 3-4 vectors",
+    "Owner suppression and absent source configuration",
+    "Absent, enabled and bypass processor configuration",
+    "Blocked/unblocked sources"
+  ],
+  "numerics": "Original RSQRTPS estimate observed and supplied to adapter for direction comparison; seed generation not reconstructed",
+  "spans": [
+    {
+      "start_rva": "0x4b69b0",
+      "end_rva_exclusive": "0x4b6a5b",
+      "sha256": "aaef3fda0c25e8d037ed424d9af88b8597cd62210607f357e75d9fb1e5aeb196"
+    },
+    {
+      "start_rva": "0x4b21d0",
+      "end_rva_exclusive": "0x4b2370",
+      "sha256": "be040e7392b48b6ef99cfaf5b8dc19f34ea64b4731db601837323417f422488b"
+    }
+  ],
+  "limits": [
+    "Finite synthetic lanes only",
+    "No actual source-cache/ownership logic or configured processor execution",
+    "No device identity, live game, scheduler integration or input freshness proof"
+  ],
+  "game_process": false
+}

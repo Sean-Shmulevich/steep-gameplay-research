@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated the composed reset/vector-source adapter against original instructions
+in 1,440 cases, comparing all synthetic action bytes and processor-call ordering.
+No correction was needed. Source/cache internals and the processor remain supplied;
+exact direction comparison uses an observed native RSQRT seed. Active player
+binding and scheduler-integrated sample freshness remain separate live questions.
+See [vector differential validation](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#differential-reset-and-vector-callback-validation).
+
 Implemented a vector-source refresh composition with explicit provider and
 processor callbacks. Five tests cover owner/configuration gates, lane selection
 before processing, retained analog sample amplitude, scalar selection and blocked
