@@ -1,0 +1,56 @@
+{
+  "evidence": "One bounded live Wine game session with repeated resident read-only requests through intercepted engine-main delegate",
+  "native_command_queue_submission": false,
+  "submitted_requests": 16,
+  "returned_receipts": 16,
+  "request_ids": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116
+  ],
+  "unique_matching_delegate_records": 16,
+  "callback_records": 99,
+  "callback_thread_count": 3,
+  "request_thread_count": 2,
+  "dropped": 0,
+  "caller_rvas": [
+    "0x65b223"
+  ],
+  "distinct_observed_job_requested_counters": 16,
+  "after_close_admission": "closed",
+  "independent_slot_restoration_verified": true,
+  "engine_progress_after_restoration": true,
+  "cleanup_verified": true,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "837fec44815dc0d3abdb9d86bbd59ac30aea89da39302e067ef9e31bfe7048ea",
+    "native/snow_host/snow_delegate_probe.h": "20e79f155403a97bdaeb587aebd5fcc2b16b274e9589f1f43359d0ee88947aa2",
+    "native/snow_host/examples/delegate_capture.c": "aea338d866c49ee0e5b24f034eb47445d460f9a9d8d082dac712dad26f738292"
+  },
+  "plugin_sha256": "9957072c517eff3b79488de2c527b9825d1c73e0b97ed35ed4fca5eb39d62942",
+  "raw_evidence_sha256": {
+    "delegate-capture-result.json": "3ca76b74ba793df145297aa1e74f96d1164b2cee6b0de64bea67cf0f91fe7bc2",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "build/plugins/delegate_capture.ini.trace.jsonl": "24731b94884f6dd4d4ae2f07f4e4f18d9ead2b80f10e58ef06edc250c59dc9a4",
+    "build/plugins/delegate_capture.ini.trace.jsonl.requests.json": "b21f154d0b00b9d575cc2dcfce5921b17a3136bb95539b6136930ec7dfe3f364"
+  },
+  "limitations": [
+    "Resident read-only adapter request slot, not native queue admission or arbitrary mutation.",
+    "One bounded steady-gameplay session; map transition, shutdown and owner destruction untested.",
+    "Close with pending/running work is covered by controlled Wine fixtures, not this live run; live close follows collection.",
+    "Manager pointer samples do not establish ownership or atomic snapshots.",
+    "No module unload or whole-engine drain qualification."
+  ]
+}

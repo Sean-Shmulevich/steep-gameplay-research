@@ -41,4 +41,26 @@ typedef struct {
 } SnowDelegateRequestObservation;
 SNOW_DELEGATE_API int SnowDelegateProbe_ArmObservation(uint64_t request_id);
 SNOW_DELEGATE_API int SnowDelegateProbe_ReadObservation(SnowDelegateRequestObservation *);
+/* Reusable single-slot observation, authored policy, not native queue semantics.
+ * Submit only after successful Install; IDs must strictly increase (no wrap).
+ * A pending/running/uncollected request applies backpressure. Collect consumes
+ * one returned or cancelled receipt. ReadObservation remains non-consuming and
+ * reports returned receipts only. Control calls serialize internally.
+ * CloseObservations permanently refuses new requests and cancels one unclaimed
+ * request. A callback that already claimed it finishes normally. Restore/Close
+ * also close requests. Neither collection nor closure authorizes module unload.
+ * Submission can be claimed and returned before SubmitObservation returns.
+ */
+typedef enum {
+    SNOW_OBSERVATION_ACCEPTED=1, SNOW_OBSERVATION_BUSY=2,
+    SNOW_OBSERVATION_CLOSED=3, SNOW_OBSERVATION_INVALID=4,
+    SNOW_OBSERVATION_STALE_BINDING=5
+} SnowObservationAdmission;
+typedef enum {
+    SNOW_OBSERVATION_NOT_READY=0, SNOW_OBSERVATION_RETURNED=1,
+    SNOW_OBSERVATION_CANCELLED=2
+} SnowObservationReceipt;
+SNOW_DELEGATE_API SnowObservationAdmission SnowDelegateProbe_SubmitObservation(uint64_t);
+SNOW_DELEGATE_API SnowObservationReceipt SnowDelegateProbe_CollectObservation(SnowDelegateRequestObservation *);
+SNOW_DELEGATE_API void SnowDelegateProbe_CloseObservations(void);
 #endif

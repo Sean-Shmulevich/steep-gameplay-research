@@ -1185,3 +1185,60 @@ an engine phase and request, not assume one fixed operating-system thread.
 Both sessions close the research bottle and verify saves, settings and the
 original DLL. Neither tests map transitions or owner destruction. The manager
 pointer remaining equal is an observation, not a lifetime or safe-mutation proof.
+
+### Reusable observation slot and explicit closure
+
+The resident observation interface now offers strictly increasing IDs, one-slot
+backpressure, receipt collection and permanent close. These are authored adapter
+policies, not recovered native queue semantics. The original pre-install arm/read
+path remains supported; runtime submission requires an installed engine-main
+binding. Record ABI v3 and the observation receipt layout are unchanged.
+
+```text
+submit under control lock:
+    reject invalid ID/configuration, closed admission, or occupied slot
+    verify current binding without claiming a lifetime pin
+    initialize receipt; publish PENDING
+callback:
+    if CAS(PENDING, RUNNING) succeeds:
+        sample manager pointer and callback provenance
+    forward original invoker unchanged
+    if this invocation claimed the request:
+        sample manager pointer; publish RETURNED
+close under control lock:
+    permanently reject future submissions
+    CAS(PENDING, CANCELLED)         // RUNNING continues normally
+collect under control lock:
+    copy RETURNED or CANCELLED receipt; publish EMPTY
+```
+
+The callback accesses no request fields after publishing RETURNED. Reading and
+collecting serialize with submission, so a new request cannot overwrite a receipt
+while a reader copies it. Close and callback claim race at their CAS: cancellation
+wins only before claim. A nonreturning original call remains RUNNING; closing does
+not retract it or manufacture completion. Closing requests alone does not restore
+the intercepted slot or drain unrelated callbacks. Restore and trace Close also
+close request admission. Existing owner-lifetime requirements remain unchanged.
+
+The [Windows fixture receipt](../../native/snow_host/delegate_repeat_fixture_validation.json)
+covers 32 sequential requests, eight competing callbacks, pending cancellation,
+close while an original callback is held at a controlled barrier, and existing
+identity/restoration/closed/graphics cases. It proves these controlled authored
+adapter cases under Wine, not all thread schedules or native lifetime safety.
+
+### Repeated live resident requests
+
+The [repeated live receipt](../../native/snow_host/delegate_repeat_live_validation.json)
+records 16 submitted requests and 16 returned receipts in one bounded steady
+session. IDs 101–116 each match exactly one different delegate record and a distinct
+observed job-request counter. The one-second capture contains 99 callbacks across
+three threads with zero drops; the 16 request-bearing invocations span two threads.
+This supports phase-based delivery without a fixed worker-thread assumption.
+
+After collecting all receipts, restoration closes admission; a later valid-ID
+submission reports CLOSED. The controller independently verifies the original
+invoker slot and advancing engine steps afterward. Bottle shutdown and save,
+settings and original-DLL restoration all pass. This live run closes after work
+returns. Pending cancellation and close during execution remain fixture-tested,
+not live shutdown evidence. No map transition, owner destruction, native command
+queue submission or gameplay mutation was exercised.

@@ -277,3 +277,19 @@ Before map-transition or shutdown claims, observe owner changes and establish
 invalidation/exclusion. Keep fixed-thread assumptions out of the API: the phase
 was observed on multiple workers. This is a concrete execution foothold, not
 permission for arbitrary subsystem mutation or plugin unload.
+
+### Repeated resident observation milestone
+
+[Repeated requests now have live evidence](../docs/reconstruction/SCHEDULER_DELEGATES.md#repeated-live-resident-requests):
+16 matching returned receipts across two workers, with distinct observed
+job-request counters, zero recorder loss and independent restoration/progress
+checks. The reusable single-slot API refuses occupied or closed admission and
+exposes collection separately from execution. Controlled Windows fixtures cover
+pending cancellation and close during execution; the live session closes only
+after collection.
+
+Next priority is owner identity/invalidation across transitions and the ordering
+of this phase relative to the specific input/motion/animation operations a mod
+would invoke. Do not grow this into an arbitrary-function executor merely because
+read-only phase delivery works. Native command-queue qualification remains a
+separate route; it is no longer a prerequisite for resident phase observations.

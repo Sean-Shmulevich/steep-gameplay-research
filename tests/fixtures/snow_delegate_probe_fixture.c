@@ -6,11 +6,17 @@
 #include "snow_delegate_probe.h"
 static void *owner_global;
 static uintptr_t table[16];
-static unsigned calls;
+static volatile LONG calls;
+static HANDLE entered_event,release_event;
+static SnowDelegateOriginal worker_callback;
+static void *worker_storage,*worker_receiver;
+static DWORD WINAPI invoke_worker(LPVOID unused){(void)unused;
+    assert(worker_callback(worker_storage,worker_receiver)==UINT64_C(0xfedcba9876543210));return 0;}
 static int invalidate;
 static unsigned job_offset=0x218;
-static uintptr_t body(void *receiver) { assert(receiver==owner_global);calls++;
-    ((uint32_t *)((unsigned char *)receiver+job_offset+0x4c))[4]++;
+static uintptr_t body(void *receiver) { assert(receiver==owner_global);InterlockedIncrement(&calls);
+    InterlockedIncrement((LONG *)((unsigned char *)receiver+job_offset+0x4c+16));
+    if(entered_event){SetEvent(entered_event);assert(WaitForSingleObject(release_event,5000)==WAIT_OBJECT_0);}
     if(invalidate)owner_global=NULL;
     return UINT64_C(0xfedcba9876543210); }
 static uintptr_t invoker(void *storage,void *receiver) { return (*(uintptr_t (**)(void *))storage)(receiver); }
@@ -32,7 +38,11 @@ int main(int argc,char **argv) {
     assert(configure&&configure_site&&install&&restore&&close_probe&&read_record&&record_size&&abi);
     int (*arm)(uint64_t)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ArmObservation");
     int (*read_request)(SnowDelegateRequestObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_ReadObservation");
-    assert(arm&&read_request);SnowDelegateRequestObservation request={0};
+    SnowObservationAdmission (*submit)(uint64_t)=(void *)GetProcAddress(dll,"SnowDelegateProbe_SubmitObservation");
+    SnowObservationReceipt (*collect)(SnowDelegateRequestObservation *)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CollectObservation");
+    void (*close_requests)(void)=(void *)GetProcAddress(dll,"SnowDelegateProbe_CloseObservations");
+    assert(arm&&read_request&&submit&&collect&&close_requests);SnowDelegateRequestObservation request={0};
+    assert(submit(1)==SNOW_OBSERVATION_INVALID);assert(!collect(&request));
     assert(!arm(9));assert(!read_request(&request));
     assert(abi()==3 && record_size()==sizeof(SnowDelegateRecord));
     owner_global=VirtualAlloc(NULL,0x1000,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE);assert(owner_global);
@@ -62,6 +72,50 @@ int main(int argc,char **argv) {
     owner[job_offset+0x194]=1;owner[0x5a]=7;
     invalidate=!strcmp(argv[2],"observation_invalid");
     assert(install());assert(!install());SnowDelegateOriginal cached=(SnowDelegateOriginal)d[3];
+    if(!strcmp(argv[2],"repeat") || !strcmp(argv[2],"cancel_pending") ||
+       !strcmp(argv[2],"close_running") || !strcmp(argv[2],"competing")) {
+        assert(engine);assert(submit(0)==SNOW_OBSERVATION_INVALID);
+        owner_global=NULL;assert(submit(1)==SNOW_OBSERVATION_STALE_BINDING);owner_global=owner;
+        if(!strcmp(argv[2],"repeat")) {
+            for(uint64_t id=1;id<=32;id++) {
+                assert(submit(id)==SNOW_OBSERVATION_ACCEPTED);
+                assert(submit(id+1)==SNOW_OBSERVATION_BUSY);assert(!collect(&request));
+                assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));
+                assert(submit(id+1)==SNOW_OBSERVATION_BUSY);assert(!collect(NULL));
+                assert(collect(&request)==SNOW_OBSERVATION_RETURNED && request.request_id==id);
+                assert(!collect(&request));assert(!read_request(&request));
+                assert(submit(id)==SNOW_OBSERVATION_INVALID);
+            }
+            assert(calls==32);close_requests();
+        } else {
+            assert(submit(1)==SNOW_OBSERVATION_ACCEPTED);
+            worker_callback=cached;worker_storage=d;worker_receiver=owner;
+            if(!strcmp(argv[2],"cancel_pending")) {
+                close_requests();assert(!read_request(&request));
+                assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));
+                assert(collect(&request)==SNOW_OBSERVATION_CANCELLED);
+                assert(request.request_id==1 && !request.entry_tick && !request.exit_tick);
+            } else {
+                unsigned count=!strcmp(argv[2],"competing")?8:1;HANDLE threads[8];
+                if(count==1){entered_event=CreateEventA(NULL,TRUE,FALSE,NULL);release_event=CreateEventA(NULL,TRUE,FALSE,NULL);assert(entered_event&&release_event);}
+                for(unsigned i=0;i<count;i++){threads[i]=CreateThread(NULL,0,invoke_worker,NULL,0,NULL);assert(threads[i]);}
+                if(count==1) {
+                    assert(WaitForSingleObject(entered_event,5000)==WAIT_OBJECT_0);
+                    assert(!collect(&request));close_requests();assert(!close_probe(NULL,NULL));
+                    assert(restore());assert(!read_request(&request));SetEvent(release_event);
+                }
+                assert(WaitForMultipleObjects(count,threads,TRUE,5000)==WAIT_OBJECT_0);
+                for(unsigned i=0;i<count;i++)CloseHandle(threads[i]);
+                assert(collect(&request)==SNOW_OBSERVATION_RETURNED && request.request_id==1);
+                assert(calls==(LONG)count);close_requests();
+                if(entered_event){CloseHandle(entered_event);CloseHandle(release_event);entered_event=release_event=NULL;}
+            }
+        }
+        assert(submit(100)==SNOW_OBSERVATION_CLOSED);assert(!collect(&request));
+        assert(restore());assert(close_probe(NULL,NULL));
+        LONG before=calls;assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==before+1);
+        assert(!collect(&request));printf("%s passed\n",argv[2]);return 0;
+    }
     assert(cached(d,owner)==UINT64_C(0xfedcba9876543210));assert(calls==1);
     if(requested&&engine){
         assert(read_request(&request));assert(request.request_id==91);

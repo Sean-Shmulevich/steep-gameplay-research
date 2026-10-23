@@ -9,7 +9,7 @@
 #include "snow_plugin.h"
 #include "snow_delegate_probe.h"
 static char trigger[MAX_PATH],output[MAX_PATH];
-static unsigned duration,request_id;
+static unsigned duration,request_id,request_count=1;
 static SnowDelegateSite site=SNOW_DELEGATE_GRAPHICS_MAIN;
 static const char *site_name="graphics";
 static volatile LONG cancelled;
@@ -53,19 +53,57 @@ static DWORD WINAPI capture(LPVOID unused) {
                                      descriptor[0],descriptor[1],descriptor[2],descriptor[3]};
         configured=SnowDelegateProbe_ConfigureSite(&binding,site);
     }
+    SnowDelegateRequestObservation requests[16]={0};
+    SnowObservationReceipt outcomes[16]={0};unsigned collected=0,submitted=0;
+    SnowObservationAdmission last_submit=SNOW_OBSERVATION_INVALID,after_close=SNOW_OBSERVATION_INVALID;
     int request_armed=0;
     if(configured && request_id)request_armed=SnowDelegateProbe_ArmObservation(request_id);
+    if(request_armed)submitted=1;
     if(configured && (!request_id || request_armed)) {
         installed=SnowDelegateProbe_Install();
         if(installed) {
             until=GetTickCount64()+duration;
-            while(GetTickCount64()<until && !InterlockedCompareExchange(&cancelled,0,0))Sleep(1);
+            while(GetTickCount64()<until && !InterlockedCompareExchange(&cancelled,0,0)) {
+                if(request_count>1 && collected<submitted) {
+                    SnowObservationReceipt outcome=SnowDelegateProbe_CollectObservation(&requests[collected]);
+                    if(outcome) {
+                        outcomes[collected++]=outcome;
+                        if(outcome==SNOW_OBSERVATION_RETURNED && submitted<request_count) {
+                            last_submit=SnowDelegateProbe_SubmitObservation((uint64_t)request_id+submitted);
+                            if(last_submit==SNOW_OBSERVATION_ACCEPTED)++submitted;
+                        }
+                    }
+                }
+                Sleep(1);
+            }
         }
         restored=SnowDelegateProbe_Restore();
         until=GetTickCount64()+2000;
         do { drained=SnowDelegateProbe_Close(&used,&dropped);if(drained)break;Sleep(1); }while(GetTickCount64()<until);
     }
-    if(request_id) {
+    if(request_count>1) {
+        if(collected<submitted) {
+            SnowObservationReceipt outcome=SnowDelegateProbe_CollectObservation(&requests[collected]);
+            if(outcome)outcomes[collected++]=outcome;
+        }
+        after_close=SnowDelegateProbe_SubmitObservation((uint64_t)request_id+request_count+1);
+        char repeat_output[MAX_PATH+32];snprintf(repeat_output,sizeof repeat_output,"%s.requests.json",output);
+        FILE *rf=fopen(repeat_output,"w");
+        if(rf) {
+            fprintf(rf,"{\"route\":\"intercepted_engine_delegate\",\"requested\":%u,\"submitted\":%u,\"collected\":%u,\"last_submit\":%u,\"after_close\":%u,\"receipts\":[",
+                request_count,submitted,collected,(unsigned)last_submit,(unsigned)after_close);
+            for(unsigned i=0;i<collected;i++) {
+                SnowDelegateRequestObservation *r=&requests[i];
+                fprintf(rf,"%s{\"id\":%llu,\"outcome\":%u,\"entry\":%llu,\"exit\":%llu,\"thread\":%llu,\"caller\":\"%llx\",\"receiver\":\"%llx\",\"storage\":\"%llx\",\"manager_before\":\"%llx\",\"manager_after\":\"%llx\",\"valid_before\":%u,\"valid_after\":%u}",
+                    i?",":"",(unsigned long long)r->request_id,(unsigned)outcomes[i],(unsigned long long)r->entry_tick,
+                    (unsigned long long)r->exit_tick,(unsigned long long)r->thread,(unsigned long long)r->caller,
+                    (unsigned long long)r->receiver,(unsigned long long)r->storage,(unsigned long long)r->manager_before,
+                    (unsigned long long)r->manager_after,r->valid_before,r->valid_after);
+            }
+            fputs("]}\n",rf);fclose(rf);
+        }
+    }
+    if(request_id && request_count==1) {
         char request_output[MAX_PATH+32];
         snprintf(request_output,sizeof request_output,"%s.request.json",output);
         FILE *rf=fopen(request_output,"w");
@@ -112,6 +150,8 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     else if(!strcmp(selected,"graphics")) { site=SNOW_DELEGATE_GRAPHICS_MAIN;site_name="graphics"; }
     else return 1;
     request_id=GetPrivateProfileIntA("capture","request_id",0,api->config_path);
+    request_count=GetPrivateProfileIntA("capture","request_count",1,api->config_path);
+    if(!request_count || request_count>16 || (request_count>1 && !request_id))return 1;
     if(request_id && site!=SNOW_DELEGATE_ENGINE_MAIN)return 1;
     duration=GetPrivateProfileIntA("capture","milliseconds",500,api->config_path);
     if(duration<100 || duration>2000)return 1;

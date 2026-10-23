@@ -717,3 +717,35 @@ returns. This does not pin the manager, establish an atomic snapshot, prove a
 native queue delivery phase or authorize arbitrary commands. The plugin, recorder
 and original image remain resident; existing installation lifetime prerequisites
 still apply.
+
+### Repeated resident observation requests
+
+Set `request_count=16` alongside a nonzero `request_id` and `site=engine` to run
+up to 16 sequential observation requests inside the existing 100–2000 ms capture
+window. The default remains one request. The controller collects each receipt
+before submitting the next ID. Output `.trace.jsonl.requests.json` reports the
+requested/submitted/collected counts, admission results, receipt outcomes and
+private callback observations. An incomplete count is not silently promoted to
+success. This remains an opt-in bounded experiment, not a general gameplay API.
+
+The new adapter methods expose one reusable slot:
+
+- `SubmitObservation(id)` requires an installed engine-main binding, strictly
+  increasing nonzero ID, and an empty slot. It reports accepted, busy, closed,
+  invalid or stale binding. Failed submissions do not consume IDs. Invalid
+  configuration/ID checks precede closed/busy/binding checks.
+- `CollectObservation(out)` consumes a returned or cancelled receipt; pending
+  and running requests return not-ready. A null output does not consume anything.
+  Non-consuming `ReadObservation` still reports returned receipts only.
+- `CloseObservations()` permanently closes admission. Its CAS cancels an unclaimed
+  request; if a callback already claimed it, that callback finishes normally.
+  `Restore` also closes admission, even if restoring the slot later conflicts.
+  `Close` waits for both trace drain and any running request before reporting drain.
+
+Control calls serialize with the existing SRW lock. The callback claims the slot
+atomically and never takes that control lock. It publishes a returned receipt only
+after the original invoker and final read have returned, and does not access that
+receipt afterward. Pending, running and uncollected receipts all apply
+backpressure. Collection can permit another callback to claim a new request before
+an older wrapper finishes its final machine return; there is no whole-job idle
+claim. Neither request closure nor collection releases module/owner storage.

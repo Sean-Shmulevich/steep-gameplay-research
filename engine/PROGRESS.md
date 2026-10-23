@@ -6755,3 +6755,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Two live captures return the authored request inside exactly one matched engine callback. First controller has a post-capture job-map-key error, retained as partial evidence. Corrected run has 48 records, zero drops, three callback threads, independent slot-restoration verification and continued engine progress.
 - Both live sessions verify bottle shutdown, save/settings restoration and original DLL identity. Public sanitized receipts preserve source and private-output hashes without raw pointers or game payloads.
 - Native queue submission, reusable delivery, transition/shutdown lifetime and arbitrary mutation remain open. The request is delivered by the resident intercepted delegate, not the game's command queue.
+
+### Repeated resident engine-phase requests
+
+- Added a reusable one-slot read-only observation API with increasing IDs, busy/closed/invalid/stale admission results, consuming receipt collection, and permanent close. Pending work cancels; claimed work finishes normally. Restore and trace Close also close request admission.
+- Eleven compiled Windows/Wine fixture scenarios pass, including 32 sequential requests, eight competing callbacks, pending cancellation, close during a blocked original callback, stale binding and legacy behavior. Two portable trace/pipeline tests also pass.
+- Live bounded capture: 16 accepted requests, 16 returned receipts, 16 distinct matched job-request counters; 99 callbacks, zero drops, three callback threads and two request-bearing threads. Post-close submission is refused, the intercepted slot is independently verified restored, and engine progress continues.
+- Bottle, saves, settings and original DLL cleanup verified. No game data added. Native queue admission, owner transitions, whole-engine drain, arbitrary mutation and unload remain open; live close with work still pending is not claimed.

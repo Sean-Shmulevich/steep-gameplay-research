@@ -1,0 +1,61 @@
+{
+  "evidence": "Compiled Windows x64 adapter fixture under Wine with synthetic owner and callbacks",
+  "passed": [
+    {
+      "scenario": "repeat",
+      "site": "engine"
+    },
+    {
+      "scenario": "cancel_pending",
+      "site": "engine"
+    },
+    {
+      "scenario": "close_running",
+      "site": "engine"
+    },
+    {
+      "scenario": "competing",
+      "site": "engine"
+    },
+    {
+      "scenario": "request",
+      "site": "engine"
+    },
+    {
+      "scenario": "closed",
+      "site": "engine"
+    },
+    {
+      "scenario": "identity",
+      "site": "engine"
+    },
+    {
+      "scenario": "conflict",
+      "site": "engine"
+    },
+    {
+      "scenario": "readonly",
+      "site": "engine"
+    },
+    {
+      "scenario": "observation_invalid",
+      "site": "engine"
+    },
+    {
+      "scenario": "request",
+      "site": "graphics"
+    }
+  ],
+  "sequential_requests": 32,
+  "competing_workers": 8,
+  "game_launched": false,
+  "sources": {
+    "native/snow_host/snow_delegate_probe.c": "837fec44815dc0d3abdb9d86bbd59ac30aea89da39302e067ef9e31bfe7048ea",
+    "native/snow_host/snow_delegate_probe.h": "20e79f155403a97bdaeb587aebd5fcc2b16b274e9589f1f43359d0ee88947aa2",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "a0f2db30a78dc6903fe00b31f52d25b647f03cf8ae7065cb644fd9a4a72af5cf"
+  },
+  "limitations": [
+    "No live repeated game delivery, native command queue, owner lifetime or unload qualification.",
+    "Close races use controlled callback barriers; this is not an exhaustive interleaving proof."
+  ]
+}

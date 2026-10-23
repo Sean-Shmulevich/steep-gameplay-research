@@ -12,9 +12,14 @@ static SnowDelegateRecord records[CAPACITY];
 static volatile LONG ready;
 static SRWLOCK control=SRWLOCK_INIT;
 static int attempted,installed;
-static volatile LONG request_state; /* 0 unused, 1 armed, 2 running, 3 returned */
+static volatile LONG request_state; /* 0 idle, 1 pending, 2 running, 3 returned, 4 cancelled */
 static SnowDelegateRequestObservation request_observation;
-static uint64_t manager_global;
+static uint64_t manager_global,last_request_id;
+static int requests_closed;
+static void close_requests_locked(void) {
+    requests_closed=1;
+    InterlockedCompareExchange(&request_state,4,1);
+}
 static void *volatile *slot;
 static int read_at(uint64_t at,void *dst,size_t n) {
     SIZE_T got=0;
@@ -124,6 +129,7 @@ int SnowDelegateProbe_Restore(void) {
     int ok=0;uint64_t seen;
     AcquireSRWLockExclusive(&control);
     if(ready!=2) goto done;
+    close_requests_locked();
     if(!installed) { ok=1;goto done; }
     if(!qualify(&seen)) goto done;
     if(seen==binding.invoker) { installed=0;ok=1;goto done; }
@@ -134,8 +140,9 @@ done: ReleaseSRWLockExclusive(&control);return ok;
 }
 int SnowDelegateProbe_Close(size_t *used,size_t *dropped) {
     if(InterlockedCompareExchange(&ready,2,2)!=2) return 0;
+    SnowDelegateProbe_CloseObservations();
     snow_delegate_trace_close(&trace);
-    if(!snow_delegate_trace_drained(&trace)) return 0;
+    if(!snow_delegate_trace_drained(&trace) || InterlockedCompareExchange(&request_state,2,2)==2) return 0;
     if(used)*used=atomic_load(&trace.used);
     if(dropped)*dropped=atomic_load(&trace.dropped);
     return 1;
@@ -148,15 +155,55 @@ int SnowDelegateProbe_Read(size_t i,void *out,size_t n) {
 int SnowDelegateProbe_ArmObservation(uint64_t id) {
     int ok=0;HMODULE module;
     AcquireSRWLockExclusive(&control);
-    if(ready==2 && job_offset==0x740 && !attempted && !(atomic_load(&trace.gate)&CLOSED) && id && request_state==0 &&
+    if(ready==2 && job_offset==0x740 && !attempted && !(atomic_load(&trace.gate)&CLOSED) && !requests_closed && id && !last_request_id && InterlockedCompareExchange(&request_state,0,0)==0 &&
        image_at(binding.function,1,&module)) {
         manager_global=(uintptr_t)module+0x312f3a8;
-        request_observation.request_id=id;
+        request_observation.request_id=id;last_request_id=id;
         InterlockedExchange(&request_state,1);ok=1;
     }
     ReleaseSRWLockExclusive(&control);return ok;
 }
 int SnowDelegateProbe_ReadObservation(SnowDelegateRequestObservation *out) {
-    if(!out || InterlockedCompareExchange(&request_state,3,3)!=3)return 0;
-    *out=request_observation;return 1;
+    int ok=0;
+    AcquireSRWLockShared(&control);
+    if(out && InterlockedCompareExchange(&request_state,3,3)==3) {
+        *out=request_observation;ok=1;
+    }
+    ReleaseSRWLockShared(&control);return ok;
+}
+SnowObservationAdmission SnowDelegateProbe_SubmitObservation(uint64_t id) {
+    SnowObservationAdmission result=SNOW_OBSERVATION_INVALID;uint64_t seen;HMODULE module;
+    AcquireSRWLockExclusive(&control);
+    if(ready!=2 || job_offset!=0x740 || !id || id<=last_request_id)goto done;
+    if(requests_closed || (atomic_load(&trace.gate)&CLOSED)) {
+        result=SNOW_OBSERVATION_CLOSED;goto done;
+    }
+    if(!installed)goto done;
+    if(InterlockedCompareExchange(&request_state,0,0)!=0) {
+        result=SNOW_OBSERVATION_BUSY;goto done;
+    }
+    if(!qualify(&seen) || seen!=(uintptr_t)&dispatch || !image_at(binding.function,1,&module)) {
+        result=SNOW_OBSERVATION_STALE_BINDING;goto done;
+    }
+    manager_global=(uintptr_t)module+0x312f3a8;
+    memset(&request_observation,0,sizeof request_observation);
+    request_observation.request_id=id;last_request_id=id;
+    InterlockedExchange(&request_state,1);result=SNOW_OBSERVATION_ACCEPTED;
+done:ReleaseSRWLockExclusive(&control);return result;
+}
+SnowObservationReceipt SnowDelegateProbe_CollectObservation(SnowDelegateRequestObservation *out) {
+    SnowObservationReceipt result=SNOW_OBSERVATION_NOT_READY;
+    AcquireSRWLockExclusive(&control);
+    LONG state=InterlockedCompareExchange(&request_state,0,0);
+    if(out && (state==3 || state==4)) {
+        *out=request_observation;
+        result=state==3?SNOW_OBSERVATION_RETURNED:SNOW_OBSERVATION_CANCELLED;
+        InterlockedExchange(&request_state,0);
+    }
+    ReleaseSRWLockExclusive(&control);return result;
+}
+void SnowDelegateProbe_CloseObservations(void) {
+    AcquireSRWLockExclusive(&control);
+    if(ready==2)close_requests_locked();
+    ReleaseSRWLockExclusive(&control);
 }
