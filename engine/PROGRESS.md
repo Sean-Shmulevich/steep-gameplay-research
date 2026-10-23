@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Connected a concrete kind-3 callback producer to preparation, counted consumption,
+record cleanup and dispatch. All 72 original pipeline cases, 24 ABI cases and six
+generic-invoker cases passed. Full-ring admission drops the new record but still
+increments the budget; 32 constructed cases repeated the last cached callback.
+An existing caller uses the known scheduler delegate invoker. Queue unlock precedes
+dispatch, which holds a separate global-owner lock. Descriptor copies do not prove
+context/module retention. Added runnable inspection/publication models and a
+payload-free repeat demonstration. No game launch or native submission API claimed.
+Full suite passed: 2153 tests, one skipped; example and repository checks passed.
+
+
 Decoded the executor's primary command ring drain and quota helper. Return means
 processed work, not readiness. Default quota is one; occupancy above 3/4 increases
 it, a separate flag selects sampled count, and a mode byte bypasses quota/time.

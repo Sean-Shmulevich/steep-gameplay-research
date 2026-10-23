@@ -1,0 +1,74 @@
+{
+  "evidence": "Connected original kind-3 producer, record copy, preparation prefix, counted consumer, record cleanup, dispatcher and lock getter; supplied lock/callback services",
+  "pipeline_cases": 72,
+  "abi_cases": 24,
+  "generic_invoker_cases": 6,
+  "repeated_cached_cases": 32,
+  "all_passed": true,
+  "callback_kinds": [
+    3,
+    4
+  ],
+  "dispatch_under_global_lock": true,
+  "source_descriptor_overwritten_after_submission": true,
+  "spans": [
+    {
+      "rva": "0x6538b0",
+      "length": 596,
+      "sha256": "cd3cf5fb49196d847cce0ea269607915de0b7a39fb89db6d06b9b8c6e4d706a6"
+    },
+    {
+      "rva": "0x6475b0",
+      "length": 157,
+      "sha256": "22ef435864a35fe11ffff7ed030f2e31c70cccf4c6ad5655ca119f11f92ad6f5"
+    },
+    {
+      "rva": "0x67ced0",
+      "length": 132,
+      "sha256": "ed455382e34a9fbb119b06f3f0b4f42bd2cfeb4245bd0bff2660316f982849ea"
+    },
+    {
+      "rva": "0x663de0",
+      "length": 598,
+      "sha256": "915062bfd44a777ca6cbbce67da95f223e82259bfc66c024da5f008b509c938b"
+    },
+    {
+      "rva": "0x662a60",
+      "length": 536,
+      "sha256": "efe1366ade7f3cb48c64e55ab58da2e67738f99346efd72a61fb2e2ed1d1215d"
+    },
+    {
+      "rva": "0x64cd40",
+      "length": 127,
+      "sha256": "8caf9d580084dda8230e0020ab64a6b409263135bb5428d0155af4844b2f5581"
+    },
+    {
+      "rva": "0xe237c0",
+      "length": 14,
+      "sha256": "3940cfdce40fc7787a417788b8c32926508989326e52387e3fb819252cad0ded"
+    },
+    {
+      "rva": "0x8ab390",
+      "length": 9,
+      "sha256": "c2b13b0a2d8635b4a691fc95c63ba2cf2f1482c419541597e898b96ad219cb93"
+    }
+  ],
+  "limitations": [
+    "Ordinary producer ring path only; alternate staging/growth excluded.",
+    "Preparation stops after participant traversal with an empty registry; later preparation services excluded.",
+    "Synthetic lock callbacks establish call order, not concurrent exclusion or native reentrancy.",
+    "Context addresses are deliberately unmapped tokens; callback bodies are intercepted. No receiver or module lifetime proved.",
+    "Dummy holder references remain retained; freeing/final release and exception unwinding are not validated.",
+    "Full-ring callback repetition is an instruction-level constructed case, not an observed live-game occurrence."
+  ],
+  "static_caller": {
+    "rva": "0x659760",
+    "length": 126,
+    "sha256": "f32eaa20309ac214cde155a0fb6e928edb26d28d1ef610c2aae6943c906aad3a",
+    "manager_singleton_rva": "0x312f3a8",
+    "body_rva": "0x6545f0",
+    "invoker_rva": "0x8ab390",
+    "producer_call_rva": "0x6597b3",
+    "caller_executed_in_fixture": false
+  }
+}

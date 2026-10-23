@@ -37,6 +37,13 @@ supplied list removal can skip the moved participant. Native reachability remain
 unproved. Admission/drain must track actual admitted calls and object lifetime;
 neither the byte nor registry absence alone establishes safe unloading.
 
+A [concrete callback producer and ABI](../docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md#callback-command-producer-and-abi)
+now connect to the counter-driven queue and generic delegate invoker. Connected
+instruction cases show full-ring submission can drop a record while increasing
+the budget, then repeat the previous callback. Before native admission, qualify
+capacity under the queue lock, receiver/module retention, the separate dispatch
+lock and completion receipts. The ordinary producer is not yet a safe mod API.
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain

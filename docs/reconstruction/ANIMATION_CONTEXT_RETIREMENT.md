@@ -2884,3 +2884,91 @@ records when opaque service C is admitted. It supplies synthetic commands and
 clocks; it does not submit commands to the original game. The dispatcher contains
 indirect callback cases, a promising next lead, but their producer, receiver ABI
 and lifetime must be established before exposing a native mod command API.
+
+## Callback command producer and ABI
+
+A concrete producer at RVA `0x6538b0` accepts manager, pointer to a 32-byte
+callable descriptor, and a byte selecting a possible alternate route. It creates
+command kind 3 and copies all 32 descriptor bytes into record +0x18. Two holder
+fields receive the default holder, and record +0x60 is null. The ordinary ring
+branch uses manager +0x30 backing, +0x38 count, +0x3c write index, +0x44 capacity,
+and the lock at manager +0. This is the counter-driven queue consumed by service
+A, not service B's time-budgeted ring.
+
+The dispatcher's seven-entry table maps kind 3 to the two-argument indirect call
+and kind 4 to the three-argument call. On Win64:
+
+| Kind | RCX | RDX | R8 | Indirect target |
+| --- | --- | --- | --- | --- |
+| 3 | address of retained record +0x18 | qword at +0x28, low two bits cleared | not established as a third argument | qword at +0x30 |
+| 4 | address of retained record +0x38 | qword at +0x48, low two bits cleared | qword at +0x58 | qword at +0x50 |
+
+These targets are callable-wrapper invokers, not necessarily the final body.
+The inspected direct caller at RVA `0x659760` loads the command-manager singleton
+from RVA `0x312f3a8`, builds a descriptor containing body `0x6545f0`, its receiver,
+and invoker `0x8ab390`, then calls the producer with the alternate-route byte zero.
+That invoker is already known from scheduler delegates: it moves the masked
+context to RCX and tail-jumps through the descriptor's first qword. The final body
+therefore receives the context as its first argument. The caller subsequently
+uses a separate referenced object and service `0x833a90`; its wait/lifetime
+semantics remain unqualified. No user-facing name is assigned to this operation.
+
+The dispatcher acquires a separate lock supplied by getter `0xe237c0`, which
+returns a global owner plus +0x508. It releases that lock after dispatch returns.
+The producer/queue lock is released before dispatch, but that does not make the
+callback free of engine locks. The owner type, lock reentrancy and subsystem-wide
+exclusion still require qualification.
+
+The producer copies descriptor values without retaining the context pointee or
+pinning the target module. The generic invoker also does not retain them. This
+local finding does not exclude lifetime management by the caller. Record holder
+management must not be mistaken for ownership of an arbitrary callback context.
+Cleanup at `0x64cd40` releases the optional +0x60 object and two holder fields,
+and clears the first invoker field; it does not establish generic callable
+capture destruction or DLL unloading safety.
+
+### Full-ring admission and repeated callback
+
+The ordinary producer follows this order under its queue lock:
+
+```text
+if queue.count < queue.capacity:
+    copy_and_retain_record(queue.write_slot, local_record)
+    queue.count += 1
+    queue.write_index = (queue.write_index + 1) % queue.capacity
+atomic_increment(manager.deferred_A)  # also runs when full
+```
+
+Preparation transfers deferred A to active A. Service A exchanges active A with
+zero and makes that many dispatch attempts if the signed result is positive.
+Each successful pop replaces its retained local record. When no record is
+available, it still dispatches the retained record from the preceding pop.
+Thus a one-slot queue receiving callback A then callback B while full can dispatch
+A twice, with B never inserted. The original producer does not supply the model's
+explicit `inserted` observation as a supported native success result.
+
+The [connected instruction fixture](../../native/snow_host/callback_command_pipeline_validation.json)
+runs the original producer, copy helper, preparation prefix, service A, cleanup,
+dispatcher and lock getter. All 72 pipeline cases matched the serial model; 32
+constructed full-queue cases repeated a cached callback. Another 24 dispatch ABI
+cases and six generic-invoker cases passed. Descriptor source storage is overwritten
+after each submission, demonstrating that the queued copy survives source reuse.
+Context tokens are unmapped and callback bodies intercepted; this proves neither
+receiver validity nor native callback safety. Platform lock bodies and final
+holder freeing remain outside the fixture. No game was launched.
+
+`engine.callback_commands` exposes descriptor inspection and the recovered
+ordinary publication/consumption rules. Initially empty positive-budget dispatch
+has no decoded kind-3 record and is refused by this model. Alternate staging,
+allocation/growth and non-callback record kinds remain excluded.
+
+```sh
+python3 -m engine.examples.callback_command_probe
+```
+
+For a future native adapter, require proven capacity admission under the actual
+queue synchronization, pinned callback code/context, an explicit completion
+receipt and per-request duplicate handling. Do not blindly enqueue non-idempotent
+mod operations through this producer. Next trace the concrete caller's receiver
+and post-submit service, then qualify one bounded observation callback before
+allowing mutations.
