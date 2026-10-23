@@ -1,0 +1,91 @@
+{
+  "evidence": "Three bounded live startup attempts; final attempt identifies protection-change refusal",
+  "constructor_rva": "0x647650",
+  "page_rva": "0x647000",
+  "constructor_fingerprint": {
+    "bytes": 32,
+    "fnv64": "0xb24d59629290bbbb"
+  },
+  "sessions": [
+    {
+      "case": 1,
+      "observation": {
+        "compatible": 1,
+        "initial_null": 1,
+        "armed": 0,
+        "captured": 0,
+        "initial_protection": 32,
+        "final_protection": 32
+      },
+      "cleanup": {
+        "ok": true,
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      }
+    },
+    {
+      "case": 2,
+      "observation": {
+        "compatible": 1,
+        "initial_null": 1,
+        "armed": 0,
+        "captured": 0,
+        "initial_protection": 32,
+        "final_protection": 32,
+        "eligible": 1,
+        "pin_ok": 1
+      },
+      "cleanup": {
+        "ok": true,
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      }
+    },
+    {
+      "case": 3,
+      "observation": {
+        "compatible": 1,
+        "initial_null": 1,
+        "armed": 0,
+        "captured": 0,
+        "initial_protection": 32,
+        "final_protection": 32,
+        "eligible": 1,
+        "pin_ok": 1,
+        "arm_stage": 5,
+        "arm_error": 5
+      },
+      "cleanup": {
+        "ok": true,
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      }
+    }
+  ],
+  "final_attempt_mapping": {
+    "state": 4096,
+    "type": 16777216,
+    "protection": 32,
+    "allocation_matches_main_image": true
+  },
+  "interpretation": "VirtualProtect from RX to READONLY returned false with GetLastError 5. No observer capture occurred and the queried protection remained RX.",
+  "final_source_hashes": {
+    "native/snow_host/examples/command_manager_execute.c": "4f836dc23593d7d29c8f734f01d90c6bb592b7adde17a7b6ffcad9811f311417",
+    "native/snow_host/snow_first_execute.c": "8b5504f38d7e634f4d5e4b3c77299f7c05abf247743fb8d07ceb0d91f441d01c",
+    "native/snow_host/snow_first_execute.h": "484a3639a7e8084ea827b0335010a77766b67d572c6f4c1ef9442b2fe4433007",
+    "scripts/build_snow_host.py": "aac6d9e94e4ed5f5dc227fd1e9f3ef9746fa3d68a312361d0b86d96c91f6ea30"
+  },
+  "limitations": [
+    "Earlier attempts lacked arm-stage diagnostics; only final attempt identifies the API failure.",
+    "Does not identify whether the denial originates in Wine, mapped-section constraints, or game-specific protection.",
+    "No constructor caller, receiver, return or teardown was captured.",
+    "Module retention and VEH registration succeeded in final attempt; handler stays resident until process exit."
+  ],
+  "next_experiment": "Compare protection changes on a dedicated authored control allocation inside the same game process and inspect protection API provenance before considering another constructor observation method."
+}

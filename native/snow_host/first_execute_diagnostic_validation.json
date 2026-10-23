@@ -1,0 +1,103 @@
+{
+  "evidence": "Synthetic execution-observer rerun after adding controller arm diagnostics",
+  "cases": [
+    {
+      "image": false,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "rw",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "rwx",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "self",
+      "returncode": 0
+    },
+    {
+      "image": false,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "rw",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "rwx",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "self",
+      "returncode": 0
+    },
+    {
+      "image": true,
+      "scenario": "concurrent",
+      "returncode": 0
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_first_execute.c": "8b5504f38d7e634f4d5e4b3c77299f7c05abf247743fb8d07ceb0d91f441d01c",
+    "native/snow_host/snow_first_execute.h": "484a3639a7e8084ea827b0335010a77766b67d572c6f4c1ef9442b2fe4433007",
+    "tests/fixtures/snow_first_execute_fixture.c": "8675ee61a36ae7baa4f47a56f0320f722a1d698c693cc1148cc46c002fdad9c4",
+    "tests/fixtures/snow_first_execute_image.c": "86e0e58112cc3c009efd77b1ae042a887f59ac22d3a1f3f356e9f9a1d2eabd28"
+  },
+  "diagnostic_assertions": [
+    "Unused stage 0 and error 0 before arm.",
+    "Unsupported protection refusal reports stage 1.",
+    "Own-module refusal reports stage 2.",
+    "Successful arm reports stage 6; repeat arm does not replace diagnostics."
+  ],
+  "game_launched": false,
+  "limitations": [
+    "Synthetic fixtures do not inject OS pin, handler-registration or protection-change failure.",
+    "The separate live refusal receipt supplies observed stage 5 and error 5 on the game page.",
+    "No exhaustive cancellation race or teardown guarantee."
+  ]
+}

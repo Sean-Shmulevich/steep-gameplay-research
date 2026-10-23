@@ -6296,3 +6296,15 @@ cancellation, refusal and concurrent callers on private and DLL-backed pages.
 Receipt: `native/snow_host/first_execute_fixture_validation.json`. This prepares a
 constructor-caller experiment; no new game execution or manager lifetime claim
 is made by the implementation.
+
+### Constructor observation reached a specific live protection boundary
+
+Added the opt-in startup execution controller with build fingerprints, null-manager
+and image-page gates, bounded wait, raw private context output and arm diagnostics.
+Three live starts refused without a capture and passed readiness/cleanup. The
+final diagnostic isolates VirtualProtect RX-to-read-only failure with error 5;
+module retention and handler registration succeeded. No code-page protection
+change or constructor execution was observed. This redirects the next experiment
+to an in-process control allocation/protection-API check rather than another
+identical constructor-page attempt. See the live refusal receipt and lifecycle
+guide; manager ownership and teardown remain unresolved.

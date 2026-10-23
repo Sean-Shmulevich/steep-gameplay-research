@@ -16,10 +16,11 @@ def main():
     ap.add_argument('--scheduler-phase-capture-plugin', action='store_true', help='Build opt-in paired main/finalizer capture; steep adapter only')
     ap.add_argument('--command-manager-startup-plugin', action='store_true', help='Build opt-in read-only command manager initialization observation; steep adapter only')
     ap.add_argument('--command-manager-write-plugin', action='store_true', help='Build opt-in one-shot startup page-write experiment; steep adapter only')
+    ap.add_argument('--command-manager-execute-plugin', action='store_true', help='Build opt-in one-shot constructor-page execution experiment; steep adapter only')
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--cc', default='x86_64-w64-mingw32-gcc')
     args = ap.parse_args()
-    if (args.capture_plugin or args.delegate_capture_plugin or args.finalizer_capture_plugin or args.scheduler_phase_capture_plugin or args.command_manager_startup_plugin or args.command_manager_write_plugin) and args.adapter != 'steep':
+    if (args.capture_plugin or args.delegate_capture_plugin or args.finalizer_capture_plugin or args.scheduler_phase_capture_plugin or args.command_manager_startup_plugin or args.command_manager_write_plugin or args.command_manager_execute_plugin) and args.adapter != 'steep':
         ap.error('capture plugins require --adapter steep')
     cc = shutil.which(args.cc)
     if not cc:
@@ -44,6 +45,8 @@ def main():
     build('snow_finalizer_probe.dll', ['snow_finalizer_probe.c','snow_delegate_trace.c'], ['-shared'])
     if args.command_manager_write_plugin:
         build('plugins/command_manager_write.dll', ['examples/command_manager_write.c','snow_first_write.c'], ['-shared'])
+    if args.command_manager_execute_plugin:
+        build('plugins/command_manager_execute.dll', ['examples/command_manager_execute.c','snow_first_execute.c'], ['-shared'])
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
     if args.delegate_capture_plugin:

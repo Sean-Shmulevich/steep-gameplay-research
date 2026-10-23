@@ -1362,3 +1362,30 @@ separate events; this observer alone does not establish the latter three.
 [Fixture validation receipt](../../native/snow_host/first_execute_fixture_validation.json):
 16 cases passed under Wine. No game constructor capture has been attempted with
 this observer yet. Native Windows and injected restoration failures remain untested.
+
+## Live constructor-page observation refused by protection change
+
+Three bounded startup attempts reached scheduler readiness and passed cleanup.
+Both constructor/getter fingerprints matched, and the sampled manager singleton
+was null. No execution capture occurred. Additional diagnostics in the final
+attempt locate the failure precisely: observer module retention and vectored
+handler registration succeeded, but `VirtualProtect(page, READONLY)` returned
+false with error 5, `ERROR_ACCESS_DENIED`. The constructor page was committed
+`MEM_IMAGE`, allocated at the main image base, with queried protection
+`PAGE_EXECUTE_READ` before and after the failed request.
+
+The [live refusal receipt](../../native/snow_host/constructor_execute_live_refusal.json)
+records the progressively refined diagnostics. Earlier attempts did not identify
+the failing stage. The first-execution fixture's success on authored code pages
+does not establish that the same change is permitted on this game image page.
+Do not describe the refusal as a constructor capture, an observed constructor
+call, or proof that a particular protection product caused it. A registered
+handler without an armed page produces no execution observation; its pinned
+module is retained through process exit.
+
+Do not repeat the same permission-change attempt without new evidence. A useful
+control is the same protection sequence on a dedicated authored allocation inside
+the game process, alongside protection-API provenance. This can distinguish a
+process-wide restriction from a target-page restriction before choosing another
+observation mechanism. Constructor caller, successful return and teardown remain
+open. The earlier singleton publication capture remains valid and independent.

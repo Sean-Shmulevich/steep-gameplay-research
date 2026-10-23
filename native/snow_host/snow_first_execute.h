@@ -21,4 +21,9 @@ typedef struct {
 int snow_first_execute_arm(void *address);
 int snow_first_execute_cancel(void); /* Retry if another thread is restoring. */
 int snow_first_execute_read(SnowFirstExecuteRecord *out);
+/* Controller-only diagnostics after Arm returns: no concurrent reconfiguration.
+ * stage: 0 unused, 1 query/eligibility, 2 own module, 3 module pin,
+ * 4 handler registration, 5 protection change, 6 armed. Error is an OS failure
+ * code only for stages 3..5; zero elsewhere is not proof of success. */
+void snow_first_execute_arm_diagnostic(unsigned *stage,DWORD *error);
 #endif

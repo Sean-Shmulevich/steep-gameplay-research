@@ -6,6 +6,12 @@ static volatile LONG state;
 static uintptr_t page;
 static SIZE_T page_size;
 static SnowFirstExecuteRecord record;
+static unsigned arm_stage;
+static DWORD arm_error;
+void snow_first_execute_arm_diagnostic(unsigned *stage,DWORD *error){
+    if(stage)*stage=arm_stage;
+    if(error)*error=arm_error;
+}
 static int executable(void){
     MEMORY_BASIC_INFORMATION info;
     return VirtualQuery((void *)page,&info,sizeof info) &&
@@ -48,22 +54,29 @@ static LONG CALLBACK fault(EXCEPTION_POINTERS *e){
 }
 int snow_first_execute_arm(void *address){
     if(InterlockedCompareExchange(&state,5,0)!=0)return 0;
+    arm_stage=1;
     SYSTEM_INFO system;GetSystemInfo(&system);page_size=system.dwPageSize;
     page=(uintptr_t)address-((uintptr_t)address%page_size);
     MEMORY_BASIC_INFORMATION info, own;
     if(!address || !VirtualQuery((void *)page,&info,sizeof info) || info.State!=MEM_COMMIT ||
        info.Protect!=PAGE_EXECUTE_READ || (info.Type!=MEM_PRIVATE && info.Type!=MEM_IMAGE) ||
-       !VirtualQuery((void *)(uintptr_t)&fault,&own,sizeof own) ||
-       info.AllocationBase==own.AllocationBase)return 0;
+       !VirtualQuery((void *)(uintptr_t)&fault,&own,sizeof own))return 0;
+    arm_stage=2;if(info.AllocationBase==own.AllocationBase)return 0;
     /* Reject the entire observer module, including its data and helper code. */
     HMODULE pinned;
+    arm_stage=3;
     if(!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,
-       (LPCSTR)(uintptr_t)&fault,&pinned) || !AddVectoredExceptionHandler(1,fault))return 0;
+       (LPCSTR)(uintptr_t)&fault,&pinned)){arm_error=GetLastError();return 0;}
+    arm_stage=4;
+    if(!AddVectoredExceptionHandler(1,fault)){arm_error=GetLastError();return 0;}
     InterlockedExchange(&state,1);
     DWORD old;
+    arm_stage=5;
     if(!VirtualProtect((void *)page,page_size,PAGE_READONLY,&old)){
+        arm_error=GetLastError();
         InterlockedExchange(&state,5);return 0;
     }
+    arm_stage=6;
     return 1;
 }
 int snow_first_execute_cancel(void){

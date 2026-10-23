@@ -456,3 +456,28 @@ An optional second argument is the Windows path to `first-execute-image.dll`;
 this exercises image-backed code instead of a private executable page. Each case
 needs a fresh process because the observer deliberately permits only one arm.
 No game files are required. The fixture retains its watched allocation until exit.
+
+### Constructor-page startup experiment
+
+`--adapter steep --command-manager-execute-plugin` builds the opt-in controller.
+It requires `plugins/command_manager_execute.ini`:
+
+```ini
+[execution]
+enabled=1
+timeout_ms=60000
+```
+
+The controller checks the local getter and constructor fingerprints, a null
+manager singleton, and an RX main-image page before arming. The wait is bounded
+between 100 and 90000 ms. Output is `.ini.execute.json`, including restoration,
+page protection, eligibility/pin results and observer arm-stage errors, whether
+the exact constructor entry won, registers and a bounded
+stack snapshot. Keep this raw output private. The worker's later singleton read
+is a separate observation, not an atomic join with the entry context. Another
+function on the same page can consume the one-shot capture. Host startup placement
+does not guarantee that no earlier constructor invocation occurred.
+
+The handler/module and main image stay pinned for process lifetime. Use an
+external process watchdog and verify restoration/cleanup. This experimental
+controller is not a general plugin unload or command-manager lifetime API.

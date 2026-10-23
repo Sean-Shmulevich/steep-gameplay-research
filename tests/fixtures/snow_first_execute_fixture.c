@@ -35,8 +35,11 @@ int main(int argc,char **argv){
     DWORD old;assert(VirtualProtect(page,4096,PAGE_EXECUTE_READ,&old));
     assert(FlushInstructionCache(GetCurrentProcess(),page,4096));
     SnowFirstExecuteRecord r;assert(!snow_first_execute_read(&r));
+    unsigned stage=99;DWORD error=99;snow_first_execute_arm_diagnostic(&stage,&error);assert(stage==0 && error==0);
     if(!strcmp(argv[1],"self")){
-        assert(!snow_first_execute_arm((void *)(uintptr_t)&caller));puts("self passed");return 0;
+        assert(!snow_first_execute_arm((void *)(uintptr_t)&caller));
+        snow_first_execute_arm_diagnostic(&stage,&error);assert(stage==2 && error==0);
+        puts("self passed");return 0;
     }
     if(!strcmp(argv[1],"rw") || !strcmp(argv[1],"rwx")){
         DWORD protection=!strcmp(argv[1],"rw")?PAGE_READWRITE:PAGE_EXECUTE_READWRITE;
@@ -45,12 +48,14 @@ int main(int argc,char **argv){
         assert(before.Protect==protection || (argc==3 && before.Protect==
             (protection==PAGE_READWRITE?PAGE_WRITECOPY:PAGE_EXECUTE_WRITECOPY)));
         assert(!snow_first_execute_arm(page));
+        snow_first_execute_arm_diagnostic(&stage,&error);assert(stage==1 && error==0);
         assert(VirtualQuery(page,&info,sizeof info));assert(info.Protect==before.Protect);
         printf("protection refusal passed requested=%lu observed=%lu\n",
             (unsigned long)protection,(unsigned long)info.Protect);return 0;
     }
     if(!strcmp(argv[1],"warm"))for(int i=0;i<1000;i++)assert(target()==42);
     assert(snow_first_execute_arm(page));assert(!snow_first_execute_arm(page));
+    snow_first_execute_arm_diagnostic(&stage,&error);assert(stage==6 && error==0);
     assert(page[0]==0xb8 && !snow_first_execute_read(&r));
     AddVectoredExceptionHandler(0,fallback);
     ULONG_PTR args[2]={0,(uintptr_t)page};RaiseException(EXCEPTION_ACCESS_VIOLATION,0,2,args);
