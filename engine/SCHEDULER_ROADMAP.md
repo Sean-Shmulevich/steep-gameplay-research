@@ -345,3 +345,10 @@ the adapter/callback actually executes and which caller requests it. Observe tha
 entry/return with existing modes and request counters; do not replace execution
 evidence with state eligibility. Exact ingestion latency, writer identity and
 independent selected-player proof remain open.
+
+The [markup registration route](../docs/reconstruction/CENTRAL_IMPULSE.md#markup-notifications-reach-the-motion-adapters)
+now supplies a concrete producer lead: registered IDs 84/92 reach the two motion
+release paths. Registration copies descriptors, so source-field replacement alone
+would not establish notification interception. Next, identify the subscribed
+receiver for the captured actor and observe notification/callback execution with
+the existing motion/physics channel. Do not assume a clip marker name or thread.

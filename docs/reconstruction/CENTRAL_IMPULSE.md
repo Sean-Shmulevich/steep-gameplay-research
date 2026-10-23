@@ -464,6 +464,77 @@ for its true branch or another motion dispatcher for false. This is a concrete
 caller lead, not yet a named input binding. Its component queries, alternate
 branch and fallback effects remain external to the route selector.
 
+### Markup notifications reach the motion adapters
+
+The caller lead now has a concrete registration route. Component construction
+builds captured callback descriptors, and its later bind routine registers them
+against the object at `component+0x388`, using that object's embedded receiver at
+`+0x18`. The binary's diagnostics name this subsystem "Markup", including
+`LinkToMarkup` and `AddCallbackToMarkupChanged`. These names support a markup
+notification interpretation; they do not identify the authored markup names or
+prove that a particular animation clip emitted the live transition.
+
+| Markup ID | Descriptor in component | Callback | Observed downstream route |
+| --- | --- | --- | --- |
+| `0x54` / 84 | `+0x948`, 32 bytes | `0x1405c7040` | Resolve actor, dispatch A, then additional zero-vector calls |
+| `0x5c` / 92 | `+0x9c8`, 32 bytes | `0x1405c74f0` | Boolean true resolves actor and calls adapter B; false selects a different dispatcher |
+
+Constructor `0x14057ea90` builds both descriptors with the component captured as
+receiver. Registration routine `0x1405b8c50` skips this registration block if
+`component+0x388` is null. Otherwise it copies each descriptor to temporary storage
+and calls `0x14153c3c0` with receiver `markup_object+0x18`, the numeric ID and the
+descriptor address. This is registration, not evidence of callback execution.
+
+```python
+def bind_release_notifications(component):
+    markup_object = component.markup_object
+    if markup_object is None:
+        return
+    register_markup_callback(markup_object, 84, component.callback_A)
+    # Other callbacks are registered between these two.
+    register_markup_callback(markup_object, 92, component.callback_B)
+
+def notification_B(component, argument_byte):
+    if component.interface_predicate():
+        entity = component.interface_entity()
+        if argument_byte != 0:
+            optional_component_call(entity, argument=0)
+            actor = lookup_actor(entity)
+            if actor is not None:
+                actor_adapter_b(actor)
+        else:
+            actor = lookup_actor(entity)
+            if actor is not None:
+                other_motion_dispatch(actor.motion)
+    elif argument_byte != 0:
+        fallback(component.field_628)
+```
+
+These descriptive labels leave unresolved callees explicit. The boolean's authored
+meaning and the callback's emitting thread/job remain unknown. Do not translate
+it to "animation finished" or a keyboard action without producer evidence.
+
+[Eight original-instruction cases](../../native/snow_host/snow_markup_binding_validation.json)
+execute the constructor fragment and registration call sequence with synthetic
+storage, crossing all four initial low tag combinations and present/absent markup
+owner. They verify function pointers, receiver tagging, copied 32-byte descriptors,
+IDs and registration receiver. The registration callee is intercepted, so neither
+its allocation nor notification delivery is executed in this check.
+
+Static inspection of the registration helper supplies an additional hook-design
+constraint: it increments a bounded per-markup link count, then stores a copy of
+the callback descriptor in a listener entry. Changing the component's original
+descriptor after binding therefore does not necessarily change the registered
+callback. An observation hook must locate the registered copy or intercept a
+validated dispatch boundary, with ownership and restoration checks. Do not rewrite
+the descriptor source and assume notification coverage.
+
+This provides a candidate explanation for the live gap between mode eligibility
+and gate clearing: the release can be requested by a separate markup notification.
+It remains a hypothesis until IDs 84/92 or their callbacks are observed alongside
+the actor transition. The IDs are build-specific; authored markup/resource names,
+clip timing, live component ownership and notification scheduling remain open.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

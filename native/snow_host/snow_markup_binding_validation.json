@@ -1,0 +1,94 @@
+{
+  "evidence": "Original constructor and registration fragments with synthetic storage; registration callee intercepted",
+  "cases": 8,
+  "passed": true,
+  "bindings": [
+    {
+      "markup_id": 84,
+      "descriptor_offset": "0x948",
+      "callback_rva": "0x5c7040"
+    },
+    {
+      "markup_id": 92,
+      "descriptor_offset": "0x9c8",
+      "callback_rva": "0x5c74f0"
+    }
+  ],
+  "rows": [
+    {
+      "initial_tag": 0,
+      "markup_owner_present": false,
+      "registration_ids": []
+    },
+    {
+      "initial_tag": 0,
+      "markup_owner_present": true,
+      "registration_ids": [
+        84,
+        2,
+        87,
+        88,
+        92
+      ]
+    },
+    {
+      "initial_tag": 1,
+      "markup_owner_present": false,
+      "registration_ids": []
+    },
+    {
+      "initial_tag": 1,
+      "markup_owner_present": true,
+      "registration_ids": [
+        84,
+        2,
+        87,
+        88,
+        92
+      ]
+    },
+    {
+      "initial_tag": 2,
+      "markup_owner_present": false,
+      "registration_ids": []
+    },
+    {
+      "initial_tag": 2,
+      "markup_owner_present": true,
+      "registration_ids": [
+        84,
+        2,
+        87,
+        88,
+        92
+      ]
+    },
+    {
+      "initial_tag": 3,
+      "markup_owner_present": false,
+      "registration_ids": []
+    },
+    {
+      "initial_tag": 3,
+      "markup_owner_present": true,
+      "registration_ids": [
+        84,
+        2,
+        87,
+        88,
+        92
+      ]
+    }
+  ],
+  "private_script_sha256": "6a2a8197894e65e5bc32a6354e5524dcb4031b2d2e6dd6147bf7b6205e072dc9",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "fragment_sha256": {
+    "0x57ee81": "a8d405935012ce93f2643f3a22a599f0093734ecf9e0c56a5dfa0accb7961d36",
+    "0x5b8c72": "f7e057874b9784ef2d0e3770238a972bb522027fa48d9e555347a2ebe92fc2ae"
+  },
+  "limitations": [
+    "Markup registration helper and event emission were not executed.",
+    "No live callback firing, markup name, animation clip timing or actor ownership proof.",
+    "Constructor fragment inputs are synthetic; complete construction is not validated."
+  ]
+}
