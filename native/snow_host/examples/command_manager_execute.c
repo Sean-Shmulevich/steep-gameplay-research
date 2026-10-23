@@ -20,6 +20,9 @@ static uintptr_t initial_allocation;
 static int eligible,pin_ok;
 static int continuation_requested,backend_ready;
 static SnowLocalProtection continuation;
+static int wait_requested,wait_guard,wait_satisfied,wait_too_late,wait_read_failed;
+static uint64_t input_table;
+static unsigned wait_samples;
 static int prepare_trace(void){
     char path[MAX_PATH+16];snprintf(path,sizeof path,"%s.trace.bin",output);
     HANDLE file=CreateFileA(path,GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,
@@ -42,10 +45,14 @@ static void milestone(const char *stage){
     snow_first_execute_arm_diagnostic(&arm_stage,&arm_error);
     fprintf(f,"{\"stage\":\"%s\",\"compatible\":%d,\"eligible\":%d,"
         "\"backend_ready\":%d,\"armed\":%d,\"arm_stage\":%u,\"arm_error\":%lu,"
-        "\"backend_calls\":%ld,\"backend_last_status\":\"%08lx\"}\n",
+        "\"backend_calls\":%ld,\"backend_last_status\":\"%08lx\","
+        "\"wait_requested\":%d,\"wait_guard\":%d,\"wait_satisfied\":%d,"
+        "\"wait_too_late\":%d,\"wait_read_failed\":%d,\"wait_samples\":%u,\"input_table\":\"%llx\"}\n",
         stage,compatible,eligible,backend_ready,armed,arm_stage,(unsigned long)arm_error,
         InterlockedCompareExchange(&continuation.calls,0,0),
-        (unsigned long)InterlockedCompareExchange(&continuation.last_status,0,0));
+        (unsigned long)InterlockedCompareExchange(&continuation.last_status,0,0),
+        wait_requested,wait_guard,wait_satisfied,wait_too_late,wait_read_failed,wait_samples,
+        (unsigned long long)input_table);
     fclose(f);
 }
 static int read_at(uintptr_t p,void *out,size_t n){SIZE_T got=0;return ReadProcessMemory(GetCurrentProcess(),(void *)p,out,n,&got)&&got==n;}
@@ -88,11 +95,14 @@ static DWORD WINAPI collect(LPVOID unused){
     fprintf(f,"},\"initial_type\":%lu,\"initial_state\":%lu,\"initial_allocation\":\"%llx\","
         "\"eligible\":%d,\"pin_ok\":%d,\"pin_error\":%lu,\"arm_stage\":%u,\"arm_error\":%lu,"
         "\"continuation_requested\":%d,\"backend_ready\":%d,\"continuation_joined\":%d,\"continuation_rechecked\":%d,"
-        "\"backend_calls\":%ld,\"backend_last_status\":\"%08lx\"}\n",
+        "\"backend_calls\":%ld,\"backend_last_status\":\"%08lx\","
+        "\"wait_requested\":%d,\"wait_guard\":%d,\"wait_satisfied\":%d,"
+        "\"wait_too_late\":%d,\"wait_read_failed\":%d,\"wait_samples\":%u,\"input_table\":\"%llx\"}\n",
         (unsigned long)initial_type,(unsigned long)initial_state,(unsigned long long)initial_allocation,
         eligible,pin_ok,(unsigned long)pin_error,arm_stage,(unsigned long)arm_error,
         continuation_requested,backend_ready,continuation.joined,continuation.rechecked,continuation.calls,
-        (unsigned long)continuation.last_status);fclose(f);return 0;
+        (unsigned long)continuation.last_status,wait_requested,wait_guard,wait_satisfied,
+        wait_too_late,wait_read_failed,wait_samples,(unsigned long long)input_table);fclose(f);return 0;
 }
 static void unload(void *unused){(void)unused;InterlockedExchange(&cancelled,1);if(armed)snow_first_execute_cancel();}
 __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPluginV1 *plugin){
@@ -104,16 +114,33 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     char backend_name[24]={0};GetPrivateProfileStringA("execution","backend","virtualprotect",backend_name,sizeof backend_name,api->config_path);
     continuation_requested=!strcmp(backend_name,"continuation");
     if(!continuation_requested && strcmp(backend_name,"virtualprotect"))return 1;
+    wait_requested=GetPrivateProfileIntA("execution","wait_input_table",0,api->config_path);
+    if(wait_requested!=0 && wait_requested!=1)return 1;
     snprintf(output,sizeof output,"%s.execute.json",api->config_path);
     base=(uintptr_t)GetModuleHandleW(NULL);target=base+0x647650;
     compatible=fingerprint(base+0x674bb0,15,UINT64_C(0x914345ed589be986)) &&
         fingerprint(target,32,UINT64_C(0xb24d59629290bbbb));
+    if(compatible && wait_requested){
+        wait_guard=fingerprint(base+0x671d50,7,UINT64_C(0x4ffb8228ee3acab2));
+        ULONGLONG deadline=GetTickCount64()+timeout_ms;
+        while(wait_guard && GetTickCount64()<deadline){
+            uint64_t manager=0;wait_samples++;
+            if(!read_at(base+0x312f3a8,&manager,8) || !read_at(base+0x3139168,&input_table,8)){
+                wait_read_failed=1;break;
+            }
+            if(manager){wait_too_late=1;break;}
+            if(input_table>=0x10000 && input_table<=UINT64_C(0x7fffffffffff)){wait_satisfied=1;break;}
+            Sleep(1);
+        }
+        milestone("input_table_wait_finished");
+    }
     MEMORY_BASIC_INFORMATION info={0};HMODULE pinned;
     if(VirtualQuery((void *)target,&info,sizeof info)){
         initial_protection=info.Protect;initial_type=info.Type;initial_state=info.State;
         initial_allocation=(uintptr_t)info.AllocationBase;
     }
-    eligible=compatible && (initial_read=read_at(base+0x312f3a8,&initial,8)) && initial==0 &&
+    eligible=compatible && (!wait_requested || wait_satisfied) &&
+       (initial_read=read_at(base+0x312f3a8,&initial,8)) && initial==0 &&
        info.State==MEM_COMMIT && info.Type==MEM_IMAGE && info.AllocationBase==(void *)base && info.Protect==PAGE_EXECUTE_READ;
     milestone("eligibility_checked");
     if(eligible && GetPrivateProfileIntA("execution","trace",0,api->config_path)==1 && !prepare_trace()){

@@ -6415,3 +6415,18 @@ scheduler readiness and passed cleanup. The stack return slot matches the known
 input-table allocation caller. Command-manager construction remains uncaptured:
 earlier shared-page code wins the one-shot observation. This was an instrumentation
 bug; these exits do not establish an intentional game protection decision.
+
+### Exact command-manager constructor entry and encoded call boundary
+
+Added an opt-in bounded wait for input-table publication, with fresh build guards,
+late/read-failure refusal and normal constructor eligibility checks. Three refusal
+fixtures pass. One live run captured the exact constructor, restored RX and reached
+scheduler readiness; its receiver equaled the later singleton read and cleanup
+passed. Polling is not an atomic ordering or lifetime guarantee.
+
+The entry stack identified continuation 0x411efd1. Thirty-two independent synthetic
+original-instruction cases validate the preceding encoded bridge: RCX receives
+entry RAX, other GPRs and checked caller-stack bytes are preserved, and control
+reaches the constructor with the expected return slot. Flags and allocation are
+not covered. Manager allocator origin, return/publication flow and destruction
+remain the next ownership questions; full dispatcher reconstruction is not claimed.

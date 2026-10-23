@@ -1,0 +1,58 @@
+{
+  "evidence": "One live exact command-manager constructor capture after sampling input-table publication",
+  "live": {
+    "compatible": 1,
+    "initial_read": 1,
+    "initial_null": 1,
+    "armed": 1,
+    "captured": 1,
+    "exact_constructor": 1,
+    "restore_returned": 1,
+    "final_protection": 32,
+    "backend_calls": 2,
+    "backend_last_status": "00000000",
+    "wait_requested": 1,
+    "wait_guard": 1,
+    "wait_satisfied": 1,
+    "wait_too_late": 0,
+    "wait_read_failed": 0,
+    "wait_samples": 146,
+    "stack_valid": 1
+  },
+  "constructor_rva": "0x647650",
+  "return_rva": "0x411efd1",
+  "receiver_equals_later_manager": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "refusal_fixtures": [
+    {
+      "case": "incompatible_wait",
+      "passed": true
+    },
+    {
+      "case": "invalid_wait",
+      "passed": true
+    },
+    {
+      "case": "incompatible_default",
+      "passed": true
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/examples/command_manager_execute.c": "5e3afb7033cc662ee619822fe71f97802e631ae4170dda71de74320e0746cf3c"
+  },
+  "tested_plugin_sha256": "a96bd98a53ae030d157c4c2748dc0033015d7485e3393217f2b7f352264072a3",
+  "limitations": [
+    "The publication wait uses polling, not an atomic initialization callback.",
+    "One successful selection does not prove repeatability or race freedom.",
+    "The later singleton read is sequential and does not pin object lifetime.",
+    "A captured return address identifies the continuation, not necessarily a conventional adjacent call instruction.",
+    "Allocator origin and manager destruction remain unresolved."
+  ]
+}

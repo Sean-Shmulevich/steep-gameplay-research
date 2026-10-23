@@ -675,3 +675,17 @@ It does not accept a fault address outside the watched page, relax the execute
 access requirement, or claim the captured instruction is the requested target.
 The cross-page fixture compares the old rejection with the corrected capture
 and verifies restoration without fixture recovery after the correction.
+
+`[execution] wait_input_table=1` is an opt-in selection experiment. Before arming,
+it verifies the analyzed input-table publication instruction, then samples the
+input-table and command-manager globals until the table is nonzero, the manager
+is already published, a read fails, or the configured timeout expires. It then
+rechecks ordinary constructor eligibility, including a still-null manager.
+The default remains immediate arming. Invalid values decline initialization.
+
+This blocks this plugin's initialization for at most the configured wait budget;
+the capture has its own budget afterward. Use an external watchdog covering both.
+The 1-ms polling interval is not a scheduler boundary or an atomic event callback.
+Construction may race between checks and arming. Final output and milestones
+report wait gates, samples, late/read-failure refusal and the sampled table pointer.
+A successful wait is not proof of exact-constructor capture or object lifetime.

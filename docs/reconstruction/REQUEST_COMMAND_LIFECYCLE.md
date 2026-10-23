@@ -1714,3 +1714,52 @@ described in [input ownership layout](INPUT_UPDATE_ORDER.md#ownership-table-layo
 It does not transfer that table's 0xfe60 allocation or lifetime to the command
 manager. The next target-selection problem is to arm after earlier shared-page
 construction, or observe a more selective entry, without relying on a timed sleep.
+
+## Exact command-manager constructor entry after input-table publication
+
+An opt-in wait samples the input-table publication, then rechecks that the
+command manager is still unpublished before arming. The publication instruction
+is fingerprinted independently. Late manager publication, read failure, timeout
+or incompatible code prevents arming. The wait is bounded polling, not an atomic
+callback or a stable API ordering guarantee.
+
+The [first live wait-mode run](../../native/snow_host/constructor_after_input_live_validation.json)
+observed the condition after 146 samples and captured exact entry 0x647650.
+Its RCX receiver equaled the manager pointer read afterward. The entry stack's
+first qword was continuation 0x411efd1. Both protection calls succeeded, RX was
+restored, scheduler readiness passed and cleanup verified saves, settings and
+the original DLL. This closes the previously missing exact-entry observation
+for one run, not allocator ownership, repeatability or destruction.
+
+### Encoded bridge has a concrete constructor-call boundary
+
+The captured continuation leads to an encoded bridge beginning at 0x411efbb.
+A [32-case original-instruction validation](../../native/snow_host/constructor_call_bridge_validation.json)
+starts there with independent synthetic general registers, flags and caller-stack
+contents. Without substituting any service calls, each case reaches 0x647650 with
+RCX copied from entry RAX, other general registers preserved, RSP reduced by eight,
+and 0x411efd1 placed at the new stack top. The checked 128 bytes of caller stack
+above the entry RSP remain unchanged. Flags are not claimed preserved, and the
+encoded implementation uses temporary storage below RSP.
+
+The verified entry-side behavior can therefore be expressed as:
+
+```text
+constructor_storage = entry.RAX
+RCX = constructor_storage
+push(native_return_continuation)
+transfer_to_command_manager_constructor()
+```
+
+This describes the state at constructor entry, not a complete replacement for the
+encoded dispatcher. The receiver storage is already supplied in RAX when the
+bridge starts; how that storage was obtained remains unresolved.
+The validation stops before construction and does not prove the subsequent return
+or singleton publication. The live receiver-to-later-singleton equality supplies
+a separate sequential observation of that relationship.
+
+A wider exploratory emulation from an earlier continuation reached another
+factory and then encountered missing runtime state. Its 0x98 allocation request
+is not attributed to the command manager. That probe remains private and is not
+part of the validated call-boundary claim. Next is tracing the producer of RAX
+immediately before this bridge and the continuation after constructor return.
