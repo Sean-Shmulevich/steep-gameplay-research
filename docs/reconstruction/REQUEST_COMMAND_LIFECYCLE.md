@@ -194,6 +194,53 @@ Keep capture bounded and perform no gameplay writes. The callback return site
 identifies the dispatcher branch; it cannot distinguish frame versus transition
 entry into the executor without additional enclosing provenance.
 
+## Encoded lock-wrapper targets
+
+The two opaque helper paths can now be reduced to target-decoding thunks for the
+inspected image. An initial bounded trace of the unchanged image reaches invalid
+instruction-fetch targets after 54 and 64 instructions. Each path performs one
+image-data read from an encoded target slot. This failure is a static-image result,
+not a native game crash or evidence of an anti-debug response.
+
+The recovered local behavior is:
+
+```text
+enter_helper(wrapper):
+    argument = read_u64(wrapper)
+    encoded = read_u64(image_base + 0x3d9bc2d)
+    target = (encoded + 0x796e0b07) modulo 2^64
+    tail_transfer(target, first_argument=argument)
+
+leave_helper(wrapper):
+    argument = read_u64(wrapper)
+    encoded = read_u64(image_base + 0x3c7a1b2)
+    target = (encoded + 0x7b907d10) modulo 2^64
+    tail_transfer(target, first_argument=argument)
+```
+
+The [original-instruction receipt](../../native/snow_host/lock_thunk_validation.json)
+covers 96 cases, 48 per helper, with eight supplied target addresses, varying
+pointees, randomized general-purpose registers and six flag patterns. At the
+synthetic target, the first argument, original return address, stack pointer,
+general-purpose nonvolatile registers and flags match expectations. A returning
+stub reaches the original caller. All visited instruction spans are hashed.
+Target slots are deliberately replaced in the emulator; this is not live import
+resolution. SIMD state and alternate image bases are not tested.
+
+`engine.lock_target_observation.decode_target` implements the recovered modular
+addition and is checked against these cases. `observe_lock_targets` reads both
+slots twice using a supplied reader, at most four reads and 32 bytes. It refuses
+short or failed reads and withholds targets if the samples differ. Equal samples
+are not atomic or proof of lifetime. The returned addresses are session-private;
+do not publish them as portable constants or raw memory captures.
+
+This reduces the next live check to reading those slots, decoding the targets,
+and resolving them against the process's current modules and exports. A lower
+user-address-range target is not proof of executable memory or API identity.
+The slot initialization/writer, actual target identity, native lock behavior and
+reentrancy remain open. In particular, do not add an outer recursive lock around
+publication based solely on the names `enter_helper` and `leave_helper`.
+
 ## Inspect the behavior without game files
 
 ```sh

@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Reduced both opaque publication/dispatch lock helpers to encoded target thunks.
+96 original-instruction cases validate fixed modular addends, dereferenced first
+argument, tail-transfer stack, flags and nonvolatile general-purpose registers
+with supplied targets. Added a bounded two-slot observer and modular decoder.
+Unchanged static-image values produce invalid targets; no native API identity,
+reentrancy, live crash or anti-debug response is inferred. Next live observation
+can resolve two decoded targets against current modules. No game launch.
+Full suite passed: 2192 tests, one skipped. Repository checks passed.
+
 Connected the compiled command observer through original producer, descriptor copy,
 preparation prefix, counted consumer, cleanup and dispatcher in 72 emulated cases,
 including 44 supplied overflow states. Distinct retained IDs show last-admitted

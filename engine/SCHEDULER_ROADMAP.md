@@ -56,6 +56,12 @@ subsystem rather than widening mutation permission. Keep the engine dispatcher
 observation milestone independent of further loading internals. See the
 [loading execution route](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#loading-owner-and-execution-route).
 
+The publication/dispatch lock helpers now have validated encoded-target formulas,
+with 96 original-instruction cases against supplied target slots. Their native API
+identities remain unknown. A bounded live check can read the two slots and resolve
+the decoded targets against current module exports before considering recursive
+admission locking. See [encoded lock targets](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#encoded-lock-wrapper-targets).
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain
