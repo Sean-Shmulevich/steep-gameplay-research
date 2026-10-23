@@ -1,0 +1,23 @@
+{
+  "evidence": "Original-instruction lock initializer with supplied encoded target slots; retrospective live pointer relationship",
+  "all_passed": true,
+  "cases": 48,
+  "initializer_rva": "0x1c367a0",
+  "target_slot_rva": "0x37ede4a",
+  "target_addend": "0x5a0d734c",
+  "target_formula": "u64(slot_value + addend)",
+  "wrapper_to_lock_offset": 8,
+  "target_arguments": {
+    "spin_count": 4096,
+    "flags": "0x02000000"
+  },
+  "return_rva": "0x1c367c1",
+  "live_inline_lock_samples": 20,
+  "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "Target API identity is not established; supplied synthetic functions return success.",
+    "No actual critical-section initialization, native startup or destruction executed.",
+    "Fixed image base; SIMD preservation and concurrent accesses excluded.",
+    "Twenty previously captured sequential samples confirm pointer relationship, not object lifetime."
+  ]
+}

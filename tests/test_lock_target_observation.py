@@ -49,3 +49,18 @@ class LockTargetTests(unittest.TestCase):
         self.assertEqual(observe_lock_targets(fail, image_base=1, image_size=0x6000000)['status'], 'read_failed')
         with self.assertRaises(ValueError):
             observe_lock_targets(fail, image_base=1, image_size=1)
+
+    def test_optional_initializer_preserves_default_read_budget(self):
+        from engine.lock_target_observation import INITIALIZE_TARGET_PROFILE
+        profiles = dict(LOCK_TARGET_PROFILES, initialize_helper=INITIALIZE_TARGET_PROFILE)
+        targets = {name: 0x70001000 + i * 4096 for i, name in enumerate(profiles)}
+        memory = {1 + offset: ((targets[name] - delta) % 2**64).to_bytes(8, 'little')
+                  for name, (offset, delta) in profiles.items()}
+        report = observe_lock_targets(lambda a, n: memory[a], image_base=1,
+                                      image_size=0x6000000, include_initializer=True)
+        self.assertEqual(report['targets'], targets)
+        self.assertEqual((report['reads'], report['requested_bytes']), (6, 48))
+        self.assertFalse(report['api_identity_proved'])
+        with self.assertRaises(ValueError):
+            observe_lock_targets(lambda a, n: memory[a], image_base=1,
+                                 image_size=0x6000000, include_initializer=1)

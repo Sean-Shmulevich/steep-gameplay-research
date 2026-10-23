@@ -494,6 +494,42 @@ remain candidates. The next ownership search can now start from this constructor
 and its buffer teardown counterparts, rather than only singleton readers.
 No lifetime pin or safe native publication point follows from initialization alone.
 
+## Inline lock storage and initializer target
+
+Re-examining the existing 20-sample live capture establishes `lock == manager + 8`
+in every sample. This agrees with the initializer's visible pointer assignment;
+it is not a new live session or evidence that the allocation cannot disappear.
+
+The [initializer instruction fixture](../../native/snow_host/lock_initializer_validation.json)
+now traces and validates the encoded call in 48 supplied-target cases:
+
+```text
+initialize_lock_wrapper(wrapper):
+    wrapper.pointer = wrapper + 8
+    target = u64(read_u64(image_base + 0x37ede4a) + 0x5a0d734c)
+    target(wrapper + 8, 4096, 0x02000000)
+    return wrapper
+```
+
+The target transfer returns to RVA `0x1c367c1`, bypassing the intervening `hlt`
+byte in this inspected path. All tested nonvolatile integer registers survive.
+Three supplied target addresses, four register seeds and four initial flag words
+exercise the thunk. Synthetic callees return success; SIMD, relocation and native
+initialization semantics remain untested. The unchanged image's target slot does
+not itself resolve to a valid callable destination. Do not name a Windows API
+from its apparent argument shape alone.
+
+`observe_lock_targets(..., include_initializer=True)` now reads all three slots
+twice, at most six reads / 48 bytes. The default remains enter/leave only, four
+reads / 32 bytes. The next live observation can resolve the initialization target
+against loaded modules and exports without calling it or modifying the game.
+
+No absolute constructor function pointer was found in the inspected mapped
+image. The bounded relative-displacement search within unwind-described code
+found singleton readers but no constructor reference or singleton writer. These
+search exclusions do not establish permanence or rule out indirect/transformed
+startup paths. Manager ownership and shutdown remain open.
+
 ## Buffer disposal is not callback delivery
 
 The constructor's auxiliary-buffer cleanup leads to clear routine `0x658470`

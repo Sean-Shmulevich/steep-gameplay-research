@@ -6107,3 +6107,10 @@ Added `engine.command_disposal` and a synthetic wrapped-buffer example. The
 independent implementation matches original-instruction effects in 200 cases;
 seven public tests cover service ordering, retained allocation state and failure
 boundaries. No native shutdown hook or lifetime guarantee is claimed.
+
+### Inline lock and initialization target
+
+The existing live capture confirms the lock resides at manager+8 in all 20
+samples. A 48-case original-instruction fixture validates the initializer target
+decode and argument shape. The read-only target observer can optionally inspect
+that slot with a six-read / 48-byte bound; live API identity remains unverified.

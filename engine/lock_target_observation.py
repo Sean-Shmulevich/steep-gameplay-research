@@ -1,4 +1,4 @@
-"""Bounded observation of two build-specific encoded call-target slots.
+"""Bounded observation of build-specific encoded call-target slots.
 
 Evidence: REQUEST_COMMAND_LIFECYCLE.md, Encoded lock-wrapper targets.
 This decodes targets only. It never calls them or infers synchronization semantics.
@@ -12,6 +12,8 @@ LOCK_TARGET_PROFILES = {
     'leave_helper': (0x3C7A1B2, 0x7B907D10),
 }
 
+INITIALIZE_TARGET_PROFILE = (0x37EDE4A, 0x5A0D734C)
+
 
 def decode_target(encoded, addend):
     """Recovered modular uint64 addition; does not validate a callable target."""
@@ -20,25 +22,33 @@ def decode_target(encoded, addend):
     return (encoded + addend) & (2**64 - 1)
 
 
-def observe_lock_targets(read, *, image_base, image_size):
-    """Read both slots twice, at most four reads/32 bytes. No retry or writes.
+def observe_lock_targets(read, *, image_base, image_size, include_initializer=False):
+    """Read enter/leave twice, optionally initialization: four or six reads.
+
+    Requests at most 32 bytes by default or 48 with initialization included.
+    No retry or writes. The extra target has not been identified live.
 
     Stable equality is diagnostic, not an atomic snapshot or lifetime guarantee.
     A target in the usual lower 48-bit user range is not necessarily mapped,
     executable, an import, or a lock API. Resolve modules/exports separately.
     """
+    if type(include_initializer) is not bool:
+        raise ValueError('boolean initializer selection required')
+    profiles = dict(LOCK_TARGET_PROFILES)
+    if include_initializer:
+        profiles['initialize_helper'] = INITIALIZE_TARGET_PROFILE
     if (type(image_base) is not int or type(image_size) is not int
             or not 0 < image_base < 2**64 or image_size <= 0
             or image_base + image_size > 2**64
-            or any(offset+8 > image_size for offset, _ in LOCK_TARGET_PROFILES.values())):
-        raise ValueError('image range must contain both encoded slots')
+            or any(offset+8 > image_size for offset, _ in profiles.values())):
+        raise ValueError('image range must contain selected encoded slots')
     reads = 0
     class Refused(Exception):
         pass
     def sample():
         nonlocal reads
         values = {}
-        for name, (offset, addend) in LOCK_TARGET_PROFILES.items():
+        for name, (offset, addend) in profiles.items():
             reads += 1
             value = read(image_base+offset, 8)
             if not isinstance(value, bytes) or len(value) != 8:
@@ -53,7 +63,7 @@ def observe_lock_targets(read, *, image_base, image_size):
         else:
             result['status'] = 'observed'
             result['targets'] = {
-                name: decode_target(value, LOCK_TARGET_PROFILES[name][1])
+                name: decode_target(value, profiles[name][1])
                 for name, value in first.items()
             }
             result['all_targets_in_lower_48bit_user_range'] = all(
