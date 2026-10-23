@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved the post-pad stage adapter to each eligible world's graph wrapper
+at +0xc840. It chains worlds in handle order and keeps seed==tail when empty;
+the tail precedes the AI after-update graph. 121 original chain cases pass with
+list/lock effects observed via substitutions. Wrapper interiors and player
+physics consumption remain open. See
+[post-pad world chain](../docs/reconstruction/INPUT_UPDATE_ORDER.md#post-pad-stage-chains-per-world-wrappers).
+
 Resolved the pad predecessor as the first AI provider terminal. Step registers
 AI global-update terminal -> UpdatePadManager -> world-stage member +0x638.
 Sixteen original graph-slice cases pass with list mutation/locks observed via

@@ -1796,3 +1796,63 @@ outgoing-list clear/append helpers were substituted with observations; container
 mutation and complete graph execution were not validated. This resolves the
 receiver-identity ambiguity in the preceding section without upgrading it to a
 live input-to-physics trace.
+
+## Post-pad stage chains per-world wrappers
+
+The singleton containing the +0x638 stage is allocated and constructed through
+0x647800. Its stage builder at 0x68a798..0x68a7f8 resets the tail at +0x7d0 to
+that seed, clears the seed's outgoing list, and visits the world-handle array
+at +0x72 with uint16 count at +0x7c. A handle resolves only when its signed
+state at +0x0c is negative; a null resolved pointer is skipped.
+
+Adapter 0x8eb580 loads the graph pointer at world+0x1038 and selects its wrapper
+at graph+0xc840. The generic linker 0x11e1680 reads wrapper+8 as the allocated
+entry, uses wrapper+0x10 as the inline terminal, clears that terminal's outgoing
+list under its lock, registers the preceding job to the entry, and returns the
+terminal. The resulting local model is:
+
+```text
+tail = stage.seed
+clear_outgoing(tail)
+for handle in stage.world_handles_in_order:
+    world = resolve(handle)
+    if world != null:
+        wrapper = world.graph.wrapper_c840
+        clear_outgoing(wrapper.terminal)
+        register(tail, wrapper.entry)
+        tail = wrapper.terminal
+stage.tail = tail
+```
+
+The wrapper's constructor site is 0x8b2278, which calls 0x11c8b20. Setup also
+configures this wrapper in the larger graph-setup routine beginning at 0x905dd0.
+Those are leads for its internal predicate/body/terminal route; a wrapper offset
+is not itself a physics or animation label.
+
+The Step callback then reads this stage tail and connects it to the second AI
+provider's entry. The independently decoded second provider graph contains
+CoordinatorManagerUpdate between its entry and terminal. Its terminal feeds the
+next world-stage seed at singleton+0x7d8. Thus the registered outer sequence is:
+
+```text
+AI global-update terminal
+  -> UpdatePadManager
+  -> post-pad seed
+  -> selected world wrapper(s), in handle-array order
+  -> AI after-update entry -> CoordinatorManagerUpdate -> AI after-update terminal
+  -> next world-stage seed
+```
+
+The per-world entry-to-terminal interiors remain abbreviated in this diagram.
+No eligible worlds means the post-pad seed itself is the tail; no dummy world
+is inserted. Resolved does not mean selected-player world, and graph reachability
+does not prove a conditional wrapper executes its primary body.
+
+[World-chain validation](../../native/snow_host/input_post_pad_world_chain_validation.json)
+executes 121 original builder cases for zero through four handles with resolved,
+unresolved and resolved-null combinations. It also executes the original world
+adapter, wrapper linker and ordinary registration wrappers. Expected edge order,
+clear receivers and final tail all match. Lock and list-storage operations were
+substituted with observations. Neither wrapper interiors nor scheduler execution
+were included. Next is the selected wrapper's internal graph and how it connects
+to the already studied action graph and physics consumers.
