@@ -3095,3 +3095,63 @@ The queued callback body at `0x6545f0` also reaches this request wrapper, with a
 callback and context in its supplied arguments. That is a separate downstream
 handoff to trace before claiming a final completion signal. The related-record
 retention studied here does not close the original queued receiver's ownership.
+
+## Request callback binding and context cleanup
+
+The callback body's downstream handoff supplies callback RVA `0x66b300` and the
+original queued receiver as a context argument. Request initializer `0x11b8730`
+stores that callback in work +0x28 and context in work +0x18. These are separate
+fields. It also stores the request mode at +0x3c and an associated reference at
++0x40; those fields are not interchangeable with the callback context.
+
+The selected callback expects its context as the fifth Win64 argument. It uses
+the third argument as a resource wrapper and resolves the target through two
+pointer loads. Its normal-return ordering is:
+
+```text
+activate_global_service(1)
+target = resource_wrapper.first_pointer.first_pointer
+target.field1008 = context.value_u32
+refresh_target(target)
+apply_holder_field(target, address_of(context.weak_holder8))
+if context.flag18: optional_service0(resource_wrapper, context.parameter10)
+if context.flag19: optional_service1(resource_wrapper, true, null)
+if context.flag1a: optional_service2(target)
+allocation_token = allocator_query(context)
+decrement_strong(context.holder20)  # low24-zero release helper
+weak = context.weak_holder8         # reloaded after prior release
+previous = atomic_decrement(weak.count8)
+if previous == 1 and low24(weak.statusC) == 0:
+    release_weak_holder(weak)
+allocator_free(context, allocation_token)
+```
+
+The free is a tail call after the reference operations. This identifies a concrete
+normal cleanup path for the supplied context. It does not establish how the
+receiver was allocated or retained before callback invocation, nor whether all
+accepted requests invoke it exactly once. The native work consumer that calls
+this binding is still unresolved; do not equate this body with a universal
+request-completion or scheduler-drain boundary.
+
+[48 original-instruction cases](../../native/snow_host/request_context_cleanup_validation.json)
+validate the binding-store slice and complete selected callback body. Cases cover
+all three optional flags, final/nonfinal reference counts, high status bits and
+same-holder aliasing. The fixture reads the stored callback/context fields, then
+explicitly invokes the callback with a synthetic resource wrapper. This invocation
+is supplied by the fixture, not recovered downstream dispatch. All called services,
+release helpers and allocator free are intercepted; storage stays allocated.
+Initializer acquisition before the store slice and its clock tail are excluded.
+
+`engine.request_context_cleanup.complete_request_context` expresses the local
+ordering with bound service adapters and supplied objects. The `apply_holder`
+adapter receives the context so it can address its weak-holder field. The model
+retains no claim about game pointers, exception cleanup or actual freeing.
+
+```sh
+python3 -m engine.examples.request_context_cleanup_probe
+```
+
+The next missing connection is the work consumer's callback invocation and request
+return/cancellation policy. That matters more than adding another inferred wait:
+we now have field-level evidence for a callback-owned cleanup path, but no proof
+that admission failure, duplicate command delivery or shutdown reaches it safely.

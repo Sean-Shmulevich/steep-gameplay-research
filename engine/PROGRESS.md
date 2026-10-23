@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Decoded downstream request callback/context stores and the selected callback's
+normal cleanup body. Forty-eight original-instruction cases passed across optional
+flags, final/nonfinal references and holder aliasing. The callback releases two
+references then frees its supplied context. Invocation is explicitly supplied in
+the fixture; the actual request consumer, exactly-once/cancellation policy and
+receiver creation remain unresolved. Added local executable cleanup and example.
+No game launch or universal completion/drain claim.
+Full suite passed: 2166 tests, one skipped; example and repository checks passed.
+
+
 Recovered related-handler reference replacement and downstream request-pool
 admission. All 54 connected instruction cases match: exchange precedes old release,
 aliasing balances counts, and failed pool admission leaves replacement intact.

@@ -1,0 +1,26 @@
+{
+  "evidence": "Original request-binding store slice and entire selected callback body with explicitly supplied invocation and intercepted services",
+  "cases": 48,
+  "all_passed": true,
+  "context_is_fifth_callback_argument": true,
+  "reference_release_before_context_free": true,
+  "consumer_invocation_join_proved": false,
+  "spans": [
+    {
+      "rva": "0x11b882b",
+      "length": 44,
+      "sha256": "151cf2717a5fa971e5028a9afa25623b9dcf23b3836123389b34849a99302433"
+    },
+    {
+      "rva": "0x66b300",
+      "length": 280,
+      "sha256": "4b66aced53d5ac2a15eb1f86159243372ff61cf1cb70f8352a188c5d9fb38922"
+    }
+  ],
+  "limitations": [
+    "Initializer prefix, holder acquisition and clock tail excluded; only binding-store slice executes.",
+    "Invocation is supplied from decoded work fields; actual completion consumer and cadence remain unresolved.",
+    "All callback services and allocator free are intercepted; memory remains mapped after release.",
+    "Valid stable receiver/holder identities; no exceptions, cancellation, concurrent destruction or native lifetime proof."
+  ]
+}
