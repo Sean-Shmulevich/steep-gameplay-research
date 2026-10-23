@@ -2,6 +2,15 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Connected participant execution validated in 18 original-instruction cases:
+retain/visibility/apply/release ordering, conditional retirement and final compact
+clear. Submission context helper is a TLS +0x40 write, not a lock. Full deferred
+holder lifetime and manager-list mutation exclusion remain unresolved. Next
+prioritize manager registration/removal and ownership over further container
+arithmetic; apply body and callback failure paths are still external. Full suite:
+2077 tests passed (one skipped); packaging and diff checks passed.
+
+
 Compact participant first/next iteration reconstructed and compared against 100
 original-instruction cases without helper substitution on covered paths. Iteration
 uses unsigned key cursors, not stable entry positions; preserves exhaustion cursor

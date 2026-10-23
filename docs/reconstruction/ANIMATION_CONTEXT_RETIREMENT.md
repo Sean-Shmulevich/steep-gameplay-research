@@ -2213,3 +2213,40 @@ logical effects do not grant permission to mutate native storage concurrently;
 allocation and iterator exclusion remain unresolved. The observed participant
 clears its container after traversal, so publication during traversal must be
 understood before treating it as a reliable general mod-command mechanism.
+
+
+## Participant execution, reference bracket and TLS context
+
+The submission wrapper's helper at RVA `0x11751c0` resolves the module TLS block
+through the Windows TLS array and writes its argument at block +0x40. Submission
+sets this field before insertion and clears it with zero afterward. The helper
+contains no lock acquisition or atomic ownership operation. Its semantic purpose
+remains unnamed; it is a context setter, not evidence of container serialization.
+This local observation does not exclude locks in outer callers or other helpers.
+
+An [18-case connected instruction check](../../native/snow_host/command_participant_execution_validation.json)
+now executes the participant body together with original compact first/next and
+clear paths. Apply, holder-retirement and storage-free services are intercepted.
+Synthetic sets contain zero, one or three holders; reference counts and status
+bits vary. The check establishes these local rules:
+
+- Each encountered holder is incremented before payload resolution.
+- Signed status selects visibility; invisible holders skip the apply call.
+- Visible nonzero payloads receive arguments `(0, 1)` while the temporary
+  reference is held. Calls follow compact unsigned key order.
+- The holder is decremented afterward. A resulting zero with low 24 status bits
+  clear selects the retirement helper; other cases skip retirement.
+- Normal traversal completion clears the compact container after holder handling.
+  Storage free is last, and the container word becomes zero.
+
+The zero-reference test cases establish instruction branching on synthetic
+readable storage, not permission to use a native dead holder. A temporary retain
+inside execution cannot protect a holder that was already invalid before that
+instruction. No whole-deferred-interval ownership guarantee follows.
+
+The connected test does not run the apply operation, real allocator/retirement,
+callback fault paths, tag-7 representation or concurrent publication. The core
+mod-loader gap is still manager-list registration and lifecycle exclusion, not
+more confidence in compact arithmetic. Next prioritize the exact manager's list
+writer/removal path and participant ownership rather than extending unrelated
+container branches.

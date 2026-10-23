@@ -1,0 +1,29 @@
+{
+  "evidence": "Original participant, compact iteration and clear instructions; apply, retirement and allocation-free services intercepted",
+  "cases": 18,
+  "all_passed": true,
+  "retains_bracket_apply": true,
+  "clear_after_traversal": true,
+  "spans": [
+    {
+      "rva": "0xa95450",
+      "length": 206,
+      "sha256": "94dc57e45f39ab8d52e163dceaad08da22d5aa967485e3e74b75270d8d6b63a4"
+    },
+    {
+      "rva": "0x108ac20",
+      "length": 325,
+      "sha256": "4fa8fef841d0c020c8b9d97d3fcb2fb6b0e43b98c709853c1b38772901637aab"
+    },
+    {
+      "rva": "0x11751c0",
+      "length": 30,
+      "sha256": "2bdc987b61301fd800e5016ab7330dfaf67d279827d8d3a91eda968cf39331b7"
+    }
+  ],
+  "limitations": [
+    "Synthetic stable holders and compact container; zero-ref cases do not establish native lifetime validity.",
+    "Apply body, real retirement and allocator behavior are not executed.",
+    "No callback fault, concurrent submission, tag-7 traversal, registration or unloading proof."
+  ]
+}
