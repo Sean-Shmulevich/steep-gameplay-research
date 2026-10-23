@@ -1,0 +1,26 @@
+{
+  "records": 8192,
+  "dropped": 412,
+  "no_reported_drops": false,
+  "distinct_actions": 9,
+  "distinct_threads": 10,
+  "batch_size_hypothesis": 9,
+  "complete_batches": 910,
+  "trailing_records": 2,
+  "motif_has_distinct_actions": true,
+  "motif_mismatches": 0,
+  "tied_entry_timestamps": 0,
+  "reservation_order_inversions": 0,
+  "motif_order_unambiguous": true,
+  "single_thread_batches": 910,
+  "batch_thread_changes": 817,
+  "entries_overlapping_previous_intervals": 0,
+  "peak_positive_width_intervals": 1,
+  "batch_start_gap_seconds": {
+    "min": 0.0058254,
+    "median": 0.0104941,
+    "max": 0.0180454
+  },
+  "proves_job_identity": false,
+  "proves_physics_order": false
+}

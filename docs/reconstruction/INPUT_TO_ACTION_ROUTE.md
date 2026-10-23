@@ -1810,3 +1810,27 @@ objects belongs to the selected action, and capture physics update intervals
 concurrently. Ten observed thread IDs rule out assuming one fixed execution
 thread for this class across the recording; they do not alone establish parallel
 execution or worker roles. No input-cache or action-result payload was captured.
+
+## Repeated serial evaluator batches across threads
+
+The [event analyzer](../../engine/action_event_analysis.py) tests a caller-supplied
+batch-size hypothesis, retaining timestamp ties, ordering inversions, partial
+batches, overflow and overlapping intervals. It does not infer scheduler jobs.
+Run it with `python3 -m engine.action_event_analysis EVENTS.csv --batch-size 9
+--frequency 10000000 --dropped 412`; the CSV columns are action, thread,
+entry_qpc and exit_qpc, all unsigned integer fields in one clock domain.
+
+Applied to the live class trace, it finds 910 complete groups of nine distinct
+actions in exactly the same identity order, plus two trailing records. Every
+complete group uses one thread ID, with 817 thread changes between adjacent
+groups. There are no entry timestamp ties, reservation-order inversions or
+positive-width interval overlaps. Group start gaps range from 5.8254 to 18.0454
+ms, median 10.4941 ms. See the
+[analysis receipt](../../native/snow_host/live_action_batch_analysis.json).
+
+This supports serial traversal dispatched on changing threads. It is consistent
+with the reconstructed action refresh traversal, but does not prove the enclosing
+job, the full refresh list, physics substep frequency, or an input-ingestion
+boundary. The batch size was selected after examining this trace, not predicted
+by the analyzer. The capture overflowed at its tail; unrecorded calls are outside
+these claims. Equal timestamps in future captures must leave ordering ambiguous.

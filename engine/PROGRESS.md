@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Analyzed the live class trace with a tested interval/motif tool: 910 complete
+nine-action groups repeat without order deviations; each group uses one thread,
+with 817 changes between groups and no measured interval overlap. This supports
+serial traversal on changing threads, not proven job identity or physics order.
+Five analyzer tests pass. See [batch analysis](../native/snow_host/live_action_batch_analysis.json).
+
 Live directional-class evaluator capture succeeded during a forward pulse:
 8,192 recorded calls, nine objects, ten thread IDs. Slot restored and drained;
 412 calls dropped after capacity filled. This proves callback execution across
