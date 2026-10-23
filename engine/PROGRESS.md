@@ -6707,3 +6707,10 @@ lookup, including associated/holder final-reference thresholds. Wrapped and
 nonwrapped cleanup order matches; header resets only after record services return.
 Native manager destruction remains unlocated. Roadmap now explicitly separates
 remaining allocator internals from command-phase/lifetime qualification.
+
+Reconstructed command record copy and connected it to cleanup in60 original-
+instruction cases. A runnable attachment probe shows source cleanup followed by
+copy disposal, with final attachment destruction and no command execution. This
+provides a concrete request-context retention lead while leaving native CAS
+contention, attachment ABI, module pinning and manager lifetime open. Native
+admission remains unchanged and still constructs a null associated reference.

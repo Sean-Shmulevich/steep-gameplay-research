@@ -1,0 +1,25 @@
+{
+  "evidence": "Complete original command copy followed by cleanup of source and destination; final-reference bodies supplied",
+  "cases": 60,
+  "copy_bytes_counts_cleanup_and_events_match": true,
+  "routines": [
+    {
+      "rva": "0x6475b0",
+      "sha256": "22ef435864a35fe11ffff7ed030f2e31c70cccf4c6ad5655ca119f11f92ad6f5"
+    },
+    {
+      "rva": "0x64cd40",
+      "sha256": "ea42e945cc29f77b39e3ea5b4f6df942ee00df8cc31d4463deeadfb34a697983"
+    }
+  ],
+  "models": {
+    "command_record_copy.py": "bed0947110a6f29e731237b369066a0c1e8ca4c108ba91acdd3040548a288681",
+    "command_record_cleanup.py": "827495eee6912720d979ab066b69636cbeaf64a80883d006f6358032e4ccdeb3"
+  },
+  "limitations": [
+    "Serial retained objects; original CAS acquisition executes without contention or source-pointer replacement.",
+    "Synthetic zero/overflow counts and self-copy establish instruction behavior, not valid ownership or safe API inputs.",
+    "Associated destructor and final-holder-release bodies supplied; no native callback execution, manager lifetime or module pin.",
+    "Destination construction overwrites prior references without releasing them; it is not assignment."
+  ]
+}

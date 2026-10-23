@@ -172,3 +172,10 @@ target with address, original uint32 size and0x4000 only when flags equals1; all
 other flag bytes use address, zero and0x8000. This is one statically connected
 context family. It does not implement or identify a live OS API. The upstream
 fallback's bookkeeping size remains independent of the target's size argument.
+
+Command copying: `copy_record` constructs a destination from retained source
+references, increments both holder statuses and the optional associated count,
+and preserves unmodeled destination padding. Its serial contract excludes source
+mutation during native acquisition. It does not release overwritten destination
+references or establish module/manager lifetime. Attachment final release may
+occur on disposal with no callback execution.

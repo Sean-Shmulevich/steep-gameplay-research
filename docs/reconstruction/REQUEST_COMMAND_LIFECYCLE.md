@@ -2140,3 +2140,53 @@ reentrant disposal. It does not locate manager destruction or establish that
 these helpers run during shutdown. Ring clearing does not decrement the manager's
 separate published budget. The next native ownership milestone remains a bounded
 manager-lifetime and command-delivery contract, not further allocator internals.
+
+## Command record attachment ownership
+
+[`copy_record`](../../engine/command_record_copy.py) reconstructs the serial
+behavior of `0x6475b0..0x64764c`. It copies kind, both holder pointers and payload
+fields, increments each holder's status, then acquires the associated object at
+record+0x60. The four padding bytes at +4 are not overwritten. Holder aliases are
+incremented twice. The destination associated pointer is zeroed before the source
+associated pointer is read; prior destination references are not released. This
+is construction by copying, not a safe assignment operation or self-copy API.
+
+The native associated acquisition repeatedly reads source+0x60, reads its count
+at object+8, verifies the source pointer has not changed, then compare-exchanges
+the count to count+1. Failed comparison retries from the source. This local
+protocol does not itself prove that a concurrently removed object remains readable,
+prevent address reuse, reject zero references or saturate overflow. The current
+model requires retained objects and stable source fields; native contention and
+pointer replacement remain a separate proof obligation.
+
+The cleanup routine exchanges associated+0x60 to null, decrements count and invokes
+virtual slot+8 only when the old count was1. Therefore a retained attachment can
+outlive cleanup of the source record while copies remain. Final copy disposal can
+release it without running the command invoker. Attachment destruction establishes
+neither callback execution nor successful gameplay work.
+
+```sh
+python3 -m engine.examples.command_attachment_probe
+```
+
+This synthetic probe creates two copies, cleans the source, then discards both
+copies. Attachment references follow1,3,2,1,0, with one supplied destruction event
+and zero gameplay callback invocations. Its schedule, storage and destruction
+service are authored. The attachment's relationship to descriptor.context must
+be explicitly arranged by a future adapter; the copy routine does not create that
+relationship or pin a plugin module automatically.
+
+[Original copy/cleanup comparison](../../native/snow_host/command_attachment_validation.json)
+passes60 cases over null/zero/one/two/max associated counts, holder count1/2/max,
+aliased/distinct holders and distinct/self-copy records. It checks the complete
+copied bytes, padding preservation, reference counts and cleanup event order.
+Original CAS instructions execute serially; associated destructors and final
+holder release bodies are supplied. Overflow and self-copy tests describe raw
+behavior, not valid mod-facing inputs. The current native admission API still
+uses a null associated pointer and has not been changed by this research.
+
+A prospective request-ownership adapter should own one temporary attachment
+reference, let record copying acquire another, and release the temporary only
+through the proven cleanup path. Before exposing it natively, qualify attachment
+ABI/storage, descriptor-context association, source stability, thread of final
+destruction and callback-module retention. Manager lifetime remains independent.
