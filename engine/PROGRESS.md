@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Paired collection lifecycle helpers located: registration calls +0x90 before
+holder insertion; removal calls related-holder +0xe0 callbacks before +0xc8,
+then erases the collection holder. Twelve original-instruction cases validate
+callback order with flag and null-payload variations. UI-manager receiver link
+is conditional pending collection population / caller qualification. No phase,
+drain or concurrency guarantee established; those remain the next targets.
+
 Read-only owner qualification API added and exercised live: three startup
 samples identify UIManagerGame and match its embedded participant to the sole
 nearby registry entry. Identity stable across samples; sequential reads do not

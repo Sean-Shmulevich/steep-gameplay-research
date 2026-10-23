@@ -2434,3 +2434,75 @@ Private heap addresses and raw observations remain outside the public package.
 
 The next missing evidence is lifecycle phase and callback drain, not owner name.
 No claim of safe native participant registration follows from this result.
+
+
+## Collection lifecycle ordering around participant removal
+
+Two paired helpers expose the next caller layer. Registration body RVA
+`0xae1b10` resolves a supplied holder and calls the receiver's `+0x90` slot.
+Removal body `0xae6ac0` takes a resolved receiver and reaches its `+0xc8` slot.
+The indexed removal wrapper `0xae6bf0` resolves the holder from collection +0x10
+and passes its index. Registration thunk `0xae1b00` and indexed removal wrapper
+both appear in the metadata record at `0x2e75978`. This is a concrete paired
+collection interface, not a match based only on virtual slot numbers.
+
+The UI-manager base constructor installs table `0x1f09910` before the derived
+constructors replace it. Its lifecycle slots are no-op defaults. Named metadata
+includes `UniverseComponent` and `Universe`; the latter constructor initializes
+collections at +0x10, +0x1c and +0x28. These are supporting type/collection leads.
+The exact metadata schema and live receiver provenance at these caller sites
+remain open; the following behavior is conditional on the supplied receiver.
+
+```text
+register_receiver(collection, holder_reference):
+    receiver = resolve_signed_status_holder(*holder_reference)
+    receiver.virtual90(collection)
+    insert_holder(collection + 0x10, holder_reference, 0)
+    postprocess_collection(collection + 0x10)  # helper semantics unresolved
+    for holder in related_holder_range():
+        receiver.virtualD8(resolve_signed_status_holder(holder))
+    if global_flag_41 == 0:
+        receiver.virtualB8()
+
+remove_receiver(collection, receiver, index):
+    if receiver != null:
+        if global_flag_41 == 0:
+            receiver.virtualC0()
+        for holder in related_holder_range():
+            receiver.virtualE0(resolve_signed_status_holder(holder))
+        receiver.virtualC8()
+    if index != -1:
+        erase_index(collection + 0x10, index)
+    else if receiver != null:
+        obtain_temporary_holder(receiver)
+        erase_matching_holder(collection + 0x10, holder)
+        release_temporary_holder(holder)
+    postprocess_collection(collection + 0x10)
+```
+
+`related_holder_range` is descriptive, not an established resource type. Its
+getters `0x6a52f0` / `0x6a5300` read an array at another manager's +0x72 and a
+16-bit count at +0x7c. Both loops take begin/end once and advance by eight bytes.
+Invisible holders resolve to zero but still reach `virtualD8/E0` with a null
+argument. The flag getter `0x675180` reads a byte at global-object +0x41; it is not
+a mutex or callback-drain operation. Its semantic mode name remains unresolved.
+
+The [12-case instruction check](../../native/snow_host/command_owner_lifecycle_order_validation.json)
+executes the registration body and removal callback prefix across flag values
+zero/one and zero/one/three related holders, including a null payload. It
+intercepts callbacks, getters and collection services. It confirms callback
+ordering and argument propagation, not the implementations of those services.
+Removal erasure and destruction are outside the executed prefix.
+
+If this receiver is the qualified `UIManagerGame`, its `+0xc8` implementation
+ultimately unregisters the embedded command participant before the collection
+removal shown here. That conditional link narrows the lifetime search, but does
+not establish that this helper actually receives that owner in a live teardown.
+Direct caller `0x68c470` obtains a receiver through another object's `+0x38`
+method, holds a temporary holder across `0xae6ac0`, then releases it. The indexed
+wrapper has metadata references; a direct-call-only search is insufficient.
+
+Next qualify the collection's receiver population and its outer caller's phase.
+Neither local ordering nor the temporary holder demonstrates exclusion from the
+command executor or a drain of already-running callbacks. Do not install or
+unload third-party participants based on this ordering alone.

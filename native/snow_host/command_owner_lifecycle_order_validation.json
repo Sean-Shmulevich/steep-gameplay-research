@@ -1,0 +1,108 @@
+{
+  "evidence": "Original lifecycle registration body and removal callback prefix with external services/callbacks intercepted",
+  "cases": [
+    {
+      "operation": "registration",
+      "flag": 0,
+      "world_count": 0,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "registration",
+      "flag": 0,
+      "world_count": 1,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "registration",
+      "flag": 0,
+      "world_count": 3,
+      "null_world_included": true,
+      "matched": true
+    },
+    {
+      "operation": "registration",
+      "flag": 1,
+      "world_count": 0,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "registration",
+      "flag": 1,
+      "world_count": 1,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "registration",
+      "flag": 1,
+      "world_count": 3,
+      "null_world_included": true,
+      "matched": true
+    },
+    {
+      "operation": "removal_callback_prefix",
+      "flag": 0,
+      "world_count": 0,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "removal_callback_prefix",
+      "flag": 0,
+      "world_count": 1,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "removal_callback_prefix",
+      "flag": 0,
+      "world_count": 3,
+      "null_world_included": true,
+      "matched": true
+    },
+    {
+      "operation": "removal_callback_prefix",
+      "flag": 1,
+      "world_count": 0,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "removal_callback_prefix",
+      "flag": 1,
+      "world_count": 1,
+      "null_world_included": false,
+      "matched": true
+    },
+    {
+      "operation": "removal_callback_prefix",
+      "flag": 1,
+      "world_count": 3,
+      "null_world_included": true,
+      "matched": true
+    }
+  ],
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0xae1b10",
+      "length": 221,
+      "sha256": "e3b73068894f3a262c389578c166e3cc11e4400c7d7645f9b58e74e0a188e889"
+    },
+    {
+      "rva": "0xae6ac0",
+      "length": 142,
+      "sha256": "7a87152dc1a7d1a0e561c889fe7c326eb8a9089f5bc5047775dd1a8b762e496e"
+    }
+  ],
+  "limitations": [
+    "Synthetic receiver and holder memory; not a native lifecycle call.",
+    "Callbacks, flag/list getters, insertion and collection postprocess are intercepted.",
+    "Removal collection erasure and destruction are outside the executed prefix.",
+    "No scheduler phase, exclusion, callback drain or arbitrary receiver type proof."
+  ]
+}
