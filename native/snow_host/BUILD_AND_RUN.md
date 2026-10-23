@@ -301,3 +301,12 @@ Run the fixture in Windows/Wine as `snow_finalizer_probe_fixture.exe <DLL-path>
 <scenario>`. Scenarios are `normal`, `readonly`, `conflict`, `identity_before`,
 `identity_during`, `closed`, and `heap_table`. Each process uses synthetic
 allocated job storage and its own executable-backed table, not game memory.
+
+Build the opt-in one-shot finalizer controller with `--adapter steep
+--finalizer-capture-plugin`. Its `finalizer_capture.ini` needs `[capture] enabled=1`
+and optionally `milliseconds=500` (allowed 100..2000). It refuses an existing
+`.trigger` at initialization and waits up to 180 seconds for a fresh trigger.
+Use a new output/config path per experiment. Output is private JSONL at
+`<config>.trace.jsonl`; check the complete row count and all install/restore/drain
+outcomes. The controller verifies three code fingerprints and the selected job
+binding before installation. It never sends input or pauses the scheduler.

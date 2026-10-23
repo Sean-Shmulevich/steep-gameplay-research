@@ -1,0 +1,30 @@
+{
+  "status": "synthetic_finalizer_controller_refusals_passed",
+  "scenarios": [
+    {
+      "name": "disabled",
+      "passed": true
+    },
+    {
+      "name": "stale",
+      "passed": true
+    },
+    {
+      "name": "trigger",
+      "passed": true
+    }
+  ],
+  "game_launched": false,
+  "game_memory_modified": false,
+  "runtime": "Wine on macOS",
+  "source_hashes": {
+    "native/snow_host/examples/finalizer_capture.c": "5d245280f3eebe8b093f68826c475eda02d78c16ca3ec5a0e97eb988a32ff0b9",
+    "native/snow_host/snow_finalizer_probe.c": "f377be6d4cb33ef1d7bfcac87e9cd62358474aaa9a6f098cf6019223ea9be632",
+    "native/snow_host/snow_delegate_trace.c": "fb4c1e74c86c29a0821f231ae80b01bb12e8a16c32f9ca04ecab9de914f90ef5",
+    "tests/fixtures/delegate_capture_fixture.c": "7c0383b3654b2b5220560c3e34f578a5445122de6a92e38ff309ec947edd0faf"
+  },
+  "limitations": [
+    "Disabled/stale trigger/incompatible executable refusal only; successful install is tested separately.",
+    "No live finalizer attribution, lifetime exclusion or unload safety established by these fixtures."
+  ]
+}

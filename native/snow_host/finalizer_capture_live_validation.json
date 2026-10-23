@@ -1,0 +1,102 @@
+{
+  "status": "live_graphics_finalizer_capture_passed",
+  "probe": "finalizer",
+  "record_abi": 1,
+  "sessions": 1,
+  "configured_capture_ms": 500,
+  "record_count": 8,
+  "dropped": 0,
+  "observed_thread_count": 1,
+  "caller_rvas": [
+    "0x11e2dff"
+  ],
+  "phase_values": {
+    "before": {
+      "valid": [
+        1
+      ],
+      "executions": [
+        0
+      ],
+      "outstanding": [
+        1
+      ],
+      "state": [
+        2
+      ],
+      "holds": [
+        0
+      ],
+      "usage": [
+        0
+      ],
+      "selector": [
+        0
+      ]
+    },
+    "after": {
+      "valid": [
+        1
+      ],
+      "executions": [
+        0
+      ],
+      "outstanding": [
+        1
+      ],
+      "state": [
+        0
+      ],
+      "holds": [
+        0
+      ],
+      "usage": [
+        0
+      ],
+      "selector": [
+        0
+      ]
+    }
+  },
+  "requests": {
+    "first": 599,
+    "last": 606,
+    "started_equals_requested": true,
+    "consecutive": true
+  },
+  "capture_span_seconds": 0.7000507,
+  "observed_duration_microseconds": {
+    "min": 22.900000000000002,
+    "median": 25.599999999999998,
+    "max": 91.5
+  },
+  "engine_steps": {
+    "before": 596,
+    "after": 608,
+    "later": 611
+  },
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "movement_input_sent": false,
+  "scheduler_pause_requested": false,
+  "debugger_attached": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_result_sha256": "c49dba9dfad6fdc1f39bbe05f698edc79b09aa0c1af8b32025bdc54330409b86",
+  "private_trace_sha256": "63dd4697edf4879caf8bd5e0e545c0d0d58cea9f4d31d903859c148210fd5ef0",
+  "limitations": [
+    "Eight selected calls in one normal-gameplay session; not universal engine behavior.",
+    "Configured 500 ms interval yielded a 700.0507 ms record span; controller scheduling is not a hard wall-clock bound.",
+    "No direct observation of outstanding decrement after finalizer return.",
+    "Lock scope comes from static/serial instruction evidence, not a live OS lock instrument.",
+    "Guarded sequential reads do not establish atomicity, lifetime exclusion or absence of ABA.",
+    "No arbitrary-mod or unload safety established; module pinned through exit.",
+    "Durations include observations and do not establish uninstrumented performance."
+  ]
+}

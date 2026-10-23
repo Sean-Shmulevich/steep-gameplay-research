@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Built and live-validated bounded finalizer capture controller. Eight selected
+calls all returned through the decoded worker-completion call site: entry had
+executions=0/outstanding=1/DONE; return had 0/1/UNSCHEDULED. This closes live
+finalizer attribution and proves UNSCHEDULED alone is not dispatch drain.
+Original shared slot restored, simulation continued, and launcher cleanup passed.
+Configured 500 ms window overshot to a 700 ms record span; no hard timing claim.
+Three controller refusal scenarios passed; full suite 2119 tests, one skipped;
+standalone build and repository checks passed. Final outstanding decrement,
+actual lock ownership, and same-request phase correlation remain open.
+
 Built the filtered native finalizer adapter (ABI 1) and added it to the standalone
 host build. Seven synthetic Windows/Wine scenarios passed: filtering and integer
 forwarding, read-only protection restoration, competitor refusal/retry, owner-loss

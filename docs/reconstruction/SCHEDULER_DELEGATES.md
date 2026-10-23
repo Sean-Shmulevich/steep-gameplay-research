@@ -858,3 +858,48 @@ records seven passing synthetic scenarios. No game was launched. The initial
 fixture incorrectly assumed the default image-page protection; the corrected
 fixture measures and checks preservation of the original value. Fault-injected
 OS protection failures and concurrent third-party page changes remain untested.
+
+### Bounded finalizer capture controller
+
+The opt-in [finalizer controller](../../native/snow_host/examples/finalizer_capture.c)
+adds a fresh-trigger workflow, three instruction fingerprints (ordinary finalizer,
+completion prefix, graphics dispatcher), selected graphics binding checks, a
+100..2000 ms capture window, restoration after any install attempt, and a bounded
+two-second recorder drain. Installation must return exactly 1; a protection-error
+return does not start the capture interval. The module remains pinned.
+
+Output identifies `probe: finalizer` and `record_abi: 1`. Its receiver is the job,
+not the engine owner. A controller must validate the complete file, record count,
+caller sites, owner continuity, original slot restoration, and continued simulation.
+A fresh trigger is not a lock or an owner-lifetime guarantee. This supersedes the
+previous missing-controller status; live validation is a separate evidence step.
+
+### First live graphics finalizer capture
+
+The [live finalizer receipt](../../native/snow_host/finalizer_capture_live_validation.json)
+records eight selected calls with zero drops and 16 valid before/after observations.
+Every return address resolves to RVA `0x11e2dff`, immediately after completion's
+virtual finalizer call. Entry had executions 0, outstanding 1, and state 2 (DONE).
+Return had executions 0, outstanding 1, and state 0 (UNSCHEDULED). Holds, usage,
+and selector were zero throughout. Started/requested matched and advanced
+consecutively from 599 through 606.
+
+This closes the live worker-completion-to-finalizer caller join and confirms the
+state transition while outstanding accounting remains positive. It does not
+observe the later outstanding decrement. Static/serial instruction evidence says
+the outer job lock remains held at this return; this session did not instrument
+OS lock ownership or dependency-release internals.
+
+The selected job was correctly filtered and the shared slot restored. Subsequent
+engine steps advanced from 608 to 611 (596 before capture). The launcher verified
+bottle stop, saves/settings restoration, and original DLL. No movement, pause or
+debugger was used. The configured 500 ms capture had an observed 700.0507 ms
+entry-to-final-exit span; control-thread scheduling can overshoot its deadline.
+These bounded loops are not hard real-time capture guarantees. No performance
+comparison with prior main-callback captures is warranted.
+
+Together with the separate main-callback capture, the evidence now distinguishes
+body entry/return (executions 1, outstanding 1), finalizer entry (0, 1, DONE), and
+finalizer return (0, 1, UNSCHEDULED). These were separate sessions, not correlated
+records from the same request. Both zero executions and UNSCHEDULED can therefore
+coexist with unfinished outstanding-dispatch accounting on the observed path.
