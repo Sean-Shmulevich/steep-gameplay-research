@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+One read-only live interval samples stable manager/lock/array identity and a valid
+3072-entry empty queue while the engine advances 275 steps. All three addresses
+belong to writable private memory; executable pinning cannot establish lifetime.
+Shared default-holder words change with bit 26 clear and bit 31 set. Observed
+endpoints extend compiled-adapter/original-producer comparison to 90 cases; the
+portable fixture passes final-slot wrap at capacity 3072. No command or movement
+input submitted. Session stopped, saves/settings restored, original DLL verified.
+Focused C fixture, instruction checks and repository checks passed. No runtime
+source changed; the full previously passing 2193-test suite was not rerun.
+
 Connected corrected compiled admission and observer through original preparation,
 counted consumer, dispatcher and cleanup in 72 serial cases. Admitted IDs each
 produce one observation; refused IDs and a second empty drain produce none. Native

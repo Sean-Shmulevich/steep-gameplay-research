@@ -352,11 +352,11 @@ The older [nested-producer receipt](../../native/snow_host/command_admission_val
 is preserved as limited historical evidence. The current
 [cleanup-order receipt](../../native/snow_host/command_admission_cleanup_validation.json)
 executes the compiled Windows adapter with original copy/cleanup/release helpers,
-game lock thunks and observed Wine critical-section routines. All 54 supplied cases
+game lock thunks and observed Wine critical-section routines. All 90 supplied cases
 match successful original-producer publication in meaningful kind-3 record fields,
 queue/cursor/budget fields, holder counts and final lock state. The fixture compares
-capacities 1/2/4, 1 through 6 submissions and three holder-count states with bit 26
-set. Across adapter and reference paths, 140 resource-release helper calls occur
+capacities 1/2/4, 1 through 6 submissions, three synthetic holder-count boundary states with bit 26
+set and two actual words observed in the live interval described below. Across adapter and reference paths, 140 resource-release helper calls occur
 with the queue lock released. Payload destruction, concurrency and exceptions
 remain excluded; unspecified record bytes are not claimed equivalent.
 
@@ -405,6 +405,31 @@ missing from unwind metadata. A descriptor wrapper at `0x653620` merely remaps
 arguments, reloads the singleton and tail-calls the producer. It provides no pin
 or generation token. No manager writer/lifetime mechanism was established by
 these bounded searches; absence from the search is not evidence of permanence.
+
+## Live manager storage and queue state
+
+A [read-only live interval](../../native/snow_host/command_manager_storage_live_validation.json)
+contains 20 PID/creation-guarded samples while the host-reported engine step count
+advances by 275. Manager, critical-section and array pointers and capacity remain
+equal across those samples. Capacity is 3072; count, active and deferred budgets
+stay zero. Read/write cursors stay equal and unchanged. No command or movement
+input was submitted.
+
+All three addresses belong to `MEM_PRIVATE`, `PAGE_READWRITE` regions: 64 KiB for
+the manager and lock, 320 KiB for the array. These are containing-region sizes,
+not object sizes or proof of a particular allocator. Executable-module pinning
+would not pin these allocations. Sampled stability does not close the ownership,
+invalidation or destruction questions.
+
+The shared default-holder word varies across seven observed values bounded by
+`0x807fffe1` and `0x807fffff`, with bit 31 set and bit 26 clear. The observed
+endpoints extend the original-instruction admission comparison to 90 cases; they
+are fixture inputs, not immutable configuration. The portable C fixture also
+checks final-slot wrap at capacity 3072 using full backing storage.
+
+The session stopped normally; saves/settings were restored and the original DLL
+verified. Private-allocation lifetime and callback phase remain open. An empty
+queue during this interval does not by itself establish safe native submission.
 
 ## Inspect the behavior without game files
 

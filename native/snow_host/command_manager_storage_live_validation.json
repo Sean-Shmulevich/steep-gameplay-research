@@ -1,0 +1,59 @@
+{
+  "evidence": "One read-only live command-manager storage and ring observation interval",
+  "ok": true,
+  "samples": 20,
+  "sampled_identity_stable": true,
+  "ring_fields_valid": true,
+  "engine_steps_advanced": 275,
+  "queue_capacity": 3072,
+  "queue_counts": [
+    0
+  ],
+  "active_budgets": [
+    0
+  ],
+  "deferred_budgets": [
+    0
+  ],
+  "cursor_unchanged": true,
+  "memory": {
+    "manager": {
+      "type": "MEM_PRIVATE",
+      "protection": "PAGE_READWRITE",
+      "region_size": 65536
+    },
+    "lock": {
+      "type": "MEM_PRIVATE",
+      "protection": "PAGE_READWRITE",
+      "region_size": 65536
+    },
+    "array": {
+      "type": "MEM_PRIVATE",
+      "protection": "PAGE_READWRITE",
+      "region_size": 327680
+    }
+  },
+  "default_holder": {
+    "min_word": "0x807fffe1",
+    "max_word": "0x807fffff",
+    "distinct_words": 7,
+    "bit26_set": false,
+    "bit31_set": true
+  },
+  "reader_calls": 61,
+  "targeted_bytes": 1208,
+  "movement_input_sent": false,
+  "command_submitted": false,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Sequential samples, not an atomic or continuously monitored interval.",
+    "MEM_PRIVATE identifies allocation class, not an allocator, lifetime pin, generation or destruction protocol.",
+    "The observed queue remained empty; no native callback delivery or command submission was tested.",
+    "Default-holder count is shared and changes; observed values are fixture inputs, not stable configuration."
+  ]
+}

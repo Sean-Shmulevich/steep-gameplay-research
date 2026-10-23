@@ -1,7 +1,7 @@
 {
   "evidence": "Compiled independent C admission uses original record copy/cleanup and game lock thunks with observed Wine ntdll; resource cleanup follows queue unlock",
   "all_passed": true,
-  "guarded_admission_cases": 54,
+  "guarded_admission_cases": 90,
   "resource_release_helper_calls": 140,
   "resource_release_after_queue_unlock": true,
   "successful_publication_compared_with_original_producer": true,
@@ -167,7 +167,7 @@
       ]
     }
   ],
-  "adapter_sha256": "eeb34c44eac63c6b9a18b7d6e46adec6f903fbab23d21cc6413218cb109be7e2",
+  "adapter_sha256": "569196a84a98ebefd120641b4bcd63fa645e4046b574366eb6d2b818fae886d9",
   "module_sha256": "f4da9df63f2966a142949b890d60b3e1ff6064330c6743cadf41a19c34104abf",
   "game_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
   "ntdll_instruction_spans": [
@@ -373,6 +373,6 @@
     "No contention, wait/wake, destruction, exception or live recursive acquisition tested.",
     "Reconstructed admission checked only in a serial fixture with retained manager/array; no native manager lifetime or concurrent safety qualification.",
     "Kind-3 meaningful fields compared with original producer; unused record bytes are authored zeroes.",
-    "Default holder bit 26 set; resource cleanup helper executes its suppression path after acquiring its separate lock. Payload destruction not exercised."
+    "Three supplied bit-26 boundary states plus two words observed in a live session; resource cleanup helper suppression paths exercised, payload destruction excluded."
   ]
 }

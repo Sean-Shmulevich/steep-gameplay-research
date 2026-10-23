@@ -1,7 +1,7 @@
 #include "snow_command_admission.h"
 #include <assert.h>
 #include <string.h>
-static _Alignas(8) unsigned char manager[256],array[208];
+static _Alignas(8) unsigned char manager[256],array[3072*104];
 static int depth,checks,produced,valid=1;
 static void enter(void *m){assert(m==manager);++depth;}
 static void leave(void *m){assert(m==manager && depth>0);--depth;}
@@ -30,5 +30,15 @@ int main(void){
     setup(0,1);uint32_t index=1;memcpy(manager+0x40,&index,4);
     assert(snow_command_admit(&b,&d)==SNOW_COMMAND_INVALID_RING);
     b.check=0;int before=checks;assert(snow_command_admit(&b,&d)==SNOW_COMMAND_INVALID_BINDING);
-    assert(checks==before && depth==0 && produced==1);return 0;
+    assert(checks==before && depth==0 && produced==1);
+    /* Observed live capacity; exercise final-slot wrap with real backing space. */
+    b.check=check;setup(0,3072);index=3071;
+    memcpy(manager+0x3c,&index,4);memcpy(manager+0x40,&index,4);
+    assert(snow_command_admit(&b,&d)==SNOW_COMMAND_SUBMITTED);
+    memcpy(&index,manager+0x3c,4);assert(index==0);
+    uint32_t count,budget,kind;
+    memcpy(&count,manager+0x38,4);memcpy(&budget,manager+0x54,4);
+    memcpy(&kind,array+3071*104,4);
+    assert(count==1 && budget==1 && kind==3 && depth==0 && produced==2);
+    return 0;
 }
