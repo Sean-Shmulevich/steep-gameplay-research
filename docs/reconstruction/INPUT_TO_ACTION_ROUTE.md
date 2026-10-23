@@ -175,10 +175,46 @@ service's three virtual registration methods are substituted with argument
 observers. Thus the test validates construction and handoff, not storage,
 invocation, locking under contention or sample freshness.
 
-The next static target is the concrete object behind `owner+0x10` and its
-slot-`0x20` implementation. We need its stored callback list and invoker caller
-before assigning this refresh to UpdatePadManager, UpdateAction, or another
-stage. None of those placements follows merely from the registration index.
+### Concrete service storage
+
+The owner constructor at `0x444f20` installs primary table `0x1e67338`
+and a secondary service table `0x1e67420` at `owner+0x10`. The primary table
+contains initialization method `0x47bdc0`, whose tail calls the initialization
+helper described above. This joins the service receiver to a constructed type;
+its semantic class name has not been established here.
+
+Secondary slot `0x20` selects leaf `0x4ba3d0`. It copies all 32 callable bytes
+into `service+0x2b0+32*sign_extend(index)`. Because service is `owner+0x10`
+and this registration supplies index zero, the refresh callable resides at
+`owner+0x2c0`. This is a fixed indexed slot, not an appended callback list.
+The copy preserves the source callable and does not check bounds or lock.
+Do not expose arbitrary indices as a safe native mod API.
+
+```text
+register_fixed_refresh(service, index, callable):
+    destination = service + 0x2b0 + 32 * sign_extend_32(index)
+    copy_16_bytes(destination, callable)
+    copy_16_bytes(destination + 16, callable + 16)
+```
+
+The record contains callback, auxiliary qword, tagged manager context and
+invoker. Registration clears context tag bit zero and preserves bit one.
+The stored invoker `0x43f5b0` forwards the supplied receiver to the callback
+and moves the supplied float argument into its expected argument register.
+That invoker alone does not identify where or how often the slot is invoked.
+
+[Original storage validation](../../native/snow_host/action_refresh_storage_validation.json)
+repeats the 12 complete registration cases with the original slot-zero and
+slot-`0x20` storage methods executing. It checks both stored records, including
+the refresh callable at owner-relative `+0x2c0`. Only the third registration,
+through slot `0x48`, remains an observer substitution. Constructor table
+binding is static evidence; full owner construction and callback execution were
+not emulated.
+
+The next target is the consumer of this exact fixed slot, followed by that
+consumer's scheduler binding. Its placement in UpdatePadManager, UpdateAction,
+or another stage remains open. Index zero and the surrounding lifecycle
+callbacks do not establish a frame cadence.
 
 ## Next capture contract
 

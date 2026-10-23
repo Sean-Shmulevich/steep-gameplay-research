@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "cases": 12,
+  "scope": "Original complete manager callback registration plus original fixed-slot storage methods",
+  "substitutions": [
+    "Only virtual registration slot 0x48 replaced by observer; slots 0 and 0x20 execute original instructions"
+  ],
+  "manager_callback_rva": "0x4b4ba0",
+  "refresh_rva": "0x4d0290",
+  "reset_enumerator_rva": "0x4b69b0",
+  "registration_rva": "0x4ba730",
+  "registration_slot": "0x20",
+  "registration_index": 0,
+  "context_global_rva": "0x312bb00",
+  "spans": [
+    {
+      "start_rva": "0x444f4c",
+      "end_rva_exclusive": "0x444f6e",
+      "sha256": "d289685dc6c4e48a786c91724395cd98c56c84845026774a132d9de7f00b33a0"
+    },
+    {
+      "start_rva": "0x4ba300",
+      "end_rva_exclusive": "0x4ba32e",
+      "sha256": "dd0ea5b181795715ecc477a41084bc4f78ec29d4be1a573cda927efeb3dcd21e"
+    },
+    {
+      "start_rva": "0x4ba3d0",
+      "end_rva_exclusive": "0x4ba3f1",
+      "sha256": "6845b595c52165a20296bb1edea48e5fc6f6537990817b2b8391207ef3435258"
+    },
+    {
+      "start_rva": "0x4ba730",
+      "end_rva_exclusive": "0x4ba843",
+      "sha256": "d27e05c2e7a510b25c08aa5781e3cb3dca66af40dbd9865dca31b387a51e1408"
+    },
+    {
+      "start_rva": "0x4b4ba0",
+      "end_rva_exclusive": "0x4b4c37",
+      "sha256": "baf0386d7258846006247623d5d62a7d16f8baa8b186d587c38618df1813f2b1"
+    },
+    {
+      "start_rva": "0x4d0290",
+      "end_rva_exclusive": "0x4d0425",
+      "sha256": "e3b7bb4119fc060c5dd24a20211284a439ff40fdc3e61b460793a7ad553b6b24"
+    },
+    {
+      "start_rva": "0x4b69b0",
+      "end_rva_exclusive": "0x4b6a5b",
+      "sha256": "aaef3fda0c25e8d037ed424d9af88b8597cd62210607f357e75d9fb1e5aeb196"
+    }
+  ],
+  "limits": [
+    "Synthetic manager and service identities",
+    "Static caller establishes global receiver; full initialization not emulated",
+    "Constructor table binding inspected statically; service storage validated; invocation schedule unresolved",
+    "No live execution or sample freshness claim"
+  ],
+  "game_process": false
+}

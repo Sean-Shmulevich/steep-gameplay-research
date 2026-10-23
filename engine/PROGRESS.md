@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved the refresh registration service through its constructor-backed
+secondary table. Its original method copies the callable into a fixed slot at
+owner+0x2c0. Twelve complete registration cases now execute both fixed-slot
+storage methods; only the third callback registration is substituted. The
+fixed slot's invocation caller and scheduler binding remain unresolved.
+See [service storage](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#concrete-service-storage).
+
 Connected action reset/evaluation to a registered manager callback. Initialization
 passes the same global manager used by ingestion; its callback traverses active
 contexts and reaches the known reset enumerator. Twelve original registration
