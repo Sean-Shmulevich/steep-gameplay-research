@@ -1,0 +1,267 @@
+{
+  "evidence": "Execution observer default and supplied NT protection backend fixtures under Wine",
+  "cases": [
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "rw",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "rwx",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "self",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": false,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "rw",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "rwx",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "self",
+      "returncode": 0
+    },
+    {
+      "backend": "default",
+      "image": true,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "arm_failure",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "arm_lie",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "cancel_failure",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "restore_failure",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "restore_lie",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "arm_race",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": false,
+      "scenario": "overlap",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "cold",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "warm",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "concurrent",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "arm_failure",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "arm_lie",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "cancel_failure",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "restore_failure",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "restore_lie",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "arm_race",
+      "returncode": 0
+    },
+    {
+      "backend": "backend",
+      "image": true,
+      "scenario": "overlap",
+      "returncode": 0
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_first_execute.c": "09097a6bb9df7ef30d073d5acfd4949e615dd009d08d64ec434179e82de43a47",
+    "native/snow_host/snow_first_execute.h": "d0440b5af464f161e101009b8492f36e9609e624804f3d7a396e513a624292cd",
+    "tests/fixtures/snow_execute_backend_fixture.c": "edcaaedf18f0eb94cef7f27a8e62a52a2eb4b5ddec925268f949774ae2d28003",
+    "tests/fixtures/snow_first_execute_fixture.c": "8675ee61a36ae7baa4f47a56f0320f722a1d698c693cc1148cc46c002fdad9c4"
+  },
+  "checks": [
+    "Default backend passes all sixteen prior private/image scenarios.",
+    "Supplied backend handles cold/warm execution, neighbor entry, sixteen concurrent callers and cancellation.",
+    "Backend/context configuration after arm refuses, as does context overlap with watched page.",
+    "Arm failure and false-success without protection change refuse.",
+    "Restore failure or false-success does not publish a successful capture; separate fixture handler restores the page.",
+    "Cancel failure returns false and remains failed after external fixture restoration.",
+    "Capture before the arming backend returns remains valid.",
+    "Two backend calls suffice for the successful capture/cancel cases."
+  ],
+  "game_launched": false,
+  "limitations": [
+    "Failure recovery is fixture-owned, not an automatic production recovery mechanism.",
+    "No exhaustive cancellation race or dependency lifetime proof.",
+    "Supplied fixture backend uses the standalone exported NtProtectVirtualMemory; live saved-continuation integration is separate."
+  ]
+}

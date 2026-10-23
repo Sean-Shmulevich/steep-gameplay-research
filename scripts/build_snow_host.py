@@ -60,7 +60,7 @@ def main():
     if args.protection_context_snapshot_plugin:
         build('plugins/protection_context_snapshot.dll', ['examples/protection_context_snapshot.c'], ['-shared'])
     if args.protection_continuation_control_plugin:
-        build('plugins/protection_continuation_control.dll', ['examples/protection_continuation_control.c','snow_continuation_identity.c'], ['-shared'])
+        build('plugins/protection_continuation_control.dll', ['examples/protection_continuation_control.c','snow_continuation_identity.c','snow_first_execute.c'], ['-shared'])
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
     if args.delegate_capture_plugin:

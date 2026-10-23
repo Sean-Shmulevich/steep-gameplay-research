@@ -595,3 +595,28 @@ private. Rereads are not a lifetime pin for the candidate's private allocation;
 this remains a bounded startup experiment with the external watchdog, not a
 persistent callable mod API. Disabled or incompatible configurations never call
 the candidate or allocate a control page.
+
+### Supplied execution-observer protection backend
+
+`snow_first_execute_backend(callback, context)` optionally configures a backend
+before arming. The default remains VirtualProtect. The callback follows its
+success/old-protection/error convention and must be usable from a vectored
+exception handler. Its module is pinned; the caller retains its context and
+indirect dependencies. A watched page cannot belong to the callback's module or
+contain the supplied context pointer. No callback/context extent is inferred.
+
+The observer checks actual protection after successful backend calls. It allows
+the arming race where execution has already faulted and restored RX before the
+arming backend returns. A failed restoration does not publish a successful
+capture or cancellation. There is no automatic fallback inside the observer.
+The failure fixtures use a separate authored recovery handler to verify failure
+reporting without crashing the test process; that is not a production recovery API.
+
+For the continuation control, `[continuation] observer=1` together with
+`exercise=1` selects an authored return-42 function and the observer round trip
+instead of the direct permission-change test. It uses the freshly qualified
+candidate as backend, records capture/restoration and preserves code bytes. The
+watched allocation stays until process exit rather than being freed. There is
+still no option to select a game page. The backend's private continuation lifetime
+is not generally pinned or recovered; this is a bounded experiment, not a durable
+mod API. Raw output distinguishes the observer mode from direct-call fields.

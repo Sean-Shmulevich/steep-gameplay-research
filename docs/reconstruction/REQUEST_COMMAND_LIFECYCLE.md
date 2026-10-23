@@ -1579,3 +1579,41 @@ backend on authored execution-observer fixtures, including restoration and
 cancellation. A constructor experiment remains separate and must retain fresh
 identity checks, a bounded lifetime and verified restoration. No broad native
 command-manager safety contract is inferred from this control.
+
+## Supplied protection backend validated through an execution fault
+
+The observer now accepts an optional protection callback configured before arming.
+VirtualProtect remains the default. The callback's module is pinned and its code
+must not share the watched allocation; the supplied context pointer cannot lie
+on the watched page. The caller retains the context and indirect dependencies.
+Successful backend results are checked against actual page protection.
+
+There is a real arming race: a thread can execute the page and complete the
+one-shot restoration before the arming callback returns. The postcondition check
+accepts that already-restoring/captured state instead of falsely reporting an
+arming failure because it sees RX again. This is not rearming or continuous
+observation.
+
+The [40-case Wine fixture matrix](../../native/snow_host/first_execute_backend_validation.json)
+retains all default-backend private/image cases and adds supplied NT-backend
+capture, warm code, neighbor entry, concurrency, cancellation, overlap refusal,
+arming failure, restoration failure and incorrect-success reports. A synthetic
+callback deliberately triggers execution before returning from arming. Failed
+restoration never publishes a successful capture or cancellation. Separate
+fixture-owned recovery restores permissions in failure tests; no automatic
+production recovery is implied.
+
+The [live supplied-backend control](../../native/snow_host/continuation_observer_live_validation.json)
+freshly joined the current protection continuation, configured it as backend,
+armed an authored return-42 function and caught that function's exact entry. The
+backend restored RX in the fault handler; the function returned 42, bytes were
+unchanged, and no fallback was needed. The two backend calls covered arming and
+restoration. The page and observer module were retained through process exit.
+Scheduler readiness and all cleanup checks passed.
+
+This qualifies the combined observation mechanism on authored memory inside the
+game. It does not establish constructor-page behavior, private continuation
+lifetime in general, or a persistent mod API. A next constructor experiment must
+freshly validate the same identities and make the supplied backend explicit,
+retain a bounded wait and report actual restoration. Another function on the
+constructor's page may still win the one-shot observation.

@@ -1,0 +1,47 @@
+{
+  "evidence": "Live authored-function execution observer using the freshly qualified protection continuation as backend",
+  "live": {
+    "compatible": 1,
+    "joined": 1,
+    "rechecked": 1,
+    "ntdll_pinned": 1,
+    "observer": 1,
+    "backend_configured": 1,
+    "armed": 1,
+    "captured": 1,
+    "exact_entry": 1,
+    "cancel_returned": 1,
+    "bytes_equal": 1,
+    "retained_until_exit": 1,
+    "arm_stage": 6,
+    "arm_error": 0,
+    "function_result": 42,
+    "backend_calls": 2,
+    "backend_last_status": "00000000",
+    "fallback": 0,
+    "final_protection": 32,
+    "released": 0
+  },
+  "cleanup": {
+    "ok": true,
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/examples/protection_continuation_control.c": "b1dfb23d9ce087171dbf53184b3cf9ad8b0995f11e936c900f112f18eeb91050",
+    "native/snow_host/snow_first_execute.c": "09097a6bb9df7ef30d073d5acfd4949e615dd009d08d64ec434179e82de43a47",
+    "native/snow_host/snow_first_execute.h": "d0440b5af464f161e101009b8492f36e9609e624804f3d7a396e513a624292cd",
+    "scripts/build_snow_host.py": "308a274cf8f0bead013612ac37c557f1ca739c9eb80e6ab1332a51cf8a3bd386"
+  },
+  "standalone_incompatible_case": "Observer exercise refuses before allocation, backend configuration or invocation.",
+  "interpretation": "The supplied continuation backend armed the authored function page, restored RX in the execution-fault handler and allowed the original function to return 42 with unchanged bytes.",
+  "limitations": [
+    "No game code page was observed or modified.",
+    "No constructor caller or protected denial policy was recovered.",
+    "Backend module and watched allocation are retained; private continuation allocation lifetime remains unproved in general.",
+    "The last NT status is recorded; successful arming/restoration also require queried protection agreement.",
+    "No durable modding API or safe arbitrary-target promise follows."
+  ]
+}

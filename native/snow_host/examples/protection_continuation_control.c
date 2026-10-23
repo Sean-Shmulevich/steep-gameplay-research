@@ -7,6 +7,18 @@
 #include <string.h>
 #include "snow_plugin.h"
 #include "snow_continuation_identity.h"
+#include "snow_first_execute.h"
+typedef LONG (WINAPI *NativeProtect)(HANDLE,PVOID *,SIZE_T *,ULONG,PULONG);
+typedef ULONG (WINAPI *StatusError)(LONG);
+static struct { NativeProtect call;StatusError error;volatile LONG calls,last_status; } provider;
+static BOOL protect_backend(void *ctx,void *address,SIZE_T size,DWORD protection,DWORD *old){
+    if(ctx!=&provider || !provider.call){SetLastError(ERROR_INVALID_PARAMETER);return FALSE;}
+    PVOID p=address;SIZE_T n=size;
+    LONG status=provider.call(GetCurrentProcess(),&p,&n,protection,old);
+    InterlockedIncrement(&provider.calls);InterlockedExchange(&provider.last_status,status);
+    if(status<0){SetLastError(provider.error?provider.error(status):ERROR_GEN_FAILURE);return FALSE;}
+    return TRUE;
+}
 static int read_at(uintptr_t address,void *out,SIZE_T size){
     MEMORY_BASIC_INFORMATION info;SIZE_T got=0;
     if(address<0x10000 || address>UINT64_C(0x7fffffffffff)-size ||
@@ -47,6 +59,9 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
             read_at(sample.candidate,second.candidate_bytes,sizeof second.candidate_bytes) && !memcmp(&sample,&second,sizeof sample);
     }
     int exercise=GetPrivateProfileIntA("continuation","exercise",0,api->config_path)==1;
+    int observer=GetPrivateProfileIntA("continuation","observer",0,api->config_path)==1;
+    int configured=0,armed=0,captured=0,exact=0,cancelled=0,retained=0;uint64_t function_result=0;
+    unsigned arm_stage=0;DWORD arm_error=0;
     int allocated=0,initial_rx=0,called=0,rounded=0,restored_call=0,fallback=0,released=0,bytes_equal=0;
     LONG status=(LONG)0xc0000001,restore_status=(LONG)0xc0000001;ULONG old_protection=0,restore_old=0;
     DWORD observed=0,final_protection=0;SYSTEM_INFO system;GetSystemInfo(&system);
@@ -54,9 +69,29 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
         unsigned char *page=VirtualAlloc(NULL,system.dwPageSize,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
         allocated=page!=NULL;
         if(page){
-            memset(page,0xa5,32);DWORD old;
+            unsigned char payload[32];memset(payload,0xa5,sizeof payload);
+            if(observer){const unsigned char function[]={0xb8,42,0,0,0,0xc3};memcpy(payload,function,sizeof function);}
+            memcpy(page,payload,sizeof payload);DWORD old;
             initial_rx=VirtualProtect(page,system.dwPageSize,PAGE_EXECUTE_READ,&old);
-            if(initial_rx){
+            if(initial_rx && observer){
+                provider.call=(NativeProtect)sample.candidate;
+                provider.error=(StatusError)(uintptr_t)GetProcAddress(ntdll,"RtlNtStatusToDosError");
+                if(FlushInstructionCache(GetCurrentProcess(),page,sizeof payload)){
+                    configured=snow_first_execute_backend(protect_backend,&provider);
+                    if(configured)armed=snow_first_execute_arm(page);
+                }
+                snow_first_execute_arm_diagnostic(&arm_stage,&arm_error);
+                if(armed){
+                    typedef uint64_t (*Function)(void);function_result=((Function)(uintptr_t)page)();
+                    SnowFirstExecuteRecord record;captured=snow_first_execute_read(&record);
+                    exact=captured && record.instruction==(uintptr_t)page;
+                    cancelled=snow_first_execute_cancel();
+                }
+                MEMORY_BASIC_INFORMATION info={0};VirtualQuery(page,&info,sizeof info);
+                if(info.Protect!=PAGE_EXECUTE_READ)fallback=VirtualProtect(page,system.dwPageSize,PAGE_EXECUTE_READ,&old);
+                VirtualQuery(page,&info,sizeof info);final_protection=info.Protect;
+                unsigned char bytes[32];bytes_equal=read_at((uintptr_t)page,bytes,sizeof bytes) && !memcmp(bytes,payload,sizeof bytes);
+            }else if(initial_rx){
                 typedef LONG (WINAPI *Protect)(HANDLE,PVOID *,SIZE_T *,ULONG,PULONG);
                 Protect protect=(Protect)sample.candidate;PVOID address=page+13;SIZE_T length=7;
                 status=protect(GetCurrentProcess(),&address,&length,PAGE_READONLY,&old_protection);called=1;
@@ -70,7 +105,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
                 unsigned char bytes[32];bytes_equal=read_at((uintptr_t)page,bytes,sizeof bytes);
                 if(bytes_equal)for(unsigned i=0;i<sizeof bytes;i++)if(bytes[i]!=0xa5)bytes_equal=0;
             }
-            released=VirtualFree(page,0,MEM_RELEASE);
+            if(observer)retained=1;else released=VirtualFree(page,0,MEM_RELEASE);
         }
     }
     char output[MAX_PATH];snprintf(output,sizeof output,"%s.join.json",api->config_path);FILE *f=fopen(output,"w");if(!f)return 1;
@@ -78,11 +113,16 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
         "\"entry\":\"%llx\",\"candidate\":\"%llx\",\"context\":\"%llx\",\"exercise\":%d,"
         "\"allocated\":%d,\"initial_rx\":%d,\"called\":%d,\"status\":\"%08lx\",\"rounded\":%d,"
         "\"old_protection\":%lu,\"observed_protection\":%lu,\"restore_called\":%d,\"restore_status\":\"%08lx\","
-        "\"restore_old\":%lu,\"fallback\":%d,\"final_protection\":%lu,\"bytes_equal\":%d,\"released\":%d}\n",
+        "\"restore_old\":%lu,\"fallback\":%d,\"final_protection\":%lu,\"bytes_equal\":%d,\"released\":%d,",
         compatible,sampled,joined,rechecked,pinned,(unsigned long long)sample.entry,(unsigned long long)sample.candidate,
         (unsigned long long)context,exercise,allocated,initial_rx,called,(unsigned long)status,rounded,
         (unsigned long)old_protection,(unsigned long)observed,restored_call,(unsigned long)restore_status,
-        (unsigned long)restore_old,fallback,(unsigned long)final_protection,bytes_equal,released);fclose(f);
+        (unsigned long)restore_old,fallback,(unsigned long)final_protection,bytes_equal,released);
+    fprintf(f,"\"observer\":%d,\"backend_configured\":%d,\"armed\":%d,\"arm_stage\":%u,\"arm_error\":%lu,"
+        "\"captured\":%d,\"exact_entry\":%d,\"cancel_returned\":%d,\"function_result\":%llu,"
+        "\"backend_calls\":%ld,\"backend_last_status\":\"%08lx\",\"retained_until_exit\":%d}\n",
+        observer,configured,armed,arm_stage,(unsigned long)arm_error,captured,exact,cancelled,
+        (unsigned long long)function_result,provider.calls,(unsigned long)provider.last_status,retained);fclose(f);
     plugin->struct_size=sizeof *plugin;plugin->api_version=SNOW_PLUGIN_API_VERSION;
     plugin->name="protection_continuation_control";plugin->version="experimental-1";return 0;
 }

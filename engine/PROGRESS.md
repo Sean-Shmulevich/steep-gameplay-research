@@ -6366,3 +6366,15 @@ protections, actual protections, marker bytes and release all matched expectatio
 no fallback was needed. Game readiness/cleanup passed. No game-page permission or
 hook change occurred, and continuation lifetime and constructor behavior remain
 open. Next is supplied-backend observer qualification before any constructor test.
+
+### Supplied observer backend passes failure fixtures and live authored capture
+
+Added optional backend configuration while preserving VirtualProtect by default.
+Callbacks are module-pinned and protection changes are checked; the observer now
+handles capture completing before the arming callback returns. Forty private/image
+Wine cases pass, including injected arm/restore failures, false-success callbacks,
+cancellation, overlap and concurrent calls. Failure recovery remains fixture-owned.
+The live continuation-backed observer captured an authored function's exact entry,
+restored RX, returned 42 and preserved bytes without fallback. Readiness/cleanup
+passed. Constructor-page behavior and continuation lifetime remain separate gaps;
+no game-page permission or hook change occurred.
