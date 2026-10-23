@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Full regression validation completed: 1,983 tests ran successfully with one skip
+using the selected Xcode installation's bundled SDK. The initial default-SDK run
+had six native fixture build errors caused by a newer Command Line Tools SDK
+whose architecture entries the selected linker could not parse. A command-scoped
+SDKROOT fixed the build environment; no fixture or global toolchain change was
+needed. This validates the portable suite, not live gameplay or native hooks.
+See [macOS SDK troubleshooting](README.md#macos-native-test-sdk-mismatch).
+
 Extended the JSON inspection API with explicit default-copy processor selection
 and persistent processor-state observations. A sequence test verifies state is
 unchanged during suppression, missing configuration and bypass, then updates on

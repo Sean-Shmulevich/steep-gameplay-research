@@ -18,6 +18,26 @@ Open http://127.0.0.1:8770 for the diagnostic terrain/skeleton view. The server 
 
 For recovered bank/context transform math, run the separate [animation work-transform testbench](../docs/reconstruction/ANIMATION_WORKBENCH.md). It accepts JSON and requires no game process.
 
+## macOS native-test SDK mismatch
+
+Some tests compile authored C fixtures. If they fail with `tapi error: malformed
+file` and `unknown architecture` in `libSystem.tbd`, check that the compiler and
+SDK come from compatible installations. A tested failure used the selected
+Xcode compiler with a newer Command Line Tools SDK. It was a build-environment
+failure, not a fixture assertion failure.
+
+When `xcode-select -p` points to a full Xcode installation with a bundled macOS
+SDK, this command selects that SDK for the test process and its compiler children:
+
+```sh
+SDKROOT="$(xcode-select -p)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" \
+  python3 -m unittest discover -s tests
+```
+
+This does not change the global developer directory. Verify the SDK directory
+exists first; the path layout is not valid for a Command Line Tools-only selection.
+Do not hide compiler failures by skipping the native fixtures.
+
 ## Animation bank JSON testbench
 
 Run the recovered mixed-channel and supplemental evaluator without a game process:
