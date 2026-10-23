@@ -3155,3 +3155,65 @@ The next missing connection is the work consumer's callback invocation and reque
 return/cancellation policy. That matters more than adding another inferred wait:
 we now have field-level evidence for a callback-owned cleanup path, but no proof
 that admission failure, duplicate command delivery or shutdown reaches it safely.
+
+## Request consumer and callback gates
+
+The actual callback consumer is now identified at RVA `0x1199a20`. This supersedes
+the missing invocation connection in the preceding section. The routine uses
+manager +0x1c8 as its active work record, calls the callback stored at work +0x28,
+and supplies work +0x18 as the fifth argument. Its other callback arguments are
+status code, work +0x40, address of work +8, and address of work +0x10. Thus the
+third argument has the holder-field layout expected by callback `0x66b300`.
+
+The full consumer begins by resetting manager event +0x218. If stop byte +0x2a0 is
+already nonzero, it returns without acquiring work or signaling that event. In
+its loop it runs a preparation service and an active-record acquisition service.
+No active work causes an event signal and return. For an active record:
+
+| Gate | Local route |
+| --- | --- |
+| work kind +0x38 is nonzero | Invoke alternate function +0x30 with context +0x18 |
+| Descriptor pointee exists and its virtual +0x88 returns false | Invoke defer service; skip ordinary callback |
+| Resource holder pointee is absent | Call materialization with false; callback code 1 if a resource then exists |
+| Resource exists and byte +0x49 is nonzero | Call materialization with true; callback code 2 if a resource still exists |
+| Resource exists and byte +0x49 is zero | Release optional seed +0x20; callback code 0 if resource still exists |
+
+Every ordinary callback additionally requires a nonnull function at work +0x28.
+The work pointer and resource holder are reloaded after materialization or seed
+release. Code meanings beyond these branch conditions remain unnamed; they are
+not treated as universal success/failure enumerations.
+
+After the selected processing path returns, the consumer acquires the manager
++0x1d8 lock, captures the current active work, clears active +0x1c8, calls recycle,
+and releases the lock. It then signals +0x218. A clear stop byte repeats the loop;
+a set byte exits. This signal can therefore follow skipped callback delivery as
+well as successful callback return. It also occurs on the no-active path. It is
+not a per-command success receipt or a proof that all engine work has drained.
+
+[36 full-consumer instruction comparisons](../../native/snow_host/request_consumer_validation.json)
+match `engine.request_consumer` across all three codes, null callbacks, failed
+materialization, resource loss, descriptor refusal, alternate handling, no active
+work and entry-stop. Callback arguments match the previously decoded binding.
+The callback runs before the consumer's retirement lock; recycle observes active
+already cleared, and signal follows recycle. Other locks held by outer callers
+are not excluded. Acquisition, materialization, defer, recycle, event and lock
+services are intercepted. The signal adapter sets stop after one iteration.
+
+The acquisition helper `0x11afeb0` statically pops from manager's +0x188 ring and
+installs a nonnull entry into active +0x1c8, or invokes further processing when
+that ring is empty. Recycling reaches `0x11ade10`; its local reset helper clears
+callback +0x28 and context +0x18 before returning the work record to the free
+pool. These helpers need connected validation, including deferred and cancellation
+paths. Clearing a context field is not proof that the context was freed.
+
+```sh
+python3 -m engine.examples.request_lifecycle_probe
+```
+
+The example composes the recovered consumer with the selected cleanup callback.
+Successful supplied materialization invokes the callback, releases references,
+frees the synthetic context and then recycles. Failed supplied materialization
+skips callback cleanup but still recycles and signals. Opaque native services may
+have other cleanup responsibilities, so this is not a claim of a native leak.
+Exactly-once delivery, context ownership on skip paths, the pending-to-active join,
+and shutdown remain open. No game was launched.

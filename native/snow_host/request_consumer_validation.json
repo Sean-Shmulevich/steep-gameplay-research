@@ -1,0 +1,27 @@
+{
+  "evidence": "Full original request-consumer loop compared to serial control-flow model with supplied one-request acquisition and intercepted services",
+  "cases": 36,
+  "all_passed": true,
+  "callback_codes": [
+    0,
+    1,
+    2
+  ],
+  "callback_context_fifth_argument": true,
+  "active_cleared_before_recycle": true,
+  "signal_after_recycle": true,
+  "spans": [
+    {
+      "rva": "0x1199a20",
+      "length": 521,
+      "sha256": "0c09634df913796bad85320c828714d228a37b0e4798c55284ea5097bd70d7ae"
+    }
+  ],
+  "limitations": [
+    "Acquisition, descriptor readiness, materialization, defer, recycling, locks and events are adapters.",
+    "Consumer signal adapter requests stop after one iteration; multi-request/concurrent behavior unverified.",
+    "Callback bodies are intercepted; prior separate cleanup fixture establishes their local behavior only.",
+    "Skip paths do not prove context cleanup because opaque defer/recycle services remain unresolved.",
+    "No live request timing, exactly-once, cancellation or shutdown guarantee."
+  ]
+}

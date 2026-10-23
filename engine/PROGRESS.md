@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Found the real request consumer and connected its callback/context fields to the
+previously decoded cleanup signature. Thirty-six full original-consumer cases
+matched the new model: codes 0/1/2, descriptor refusal, failed materialization,
+null callbacks, alternate work, no active request and entry stop. Active clears
+under the retirement lock before recycle; event signal follows even on skipped
+callback paths. Added composed lifecycle example with explicit cleanup omission
+when callback delivery is skipped. Acquisition/recycle bodies, cancellation and
+exactly-once ownership still need qualification. No game launch or global drain claim.
+Full suite passed: 2172 tests, one skipped; example and repository checks passed.
+
+
 Decoded downstream request callback/context stores and the selected callback's
 normal cleanup body. Forty-eight original-instruction cases passed across optional
 flags, final/nonfinal references and holder aliasing. The callback releases two
