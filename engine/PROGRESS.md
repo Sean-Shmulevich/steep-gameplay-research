@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Added bounded read-only engine-job inspection API: root/graphics methods and
+owner/table guards, reservation/before/main/after descriptors, selector, usage and
+dispatch accounting in two sweeps. At most 16 ranges / 2086 bytes; no raw heap
+pointers exported, and raw equality still detects redacted-field changes. Six
+synthetic tests pass. Expanded reader not yet exercised live. Direct constructor
+caller searches and same-offset selector stores did not qualify a new owner
+lifetime path; do not infer shutdown exclusion from them.
+
 Qualified engine constructor prefix through event holder +0x48, root +0x60 and
 graphics +0x218 table bindings. Its word store at +0x59 initializes the frame
 service selector +0x5a to zero. Six original-instruction cases pass with varied

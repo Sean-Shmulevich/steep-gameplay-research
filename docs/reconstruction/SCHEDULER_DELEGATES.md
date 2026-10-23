@@ -404,3 +404,46 @@ but neither those samples nor this constructor store proves selector stability
 between gates. Later selector writers and the outer lifetime exclusion still
 need qualification. This supersedes the earlier missing-initialization lead
 without changing the model's two-independent-read contract.
+
+## Bounded inspection API
+
+[engine_job_observation](../../engine/engine_job_observation.py) exposes the root
+and graphics job bindings together with their dispatch accounting and usage
+flags. It accepts an exact-read transport and a caller-verified image identity:
+
+```python
+from engine.engine_job_observation import observe_engine_jobs
+report = observe_engine_jobs(
+    readv, image_base=relocated_base, image_size=verified_image_size,
+    verified_image_sha256=verified_hash)
+```
+
+The adapter does not verify the supplied hash itself. The transport must enforce
+process identity and read timeouts. It performs two sequential sweeps, totaling
+at most 16 ranges and 2086 bytes. Each checks the owner global, shared table
+methods, both embedded job tables, then rereads owner/table identities after the
+job blocks. A failed guard or short read raises instead of returning a qualified
+sample. No writes or engine calls occur.
+
+Each report includes selector/start-region bytes, execution/outstanding counters,
+request/hold fields, the usage flag, the local teardown wait predicate and the
+four delegate records' function/invoker classifications. Image addresses become
+RVAs; raw heap addresses and auxiliary delegate payloads are omitted. Receiver
+relationships distinguish owner, job, null and other. Optional eligibility uses
+the inspected masked-context-or-function rule. A nonempty descriptor is not
+proof that its callback is callable or safe to invoke.
+
+`observations_equal` compares all raw bytes read, including redacted fields,
+while exporting only normalized observations. Thus equal-looking public samples
+can still be marked unequal if a hidden context or auxiliary field changed.
+Equality is not an atomic snapshot, lifetime pin, proof of execution, or native
+mutation permission. The two job samples can also describe different instants.
+The root layout is constructor-qualified; the graphics binding additionally has
+the earlier live capture. This expanded API has synthetic tests but has not yet
+been used for a live capture.
+
+Six tests cover read bounds, tag handling, pointer redaction, changed counters,
+redacted pointer changes, guard failure, short reads, bad method/build identity
+and external callbacks. It is intended to replace isolated unqualified field
+reads when testing lifecycle relationships. Native callback installation and
+outer ownership/destruction remain unresolved.
