@@ -1,0 +1,17 @@
+{
+  "evidence": "Original retirement ring consumer loop with synthetic holder and intercepted payload/cleanup services",
+  "cases": 36,
+  "all_passed": true,
+  "model_compared": true,
+  "routine_span": {
+    "rva": "0x1198b10",
+    "end_exclusive": "0x1198c45",
+    "sha256": "88371a35a5798b5fe44750cbfef8320db797c4954f942ee4259f17cec9e90a62"
+  },
+  "limitations": [
+    "Single item with ring-head wrap and sufficient output capacity.",
+    "Outer locks, reentrancy gate, callback internals and output destruction not executed.",
+    "Stable fields; no concurrent reacquisition or callback mutation simulated.",
+    "Ring consumption does not establish disposal completion or scheduler callback drain."
+  ]
+}

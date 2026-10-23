@@ -2567,3 +2567,56 @@ by themselves prove completed disposal or scheduler callback drain. A holder can
 be queued for later processing. The next link is the ring consumer and its caller
 phase, followed by whether that phase orders against command execution. Preserve
 that distinction when designing plugin unload receipts.
+
+
+## Deferred holder consumer and disposal boundary
+
+Consumer `0x1198a40` reaches the same ring at registry +0x98 used by release.
+It checks registry +0x5c as a reentrancy gate, takes registry/global locks and
+sets processing state before traversing. The loop at `0x1198b10` pops each holder
+by advancing the head modulo capacity and decrementing count before inspecting
+that holder. Its stable-input per-item behavior is:
+
+```text
+holder = pop_ring_head()
+if low24(holder.status) == 0:
+    payload = holder.payload
+    if payload != null:
+        payload.virtual48()
+        if registry.mode == 0:
+            dispatch_payload(payload)       # helper 0x118d870, unresolved
+        else:
+            append_output(payload)          # caller-provided output array
+    atomically_clear_bit24(holder.status)
+    cleanup_helper(registry, holder)
+else:
+    atomically_clear_bit24(holder.status)
+```
+
+A count that has become nonzero since enqueue causes the queued bit to clear
+without payload handling or cleanup. The local consumer does not wait for that
+count to return to zero. It also does not locally require holder +8 to be zero
+before invoking payload `virtual48`; the separate cleanup helper checks that
+word. Do not equate either word with all outstanding scheduler users.
+
+`engine.holder_consumer_route` reconstructs the per-item decision and event order.
+The [36-case instruction comparison](../../native/snow_host/holder_consumer_validation.json)
+varies count/flag words, payload presence and modes zero/one/two. It executes the
+original loop, checks head wrap and output count, and intercepts payload and
+cleanup services. Outer locks, reentrancy and callback-driven mutations are not
+part of this check. The returned status is the local queued-bit update, not a
+prediction of changes made inside external callbacks.
+
+The caller `0x1198820` creates a temporary output array and calls this consumer.
+After releasing its locks, it checks mode again. For mode exactly one it visits
+the collected payloads, invokes their slot-zero destructor with argument zero,
+and frees their storage through allocator services. Other modes do not execute
+that destruction loop here. This is a specific disposal path, not proof that all
+modes eventually destroy payloads identically. Mode changes during the operation
+and the mode-zero dispatch helper remain unresolved.
+
+This connects release publication to consumption and a post-lock destruction
+path. An empty retirement ring still does not imply that all owners were
+processed or destroyed: nonzero counts are skipped, output handling is
+mode-dependent, and no scheduler-wide callback drain is established. Next trace
+outer service callers and the mode-zero dispatcher into known scheduler phases.

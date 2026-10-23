@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Deferred holder consumer connected to release ring. It rechecks low24 count,
+skips payload/cleanup when nonzero, otherwise calls payload +0x48 and routes to
+dispatch or an output list before clearing queued bit and cleanup. Thirty-six
+original-loop cases match the new per-item model. Caller mode 1 destroys output
+payloads after unlocking. Ring empty is not disposal completion or callback drain.
+Next trace service callers and mode-zero dispatcher into scheduler phases.
+
 Holder-release routing reconstructed and compared with 128 original-instruction
 cases. Last-low24 release can enqueue a holder, set bit24, wrap the ring tail,
 and optionally invoke a service after unlocking. It is not a callback-drain
