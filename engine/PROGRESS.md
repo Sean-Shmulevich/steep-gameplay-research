@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Traced the setup caller: four adapters receive offsets 0..3, linking its saved
+selection to holder+0x230, already used by the bracketing cache selector. The
+first offset-zero setup propagates 0.25f to current caches; later-created caches
+and runtime player identity remain open. This pass is static caller evidence.
+See [four-adapter setup](../docs/reconstruction/INPUT_UPDATE_ORDER.md#four-adapter-setup-and-holder-selection-link).
+
 Found a concrete setup-time deadzone override to 0.25f through an adapter and
 virtual setter. Offset zero selects/updates the root and all caches; nonzero
 selects one cache. 45 original call-chain cases match without substitutions.

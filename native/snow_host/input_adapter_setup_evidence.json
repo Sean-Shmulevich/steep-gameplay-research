@@ -1,0 +1,36 @@
+{
+  "status": "statically_inspected",
+  "evidence": "Four-adapter setup loop and shared holder selection field",
+  "spans": [
+    {
+      "start_rva": "0x47d650",
+      "end_rva_exclusive": "0x47d7dc",
+      "sha256": "df700f931713f1c1d35bd659a6d30778a89a9485edc7f15b7dc714894bab0e93"
+    },
+    {
+      "start_rva": "0x4413a0",
+      "end_rva_exclusive": "0x441405",
+      "sha256": "8d15ab892b5be15aacca990dd791f1f381c345be11aab8030779969bfd64dd2c"
+    },
+    {
+      "start_rva": "0x47c510",
+      "end_rva_exclusive": "0x47c549",
+      "sha256": "9bdb3654c800dc9ff7557d643830b19a1538bbeff093b9cb70650f7f389ecd91"
+    }
+  ],
+  "setup_call_rva": "0x47d771",
+  "loop_offsets": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "selected_offset_source": "global holder +0x230",
+  "global_holder_slot_rva": "0x32fb498",
+  "limits": [
+    "Static inspection only",
+    "Unknown intervening helper effects",
+    "Manager live identity, lifecycle and scheduler context unresolved"
+  ],
+  "game_process": false
+}

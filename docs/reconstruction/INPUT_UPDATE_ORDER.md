@@ -1059,3 +1059,62 @@ Other uses of virtual slot +0x100 belong to unrelated interfaces. Matching a slo
 number alone is not sufficient to attribute a deadzone write. Next: identify
 setup routine callers and their offset values, then verify the corresponding
 adapter during an authorized live session.
+
+
+## Four-adapter setup and holder selection link
+
+The decoded direct caller of setup routine `0x47c330` is `0x47d650`. It creates
+four owner objects in a loop with explicit offsets 0, 1, 2 and 3. Each iteration
+allocates an object, calls constructor `0x4413a0`, runs setup(owner, offset),
+then calls `0x47cd00(owner)` and stores the owner in its four-entry array.
+This is no longer an unknown offset at this call site.
+
+Before the loop, the caller copies global holder+0x230 into manager+0x50. After
+each object's setup, it clears owner byte +0x10 when the loop offset differs
+from that saved value. Matching offsets leave the byte unchanged. The owner
+constructor initializes this byte to 1, but callback effects between construction
+and this comparison have not all been audited; the precise pseudocode therefore
+preserves the distinction between leaving unchanged and forcing true:
+
+```text
+selected_offset = global_holder.uint32_at_230
+manager.saved_offset = selected_offset
+manager.array_count = 4
+for offset in 0..3:
+    owner = allocate_and_construct()
+    setup(owner, offset)             # includes deadzone 0.25f
+    helper_47cd00(owner)             # further action/configuration setup
+    manager.owners[offset] = owner
+    if offset != selected_offset:
+        owner.byte_10 = 0
+```
+
+This holder field is already used by selector `0x115dd60`, one of the pair that
+brackets the holder update with cache exchanges. The connection establishes
+shared selection metadata across setup and update. It does not identify a
+specific player's adapter or prove the scheduling phase that invokes this setup.
+If selected_offset is outside 0..3, the explicit comparison clears all four
+bytes; there is no fallback assignment in this loop.
+
+Under valid stable metadata, offset 0 selects the root, so the first setup call
+propagates 0.25f to every current device cache. The remaining offsets select
+individual caches using current-index-relative modulo arithmetic and set them
+to the same value. Small record counts can alias targets; they do not turn these
+arguments into fixed physical device indices. The state of caches inserted after
+this sequence is a separate question: their common constructor still starts at
+0.3f unless another path changes them. Do not infer perpetual global 0.25f.
+
+The parent routine surrounds its work with a lock-like protocol involving thread
+identity, recursive depth and atomic bitfield operations, then calls another
+registration helper. That local protocol is not a license to call the nested
+setter from any thread; its ownership and other participants remain unresolved.
+Allocation failure also is not proved recoverable: a null allocation result can
+still flow into setup in the inspected branch.
+
+The [four-adapter static receipt](../../native/snow_host/input_adapter_setup_evidence.json)
+records the complete caller span, owner constructor initialization, setup call
+site and shared-holder field reference. This pass adds static control/data-flow
+evidence, not a full allocator/callback execution test. The previous 45-case
+setup-tail receipt continues to validate selector/setter behavior for supplied
+object graphs. Next: decode `0x47cd00`'s constructed action/configuration objects
+and their consumers, then identify the manager's runtime registration/callers.
