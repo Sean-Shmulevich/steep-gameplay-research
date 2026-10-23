@@ -6877,3 +6877,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Graph setup registers callback 0x8c2080 in AfterPhysicPropsUpdate / PropsUpdateAfterPhysics. It follows graph -> entity -> cached component at +0x11e0 -> receiver at +0x70 -> slot 0x278. This is a static candidate, not a live job-to-owner join.
 - Found the component setup call into controller slot 0x48 and child-release slot 0x488. Direct-route synchronization and controller cleanup calling phase remain unresolved.
 - Next is a bounded read-only join of the after-physics descriptor/cached receiver and route flags. Do not install a listener merely because this candidate phase is named after physics.
+
+### Live check rejects the candidate direct after-physics join
+
+- First bounded attempt used the physics scheduler state where the action graph was required. Zero job/descriptor data stopped traversal. Constructor tracing corrected the root to world+0x1038 and established that graph's first pointer is the world.
+- Second live attempt verifies the AfterPhysicPropsUpdate descriptor and cached receiver chain, but receiver identity/type differs from the tracked component. Its slot 0x278 resolves to 0x13c03e0, not the known component route. The proposed direct join is rejected for this session; indirect paths remain unproved.
+- Candidate-layout flag interpretations from that different receiver are rejected. Reader now gates those reads on exact known-component identity. Stable sequential reads do not prove lifetime or execution.
+- Both launchers stopped and restored saves/settings/original DLL. No movement, listener mutation or triggered phase recording. Next work returns to type-qualified callers of the known component update route.

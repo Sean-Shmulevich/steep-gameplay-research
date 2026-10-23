@@ -1,0 +1,57 @@
+{
+  "evidence": "Live exact-read action-graph descriptor and receiver identity check, no movement input or listener mutation",
+  "candidate_direct_player_route_confirmed": false,
+  "first_attempt": {
+    "observation_ok": false,
+    "reason": "Incorrectly applied action-graph offsets to physics scheduler state; descriptor and table were zero. No traversal beyond failed guard."
+  },
+  "corrected_attempt": {
+    "observation_ok": true,
+    "action_graph_source": "world+0x1038",
+    "graph_owner_matches_world": true,
+    "job_offset": "0x7218",
+    "descriptor_offset": "0x73b0",
+    "callback_rva": "0x8c2080",
+    "invoker_rva": "0x8ab390",
+    "job_table_rva": "0x1e89618",
+    "cached_owner_source": "world+0x11e0",
+    "receiver_source": "cached owner+0x70",
+    "receiver_matches_known_component": false,
+    "receiver_table_rva": "0x2912dc0",
+    "receiver_slot_278_static_target_rva": "0x13c03e0",
+    "known_component_table_rva": "0x1e789b8",
+    "known_component_slot_278_static_target_rva": "0x38a590",
+    "guards_stable": true,
+    "reader_calls": 18,
+    "typed_route_flags_valid": false
+  },
+  "cleanup": [
+    {
+      "ok": true,
+      "ended_by": "stop",
+      "bottle_stopped": true,
+      "saves_restored": true,
+      "settings_restored": true,
+      "original_dll_verified": true
+    },
+    {
+      "ok": true,
+      "ended_by": "stop",
+      "bottle_stopped": true,
+      "saves_restored": true,
+      "settings_restored": true,
+      "original_dll_verified": true
+    }
+  ],
+  "private_evidence_sha256": {
+    "01/route-result.json": "9fe3b3813340d4e31e3800ca24358f4b89c8431395e050aee39ce2c346ac71fe",
+    "01/result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "02/route-result.json": "ba6abcd6b5116c764f22bea61ddaaab645f8d48394b087966f19525790d8ac92",
+    "02/result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794"
+  },
+  "limitations": [
+    "This disproves the proposed direct receiver equality only for the captured session. It does not exclude indirect calls deeper in the other receiver.",
+    "Raw route bytes were sampled before type discrimination in the second private capture. Their interpreted flags are rejected and are not published as valid observations. The reader now requires receiver equality before reading that layout.",
+    "Sequential guards do not prove atomicity or lifetime. No callback execution, notification firing or synchronization established."
+  ]
+}

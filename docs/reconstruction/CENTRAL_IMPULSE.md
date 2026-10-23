@@ -910,8 +910,8 @@ Graph setup around `0x14090207d` constructs a job at graph+0x7218 with name
 `AfterPhysicPropsUpdate` and label `PropsUpdateAfterPhysics`. It stores the
 callback function `0x1408c2080` in descriptor graph+0x73b0. That function:
 
-1. Gets the entity from its captured graph receiver's first pointer.
-2. Uses entity+0x11e0 as a cached component pointer, populating it through
+1. Gets the world from its captured action-graph receiver's first pointer.
+2. Uses world+0x11e0 as a cached component pointer, populating it through
    `0x14139fb20` and `0x1408e3300` when null.
 3. Reads cached-component+0x70 and, if nonnull, tail-calls its virtual slot 0x278.
 
@@ -921,12 +921,52 @@ its flags choose the direct path, or that this callback executes during the
 notification of interest. The earlier AI preupdate membership does not establish
 this after-physics execution either.
 
-Next read-only check: freshly resolve graph/entity, verify the job descriptor,
-join entity+0x11e0 then cached-component+0x70 to the known owned component, and
+Constructor `0x140903b80` stores its second argument as the graph owner. Its
+caller at `0x1408e5402` supplies world+0x1038 as the graph and the world as owner.
+This action graph is distinct from world+0xff0 -> physics+0x18, the smaller
+physics scheduler state. Job offsets from one must not be applied to the other.
+
+Next read-only check: freshly resolve action graph/world, verify the job descriptor,
+join world+0x11e0 then cached-component+0x70 to the known owned component, and
 record the route flags with before/after ownership guards. Then qualify a bounded
 job callback capture to observe entry/return and correlate with motion/physics.
 Successful sequential pointer checks would establish a session identity join,
 not synchronization or permission to call subscribe/unsubscribe at that phase.
+
+### Live after-physics check rejects the direct receiver join
+
+The [bounded live check](../../native/snow_host/markup_job_route_live_validation.json)
+found the expected job and descriptor on the **world action graph**, but its
+receiver did not equal the tracked component. The action graph comes from
+world+0x1038 and points back to that world. Job+0x7218 has table RVA 0x1e89618;
+graph+0x73b0 contains callback RVA 0x8c2080, captured graph and invoker RVA 0x8ab390.
+World+0x11e0 and cached-object+0x70 resolve successfully, with stable guards.
+
+The resulting receiver has table RVA `0x2912dc0`, not the known component's
+`0x1e789b8`. Static inspection of that actual table resolves slot 0x278 to
+`0x1413c03e0`, not `0x14038a590`. Thus the proposed direct job-to-player-markup
+join is rejected for this session. This does not rule out an indirect route
+inside its external callees, but none has been established.
+
+The first attempt mistakenly used the smaller physics scheduler state as the
+action graph. Its job/descriptor reads were zero and the guard stopped traversal.
+Constructor tracing corrected the root before the second session. Both sessions
+ended normally and restored saves/settings/original DLL; no movement stimulus,
+listener writes or notification calls were performed. The phase recorder plugin
+was present but not triggered.
+
+The second private capture also sampled candidate route bytes before requiring
+receiver-type equality. Their interpreted flags are invalid for this receiver
+and are explicitly rejected. They must not be used to claim that markup's direct
+branch is disabled. The reader now restricts those layout reads to exact equality
+with the known component. The actual evidence here is receiver/type mismatch,
+not branch selection.
+
+Next work should follow type-qualified callers of the known component's slot
+0x278 or its three-phase wrapper. Slot numbers shared across unrelated tables
+are not evidence of shared behavior. The valid local wrapper reconstruction
+remains intact; this failed candidate job join does not invalidate its formulas
+or qualify listener synchronization.
 
 ### Authored notification recorder core
 

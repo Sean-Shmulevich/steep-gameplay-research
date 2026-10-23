@@ -372,3 +372,9 @@ The owned component has a flag-selected route to markup/middle/controller phase
 calls. Thirty-two isolated instruction cases qualify that local route. Next
 verify the cached receiver and flags live, then observe this specific job. No
 live attribution or subscribe/unsubscribe synchronization is established yet.
+
+The subsequent [live check](../docs/reconstruction/CENTRAL_IMPULSE.md#live-after-physics-check-rejects-the-direct-receiver-join)
+rejects this candidate's direct receiver equality in one gameplay session. The
+world action graph contains the expected job, but it dispatches another receiver
+type. Do not hook it as the player's markup producer. Follow type-qualified
+callers of the known component; the job's indirect callees remain untraced.
