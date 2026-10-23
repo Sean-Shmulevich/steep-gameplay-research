@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Qualified the concrete callback caller's post-submit path. Forty connected original
+instruction cases return with the callback still queued and the temporary holder
+reference already balanced; later preparation/consumption delivers the receiver.
+The follow-up selects related records by owner and unsigned priority threshold,
+not a demonstrated callback completion receipt. Reconstructed its two-pass rules
+with fresh resolution and an illustrative queue/follow-up example. Opaque handlers
+and valid stable synthetic owner chains limit the claim; receiver lifetime stays
+open. No game launch, mutation admission or native wait API claimed.
+Full suite passed: 2157 tests, one skipped; example and repository checks passed.
+
+
 Connected a concrete kind-3 callback producer to preparation, counted consumption,
 record cleanup and dispatch. All 72 original pipeline cases, 24 ABI cases and six
 generic-invoker cases passed. Full-ring admission drops the new record but still

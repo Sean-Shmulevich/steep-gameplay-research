@@ -2972,3 +2972,65 @@ receipt and per-request duplicate handling. Do not blindly enqueue non-idempoten
 mod operations through this producer. Next trace the concrete caller's receiver
 and post-submit service, then qualify one bounded observation callback before
 allowing mutations.
+
+## Post-submit follow-up is not a completion receipt
+
+The submitter's post-call service `0x833a90` does not establish a general wait for
+its queued callback. A connected fixture now executes the original submitter and
+this follow-up with supplied empty or nonempty related-record collections. The
+caller returns with one queued callback and deferred count one. Its temporary
++8 reference increment on the receiver's +0x20 holder has already been balanced.
+Only later execution of preparation and service A delivers the queued callback.
+The callback context itself has no new demonstrated retention through that delay.
+
+All [40 caller/follow-up comparisons](../../native/snow_host/callback_caller_validation.json)
+passed across two queue capacities, two initial reference counts, two stack fills,
+and five collections. The follow-up's collection producer, TLS mask service,
+container initialization and selected handlers are adapters. The final callback
+body is intercepted. This establishes a concrete return-before-dispatch path;
+it does not rule out blocking inside opaque handlers on other paths.
+
+The follow-up's two-pass selection has this local behavior:
+
+```text
+selected = []
+threshold = 0
+for entry in supplied_collection:
+    resolved = resolve_two_holder_links(entry)
+    if resolved.owner_holder == supplied_owner_holder:
+        selected.append(entry)
+        if entry.flag_byte != 0:
+            threshold = max_unsigned_u32(threshold, entry.priority_u32)
+for entry in selected:
+    resolved = resolve_two_holder_links(entry)  # resolved again
+    if resolved.level_u32 >= threshold:        # unsigned, inclusive
+        related_handler(entry)
+release_temporary_containers()
+release_supplied_holder_weak_reference()
+```
+
+The entry uses +0x10 for the first holder, +0x20 for priority and +0x24 for its
+flag. The first resolved object uses +0x18 for the next holder; the second uses
++0x20 for the owner holder and +0x28 for level. Names are descriptive, not recovered
+class or field names. Holder resolution includes the existing TLS-mask convention.
+The second pass does not recheck the owner equality. Its handler at `0x8328a0`
+changes referenced fields and performs further work; the fixture intercepts that
+body and makes no claim about its semantic purpose or locking.
+
+`engine.command_related_selection.select_related` reconstructs the selection
+with caller-supplied resolution/handling. It requires stable input storage and
+retains duplicates; it does not reproduce native array allocation, pointer faults,
+or source-list relocation. Unit tests also exercise changed second-pass resolution
+as an explicitly supplied scenario, not a demonstrated live ownership change.
+The original-instruction cases keep owner chains valid and stable.
+
+```sh
+python3 -m engine.examples.callback_followup_probe
+```
+
+The example distinguishes related-record processing from later queued callback
+execution. It must not be used as a native lifetime guarantee. Next trace the
+receiver's creator/destructor and the selected handler's reference changes, or
+provide an independently pinned callback context and explicit receipt under a
+qualified admission contract. The existing post-submit routine is not a substitute
+for that receipt. No game was launched during these checks.

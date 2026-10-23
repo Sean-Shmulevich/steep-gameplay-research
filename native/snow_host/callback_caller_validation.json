@@ -1,0 +1,26 @@
+{
+  "evidence": "Original concrete submitter and post-submit routine with supplied related-record collections and intercepted record handlers, followed by original preparation/consumer/dispatch chain",
+  "cases": 40,
+  "all_passed": true,
+  "caller_returns_before_callback": true,
+  "post_submit_weak_reference_balanced": true,
+  "spans": [
+    {
+      "rva": "0x659760",
+      "length": 126,
+      "sha256": "f32eaa20309ac214cde155a0fb6e928edb26d28d1ef610c2aae6943c906aad3a"
+    },
+    {
+      "rva": "0x833a90",
+      "length": 789,
+      "sha256": "1c77a921f607e13e23cd4db50eb6d8640fe99ab0fb456b104e2813fd7910d916"
+    }
+  ],
+  "limitations": [
+    "Collection population and TLS mask service are supplied; owner links remain valid and stable. Handler bodies are intercepted.",
+    "Container initialization adapters use retained inline stack backing.",
+    "Actual callback body is intercepted; only receiver delivery and later invocation are established.",
+    "Queue and dispatch lock services remain synthetic.",
+    "No concurrent receiver destruction, game session, module unload or completion wait established."
+  ]
+}
