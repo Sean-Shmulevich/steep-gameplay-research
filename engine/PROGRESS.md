@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Traced the holder-to-service-to-timestamp call chain and refresh-byte consumption.
+Documented repeated link reads, service-null behavior, initialization order and
+unknown callbacks. The direct upstream caller is conditional and is not proved
+to be the physics loop. Next: refresh writers and indirect registration, then
+common-sequence live attribution when available. See
+[input update order](../docs/reconstruction/INPUT_UPDATE_ORDER.md).
+
 Input caller copies current caches to previous before polling and edge stamping.
 Device poll helpers match 144 original cases, preserving partial failed writes
 and reacquisition-without-repoll behavior. Reactivation also clears the cutoff,

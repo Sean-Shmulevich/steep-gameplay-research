@@ -1,0 +1,55 @@
+{
+  "evidence": "Static instruction inspection of input holder/poll/timestamp call order",
+  "status": "statically_inspected",
+  "spans": [
+    {
+      "start_rva": "0x11789f0",
+      "end_rva_exclusive": "0x1178a5c",
+      "sha256": "f1c432f1a555c216ee0f1cd3519989ddc8c93ba14add211772bf24cd70c7e6ca"
+    },
+    {
+      "start_rva": "0x1178a60",
+      "end_rva_exclusive": "0x1178b0e",
+      "sha256": "9a3006b0ffb4d1257cd3ec1850df8d0ef8ecdc20f8a6b5d82c85dbadf43677ea"
+    },
+    {
+      "start_rva": "0x11785c0",
+      "end_rva_exclusive": "0x117890d",
+      "sha256": "6e22ec699a4b5066c9fcb0e9a30709d37ca0fd760b5506d52118256cdf6c8797"
+    },
+    {
+      "start_rva": "0x1179c50",
+      "end_rva_exclusive": "0x1179d7f",
+      "sha256": "949f7cc2bd02c70a31e77080e54833c3c7099fecc32015216b40d305b70bc438"
+    },
+    {
+      "start_rva": "0xf90751",
+      "end_rva_exclusive": "0xf9078f",
+      "sha256": "d6f8cdf15de379151152cd5caaa070024db9b89fe4b48f0b4b68245a6a79be51"
+    }
+  ],
+  "direct_calls": [
+    {
+      "site_rva": "0xf9078a",
+      "target_rva": "0x11789f0"
+    },
+    {
+      "site_rva": "0x1178a2f",
+      "target_rva": "0x1178a60"
+    },
+    {
+      "site_rva": "0x1178ae1",
+      "target_rva": "0x11785c0"
+    },
+    {
+      "site_rva": "0x1178867",
+      "target_rva": "0x1179c50"
+    }
+  ],
+  "game_process": false,
+  "limits": [
+    "Unknown bracketing and virtual callback effects",
+    "Indirect callers and main scheduler placement unresolved",
+    "No execution or callback mutation validation"
+  ]
+}
