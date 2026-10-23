@@ -6784,3 +6784,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Live gated capture: 16 returned requests distributed 4 before, 4 during and 8 after OS down/up reports. All 32 physics samples valid; 206 callbacks, five threads, zero drops. Restoration, continued engine progress and outer cleanup verified.
 - Main/rider velocity first becomes nonzero at request 108 during the reported hold; the second gate changes and the preconsume counter becomes negative. Subsequent samples show increasing speed overall. Paired samples remain equal across each engine callback; pending impulse remains zero at sampled points.
 - Boxed ownership and registry routes agree on the actor. Selected-player identity, engine input ingestion and causal response timing remain open. Earlier helper-startup miss is retained as negative evidence. Private traces/helper stay excluded; public receipt contains derived summaries and hashes.
+
+### Snow wrapper blocking-byte release paths
+
+- Connected the changing live gate to the previously validated wrapper early return. It removes one inhibition condition; it is not directly a force or a universal active-state flag.
+- Decoded two owner callbacks that clear the byte, invoke a physics-side helper, reload the actor and clear an additional byte. One callback also requires the fourth wrapper gate. Published pseudocode preserves pointer reloads and leaves helper effects external.
+- Sixteen original-instruction cases pass with synthetic objects, the actual virtual getter and an intercepted external helper. They include noncanonical true byte values. No live writer attribution, complete writer inventory or safe setter API is claimed.
+- Reconciled the next step with the existing mode-zero BeforeSimulation/input capture: reuse its proven observation route to join the new gate transition and resident phase requests, rather than repeating the older ingestion investigation.

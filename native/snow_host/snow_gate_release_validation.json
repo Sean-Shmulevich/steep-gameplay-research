@@ -1,0 +1,112 @@
+{
+  "evidence": "Original instruction execution with synthetic objects; external physics helper intercepted",
+  "cases": 16,
+  "passed": true,
+  "actual_virtual_getter_executed": true,
+  "helper_effects_validated": false,
+  "cases_detail": [
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 0,
+      "fc9": 0,
+      "cleared": false
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 0,
+      "fc9": 1,
+      "cleared": false
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 1,
+      "fc9": 0,
+      "cleared": true
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 1,
+      "fc9": 1,
+      "cleared": true
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 2,
+      "fc9": 0,
+      "cleared": true
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 2,
+      "fc9": 1,
+      "cleared": true
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 255,
+      "fc9": 0,
+      "cleared": true
+    },
+    {
+      "variant": "unconditional_fc9",
+      "blocked": 255,
+      "fc9": 1,
+      "cleared": true
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 0,
+      "fc9": 0,
+      "cleared": false
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 0,
+      "fc9": 1,
+      "cleared": false
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 1,
+      "fc9": 0,
+      "cleared": false
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 1,
+      "fc9": 1,
+      "cleared": true
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 2,
+      "fc9": 0,
+      "cleared": false
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 2,
+      "fc9": 1,
+      "cleared": true
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 255,
+      "fc9": 0,
+      "cleared": false
+    },
+    {
+      "variant": "requires_fc9",
+      "blocked": 255,
+      "fc9": 1,
+      "cleared": true
+    }
+  ],
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "instruction_regions_sha256": {
+    "0x536620": "5f7a70cf7806ac7da1c8f8c9f9b83f6cb65cbdc14cd9fa8d7c721d2ab796b6a3",
+    "0x537640": "72b7ed903a0ad367517f5234d788d15781fafa1a5eab17f14c2c75b137929962",
+    "0x52bbb0": "0c0c3c6faa9e08397747d1048d5bd22e51de35add1cbec70ed550cbf740daee7"
+  },
+  "private_check_script_sha256": "6401f56654dbf93406669181fab6402e8a964eb424445e32ce5ba6820b701954"
+}

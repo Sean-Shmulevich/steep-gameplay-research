@@ -309,6 +309,54 @@ slot was also checked against the analyzed image. See the
 [sanitized validation receipt](../../native/snow_host/consumer_wrapper_validation.json).
 This validates wrapper behavior only; no snow calculation ran in this experiment.
 
+### Writers that release the wrapper's blocking byte
+
+The paced [input capture](SCHEDULER_DELEGATES.md#live-input-interval-and-moving-body-observations)
+observed `actor+0xfdc` change from 1 to 0 at the first sampled nonzero body
+velocity. The wrapper above establishes a concrete consequence: clearing this
+byte removes one early-return condition. It does not by itself enable the wrapper
+unless the other three gates also pass, nor does it directly apply a force.
+
+Two inspected owner callbacks clear this byte through an actor reached at
+`owner+0x10 -> context+0x40`. The actor's slot `0x4b0` is a leaf that returns the
+byte as an unsigned value. The callbacks differ by an additional `actor+0xfc9`
+guard. Their local behavior is:
+
+```python
+def release_snow_block(owner, require_fc9):
+    # resolve_actor performs both pointer loads on every call, as the code does.
+    if resolve_actor(owner).virtual_4b0() == 0:
+        return
+    actor = resolve_actor(owner)
+    if require_fc9 and actor.byte_fc9 == 0:
+        return
+    actor.byte_fdc = 0
+    physics_side_helper(resolve_actor(owner), 1)
+    resolve_actor(owner).byte_2ae = 0
+```
+
+The helper is external to this local model. Its inspected entry resolves the
+actor's entity/world physics owner, takes a lock, and branches on the argument
+and body state. Its complete transitive effects are not validated here. In
+particular, skipping it and writing only the byte is not an equivalent operation.
+The pointer reload after the helper is preserved because transitive changes have
+not been excluded. The final byte's gameplay meaning is unresolved.
+
+[Sixteen isolated original-instruction cases](../../native/snow_host/snow_gate_release_validation.json)
+execute both callbacks and the actual virtual getter using synthetic objects.
+They cover blocked-byte values 0, 1, 2 and 255, and `fc9` values 0 and 1.
+The physics helper is intercepted; its receiver and low-byte argument are checked,
+as are the cleared fields and skipped-call behavior. This proves the local
+nonzero tests, not a native mod API or the identity of the writer in the live run.
+
+Evidence anchors for this build: unconditional callback `0x140536620`, guarded
+callback `0x140537640`, getter `0x14052bbb0`, external helper `0x141373250`.
+Other writers exist, including setters that record a clock before writing 1.
+The search was limited to decoded exception-table regions with literal field
+displacements; it is not a complete writer inventory and unrelated object types
+can use the same offset. The next live attribution needs a callback identity or
+state transition, rather than labeling this byte a key, contact, or crash flag.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

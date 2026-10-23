@@ -1364,3 +1364,13 @@ or an exact response delay. Zero pending impulse at these sparse phase samples
 does not show that no impulse occurred between them. The next investigation
 should join the selected-player/input owner to its action-state writer and the
 downstream snow job, preserving job-specific counters and completion boundaries.
+
+Follow-up inspection identifies the changing second gate as the wrapper's
+blocking byte. [Two local release callbacks](CENTRAL_IMPULSE.md#writers-that-release-the-wrappers-blocking-byte)
+clear it and call a physics-side helper, with 16 isolated instruction checks.
+Their execution in this live capture remains unobserved. The existing
+[mode-zero ingestion capture](MOTION_MEMBERSHIP_OBSERVATION.md#live-mode-zero-ingestion-path)
+already connects BeforeSimulation results to later actor samples in another
+session. Reuse that recorder and attribution route rather than treating input
+ingestion as wholly unexplored; the missing connection here is to this capture's
+gate transition and resident engine-phase requests.
