@@ -1,0 +1,57 @@
+{
+  "evidence": "Static branch/call and constructor callback-label audit",
+  "all_passed": true,
+  "instruction_checks": [
+    "0x69d70c",
+    "0x69d742",
+    "0x656c6c",
+    "0x656c70",
+    "0x656c72",
+    "0x656c01",
+    "0x656c05",
+    "0x656c0a",
+    "0x1198b81"
+  ],
+  "callback": {
+    "rva": "0x656c20",
+    "label": "Graphic::BeginGraphicFrame"
+  },
+  "shared_update_rva": "0x69d6a0",
+  "ordered_calls": [
+    "0x67ced0",
+    "0x1198820"
+  ],
+  "spans": [
+    {
+      "rva": "0x69d6a0",
+      "length": 183,
+      "sha256": "448d805e8f574523ba3990b04952b5f6d5cce3c8bebffb853874c796d49dd865"
+    },
+    {
+      "rva": "0x656c01",
+      "length": 14,
+      "sha256": "0fe975b80b6cee5eb0f0c4b6a51245ed4a96e68af2a0b2fef10d0bea1b1807d8"
+    },
+    {
+      "rva": "0x656c20",
+      "length": 87,
+      "sha256": "af5ae6fc38b63a3c23ac2c8e4c0134a9c473e0c0a303d253380c4cbbc4c7d13c"
+    },
+    {
+      "rva": "0x696ed5",
+      "length": 179,
+      "sha256": "21121275759fc5ce6278687a3edf5fb403f4f3a9402a8d382264338665452043"
+    },
+    {
+      "rva": "0x118d870",
+      "length": 159,
+      "sha256": "0a4db55c374fabb4d80d55c79fffcfac77515f2b2608d75445bbf8b0eacfa397"
+    }
+  ],
+  "limitations": [
+    "No live phase sampling or exhaustive indirect caller inventory.",
+    "Complementary gate observations do not establish exactly one call if the byte changes between sites.",
+    "Preparation-before-retirement order does not prove all command execution or workers have drained.",
+    "Mode-zero queue capacity failure remains unresolved."
+  ]
+}

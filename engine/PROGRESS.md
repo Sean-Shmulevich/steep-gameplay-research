@@ -1,5 +1,12 @@
 # Reconstruction progress and next work
 
+Retirement service connected to shared frame update: command preparation runs
+before service on its inspected normal path. Constructor binds one gated caller
+to Graphic::BeginGraphicFrame; owner +0x5a selects it versus a complementary
+site. Mode zero republishes payloads to loading ring +0x268 and pending +0x28c.
+Static audit passed. Next trace phase-selector writers and second-ring consumer;
+no exactly-once frame or whole-scheduler drain guarantee is established.
+
 Deferred holder consumer connected to release ring. It rechecks low24 count,
 skips payload/cleanup when nonzero, otherwise calls payload +0x48 and routes to
 dispatch or an output list before clearing queued bit and cleanup. Thirty-six

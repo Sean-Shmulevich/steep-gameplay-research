@@ -2620,3 +2620,66 @@ path. An empty retirement ring still does not imply that all owners were
 processed or destroyed: nonzero counts are skipped, output handling is
 mode-dependent, and no scheduler-wide callback drain is established. Next trace
 outer service callers and the mode-zero dispatcher into known scheduler phases.
+
+
+## Retirement service joins the frame path
+
+The [phase audit](../../native/snow_host/retirement_phase_audit.json) joins the
+retirement service to a shared engine update at RVA `0x69d6a0`. Its inspected
+normal path calls command preparation `0x67ced0` at `0x69d70c`, then retirement
+service `0x1198820` at `0x69d742`, under an additional external guard. The
+preparation call is the previously reconstructed counter transfer and participant
+prepare traversal, not a proof that every command callback has completed.
+Earlier conditional branches can invoke transition helpers; their behavior must
+remain part of any full phase contract.
+
+Constructor instructions around `0x696edc..0x696f83` bind callback `0x656c20`
+to the job labelled `Graphic::BeginGraphicFrame`. That callback invokes the
+shared update when owner byte +0x5a is nonzero. Another inspected call site at
+`0x656c0a` invokes it when that byte is zero:
+
+```text
+site_A(owner):
+    if owner.byte5a == 0:
+        shared_update(owner)
+
+BeginGraphicFrame(owner):
+    ...
+    if owner.byte5a != 0:
+        shared_update(owner)
+    ...
+
+shared_update(owner):
+    conditional_transition_work(...)
+    other_engine_work(...)
+    prepare_commands(command_manager)
+    ...
+    enter_external_guard()
+    service_retirement(shared_resource_registry)
+    leave_external_guard()
+    ...
+```
+
+These complementary gates do not prove exactly one call per frame if the byte
+can change between sites. Nor does the static job label identify a native thread
+or establish exclusion from all graphics work. The phase-selection byte's writer
+and frame-stability contract are now concrete follow-up targets.
+
+Mode-zero dispatch `0x118d870` is a second queue publication, not immediate
+payload disposal. Under loading-object +0x1d8 it appends the payload pointer to a
+ring at +0x268 and increments pending counter +0x28c. Ring offsets relative to
+that ring are storage +0, count +8, tail +0xc and capacity +0x14. Capacity growth
+requests +0x400; the pending counter increments even if the post-growth room
+check fails. Do not infer one successful queued payload per notification without
+resolving allocator failure. The retirement consumer then transfers this pending
+count toward loading work at its tail.
+
+The prior [manager processing research](../systems/animations/runtime-binding/trace-recipe.md#manager-processing-route)
+already identified the separate mode-zero-to-one transition helper, which polls
+loading counters +0x288/+0x290 before and after service. This pass connects that
+shared resource machinery to command preparation and the labelled graphics
+callback; it does not reclassify it as animation-only or a universal mod drain.
+
+Next qualify owner +0x5a writers and identify the second ring's consumer against
+the existing loading-thread evidence. Scheduler-wide teardown safety remains
+unproven despite the now-established local preparation/service order.
