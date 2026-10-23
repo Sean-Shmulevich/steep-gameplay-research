@@ -3415,3 +3415,42 @@ Another 100 cases stop at the null-destination copy boundary. These latter cases
 are not native crash tests. Four public tests cover logical ordering, empty null
 allocation, nonempty null destination and same-capacity clearing. No live launch,
 concurrency or overflow-sized allocation was tested.
+
+## Callback-sensitive holder consumption
+
+`engine.holder_consumer_step.consume_holder_step` reconstructs one iteration at
+`0x1198b10..0x1198c45` with mutable holder/registry state and supplied callbacks.
+It complements the older stable-input route, which only predicts event names.
+The caller remains responsible for outer locks, valid ring storage and output
+capacity. The authored API handles one item so it does not invent a drain bound.
+
+The exact ordering matters:
+
+1. Advance ring head modulo capacity and decrement count. The old slot is not
+   cleared. Read its holder and capture the payload pointer.
+2. Test the initial low-24-bit holder count. A nonzero value skips all payload
+   handling and cleanup, but still clears the queued bit from current status.
+3. For an eligible nonnull payload, call its virtual slot +0x48. Then read the
+   **current registry mode**. Mode zero dispatches; other modes append output.
+   Both paths use the **payload captured before the callback**, even if the
+   callback changes the holder's payload field.
+4. Clear bit 24 from the **current holder status**, preserving other callback
+   changes, then call cleanup. The consumer does not repeat its initial low-count
+   gate here. The supplied cleanup implementation has its own eligibility checks.
+5. The native loop re-reads queue count at its next iteration. Work queued by a
+   callback therefore affects that next iteration; no fixed initial count is used.
+
+A callback that restores a reference count does not prevent the consumer from
+calling cleanup on this path, but cleanup may refuse disposal. This is another
+reason a cleanup-call receipt cannot mean that the payload was destroyed. A
+payload-field replacement also does not redirect the already selected payload's
+dispatch/output operation. These are local observations, not authorization for
+arbitrary live callback mutation.
+
+The [mutation receipt](../../native/snow_host/holder_consumer_mutation_validation.json)
+compares 288 original single-iteration cases with serial supplied callbacks that
+vary mode, status, payload replacement and queue count. It checks resulting
+fields and service order, including payload identity. Three public tests cover
+cached payload versus current mode/status, nonzero-count skipping and callback
+queue changes. Outer locks, output growth, cleanup bodies and subsequent loop
+iterations are not executed in this comparison. No live game was launched.

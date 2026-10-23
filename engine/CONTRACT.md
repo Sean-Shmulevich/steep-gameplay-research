@@ -76,3 +76,10 @@ order and must reject invalid destinations. A null allocation with retained
 items is passed to copy before header reset; no silent loss or invented recovery
 is permitted. Empty/discard allocation failure returns zero capacity. Services
 and exception behavior remain supplied; native failure outcomes are unproved.
+
+`holder_consumer_step.consume_holder_step` pops one valid ring item before callbacks.
+It caches payload and initial low-count eligibility, reads registry mode after
+payload virtual48, and clears queued bit on current status. Eligible-path cleanup
+is called even if callbacks changed the count; cleanup eligibility is external.
+Callbacks may mutate fields or queue work. This is serial ordering, not a native
+synchronization, output-capacity or completed-disposal guarantee.

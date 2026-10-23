@@ -1,0 +1,16 @@
+{
+  "evidence": "Original single consumer iteration with callback-controlled mutations and supplied services",
+  "cases": 288,
+  "state_and_service_order_match": true,
+  "routine_span": {
+    "rva": "0x1198b10",
+    "end_exclusive": "0x1198c45",
+    "sha256": "88371a35a5798b5fe44750cbfef8320db797c4954f942ee4259f17cec9e90a62"
+  },
+  "model_sha256": "1e74734b953d397c5e9941be7a5d2fb7f484500e155fd166e65048fb6702a45c",
+  "limitations": [
+    "Outer locks, output growth, subsequent iterations and cleanup internals excluded.",
+    "Mutations occur serially at supplied callback; no native concurrent reacquisition proven.",
+    "A cleanup call is not proof of disposal completion."
+  ]
+}

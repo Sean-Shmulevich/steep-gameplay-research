@@ -6510,3 +6510,12 @@ service events without replacing the middle routines. Three integration tests
 cover wrapped growth, holder aliasing and empty allocation failure. Corrected the
 record-service contract to permit holder flag updates. Deferred consumer, native
 ownership and scheduler-drain proof remain open. No live game launched.
+
+### Callback-sensitive retirement consumption implemented
+
+Added a mutable single-item consumer model alongside stable event routing. All
+288 original-instruction cases match serial callback changes to mode, status,
+payload linkage and queue count. Three public tests pass. Captured payload remains
+selected across callbacks; mode and queued-bit clearing use current fields.
+Cleanup is called without repeating the initial count gate, but its body can
+refuse disposal. Outer synchronization and disposal completion remain unresolved.
