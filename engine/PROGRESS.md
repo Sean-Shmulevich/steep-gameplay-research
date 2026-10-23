@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Implemented and differentially validated history action timing: 768 original
+configured evaluator cases match rising/held/falling gates, timestamps, distinct
+clock reads and magnitude suppression. The original clock fallback executes;
+direction and ownership predicates are supplied. Eighteen portable history tests
+pass. Selected-world clock identity, actual reader composition and live ingestion
+remain open. See [timing gates](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#history-action-timing-gates).
+
 Joined the history reader to factory source type 4 and implemented its
 four-sector predicate. It reads newest magnitude and pre-curve history B, not
 curve-remapped history C. All 570 original reader comparisons and fifteen

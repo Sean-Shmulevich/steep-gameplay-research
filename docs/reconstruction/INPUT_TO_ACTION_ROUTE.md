@@ -1488,3 +1488,67 @@ current predicate at byte `+0xb8`, and publishes newest magnitude at `+0x60`
 after a second ownership check. The timing arithmetic, clock units, missing
 configuration path and composed action behavior have not yet been validated.
 These are next local dependencies, not a completed player-physics ingestion join.
+
+## History action timing gates
+
+The configured path of evaluator `0x4b2a20` now has a detached timing adapter in
+[action history timing](../../engine/action_history_timing.py). This supersedes
+the previous section's unvalidated timing boundary for the tested domain only.
+The direction predicate and final ownership check remain supplied dependencies
+in [timing validation](../../native/snow_host/action_history_timing_validation.json).
+
+Let `current` be the current direction match and `previous` the byte cached at
+action `+0xb8`. Modes 0 and 2 publish rising and falling edges respectively.
+Mode 1 uses hold delay at configuration `+0x34` and repeat delay at `+0x38`:
+
+```text
+active = false
+if mode == 0: active = current and not previous
+if mode == 2: active = previous and not current
+if mode == 1:
+    if abs(hold_delay) <= float32(1e-5): active = current
+    else if current:
+        now = read_clock()
+        if current != previous: start_time = now
+        else: active = unsigned64(now - start_time) >= ticks(hold_delay)
+    if active and abs(repeat_delay) > float32(1e-5):
+        now = read_clock()    # separate read, not reused from above
+        if unsigned64(now - repeat_time) >= ticks(repeat_delay):
+            repeat_time = now
+        else: active = false
+previous = current
+```
+
+For supported finite nonnegative durations below the uint64 range,
+`ticks(duration) = truncate(float32(duration * 1000))`. Exact equality passes
+both elapsed-time gates. A positive hold delay records its start on the first
+matching evaluation without firing. A zero delay can fire immediately, subject
+to the repeat gate. Neither timestamp is reset on release. Unsupported mode
+values publish false but still update cached `previous`. Unsigned subtraction
+also means a supplied clock earlier than the saved timestamp produces a large
+elapsed value, not a clamped zero. The adapter preserves that behavior.
+
+Native code has signed/unsigned conversion branches for larger and negative
+values; the public adapter explicitly rejects negative, nonfinite and oversized
+durations instead of claiming that behavior is reconstructed. The native
+near-zero comparison uses absolute values; supported nonnegative inputs permit
+the simpler comparison in the implementation.
+
+Clock helper `0x478fe0` first reads a global receiver, then receiver `+0x188`,
+then that object's qword `+0x1050`. If either pointer is null, it reads another
+global clock object's qword `+8`. This gives a concrete selected-world-versus-
+fallback lead; the timing receipt executes the fallback only. Multiplication by
+1000 establishes the conversion factor, not independently the live clock units.
+
+The final ownership check can suppress the magnitude published at action `+0x60`
+without changing the already computed boolean. The validation supplies the two
+predicates independently to confirm this operation order; it does not claim
+those predicates are independent in ordinary gameplay.
+
+All 768 original evaluator cases match active flag, cached predicate, both
+stored timestamps, number/order of clock reads and magnitude publication.
+Original fallback clock instructions execute. Cases cover all prior/current
+boolean combinations, modes 0/1/2/3, zero/epsilon/positive delays, repeat gating,
+clock thresholds and suppression. Eighteen portable history tests pass. Missing
+configuration, the selected-world clock branch, composition with the actual
+direction reader, active player binding and physics-substep timing remain open.

@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "cases": 768,
+  "scope": "Original configured action evaluator and original fallback clock accessor; compare predicate, cached state, timestamps, clock reads and magnitude publication",
+  "substitutions": [
+    "Direction wrapper returns supplied predicate",
+    "Final ownership helper returns supplied suppression"
+  ],
+  "setup": [
+    "Synthetic configuration and owner magnitude",
+    "Clock accessor executes its global fallback with explicit timestamps, including distinct successive reads"
+  ],
+  "coverage": [
+    "Modes 0,1,2 and unsupported3",
+    "All current/previous predicate combinations",
+    "Zero, epsilon and positive hold delay; zero and positive repeat delay",
+    "Clock before/at/after hold threshold and before stored start",
+    "Suppressed and unsuppressed magnitude publication"
+  ],
+  "limits": [
+    "Direction-reader composition and live scheduler not tested",
+    "Nonnegative finite bounded duration domain only",
+    "Selected-world clock branch not executed",
+    "Configuration missing/error path excluded",
+    "No live tick-unit assertion from scale factor alone"
+  ],
+  "game_process": false,
+  "spans": [
+    {
+      "start_rva": "0x4b2a20",
+      "end_rva_exclusive": "0x4b2cfa",
+      "sha256": "e05ff4f6c7042b3b290170ae77996929806bf11cc3f6fc662ec3420bb1e0775d"
+    },
+    {
+      "start_rva": "0x478fe0",
+      "end_rva_exclusive": "0x47900c",
+      "sha256": "a538d3ae42b4679c9dbd873032c04fa2a5aae6480cbe2f94fb95e870c2b66dcb"
+    }
+  ]
+}
