@@ -1,0 +1,48 @@
+{
+  "kind": "lateral_capture_coverage_failure",
+  "status": "incomplete_for_lateral_ingestion",
+  "coverage": {
+    "covered": false,
+    "key_down_inside": false,
+    "key_up_inside": false,
+    "intersecting_intervals": 0
+  },
+  "key_down_after_last_update_seconds": 0.3740495,
+  "selected_parent_events": 307,
+  "parent_vectors_bits": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      3212836864,
+      0,
+      0,
+      0
+    ]
+  ],
+  "physics_records": 573,
+  "identity_endpoint_match": true,
+  "untransformed_comparison_counts": {
+    "no_completed_parent": 2,
+    "match": 571
+  },
+  "sign_gate": "not observed; comparison is an untransformed hypothesis",
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Forward preparation and lateral input were separate pulses.",
+    "Lateral key-down occurred after physics capture; zero-value matches are not lateral validation.",
+    "No ramp was observed: parent samples contained only zero and minus-one X.",
+    "Game input acceptance timing remains unmeasured."
+  ],
+  "next_step": "Preload and arm input delivery before starting both capture windows."
+}

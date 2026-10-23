@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Lateral live test correctly remains incomplete: key-down arrived 0.374 s after
+physics recording ended. Parent recorded minus-one X; physics saw only zero.
+Added a tested publication/input comparator and delivery-window acceptance check
+to reject this failure. Five tests pass; cleanup passed. Next: preload and arm
+input before opening capture windows. See
+[coverage failure](../native/snow_host/lateral_capture_coverage.json).
+
 Live parent-publication capture: all 182 actor-input samples match the preceding
 parent publication bit-for-bit, including 17 nonzero samples; all 328 selected
 parent samples valid, no drops. Both hooks restored and cleanup passed. Forward

@@ -1950,3 +1950,28 @@ publication. Next useful variations are lateral input with changing ramp output,
 release decay, and the actor's X-sign gate, while keeping the parent/actor trace
 and identity checks. Those distinguish a transformed value from coincidental
 agreement on constant zero/forward vectors.
+
+## Lateral attempt exposed a delivery-window failure
+
+After a separate forward preparation pulse, a left-input test captured 307
+selected-parent events and 573 actor updates. The parent shows zero and minus-one
+X, but key-down delivery arrived 0.3740495 seconds after the last actor-update
+interval. Both key-down and key-up therefore lie outside physics coverage.
+There are 571 zero-vector matches and two updates before parent coverage, not a
+successful lateral ingestion test. See the
+[failed coverage receipt](../../native/snow_host/lateral_capture_coverage.json).
+
+Both probes restored/drained and shutdown cleanup passed. The failure is temporal
+coverage: starting the Wine input helper after capture starts can consume the
+window before delivery. The next experiment must preload/arm input delivery and
+wait for its ready signal before opening capture windows. Native slot installation
+and OS delivery success alone are insufficient acceptance gates.
+
+The independent [publication comparison API](../../engine/publication_input_join.py)
+now validates interval order, rejects invalid latest samples without falling back
+to older matching values, requires a following parent boundary, preserves raw
+float bits, and accepts only an explicitly supplied X-sign gate. Its separate
+delivery-window check rejects reports outside the measured observation span or
+with no intersecting observation interval. Five tests cover failures, sign-bit
+handling, partial coverage and valid matches. Neither function proves input
+acceptance or copy execution.
