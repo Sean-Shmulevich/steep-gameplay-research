@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Resolved readiness for three constructor-identified cache types and root
+forwarding. The initial slots share the fallback scan's external query; other
+types use byte/pointer predicates. 864 original direct/delegated cases match,
+with only the slot query supplied. Device functionality and ingestion cadence
+remain unproved. See
+[readiness callbacks](../docs/reconstruction/INPUT_UPDATE_ORDER.md#cache-type-readiness-callbacks).
+
 Decoded saved-name restoration before fallback selection and the enumeration
 callback's record update/append routes. Device-path prefix checking ties this
 cache lifecycle to device enumeration. The preference kernel matches 80 original

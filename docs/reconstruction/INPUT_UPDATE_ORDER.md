@@ -535,3 +535,56 @@ cycle when live access is available.
 
 The [refresh evidence receipt](../../native/snow_host/input_cache_refresh_evidence.json)
 records static spans for this callback, path predicate and related helpers.
+
+
+## Cache-type readiness callbacks
+
+Constructor vtable assignments now identify virtual +0x120 for three concrete
+cache types and the root container. These names describe our interfaces, not
+original class names. A record's mutable kind is not sufficient to identify its
+implementation; use the actual cache vtable.
+
+| Constructor/table evidence | +0x120 target | Recovered rule |
+| --- | --- | --- |
+| Four initial caches, table 0x28eff08 | 0x11a7b20 | External query of cache+0x244 slot returns zero |
+| Alternate cache constructor 0x1188e80, table 0x28efbe0 | 0x11a7b00 | Byte +0x240 nonzero OR pointer +0x828 non-null |
+| Kind-9 construction path, table 0x28f00e8 | 0x11a7af0 | Pointer +0x8b8 non-null |
+| Root table 0x28efd70 | 0x11a7ac0 | Delegate to current record cache's virtual +0x120 |
+
+The queried callback reads its uint32 slot from cache+0x244, zeros a 16-byte
+stack buffer, passes slot and buffer to `0x1c34f3c`, and returns whether the
+32-bit result equals zero. Buffer contents are not used afterward. This is the
+same query target used by the fallback scan with record+0x420. The constructor
+supplies the same 0..3 slot values to its four initial caches and records.
+The callback and fallback policy therefore share a concrete query mechanism;
+its external implementation and live state remain unresolved.
+
+The alternate callback short-circuits on the override byte, so its pointer need
+not be read in that branch. Neither pointer-based predicate dereferences the
+pointer or proves that the device is functioning. The root reads current index
+and record pointer without a count check and tail-dispatches to the selected
+cache. Its result is the selected cache's result, not a separately cached flag.
+
+[`action_cache_readiness`](../../engine/action_cache_readiness.py) exposes these
+three leaf predicates. The queried form accepts an explicit query callback and
+creates a fresh zeroed bytearray for its scratch buffer. It discards buffer
+writes and tests the entire uint32 status for zero. For example, status 256 is
+false here even though saved-name restoration subsequently tests only the low
+byte of the resulting boolean. Pointer identities, override bytes and slots are
+caller-supplied metadata with no physical units. These APIs perform no device
+acquisition or polling on their own and make no update-cadence assumption.
+
+The [readiness receipt](../../native/snow_host/input_cache_readiness_validation.json)
+compares 864 original executions directly and through root delegation. It checks
+constructor-derived vtable entries, boolean results, query argument values and
+the zero-initialized scratch buffer. Only the external slot query is supplied;
+it writes synthetic bytes and returns an explicit status. The pointer-based
+callbacks and root dispatch execute without substituted calls. Valid stable
+indices/records are supplied; invalid metadata and object lifetime are outside
+this validation. Twenty focused public tests cover the cache kernels, including
+composing readiness with preferred-name selection.
+
+This resolves the local readiness rules for these identified types. It does not
+resolve all cache subclasses, the post-selection helper, or the external slot
+query. The next useful join is between these device caches and action-source
+queries, with scheduler placement kept separate from device-refresh behavior.
