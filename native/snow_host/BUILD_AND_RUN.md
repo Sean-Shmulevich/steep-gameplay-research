@@ -268,17 +268,33 @@ Use only when current session ownership permits live testing.
 ### Experimental delegate recorder
 
 The build also emits `snow_delegate_probe.dll`. It is not loaded automatically.
-It records the graphics-main invoker's two-argument calls and supplies an opt-in,
+It records a selected graphics-main or engine-main invoker's two-argument calls and supplies an opt-in,
 one-attempt heap-slot installer with conflict-aware restoration. See
 [delegate adapter contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#experimental-windows-adapter)
 for caller lifetime requirements and synthetic Windows validation. The fixture
 passing does not establish a safe live-game installation window.
 
-To build the separate one-shot graphics capture plugin, add
+To build the separate one-shot main-delegate capture plugin, add
 `--delegate-capture-plugin` with `--adapter steep`. It remains disabled without
 its INI opt-in and refuses a trigger that exists at initialization. See the
 [capture controller contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#one-shot-capture-controller)
 before using it; it does not establish an owner-lifetime lock.
+
+In `plugins/delegate_capture.ini`, the optional `[capture]` key `site=engine`
+selects BeginEngineFrame. Omit `site` or use `site=graphics` for the existing
+BeginGraphicFrame behavior. Other values refuse initialization. Example:
+
+```ini
+[capture]
+enabled=1
+site=engine
+milliseconds=500
+```
+
+Initialization still waits for a newly created `delegate_capture.ini.trigger`;
+it does not create the trigger itself. The summary in
+`delegate_capture.ini.trace.jsonl` identifies `site` so captures cannot silently
+be confused. This is an experimental observer, not an engine command publisher.
 
 ### Experimental finalizer recorder
 

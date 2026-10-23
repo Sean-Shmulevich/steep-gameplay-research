@@ -1,0 +1,38 @@
+{
+  "status": "synthetic_controller_site_refusals_passed",
+  "scenarios": [
+    {
+      "scenario": "disabled",
+      "returncode": 0
+    },
+    {
+      "scenario": "stale",
+      "returncode": 0
+    },
+    {
+      "scenario": "invalid",
+      "returncode": 0
+    },
+    {
+      "scenario": "graphics",
+      "returncode": 0
+    },
+    {
+      "scenario": "engine",
+      "returncode": 0
+    }
+  ],
+  "runtime": "Wine on macOS",
+  "source_hashes": {
+    "native/snow_host/examples/delegate_capture.c": "12a7185f8c7d366184676a9fb0fa1cf2876c86ea9b336859f2297a10eaf7b76a",
+    "native/snow_host/snow_delegate_probe.c": "8e0452825bb86b220f8947b0be76c8ab4f58f9a22ad8a56e069dbe59722c6ece",
+    "native/snow_host/snow_delegate_probe.h": "72f91ce29c2dd6ad409a2d49155264922e81f772f69b83e189eb73ac7c0f5486",
+    "native/snow_host/snow_delegate_trace.c": "fb4c1e74c86c29a0821f231ae80b01bb12e8a16c32f9ca04ecab9de914f90ef5",
+    "tests/fixtures/delegate_capture_fixture.c": "ef980cc23f7f749adaf088cde500a89f7a5380b5a0adfa323d3d5316729b6bee"
+  },
+  "game_launched": false,
+  "limitations": [
+    "Only initialization refusals, incompatible-image refusal, and selected-site summary tested here.",
+    "Successful live binding is reported separately."
+  ]
+}

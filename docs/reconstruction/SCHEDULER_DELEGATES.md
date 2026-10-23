@@ -1094,6 +1094,42 @@ The [site-extension fixture receipt](../../native/snow_host/delegate_site_fixtur
 covers six synthetic Windows scenarios for each site under Wine, including
 post-call identity invalidation. Run the fixture as
 `snow_delegate_probe_fixture.exe <DLL-path> <scenario> engine` for engine-main,
-or omit `engine` for the legacy graphics path. The existing capture controllers
-still select graphics; this change does not silently redirect them or publish
-commands to the game. A live engine-main capture remains the next validation step.
+or omit `engine` for the legacy graphics path. The adapter extension itself does not redirect existing controllers or publish
+commands to the game. The subsequent opt-in controller and live evidence are
+described below.
+
+
+## Engine-main controller and live observation
+
+The standalone `delegate_capture` plugin now accepts `[capture] site=engine`;
+the default remains `graphics`. Invalid names refuse initialization. The summary
+identifies the selected site. Each site checks its callback fingerprint as well
+as the common invoker and dispatch method before configuration. See
+[configuration instructions](../../native/snow_host/BUILD_AND_RUN.md) and the
+[five-case controller fixture receipt](../../native/snow_host/delegate_capture_site_fixture_validation.json).
+The paired main/finalizer controller still selects graphics.
+
+One [bounded live capture](../../native/snow_host/engine_main_capture_live_validation.json)
+installed the engine-main observer and recorded 39 calls with no drops over a
+0.4905468-second entry span. Requests 1594 through 1632 were consecutive in entry
+order. All before/after observations were valid and equal within each call:
+executions=1, outstanding=1, state=2, holds=0, usage=0, selector=0. Call intervals
+did not overlap in this capture. This does not establish universal serialization.
+
+The calls were distributed across **two threads**, with 36 on one and 3 on the
+other. A callback API should identify the validated engine phase, not promise a
+single fixed main thread. Return from the observed body still precedes execution
+completion accounting; it is not a drain or unload boundary.
+
+The observer reported successful configuration, installation, restoration and
+recorder drain. The bounded launcher stopped normally and verified restored
+saves/settings and the original DLL. Readiness was `scheduler_ready`; no movement
+input or mod command was sent. This proves the selected callback can be observed
+in that session. It does not establish rider gameplay, transition safety, command
+manager lifetime or actual command invocation. Heap-owner lifetime remains a
+caller prerequisite; no general lifetime exclusion mechanism was added.
+
+The next command experiment must distinguish the enclosing phase from a command's
+own invocation and correlate request identity through admission and completion.
+The live thread distribution is a constraint on that design, not a reason to
+assume the command can run on any arbitrary thread.

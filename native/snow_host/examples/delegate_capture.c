@@ -1,4 +1,4 @@
-/* Opt-in one-shot graphics-main observation. A controller creates the trigger
+/* Opt-in one-shot main-delegate observation. A controller creates the trigger
  * only inside its bounded gameplay/owner-lifetime experiment. No general owner
  * exclusion is supplied here. Output contains private process provenance.
  */
@@ -10,6 +10,8 @@
 #include "snow_delegate_probe.h"
 static char trigger[MAX_PATH],output[MAX_PATH];
 static unsigned duration;
+static SnowDelegateSite site=SNOW_DELEGATE_GRAPHICS_MAIN;
+static const char *site_name="graphics";
 static volatile LONG cancelled;
 static int read_at(uint64_t address,void *dst,size_t n) {
     SIZE_T got=0;return ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)address,dst,n,&got)&&got==n;
@@ -34,18 +36,22 @@ static DWORD WINAPI capture(LPVOID unused) {
     }
     if(InterlockedCompareExchange(&cancelled,0,0))return 0;
     uint64_t base=(uintptr_t)GetModuleHandleW(NULL),owner=0,descriptor[4]={0};
+    uint32_t function_rva=site==SNOW_DELEGATE_ENGINE_MAIN?0x656900:0x656c20;
+    uint32_t descriptor_offset=site==SNOW_DELEGATE_ENGINE_MAIN?0x8d8:0x3b0;
+    uint64_t function_hash=site==SNOW_DELEGATE_ENGINE_MAIN?
+        UINT64_C(0x118b7155fb2e01ca):UINT64_C(0x17e686d0b8520ef0);
     int compatible=signature(base,0x8ab390,9,UINT64_C(0xc8597ed6f61359ff)) &&
         signature(base,0x65b1e0,116,UINT64_C(0xc69ce13c5cf9fd06)) &&
-        signature(base,0x656c20,32,UINT64_C(0x17e686d0b8520ef0));
+        signature(base,function_rva,32,function_hash);
     int configured=0,installed=0,restored=0,drained=0;
     size_t used=0,dropped=0;
     if(compatible && read_at(base+0x312cfe8,&owner,8) && owner>=0x10000 &&
-       owner<UINT64_C(0x7fffffff0000) && read_at(owner+0x3b0,descriptor,sizeof descriptor) &&
-       descriptor[0]==base+0x656c20 && descriptor[3]==base+0x8ab390 &&
+       owner<UINT64_C(0x7fffffff0000) && read_at(owner+descriptor_offset,descriptor,sizeof descriptor) &&
+       descriptor[0]==base+function_rva && descriptor[3]==base+0x8ab390 &&
        (descriptor[2]&~UINT64_C(3))==owner) {
         SnowDelegateBinding binding={base+0x312cfe8,owner,base+0x1e89618,base+0x65b1e0,
                                      descriptor[0],descriptor[1],descriptor[2],descriptor[3]};
-        configured=SnowDelegateProbe_Configure(&binding);
+        configured=SnowDelegateProbe_ConfigureSite(&binding,site);
     }
     if(configured) {
         installed=SnowDelegateProbe_Install();
@@ -60,8 +66,8 @@ static DWORD WINAPI capture(LPVOID unused) {
     FILE *f=fopen(output,"w");
     if(f) {
         LARGE_INTEGER frequency;QueryPerformanceFrequency(&frequency);
-        fprintf(f,"{\"kind\":\"summary\",\"record_abi\":3,\"compatible\":%d,\"configured\":%d,\"installed\":%d,\"restored\":%d,\"drained\":%d,\"used\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"owner\":\"%llx\"}\n",
-            compatible,configured,installed,restored,drained,(unsigned long long)used,
+        fprintf(f,"{\"kind\":\"summary\",\"record_abi\":3,\"site\":\"%s\",\"compatible\":%d,\"configured\":%d,\"installed\":%d,\"restored\":%d,\"drained\":%d,\"used\":%llu,\"dropped\":%llu,\"qpf\":%llu,\"owner\":\"%llx\"}\n",
+            site_name,compatible,configured,installed,restored,drained,(unsigned long long)used,
             (unsigned long long)dropped,(unsigned long long)frequency.QuadPart,(unsigned long long)owner);
         if(drained)for(size_t i=0;i<used;i++) {
             SnowDelegateRecord r;if(!SnowDelegateProbe_Read(i,&r,sizeof r))break;
@@ -81,6 +87,11 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
        api->struct_size<sizeof *api || !api->config_path ||
        GetPrivateProfileIntA("capture","enabled",0,api->config_path)!=1 ||
        strlen(api->config_path)+16>=MAX_PATH)return 1;
+    char selected[32];
+    GetPrivateProfileStringA("capture","site","graphics",selected,sizeof selected,api->config_path);
+    if(!strcmp(selected,"engine")) { site=SNOW_DELEGATE_ENGINE_MAIN;site_name="engine"; }
+    else if(!strcmp(selected,"graphics")) { site=SNOW_DELEGATE_GRAPHICS_MAIN;site_name="graphics"; }
+    else return 1;
     duration=GetPrivateProfileIntA("capture","milliseconds",500,api->config_path);
     if(duration<100 || duration>2000)return 1;
     snprintf(trigger,sizeof trigger,"%s.trigger",api->config_path);

@@ -1,0 +1,82 @@
+{
+  "status": "bounded_live_engine_main_capture_passed",
+  "site": "engine",
+  "record_abi": 3,
+  "capture_milliseconds_requested": 500,
+  "summary": {
+    "record_abi": 3,
+    "site": "engine",
+    "compatible": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 39,
+    "dropped": 0,
+    "qpf": 10000000
+  },
+  "entry_span_seconds": 0.4905468,
+  "thread_count": 2,
+  "calls_per_thread": [
+    3,
+    36
+  ],
+  "request_range": [
+    1594,
+    1632
+  ],
+  "requests_consecutive_in_entry_order": true,
+  "all_before_after_valid": true,
+  "all_before_after_equal": true,
+  "observed_call_intervals_nonoverlapping": true,
+  "observed_counter_values": {
+    "executions": [
+      1
+    ],
+    "outstanding": [
+      1
+    ],
+    "state": [
+      2
+    ],
+    "holds": [
+      0
+    ],
+    "usage": [
+      0
+    ],
+    "selector": [
+      0
+    ]
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "navigation_outcome": "scheduler_ready",
+  "source_hashes": {
+    "native/snow_host/examples/delegate_capture.c": "12a7185f8c7d366184676a9fb0fa1cf2876c86ea9b336859f2297a10eaf7b76a",
+    "native/snow_host/snow_delegate_probe.c": "8e0452825bb86b220f8947b0be76c8ab4f58f9a22ad8a56e069dbe59722c6ece",
+    "native/snow_host/snow_delegate_probe.h": "72f91ce29c2dd6ad409a2d49155264922e81f772f69b83e189eb73ac7c0f5486",
+    "native/snow_host/snow_delegate_trace.c": "fb4c1e74c86c29a0821f231ae80b01bb12e8a16c32f9ca04ecab9de914f90ef5",
+    "tests/fixtures/delegate_capture_fixture.c": "ef980cc23f7f749adaf088cde500a89f7a5380b5a0adfa323d3d5316729b6bee"
+  },
+  "plugin_sha256": "954291663bc03aad2a9071aebe2d6eede1d5bc0ef4147ea715abfab81ef420bf",
+  "private_trace_sha256": "c0683a6a108c6cf277b949e552e0c916e6068517596fcf5f6fcb1d2ce0ac5c12",
+  "game_launched": true,
+  "game_heap_invoker_temporarily_replaced": true,
+  "game_code_patched": false,
+  "movement_input_sent": false,
+  "mod_commands_submitted": false,
+  "limitations": [
+    "One bounded scheduler-ready session; does not establish rider gameplay or repeatability across transitions.",
+    "Sequential state observations are not atomic snapshots and do not retain owner lifetime.",
+    "No command admission, command callback, queue disposal, or manager lifetime observed.",
+    "No proof of thread affinity, scheduler-wide quiescence, or safe module unload.",
+    "Original callback forwarded; observation instrumentation affects timing."
+  ]
+}

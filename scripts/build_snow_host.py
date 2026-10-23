@@ -11,7 +11,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--adapter', choices=('fixture', 'steep'), default='fixture')
     ap.add_argument('--capture-plugin', action='store_true', help='Build opt-in experimental update capture plugin; steep adapter only')
-    ap.add_argument('--delegate-capture-plugin', action='store_true', help='Build opt-in experimental graphics delegate capture; steep adapter only')
+    ap.add_argument('--delegate-capture-plugin', action='store_true', help='Build opt-in experimental graphics/engine delegate capture; steep adapter only')
     ap.add_argument('--finalizer-capture-plugin', action='store_true', help='Build opt-in filtered finalizer capture; steep adapter only')
     ap.add_argument('--scheduler-phase-capture-plugin', action='store_true', help='Build opt-in paired main/finalizer capture; steep adapter only')
     ap.add_argument('--out', type=Path, required=True)

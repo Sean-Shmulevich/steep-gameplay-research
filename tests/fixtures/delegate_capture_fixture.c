@@ -5,7 +5,7 @@
 #include <string.h>
 #include "snow_plugin.h"
 int main(int argc,char **argv) {
-    assert(argc==4);HMODULE dll=LoadLibraryA(argv[1]);assert(dll);
+    assert(argc==4 || argc==5);HMODULE dll=LoadLibraryA(argv[1]);assert(dll);
     SnowModInitializeFn init=(void *)GetProcAddress(dll,"SnowMod_Initialize");assert(init);
     SnowHostApiV1 api={0};SnowPluginV1 plugin={0};
     api.struct_size=sizeof api;api.api_version=SNOW_PLUGIN_API_VERSION;api.config_path=argv[2];
@@ -23,5 +23,8 @@ int main(int argc,char **argv) {
         Sleep(10);
     }
     assert(strstr(line,"\"compatible\":0") && strstr(line,"\"installed\":0"));
+    const char *expected=argc==5?argv[4]:"graphics";
+    char site_text[64];snprintf(site_text,sizeof site_text,"\"site\":\"%s\"",expected);
+    assert(strstr(line,site_text));
     plugin.on_unload(plugin.user);puts("incompatible executable refused");return 0;
 }

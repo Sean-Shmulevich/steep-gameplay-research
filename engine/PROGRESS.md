@@ -6181,3 +6181,14 @@ configuration to the inspected command-execution phase. Both site layouts pass
 six synthetic Windows/Wine scenarios each; live engine-main binding, owner
 lifetime and command publication remain unproved. See the engine-main observation
 section in `docs/reconstruction/SCHEDULER_DELEGATES.md`.
+
+
+### Live engine-main observation
+
+The opt-in controller now selects graphics or engine-main and labels the output.
+Five controller refusal/site cases and the full native build pass. One bounded
+live engine-main capture recorded 39 consecutive requests without drops, restored
+the slot, and passed session cleanup. Calls ran across two threads, so a future
+command API must describe the engine phase rather than promise a fixed main
+thread. No mod command was submitted; manager lifetime and transition safety
+remain open. Evidence: `native/snow_host/engine_main_capture_live_validation.json`.
