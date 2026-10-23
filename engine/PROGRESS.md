@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Traced adapter setup into 31 configuration binding slots, first-resolved-match
+resource selection, six source factory branches and registry insertion rules.
+Preserved reference/cleanup side effects and special-ID handling in pseudocode.
+This is static evidence; semantic controls and joins to live motion sources
+remain unproved. See
+[binding/source routes](../docs/reconstruction/INPUT_UPDATE_ORDER.md#adapter-binding-slots-and-source-construction).
+
 Traced the setup caller: four adapters receive offsets 0..3, linking its saved
 selection to holder+0x230, already used by the bracketing cache selector. The
 first offset-zero setup propagates 0.25f to current caches; later-created caches

@@ -1,0 +1,50 @@
+{
+  "status": "statically_inspected",
+  "evidence": "Adapter binding slot creation, first-match configuration binding, source factory and registration",
+  "slot_count": 31,
+  "slot_indices": [
+    0,
+    30
+  ],
+  "factory_builders_in_test_order": [
+    "0x457630",
+    "0x4575b0",
+    "0x457890",
+    "0x457910",
+    "0x4577a0",
+    "0x457720"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x47cd00",
+      "end_rva_exclusive": "0x47cf6a",
+      "sha256": "eb98db760633b0f97a36545ce066a94451d7b0500efc75de70c469e4468a57d2"
+    },
+    {
+      "start_rva": "0x47db40",
+      "end_rva_exclusive": "0x47dd12",
+      "sha256": "c93faa5ecf6d3882287f08ab7107ae1c94d1ccdbb26d4562862eb1adee3b78e6"
+    },
+    {
+      "start_rva": "0x47c220",
+      "end_rva_exclusive": "0x47c325",
+      "sha256": "eaa5ff2110b5f376319e1601411982cacd960bebb8028e421e939e37290322a8"
+    },
+    {
+      "start_rva": "0x458ae0",
+      "end_rva_exclusive": "0x458c2d",
+      "sha256": "1313796b240414fd3fb4f6f5dcc94e3b7be96a8c7b7867e4f688bf9ccd634902"
+    },
+    {
+      "start_rva": "0x4cbd20",
+      "end_rva_exclusive": "0x4cbe1c",
+      "sha256": "988a1dfb9be9c5a0346fe43ee23fd999673e988623fb1f958d523444db41f9bc"
+    }
+  ],
+  "limits": [
+    "No allocator or resource API execution",
+    "Factory type labels and semantic IDs unresolved",
+    "No live player source attribution"
+  ],
+  "game_process": false
+}

@@ -1118,3 +1118,95 @@ evidence, not a full allocator/callback execution test. The previous 45-case
 setup-tail receipt continues to validate selector/setter behavior for supplied
 object graphs. Next: decode `0x47cd00`'s constructed action/configuration objects
 and their consumers, then identify the manager's runtime registration/callers.
+
+
+## Adapter binding slots and source construction
+
+Helper `0x47cd00`, called after each adapter setup, constructs **31** indexed
+binding slots, numbered 0..30. These are not the 32 packet-button outputs or the
+four device adapters. Each 0x30-byte slot object stores its index at +8, the
+shared adapter at +0x10, a reference handle at +0x18, a resolved configuration
+pointer at +0x20, and a separately allocated 0x20-byte registry at +0x28. The
+registry also stores the shared adapter at +0x10. The slot objects are appended
+to owner+0xb4. These sizes/field names describe this allocation path only.
+
+Binding helper `0x47db40` obtains a resource-handle collection through an external
+query and scans it in order. It resolves each acquired handle using the reference
+state, compares configuration+0x24 with slot.index, and accepts only the first
+resolved match in that invocation. It retains that handle in slot+0x18, writes
+its resolved pointer at +0x20, and writes a backlink at configuration+0x30 to the
+slot. Later matching entries are not selected, although their temporary
+references are still released. Handle ownership and collection cleanup use real
+atomic reference operations; this is not a read-only lookup.
+
+When the selected handle is non-sentinel, helper `0x47c220` visits the child
+handle array at configuration+0x18. It creates each source through
+`0x458ae0(adapter, child_handle)` and attempts registry insertion through
+`0x4cbd20`. If insertion fails for a non-null source, it invokes the source's
+virtual +0x48 cleanup, destructor and allocator release. Therefore an unsuccessful
+registration does not imply the source was never created.
+
+### Source factory dispatch
+
+The factory resolves the child handle, then tests six configuration types in
+order using helper `0x11a7320`. The first successful test selects a builder:
+
+| Test order | Builder RVA |
+| --- | --- |
+| 1 | 0x457630 |
+| 2 | 0x4575b0 |
+| 3 | 0x457890 |
+| 4 | 0x457910 |
+| 5 | 0x4577a0 |
+| 6 | 0x457720 |
+
+Unresolved handles and configurations matching none of these tests return null.
+The type descriptor identities and builder-to-known-source joins need tracing;
+no sport or semantic control names are assigned here. These are factory
+branches, not a list of six physical devices.
+
+### Registry insertion rules
+
+The registry helper reads a source configuration pointer at source+0x90 and its
+uint32 identifier at configuration+0x18. Its local decisions are:
+
+```text
+if source == null or source.configuration == null:
+    reject
+if identifier == 0xeb:
+    reject
+if identifier in {0x36, 0x37}:
+    key = wrap_u32(registry.sequence_counter + 0xea)
+    enter_global_guard()
+    map_find_or_insert(key).value = source
+    leave_global_guard()
+    registry.sequence_counter += 1
+    accept
+else:
+    if map_lookup(identifier) exists:
+        reject
+    map_insert(identifier, source)
+    accept
+```
+
+The special branch does not perform the ordinary duplicate precheck. Its keys
+are generated independently of the incoming ID; replacing a preexisting entry
+and the reference effects of map helpers remain to be checked. The precise
+guard implementation is unresolved. ID 0xeb rejection applies to the incoming
+configuration ID, not to generated keys. No meaning such as jump, brake or
+steering is established by these integers alone.
+
+The owner setup also writes a 31-entry uint32 array at +0x14. Its values are 0,
+1 and 2, including a qword store that writes adjacent 1 and 0 entries. Their
+consumer is not yet decoded, so these are not labeled button states or action
+types. The slot list is configuration-driven; reconstructing its semantics
+requires the selected resources and factory consumers.
+
+The [binding-route receipt](../../native/snow_host/input_binding_routes_evidence.json)
+records inspected spans and factory targets. This pass is static control/data
+flow only; allocation, resource resolution, source callbacks and map helpers
+were not executed. It connects adapter setup to configuration-driven sources,
+without proving that these are the same active sources captured in prior live
+motion observations. Next: decode the six builders' constructors and virtual
+initializers, join their source types to the existing action-source research,
+and recover the owner-array consumer.
