@@ -1054,3 +1054,48 @@ and cannot exclude an earlier transient publication. The next probe should
 record the first observed publication with execution provenance. Polling alone
 can narrow timing but cannot recover the writer's call stack. No manager-lifetime
 contract or native command-publication permission follows yet.
+
+
+## One-shot first-write observer preparation
+
+The authored `snow_first_write.c` / `snow_first_write.h` component prepares a
+publication experiment. It arms one committed READWRITE data page as READONLY
+and registers a vectored exception handler. The first continuable write access
+violation on that page records fault address, instruction address, thread, QPC
+and the supplied Windows context. It restores READWRITE and returns to retry the
+original instruction without changing registers or instruction bytes. A record
+therefore describes a **write attempt**, not successful publication or a completed
+constructor. A neighboring write can win; exact fault address must be checked.
+
+The mechanism follows Microsoft's [VirtualProtect](https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualprotect),
+[exception-record](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-exception_record)
+and [vectored-handler](https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-addvectoredexceptionhandler)
+contracts. Page-level protection changes affect other data on the page. Do not
+use allocator heap pages. The caller must retain the page through process exit
+and exclude other protection changes; no allocation pin or protection ownership
+is created by this component. Its own observer storage cannot be watched.
+
+Arm is one-shot. Read-only and incompatible mappings refuse without making them
+writable. Cancel restores an untriggered page; a controller must retry if another
+thread is currently handling the fault. Concurrent matching faults retry while
+one handler restores protection. A delayed matching fault after restoration is
+handled only while the page is still READWRITE. Restore failure is not reported
+as success. Unrelated exceptions, read faults and faults on other pages pass to
+later handlers. The code pins its module and retains its handler until process
+exit; there is deliberately no unloading or rearming API. A stalled handler or
+protection operation still requires an external watchdog.
+
+The [synthetic Windows/Wine receipt](../../native/snow_host/first_write_fixture_validation.json)
+covers exact-address and neighbor writes, normal instruction retry, cancellation,
+read-only refusal and 16 concurrent writers on dedicated VirtualAlloc storage.
+Additional software-raised read/foreign-page exceptions verify handler filtering;
+they are not hardware read/write faults. No game was launched. This does not prove
+Wine/game handler ordering, game data-page compatibility, publication identity,
+or absence of perturbation during actual startup.
+
+The fixture can be built with MinGW using `-std=c11 -O2 -Wall -Wextra -Werror`,
+include path `native/snow_host`, and the sources
+`native/snow_host/snow_first_write.c` and
+`tests/fixtures/snow_first_write_fixture.c`. Invoke the resulting executable once
+per scenario: `normal`, `neighbor`, `cancel`, `readonly`, or `concurrent`.
+The standalone host build does not automatically install this observer.

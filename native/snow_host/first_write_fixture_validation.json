@@ -1,0 +1,51 @@
+{
+  "evidence": "Synthetic Windows executable under Wine on macOS; dedicated VirtualAlloc data page",
+  "scenarios": [
+    {
+      "scenario": "normal",
+      "returncode": 0
+    },
+    {
+      "scenario": "neighbor",
+      "returncode": 0
+    },
+    {
+      "scenario": "cancel",
+      "returncode": 0
+    },
+    {
+      "scenario": "readonly",
+      "returncode": 0
+    },
+    {
+      "scenario": "concurrent",
+      "returncode": 0
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/snow_first_write.c": "9d518e88c36697f3656a8d0c815f808b69700098b9e0f1f0759116240dc3500e",
+    "native/snow_host/snow_first_write.h": "d124bc7a35140d702f567ac171462d5f7606c5db502bbe27de5196ac452bcc73",
+    "tests/fixtures/snow_first_write_fixture.c": "adc9550a493a27a471260bab60fd0606d26f63dd1b44ced655ceca04e6a55ff3"
+  },
+  "fixture_sha256": "d71da7e4333e200aff72302144bee0f526ee74eb1d06728c446a65ef198e5fa5",
+  "compiler": "MinGW x86_64; C11; -O2 -Wall -Wextra -Werror",
+  "checks": [
+    "Target write fault records exact fault address, instruction/context RIP and thread, then original write completes.",
+    "Neighbor write wins without claiming target publication.",
+    "Cancel restores write access and leaves no capture.",
+    "Originally read-only page refuses without changing protection.",
+    "16 event-released concurrent writer threads all complete; one record retained.",
+    "Non-access exceptions and software-raised read/foreign-page access exceptions reach a later handler.",
+    "Ordinary reads do not trigger; subsequent writes do not replace the first record."
+  ],
+  "game_launched": false,
+  "game_memory_modified": false,
+  "limitations": [
+    "No live game page, handler ordering or startup publication observed.",
+    "Dedicated allocated page retained through process exit; heap-page ownership and concurrent protection changes excluded.",
+    "Concurrent fixture is one schedule, not a proof of all races or freedom from handler stalls.",
+    "Protection restoration failures and timeout-cancellation races were not fault-injected.",
+    "Instruction context is captured before the faulting write completes; publication semantics remain unknown.",
+    "Module and handler remain present until process exit; no unload proof."
+  ]
+}

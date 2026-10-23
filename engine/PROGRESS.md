@@ -6223,3 +6223,13 @@ found the manager and a 3072-slot queue. PID and creation identity agree; both
 sessions passed cleanup. This provides an early observation point for publication
 instrumentation. Writer, allocation ownership and teardown remain unknown. See
 `native/snow_host/command_manager_startup_live_validation.json`.
+
+
+### First-write observer prepared
+
+Added an authored one-shot page-write observer and Windows fixture to identify a
+startup publisher's instruction/context. It restores protection and retries the
+original write, with explicit foreign-fault filtering and process-lifetime code
+retention. Synthetic Wine tests cover target/neighbor writes, cancellation,
+read-only refusal and 16 concurrent writers. No game integration or publication
+identity is claimed; the next experiment must qualify the actual singleton page.
