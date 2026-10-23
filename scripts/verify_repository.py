@@ -18,6 +18,8 @@ def allowed_native_source(path):
     return path.suffix in {'.c', '.h', '.def'} and (
         rel.parts[0] == 'native' or rel.parts[:2] == ('tests', 'fixtures'))
 native_sources = {
+    'native/snow_host/armed_input_gate.cs',  # authored trigger synchronization, no game payload
+    'tests/fixtures/armed_input_gate_fixture.cs',  # synthetic gate validation
     'tests/fixtures/snow_entry_caller.S',  # authored Win64 fixture
     'native/snow_host/snow_entry_thunk.S',  # reviewed authored ABI adapter
     'native/mod_loader/proxy.c',

@@ -1975,3 +1975,27 @@ delivery-window check rejects reports outside the measured observation span or
 with no intersecting observation interval. Five tests cover failures, sign-bit
 handling, partial coverage and valid matches. Neither function proves input
 acceptance or copy execution.
+
+## Armed lateral pulse covered by both recorders
+
+The input helper now loads, validates the target and signals ready before either
+capture starts. After the recorders start, a file trigger releases the bounded
+500 ms left-input hold. Both key-down and key-up reports fall inside physics
+coverage, with 56 update intervals intersecting the reported hold. See the
+[armed lateral receipt](../../native/snow_host/armed_lateral_capture.json) and
+[gate validation](../../native/snow_host/armed_input_gate_validation.json).
+
+There are 333 selected-parent events with valid samples and 582 actor updates.
+Thirteen updates precede usable parent coverage and are excluded. All remaining
+569 motion primary inputs match the latest bracketed parent publication exactly,
+including 57 nonzero minus-one X samples. The untransformed-vector hypothesis
+matches; the actor sign-gate byte was not directly captured. This extends the
+forward-path result to nonzero lateral input but does not test the opposite sign
+branch. Parent publication contains only zero and minus-one X: no intermediate
+ramp values or gradual release were observed at this stage.
+
+Both probes report zero drops and successful restoration/drain. Binding roots
+agree at the endpoints, injected keys were released, and save/settings/original
+DLL checks passed. The ready/trigger handshake fixes the prior coverage failure;
+it does not make delivery deterministic in simulation time. Publication values
+still do not directly timestamp the ingestion copy instruction.

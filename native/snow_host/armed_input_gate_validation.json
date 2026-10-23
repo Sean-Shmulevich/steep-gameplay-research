@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "evidence": [
+    "Synthetic C# fixture under Wine",
+    "Existing input helper synthetic cleanup self-test",
+    "Live preloaded lateral pulse inside both observation windows"
+  ],
+  "gate_checks": [
+    "Ready created before trigger release",
+    "Existing trigger refused",
+    "Bounded timeout before delivery",
+    "Target invalidation interrupts waiting"
+  ],
+  "live_input_sent": true,
+  "live_key_release_verified": true,
+  "scope": "File handshake is authored synchronization, not engine input ingestion.",
+  "limits": [
+    "File polling and OS delivery are not deterministic simulation-time scheduling",
+    "Target/held-key/focus validation and finally-release remain responsibilities of the input helper"
+  ]
+}

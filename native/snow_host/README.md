@@ -1246,3 +1246,27 @@ must validate the parent type and explain its source fields. Before/after values
 show observed publication state, not the exact store instruction or ingestion
 time. Native fixtures cover all four validity combinations and forwarding, and
 the Windows DLL fixture checks actual before/after samples through ABI 2.
+
+## Preloaded input trigger gate
+
+`armed_input_gate.cs` provides a bounded ready/trigger handshake for an external
+input helper. It sends no input itself. The helper loads first, verifies its
+process/window and held-key conditions, then calls `ArmedInputGate.Wait` with
+fresh, distinct ready/trigger paths, a timeout of at most 30 seconds, and a target
+validation callback. The gate creates the ready file exclusively and keeps
+validating while waiting. A stale trigger, expired wait or failed validation
+throws before the helper reaches its delivery code. Recheck held keys after
+return and retain the existing bounded hold/finally-release logic.
+
+The controller waits for ready before starting recorders. Once recording is
+confirmed, it creates the trigger file. The helper then performs its normal
+verified delivery and reports QPC timestamps for actual key-down and key-up.
+Those reports must pass the delivery-window coverage check; file creation time
+is not game acceptance time. Use a fresh session directory for every attempt.
+The handshake removes process startup from the capture window, not OS input
+latency or scheduling uncertainty.
+
+`tests/fixtures/armed_input_gate_fixture.cs` can be compiled with this source
+using a C# compiler and run without input injection. It tests ready-before-release,
+fresh-trigger rejection, timeout and target invalidation. The private input
+helper's original focus/cleanup self-test is retained separately.

@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Preloaded input handshake passed synthetic Wine tests and a live lateral run.
+Delivery falls inside physics coverage; 569 eligible motion samples match parent
+publication, including 57 nonzero X samples. Thirteen early updates excluded.
+No drops; restoration/cleanup passed. Only zero and minus-one X appeared, so no
+ramp behavior is claimed. See [armed lateral](../native/snow_host/armed_lateral_capture.json).
+
 Lateral live test correctly remains incomplete: key-down arrived 0.374 s after
 physics recording ended. Parent recorded minus-one X; physics saw only zero.
 Added a tested publication/input comparator and delivery-window acceptance check

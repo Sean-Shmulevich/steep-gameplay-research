@@ -1,0 +1,78 @@
+{
+  "parent_events": 333,
+  "valid_after": 333,
+  "valid_before": 333,
+  "distinct_published_vectors": 2,
+  "comparisons": {
+    "no_prior_parent": 13,
+    "bit_exact": 569,
+    "other": 512,
+    "nonzero_bit_exact": 57
+  },
+  "mismatches": [],
+  "update_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 582,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 582,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 582,
+    "other_calls": 0
+  },
+  "kind": "armed_lateral_parent_input_capture",
+  "coverage": {
+    "covered": true,
+    "key_down_inside": true,
+    "key_up_inside": true,
+    "intersecting_intervals": 56
+  },
+  "strict_comparison_counts": {
+    "no_completed_parent": 13,
+    "match": 569
+  },
+  "input_ready_before_capture": true,
+  "root_identity_fields_equal": true,
+  "parent_vectors_bits": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      3212836864,
+      0,
+      0,
+      0
+    ]
+  ],
+  "action_probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 4305,
+    "dropped": 0,
+    "qpc_frequency": 10000000
+  },
+  "keys_released": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "13 actor updates precede usable parent coverage and are excluded.",
+    "Untransformed vector hypothesis matches; actor sign gate was not directly sampled.",
+    "Only zero and minus-one X were observed; no visible ramp or gradual release at this publication stage.",
+    "OS key delivery and sample agreement do not locate the exact copy instruction.",
+    "Endpoint identity checks are not continuous lifetime tracking."
+  ]
+}
