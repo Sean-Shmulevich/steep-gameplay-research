@@ -2250,3 +2250,57 @@ mod-loader gap is still manager-list registration and lifecycle exclusion, not
 more confidence in compact arithmetic. Next prioritize the exact manager's list
 writer/removal path and participant ownership rather than extending unrelated
 container branches.
+
+
+## Participant registration and removal resolved locally
+
+Following the concrete owner's embedded address reveals both manager-list
+operations. Owner method RVA `0xaaf760` passes `owner +0x4b8` to registration
+wrapper `0x653de0` near entry. Owner cleanup method `0xab68d0` passes the same
+embedded address to removal wrapper `0x68b410` at its tail. Both wrappers load
+the exact command-manager singleton and target its array at +0xb0.
+
+These wrappers are leaf functions without exception-table records. Earlier
+searches requiring exception-table membership missed them. Absence from that
+search was not evidence of protected code or absent registration. Their complete
+short instruction sequences and tail targets are now inspected and hashed.
+
+```text
+register(manager, participant):
+    if participant already occurs in manager.participants:
+        return false
+    ensure_capacity_for_one_more()  # allocator/failure contract still external
+    append participant
+    return true
+
+remove(manager, participant):
+    index = first matching entry
+    if absent: return false
+    if index is not last:
+        entries[index] = entries[last]
+    count -= 1
+    return true
+```
+
+Registration helper `0x999d70` uses a membership search and appends unique raw
+pointers. Removal helper `0x766ab0` calls the index eraser `0x115b8d0`, which
+copies the last eight-byte element into the removed slot and decrements the
+16-bit count. It does not shift the intervening entries. Consequently removal
+can change subsequent callback order. If a synthetic list contains duplicates,
+only its first match is removed. Neither local path invokes participant methods
+or visibly retains/releases participant ownership.
+
+`engine.command_participant_registry` reconstructs membership changes on supplied
+storage with sufficient capacity. The [40-case instruction comparison](../../native/snow_host/command_participant_registry_validation.json)
+executes original singleton wrappers, search, append and removal instructions;
+only the eight-byte copy primitive is intercepted. Empty, first/middle/last,
+absent, duplicate-registration and duplicate-initial-list cases all match.
+Capacity growth and allocation failure remain outside this model.
+
+No execution-byte check, mutex or wait-for-callback appears in these local
+registration/removal paths. This closes the local list-operation gap, not the
+native concurrency or unloading contract. Removing a pointer does not prove a
+callback already holding it has returned. The owner methods' calling phases,
+serialization with executor traversal, and their ordering before destruction
+must be established before installing third-party participants. Those are now
+specific caller/lifetime targets rather than unknown registration functions.

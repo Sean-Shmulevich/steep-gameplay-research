@@ -1,0 +1,43 @@
+{
+  "evidence": "Original singleton wrappers, membership search, append and removal instructions; eight-byte copy primitive intercepted",
+  "cases": 40,
+  "all_passed": true,
+  "model_compared": true,
+  "spans": [
+    {
+      "rva": "0x653de0",
+      "length": 22,
+      "sha256": "a3d2b691586f98b8fe19eabeea1e90b84e4b353188298ffce10caf3b0f829a2b"
+    },
+    {
+      "rva": "0x68b410",
+      "length": 22,
+      "sha256": "004e940b28d6f170e056790d22743fe10bf1f9ceb12c4f34d1955edd4f704738"
+    },
+    {
+      "rva": "0x999d70",
+      "length": 187,
+      "sha256": "524b9b3330f0d693dbed16b975a8077aacde201e83f930219d566833614f397f"
+    },
+    {
+      "rva": "0x766ab0",
+      "length": 292,
+      "sha256": "3851a61b45e264a9e14af5d80624dfbc634762c3df5eca207456366dae9bcee8"
+    },
+    {
+      "rva": "0x115b8d0",
+      "length": 74,
+      "sha256": "d8ee0f7073773365c8575905e44e8a11e08cb1effc39ecee260d70ebda7a2d89"
+    },
+    {
+      "rva": "0x6cd390",
+      "length": 146,
+      "sha256": "0daec5e1cba46b6832781174f741346dbc16d8f865462baa815c93662dcdb0f2"
+    }
+  ],
+  "limitations": [
+    "Sufficient synthetic array capacity; growth/allocation failure excluded.",
+    "No native registration, concurrent dispatch, object ownership or unload/drain proof.",
+    "Synthetic identities include duplicate initial lists to characterize first-match removal."
+  ]
+}

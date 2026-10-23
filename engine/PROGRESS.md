@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Located exact participant register/remove wrappers through owner +0x4b8.
+Registration appends uniquely; removal swaps last entry into first matching slot.
+Forty original-instruction cases match new logical registry model. Leaf wrappers
+lacked exception-table records and were missed by earlier bounded searches.
+No local execution-byte gate, lock or drain found. Next trace owner lifecycle
+caller phases and removal-before-destruction exclusion before native extension.
+
+
 Connected participant execution validated in 18 original-instruction cases:
 retain/visibility/apply/release ordering, conditional retirement and final compact
 clear. Submission context helper is a TLS +0x40 write, not a lock. Full deferred
