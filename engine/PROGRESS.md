@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added a JSON input-refresh inspection API and CLI with explicit publication/
+refresh events, gates and processor bypass. Output carries an input hash, decoded
+action/cache observations and fidelity limits. API/CLI equivalence and invalid
+input tests pass. The example distinguishes suppressed retained status from an
+evaluated masked-zero status; no game access or implicit polling occurs.
+See [testbench usage](README.md#input-refresh-json-testbench).
+
 Joined the existing selected-cache publication tail to the vector refresh adapter
 in a runnable synthetic timeline. Two tests demonstrate that cache clocks can
 advance without value changes and analog values can change without new derived

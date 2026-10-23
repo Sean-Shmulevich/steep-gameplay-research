@@ -1,0 +1,86 @@
+{
+  "events": [
+    {
+      "event": "publish",
+      "vectors": [
+        [
+          0.25,
+          0.5,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "scalars": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "now": 100
+    },
+    {
+      "event": "refresh",
+      "source_kind": 0,
+      "lane_mode": 0,
+      "owner_suppressed": false,
+      "configuration_available": true,
+      "ownership_blocked": false,
+      "cache_masked": false,
+      "processor": "bypass"
+    },
+    {
+      "event": "refresh",
+      "source_kind": 0,
+      "lane_mode": 0,
+      "owner_suppressed": true,
+      "configuration_available": true,
+      "ownership_blocked": false,
+      "cache_masked": false,
+      "processor": "bypass"
+    },
+    {
+      "event": "refresh",
+      "source_kind": 0,
+      "lane_mode": 0,
+      "owner_suppressed": false,
+      "configuration_available": true,
+      "ownership_blocked": false,
+      "cache_masked": true,
+      "processor": "bypass"
+    }
+  ]
+}

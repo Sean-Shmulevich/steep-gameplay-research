@@ -41,6 +41,32 @@ reports the range and absolute processed indices. Set case `entry` to
 the default `inner` entry retains its single-range semantics.
 See [the integration evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#mixed-channels-with-supplemental-evaluation).
 
+## Input refresh JSON testbench
+
+```sh
+python3 -m engine.input_refresh_bench engine/examples/input_refresh_plan.json
+python3 -m engine.input_refresh_bench engine/examples/input_refresh_plan.json --output /tmp/input-refresh.json
+```
+
+`inspect_timeline(plan)` in `engine.input_refresh_bench` accepts the same JSON
+object with an `events` list. `publish` supplies two four-lane vectors, 32 scalar
+channels and an opaque uint64 `now`. `refresh` supplies uint32 `source_kind` and
+`lane_mode`, explicit boolean owner/configuration/ownership/cache-mask gates,
+and `processor: "bypass"`. The checked-in example lists the exact field names.
+Only processor bypass is supported by this bench; the lower-level vector adapter
+accepts explicit processor callbacks.
+
+Output includes an input hash, event indices, action raw/sample/direction/status,
+cache clock, derived press stamps and evaluation diagnostics. Events operate on
+synthetic zero-initialized caches and action state. Publication events do not
+refresh the action automatically. Suppression can clear samples while retaining
+prior status, whereas an evaluated masked zero updates status to zero. Direction
+uses the labeled scalar reciprocal-seed approximation.
+
+This is a detached inspection API, not a native mod command. Event indices are
+harness labels, not engine requests or sample generations; clocks are not seconds.
+See [input-route evidence and boundaries](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md).
+
 ## Python API
 
 ```python
