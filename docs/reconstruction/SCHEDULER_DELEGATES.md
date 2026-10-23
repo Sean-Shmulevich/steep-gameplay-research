@@ -524,3 +524,49 @@ the function/context binding remained compatible. A native adapter still needs
 qualified binding checks, a stated owner-lifetime window, retained forwarding
 code/configuration, conflict-aware restoration and a bounded capture controller.
 No DLL wrapper, installer or live capture using this new core is claimed yet.
+
+## Experimental Windows adapter
+
+The [Windows adapter](../../native/snow_host/snow_delegate_probe.c) now builds as
+`snow_delegate_probe.dll` in the standalone host build. Its
+[ABI v1 header](../../native/snow_host/snow_delegate_probe.h) describes a one-shot
+configuration and installation attempt, retryable restore, close/drain and sized
+record reads. It targets the graphics main delegate at owner +0x3b0 and its
+aligned invoker field at +0x3c8. This is not a general hook-placement API.
+
+Configure checks owner-global identity, the graphics job table and dispatch
+method, the function/auxiliary/context fields and original invoker. Function,
+invoker, dispatch method, table and owner global must belong to the same image;
+code targets must occupy executable image pages. The slot must occupy committed,
+writable private memory. The adapter pins its own module and the original image,
+then initializes the recorder before any supported pointer publication.
+
+Install rechecks the binding and uses compare/exchange to replace only the
+invoker qword. It does not alter page protection or rewrite the other delegate
+fields. Restore rechecks identity and descriptor fields, replaces only its own
+pointer, accepts an already-restored original, and refuses a competing pointer.
+Closing capture prevents future installs but preserves late forwarding through
+cached wrapper addresses. Keep the DLL/configuration/storage alive through
+process exit; capture drain does not permit native unload.
+
+The caller must still guarantee allocated, unreused owner storage while install
+and restore access the slot, and compatible function/context ABI for cached
+callers. Guard reads and CAS do not establish those prerequisites or prevent a
+concurrent teardown between checks. No live-game installation was performed.
+Build identity and exact native instruction compatibility remain caller duties.
+
+The [Windows fixture receipt](../../native/snow_host/delegate_probe_fixture_validation.json)
+records five synthetic-process scenarios under Wine: ordinary install/restore,
+competing invoker, owner/context changes, read-only owner memory, and close before
+install. They check refusal without overwriting a competitor, retry after restored
+identity, unchanged full-width return, record copying and cached forwarding after
+restore/close. The fixture uses allocated storage that remains alive throughout;
+it does not prove the game's ownership window or protection-layer acceptance.
+
+The [fixture source](../../tests/fixtures/snow_delegate_probe_fixture.c) can be
+compiled with the same MinGW compiler and include path as the DLL, then invoked
+as `snow_delegate_probe_fixture.exe <DLL-path> <scenario>`. Scenario names are
+`normal`, `conflict`, `identity`, `readonly` and `closed`. The standard host build
+compiles the DLL but neither loads it nor launches this fixture or the game.
+This supersedes the prior missing-DLL/installer status; live ABI and owner-lifetime
+qualification remain open.

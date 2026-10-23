@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Built experimental Windows graphics delegate adapter: qualified owner/table/
+descriptor reads, pinned forwarding code, aligned invoker CAS and conflict-aware
+restore without page-protection changes. Five synthetic Windows/Wine scenarios
+passed, including competing pointer, changed owner/context, read-only memory,
+close-before-install and cached forwarding after restore. Standalone host build
+includes the DLL. No game launched or modified; caller-owned heap lifetime and
+actual live ABI/protection acceptance remain unproved. Full suite passed: 2116
+tests, one skipped. Packaging/link checks passed; Wine bottle stopped.
+
 Added native two-argument delegate recorder core for callback-entry evidence.
 It forwards original storage/receiver and integer result, uses bounded atomic
 capture, continues forwarding after close, and exposes records only after drain.

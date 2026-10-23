@@ -1,0 +1,41 @@
+{
+  "status": "synthetic_windows_fixture_passed",
+  "abi_version": 1,
+  "scenarios": [
+    {
+      "name": "normal",
+      "passed": true
+    },
+    {
+      "name": "conflict",
+      "passed": true
+    },
+    {
+      "name": "identity",
+      "passed": true
+    },
+    {
+      "name": "readonly",
+      "passed": true
+    },
+    {
+      "name": "closed",
+      "passed": true
+    }
+  ],
+  "compiler": "MinGW x86_64 Windows target",
+  "runtime": "Wine on macOS",
+  "source_hashes": {
+    "native/snow_host/snow_delegate_probe.c": "82fab7e629b4b30fbb8d59b42def909213caed7d50356b5290a40fe3f4c87591",
+    "native/snow_host/snow_delegate_trace.c": "e5ca06fb47f591a86ae0a438e598aaea0f446f5ca6502804cf1323b43c15e249",
+    "tests/fixtures/snow_delegate_probe_fixture.c": "810b31d011a8f7ff9dba437fcd9b0d482c17fdac4e74a48b4331e00294389892"
+  },
+  "game_launched": false,
+  "game_memory_modified": false,
+  "limitations": [
+    "Synthetic VirtualAlloc owner and executable-backed function/table globals.",
+    "No game build signature, actual game invoker ABI, or protection-layer acceptance tested.",
+    "Owner storage remains allocated throughout fixture. Native owner lifetime/exclusion not proved.",
+    "Conflict scenarios are controlled sequential changes; concurrent original dispatch during install/restore not exercised."
+  ]
+}

@@ -264,3 +264,12 @@ than extend it. An observed active handle does not prove thread-local
 availability or actual ramp execution. Results contain private-session
 addresses and curve data; keep the raw result outside the public repository.
 Use only when current session ownership permits live testing.
+
+### Experimental delegate recorder
+
+The build also emits `snow_delegate_probe.dll`. It is not loaded automatically.
+It records the graphics-main invoker's two-argument calls and supplies an opt-in,
+one-attempt heap-slot installer with conflict-aware restoration. See
+[delegate adapter contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#experimental-windows-adapter)
+for caller lifetime requirements and synthetic Windows validation. The fixture
+passing does not establish a safe live-game installation window.
