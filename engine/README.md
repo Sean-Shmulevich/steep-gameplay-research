@@ -956,3 +956,8 @@ Run `python3 -m engine.examples.command_retirement_probe` for the serial
 record-cleanup-to-deferred-queue composition. Its JSON shows retained queue order,
 new insertion receipts and holder flags. Storage and leaf services are synthetic;
 no payload disposal or scheduler-drain completion is claimed.
+
+Run `python3 -m engine.examples.holder_consumption_probe` to compare consumed queue
+entries with successful versus refused holder cleanup. It composes consumer,
+cleanup and pool lookup and reports queue state separately from recycling.
+Synthetic payload services and descriptors do not establish completed disposal.

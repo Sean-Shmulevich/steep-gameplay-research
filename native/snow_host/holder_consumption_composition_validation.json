@@ -1,0 +1,12 @@
+{
+  "evidence": "Original consumer iteration, holder cleanup and pool lookup composed without replacing cleanup or lookup",
+  "cases": 144,
+  "state_and_events_match": true,
+  "probe_sha256": "39ad323079a15e73a35e56bfb01b1388df52b2968d6920460c46a1b709b64b54",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limitations": [
+    "Synthetic descriptor, reserved token and supplied payload virtual48/dispatch; no token-removal path in this composition.",
+    "Outer locks, output growth/destruction and further iterations excluded.",
+    "Serial callback changes only, not native concurrent ownership or scheduler drain."
+  ]
+}

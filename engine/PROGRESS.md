@@ -6535,3 +6535,12 @@ signed-difference /24 and low32 comparison. All 4,200 complete instruction cases
 match; four public tests cover boundaries, overlaps and cleanup composition.
 Lookup does not validate alignment or full-width membership. Descriptor origins,
 liveness and synchronization remain unresolved. No live game launched.
+
+### Consumption-to-recycling composition validated
+
+Added a runnable comparison of local recycling versus cleanup refusal after
+callback reference restoration or a retained separate count. All 144 combined
+original-instruction cases match consumer, cleanup and pool lookup state without
+substituting the latter routines. Three public integration tests pass. Queue
+emptiness remains explicitly separate from payload detachment, holder recycling
+and disposal completion. No live launch or concurrency proof.

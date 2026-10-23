@@ -3527,3 +3527,25 @@ Cleanup `0x11943b0` dereferences the returned descriptor without a null test.
 Consequently a failed lookup is not a native graceful refusal contract. The
 Python locator returns None, and callers must not invent a successful recycle
 from that result. Native invalid-input failure behavior was not exercised.
+
+## Runnable consumption and recycling composition
+
+Run `python3 -m engine.examples.holder_consumption_probe`. The JSON compares
+successful local recycling, callback-restored references, and a retained separate
+count. All three can empty the retirement queue, but the latter two leave the
+payload attached and pool head unchanged. The probe reports the consumer action,
+cleanup result, holder flags/link, payload flags and pool head independently.
+`disposal_completion_proved` remains false even in the recycled case: payload
+handling and eventual destruction are distinct, and no scheduler drain is shown.
+
+The [combined receipt](../../native/snow_host/holder_consumption_composition_validation.json)
+checks 144 original-instruction paths from consumer iteration through actual
+cleanup and actual pool lookup. Cleanup and lookup are not substituted in this
+comparison. The payload virtual callback and mode-zero dispatcher remain supplied;
+mode-nonzero output insertion uses original instructions with sufficient synthetic
+capacity. A reserved token selects the no-removal path, and the descriptor is
+synthetic. State and event order match the independent composed probe across
+initial reference gates, separate counts, payload presence, initial/current modes
+and callback-restored reference counts. Three public integration tests cover the
+main outcomes. No outer locks, output destruction, further iterations or live
+concurrency are claimed.
