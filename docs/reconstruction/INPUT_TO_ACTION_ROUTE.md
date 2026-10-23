@@ -1738,3 +1738,26 @@ cadence, or validate the newest recorder ABI live. The run reused a previously
 passing host build. No input was sent and the observations were sequential, not
 atomic. Shutdown, save restoration, settings restoration and original DLL
 verification all passed.
+
+## History action through reset and suppression
+
+The original binding reset and configured history evaluator were executed together
+in 1,800 refreshes across 360 synthetic sequences. Only tagged-map first/next
+helpers were substituted to supply one action. The actual reset, evaluator,
+ownership lookup, direction reader and clock accessor executed. Complete action
+bytes and clock read sequences matched the independent composition of
+`reset_action` and `evaluate_history_action`. See the
+[validation receipt](../../native/snow_host/history_refresh_validation.json).
+
+Each sequence suppresses evaluation on its second and fourth refresh. Reset
+clears sample fields while preserving the active flag, cached predicate and
+timestamps. Suppression prevents evaluation and clock reads; it does not reset
+the hold timer. A later unsuppressed evaluation can satisfy its hold delay with
+unchanged input history. The independent regression in
+`tests/test_history_refresh.py` demonstrates this at ticks 100, 150 and 200.
+
+A live recorder must distinguish binding refresh, evaluator execution and input
+publication. An active flag can survive a suppressed refresh, and zero magnitude
+can result from reset alone. Neither is an execution counter. This validation
+does not establish that the selected live rider action uses this history family,
+nor does it execute native map enumeration or manager scheduling.

@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Validated original reset plus history evaluation in 1,800 refreshes across 360
+sequences, with synthetic map enumeration only. Suppressed refresh clears samples
+but preserves event/predicate/timers; subsequent evaluation can mature a hold
+without new history. Two independent regression tests pass. This makes explicit
+why live cadence needs evaluator events rather than inferred field changes. See
+[reset composition](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#history-action-through-reset-and-suppression).
+
 Hardened record copying after the v7 layout extension: explicit ABI/size queries
 and a sized read reject incompatible buffers before copying. Native fixture
 checks all smaller sizes plus invalid lifecycle/index cases; six fixtures pass.

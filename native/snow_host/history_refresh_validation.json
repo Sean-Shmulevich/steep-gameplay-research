@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "sequences": 360,
+  "refreshes": 1800,
+  "game_process": false,
+  "scope": "Original action reset calls original configured history evaluator, ownership lookup, direction reader and clock accessor",
+  "substitutions": [
+    "Tagged-map first and next helpers supply one synthetic action then terminate enumeration"
+  ],
+  "coverage": [
+    "Two channels, five direction selectors, four timing modes and three clock routes",
+    "Empty, self and other ownership slots",
+    "Five refreshes per sequence, with owner suppression on second and fourth refresh",
+    "Entire action snapshot and clock read sequence compared after every refresh"
+  ],
+  "limits": [
+    "Synthetic objects and histories; no live player binding or execution cadence claim",
+    "Map enumeration substituted; manager traversal and history production not executed",
+    "Finite planar inputs; no new general numerical boundary claim"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x4b69b0",
+      "end_rva_exclusive": "0x4b6a5b",
+      "sha256": "aaef3fda0c25e8d037ed424d9af88b8597cd62210607f357e75d9fb1e5aeb196"
+    },
+    {
+      "start_rva": "0x4b2a20",
+      "end_rva_exclusive": "0x4b2cfa",
+      "sha256": "e05ff4f6c7042b3b290170ae77996929806bf11cc3f6fc662ec3420bb1e0775d"
+    }
+  ]
+}
