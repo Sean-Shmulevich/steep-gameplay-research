@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Added a bounded native evaluator-event recorder with explicit entry/exit ticks
+and thread/action identity. Seven native fixtures pass, including nested calls,
+concurrent overflow and close while an original call remains active; Windows
+object compilation passes. No hook is installed and no live evaluation order is
+claimed. This is the missing event channel, separate from sampled action state.
+See [event recorder](../native/snow_host/README.md#explicit-action-evaluator-event-recorder).
+
 Validated original reset plus history evaluation in 1,800 refreshes across 360
 sequences, with synthetic map enumeration only. Suppressed refresh clears samples
 but preserves event/predicate/timers; subsequent evaluation can mature a hold

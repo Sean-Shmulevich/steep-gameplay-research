@@ -1168,3 +1168,33 @@ Six native fixture tests pass. The host, probe and capture plugin cross-compile,
 and the new exports are present in the Windows DLL. The dynamic Windows fixture
 also compiles, but was not executed under Wine during this pass. No game launch
 or shared Wine-session operation was performed.
+
+## Explicit action-evaluator event recorder
+
+`snow_action_trace.h/c` provides authored capture plumbing for a verified
+`void evaluator(void *action)` callback. It records action identity, thread ID
+and entry/exit ticks around every captured call. It does not read game objects,
+install hooks, select an action, or claim that an evaluation consumed new input.
+The separate recorder leaves the existing update-record ABI unchanged.
+
+Initialize before publishing the wrapper. Supply bounded, thread-safe clock and
+thread callbacks; use a verified common clock domain with the physics recorder
+and report its frequency. Route the wrapper through `snow_action_trace_call`.
+The original callback always executes, including overflow and calls after close.
+Nested original calls can create separate records. Storage reservation order is
+not chronological order across threads. Recorded intervals include tracing
+cost and preemption, so they are not pure evaluator CPU-time measurements.
+
+Close capture, then wait for `snow_action_trace_drained` before reading through
+the exact-size copy function. A closed/drained recorder must still remain alive
+for late callers; this does not authorize unloading or restoring/reusing its
+storage. Exceptions or nonlocal exits are not contained. Reinitialization while
+any caller could retain the wrapper is prohibited.
+
+The native fixture checks nested intervals, zero-capacity forwarding, late
+forwarding, close while the original is blocked, exact-size reads and concurrent
+reservation/overflow. Windows compilation is checked separately. No live hook
+installation or action/physics ordering is established by these fixtures.
+Remaining integration needs verified target/calling convention, guarded slot
+installation/restoration, selected-player attribution, clock-domain qualification,
+and export of evaluator events alongside the update trace.
