@@ -1,0 +1,28 @@
+{
+  "evidence": "Full original execution wrapper connected to completion/finalizer, compared against authored serial wrapper adapter",
+  "cases": 256,
+  "all_passed": true,
+  "spans": [
+    {
+      "rva": "0x11e9990",
+      "length": 407,
+      "sha256": "24d3e80d0b765aebc07cfaa0eac77846acaa87228fa25cd4e2ab55b98e686a3e"
+    },
+    {
+      "rva": "0x11e2d70",
+      "length": 171,
+      "sha256": "1877fddd9c59e7a7eddee73f440834efc81f1784d26b543697b88200acd00075"
+    },
+    {
+      "rva": "0x11d1670",
+      "length": 123,
+      "sha256": "1a91ff93e0f55c64247ba8d459ff0f21064ce670612d81c7404b18143c902586"
+    }
+  ],
+  "limitations": [
+    "Synthetic GS/TLS block, diagnostic/context callbacks, lock services, dependency release and notification adapter.",
+    "Dependency release changes the queue counter by supplied effect; no live worker/wait ownership proved.",
+    "CAS contention, changing worker arrays, exceptions and native stack unwinding not exercised.",
+    "Notification is conditional and cannot serve as a universal completion hook."
+  ]
+}

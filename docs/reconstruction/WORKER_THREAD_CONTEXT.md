@@ -589,3 +589,49 @@ The bounded direct RIP-relative search found the collection initializer, worker
 append path and this buffer cleanup. Computed or indirect references and protected
 code remain outside that search, so this is not a claim that no coordinator exists.
 No live process was accessed.
+
+## Executable normal-return wrapper reconstruction
+
+The authored [serial wrapper adapter](../../engine/worker_execution_wrapper.py)
+implements diagnostic scope entry/exit, retained TLS-block context gates, mode
+save/conditional restore, body execution, completion, queue-change comparison,
+and per-worker coalesced notifications. It uses supplied callbacks and owned
+state dictionaries; it does not create native TLS or threads, emulate locks, or
+provide permission to invoke arbitrary original engine functions.
+
+The [256-case connected instruction fixture](../../native/snow_host/worker_wrapper_validation.json)
+executes the original complete wrapper together with completion and the ordinary
+finalizer. Synthetic GS/TLS, context/diagnostic callbacks, locks, dependency
+release and notification adapters supply external effects. The comparison varies
+entry/exit job-mode sentinel, entry/exit TLS context presence, diagnostic scope,
+diagnostic mode, and whether body/completion changes the queue counter. Observed
+callback order, restored mode and worker wake counters match the independent
+adapter in all cases. CAS contention and exception unwind remain outside this
+validation.
+
+The diagnostic-scope handle is captured before the body, while job mode and TLS
+scheduler-context presence are reread later. The mode restore can therefore be
+skipped when a body changes mode to 255; changing from 255 to a nonsentinel value
+restores the initialized saved value 255. These branches are preserved without
+claiming such mutations occur normally. A callback exception propagates without
+invented finalization or finally-based native mode restoration.
+
+Queue-change capture occurs after body return, context-after, mode restoration,
+and diagnostic-end. A change made only in the body is already in the baseline
+and does not itself trigger this post-completion notification branch. When
+completion changes the counter, each visited worker receives the decoded
+coalescing transition; the platform notification adapter runs only for a negative
+old wake counter. An unchanged counter, an empty worker list, or nonnegative old
+counters can produce no notification after a completed dispatch.
+
+Run the synthetic composition:
+
+```sh
+python3 -m engine.examples.worker_completion_probe
+```
+
+It joins the adapter to `MixedScheduler`: parent body return still has one
+outstanding dispatch; completion and subsequent notification see zero, while a
+child remains queued. The example's queue-counter wiring is authored integration,
+not a verified mapping of every native queue-counter writer. A completed parent
+or a worker notification is not global scheduler drain.

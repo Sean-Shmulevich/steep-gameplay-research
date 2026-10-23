@@ -1,5 +1,14 @@
 # Reconstruction progress and next work
 
+Reconstructed full ordinary execution-wrapper order as an authored serial adapter:
+TLS mode/context gates, diagnostic scope, body, completion, and conditional worker
+notification. Compared against 256 connected original-instruction cases; all
+passed. Runnable example joins MixedScheduler and shows parent drain while its
+child remains queued. Post-decrement audit found no unconditional virtual callback;
+context/profiling hooks are earlier and worker notification is conditional. The
+live decrement gap remains explicit rather than mislabeled closed. No game launch.
+Full suite passed: 2137 tests, one skipped; example and repository checks passed.
+
 Same-request paired capture passed after adding explicit scheduler-only readiness.
 14 main records and 10 finalizers produced 10 matched requests, eight wholly inside
 the shared interval; all ordered on the same observed thread and matched the

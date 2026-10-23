@@ -1038,3 +1038,25 @@ This supersedes the missing same-request correlation result. The previous disjoi
 record spans and pre-trigger player-readiness failure remain preserved as distinct
 failed attempts. Next instrumenting the final decrement requires another boundary;
 matching finalizer return to main execution does not make it a drain notification.
+
+## Post-completion observation-site audit
+
+The fully decoded execution wrapper calls completion at RVA `0x11e9a7d`; its
+return site is `0x11e9a82`, after the original outstanding decrement. There is no
+unconditional virtual callback between that return and the wrapper epilogue.
+The worker-array notification path is conditional on a queue-counter change,
+and its notification adapter at `0x1c3b570` is further conditional on a negative
+old per-worker counter. It cannot be used as a universal dispatch-finished hook.
+
+The wrapper's context-after slot +0x30 and optional diagnostic-end slot +0x60 run
+before completion. Hooking them would not observe the missing decrement either.
+The new [connected wrapper validation](WORKER_THREAD_CONTEXT.md#executable-normal-return-wrapper-reconstruction)
+executes that order and records notification only after local accounting reaches
+zero in the supplied serial cases. It does not establish live notification
+coverage or a new arbitrary-mod phase.
+
+For a direct observation of every completion, a future probe must cover the actual
+completion return boundary (or its caller), with an explicitly validated ABI,
+stack/unwind behavior and installation method. Current slot-based probes do not
+supply that hook. Conditional notification is a useful separate scheduler signal,
+not a substitute that closes the outstanding-decrement observation gap.
