@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Reconciled held timing with earlier frame-graph research: BeginEngineFrame
+prepares timing upstream of CheckEngineStop. Rechecked service call and world
+iteration, corrected stale 1-2 substep expectation and universal seven-count
+claim. Live receiver binding remains unverified in this pass. Next: qualify
+that receiver and correlate producer entry/return with the consuming batch.
+See [producer ordering](../docs/reconstruction/SCHEDULER_SMOOTHING_AUDIT.md#producer-ordering-reconciled-with-the-frame-graph).
+
+
 Held-only live check confirms timing history changes under the current world
 hold: six samples, stable world request token, zero released steps, cursor
 9/0/1/2/3/5. Four adjacent single-append pairs reproduce timing outputs exactly;

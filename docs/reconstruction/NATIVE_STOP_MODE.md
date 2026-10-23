@@ -89,11 +89,11 @@ Because `UpdateCamera` is frozen, the camera change seen while held must come fr
 
 ## What a released step simulates
 
-This section is static analysis plus instruction emulation of the original timing routines; it has not yet been measured live.
+This section began as static analysis and instruction emulation. Later [held timing observations](SCHEDULER_SMOOTHING_AUDIT.md#timing-history-changes-during-world-hold) confirm history changes while the world is held; accumulated world-clock behavior has not been directly measured by that experiment.
 
 - `BeginFrame` runs the frame-clock driver every request, held or not. The driver measures the timer delta since its previous call and caps it at one second. The clock updater overwrites the interval rather than accumulating it.
-- `BeginEngineFrame` runs the physics timing producer every request. It caps the world interval at 1/15 s and computes a substep count (`n = floor(f * dt)`, rounded up at a half, at most 7) and substep length. Only the physics world step inside `Step` consumes them.
-- So a released step simulates **about one frame, typically 1–2 substeps**, not the whole hold. Emulation of a 5 s hold at 60 Hz followed by one release produced two 8.3 ms substeps.
+- `BeginEngineFrame` runs the physics timing producer every request. With smoothing enabled, it caps the retained-plus-incoming accumulator at 1/15 s and computes count and substep length using the [policy-dependent arithmetic](SCHEDULER_SMOOTHING_AUDIT.md). Seven is not a universal count bound across frequencies and policies. Only the physics world step inside `Step` consumes them.
+- A release consumes the prepared timing plan, whose duration depends on current clock input, history and policy. Emulation of a 5 s hold at 60 Hz followed by one release produced two 8.3 ms substeps. That is a scenario result: later live controlled releases included seven-substep capped batches, so 1–2 substeps is not a reliable expectation.
 - **Exception:** the world's accumulated millisecond timestamp keeps advancing through the hold. Logic that measures "time since" an event sees the whole hold as one jump on release.
 - **Input:** the pad manager is wired only inside the Step chain. On release it swaps snapshots and polls once. A button held across the release probably reads as a new press, and a press and release entirely inside a hold is lost (inferred).
 - No world-clock hold was found on the paused or clear paths within a bounded search. Protected callees, including the setter notification, keep this at medium-high confidence.

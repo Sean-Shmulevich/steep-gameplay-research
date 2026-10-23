@@ -177,3 +177,39 @@ smoothing history or a reproducible duration on its next release. The next
 boundary to locate is the timing producer's caller and its ordering relative
 to the hold decision. Do not freeze or overwrite that state until its consumers
 and completion obligations are understood.
+
+
+## Producer ordering reconciled with the frame graph
+
+The older [native stop-mode analysis](NATIVE_STOP_MODE.md#what-a-released-step-simulates)
+already placed timing preparation in `BeginEngineFrame`, upstream of
+`CheckEngineStop`. The held-history capture is new live corroboration of that
+prediction, not a newly discovered caller. The [registered frame graph](ENGINE_FRAME_GRAPH_COVERAGE.md#static-topology)
+orders these jobs before either the paused path or ordinary world execution.
+
+The current static recheck confirms the unconditional service virtual call near
+the end of `BeginEngineFrame`, and the timing-service routine's loop over world
+handles. Each resolved world supplies its physics manager and timing owner; the
+loop passes the global policy byte to the recovered producer. The candidate
+service table contains that routine in the called slot. The service singleton
+is null in the inspected image, so this pass does not independently establish
+the live virtual receiver. A live receiver qualification remains useful.
+
+Illustrative ordering, excluding unrelated frame work:
+
+```text
+BeginFrame: update clocks
+BeginEngineFrame:
+    for each world in timing service collection:
+        prepare_timing(world.timing_owner, policy)
+CheckEngineStop:
+    if held: run paused path
+    else: run ordinary world path, consuming prepared timing
+EndFrame: finish this request and prepare dependencies
+```
+
+This explains why a world hold leaves timing preparation active. The next
+useful probe should qualify the service receiver and associate producer entry/
+return with request and world identities. It should record the timing state
+that the consuming physics batch actually receives. Freezing the entire frame
+or overwriting the ring would bypass unresolved clock and consumer behavior.

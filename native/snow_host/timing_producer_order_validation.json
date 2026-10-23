@@ -1,0 +1,25 @@
+{
+  "evidence": "static instruction recheck and reconciliation with prior frame registration research",
+  "spans": [
+    {
+      "rva": "0x6569b5",
+      "length": 13,
+      "sha256": "788cf3d5692a48c25a7796f4094868bb3ff4e6d3306b2f04f5ed4d4f176073a1"
+    },
+    {
+      "rva": "0x137a850",
+      "length": 116,
+      "sha256": "e5fb49284d8b68c6590df34f61e5d393d7da7cb5da968d8e7e8a8b48f08de98f"
+    }
+  ],
+  "service_slot": 72,
+  "candidate_table_rva": "0x2911780",
+  "timing_loop_rva": "0x137a850",
+  "singleton_null_in_inspected_image": true,
+  "live_virtual_receiver_verified": false,
+  "conclusion": "Existing frame registration places BeginEngineFrame timing preparation upstream of CheckEngineStop; held-history observations corroborate continued preparation.",
+  "limitations": [
+    "Indirect receiver binding is not independently proved by the null singleton in this image.",
+    "Static ordering is not a complete live producer/consumer trace."
+  ]
+}
