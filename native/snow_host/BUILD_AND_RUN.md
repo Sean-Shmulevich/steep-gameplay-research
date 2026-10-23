@@ -354,10 +354,12 @@ python3 scripts/run_command_pipeline_probe.py
 ```
 
 Run from the repository root with a native 64-bit C11 compiler available. This
-builds and runs the admission and observer C components against synthetic queue,
+builds and runs the admission, attachment and observer C components against synthetic queue,
 lock and lifetime services. See the [combined probe contract](../../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#combined-native-code-inspection-probe)
 for refusals, disposal, repeated delivery and recorder-close boundaries. This
-console probe neither launches the game nor installs a native callback.
+console probe neither launches the game nor installs a native callback. Output
+separates ownership finalization from observed delivery; the known synthetic
+invocation count also exposes recorder overflow and forwarding after close.
 
 
 ### Read-only command-manager startup observation

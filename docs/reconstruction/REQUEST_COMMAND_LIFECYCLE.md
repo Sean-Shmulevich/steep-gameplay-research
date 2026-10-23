@@ -2309,3 +2309,23 @@ This is emulation evidence, not a game session. The host fixture separately chec
 actual freeing in a finalizer. Link `snow_command_attachment.c` alongside
 `snow_command_admission.c` when using this interface; it is not automatically
 installed as a host/plugin export.
+
+### Combined ownership and observation example
+
+The public `scripts/run_command_pipeline_probe.py` now links the concrete
+attachment owner as well as admission and observation. Its queue services are
+synthetic: copying retains an attachment, taking a slot moves that reference,
+and cleanup releases it through the attachment vtable. It does not simulate
+original holder retirement, concurrent acquisition, or teardown. Observation
+storage stays separately alive until every cached invocation ends.
+
+The JSON keeps `ownership_finalized` and `ownership_release_path` separate from
+`observed_deliveries`. Request 101 executes four synthetic invocations, but records
+two, drops one when its recorder fills, and forwards one after recorder close.
+Request 102 is submitted and disposed without invocation. Requests 103 and 104
+are refused for full and stale queues and released by their caller. All four
+finalize once. `synthetic_invocations` is the example dispatcher's known count,
+not a new native telemetry measurement. Zero recorded deliveries alone does not
+prove nonexecution in a live capture, and finalization is not a completion event.
+The example does not free observation storage at attachment finalization or grant
+module unload permission.

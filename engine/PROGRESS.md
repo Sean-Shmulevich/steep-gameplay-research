@@ -6735,3 +6735,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Compiled Windows x64 implementation joined to original copy/cleanup in 24 emulator cases, including finalization before submission return. Receipt: `native/snow_host/authored_attachment_validation.json`.
 - Host admission fixture now uses the concrete owner and tests refusal release, zero rejection and a finalizer that frees its object.
 - No live game run, module pin, execution receipt or safe unload claim; installation and manager lifetime qualification remain open.
+
+### Joined attachment ownership with command observation
+
+- Extended the existing compiled command pipeline probe to carry concrete attachments through synthetic queue copy, transfer and cleanup.
+- Output separates ownership finalization, refusal cleanup, known synthetic invocations and bounded observation records. Repeated execution, disposal without invocation and two refusals remain distinct.
+- Public runner selects the SDK from the selected macOS developer directory without changing system settings. No live game or native lifetime claim.

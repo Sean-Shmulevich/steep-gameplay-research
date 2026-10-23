@@ -21,15 +21,18 @@ def main():
         parser.error('native C compiler unavailable: ' + args.cc)
     env = os.environ.copy()
     if sys.platform == 'darwin' and not env.get('SDKROOT'):
+        if not env.get('DEVELOPER_DIR'):
+            env['DEVELOPER_DIR'] = subprocess.check_output(
+                ['xcode-select', '-p'], text=True, timeout=10).strip()
         sdk = subprocess.run(['xcrun', '--sdk', 'macosx', '--show-sdk-path'],
-                             check=True, capture_output=True, text=True, timeout=10)
+                             check=True, capture_output=True, text=True, timeout=10, env=env)
         env['SDKROOT'] = sdk.stdout.strip()
     src = ROOT / 'native/snow_host'
     with tempfile.TemporaryDirectory(prefix='snow-command-pipeline-') as tmp:
         exe = Path(tmp) / ('probe.exe' if os.name == 'nt' else 'probe')
         command = [cc, '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', '-I', str(src)]
         command += [str(src / name) for name in ('snow_command_admission.c',
-            'snow_command_observation.c', 'snow_delegate_trace.c', 'examples/command_pipeline_probe.c')]
+            'snow_command_observation.c', 'snow_command_attachment.c', 'snow_delegate_trace.c', 'examples/command_pipeline_probe.c')]
         subprocess.run(command + ['-o', str(exe)], check=True, timeout=60, env=env)
         result = subprocess.run([str(exe)], check=True, capture_output=True, text=True, timeout=10)
         sys.path.insert(0, str(ROOT))

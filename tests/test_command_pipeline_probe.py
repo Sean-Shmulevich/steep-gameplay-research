@@ -21,11 +21,18 @@ class CommandPipelineProbeTests(unittest.TestCase):
         self.assertFalse(report['unload_safety_proved'])
         requests = {r['id']: r for r in report['requests']}
         self.assertEqual(requests[101], dict(id=101, admission='submitted',
-                                          observed_deliveries=2, recorder_dropped=1))
+                                          observed_deliveries=2, recorder_dropped=1,
+                                          ownership_finalized=1, synthetic_invocations=4, ownership_release_path="queue_cleanup"))
         self.assertEqual(requests[102]['admission'], 'submitted')
         self.assertEqual(requests[102]['observed_deliveries'], 0)
+        self.assertEqual(requests[102]['synthetic_invocations'], 0)
         self.assertEqual(requests[103]['admission'], 'full')
         self.assertEqual(requests[104]['admission'], 'stale_binding')
+        self.assertTrue(all(r['ownership_finalized'] == 1 for r in requests.values()))
+        self.assertEqual(requests[102]['ownership_release_path'], 'queue_cleanup')
+        for i in (103,104):
+            self.assertEqual(requests[i]['ownership_release_path'], 'caller_after_refusal')
+            self.assertEqual(requests[i]['observed_deliveries'], 0)
         self.assertEqual(report['queue_remaining'], 0)
         self.assertEqual(report['synthetic_disposals_without_invocation'], 1)
         self.assertTrue(report['cached_call_after_close_returned'])
