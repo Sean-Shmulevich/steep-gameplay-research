@@ -1099,3 +1099,24 @@ include path `native/snow_host`, and the sources
 `tests/fixtures/snow_first_write_fixture.c`. Invoke the resulting executable once
 per scenario: `normal`, `neighbor`, `cancel`, `readonly`, or `concurrent`.
 The standalone host build does not automatically install this observer.
+
+
+## Startup write-controller refused the current image page
+
+The [opt-in controller](../../native/snow_host/examples/command_manager_write.c)
+connects the generic first-write observer to the sampled-null singleton, with
+bounded waiting/cancellation and private output. Its
+[first live attempt](../../native/snow_host/command_manager_write_live_refusal.json)
+matched the getter fingerprint and read a null singleton, but did not arm. The
+post-refusal page query reported protection 8, `PAGE_WRITECOPY`; the generic
+observer currently accepts only protection 4, `PAGE_READWRITE`. The controller
+reports no captured fault and installed no observer on this refused branch.
+The early predicates are not individually reported, so the receipt preserves
+the actual post-refusal protection observation rather than claiming a complete
+qualification trace. Saves/settings/original DLL cleanup passed.
+
+This identifies a concrete integration gap. The next implementation must retain
+and restore the original image-page protection, with an image-backed synthetic
+fixture for copy-on-write behavior and cancellation. Broadly converting the page
+to ordinary read/write would change the experiment's semantics. No publisher
+instruction or manager-lifetime fact was recovered in this attempt.

@@ -1,0 +1,46 @@
+{
+  "status": "live_arm_refused_no_write_capture",
+  "compatibility_fingerprint_matched": true,
+  "initial_singleton_null": true,
+  "armed": false,
+  "captured": false,
+  "post_refusal_page_protection": 8,
+  "post_refusal_page_protection_name": "PAGE_WRITECOPY",
+  "supported_observer_protection": "PAGE_READWRITE only",
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "source_hashes": {
+    "native/snow_host/examples/command_manager_write.c": "429ad490445044ef81b2d2cab8feeb7037c7a2383fe3582292189338b196b4f7",
+    "native/snow_host/snow_first_write.c": "9d518e88c36697f3656a8d0c815f808b69700098b9e0f1f0759116240dc3500e",
+    "native/snow_host/snow_first_write.h": "d124bc7a35140d702f567ac171462d5f7606c5db502bbe27de5196ac452bcc73"
+  },
+  "plugin_sha256": "f1bd51c09da32e04d5aa07960cc90dab785ac5985210af11ce472e0b06d47ea7",
+  "private_output_sha256": "8088ff537c3e0946dae148a84abfc39da280d513bfb164a9ce9f6da2d7977d47",
+  "synthetic_controller_refusals": [
+    {
+      "enabled": 0,
+      "returncode": 0
+    },
+    {
+      "enabled": 1,
+      "returncode": 0
+    }
+  ],
+  "game_launched": true,
+  "observer_page_protection_changed": false,
+  "game_code_patched": false,
+  "mod_commands_submitted": false,
+  "limitations": [
+    "Post-refusal VirtualQuery reports PAGE_WRITECOPY; early qualification does not separately report every refused predicate.",
+    "initial_protection zero is an unset field on the refused branch, not the original page protection.",
+    "No exception handler installed by this plugin because the page qualification declined before observer arming.",
+    "No publisher instruction, call stack, manager ownership or teardown established.",
+    "Startup director navigates normally; observations do not assert no unrelated game writes."
+  ]
+}

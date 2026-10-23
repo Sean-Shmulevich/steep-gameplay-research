@@ -6233,3 +6233,13 @@ original write, with explicit foreign-fault filtering and process-lifetime code
 retention. Synthetic Wine tests cover target/neighbor writes, cancellation,
 read-only refusal and 16 concurrent writers. No game integration or publication
 identity is claimed; the next experiment must qualify the actual singleton page.
+
+
+### Startup write controller qualification boundary
+
+Built the opt-in bounded page-write controller and attempted one live startup
+capture. It refused before arming; the page query reported PAGE_WRITECOPY, while
+the observer only supports READWRITE. No protection change or write capture
+occurred, and cleanup passed. Two synthetic controller refusal cases also pass.
+Next work is preserving copy-on-write protection with an image-backed fixture,
+then repeating the publication experiment. No lifetime claim is added.

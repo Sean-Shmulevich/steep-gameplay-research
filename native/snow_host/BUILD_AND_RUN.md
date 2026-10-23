@@ -386,3 +386,39 @@ manager. `same_pointer=1` only compares two reads; it does not prove ownership o
 an atomic snapshot. A matching getter fingerprint is a local compatibility check,
 not verification of the complete executable. Publication may predate or follow
 plugin initialization; this one-shot observer does not capture the writer.
+
+
+### Experimental startup page-write controller
+
+`--adapter steep --command-manager-write-plugin` builds an opt-in controller for
+`snow_first_write`. It requires `plugins/command_manager_write.ini`:
+
+```ini
+[publication]
+enabled=1
+timeout_ms=60000
+```
+
+It checks the singleton-getter fingerprint, requires a sampled null singleton,
+and accepts only a READWRITE image page belonging to the main executable. The
+observer pins code/image modules and stays registered until process exit. The
+worker waits at most the configured 100..90000 ms, then attempts cancellation for
+up to two additional seconds. An external process watchdog is still required.
+No game command is submitted. This changes data-page protection only if armed;
+it is not the read-only startup observer.
+
+Output `command_manager_write.ini.write.json` contains private addresses,
+registers and a bounded instruction-byte snapshot. Keep it outside public
+research. Instruction bytes are read after the handler restores protection, so
+they are not an atomic code/context snapshot. No captured context proves the
+faulting instruction subsequently completed or targeted the singleton rather
+than another global on the page.
+
+The first live attempt declined to arm. Its post-refusal page query reported
+`PAGE_WRITECOPY`, unsupported by the current READWRITE-only observer. Do not
+interpret this as a successful publication capture or override it with a generic
+READWRITE restore. See the
+[refusal receipt](command_manager_write_live_refusal.json). Copy-on-write support
+requires preservation of the original protection and an image-backed fixture
+before another live attempt. The separate initial-protection field remains zero
+on this refused branch; it is not an observed protection value.
