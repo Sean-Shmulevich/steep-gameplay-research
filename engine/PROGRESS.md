@@ -1,5 +1,16 @@
 # Reconstruction progress and next work
 
+Connected four-category request publication and pending-to-ready transfer. All 160
+original-instruction cases match category order, resource-preparation pass stop,
+wake coalescing and capacity-pressure accounting, including signed wake extremes.
+Publisher saturation compares the old value before increment selection. Seed construction is an explicit
+intercepted block; refill is a supplied service. Added runnable pending-policy
+example and a consolidated command/request lifecycle guide to join the accumulated
+models and distinguish admission, delivery, context cleanup and record reuse.
+No game launch or concurrent/exactly-once guarantee.
+Full suite passed: 2182 tests, one skipped; example and repository checks passed.
+
+
 Connected original ready-ring acquisition, consumer, refusal, reset and free-pool
 return in 12 passing cases. Reset clears callback/context without a direct context
 free; skip-path ownership remains external. Recycler reenters the consumer's pool

@@ -1,0 +1,31 @@
+{
+  "evidence": "Connected original publisher and pending-to-ready transfer control flow compared to serial model",
+  "cases": 160,
+  "all_passed": true,
+  "category_order": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "seed_preparation_ends_pass": true,
+  "capacity_pressure_preserved": true,
+  "spans": [
+    {
+      "rva": "0x118eae0",
+      "length": 221,
+      "sha256": "38f7a315dec1657be68cf84e52c9ef0f2ba08380b483f086ee8f24ffc55619e5"
+    },
+    {
+      "rva": "0x11aff80",
+      "length": 479,
+      "sha256": "ca807ba3c49dcebf8737f3ab80b1a1b1f5935efc6ed61ed6a68a07b60e85b441"
+    }
+  ],
+  "limitations": [
+    "Seed allocation/construction block intercepted at entry and resumes original epilogue; only its gate, lock context and pass-ending behavior proved.",
+    "Lock, wake, before-transfer and category-1 refill services are synthetic; refill always returns false.",
+    "Capacity-pressure states and initial null pending slot are supplied, not live observed.",
+    "No request execution, context ownership, cancellation or concurrency guarantee."
+  ]
+}

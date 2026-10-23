@@ -3278,3 +3278,48 @@ a permanent command identity is insufficient; requests need a generation or
 another independently retained identity. Next qualify pending publication and
 ready-ring production, including full-ring accounting and request replacement,
 before declaring this lifecycle reliable for native submissions. No game launched.
+
+## Pending publication and ready transfer
+
+Publisher `0x118eae0` chooses one of four pending rings from work mode +0x3c.
+Their headers begin at manager +0x108 with stride 0x20. Under the manager lock,
+it increments pending-total +0x228, attempts insertion when capacity permits,
+and increments normal-outstanding +0x220 for kind zero. Both counter changes
+occur even when insertion fails. After unlock, it updates wake counter +0x208
+by selecting 1 when the old signed value is at least 1, otherwise old + 1.
+It signals +0x210 only when the previous counter was negative. The comparison
+precedes increment selection, so signed INT_MAX saturates to 1 without wrapping. Publication return is not an insertion
+receipt; a higher-level accepted result must not silently imply queue membership.
+
+Transfer `0x11aff80` calls a global service, then scans categories 0 through 3 under
+the queue lock. It drains each category before advancing. When category 1 is
+empty, it releases the lock, calls a refill service and reacquires the lock; a
+true result rechecks that category. It does not restart at category 0. Each
+nonnull pop decrements pending-total and attempts insertion into the ready ring
+at +0x188. A null slot is consumed without decrementing pending-total.
+
+For kind-zero work with an absent resource or a nonzero reload byte, transfer
+prepares auxiliary resource work and ends the pass. This happens after the ready
+insertion attempt, including when that insertion failed. Otherwise it keeps
+scanning. The preparation block allocates an auxiliary object and submits it to
+a separate service; its numerical/ownership behavior remains outside this model.
+The preparation gate and its execution under the queue lock are established.
+
+[160 connected original publisher/transfer comparisons](../../native/snow_host/request_pending_validation.json)
+match `engine.request_pending` across four submitted categories, ordinary and
+alternate kinds, resource/reload gates, wake states and pending/ready capacity
+pressure. The seed-construction block is intercepted at entry and resumes at
+the original epilogue. Its allocation and submission are not claimed validated.
+The refill adapter always returns false in these instruction cases; a separate
+model test supplies a refill and verifies that earlier categories are not revisited.
+Lock/event services remain synthetic. Capacity-pressure states are not live proof.
+
+```sh
+python3 -m engine.examples.request_pending_probe
+```
+
+The example publishes in reverse/mixed order and shows category 0 followed by
+category 1, where auxiliary preparation ends the pass with categories 2 and 3
+still pending. No native threading or submission safety is implied. See the
+[consolidated lifecycle guide](REQUEST_COMMAND_LIFECYCLE.md) for the connected
+contracts, executable entry points and remaining release gates.

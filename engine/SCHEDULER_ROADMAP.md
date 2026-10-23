@@ -44,6 +44,12 @@ the budget, then repeat the previous callback. Before native admission, qualify
 capacity under the queue lock, receiver/module retention, the separate dispatch
 lock and completion receipts. The ordinary producer is not yet a safe mod API.
 
+The [command/request lifecycle guide](../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md)
+now connects the initial callback producer, downstream admission, four pending
+categories, ready/active consumption, context cleanup and record recycling.
+It distinguishes locally validated joins from opaque preparation/cancellation
+and native concurrency. Use it when designing command receipts and identity.
+
 Immediate sequence:
 
 1. Audit command producer publication and all executor entry paths; retain
