@@ -1642,3 +1642,61 @@ requests capacity 32 for each of eight descriptors. This does not establish
 that 32 records are populated or that the descriptors alias embedded scalar
 records. Descriptor population and scalar/vector ownership writers remain
 separate open leads.
+
+## Direct holder-poll caller is conditional
+
+The direct holder-cycle call previously identified at 0xf9078a belongs to
+helper 0xf906e0. For finite scalar inputs, its prefix reaches that call only
+under all of these conditions:
+
+```text
+object.byte_109 == 0
+and (object.byte_ac != 0 or object.byte_7d != 0)
+and object.float_c0 > 0
+and abs(float32(object.float_c4 - 1.0f)) <= float32(0.00001)
+and object.byte_af != 0
+```
+
+These offsets remain unnamed; the evidence does not identify float_c0 as dt,
+float_c4 as playback speed, or these flags as gameplay/menu state. If the first
+four conditions pass but byte_af is zero, later work proceeds without this
+holder update. The subtraction is float32. The original comparison behavior
+for nonfinite values is not generalized by the finite-input formula above.
+
+The [prefix validation](../../native/snow_host/input_poll_caller_gate_validation.json)
+executes 240 original gate cases, including float32 values on either side of
+the near-one threshold. It stops before the holder call or later work and uses
+no substituted calls. It proves the finite eligibility decisions, not polling
+frequency or effects.
+
+A further direct caller 0xf98b90 adds these outer gates:
+
+```text
+if object.pointer_f0 == null or uint32(object.type_8 - 2) > 1:
+    return
+object.virtual_10()
+if object.byte_29 != 0:
+    return
+helper_f906e0(object)
+if object.byte_29 != 0:
+    return
+helper_f90bc0(object)
+```
+
+The repeated byte_29 read matters because callbacks may change it. The type
+condition accepts exactly uint32 values 2 and 3. These are static findings;
+virtual_10 and helper_f90bc0 are not reconstructed by the gate test.
+
+Caller 0xae6c20 iterates an object's pointer array at +0x60 with uint16 count
++0x6a. It temporarily writes a supplied context to each child's +0xf0, invokes
+0xf98b90, then reloads the array entry and clears +0xf0. Another direct caller
+at 0xf99314 also invokes 0xf98b90. Their semantic roles and relation to the
+StepPreWorlds graph are unresolved.
+
+This narrows the scheduling conclusion: a direct route to polling exists, but
+it is conditional and not yet proved to be the universal device-update path.
+The StepPreWorlds ownership/history registration does not itself close polling
+freshness. Next useful probes are the writers of byte_af and the owning objects'
+registration paths, alongside indirect references to the holder update. Until
+those joins are established, do not model polling as once per world step merely
+because ownership updates precede Step.

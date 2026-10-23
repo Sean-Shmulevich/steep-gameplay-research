@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Traced the direct holder-poll caller through its finite-scalar and flag gates
+and an outer context/type gate. 240 original prefix cases pass without call
+substitutions. This is a conditional polling path, not proof of one poll per
+StepPreWorlds/physics step; semantic field roles and registration remain open.
+See [poll caller boundary](../docs/reconstruction/INPUT_UPDATE_ORDER.md#direct-holder-poll-caller-is-conditional).
+
 Identified the history/ownership wrapper as the registered StepPreWorlds
 callback. Joined it to the existing normal-route frame graph upstream of Step.
 Twelve original registration slices pass without substituted calls. This closes

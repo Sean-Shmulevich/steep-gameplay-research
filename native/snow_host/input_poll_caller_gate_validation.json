@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "cases": 240,
+  "scope": "Original conditional poll caller prefix through eligibility decision; stopped before holder call or later work",
+  "substitutions": [],
+  "inputs": "Finite float32 boundary values and boolean flags; synthetic owner",
+  "spans": [
+    {
+      "start_rva": "0xf906e0",
+      "end_rva_exclusive": "0xf9078f",
+      "sha256": "4297e2cd86d93c6711d06d913e5fb9eb9e0e3cf0c86318945b3051007b4af6f8"
+    },
+    {
+      "start_rva": "0xf98b90",
+      "end_rva_exclusive": "0xf98bdb",
+      "sha256": "53e82af9ae7e59c6a248d425fb3b88855149a69dd17e6a5db35028c8784e4f0a"
+    }
+  ],
+  "limits": [
+    "Outer caller statically inspected only",
+    "Nonfinite scalar behavior not modeled",
+    "No holder execution or runtime frequency proof"
+  ],
+  "game_process": false
+}
