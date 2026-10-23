@@ -1,6 +1,7 @@
 {
   "evidence": "original_instruction_emulation_with_substituted_callees",
   "passed": true,
+  "portable_gate_kernel_compared": true,
   "cases": 192,
   "game_process": false,
   "code_sha256": {

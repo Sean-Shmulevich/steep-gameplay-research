@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Implemented the recovered ingestion-gate sequence with deferred skip reads
+after preparation and predicate precedence. Reran 192 original-instruction
+emulation cases against the new kernel: ingestion eligibility and predicate/
+preparation order match. Composition tests verify suppression skips action
+reads while physics substeps retain the prior state. Helper effects, handle
+resolution and live mode coverage remain explicit dependencies.
+
 Added an explicit motion-input batch interface around the recovered ingestion
 prefix and existing scheduler plans. Four separate action reads occur once per
 eligible preparation; every supplied substep uses the same immutable result.

@@ -888,3 +888,19 @@ A caller-requested zero-step batch still refreshes eligible input; this is an
 explicit interface choice without a corresponding live zero-step observation.
 Suppression preserves prior state without action reads. Callback failures stop
 execution and propagate; earlier callback side effects are not rolled back.
+
+For the recovered activity/controller/motion-enable/skip decision, use
+`motion_input_gate.resolve_motion_input_gate(read_flag, predicate_a, predicate_b,
+prepare_a, prepare_b)` and pass its `ingestion_enabled` result into batch
+preparation. `read_flag` receives the names `active`, `controller_blocked`,
+`motion_enabled`, and `skip_ingestion`; it must read caller-owned state at call
+time, not return a snapshot taken before preparation. Predicate A takes
+precedence over B. The chosen preparation runs before the skip flag is read.
+
+This gate kernel matched all 192 original-instruction emulation cases, including
+predicate/preparation call order. Helper bodies were substituted; synthetic
+preparation changes to skip test sensitivity rather than establish those
+helpers' real effects. Actor preparation before these gates, controller handle
+resolution, and downstream bookkeeping remain caller dependencies. A failed
+outer gate prevents subsequent reads and preparations. Unresolved/non-boolean
+values raise an error rather than silently disable ingestion.

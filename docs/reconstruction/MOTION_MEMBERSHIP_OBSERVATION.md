@@ -126,6 +126,12 @@ motion-update branches in 192 synthetic cases. All cases passed. The
 code hashes, inputs and outcomes. This establishes local branch behavior with
 substituted callees, not live input consumption.
 
+The portable `engine/motion_input_gate.py` kernel now implements this gate
+sequence. A fresh emulation pass compared its decision and predicate/preparation
+order with all 192 original-instruction cases. It reads skip through a callback
+after preparation, preserving sensitivity to helper mutations. This does not
+supply the helper bodies or establish live gate coverage.
+
 The gate order is:
 
 ```text
