@@ -731,9 +731,10 @@
       "source": "docs/reconstruction/ANIMATION_CONTEXT_RETIREMENT.md",
       "source_sha256": "adfb8021009aed469d2e13dd160c31d3f7274e17659be06cdfe027a7f08ed778",
       "published": "engine/examples/begin_commands_probe.py",
-      "published_sha256": "6a3ef842e20bfc108fbba411448395e8439598287fccf62dcc1db9f7d3623006",
+      "published_sha256": "c4710da8fb2d3d34638d2b2a898344515562dc37960f4da5889006ee0ab3d743",
       "adaptations": [
-        "Partial recovered frame-entry topology, synthetic command and callback bodies, authored terminal; no native quiescence claim."
+        "Partial recovered frame-entry topology, synthetic command and callback bodies, authored terminal; no native quiescence claim.",
+        "Added registered graphics sibling chain with deliberately deferred dispatch finalization to demonstrate operation-specific exclusion limits; no native concurrency proof."
       ],
       "game_payloads_included": false
     },
