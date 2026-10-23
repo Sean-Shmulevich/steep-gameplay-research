@@ -954,3 +954,44 @@ both, then starts one shared interval and restores both. Independent trigger
 files are insufficient synchronization. The correlator must continue preserving
 unmatched edges and refusing guessed pairings; increasing the nominal durations
 alone would not establish synchronized start.
+
+### Coordinated capture implementation
+
+The [paired controller](../../native/snow_host/examples/scheduler_phase_capture.c)
+uses one worker and one trigger. It verifies five code spans and both bindings,
+configures both adapters, installs main then finalizer, and starts its interval
+only after both report success. It marks the interval with a common QPC start/end,
+restores finalizer then main, and closes/drains both within a bounded polling loop.
+Every configured adapter receives a restoration attempt even if installation
+partially fails. Record windows can include installation/restoration edges, so
+records are still correlated rather than assumed to align by row index.
+
+The correlation tool requires matching nonzero shared markers when supplied and
+reports `inside_shared_interval` for each pair. Legacy independent captures retain
+null for that field. Marker agreement is controller evidence, not a new native
+scheduler barrier. Installing/restoring the two hooks is sequential, and control
+thread scheduling can still overshoot the configured interval.
+
+The [refusal receipt](../../native/snow_host/paired_capture_fixture_validation.json)
+covers disabled configuration, stale trigger, stale output and incompatible
+executable. Both refusal outputs report zero interval markers. It does not test
+injected partial-install/protection failures. Adapter-level rollback/conflict
+checks remain separate evidence. This supersedes the missing coordinated-controller
+status; the earlier disjoint-record attempt remains an inconclusive observation.
+
+### Coordinated attempt stopped before activation
+
+The [startup failure receipt](../../native/snow_host/paired_capture_startup_failure.json)
+records a distinct failure before probe installation. The navigator observed the
+gameplay HUD 37 times; its native world step advanced from 998 to 6898. However,
+`player.get` returned `no_player` and `player.bind` returned `player_rejected`
+(runtime link invalid), so the player-required readiness gate never completed.
+The experiment controller timed out without writing a trigger. Both probes
+remained uninstalled. Watchdog/bottle, saves/settings and original DLL cleanup
+passed; the navigation outcome itself was failure.
+
+This does not test the coordinated hook implementation. Scheduler-only captures
+should have a separately named readiness contract using gameplay HUD, advancing
+engine state and current engine/job identity checks. They should not silently
+claim player readiness or relax the existing gate for player-dependent work.
+The player runtime-link failure remains an independent unresolved observation.

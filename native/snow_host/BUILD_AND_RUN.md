@@ -310,3 +310,16 @@ Use a new output/config path per experiment. Output is private JSONL at
 `<config>.trace.jsonl`; check the complete row count and all install/restore/drain
 outcomes. The controller verifies three code fingerprints and the selected job
 binding before installation. It never sends input or pauses the scheduler.
+
+### Coordinated main/finalizer capture
+
+Build with `--adapter steep --scheduler-phase-capture-plugin`. This produces
+`plugins/scheduler_phase_capture.dll`; use it instead of the two independent
+capture plugins for a paired experiment. Configuration is the same `[capture]`
+section. It refuses stale trigger or output files. A single `<config>.trigger`
+starts installation of both probes, followed by a shared interval only after both
+installations succeed. It writes `<config>.main.trace.jsonl` and
+`<config>.finalizer.trace.jsonl`, each with identical `joint_start_tick` and
+`joint_end_tick` markers. It restores both configured adapters, including partial
+installation cases, before closing/draining and writing output. No simultaneous
+atomic installation or hard wall-clock deadline is claimed.

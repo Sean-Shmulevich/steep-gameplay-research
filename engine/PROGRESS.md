@@ -1,5 +1,15 @@
 # Reconstruction progress and next work
 
+Built coordinated main/finalizer controller with one trigger, five fingerprints,
+shared QPC interval after both installs, and cleanup for both configured adapters.
+Four synthetic refusal scenarios passed; correlation tests now qualify shared
+interval pairs. Live attempt never activated: HUD/world steps showed gameplay,
+but host player binding repeatedly returned player_rejected, blocking the existing
+player-required navigator. No trigger or probe installation occurred; cleanup
+passed. Next separate scheduler-only readiness from player-dependent readiness,
+then validate the combined hooks. Full suite 2127 tests, one skipped; build and
+repository checks passed. Earlier disjoint-record failure remains preserved.
+
 Added bounded private-trace correlation API/CLI with session, owner, clock, caller,
 ABI and capture-integrity checks; duplicate/changing keys are never guessed into
 pairs. First live dual-plugin attempt was inconclusive: 17 main records and 56

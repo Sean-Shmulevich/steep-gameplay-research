@@ -1,0 +1,34 @@
+{
+  "status": "synthetic_paired_controller_refusals_passed",
+  "scenarios": [
+    {
+      "name": "disabled",
+      "passed": true
+    },
+    {
+      "name": "stale",
+      "passed": true
+    },
+    {
+      "name": "stale_output",
+      "passed": true
+    },
+    {
+      "name": "trigger",
+      "passed": true
+    }
+  ],
+  "runtime": "Wine on macOS",
+  "game_launched": false,
+  "source_hashes": {
+    "native/snow_host/examples/scheduler_phase_capture.c": "5e33051ae8baaa247f1bd69cd0d08b3d82766a2321772e373bd58cf533fc93f6",
+    "tests/fixtures/scheduler_phase_capture_fixture.c": "7aeda0e4527c57f682c53a75727ad68acbd6069ef261f87c25e5527212ec0af0",
+    "native/snow_host/snow_delegate_probe.c": "935eae3ee67683f0ce6b714ff3d64c548a93bef2a4a11703ca2c56ece5e39c2b",
+    "native/snow_host/snow_finalizer_probe.c": "f377be6d4cb33ef1d7bfcac87e9cd62358474aaa9a6f098cf6019223ea9be632"
+  },
+  "limitations": [
+    "Disabled/stale-trigger/stale-output/incompatible-executable refusal only.",
+    "No injected partial-install or OS protection failure in this controller fixture.",
+    "Adapters have separate synthetic install/restore tests; combined live validation remains distinct."
+  ]
+}

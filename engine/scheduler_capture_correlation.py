@@ -37,7 +37,7 @@ def correlate_graphics_captures(main, finalizer):
     base = _integer(main.get('image_base'), 0x10000)
     if finalizer.get('image_base') != base:
         raise ValueError('image bases differ')
-    captures = []; windows = []; owner = frequency = None
+    captures = []; windows = []; shared_intervals = []; owner = frequency = None
     for envelope, abi, site, is_final in ((main, 3, 0x65b223, False),
                                         (finalizer, 1, 0x11e2dff, True)):
         rows = envelope.get('rows')
@@ -52,6 +52,13 @@ def correlate_graphics_captures(main, finalizer):
             raise ValueError('capture lifecycle incomplete')
         if _integer(summary.get('used'), 0, 1024) != len(rows)-1 or summary.get('dropped') != 0:
             raise ValueError('incomplete or dropped records')
+        has_interval = 'joint_start_tick' in summary or 'joint_end_tick' in summary
+        if has_interval:
+            start = _integer(summary.get('joint_start_tick'), 1)
+            end = _integer(summary.get('joint_end_tick'), start)
+            shared_intervals.append((start, end))
+        else:
+            shared_intervals.append(None)
         current_owner = _pointer(summary.get('owner'))
         current_frequency = _integer(summary.get('qpf'), 1)
         if owner is not None and (owner != current_owner or frequency != current_frequency):
@@ -85,6 +92,9 @@ def correlate_graphics_captures(main, finalizer):
         captures.append((keyed, rejected))
         windows.append((min(r['entry'] for r in rows[1:]), max(r['exit'] for r in rows[1:]))
                        if len(rows) > 1 else None)
+    if shared_intervals[0] != shared_intervals[1]:
+        raise ValueError('shared interval markers differ')
+    interval = shared_intervals[0]
     a, b = captures[0][0], captures[1][0]
     ambiguous = sorted(k for k in a.keys() | b.keys() if len(a[k]) > 1 or len(b[k]) > 1)
     pairs = []; unmatched_main = unmatched_finalizer = 0
@@ -98,6 +108,8 @@ def correlate_graphics_captures(main, finalizer):
         m, f = a[request][0], b[request][0]
         signature = lambda s: (s['executions'], s['outstanding'], s['state'])
         pairs.append(dict(request=request, observed_order=m['exit'] <= f['entry'],
+            inside_shared_interval=(interval[0] <= m['entry'] and f['exit'] <= interval[1])
+                if interval is not None else None,
             same_thread=m['thread'] == f['thread'],
             gap_ticks=f['entry']-m['exit'],
             accounting_matches=(signature(m['before']) == (1, 1, 2) and
@@ -107,6 +119,7 @@ def correlate_graphics_captures(main, finalizer):
                max(w[0] for w in windows) <= min(w[1] for w in windows))
     return dict(schema='graphics-phase-correlation-v1', pairs=pairs, pair_count=len(pairs),
         observed_capture_windows_overlap=bool(overlap),
+        shared_interval_ticks=interval[1]-interval[0] if interval is not None else None,
         rejected_main=captures[0][1], rejected_finalizer=captures[1][1],
         ambiguous_requests=ambiguous, unmatched_main=unmatched_main,
         unmatched_finalizer=unmatched_finalizer, clock_frequency=frequency,

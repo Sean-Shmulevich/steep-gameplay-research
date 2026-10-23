@@ -28,7 +28,7 @@ class CaptureCorrelationTests(unittest.TestCase):
         a, b = self.envelopes();r = correlate_graphics_captures(a, b)
         self.assertEqual(r['pair_count'], 1)
         self.assertEqual(r['pairs'][0], dict(request=17, observed_order=True,
-            same_thread=True, gap_ticks=10, accounting_matches=True))
+            same_thread=True, gap_ticks=10, accounting_matches=True, inside_shared_interval=None))
         self.assertNotIn(a['session'], json.dumps(r))
         self.assertFalse(r['outstanding_decrement_observed'])
 
@@ -78,3 +78,17 @@ class CaptureCorrelationTests(unittest.TestCase):
         report = correlate_graphics_captures(a, b)
         self.assertFalse(report['observed_capture_windows_overlap'])
         self.assertEqual(report['pair_count'], 0)
+
+    def test_shared_interval_markers_and_boundary_pairs(self):
+        a, b = self.envelopes()
+        for capture in (a, b):
+            capture['rows'][0].update(joint_start_tick=10, joint_end_tick=40)
+        report = correlate_graphics_captures(a, b)
+        self.assertEqual(report['shared_interval_ticks'], 30)
+        self.assertTrue(report['pairs'][0]['inside_shared_interval'])
+        for capture in (a, b):
+            capture['rows'][0]['joint_end_tick'] = 39
+        self.assertFalse(correlate_graphics_captures(a, b)['pairs'][0]['inside_shared_interval'])
+        b['rows'][0]['joint_end_tick'] = 40
+        with self.assertRaises(ValueError):
+            correlate_graphics_captures(a, b)

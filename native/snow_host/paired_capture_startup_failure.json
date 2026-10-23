@@ -1,0 +1,30 @@
+{
+  "status": "paired_capture_not_triggered_player_readiness_failed",
+  "probe_installed": false,
+  "trigger_created": false,
+  "record_count": 0,
+  "gameplay_hud_samples": 37,
+  "first_gameplay_seconds": 48.5,
+  "first_gameplay_step": 998,
+  "last_gameplay_step": 6898,
+  "native_errors": [
+    "player_rejected"
+  ],
+  "controller_result": "Readiness timeout",
+  "navigator_result": "budget_exhausted",
+  "cleanup": {
+    "ok": false,
+    "error": "did not reach the startup map or gameplay",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_navigation_sha256": "7a736eabcc288c9ac7e656cb4cd333c416f5d0fba5509c6a6ac16f00ce69d4ef",
+  "limitations": [
+    "Host player runtime link was rejected while gameplay HUD and advancing world steps were observed.",
+    "No paired probe activation, record correlation, or live restoration behavior was tested.",
+    "Native director and scheduler observation do not establish a valid player API binding."
+  ],
+  "next_action": "Introduce an explicitly scheduler-only readiness gate requiring gameplay HUD, advancing engine state and qualified owner/job identities; retain player-required readiness for player-dependent tests."
+}
