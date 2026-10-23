@@ -1027,3 +1027,30 @@ Invoked descriptor context/code must also outlive every possible delivery.
 Neither the successful engine-main capture nor this negative static search
 satisfies those requirements. No new command publication is authorized by these
 findings alone.
+
+
+## Startup precedes observed manager publication
+
+The opt-in [startup observer](../../native/snow_host/examples/command_manager_startup.c)
+performs a one-shot read during plugin initialization, after checking the local
+singleton-getter fingerprint. It adds no hook, worker, engine call or game-memory
+write. [Build and configuration](../../native/snow_host/BUILD_AND_RUN.md#read-only-command-manager-startup-observation)
+are available in the standalone repository.
+
+In [two bounded startup sessions](../../native/snow_host/command_manager_startup_live_validation.json),
+the getter fingerprint matched and both reads of the singleton were null during
+plugin initialization. No manager fields were read at that time. In the second
+session, a later PID/creation-guarded read at scheduler readiness found a nonnull
+manager, nonnull array, capacity 3072, count zero and lock pointer at manager+8.
+The singleton remained equal across the later read sequence. The in-process
+initial PID and creation time exactly match the later reader's process identity.
+Both sessions stopped normally and verified saves, settings and original DLL.
+
+This establishes an observation point before the null-to-present change in one
+verified process. A startup-installed publication probe is therefore feasible to
+investigate next; a gameplay-only probe is unnecessary for that initial window.
+It does not identify the write instruction, constructor caller or storage owner,
+and cannot exclude an earlier transient publication. The next probe should
+record the first observed publication with execution provenance. Polling alone
+can narrow timing but cannot recover the writer's call stack. No manager-lifetime
+contract or native command-publication permission follows yet.

@@ -358,3 +358,31 @@ builds and runs the admission and observer C components against synthetic queue,
 lock and lifetime services. See the [combined probe contract](../../docs/reconstruction/REQUEST_COMMAND_LIFECYCLE.md#combined-native-code-inspection-probe)
 for refusals, disposal, repeated delivery and recorder-close boundaries. This
 console probe neither launches the game nor installs a native callback.
+
+
+### Read-only command-manager startup observation
+
+Build with `--adapter steep --command-manager-startup-plugin` to include
+`plugins/command_manager_startup.dll`. It is disabled by default. Enable it with
+`plugins/command_manager_startup.ini`:
+
+```ini
+[observation]
+enabled=1
+```
+
+During `SnowMod_Initialize`, the plugin checks the inspected singleton getter's
+code fingerprint and performs one bounded sequence of `ReadProcessMemory` calls.
+It reads the singleton, selected queue fields when the pointer is plausible, and
+the singleton again. No original engine routine is invoked and no hook, background
+worker or gameplay write is installed. The output is
+`command_manager_startup.ini.observation.json` beside the INI, overwritten for
+this initialization. It contains private addresses, process creation identity and
+QPC timestamps; keep the raw file private.
+
+`owner_read=1` with `manager="0"` means the global was readable and null at that
+sample. `fields_read=0` then means no manager fields were read, not a zero-capacity
+manager. `same_pointer=1` only compares two reads; it does not prove ownership or
+an atomic snapshot. A matching getter fingerprint is a local compatibility check,
+not verification of the complete executable. Publication may predate or follow
+plugin initialization; this one-shot observer does not capture the writer.

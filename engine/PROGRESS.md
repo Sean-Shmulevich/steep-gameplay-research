@@ -6213,3 +6213,13 @@ calls are constructor branches, not a shutdown path. The receipt states search
 coverage and unanchored decode ambiguity. Next ownership evidence must address
 startup publication or containing-object teardown rather than repeat the same
 reference search. No game launch or native command submission occurred.
+
+
+### Manager startup publication window observed
+
+A standalone opt-in read-only plugin found the command-manager global null during
+initialization in two sessions. One same-process later read at scheduler readiness
+found the manager and a 3072-slot queue. PID and creation identity agree; both
+sessions passed cleanup. This provides an early observation point for publication
+instrumentation. Writer, allocation ownership and teardown remain unknown. See
+`native/snow_host/command_manager_startup_live_validation.json`.

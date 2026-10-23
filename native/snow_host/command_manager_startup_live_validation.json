@@ -1,0 +1,67 @@
+{
+  "evidence": "Two read-only initialization observations; one same-process later comparison",
+  "runs": [
+    {
+      "initial_manager_null": true,
+      "fingerprint_matched": true,
+      "initial_read_and_recheck_succeeded": true,
+      "fields_read": false,
+      "initial_observation_ticks": 376,
+      "ticks_per_second": 10000000,
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "private_observation_sha256": "0ee2b56773b769b9d2754fe2b56fa981f1393760283b938b74ea11342bc44a9e"
+    },
+    {
+      "initial_manager_null": true,
+      "fingerprint_matched": true,
+      "initial_read_and_recheck_succeeded": true,
+      "fields_read": false,
+      "initial_observation_ticks": 189,
+      "ticks_per_second": 10000000,
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "private_observation_sha256": "b89d053558db36f873bac70777b89b492d2f9db32da32ec44be46588cc2de690",
+      "later_observation": {
+        "same_process_identity": true,
+        "manager_nonnull": true,
+        "singleton_recheck_equal": true,
+        "capacity": 3072,
+        "count": 0,
+        "lock_is_manager_plus_8": true,
+        "array_nonnull": true,
+        "reader_calls": 3,
+        "reader_bytes": 40,
+        "readiness": "scheduler_ready"
+      }
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/examples/command_manager_startup.c": "187a9b63255b4a258f12614bec1d056a6ea65d687929e0383fe42121bcdb898b"
+  },
+  "plugin_sha256": "99a2d9b83f5cb1bcd72edcee9379ae2911c4e0dedd554754ecc002679a65cec6",
+  "game_launched": true,
+  "observer_game_memory_modified": false,
+  "observer_engine_functions_called": false,
+  "movement_input_sent": false,
+  "mod_commands_submitted": false,
+  "limitations": [
+    "Startup director remains active for navigation; read-only refers to this observation plugin and later reader.",
+    "Two null samples do not prove no transient earlier publication or process-wide initialization order.",
+    "Later readable manager fields are sequential observations, not an atomic snapshot or lifetime pin.",
+    "Publication writer, constructor caller, allocation owner and teardown remain unidentified.",
+    "One repeated session includes a later observation; the first session ended without it."
+  ]
+}
