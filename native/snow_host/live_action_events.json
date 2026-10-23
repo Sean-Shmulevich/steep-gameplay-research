@@ -1,0 +1,82 @@
+{
+  "probe": {
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "used": 8192,
+    "dropped": 412,
+    "qpc_frequency": 10000000
+  },
+  "records": 8192,
+  "distinct_actions": 9,
+  "distinct_threads": 10,
+  "per_action_counts_sorted": [
+    910,
+    910,
+    910,
+    910,
+    910,
+    910,
+    910,
+    911,
+    911
+  ],
+  "per_thread_counts_sorted": [
+    702,
+    756,
+    765,
+    774,
+    774,
+    792,
+    810,
+    882,
+    893,
+    1044
+  ],
+  "all_intervals_nonnegative": true,
+  "same_reported_qpc_frequency": true,
+  "recorded_span_seconds": 9.7500123,
+  "entry_counts_relative_to_delivery_reports": {
+    "before": 3420,
+    "during": 405,
+    "after": 4367
+  },
+  "movement": {
+    "ok": true,
+    "method": "sequential host polling for player movement; evaluator events exported separately",
+    "helper_launch_seconds": 2.0117164999828674,
+    "input_exit": 0,
+    "keys_released": true,
+    "samples": 95,
+    "baseline_samples": 19,
+    "max_distance_from_initial": 68.49413700895656,
+    "max_speed": 25.70521250179456,
+    "first_step": 1730,
+    "last_step": 2657,
+    "action_export_complete": true
+  },
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limits": [
+    "Class-wide events, not a proven selected-player binding.",
+    "No physics update trace was recorded concurrently.",
+    "QPC report comparison is not input acceptance or ingestion latency.",
+    "No action result or input-cache snapshots were captured.",
+    "Buffer saturated: 412 calls forwarded but not recorded; do not treat the trace as complete."
+  ],
+  "kind": "live_directional_evaluator_capture",
+  "evidence": "live class-slot callback instrumentation, bounded OS input and separate player-state sampling",
+  "prior_attempt": {
+    "exported": false,
+    "movement_verified": true,
+    "cleanup_passed": true,
+    "failure": "Runner stopped game after player sampling without waiting for plugin export.",
+    "correction": "Wait for plugin completion receipt before requesting game shutdown."
+  }
+}

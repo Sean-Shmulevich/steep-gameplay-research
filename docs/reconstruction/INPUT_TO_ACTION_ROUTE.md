@@ -1782,3 +1782,31 @@ claim ingestion latency. Player and scheduler reads are also sequential.
 
 The game was stopped after capture; save/settings restoration and original DLL
 verification passed. The earlier action-chain run remains idle-only evidence.
+
+## Live directional evaluator events during movement
+
+A private build-qualified plugin installed the action probe on the known
+directional evaluator's class slot after native-director startup. It verified
+callback bytes and the original slot pointer, then recorded callback entry/exit
+QPC and thread/action identities for a bounded interval. A 500 ms forward pulse
+and separate host sampling confirmed rider movement. See the
+[live receipt](../../native/snow_host/live_action_events.json).
+
+The exported trace contains 8,192 calls across nine action objects and ten thread
+IDs, spanning 9.750 seconds. Per-object recorded counts range from 910 to 911.
+This is direct execution evidence, not inferred field changes. The buffer filled
+and 412 additional calls were forwarded without recording. On the reported QPC
+time scale, 3,420 entries precede key-down delivery, 405 fall between key-down
+and key-up reports, and 4,367 follow key-up. These counts do not establish input
+acceptance or ingestion latency. Both reporters supplied frequency 10,000,000.
+
+Installation, slot restoration and recorder drain succeeded. Save/settings and
+original DLL restoration checks passed after shutdown. An earlier attempt reached
+movement but shut down before export; the runner now waits for the plugin's
+completion receipt. That failed attempt contributes no evaluator timing evidence.
+
+Remaining work: renew player binding during capture, identify which of these
+objects belongs to the selected action, and capture physics update intervals
+concurrently. Ten observed thread IDs rule out assuming one fixed execution
+thread for this class across the recording; they do not alone establish parallel
+execution or worker roles. No input-cache or action-result payload was captured.
