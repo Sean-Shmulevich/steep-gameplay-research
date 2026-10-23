@@ -238,3 +238,10 @@ service/dispatch/owner changes, invalid handle status, duplicate membership,
 and a receiver replacement between samples. The reader has not yet run live.
 Even a qualified result would establish observed dispatch configuration and
 membership, not that the virtual call executed, atomicity, or pinned lifetimes.
+
+
+The first attempted live service qualification was aborted before any service
+read: startup repeatedly failed the existing player-transform finite checks.
+No hold or step commands ran. Cleanup passed. This is a startup qualification
+failure, not evidence that the new reader failed or that timing dispatch differs.
+See [attempt receipt](../../native/snow_host/timing_service_live_attempt.json).

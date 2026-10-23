@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+First live timing-service qualification attempt stopped before capture: startup
+player queries repeatedly rejected a nonfinite transform, so READY was never
+accepted. No hold, step, or service observation ran. Bottle stopped and saves,
+settings, original DLL restored/verified. Cause unresolved; preserve the guard.
+Next: inspect the failed transform fields and compare a qualified startup before
+retrying the service capture. See [failed attempt](../native/snow_host/timing_service_live_attempt.json).
+
+
 Added bounded timing-service/world-membership reader: validates dispatch slot,
 separate registry, signed world handles, and manager/owner links with two equal
 samples. Four synthetic tests pass, including every short-read point and maximum

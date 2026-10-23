@@ -1,0 +1,44 @@
+{
+  "evidence": "live attempt rejected before timing service observation",
+  "status": "incomplete",
+  "reason": "Startup player.get and rebind checks repeatedly rejected a nonfinite transform; controller timed out before READY.",
+  "movement_commands": 0,
+  "hold_commands": 0,
+  "step_commands": 0,
+  "service_samples": 0,
+  "timing_samples": 0,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "navigator_stopped_after_bottle_exit": true,
+  "static_layout_spans": [
+    {
+      "rva": "0x6a52f0",
+      "length": 12,
+      "sha256": "e00c3e5309ad09927bb448fc67a5fdeb5e9670470fbd84f2ea7cdfd24adb6465"
+    },
+    {
+      "rva": "0x6a5300",
+      "length": 20,
+      "sha256": "eab189dc96144aa00f29e0d1e80ec8b726d6e00c364dfd387a7ed21889809a13"
+    },
+    {
+      "rva": "0x13cdf95",
+      "length": 10,
+      "sha256": "3c40028724d57cb4135a783ec65854265b83af55657c3d2a9ec15f892574c3a3"
+    },
+    {
+      "rva": "0x29117c8",
+      "length": 8,
+      "sha256": "4ea45861b3ce4e173389656a6af4efc43946d25de52f469fbf11e42ffae6bd61"
+    }
+  ],
+  "limitations": [
+    "No live service binding was qualified.",
+    "Nonfinite transform source is unresolved; no attribution to scheduler, director, protection, or observation code is established.",
+    "Static hashes identify inspected layout evidence, not runtime execution."
+  ]
+}
