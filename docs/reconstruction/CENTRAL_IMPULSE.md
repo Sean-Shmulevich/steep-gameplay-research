@@ -597,6 +597,53 @@ lead; its live relationship to the selected snow actor and enclosing job is not
 yet established. Do not hook the snow vtable at an inferred matching slot: the
 inspected snow table does not directly contain this callback target.
 
+### Live markup ownership joins the acquired actor's component chain
+
+The callback's table is now identified: the owned component table `0x1e789b8`
+contains `0x14053c760` at slot `0x4b0`. Its destructor also installs that table,
+supporting the table origin rather than inferring an offset from an arbitrary
+nearby function pointer. This is the component previously observed in the
+[`Ai::UpdateAIPreUpdate` membership](MOTION_MEMBERSHIP_OBSERVATION.md#live-result),
+not the snow actor table. Its unrelated slot `0x270` is the AI preupdate entry;
+membership there does not establish which job calls slot `0x4b0`.
+
+A [bounded live ownership check](../../native/snow_host/markup_binding_live_validation.json)
+now joins the paths:
+
+```text
+owned component, table 0x1e789b8
+  +0x6c8 -> controller, table 0x1e7d4b0
+              +0x628 -> same owned component
+  +0x6c0 -> markup object <- controller+0x388
+              +0x18 -> markup dispatcher
+```
+
+The component/controller relationship and boxed actor route are acquired freshly,
+with the actor also matching the world registry candidate. Both markup paths
+resolve to the same object before and after the input capture. Exact reads and
+rechecks confirm the controller descriptor function, captured receiver and shared
+thunk for IDs 84/92. The dispatcher has 148 records in this session:
+
+| ID | Query words | Source branch | Link count | Cached byte before / after | Force / pending index |
+| --- | --- | --- | --- | --- | --- |
+| 84 | `0x00c00002`, `0xffffffff` | 0 | 1 | 0 / 0 | 0 / -1 |
+| 92 | `0x00c0000b`, `0xffffffff` | 0 | 1 | 0 / 0 | 0 / -1 |
+
+These query words are build/session evidence, not decoded authored names. Branch
+zero uses the helper that follows its query owner at `+0xb0` and invokes that
+object's slot `0xb8`; branch one instead follows `+0x10` and slot `0x20`, returning
+zero if that pointer is null. The branch-zero query's concrete provider is the
+next producer lead.
+
+The run also returns 16 resident requests with all 32 motion and 32 physics samples
+valid, 201 callbacks and zero drops. Delegate restoration, continued engine
+progress and outer cleanup pass. The cached bytes match at the endpoints; no
+conclusion about notifications between them follows. A link count of one does
+not prove the identity or execution of the subscribed descriptor copy. The source
+descriptors are verified, but the listener entries are not yet read. The next
+capture must inspect or trace registered notification delivery, retaining this
+ownership chain and the existing motion/physics request correlation.
+
 The tagged-record visitor supplies the caller relationship:
 
 ```python

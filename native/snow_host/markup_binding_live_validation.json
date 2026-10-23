@@ -1,0 +1,109 @@
+{
+  "evidence": "One bounded live capture with exact bracketed markup ownership/record reads before and after input experiment",
+  "same_markup_object_before": true,
+  "same_markup_object_after": true,
+  "markup_pointer_unchanged_between_endpoints": true,
+  "anchor_checks_passed": true,
+  "component_table_rva": "0x1e789b8",
+  "controller_table_rva": "0x1e7d4b0",
+  "component_controller_forward_offset": "0x6c8",
+  "controller_component_reverse_offset": "0x628",
+  "component_markup_offset": "0x6c0",
+  "controller_markup_offset": "0x388",
+  "component_callback_slot": "0x4b0",
+  "component_callback_rva": "0x53c760",
+  "markup_record_count": 148,
+  "records": {
+    "before": [
+      {
+        "id": 84,
+        "key_words": [
+          12582914,
+          4294967295
+        ],
+        "pending_index": -1,
+        "backend": 0,
+        "force": 0,
+        "cached": 0,
+        "link_count": 1
+      },
+      {
+        "id": 92,
+        "key_words": [
+          12582923,
+          4294967295
+        ],
+        "pending_index": -1,
+        "backend": 0,
+        "force": 0,
+        "cached": 0,
+        "link_count": 1
+      }
+    ],
+    "after": [
+      {
+        "id": 84,
+        "key_words": [
+          12582914,
+          4294967295
+        ],
+        "pending_index": -1,
+        "backend": 0,
+        "force": 0,
+        "cached": 0,
+        "link_count": 1
+      },
+      {
+        "id": 92,
+        "key_words": [
+          12582923,
+          4294967295
+        ],
+        "pending_index": -1,
+        "backend": 0,
+        "force": 0,
+        "cached": 0,
+        "link_count": 1
+      }
+    ]
+  },
+  "descriptor_function_receiver_thunk_checks_passed": true,
+  "callback_descriptor_offsets": [
+    "0x948",
+    "0x9c8"
+  ],
+  "descriptor_thunk_rva": "0x397a20",
+  "motion_valid_samples": 32,
+  "physics_valid_samples": 32,
+  "returned_requests": 16,
+  "callback_records": 201,
+  "dropped": 0,
+  "owner_and_binding_restored": true,
+  "progress_after_restore": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "event_execution_proved": false,
+  "subscribed_listener_entry_read": false,
+  "selected_player_independently_proved": false,
+  "private_observer_sha256": "b19d0283fcc6b496e105a58d47f6355a804ef07e892cf997fd8f13c8640bdbc4",
+  "private_controller_sha256": "6edce6c29d1fabb4e052816cf8e31989143f437aae2e268f6d52a2747b077aa1",
+  "private_evidence_sha256": {
+    "delegate-capture-result.json": "6353253f1d06d057bc006ee620f87a409cb759dd21f356e8c081ea9e87787df3",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "boxed-provenance.json": "1397abc8e68ff2cbe2d67ed87b8695d4fa6189b9b871e1655447ab581a4697f4",
+    "input-events.jsonl": "a606bfa58cde6aacbf054d2a8c1c29dbbde6c95972b50deccda4138356897f9c"
+  },
+  "limitations": [
+    "Two endpoints only: equal zero cached bytes do not exclude a transient notification.",
+    "Link count one does not prove which copied listener is installed or that it ran.",
+    "Controller descriptor source is verified; subscribed copy remains unobserved.",
+    "Bracketed exact reads are not atomic and do not pin owner lifetime.",
+    "The acquired actor matches boxed/registry routes; independent selected-player identity remains open."
+  ]
+}

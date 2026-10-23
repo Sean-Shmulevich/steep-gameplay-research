@@ -6831,3 +6831,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Added a portable local record-update kernel with explicit signed link counts, raw byte semantics and pending-index reset. External graph queries, listener lifecycle and scheduling remain outside the model.
 - 216 isolated original-instruction cases match notification decisions, cache writes and the actual thunk's receiver/ID/value/sentinel forwarding. One synthetic listener, intercepted queries/map lookup; no live marker execution claim.
 - Found an upstream virtual callback via receiver+6c0 but have not joined its owner to the selected snow actor or scheduler job. The known snow vtable does not directly contain this target, so no slot is assumed for a live hook.
+
+### Live markup owner identity
+
+- Identified the updater at slot 0x4b0 of the owned component table already seen in AI preupdate membership. This is a different receiver from the snow actor; AI batch membership does not identify the job invoking the markup slot.
+- Live exact reads join component+6c0 and controller+388 to one markup object, with component/controller forward/reverse links and descriptor function/receiver/thunk checks. Both endpoint observations pass.
+- Markup IDs 84/92 each have link count one in a 148-record dispatcher, source branch zero, and cached value zero before and after. This does not exclude pulses between reads or prove a registered listener ran. Source descriptors are verified; subscribed copies remain open.
+- Concurrent resident capture returns 16 requests with 32 valid motion and 32 valid physics samples, 201 callbacks and zero drops. Restoration, progress and bottle/save/settings/original-DLL cleanup pass. Sanitized receipt retained; no payload published.
