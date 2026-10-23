@@ -543,3 +543,23 @@ Reads are sequential, not atomic against other threads. Missing exports remain
 explicit. Raw code bytes and absolute addresses must stay outside this repository.
 `tests/fixtures/snow_api_route_fixture.c` exercises the recognized forms and bounds
 using authored bytes that are never executed.
+
+### Protection dispatcher context snapshot
+
+`--adapter steep --protection-context-snapshot-plugin` builds an opt-in, read-only
+startup sampler. Enable `[context] enabled=1` in
+`plugins/protection_context_snapshot.ini`. It checks the local wrapper fingerprint,
+then reads the protection context pointer and three 256-byte windows: that context,
+a selected dispatcher stream window, and a selected image window read by the
+synthetic dispatcher probe. It rereads the context pointer afterward.
+
+The `.ini.context.json` output is private: it contains addresses and raw payload
+bytes. Equal pointer reads do not pin the allocation, exclude address reuse or
+make the three reads atomic. A valid fingerprint does not establish that the
+context layout or all dispatcher state is known. No target routine is called and
+no memory/protection is changed. Incompatible images emit no payload windows.
+
+Optional `[context] follow_candidate=1` adds one bounded window through the qword
+at context offset `0x78`. This is a research lead, not a stable context layout or
+callable API. The 256-byte context storage window does not establish object size
+and may include neighboring heap storage. No candidate function is invoked.

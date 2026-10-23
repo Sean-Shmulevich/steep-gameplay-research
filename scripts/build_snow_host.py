@@ -19,10 +19,11 @@ def main():
     ap.add_argument('--command-manager-execute-plugin', action='store_true', help='Build opt-in one-shot constructor-page execution experiment; steep adapter only')
     ap.add_argument('--execution-control-plugin', action='store_true', help='Build opt-in execution observer control on an authored private allocation')
     ap.add_argument('--protection-api-snapshot-plugin', action='store_true', help='Build opt-in read-only protection API entry snapshots')
+    ap.add_argument('--protection-context-snapshot-plugin', action='store_true', help='Build opt-in read-only protection context/stream snapshots; steep adapter only')
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--cc', default='x86_64-w64-mingw32-gcc')
     args = ap.parse_args()
-    if (args.capture_plugin or args.delegate_capture_plugin or args.finalizer_capture_plugin or args.scheduler_phase_capture_plugin or args.command_manager_startup_plugin or args.command_manager_write_plugin or args.command_manager_execute_plugin) and args.adapter != 'steep':
+    if (args.capture_plugin or args.delegate_capture_plugin or args.finalizer_capture_plugin or args.scheduler_phase_capture_plugin or args.command_manager_startup_plugin or args.command_manager_write_plugin or args.command_manager_execute_plugin or args.protection_context_snapshot_plugin) and args.adapter != 'steep':
         ap.error('capture plugins require --adapter steep')
     cc = shutil.which(args.cc)
     if not cc:
@@ -55,6 +56,8 @@ def main():
         build('fixtures/execution_control_image.dll', ['../../tests/fixtures/snow_first_execute_image.c'], ['-shared','-fno-toplevel-reorder'])
     if args.protection_api_snapshot_plugin:
         build('plugins/protection_api_snapshot.dll', ['examples/protection_api_snapshot.c'], ['-shared'])
+    if args.protection_context_snapshot_plugin:
+        build('plugins/protection_context_snapshot.dll', ['examples/protection_context_snapshot.c'], ['-shared'])
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
     if args.delegate_capture_plugin:

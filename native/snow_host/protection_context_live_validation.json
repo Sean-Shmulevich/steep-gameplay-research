@@ -1,0 +1,117 @@
+{
+  "evidence": "Bounded read-only protection context and dispatcher-window snapshots during two game startups",
+  "receiver_global_rva": "0x3595838",
+  "window_bytes": 256,
+  "sessions": [
+    {
+      "case": 1,
+      "compatible": true,
+      "pointer_reread_equal": true,
+      "windows": [
+        {
+          "label": "context",
+          "read": 1,
+          "bytes": 256,
+          "type": 131072,
+          "protection": 4,
+          "sha256": "3da5d92935e1a5867b202ba4927f8f55f41b027d170bf711717c4affd182901c"
+        },
+        {
+          "label": "initial_stream",
+          "read": 1,
+          "bytes": 256,
+          "type": 16777216,
+          "protection": 2,
+          "sha256": "a395d0edec58b1271d88fa647f85ed93b7f4160b888b249de867b6e0d3803272",
+          "rva": "0x34b8700",
+          "matches_analyzed_image": true
+        },
+        {
+          "label": "scanned_image_window",
+          "read": 1,
+          "bytes": 256,
+          "type": 16777216,
+          "protection": 2,
+          "sha256": "5632f0aa1c24381f3267c8e12a269dd35f669d3306640e6ec2d0b10dd6703b7f",
+          "rva": "0x3509400",
+          "matches_analyzed_image": true
+        }
+      ],
+      "cleanup": {
+        "ok": true,
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      }
+    },
+    {
+      "case": 2,
+      "compatible": true,
+      "pointer_reread_equal": true,
+      "windows": [
+        {
+          "label": "context",
+          "read": 1,
+          "bytes": 256,
+          "type": 131072,
+          "protection": 4,
+          "sha256": "bc0d7147c27aac28123a36bf88357a0be8caec5cce42c85083dbd62927861ef8"
+        },
+        {
+          "label": "initial_stream",
+          "read": 1,
+          "bytes": 256,
+          "type": 16777216,
+          "protection": 2,
+          "sha256": "a395d0edec58b1271d88fa647f85ed93b7f4160b888b249de867b6e0d3803272",
+          "rva": "0x34b8700",
+          "matches_analyzed_image": true
+        },
+        {
+          "label": "scanned_image_window",
+          "read": 1,
+          "bytes": 256,
+          "type": 16777216,
+          "protection": 2,
+          "sha256": "5632f0aa1c24381f3267c8e12a269dd35f669d3306640e6ec2d0b10dd6703b7f",
+          "rva": "0x3509400",
+          "matches_analyzed_image": true
+        },
+        {
+          "label": "context_plus_78_target",
+          "read": 1,
+          "bytes": 256,
+          "type": 131072,
+          "protection": 32,
+          "sha256": "0154fb5dfed0ff1fc4bd482ce07b0c9978c4dffb5965db6f7adae8fb9cb5bfef"
+        }
+      ],
+      "cleanup": {
+        "ok": true,
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      }
+    }
+  ],
+  "source_hashes": {
+    "native/snow_host/examples/protection_context_snapshot.c": "a3fa4439fe4fa8c6013840f2fb2ce09b8385e9cf131ab4c546349ca867ce5579",
+    "scripts/build_snow_host.py": "971640d350456576c57ed811a96572df71e9b55230069bf181075b08383e5042"
+  },
+  "standalone_checks": [
+    "Disabled plugin declines without output.",
+    "Incompatible image emits no windows and does not read the context slot.",
+    "Build flag refuses the fixture adapter."
+  ],
+  "emulation_boundary": "A synthetic-context dispatcher probe ended at an invalid computed fetch; no protection decision is inferred. The two sampled image windows agree with live bytes, which does not validate all dispatcher state.",
+  "continuation_candidate_offset": "0x78",
+  "limitations": [
+    "The 256-byte storage window does not establish object size and may include adjacent heap storage.",
+    "Equal pointer reads are not an atomic snapshot or allocation lifetime pin.",
+    "No protected decision routine or continuation was invoked live.",
+    "The first snapshot did not follow the offset 0x78 candidate.",
+    "No constructor caller or manager lifetime is established."
+  ]
+}

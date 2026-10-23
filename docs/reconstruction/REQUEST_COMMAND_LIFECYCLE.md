@@ -1496,3 +1496,51 @@ remains possible only after accounting for this intervening main-image path.
 Do not attribute the result directly to Wine, macOS or a named protection product
 without the missing decision/forwarding evidence. The command-manager constructor
 caller remains a separate unresolved target of this instrumentation work.
+
+## Protection context and continuation candidate observed
+
+A bounded synthetic-context emulation of the downstream dispatcher ended at an
+invalid computed instruction fetch. This is an emulation boundary, not a native
+crash or an observed rejection branch. Its instruction count varies and is not a
+coverage measure. No result from that incomplete run is treated as the protection
+policy.
+
+The [two live context snapshots](../../native/snow_host/protection_context_live_validation.json)
+read the global context slot, a 256-byte storage window and two selected image
+windows used by the dispatcher probe. The context pointer rereads agreed in both
+sessions. The stream window at RVA `0x34b8700` and scanned image window at
+`0x3509400` matched the analyzed image in both captures. This validates those
+windows only, not the full interpreter state. The context window is not a proven
+object extent and can include adjacent heap storage.
+
+The qword at context offset `0x78` pointed into a private executable allocation.
+A second capture followed it read-only. Its first eight bytes match the standalone
+Wine NtProtectVirtualMemory entry prefix, followed by a relative jump to the
+address matching that baseline entry plus eight bytes:
+
+```text
+candidate_continuation(process, ...):
+    R10 = RCX
+    EAX = observed_syscall_number
+    jump_to_recorded_baseline_entry_plus_8
+```
+
+The [64-case instruction comparison](../../native/snow_host/protection_continuation_validation.json)
+confirms that this captured 13-byte sequence has the same tested register, stack
+and flag effects as the baseline eight-byte prefix before reaching the continuation.
+No syscall or full protection operation is executed by the fixture. The observed
+syscall number is runtime-build-specific and must not be hardcoded as a portable
+Windows API identifier.
+
+This is evidence for a saved original-entry continuation candidate. Its role in
+the downstream decision routine remains unproved. Baseline and game snapshots
+came from separate processes; current-process export identity, continuation target
+and bytes must be freshly checked before any invocation. Pointer reuse across
+sessions is invalid. The access-denied branch, context lifetime, constructor
+caller and manager teardown remain open. Neither the native hook nor protection
+policy was changed in these experiments.
+
+A useful next check is a same-process identity join between the current ntdll
+export, the context candidate and its continuation target. Only after that can a
+controlled operation on authored memory qualify the candidate as callable. This
+is distinct from applying it to the game constructor page.

@@ -6342,3 +6342,15 @@ original-instruction fixture recovers the wrapper's extra context argument and
 five-argument forwarding with unchanged return propagation. The downstream
 decision routine remains unresolved; no access-denied branch or constructor call
 is claimed. No hook was changed. Readiness, cleanup and standalone checks passed.
+
+### Protection context exposes an original-entry continuation candidate
+
+Added a build-gated read-only context/stream sampler. Two live startups captured
+unchanged pointer rereads and image windows matching the analyzed bytes; cleanup
+passed. Context offset 0x78 points to an executable private allocation whose
+prefix matches the standalone protection API prefix and jumps to its recorded
+continuation. Sixty-four instruction comparisons validate the local register/flag
+and stack effects without issuing a syscall. The downstream dispatcher emulation
+remains incomplete, and no denial policy is inferred from its invalid computed
+fetch. A fresh same-process identity join is required before any candidate call;
+no hook change, constructor capture or lifetime guarantee is claimed.
