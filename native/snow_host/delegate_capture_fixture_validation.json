@@ -1,0 +1,29 @@
+{
+  "status": "synthetic_controller_refusals_passed",
+  "scenarios": [
+    {
+      "name": "disabled",
+      "passed": true
+    },
+    {
+      "name": "stale",
+      "passed": true
+    },
+    {
+      "name": "trigger",
+      "passed": true
+    }
+  ],
+  "runtime": "Wine on macOS",
+  "game_launched": false,
+  "game_memory_modified": false,
+  "source_hashes": {
+    "native/snow_host/examples/delegate_capture.c": "00daf9b1e1b2e7494026157e3bbcfb85d6d33ee05e0fe663256efee4b160cc70",
+    "tests/fixtures/delegate_capture_fixture.c": "7c0383b3654b2b5220560c3e34f578a5445122de6a92e38ff309ec947edd0faf"
+  },
+  "limitations": [
+    "Fixture checks disabled/stale-trigger refusal and incompatible-executable rejection only.",
+    "Successful install/restore forwarding validated separately by delegate_probe_fixture_validation.json.",
+    "No live game owner lifetime, capture window or actual graphics callback invocation established."
+  ]
+}

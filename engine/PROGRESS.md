@@ -1,5 +1,13 @@
 # Reconstruction progress and next work
 
+Built opt-in one-shot graphics capture controller with explicit post-initialization
+trigger, three instruction fingerprints, 100..2000 ms capture, restoration and
+bounded drain. Three synthetic Windows/Wine refusal scenarios passed; standalone
+steep build with --delegate-capture-plugin passed. No live game hook yet. Output
+completion/count validation and owner-lifetime assumptions must be enforced by
+the experiment controller; file existence is not successful capture evidence.
+Full suite passed: 2116 tests, one skipped; packaging/link checks passed.
+
 Built experimental Windows graphics delegate adapter: qualified owner/table/
 descriptor reads, pinned forwarding code, aligned invoker CAS and conflict-aware
 restore without page-protection changes. Five synthetic Windows/Wine scenarios

@@ -273,3 +273,9 @@ one-attempt heap-slot installer with conflict-aware restoration. See
 [delegate adapter contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#experimental-windows-adapter)
 for caller lifetime requirements and synthetic Windows validation. The fixture
 passing does not establish a safe live-game installation window.
+
+To build the separate one-shot graphics capture plugin, add
+`--delegate-capture-plugin` with `--adapter steep`. It remains disabled without
+its INI opt-in and refuses a trigger that exists at initialization. See the
+[capture controller contract](../../docs/reconstruction/SCHEDULER_DELEGATES.md#one-shot-capture-controller)
+before using it; it does not establish an owner-lifetime lock.

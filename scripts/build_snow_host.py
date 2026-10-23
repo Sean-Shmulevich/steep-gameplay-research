@@ -11,11 +11,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--adapter', choices=('fixture', 'steep'), default='fixture')
     ap.add_argument('--capture-plugin', action='store_true', help='Build opt-in experimental update capture plugin; steep adapter only')
+    ap.add_argument('--delegate-capture-plugin', action='store_true', help='Build opt-in experimental graphics delegate capture; steep adapter only')
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--cc', default='x86_64-w64-mingw32-gcc')
     args = ap.parse_args()
-    if args.capture_plugin and args.adapter != 'steep':
-        ap.error('--capture-plugin requires --adapter steep')
+    if (args.capture_plugin or args.delegate_capture_plugin) and args.adapter != 'steep':
+        ap.error('capture plugins require --adapter steep')
     cc = shutil.which(args.cc)
     if not cc:
         ap.error('MinGW x64 compiler unavailable: '+args.cc)
@@ -36,6 +37,8 @@ def main():
     build('snow_update_probe.dll', ['snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c'], ['-shared'])
     build('snow_action_probe.dll', ['snow_action_probe.c','snow_action_trace.c'], ['-shared'])
     build('snow_delegate_probe.dll', ['snow_delegate_probe.c','snow_delegate_trace.c'], ['-shared'])
+    if args.delegate_capture_plugin:
+        build('plugins/delegate_capture.dll', ['examples/delegate_capture.c','snow_delegate_probe.c','snow_delegate_trace.c'], ['-shared'])
     if args.capture_plugin:
         build('plugins/update_capture.dll', ['examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c'], ['-shared'])
     (out/'build.json').write_text(json.dumps({'adapter':args.adapter,'game_launched':False},indent=2)+'\n')

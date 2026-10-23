@@ -570,3 +570,34 @@ as `snow_delegate_probe_fixture.exe <DLL-path> <scenario>`. Scenario names are
 compiles the DLL but neither loads it nor launches this fixture or the game.
 This supersedes the prior missing-DLL/installer status; live ABI and owner-lifetime
 qualification remain open.
+
+## One-shot capture controller
+
+The opt-in [capture plugin](../../native/snow_host/examples/delegate_capture.c)
+is built by `build_snow_host.py --adapter steep --delegate-capture-plugin`.
+It is disabled unless its plugin INI has `[capture] enabled=1`. Its configured
+`milliseconds` must be between 100 and 2000, with a default of 500. Initialization
+refuses an existing `<config-path>.trigger`; the controller must create that
+file later inside its explicitly bounded owner-lifetime experiment.
+
+The pinned worker waits at most 180 seconds for the trigger. On receipt, it
+checks fingerprints of the common invoker, graphics dispatcher and main callback
+prefix, then resolves the engine owner and expected main descriptor. It configures
+and installs the probe, captures for the configured interval, restores once and
+polls close/drain for at most two seconds. An unload notification requests early
+cancellation; it does not unload the pinned forwarding code. It never sends
+movement input, pauses the scheduler or calls a gameplay setter.
+
+The output is local JSONL at `<config-path>.trace.jsonl`, including installation,
+restoration and drain outcomes plus private pointer/timestamp records. A consumer
+must read and validate the complete file, including the expected record count;
+file existence alone does not mean the writer has finished. Missing output,
+failed restore, incomplete drain or a truncated file is a failed capture, not
+permission to discard the forwarding module. No automatic retry/reinstall occurs.
+
+The [controller fixture](../../native/snow_host/delegate_capture_fixture_validation.json)
+tests disabled configuration, stale-trigger refusal and rejection of an
+incompatible synthetic executable under Wine. The underlying adapter's successful
+synthetic installation is documented separately. No live-game installation has
+been performed with this controller. A trigger is not a native lifetime lock;
+the experiment must still state and check its owner-lifetime assumptions.
