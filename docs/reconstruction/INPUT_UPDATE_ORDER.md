@@ -1539,3 +1539,60 @@ descriptor records. The descriptor-to-scalar/vector address join still needs
 tracing; this update's descriptor behavior must not be silently applied to all
 families. Next: inspect construction and the preceding 0x983ec0 helper to
 establish which banks the priority readers consume.
+
+## Ownership table layout and reader bank
+
+Constructor 0x646fe0 initializes eight 12-byte descriptors, then constructs
+280 records of 0xe8 bytes using 0x94c740. That leaf clears all 28 owner qwords
+at record+8 through +0xe7 and leaves the first eight bytes unchanged.
+
+| Family | Table-relative base | Records | Channel count |
+| --- | --- | --- | --- |
+| Fixed | 0x60 | 8 | 1 |
+| Scalar | 0x7e0 | 256 | 32 |
+| Vector | 0xefe0 | 16 | 2 |
+
+Within scalar/vector families the record index is `adapter_offset + 8*channel`.
+The allocation ends exactly after the last vector record at 0xfe60. This proves
+the layout join to the previously decoded readers:
+
+```text
+scalar gate top = 0x7e0 + 0xe8*(offset+8*channel) + 0x40 + 6*8
+                = 0x850 + 0xe8*(offset+8*channel)
+vector gate top = 0xefe0 + 0xe8*(offset+8*channel) + 0x40 + 6*8
+                = 0xf050 + 0xe8*(offset+8*channel)
+```
+
+Both gates therefore read the +0x40 bank, descending from slot 6 to 0. That
+is the current-owner storage in the established descriptor/fixed transition.
+Matching layout does not prove that scalar/vector families use the same held
+retention rule. Helper 0x983ad0's inspected loops update the fixed records and
+descriptor-backed records; their relationship to the embedded scalar/vector
+records is still unresolved.
+
+[Ownership table inspection API](../../engine/action_ownership_layout.py) reads
+all four banks from a detached, exact-size snapshot. It bounds adapter offsets
+to 0..7 and channels to the constructed family sizes. Returned identities are
+in descending priority order, suitable for the canonical priority predicate.
+It performs no live memory access and confers no ownership/lifetime guarantee.
+
+[Constructor validation](../../native/snow_host/input_ownership_layout_validation.json)
+executes the original full table constructor with three initial storage patterns,
+including 840 actual calls to the record constructor. All table bytes, record
+receiver offsets, and the returned pointer match. Only the descriptor helper
+was substituted; its eight offsets and zero argument were checked. This proves
+the constructed bank layout, not descriptor contents or later selection.
+
+The preceding wrapper call 0x983ec0 is a separate vector-history update. When
+its manager exists it visits eight cache offsets and two vector channels,
+applying the cache-owner mask, then passes each vector to 0x9842a0 at
+manager+0x9c0+0x3c0*(2*offset+channel). It also visits a map of other providers.
+Inspection of 0x9842a0 shows vector history shifts, a call to 0x9599a0, magnitude
+history shifts and timestamp history shifts. These are different objects from
+the 0xe8-byte ownership records. The local sequence is therefore history update
+then ownership update, not proof that this first call publishes ownership.
+Its complete arithmetic, other provider semantics and frame cadence remain open.
+
+Next: resolve how descriptors are populated and find writes to embedded
+scalar/vector +0x40 banks. The constructor and gate joins now give exact record
+boundaries for that search without guessing update policy from layout alone.

@@ -2,6 +2,14 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Joined ownership construction to query addresses: eight fixed, 256 scalar
+and 16 vector records; scalar/vector gates read the +0x40 bank in descending
+priority order. Added a bounded detached-table inspector. Three full original
+constructors / 840 record calls pass with descriptor setup substituted. The
+preceding wrapper call updates separate vector histories; family-specific
+ownership writers and frame cadence remain open. See
+[table layout](../docs/reconstruction/INPUT_UPDATE_ORDER.md#ownership-table-layout-and-reader-bank).
+
 Found paired-bank publication in the ownership updater: held input preserves
 a nonnull current owner against a null request; otherwise previous=current and
 current=requested. Rising edges capture current before promotion. Added the

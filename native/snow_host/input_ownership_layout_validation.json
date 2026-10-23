@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "cases": 3,
+  "record_constructor_calls": 840,
+  "scope": "Original full table constructor and all 280 record constructors per case; entire table compared",
+  "substitutions": [
+    "Descriptor helper 0x57f660 returns without side effects; eight receiver offsets and zero second argument checked"
+  ],
+  "spans": [
+    {
+      "start_rva": "0x646fe0",
+      "end_rva_exclusive": "0x64708d",
+      "sha256": "e82dfe7d979dd15529115299f8aeb595bdeb80150b263e46a2ef5bb1ce05d20c"
+    },
+    {
+      "start_rva": "0x94c740",
+      "end_rva_exclusive": "0x94c7dd",
+      "sha256": "5e6e341de73fba44fec2db599e8aa8da30c2c276e1c5c49f834650d888212d38"
+    }
+  ],
+  "limits": [
+    "Descriptor contents not reconstructed by this test",
+    "No ownership writer or scheduler cadence proof"
+  ],
+  "game_process": false
+}
