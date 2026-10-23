@@ -1017,6 +1017,26 @@ identity guards and compare the known component against the source and storage.
 If present, observe actual batch execution before treating registration or
 cleanup as safe at that phase. A batch name alone is not a synchronization proof.
 
+### Animation-event membership attempts remain inconclusive
+
+[Two bounded live attempts](../../native/snow_host/markup_animation_membership_attempts.json)
+did not establish membership. The first reached gameplay and the reader rejected
+a changed identity/storage guard. Its exact changed range was not retained, so
+this is not assigned to a claim counter, owner transition or list mutation. The
+second reached the title screen without native-host readiness and timed out
+before reading membership. Both stopped the bottle and restored saves/settings
+and the original DLL. No movement input or listener mutation occurred.
+
+The reader now identifies changed ranges in private diagnostics; the controller
+retains read-call evidence and permits at most three fresh guarded attempts.
+Acceptance conditions have not been weakened. Fifteen portable tests pass,
+including continued rejection and precise diagnostics for a changed source list
+and changed claim counter. These diagnostics are session-private addresses, not
+portable identifiers or proof of why a field changed.
+
+Component membership in DispatchAnimEvents remains unresolved. A later accepted
+capture or a diagnosed rejection is still needed before any batch instrumentation.
+
 ### Authored notification recorder core
 
 [`snow_markup_trace.h`](../../native/snow_host/snow_markup_trace.h) and

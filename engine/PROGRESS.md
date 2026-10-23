@@ -6890,3 +6890,9 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Corrected the search blind spot for tiny thunks without exception entries. The physics-state AfterPhysicSimulationUpdate thunk invokes slot 0x278; a fresh live check excludes the known component from its two source lists and gathered storage. Correctly typed component flags still select its direct local update branch. Cleanup passed.
 - Found another slot-0x278 thunk registered for DispatchAnimEvents, labelled IAnimationComponent::DispatchAnimEvents, at action graph+0x43d8. Gather copies world registry entry 17 (+0x570) into graph+0x4570. This batch is not yet joined live to the component.
 - Extended the public bounded membership reader with the specific animation-event thunk/slot and explicit output metadata. Fourteen tests pass, including wrong-thunk rejection. Next is a live source/storage membership check of this batch, not a speculative hook.
+
+### Animation-event live membership not yet accepted
+
+- Two bounded attempts: first rejected changed guarded data, with exact range unavailable; second timed out before native readiness. Neither proves component presence or absence. Both cleanup paths restored saves/settings/original DLL and stopped the bottle.
+- Added changed-range diagnostics to the public reader without relaxing acceptance. Private controller now retains read calls and bounds fresh retries to three. Fifteen tests pass, including source and claim-counter changes.
+- DispatchAnimEvents membership remains open. Next accepted read must retain evidence sufficient to diagnose any rejection before proceeding to execution capture.

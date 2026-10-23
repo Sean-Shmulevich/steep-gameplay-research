@@ -71,8 +71,12 @@ def capture_motion_membership(readv, entity, world, image_base, guards, job=JOB,
     def check():
         for start in range(0, len(guards), 32):
             part = guards[start:start + 32]
-            if read([(a, len(b)) for a, b in part]) != [b for _, b in part]:
-                raise ValueError('membership identity or storage changed')
+            observed = read([(a, len(b)) for a, b in part])
+            changed = [a for (a, expected), actual in zip(part, observed) if actual != expected]
+            if changed:
+                # Diagnostic addresses are session-private, not portable evidence IDs.
+                raise ValueError('membership identity or storage changed at ' +
+                                 ','.join(hex(a) for a in changed))
 
     def retain(address, size):
         _address(address, size)

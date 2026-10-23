@@ -1,0 +1,48 @@
+{
+  "evidence": "Two bounded live attempts at DispatchAnimEvents membership; neither yielded an accepted snapshot",
+  "attempts": [
+    {
+      "observation_ok": false,
+      "error": "membership identity or storage changed",
+      "accepted_membership": false,
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "private_evidence_sha256": {
+        "route-result.json": "f0cff2036a5f5365fcfcba41fe9a71e50f86918cfa76a994b6dc257583e5da53",
+        "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794"
+      }
+    },
+    {
+      "observation_ok": false,
+      "error": "Readiness timeout",
+      "accepted_membership": false,
+      "cleanup": {
+        "ok": false,
+        "error": "stop requested before navigation readiness",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "private_evidence_sha256": {
+        "route-result.json": "8b5a466fe3f26480f7c556ece8c45452eca099fa455657a27f8390eeb44c795e",
+        "result.json": "59a3563386083f6ef8b16c4e827ec8aaef8bd72367d9c50b3049c1ed022f3bca"
+      }
+    }
+  ],
+  "known_component_membership": "unresolved",
+  "listener_mutation": false,
+  "movement_input_sent": false,
+  "limitations": [
+    "First capture rejected changed guarded data; exact changed range was not retained, so its cause is not assigned.",
+    "Second capture did not reach native readiness and performed no membership read.",
+    "No absence, presence, execution or thread-safety conclusion follows."
+  ],
+  "followup": "Reader now names changed guard ranges in private diagnostics and controller retains reader call evidence; acceptance guards remain unchanged."
+}

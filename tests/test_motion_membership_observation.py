@@ -103,7 +103,22 @@ class MotionMembershipObservationTests(unittest.TestCase):
                     if reads == 2:
                         result[i] = bytes(16)
             return result
-        with self.assertRaisesRegex(ValueError, 'changed'):
+        with self.assertRaisesRegex(ValueError, 'changed at ' + hex(self.source)):
+            self.capture(reader)
+
+    def test_changed_claim_counter_remains_rejected_and_identified(self):
+        address = self.graph + 0x4c70
+        reads = 0
+        def reader(plan):
+            nonlocal reads
+            blocks = self.reader(plan)
+            for i, (at, _) in enumerate(plan):
+                if at == address:
+                    reads += 1
+                    if reads == 2:
+                        blocks[i] = struct.pack('<Qii', self.storage, 1, 3)
+            return blocks
+        with self.assertRaisesRegex(ValueError, 'changed at ' + hex(address)):
             self.capture(reader)
 
     def test_short_transport_rejected(self):
