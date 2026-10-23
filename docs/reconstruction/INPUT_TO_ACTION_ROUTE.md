@@ -216,6 +216,53 @@ consumer's scheduler binding. Its placement in UpdatePadManager, UpdateAction,
 or another stage remains open. Index zero and the surrounding lifecycle
 callbacks do not establish a frame cadence.
 
+## Fixed refresh slot transfers to the attached world service
+
+The fixed slot has a concrete transfer consumer. Helper `0x4c5910` reads
+`owner+0x18`, then obtains the attached world's service from `world+0xff8`.
+It passes six callable records beginning at `owner+0x2c0` to service category
+4 through `0x695af0`. Thus the refresh callback registered at fixed index zero
+is one of the records considered for that world's callback storage. This is a
+storage join, not yet its execution site.
+
+The helper is called by `0x4c8070`. That caller requires a nonnull attached
+world and a zero owner byte at `+0x20`; it sets that byte to one before transfer.
+The inspected route therefore performs setup on that transition. It does not
+copy the callbacks afresh on every physics substep. Other callers and lifecycle
+transitions must be considered before inferring when registration can change.
+
+```text
+transfer_fixed_callbacks(service, category, source, count):
+    descriptor = service + 0x30 + 12 * category
+    descriptor.count = 0
+    for i in descending(count - 1, 0):
+        record = source[i]                 # 32 bytes
+        if (record.tagged_context & ~3) != 0 or record.callback != null:
+            reserve_if_needed(descriptor)
+            append_copy_of_32_bytes(descriptor, record)
+```
+
+The clearing wrapper is `0x695af0`, which tail-calls `0x655e40`. For category
+4 the destination descriptor is `service+0x60` and its uint16 count is at
+`+0x6a`. It retains existing capacity while resetting the count. The source
+callables remain unchanged. A record with only tag bits set and a null callback
+is skipped even if its invoker field is nonnull. A null callback with a nonnull
+masked context is retained; that is the observed eligibility test, not a claim
+that every such synthetic record would be safe to invoke.
+
+[Transfer validation](../../native/snow_host/action_refresh_world_transfer_validation.json)
+executes both original routines with capacity for six records. All 64 presence
+patterns pass for callback-only, context-only and combined populated records,
+for 192 cases without call substitutions. The checks cover reverse order,
+count reset, exact 32-byte copies, unchanged source records and untouched
+unused destination bytes. Capacity growth and concurrent mutation are outside
+this validation.
+
+The remaining static target is the consumer of category 4 in this particular
+world service. A global AI provider also has callback lists, but that similarity
+does not establish receiver identity or scheduler placement. Follow the
+`world+0xff8` service and category-4 descriptor before joining it to a named job.
+
 ## Next capture contract
 
 Once live access is available, extend the existing request/substep recorder

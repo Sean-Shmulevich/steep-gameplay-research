@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "cases": 192,
+  "scope": "Original slot-4 callback transfer through 0x695af0 and 0x655e40, preallocated capacity six",
+  "substitutions": [],
+  "source_record_count": 6,
+  "destination_descriptor_offset": "0x60",
+  "destination_count_offset": "0x6a",
+  "order": "descending source index, skipping records with null callback and masked-null context",
+  "spans": [
+    {
+      "start_rva": "0x4c5910",
+      "end_rva_exclusive": "0x4c59e3",
+      "sha256": "f989a87c302eee889d336001dc4e8fabc9ddca113856716124ac5b6d875ad8e5"
+    },
+    {
+      "start_rva": "0x695af0",
+      "end_rva_exclusive": "0x695b04",
+      "sha256": "ce1dc595440791f3ad9e709609115991a96ea164c0fd38bcc96a841895e39bad"
+    },
+    {
+      "start_rva": "0x655e40",
+      "end_rva_exclusive": "0x655fda",
+      "sha256": "3cc5f81ebddcfc07d1f2556a0dfe6c468365a40349ddaf846b0783a49363a39e"
+    }
+  ],
+  "limits": [
+    "World/service receiver chain inspected statically, not run live",
+    "Capacity growth path not exercised",
+    "Callable invocation and scheduler placement not validated",
+    "No concurrency or freshness claim"
+  ],
+  "game_process": false
+}

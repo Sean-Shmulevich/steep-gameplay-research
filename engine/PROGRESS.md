@@ -2,6 +2,13 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Traced the fixed action-refresh record into category 4 of the attached world's
+service. Setup transfers six records in reverse index order, skipping empty
+records. Original transfer routines passed 192 preallocated cases without
+substitutions. This establishes storage population, not callback execution;
+the world category-4 consumer remains the next target.
+See [world transfer](../docs/reconstruction/INPUT_TO_ACTION_ROUTE.md#fixed-refresh-slot-transfers-to-the-attached-world-service).
+
 Resolved the refresh registration service through its constructor-backed
 secondary table. Its original method copies the callable into a fixed slot at
 owner+0x2c0. Twelve complete registration cases now execute both fixed-slot
