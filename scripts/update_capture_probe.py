@@ -3,6 +3,36 @@ import configparser
 import json
 from pathlib import Path
 import time
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from engine.publication_input_join import delivery_window_coverage
+
+
+def input_coverage(delivery, summary, records):
+    """Authored acceptance gate for one OS pulse, not game ingestion proof."""
+    try:
+        reports = delivery["delivery_reports"]
+        if not isinstance(reports, list) or len(reports) != 2:
+            raise ValueError("expected exactly one key-down and one key-up report")
+        down, up = reports
+        if down["key_up"] is not False or up["key_up"] is not True:
+            raise ValueError("delivery reports must be ordered down then up")
+        frequency = summary["qpf"]
+        if type(frequency) is not int or frequency <= 0:
+            raise ValueError("invalid capture QPC frequency")
+        if down["scan_raw"] != up["scan_raw"]:
+            raise ValueError("delivery key identities differ")
+        for report in reports:
+            if (report["kind"] != "key_delivery" or report["api_reported_sent"] != 1
+                    or type(report["qpc_frequency"]) is not int
+                    or report["qpc_frequency"] != frequency):
+                raise ValueError("unaccepted delivery or mismatched QPC frequency")
+        coverage = delivery_window_coverage(
+            [(r["entry"], r["exit"]) for r in records],
+            key_down=down["qpc_ticks"], key_up=up["qpc_ticks"])
+        return dict(coverage, game_acceptance="unverified")
+    except (KeyError, TypeError, ValueError) as exc:
+        return dict(covered=False, error=str(exc), game_acceptance="unverified")
 
 def capture_update(client, build, *, timeout=12, during_capture=None):
     build=Path(build)
@@ -42,17 +72,21 @@ def capture_update(client, build, *, timeout=12, during_capture=None):
         else: raise RuntimeError('No complete capture export before deadline')
         summary=rows[0]; records=rows[1:]
         result['summary']=summary
+        if during_capture is not None:
+            result['input_coverage']=input_coverage(result['input_delivery'],summary,records)
         result['valid_pairs']=sum(bool(r['before']['valid']&1 and r['after']['valid']&1) for r in records)
         result['attributed_records']=sum(r.get('attribution_attempted')==1 and r.get('attribution_valid')==1 for r in records)
         result['direct_substep_records']=sum(r.get('attribution_valid')==1 and r.get('frame_valid')==1 for r in records)
         result['gate_patterns']=sorted({tuple(r['before']['gates']) for r in records})
         result['request_count']=len({r['before']['request'] for r in records if r['before']['valid']&4})
         result['ok']=(summary['installed']==1 and summary['restored']==1 and summary['drained']==1
-                      and (during_capture is None or result['input_delivery'].get('ok') is True)
+                      and (during_capture is None or (result['input_delivery'].get('ok') is True
+                           and result['input_coverage']['covered']))
                       and summary['dropped']==0 and len(records)>0 and result['valid_pairs']>0
                       and (not require_attribution or result['attributed_records']>0)
                       and (not require_substeps or result['direct_substep_records']>0))
-        if not result['ok']: result['error']='Capture installation/restoration/drain/data gate failed'
+        if not result['ok']:
+            result['error']='Capture installation/restoration/drain/data/input coverage gate failed'
     finally:
         if not resumed:
             try:

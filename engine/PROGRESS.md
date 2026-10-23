@@ -2,6 +2,12 @@
 
 Status: active implementation. Scheduler reconstruction is now the main priority; see [release gates and experiments](SCHEDULER_ROADMAP.md). The requested full reconstruction is not complete. This file is the continuation point across implementation passes; do not restart or replace the existing prototypes casually.
 
+Input-driven capture acceptance now requires same-key OS delivery timestamps,
+matching QPC frequency, both endpoints inside physics coverage, and an
+intersecting update. The saved late-input trace fails; the armed trace passes
+with 56 intersecting intervals. This closes the controller's false-success
+path without claiming input ingestion or deterministic scheduling.
+
 Preloaded input handshake passed synthetic Wine tests and a live lateral run.
 Delivery falls inside physics coverage; 569 eligible motion samples match parent
 publication, including 57 nonzero X samples. Thirteen early updates excluded.

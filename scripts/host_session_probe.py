@@ -257,7 +257,8 @@ try:
             accepted=len(deliveries)==2 and all(e.get('api_reported_sent')==1 and e.get('scan_raw')==30 for e in deliveries)
             return {'ok':child.returncode==0 and released and accepted,'scan':30,'duration_ms':700,
                     'accepted_deliveries':sum(e.get('api_reported_sent')==1 for e in deliveries),
-                    'exit_code':child.returncode,'keys_released':released,'os_delivery_only':True}
+                    'exit_code':child.returncode,'keys_released':released,'os_delivery_only':True,
+                    'delivery_reports':deliveries}
         pulse=steering_pulse if config.getboolean('capture','steering_pulse',fallback=False) else None
         result['update_capture']=capture_update(client,H,during_capture=pulse)
         assert result['update_capture']['ok'], 'Update capture failed; inspect plugin trace and host log'

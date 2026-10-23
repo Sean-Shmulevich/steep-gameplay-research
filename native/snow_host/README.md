@@ -1270,3 +1270,23 @@ latency or scheduling uncertainty.
 using a C# compiler and run without input injection. It tests ready-before-release,
 fresh-trigger rejection, timeout and target invalidation. The private input
 helper's original focus/cleanup self-test is retained separately.
+
+### Input coverage acceptance
+
+`capture_update` requires a `delivery_reports` list whenever `during_capture`
+is supplied. Return the two helper `key_delivery` reports in down/up order,
+including `key_up`, `scan_raw`, `api_reported_sent`, `qpc_ticks`, and
+`qpc_frequency`. Both must report OS acceptance for the same scan code.
+Their QPC frequency must match the capture summary. The adapter must supply
+reports from the same live session and Windows QPC clock domain; frequency
+equality alone cannot establish clock identity.
+
+Both delivery timestamps must fall inside the recorded physics span, and at
+least one recorded update must intersect the hold. Missing reports, malformed
+timestamps and uncovered pulses fail acceptance even if input delivery reports
+success. Passive captures need no input reports. This checks observation coverage,
+not continuous sampling or whether the game ingested the input.
+
+Regression against retained private traces rejects the late lateral pulse and
+accepts the armed lateral pulse with 56 intersecting update intervals. No new
+live test was performed for this controller change.

@@ -10,8 +10,8 @@ from update_capture_probe import capture_update
 class UpdateCaptureControllerTests(unittest.TestCase):
     def fixture(self, root, restored=1, count=1):
         (root/'plugins').mkdir()
-        summary={'installed':1,'restored':restored,'drained':1,'records':count,'dropped':0}
-        row={'before':{'valid':7,'gates':[1,0,1,1],'request':3},'after':{'valid':7}}
+        summary={'installed':1,'restored':restored,'drained':1,'records':count,'dropped':0,'qpf':10000000}
+        row={'entry':100,'exit':200,'before':{'valid':7,'gates':[1,0,1,1],'request':3},'after':{'valid':7}}
         client=Mock()
         def call(method,**kw):
             if method=='simulation.status':
@@ -100,7 +100,34 @@ class UpdateCaptureControllerTests(unittest.TestCase):
                 root=Path(d);client=self.fixture(root)
                 def pulse():
                     self.assertEqual(client.call.call_args_list[-1].args,('simulation.resume',))
-                    return {'ok':ok,'keys_released':True}
+                    return {'ok':ok,'keys_released':True,'delivery_reports':self.deliveries()}
                 result=capture_update(client,root,during_capture=pulse)
                 self.assertEqual(result['ok'],ok)
                 self.assertTrue(result['input_delivery']['keys_released'])
+
+    @staticmethod
+    def deliveries(start=120, end=180):
+        return [dict(kind='key_delivery', api_reported_sent=1, scan_raw=30,
+                     key_up=up, qpc_ticks=tick, qpc_frequency=10000000)
+                for up, tick in ((False, start), (True, end))]
+
+    def test_input_timing_failures_reject_successful_delivery(self):
+        cases = [[], self.deliveries(201, 250), self.deliveries(90, 150),
+                 self.deliveries(150, 201), self.deliveries(180, 120)]
+        mismatch = self.deliveries(); mismatch[0]['qpc_frequency'] = 1
+        wrong_key = self.deliveries(); wrong_key[1]['scan_raw'] = 17
+        cases.extend([mismatch, wrong_key, list(reversed(self.deliveries()))])
+        for reports in cases:
+            with self.subTest(reports=reports), tempfile.TemporaryDirectory() as d:
+                root=Path(d); client=self.fixture(root)
+                result=capture_update(client,root,during_capture=lambda:dict(
+                    ok=True, delivery_reports=reports))
+                self.assertFalse(result['ok'])
+                self.assertFalse(result['input_coverage']['covered'])
+
+    def test_missing_delivery_reports_fail_closed(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d); client=self.fixture(root)
+            result=capture_update(client,root,during_capture=lambda:dict(ok=True))
+            self.assertFalse(result['ok'])
+            self.assertIn('error',result['input_coverage'])
