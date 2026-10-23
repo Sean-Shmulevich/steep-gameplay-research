@@ -6644,3 +6644,11 @@ lookup/destruction/free on the retained pointer; initial emptiness and later nul
 pops differ. Pending publication during callbacks survives for the next batch.
 Synthetic supplied services preserve pointer readability, so this establishes
 call order without claiming a live double-free or safe resource teardown.
+
+Connected retirement service through mode-zero loading insertion, publication and
+batch disposal in a runnable synthetic probe. Twenty-four original-instruction
+scenarios match events and intermediate/final state, including refused growth.
+The refused-growth scenario detaches the holder and ends with zero loading
+counters without destroying the payload. Zero counters therefore remain weaker
+than completed disposal. The driver uses an explicit serial schedule and supplied
+leaf services; it does not establish native ordering or safe unload.

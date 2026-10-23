@@ -120,3 +120,39 @@ retirement consumer later transfers to the worker's published counter. See the
 [producer contract](LOADING_THREAD_LIFECYCLE.md#executable-loading-destruction-insertion)
 for field naming and signed/raw counter distinctions. This does not change the
 older joined-probe receipt scopes; those runs still supplied the dispatcher.
+
+## Connected loading disposal probe
+
+```sh
+python3 -m engine.examples.retirement_loading_service_probe
+```
+
+This newer probe connects the retirement service, actual reconstructed loading
+insertion, staged-to-pending transfer and loading destruction batch. The older
+`retirement_loading_probe` is a decision/counter demonstration; it does not
+exercise this complete chain. The new probe supplies synthetic payload methods,
+allocation services and locks. Its driver chooses to invoke the loading batch
+after the retirement service returns; that serial schedule is authored, not a
+claim about native scheduling or exclusion.
+
+`before_batch` exposes the boundary: in mode zero the holder is already detached
+and recycled while one payload waits in the loading queue and no destruction
+has happened. The insertion lock nests to depth three under the enclosing
+service and consumer locks. Mode one instead destroys through the wrapper,
+without publishing loading work. Retained references or the processing guard
+can prevent entry to the loading path.
+
+A supplied growth refusal on an empty loading ring shows why completion must not
+be inferred from counters. The holder is detached, insertion fails, staged work
+is still published, and the empty batch clears that pending count without a
+destruction call. The result has zero staged, pending, busy and queue count, yet
+the payload has not been destroyed. This is a controlled service outcome, not a
+claim that the native allocator returns this way during gameplay.
+
+[The connected original-instruction comparison](../../native/snow_host/joined_retirement_loading_validation.json)
+passes 24 scenarios over modes zero/one/two, retained references, processing guard
+and sufficient/zero loading capacity. Original wrapper, preparation, consumer,
+cleanup, pool lookup, insertion and batch routines execute; leaf services and
+zero-capacity growth refusal are supplied. It checks service-event order and
+state both before and after the batch. Payload lifetime, real destructor effects,
+concurrent producer exclusion and safe plugin unloading remain unproved.
