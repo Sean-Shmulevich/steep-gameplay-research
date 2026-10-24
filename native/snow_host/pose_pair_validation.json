@@ -1,0 +1,12 @@
+{
+  "cases": 400,
+  "bit_exact": true,
+  "scope": "Complete native body-pair ordering plus constructor frame-swap fragment; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic metadata and retained body tokens including absent and aliased second body",
+    "Metadata flag class and unsigned key producer semantics unresolved",
+    "Constructor base initialization and runtime ownership not executed"
+  ],
+  "game_files_included": false
+}

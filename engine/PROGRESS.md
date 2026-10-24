@@ -7375,3 +7375,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   original spring/submission runs match updated source and destination exactly;
   notification arguments/order checked with effects intercepted. Original phase
   timing, intervening work and force application remain external.
+- Recovered the producer of pose frame swapping: body-pair metadata bit15
+  precedence, unsigned key ordering and stable ties. Complete ordering plus
+  constructor swap matches 400 native cases, including absent/aliased second
+  bodies. Submission inspector can derive swap from caller-supplied pair metadata.
+  Body-class meanings, key producers and live pairing lifetime remain unresolved.

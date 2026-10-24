@@ -23,3 +23,12 @@ class PoseSubmissionTests(unittest.TestCase):
         self.assertEqual(len(bytes.fromhex(result['storage'])),288)
         del doc['sequence']
         with self.assertRaises(ValueError):inspect(doc)
+
+    def test_inspector_derives_swap_from_body_pair(self):
+        path=Path(__file__).resolve().parents[1]/'engine/examples/snow_pose_submission.json'
+        doc=json.loads(path.read_text())
+        doc['inputs'].pop('swap_byte')
+        doc['inputs']['body_pair']=dict(first=dict(token=1,flags16=0,key32=1),second=dict(token=2,flags16=0x8000,key32=9))
+        self.assertTrue(inspect(doc)['body_pair']['frame_swap'])
+        doc['inputs']['swap_byte']=0
+        with self.assertRaises(ValueError):inspect(doc)

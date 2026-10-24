@@ -15006,3 +15006,45 @@ The `snow-pose-submission-v1` inspector requires provenance and an explicit
 `caller_asserted_prepare_then_submit` sequence label. Input source/storage are hex
 byte strings, not addresses. Output contains records, resulting byte strings and
 limits. The synthetic fixture is an inspection input, not a gameplay calibration.
+
+### Pose body-pair ordering
+
+`engine.snow_pose_pair.order_pose_bodies` recovers the ordering producer used by
+the receiving pose object. Base constructor RVA 0x19a1530 calls 0x19a1480 to
+populate object+8/+0x10 body references and +0x18/+0x1c uint32 keys. For each body,
+metadata is body+0x30, flags are metadata+0x50 and key is metadata+0x54.
+
+With a second body present, bit15-set bodies precede bit15-clear bodies. If the
+bit15 classes match, the smaller unsigned key comes first; equal keys preserve
+input order. With no second body, the first remains first and second key is zero.
+No semantic body-class name is established by this rule.
+
+The derived constructor at RVA 0x19418b0 compares its original first body with
+object+8 after this ordering. If different, it sets object+0x59 to 1 and exchanges
+the two 64-byte frame blocks. Otherwise the base constructor's zero swap byte
+remains. This byte subsequently controls the already-recovered submission swap.
+The constructor installs primary table RVA 0x29ca988 and a secondary table at
+0x29ca9a8; adjacent addresses are not assumed to belong to those tables.
+
+Pseudocode for distinct bodies:
+
+```text
+swap = second exists and (
+    (second.bit15 and not first.bit15)
+    or (first.bit15 == second.bit15 and second.key <u first.key))
+ordered = [second, first] if swap else [first, second]
+frame_swap = ordered[0].identity != first.identity
+```
+
+Caller tokens are opaque uint64 identities, not live pointers. Aliased identities
+must have consistent metadata. Validation errors are authored API behavior.
+[400 native cases](../../native/snow_host/pose_pair_validation.json) cover the
+complete ordering routine and constructor swap fragment, including unsigned keys,
+ties, flag classes, absent second bodies and aliases, with no intercepted calls.
+Full allocation/construction, key producers and solver consumption remain external.
+
+The pose submission JSON inspector optionally accepts `inputs.body_pair` with
+`first` and optional `second`, each containing `token`, `flags16` and `key32`.
+It derives the swap byte from this metadata; supplying both body_pair and swap_byte
+is rejected. This assumes the construction-time pairing remains applicable to the
+submitted record and does not establish live identity or lifetime.
