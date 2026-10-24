@@ -1,0 +1,17 @@
+{
+  "schema": "pose-group-cleanup-validation-v1",
+  "cases": 320,
+  "passed": 320,
+  "method": "offline Unicorn execution of cleanup and both inline-array helpers; allocator virtual calls intercepted",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1957220",
+  "comparisons": [
+    "all 168 group bytes including untouched fields",
+    "allocator virtual argument and release order"
+  ],
+  "limits": [
+    "Synthetic storage descriptors include inconsistent count/capacity combinations to expose exact branches.",
+    "No pointed-to allocation or body/constraint payload is freed by the test.",
+    "Deleting wrapper, protected pool operations, concurrency and live lifetime excluded."
+  ]
+}

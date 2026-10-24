@@ -278,3 +278,10 @@ body tokens resolved through retained dictionaries. Retirement uses the saved
 reuse decision, not a later count. Single-body append failure is ignored as in
 the inspected caller. Services own allocation, destruction and failure effects;
 no rollback, concurrency guarantee or safe native retirement API is supplied.
+
+Group storage cleanup: `cleanup_pose_group` consumes retained body/link/pose
+storage descriptors with explicit pointer and inline tokens, count and capacity.
+It preserves capacity gates, pose/link/body release order and final table change.
+Allocator virtual effects are supplied; pointed-to elements are never traversed.
+This is not object deletion or a safe native unload operation. Protected pool
+return in the deleting wrapper remains outside the implementation.

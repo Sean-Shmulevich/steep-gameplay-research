@@ -7530,3 +7530,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   384 offline native outer-routine comparisons match with all services supplied.
   Retirement follows the saved reuse decision; single-body append return is
   ignored. Native destruction, allocator failure and protected callers remain open.
+- Identified the ordinary-group constructor's destructor table and reconstructed
+  complete pose/link/body storage cleanup with320 offline native comparisons.
+  All168 group bytes and allocator call order match. Cleanup releases collection
+  storage without traversing elements. Retirement argument1 selects a separate
+  protected pool-return path; that wrapper is not modeled as a heap free.

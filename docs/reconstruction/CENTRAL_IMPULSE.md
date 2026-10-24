@@ -16152,3 +16152,48 @@ seeded components, original-group reuse, low-byte eligibility and append failure
 This validates orchestration. The earlier continuous partition receipt separately
 executes the internal preparation/selection/migration helpers. Neither receipt
 proves native destruction effects, live lifetime safety or protected outer callers.
+
+### Group destructor storage cleanup
+
+The ordinary-group acquisition path calls constructor RVA0x19570f0. That
+constructor writes table0x29caba0, whose first entry is deleting wrapper0x19572c0.
+The constructor establishes inline body storage at group+0x20 with capacity4,
+inline link storage at+0x50 with capacity8, and a null pose array with zero
+count/capacity. This establishes the destructor family statically for this
+constructor; it does not establish every possible live group's class.
+
+`engine.pose_group_cleanup.cleanup_pose_group` reconstructs cleanup0x1957220 and
+array helpers0x1957140/0x19571b0. Cleanup first restores the group table, handles
+pose storage, then link storage, then body storage, and finally writes the base
+table0x29c9800. It does not traverse body/link/pose elements or destroy those
+objects. This routine releases collection storage through supplied allocator
+virtual slot0x18; the retained group object itself is not freed here.
+
+Pose cleanup is gated by nonzero capacity. A non-null pointer is released and
+cleared. The unusual null-pointer/nonzero-capacity branch instead calls allocator
+virtual slot8 with arguments0,16,55, stores its return, then clears capacity and
+any positive unsigned count. With zero capacity it preserves both pointer and
+count. These branches are documented without assigning allocator API names.
+
+Link/body helpers release storage only when capacity is nonzero and the pointer
+differs from the corresponding inline address. A null external pointer is not
+filtered. They finish with pointer and capacity zero. Count is cleared only on
+the nonzero-capacity path; a preexisting zero-capacity/nonzero-count descriptor
+retains that count. Inline storage bytes and all unrelated group fields remain.
+Callbacks can observe the group table and pending fields before cleanup returns;
+there is no invented failure recovery or rollback.
+
+[320 complete cleanup comparisons](../../native/snow_host/pose_group_cleanup_validation.json)
+execute cleanup and both original array helpers, intercepting only allocator
+virtual calls. All168 group bytes and allocator call arguments/order match.
+Synthetic cases include inline/external/null storage, empty/nonempty arrays and
+inconsistent descriptors to distinguish exact gates. Pointed-to payloads are not
+freed in emulation; this is structural cleanup evidence, not live heap safety.
+
+The deleting wrapper calls this cleanup before testing argument bit0. Bit0 clear
+returns the group pointer. Bit0 set and bit2 set calls0x75e600(group,0xa8). Bit0
+set and bit2 clear reaches a pool path: visible instructions link the group at
+pool+0x30 and decrement pool+0x28, surrounded by protected calls. Ordinary-group
+retirement supplies argument1 and therefore selects that pool branch. Protected
+call semantics, pool retention, allocator implementation and concurrent reuse
+remain unresolved. Do not substitute a general heap free for that path.
