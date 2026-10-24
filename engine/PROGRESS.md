@@ -6978,3 +6978,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   ordering. Two hundred original arithmetic cases plus three early-null guards
   pass, including source/pending aliasing. Live callback-to-consumer timing remains
   unresolved; this scaling is distinct from the plain queue leaf.
+- Added runnable `engine.markup_vector_bench` to compose vector routing, decoded
+  XYZ formulas and world-scaled pending accumulation with explicit post-dispatch
+  state and normalization seed. CLI/integration tests pass. Synthetic example
+  output is labeled; state transitions, live callback and consumer timing remain
+  external, and nonfinite outputs are reported without fabricated recovery.

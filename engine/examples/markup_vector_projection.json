@@ -1,0 +1,9 @@
+{
+  "schema": "markup-vector-bench-v1",
+  "provenance": "authored_synthetic",
+  "post_dispatch_state": {"current_mode": 0, "outer_state": 0, "inner_state": 5},
+  "vector_inputs": {"direction": [1, 0, 1], "normal": [0, 0, 1], "gain": 2},
+  "rsqrt_seed": 1,
+  "pending_before": [0, 0, 0, 0],
+  "world_interval": 0.016666666666666666
+}

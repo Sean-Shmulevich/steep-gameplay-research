@@ -983,3 +983,11 @@ SDKROOT="$(env DEVELOPER_DIR="$(xcode-select -p)" xcrun --sdk macosx --show-sdk-
 
 The optional Win64 entry-thunk test additionally needs MinGW, `pefile` and
 `unicorn` on the Python path. A skipped optional test is not a passing execution.
+
+### Markup vector inspection
+
+`python3 -m engine.markup_vector_bench engine/examples/markup_vector_projection.json`
+inspects decoded motion-state vector formulas and world-scaled pending accumulation.
+Inputs include explicit post-dispatch state and RSQRT seed. The bundled example is
+synthetic; it does not emulate state transitions or run the game. See
+[scope and JSON fields](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-vector-to-pending-inspection).

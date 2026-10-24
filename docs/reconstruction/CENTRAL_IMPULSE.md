@@ -12015,3 +12015,43 @@ This closes the arithmetic link from the callback's state-dependent vector to th
 pending buffer. Live callback execution, which vector-state branch was selected,
 its interval/input values and the pending consumer's relative timing still need
 observation before claiming an end-to-end measured physical effect.
+
+### Runnable vector-to-pending inspection
+
+Run the authored synthetic example without any game files:
+
+```sh
+python3 -m engine.markup_vector_bench engine/examples/markup_vector_projection.json
+```
+
+The [inspection API](../../engine/markup_vector_bench.py) composes state-route
+selection, the decoded XYZ vector formula and world-interval-scaled accumulation.
+The [example](../../engine/examples/markup_vector_projection.json) uses post-dispatch
+state 0/0/5, direction [1,0,1], normal [0,0,1], gain 2 and an explicitly synthetic
+RSQRT seed of 1. It produces vector [2,0,0,0] and pending [1,0,0,0] at world
+interval 1/60. This is a worked formula example, not measured game behavior.
+
+JSON input requires schema `markup-vector-bench-v1`, explicit provenance
+`authored_synthetic` or `caller_supplied_observation`, `post_dispatch_state`,
+`pending_before` and `world_interval`. Formula routes also require `vector_inputs`.
+Projection routes use direction/normal/gain; outer-three uses current/normal,
+entity_direction/gain and boolean direct_direction/reverse_fallback. The gain is
+already resolved by the caller. A normalization route requires `rsqrt_seed`;
+`positive_infinity` represents the zero-length seed in a degenerate test. Missing
+seeds fail rather than silently using another approximation.
+
+`inspect(document)` returns route, receiver depth, dispatcher return, computed
+vector, seed-request squared lengths, pending result and explicit boundaries.
+The command supports `--output PATH`. It never modifies input documents. XYZ
+formulas are composed with an authored zero W lane; no native W-bit equivalence
+is asserted. Nonfinite vector results are represented as strings in valid JSON
+and report `nonfinite_vector_pending_not_evaluated`, since the pending arithmetic
+kernel intentionally accepts only finite inputs.
+
+Crucially, the supplied state is the state at vector-service entry, after ID-84's
+earlier motion action. The bench does not predict that transition, acquire live
+objects, simulate the pending consumer or update body velocity. It assumes the
+native entity/runtime/world presence gates already passed. This makes the decoded
+formula chain usable while keeping the unresolved scheduler and callback links
+visible. Tests cover the CLI example, preservation of caller input, skip/zero
+routes, missing seeds and explicit nonfinite results.
