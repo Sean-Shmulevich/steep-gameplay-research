@@ -7695,3 +7695,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   512 full native comparisons match every context byte without interception.
   Layout→settings→solver-control composition passes; upstream units/configuration
   validation and body-index assignment remain unresolved.
+- Connected body membership indices to solver-buffer order through the existing
+  append, builder, producer and writeback evidence. Added a guarded retained-group
+  adapter and composition tests including swap removal and selected-body solving.
+  128 offline original append→producer cases match without interception. Native
+  whole-group execution, concurrency and unsupported row categories remain open;
+  the adapter's validation policy is authored rather than recovered engine code.

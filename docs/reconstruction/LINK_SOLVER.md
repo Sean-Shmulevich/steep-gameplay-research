@@ -845,3 +845,46 @@ unchanged. Tests connect layout initialization, settings and solver control, and
 verify phase reset, raw copies, low-bit flags and reciprocal values. Zero/nonfinite
 scalar inputs, reciprocal overflow, overlapping buffers and live pointer lifetime
 are outside the independent API domain. No row storage is reset by this initializer.
+
+### Group membership and solver body indices
+
+The previously recovered body append routine, `0x19573c0`, supplies the body
+index consumed by row builders. It stores the current group count at body+0x1c,
+then inserts the body into the group's slot array. Body-buffer production at
+`0x1994560` traverses that array in order. The reconstructed single-family builder
+copies the low 16 bits of body+0x1c into its row header, and the numerical routines
+use that index to select the body-data/state records. Writeback traverses the
+same group order. This connects membership, row selection and writeback without
+requiring a separately guessed index map.
+
+This association is conditional on consistent retained membership. Append
+publishes the index before capacity growth, then reloads the insertion count.
+A growth service that changes the count can break the association. Removal and
+migration repair indices when they move a body into another slot, but that does
+not establish atomicity under concurrent changes. See
+[body group append](CENTRAL_IMPULSE.md#body-group-append) for the original ordering
+and its validation.
+
+`engine.pose_group_body_buffers.build_pose_group_body_buffers` is an authored
+adapter over these recovered operations. It checks every active body's token,
+group and index against its slot, then calls the existing buffer producer in that
+order. It returns ordered body tokens plus index-keyed data/state buffers usable
+by `solve_pose_link_rows`. It does not rewrite stale indices or assign ownership.
+It rejects body counts above65535 because the retained solver layout truncates
+body count to16 bits. This check is an API restriction, not a claim that native
+append always enforces that limit for every metadata class.
+
+[128 offline native composition cases](../../native/snow_host/pose_group_body_buffers_validation.json)
+run the original append routine and original buffer producer in harness-selected
+sequence without interception, with shuffled body addresses and retained
+capacity. Membership, active slot order and every produced buffer byte match.
+Initialized TLS/static state is supplied. These checks do not run the complete
+native orchestrator, allocation, damping or concurrent mutations.
+
+Independent integration tests cover append, swap removal, buffer production and
+writeback; stale membership rejection; and a builder→solver→writeback sequence
+whose body indices come from append. The latter changes the selected body's
+motion while preserving another body's state. Numerical categories beyond the
+supported primary/tangent rows, cross-group endpoints, allocation safety and live
+ownership remain unresolved. Earlier isolated buffer tests supplied index maps;
+this adapter closes that boundary for consistent retained groups only.

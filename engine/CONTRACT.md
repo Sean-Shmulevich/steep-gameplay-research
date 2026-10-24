@@ -499,3 +499,10 @@ It writes scalar10 and its float32 reciprocal scalar_c, establishing their nativ
 producer relationship. Finite nonzero reciprocal arithmetic is required; physical
 units, upstream settings validation, overlapping buffers and live token lifetime
 remain external. Existing row/layout storage is preserved.
+
+Group body buffers: `build_pose_group_body_buffers` is an authored adapter that
+checks retained token/group/index membership and constructs indexed solver buffers
+in active group order. It does not repair indices or synchronize live memory.
+Counts above65535 are rejected to avoid the recovered layout's 16-bit truncation.
+The membership producer and numerical consumer are recovered separately; consistent
+retained membership connects them, while allocation-time mutation remains external.
