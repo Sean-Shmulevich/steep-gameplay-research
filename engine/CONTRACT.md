@@ -478,3 +478,10 @@ truncation. `initialize_pose_solver_storage` copies planned counts, clears separ
 append counters/results and preserves other retained bytes. Its domain requires
 sufficient nonwrapping storage. Allocation/release/failure behavior, category-count
 prepasses and body-index assignment remain external.
+
+Link prepass counts: `count_pose_link_rows` accumulates25 uint32 category counters
+from enabled retained links/payloads. Second-body metadata bit15 selects paired
+categories. Full settings mode zero groups multi-row payloads into category4/5;
+nonzero mode reserves two category6/7 rows per point. Counter wrap is preserved.
+Pose contributions, valid mode domain, grouped builders and live lifetime remain
+external. The prepass mode test must not be conflated with low-bit builder dispatch.

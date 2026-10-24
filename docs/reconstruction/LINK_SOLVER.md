@@ -703,3 +703,51 @@ counts and the group's body count to0x19908d0, initializes context settings thro
 0x1990ba0, and calls the solve orchestrator0x1993ed0. These prepass and body-index
 assignment details remain open; the layout reconstruction does not infer counts
 from already built rows.
+
+### Link category-count prepasses
+
+`engine.pose_link_counts.count_pose_link_rows` reconstructs0x1994bb0 for zero
+settings mode and0x1994cc0 for nonzero mode. Both traverse retained links in order,
+skip link flag84 bit0 clear, capture payload-array count, and include only payloads
+with flag114 bit0 set. They sum raw uint32 payload row counts at+0x110 with wrap.
+After the payload loop, second-body metadata word+0x50 bit15 selects category
+branch `b=0` when clear or `b=1` when set.
+
+For each enabled link, let `total` be the sum of enabled payload row counts,
+`single` the number whose count equals1 and `multiple` the number whose count is
+greater than1. The prepasses accumulate, rather than replacing prior counters:
+
+```python
+counts[b] += total
+if settings_mode == 0:
+    counts[6+b] += 2 * single
+    counts[4+b] += multiple
+else:
+    counts[6+b] += 2 * total
+```
+
+Every counter operation wraps to uint32. A zero-row enabled payload contributes
+nothing. Other categories remain untouched. In zero mode, categories4/5 represent
+one grouped record per multi-row payload, rather than a pair of tangent records
+per point. Their corresponding row sizes are208/256 bytes from the recovered
+stride table, and their numerical equations are not supplied by the completed
+single-family builder.
+
+The caller selects the prepass using the entire raw settings uint32 at+0x24.
+Builder dispatch later tests only the context mode's low two bits. The API keeps
+this distinction; arbitrary mode values such as4 must not silently be reduced to
+zero before counting. Valid configuration-domain constraints beyond the observed
+branches remain unresolved.
+
+[1024 full native prepass comparisons](../../native/snow_host/pose_link_counts_validation.json)
+run both routines and original array getters without interception. All25 output
+counters match and retained link/payload storage is unchanged. Cases include
+metadata branches, disabled links/payloads, zero/single/multiple point counts,
+nonzero prior counters and uint32 overflow. Oversized raw row counts appear only
+in arithmetic validation; they do not extend the four-row builder contract.
+Independent composition tests feed derived counts to layout and check the
+single-payload counts against actual completed-builder output.
+
+This closes link planned-count production around the retained link/payload
+inputs. Pose-count contributions, body-index assignment, multi-row builder
+families and configuration validation remain separate work.

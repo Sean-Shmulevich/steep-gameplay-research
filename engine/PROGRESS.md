@@ -7677,3 +7677,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   memset supplied; stride getter remains native. Body-count truncation and untouched
   row/body regions are explicit. Located mode-dependent link-count and pose-count
   prepasses; their semantics, allocation paths and body-index assignment stay open.
+- Recovered both mode-dependent link category-count prepasses. 1024 complete native
+  runs match all25 counters without interception, including overflow and gate cases.
+  Derived counts feed layout, and a single-payload test matches completed-builder
+  counters. Zero-mode grouped payloads use categories4/5; other modes reserve paired
+  tangents per point. Pose counts, grouped equations and body-index assignment
+  remain unresolved.
