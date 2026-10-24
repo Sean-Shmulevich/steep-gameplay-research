@@ -7213,3 +7213,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   missing selected curves do not fall back. Synthetic tests prove profile changes
   affect velocity and override flags reach floor bypass. No continuous native
   comparison across protected code/locks or live body mutation is claimed.
+- Joined physical-body frame publication to velocity decay: body basis/translation
+  forms the return transform; the existing full cofactor inverse forms the decay
+  transform. Reused verified inverse arithmetic with explicit reciprocal seeds.
+  Both published transforms match 160 original-fragment cases. Cached-basis
+  fallback, mode selection, intervening work and live freshness remain external;
+  no rigid-transpose shortcut or anatomical-axis labels added.

@@ -1,0 +1,12 @@
+{
+  "cases": 160,
+  "bit_exact": true,
+  "scope": "Original body getter and frame publication, then original full inverse and publication; no intercepted calls; portable model receives observed reciprocal seeds",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Two selected native fragments, not complete update",
+    "Finite well-conditioned synthetic body transforms; branch selection, locks, alternate body and cached fallback omitted",
+    "Cross-CPU reciprocal seeds and live body identity/freshness unproved"
+  ],
+  "game_files_included": false
+}

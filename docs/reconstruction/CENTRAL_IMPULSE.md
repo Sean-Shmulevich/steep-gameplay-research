@@ -13643,3 +13643,46 @@ dominant-profile change affecting final velocity, override propagation to floor
 bypass, missing/null selected profiles, explicit continuity, contradictory bound
 sources and skipped stages. These are composition checks on synthetic inputs,
 not evidence of native scheduling or whole-controller equivalence.
+
+### Physical-body decay frame producer
+
+The geometry update at RVA 0x140a880 calls 0x13f8f20 with runtime+0x5e8's owner
+plus 0x140 as its output. That output is the same base used by the velocity
+correction: +0x80/+0x90/+0xa0 supply the return-frame basis and
++0xc0/+0xd0/+0xe0 supply the decay-frame basis. The producer has multiple modes;
+the following join is specifically the branch selected by a nonzero byte at
+`[runtime+0x1598]+0`.
+
+In that branch, RVA 0x13f8ff3..0x13f90b8 invokes the main body's transform getter
+0x18a8860. It copies body+0x40/+0x50/+0x60 basis XYZ and body+0x70 translation XYZ,
+then publishes four vectors with basis W=0 and translation W=1. The common block
+0x13f93cb..0x13f943c copies that transform, calls the full inverse helper
+0x2396b0, and publishes the inverse beside it. This is the already reconstructed
+[cofactor inverse](ANIMATION_CONTEXT_RETIREMENT.md#attachment-inverse-arithmetic),
+including approximate reciprocal seeds and two refinements. It is not merely
+a basis transpose; using a rigid-transpose shortcut would change finite arithmetic
+and fail for scaled/sheared inputs.
+
+`engine.snow_velocity_frames.physical_body_decay_frames(body_transform,
+reciprocal_seed)` joins those two publication stages. It returns both complete
+transforms plus `to_frame` and `from_frame` triples directly consumable by the
+velocity correction API. The input is four native body vectors, not a guessed
+Euler orientation; their W lanes are ignored as in the native getter. The seed
+service remains explicit. Using `lambda d: 1/d` is a labeled numerical substitute
+for the native approximate reciprocal, not a cross-CPU parity claim.
+
+The [frame-producer receipt](../../native/snow_host/snow_body_frames_validation.json)
+executes the original body getter/publication and then the original inverse and
+its publication for 160 finite well-conditioned synthetic transforms. Both 64-byte
+published transforms match the independent API bitwise when it receives the
+observed emulator reciprocal seeds. No calls are intercepted in those fragments.
+The intervening point-velocity, alternate-body and lock work is not executed;
+this is not a complete native update or a proof of live frame freshness.
+
+When the physical-body mode byte is zero, the producer instead copies cached
+runtime vectors +0xb60/+0xb40/+0xb50 into the return basis, followed by protected
+branches and other translation work. That fallback's producers and selection
+are not reconstructed here. Consequently the bench still permits explicitly
+supplied independent frames; it must not automatically derive every frame from
+the body. Physical-branch basis ownership is now established, but the axes are
+not assigned anatomical forward/sideways labels without the shape convention.
