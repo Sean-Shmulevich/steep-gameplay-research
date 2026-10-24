@@ -302,3 +302,41 @@ saves/settings were restored and the original DLL verified. This exercises the
 live identity/header/empty-queue path only; nonempty decoding remains synthetic.
 The next experiment should observe an enqueue or dispatch boundary, since repeating
 idle polling cannot distinguish absent events from events drained between reads.
+
+## Native sampler for callback-boundary capture
+
+[`snow_animation_queue_observe`](../../native/snow_host/snow_animation_queue.h)
+provides the corresponding native sampling primitive for a future dispatch
+recorder. It accepts an exact bounded reader and fresh component/owner/image
+identities. It allocates no heap storage and performs no game calls or writes.
+Two complete samples must agree. Output is cleared on refusal.
+
+Unlike the external Python reader's limit of 64, this callback-oriented sampler
+accepts at most eight rows to bound overhead. An oversized queue is rejected,
+not truncated. It requires matching counts within the low-14-bit capacities;
+reads context pointer/status fields without their reference counts; and skips
+handle dereferences for null events. Out-of-image tables are retained as private
+identifiers but never dereferenced. The maximum is 112 reader calls of at most
+64 bytes each; callback overhead and live suitability have not been measured.
+
+The native result retains raw addresses for private correlation. Inactive handles
+retain their observed payload bits, but those bits must not be treated as a
+resolved pointer unless status bit31 is set. These structs are authored capture
+records, not native game objects or a stable wire ABI. They must be sanitized
+before publication. Equal snapshots neither pin storage nor exclude changes
+that were reversed between reads.
+
+The [native fixture](../../tests/fixtures/snow_animation_queue_fixture.c) tests
+failure at each of 112 read positions, eight identity/content mutation paths,
+maximum capacity, empty/null events, foreign table/handler pointers, inactive
+handles, mismatched counts, malformed addresses and overflow refusal. It passes
+under address/undefined-behavior sanitizers; the sampler also compiles with the
+Win64 MinGW toolchain. See the [receipt](../../native/snow_host/animation_queue_native_validation.json).
+These are synthetic adapter checks, not original-instruction or live validation.
+
+The existing `SnowActionProbe` samples input-vector-shaped records and is not a
+queue recorder. No changes to that ABI or its installed behavior are made here.
+Still required: a typed dispatch recorder, verified native calling/return
+convention, invocation-local sample storage, bounded output, retained forwarding
+for cached callers, and restoration of the stable image slot. A successful sampler
+check is not permission to install it on an arbitrary callback.

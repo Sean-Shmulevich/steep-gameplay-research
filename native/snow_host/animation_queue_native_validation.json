@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "evidence": "Authored native observer tested against synthetic memory with injected read failures and mutations",
+  "source_hashes": {
+    "native/snow_host/snow_animation_queue.c": "29e026c0b9974a497caa5eda0bdfb9a81ac9f3711b50a73bb2e79bad05b02041",
+    "native/snow_host/snow_animation_queue.h": "6a14af204fc45457e981e339d47f50aeb09cf368eb3011029e3e733e830b90a2",
+    "tests/fixtures/snow_animation_queue_fixture.c": "1f31b647bc321e8ede30d79b41e77e70bd5a658605d4dd4f49f00d242e823f9d",
+    "tests/test_animation_queue_native.py": "b62333032b4724c54a64ca48ff44a433bb2e726c04c26b174762f2ffdcdb8b6b"
+  },
+  "checks": {
+    "read_failure_positions": 112,
+    "mutation_paths": 8,
+    "maximum_reader_calls": 112,
+    "maximum_rows": 8,
+    "address_sanitizer": true,
+    "undefined_behavior_sanitizer": true,
+    "win64_object_compilation": true
+  },
+  "limitations": [
+    "No original instruction execution in this fixture.",
+    "No native sampler live installation or callback execution.",
+    "Double samples are not atomic and do not pin lifetime.",
+    "Callback overhead is not measured.",
+    "Win64 object compilation is not Windows runtime validation."
+  ]
+}
