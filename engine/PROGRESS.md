@@ -7555,3 +7555,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   payload+0x110 reset and destination growth. 384 offline comparisons match with
   protected return blocks and growth supplied. Payload meaning and pool locking
   remain unresolved; inspector keeps aggregate intent when nested data is absent.
+- Recovered16/16/32-bit link keys, reverse last-match removal and a60-to64-byte
+  payload-row serialization map. 384 original row-copy fragments and384 complete
+  key-removal runs match without interception. Identified a keyed cache consumer;
+  physical field meanings, full producer and tagged-stream framing remain open.

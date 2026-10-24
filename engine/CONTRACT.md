@@ -312,3 +312,9 @@ raw count110 and appends them to a supplied destination. It clears source count
 only after normal completion and preserves entry bytes. Payload meaning, protected
 return synchronization and lifetime remain external. Missing nested collections
 in group-inspection inputs are not implicitly treated as empty.
+
+Link record layout: `decode_payload_row` maps one admitted60-byte serialized field
+into64 supplied prior bytes, preserving the last four bytes. It neither admits
+fields nor controls active count. Packed link keys truncate to16/16/32 bits;
+`remove_link_key` removes the last matching entry by swap-last without releasing
+payloads. Physical key/row meanings and full stream framing remain unresolved.

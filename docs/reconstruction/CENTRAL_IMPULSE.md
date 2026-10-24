@@ -16351,3 +16351,51 @@ replaces the opaque link-clear traversal with recovered behavior, while its
 protected payload return remains external. The runnable group inspector still
 records the aggregate clear intent until a caller supplies these nested payload
 collections; it does not invent empty collections for missing data.
+
+### Link keys and payload row serialization
+
+Link-entry append0x19586b0 writes two uint16 fields at entry+0/+2, one uint32
+field at+4, and the payload pointer at+8. Its removal counterpart0x1959000 builds
+the same key as `low16(first) | low16(second)<<16 | low32(detail)<<32`, scans
+backwards and removes the last match by copying the entire last16-byte entry over
+it. The inactive tail is retained and the payload is neither reset nor released
+by that helper. `engine.pose_link_record.pack_link_key` and `remove_link_key`
+implement this exact comparison/removal; the latter's boolean is our diagnostic,
+not the native return-register contract.
+
+A consumer at0x198f910 compares the two low fields against supplied uint16 values
+and the high field against a key from+0x2c of48-byte input records. It can remove
+an obsolete entry, reset its payload count and append the payload to another
+collection. This establishes a keyed payload-cache relationship structurally.
+Names for the keys, the48-byte records and physical contact semantics are not yet
+proved. Reset helper0x1986020 has several other callers; it is not unique to the
+null-destination link-clear path.
+
+Reader0x1986030 queries tag0x2e02 for a4-byte count stored at payload+0x110. For
+signed-positive count it visits rows at payload+0x10 + index*64 and queries
+tag0x2e03 with size60. The admitted copy branch reads fields in this order:
+
+| Serialized bytes | Destination within64-byte row |
+| --- | --- |
+| 0..11 | 0x10..0x1b |
+| 12..23 | 0x20..0x2b |
+| 24..39 | 0x00..0x0f |
+| 40..47 | 0x30..0x37 |
+| 48..51 | 0x38..0x3b, as two16-bit fields |
+| 52..55 | 0x2c..0x2f, as two16-bit fields |
+| 56..59 | 0x1c..0x1f |
+
+The final four row bytes remain untouched. `decode_payload_row` implements this
+bit-preserving60-to64-byte conversion with supplied prior row bytes. It does not
+infer vector units, field names, active count, tagged-stream framing or an asset
+container. In the outer reader, absent fields preserve prior state; this local
+API operates only after field admission. The observed count position follows
+four64-byte slots, but no maximum-count enforcement is established here.
+
+[384 row-copy and384 key-removal comparisons](../../native/snow_host/pose_link_record_validation.json)
+execute original instructions with no calls intercepted. They compare all288
+supplied payload bytes, exact60-byte stream advancement, all link descriptor bytes
+and complete entry arrays including tails. Tests cover row offsets0..3, duplicate
+keys, width truncation and missing matches. This adds a usable local record decoder
+and proves key composition without claiming that the complete payload producer,
+contact solver or tagged-stream parser is reconstructed.

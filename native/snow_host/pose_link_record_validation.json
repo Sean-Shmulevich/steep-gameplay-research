@@ -1,0 +1,23 @@
+{
+  "schema": "pose-link-record-validation-v1",
+  "row_mapping_cases": 384,
+  "key_removal_cases": 384,
+  "passed": 768,
+  "method": "offline Unicorn admitted field-copy fragment and complete key removal; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "rvas": [
+    "0x19860b4..0x19861c1",
+    "0x1959000"
+  ],
+  "comparisons": [
+    "all 288 payload bytes",
+    "stream advance exactly 60 bytes",
+    "all link descriptor bytes",
+    "full key/payload array and inactive tails"
+  ],
+  "limits": [
+    "Tagged field admission and active row count are supplied, not decoded by the row API.",
+    "Physical field semantics and payload producer remain unresolved.",
+    "No allocation, payload release or live object access."
+  ]
+}
