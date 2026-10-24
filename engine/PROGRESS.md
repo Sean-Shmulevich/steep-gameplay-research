@@ -7083,3 +7083,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Added independent kernel matching 160 original-instruction cases; 31 related
   portable tests pass. Helper return units, selection/geometry, divisor semantics
   and live attribution remain external. No immersion or grounded label inferred.
+- Rejoined the positive accumulator to prior tetrahedron clipping research:
+  verified the five-entry nonpositive-vertex helper table, return-field joins,
+  and total-volume producer using absolute triple product / 6. This supports
+  selected submerged volume / total hull volume, superseding the wholly unnamed
+  accumulator interpretation. Static evidence only; full clipping float32 parity
+  and live volume attribution remain open, and immersion is not universal grounded.

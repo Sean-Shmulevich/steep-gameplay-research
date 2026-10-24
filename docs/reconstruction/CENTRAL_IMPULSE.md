@@ -12772,3 +12772,47 @@ Thirty-one related portable tests pass, including a result above one and feeding
 the duration threshold. No live accumulator attribution or full helper execution
 is claimed. The next dependency is the selected helper returns and denominator
 producer, followed by checking intervening writes before gate consumption.
+
+### Rejoined to the existing tetrahedron clipping research
+
+A subsequent static pass connects the generic accumulator above to the earlier
+[snow geometry and depth findings](../systems/snow/CLIENT_GUIDE.txt). The helper
+table built at RVA 0x1408e7b has five entries indexed by the count of vertices
+whose plane evaluation is nonpositive:
+
+| Nonpositive vertices | Helper RVA | Established geometry route |
+| --- | --- | --- |
+| 0 | 0x1404700 | Empty, zero return |
+| 1 | 0x1403d20 | One retained corner |
+| 2 | 0x1403030 | Three-piece clipped polyhedron |
+| 3 | 0x1403d20 | Full cell minus excluded corner |
+| 4 | 0x1404700 | Full cell |
+
+All receiver adjustments in this local table are zero. Vertex classification at
+RVA 0x1408ff0 uses the stored four-lane plane dot product, including its offset;
+zero belongs to the nonpositive side. A missing material pointer or the optional
+directional filter can skip a cell before helper dispatch. This is therefore a
+selected-volume ratio, not unconditional intersection with every scene surface.
+
+The full-cell helper copies geometry+8 into record+0x60 at RVA 0x14047fd,
+and returns that field at RVA 0x14048e1. The partial helpers likewise return
+record+0x60. These are the same clipping routines identified by the earlier snow
+research, which assigns that field submerged volume. The current pass rechecks
+the table and return joins, not every partial-clipping instruction.
+
+The denominator also has an inspected producer: geometry setup beginning at RVA
+0x13f6b00 forms a scalar triple product, takes its absolute value, divides by
+6.0 at RVA 0x13f6be8, and accumulates that cell volume into shape+0x164 at
+RVA 0x13f6d9a. This supports the existing immersion interpretation:
+
+```text
+immersion = sum(positive selected submerged cell volumes) / total hull cell volume
+```
+
+Thus the earlier statement that the physical meaning was wholly unresolved is
+superseded by this cross-reference and static producer check. The generic kernel
+keeps explicit inputs because clipping, selection and native configuration are
+not executed by it. Do not relabel the threshold as universal grounded state:
+material selection, rock/ice profiles and later writes still matter. Full
+float32 clipping equivalence, live volume attribution, shape lifetime and any
+intervening writes before timer consumption remain separate verification work.
