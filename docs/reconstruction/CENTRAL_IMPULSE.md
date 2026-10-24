@@ -15823,3 +15823,42 @@ match. Cases cover mixed endpoints, empty arrays, first/middle/last removal and
 varied supplied runtime sentinels. This closes body-array and attached-pose removal,
 not the full context detach operation, link-clear effects, concurrent mutation,
 object destruction or native storage lifetime.
+
+### Context body detach
+
+`engine.pose_context_detach.detach_pose_body` reconstructs RVA0x18e23c0..0x18e2503
+using explicit body-removal, constraint-pruning and group-processing services.
+It captures body.group, calls local removal0x1957fc0, then compares the captured
+group with the context's current special-group fields:
+
+```text
+old_group = body.group
+remove_body(old_group, body)
+if old_group == context.group408:
+    prune matching body constraints in groups418, then groups428
+elif old_group != context.group410:
+    process_group(context, old_group)
+remove first matching body from context.tracked by swap-last
+```
+
+`groups418` is pointer/count at context+0x418/+0x420; `groups428` at+0x428/+0x430.
+Each traversal captures its storage pointer and count once. It reads each slot
+when reached, so in-place slot mutations are observed but count changes do not
+shorten the current loop. The second array is captured after the first completes.
+The API assumes retained valid nonwrapping arrays; it does not manufacture native
+pointer-wrap behavior or safe concurrent reallocation.
+
+Constraint pruning uses the preceding recovered0x1958030 helper. Ordinary-group
+processing0x18e2de0 remains supplied; its entry calls group finalization and then
+branches on body count, so it must not be silently treated as a no-op. The tracked
+list pointer/count at+0x470/+0x478 are read after these services. Only the first
+matching body token is removed. The last active token replaces it, count falls
+by one, and the inactive tail remains. No match leaves that list unchanged.
+
+[320 complete native comparisons](../../native/snow_host/pose_context_detach_validation.json)
+match service order/arguments, callback-mutated arrays/counts and body membership.
+The three downstream services are intercepted. Cases include mutation of the
+special-group identity after local removal, captured loop extents, changed slot
+values, later-array reload, duplicate tracked entries and no match. This closes
+context-detach orchestration, not ordinary-group processing, storage lifetime,
+protected-wrapper synchronization or native destruction semantics.

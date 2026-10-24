@@ -1,0 +1,18 @@
+{
+  "cases": 320,
+  "matching": true,
+  "scope": "Complete native context-detach routine with local removal, constraint pruning and group processing supplied; service order/arguments, mutated arrays/counts and body membership match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Both special groups and ordinary group branch",
+    "Captured old group and reloaded special-group identity",
+    "Captured traversal extent with updated slot values and later-array reload",
+    "Tracked-list first-match swap removal including duplicates and no match"
+  ],
+  "limits": [
+    "Downstream services intercepted",
+    "Retained nonwrapping arrays assumed",
+    "No concurrent storage replacement, group destruction or lifetime proof"
+  ],
+  "game_files_included": false
+}

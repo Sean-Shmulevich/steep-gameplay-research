@@ -7486,3 +7486,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   membership cleared after pruning. 256 connected native cases match all record/
   group bytes and retained tails with link-clear supplied. Full context detach,
   destruction and lifetime remain unresolved.
+- Reconstructed full context-detach orchestration: captured old group, special-group
+  cross-array pruning, ordinary-group service and first-match tracked-list removal.
+  320 native service-intercepted cases match order and mutation visibility. Array
+  extents are captured per traversal; later arrays reload. Group processing,
+  synchronization and storage lifetime remain external.
