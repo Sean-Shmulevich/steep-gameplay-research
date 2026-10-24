@@ -1,0 +1,19 @@
+{
+  "cases": 512,
+  "paths": {
+    "angle": 349,
+    "skip": 163
+  },
+  "bit_exact": true,
+  "scope": "Original optional prepass angle selection and gate publication through rotation call arguments",
+  "intercepted_services": [
+    "Two curve evaluator calls return supplied finite samples"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite synthetic scalar inputs; prepass geometry and rotation excluded",
+    "Entry flags reproduce the preceding mode-byte comparison",
+    "Curve inputs/order, angle bits and final gate byte checked; live producer meanings unresolved"
+  ],
+  "game_files_included": false
+}

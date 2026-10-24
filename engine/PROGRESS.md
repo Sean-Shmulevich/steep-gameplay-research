@@ -7278,3 +7278,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases with observed math results, including simultaneous flags and threshold
   boundaries. Explicit cache-write diagnostics distinguish reuse from retention.
   Enabled gate, prepass producers, live activation and timing remain unresolved.
+- Recovered optional prepass control-angle formula and candidate gate publication.
+  Connected drive/override/retention/preferred fields to two curve-scaled angle
+  gains, preserving exact mode and 0.5 thresholds. Angle/gate/service arguments
+  match 512 native fragments with two supplied curve-return interceptions.
+  Initial geometry, curve producers, native discarded exceptions and live input
+  meanings remain outside the finite scalar reconstruction.

@@ -14158,3 +14158,61 @@ This closes local branch composition, not the complete callback. Enabled-byte
 handling, the prepass at 0x13fb3e0, input producers, live branch frequency and
 cache-to-frame timing remain outstanding. The earlier live capture identified
 this callback but did not prove execution of any particular override path.
+
+
+### Control-dependent prepass angle
+
+`engine.snow_prepass_angle.control_prepass_angle` recovers the optional rotation
+angle and gate-byte publication at RVA 0x13fb8a2..0x13fb9dd. The prepass has
+already constructed its initial direction by this point. This section does not
+reconstruct that geometry or execute the subsequent rotation.
+
+Mode is the fourth incoming argument's low byte. Only mode exactly 1 with
+receiver+0x16c zero enters this block; other modes leave receiver+0x1ba unchanged.
+Candidate selection requires receiver+0x1bb nonzero, absolute values of both
+receiver+0x20 and +0x30 strictly greater than 0.5, float32(+0x20 * +0x1a8) positive,
+receiver+0x10c nonpositive, and +0x1b8 zero. The prepass stores candidate AND
+NOT preferred into +0x1ba, where preferred is the byte at +0x17d. A nonzero
+preferred byte then skips this rotation, after clearing the published gate.
+These field roles do not establish keyboard mappings or sport-specific labels.
+
+Otherwise it samples config+0x158 at the frame-owner scalar +0, then config+0x190
+at the selected immersion scalar. The latter was selected earlier: config byte
++2 equal to 1 chooses runtime+0x9f4; otherwise runtime+0x9f0. The frame owner here
+is runtime+0x5e8 plus 0x140. The speed/immersion names follow existing field
+research; their producers and full units are external to this kernel.
+
+With float32 rounding after every arithmetic operation:
+
+```text
+if candidate:
+    raw = ((drive + 1) * added_angle) * candidate_gain + 0
+else:
+    raw = ((drive + 1) * added_angle) * 1 + base_angle
+if retention_byte != 0:
+    raw = base_angle + added_angle
+angle = -((raw * speed_curve_value) * immersion_curve_value)
+```
+
+Here drive is receiver+0x1b0, base_angle +0xd0, added_angle +0xe0,
+retention_byte +0x1b9, and candidate_gain is runtime+0x15b0's scalar +0x14.
+The resulting radians rotate the current first basis vector around the
+prepass-produced direction using the shared rotation helper. The sign inversion
+is applied after both curve gains. The native routine calculates its tentative
+angle before the retention override; the portable scalar API directly computes
+the selected finite result and does not emulate discarded arithmetic exceptions
+or memory accesses. Retention changes the angle formula without changing the
+candidate gate already published.
+
+This links orientation to fields also used by velocity-decay drive selection:
+receiver+0x10c override, +0x1b0 drive, +0x1b9 retention and +0x17d preferred state.
+It does not prove they have one universal input meaning. In particular the
+preferred path skips this rotation and later applies its own angle sequence.
+
+The [prepass-angle receipt](../../native/snow_host/prepass_angle_validation.json)
+compares 512 native-fragment cases: 349 produce an angle and 163 skip it. Angle
+bits, final gate byte, curve arguments and service order match. Two curve calls
+are explicitly intercepted with supplied samples; the rest of this fragment
+executes original instructions. Entry flags reproduce the immediately preceding
+mode comparison. Geometry before this block, curve internals, runtime field
+producers, live activation and actual rotation are outside this receipt.
