@@ -7145,3 +7145,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Synthetic example demonstrates report without impulse and aggregation without
   reporting. Twenty-five related tests and CLI example pass. Mathematical rsqrt
   seed is labeled; no native initialization, cross-phase freshness or solver claim.
+- Audited the submission-to-report gap: intervening routine contains additional
+  conditional central-impulse calls on the main-body route plus unresolved paths.
+  Bench now requires explicit unchanged-record assertion or separate reporting
+  snapshot; no silent phase reuse. Twenty-seven related tests and CLI pass,
+  including differing phase counts/vectors/points. Native mutation exclusion and
+  the extra body contribution remain unproved.

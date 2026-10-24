@@ -164,5 +164,6 @@
     0,
     0,
     1
-  ]
+  ],
+  "record_continuity": "caller_asserted_unchanged"
 }

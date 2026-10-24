@@ -27,3 +27,22 @@ class ContactBenchTests(unittest.TestCase):
     def test_explicit_provenance_required(self):
         doc=json.loads(EXAMPLE.read_text());del doc['provenance']
         with self.assertRaises(ValueError):inspect(doc)
+
+    def test_separate_phase_records_are_not_silently_reused(self):
+        from copy import deepcopy
+        doc=json.loads(EXAMPLE.read_text());doc['gate_one']=1
+        doc['record_continuity']='separate_phase_snapshots'
+        doc['reporting_records']=deepcopy(doc['records'][:1])
+        doc['reporting_records'][0]['a']=[0,0,7,0]
+        doc['reporting_records'][0]['point']=[0,-5,0,1]
+        r=inspect(doc)
+        self.assertEqual(r['impulse_submissions'][0]['impulse'],[.125,0,.375,0])
+        self.assertEqual(r['report_state']['records'][0]['magnitude'],7)
+        self.assertEqual([b['count'] for b in r['accumulated_buckets']],[0,1])
+        self.assertEqual(r['finalized_buckets'][1]['point'],[0,-5,0,1])
+
+    def test_implicit_or_contradictory_continuity_is_rejected(self):
+        doc=json.loads(EXAMPLE.read_text());del doc['record_continuity']
+        with self.assertRaises(ValueError):inspect(doc)
+        doc['record_continuity']='caller_asserted_unchanged';doc['reporting_records']=[]
+        with self.assertRaises(ValueError):inspect(doc)

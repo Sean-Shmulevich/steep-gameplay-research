@@ -13170,3 +13170,30 @@ reporting has not been proved to preserve every record; reuse of one supplied
 record array is an explicit composition assumption. Twenty-five related tests
 pass, including phase distinctions, unchanged inputs and gate eligibility versus
 magnitude. The CLI example also executes successfully.
+
+### Explicit phase snapshots around the intervening routine
+
+The call at RVA 0x1409dc1 reaches 0x13f7cc0 before contact reporting. That routine
+checks immersion, obtains the main body through runtime+0x6e8, enters a lock path,
+and contains conditional calls to the established central-impulse wrapper at
+RVAs 0x13f82c4 and 0x13f8658. It also calls other body helpers and protected paths.
+Thus whole-wrapper velocity change can include additional body work after the
+summed point submissions. The current inspection does not establish absence of
+record mutation through all nested paths, nor quantify this additional impulse.
+
+The bench now requires explicit `record_continuity`:
+
+- `caller_asserted_unchanged` reuses `records` for reporting and aggregation.
+  Supplying a second record list in this mode is rejected as contradictory.
+- `separate_phase_snapshots` uses `records` for impulse submissions and requires
+  `reporting_records` for reporting/aggregation. Counts, order and values may differ.
+  Per-record report/group event indices refer only to the reporting-phase list;
+  index equality does not establish native identity across phases.
+
+The supplied gates, frame and initial aggregates remain explicit inputs, not
+newly validated native state. This change removes silent phase reuse from the
+public API without claiming the missing intervening routine is reconstructed.
+The synthetic example explicitly asserts unchanged records. Twenty-seven related
+tests pass, including changed force vectors/points and unequal phase list lengths:
+submission uses its own vector while reporting magnitude and grouping reflect
+the later snapshot. Missing or contradictory continuity declarations reject.
