@@ -1,0 +1,157 @@
+{
+  "schema": "animation-dispatch-input-live-validation-v1",
+  "passed": true,
+  "evidence": "Original component dispatch bracketed during identity-checked SendInput; guarded body samples outside the capture",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "plugin_sha256": "9a23790f67bb374d5cfe853d711781104d0572b5e0827067eeafbdf29dc7dc7e",
+  "plugin_source_sha256": "f754e86946c9eb53ca1705e3e3cbe99682e7134cfd072a836ad4b78ac7760444",
+  "controller_sha256": "c34ce7573086170dc48d1e483091df111e718a276057c24f9fe6528367e034df",
+  "evidence_hashes": {
+    "route-result.json": "8dfd4d13165bb53fded91326b367450a0ae536bc26e32e4a60ff635be1cc9167",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "membership-reader-calls.json": "c6fe95a92303769cb0c771eecefc924a8a38b6bfdda87da2f9b43fdd0fffdae4",
+    "input-events.jsonl": "576a9844fe03543df49edf93acae5b205e659bbc3732ed30aca119b6c5cdb3bb",
+    "build/plugins/animation_queue_capture.ini.trace.jsonl": "6f476c66b7a121e03bffc025ec03c902cf8d4f25e6772563d89237aa689baa93"
+  },
+  "requested_capture_ms": 1000,
+  "records": 105,
+  "dropped": 0,
+  "all_before_after_samples_valid": true,
+  "caller_rva_counts": {
+    "0x8f2b8d": 105
+  },
+  "distinct_threads": 10,
+  "observed_entry_to_last_exit_seconds": 1.2108569,
+  "input": {
+    "scan": 17,
+    "api_accepted_down": true,
+    "api_accepted_up": true,
+    "foreground_verified": true,
+    "reported_hold_seconds": 0.5049706,
+    "reports_inside_capture": true,
+    "game_ingestion_directly_observed": false
+  },
+  "calls_by_report_phase": {
+    "before_keydown_report": 28,
+    "before_keyup_report": 41,
+    "after_keyup_report": 36
+  },
+  "nonempty_transitions": [
+    {
+      "record_index": 33,
+      "seconds_from_keydown_report": 0.0915018,
+      "before_count": 1,
+      "after_count": 0,
+      "before_valid": 1,
+      "after_valid": 1,
+      "events": [
+        {
+          "table_rva": "0x1eecd58",
+          "handler_rva": "0xa45ec0",
+          "known_type": "AudioEventSeed",
+          "first_active": true,
+          "second_active": true,
+          "first_matches_acquired_world": true,
+          "second_matches_acquired_owner": true
+        }
+      ]
+    },
+    {
+      "record_index": 42,
+      "seconds_from_keydown_report": 0.1993996,
+      "before_count": 1,
+      "after_count": 0,
+      "before_valid": 1,
+      "after_valid": 1,
+      "events": [
+        {
+          "table_rva": "0x1eecd58",
+          "handler_rva": "0xa45ec0",
+          "known_type": "AudioEventSeed",
+          "first_active": true,
+          "second_active": true,
+          "first_matches_acquired_world": true,
+          "second_matches_acquired_owner": true
+        }
+      ]
+    },
+    {
+      "record_index": 77,
+      "seconds_from_keydown_report": 0.5984728,
+      "before_count": 1,
+      "after_count": 0,
+      "before_valid": 1,
+      "after_valid": 1,
+      "events": [
+        {
+          "table_rva": "0x1eecd58",
+          "handler_rva": "0xa45ec0",
+          "known_type": "AudioEventSeed",
+          "first_active": true,
+          "second_active": true,
+          "first_matches_acquired_world": true,
+          "second_matches_acquired_owner": true
+        }
+      ]
+    }
+  ],
+  "body_sample_interval_seconds": 8.016672,
+  "body_samples": {
+    "body_before": {
+      "position": [
+        -2312.955810546875,
+        -4273.34521484375,
+        2385.9326171875
+      ],
+      "linear": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fdc": 1,
+      "fc9": 1,
+      "links_matched": true,
+      "atomic_snapshot": false
+    },
+    "body_after": {
+      "position": [
+        -2313.7236328125,
+        -4273.474609375,
+        2385.368408203125
+      ],
+      "linear": [
+        -2.485262870788574,
+        -0.27487850189208984,
+        -1.5939090251922607
+      ],
+      "fdc": 0,
+      "fc9": 1,
+      "links_matched": true,
+      "atomic_snapshot": false
+    }
+  },
+  "body_position_delta": [
+    -0.767822265625,
+    -0.12939453125,
+    -0.564208984375
+  ],
+  "body_displacement_units": 0.9615746223545962,
+  "movement_prelude": null,
+  "external_slot_restore_verified": true,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Input report timestamps are taken after SendInput; game ingestion is not directly recorded.",
+    "Observed body changes and event timing are not proof of input-to-event causality.",
+    "Individual event handler entry and effects were not instrumented.",
+    "Acquired actor ownership does not independently establish selected local-player identity.",
+    "Body snapshots are sequential and only link-guarded, not atomic or same-substep.",
+    "Capture duration is a requested interval, not an exact deterministic frame window."
+  ]
+}

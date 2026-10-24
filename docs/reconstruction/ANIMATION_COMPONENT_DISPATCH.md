@@ -436,7 +436,7 @@ The build does not start the game. The plugin is disabled unless its adjacent
 setting must be 100..1000 and defaults to 500.
 
 Initialization starts a pinned worker waiting at most three minutes for
-`animation_queue_capture.ini.trigger`. It refuses a trigger or done marker already
+`animation_queue_capture.ini.trigger`. It refuses a trigger, armed or done marker already
 present at initialization. A controller must first acquire and validate fresh
 `component`, `owner`, `actor`, `world` and image `size`, append these hexadecimal
 values to the INI, then create the trigger. Never reuse addresses from an earlier
@@ -450,7 +450,7 @@ restoration for at most two seconds, then closes/drains for at most two seconds.
 An outer controller must stop the session on failure; the plugin cannot guarantee
 restoration against a competing writer or prevent process termination.
 
-Only after restoration/drain does it write private `.trace.jsonl` records and a
+Only after restoration/drain attempts does it write private `.trace.jsonl` records and a
 `.done` marker. The summary records installation/restoration outcomes, an explicit
 original-slot comparison, used/dropped records and clock frequency. Record rows
 contain raw addresses and must stay private. A done marker means output was
@@ -498,3 +498,59 @@ that recorder state and any future API at this boundary must handle calls on
 multiple workers. Next, a controlled movement/jump capture can test whether other
 event classes appear; a class-specific handler trace would be needed to establish
 their effects. Do not expand this audio result into a motion-release claim.
+
+
+For coordinated input, the plugin now writes `.armed` only after successful slot
+installation. A controller can prewarm an identity-checked input helper, wait for
+that marker, then release its input gate. The marker does not prove the slot is
+still installed later; compare input-delivery and captured-call timestamps and
+inspect the restoration summary. Stale armed markers are refused at startup.
+Input delivery and queue sampling are independent observations. Windows accepting
+a key does not establish game ingestion, and a queue transition near a key event
+does not establish that the key caused the transition.
+
+## Controlled movement and Space-input trials
+
+Two further sessions used a prewarmed, process/window-identity-checked SendInput
+helper. The controller released its input gate only after `.armed`. Key-down and
+key-up reports both fell inside the recorded callback interval on the shared QPC
+clock. Reports are timestamped after the API call; they are not the game's input
+ingestion timestamps.
+
+| Trial | Dispatch calls | Nonempty before -> empty after | Event types observed |
+| --- | ---: | ---: | --- |
+| W held 500 ms | 105 | 3 | AudioEventSeed only |
+| W prelude, then Space held 150 ms | 117 | 0 | None |
+
+See the [W receipt](../../native/snow_host/animation_dispatch_input_live_validation.json)
+and [Space-input receipt](../../native/snow_host/animation_dispatch_jump_input_live_validation.json).
+All before/after queue samples passed, no records were dropped, and every caller
+was the same inspected batch-visitor return site. All three W-trial events had
+active handles matching the acquired world and owning entity. This extends the
+context mapping observed in the first idle capture; it does not establish a
+universal schema for every event type.
+
+Guarded body reads in the W trial changed from zero velocity to nonzero velocity,
+with about 0.962 world units of displacement. The reads were 8.017 seconds apart,
+including helper startup, so this is not distance traveled in the one-second
+capture or a calibrated speed calculation. The actor's fdc byte changed 1 -> 0;
+fc9 remained 1. The latter byte therefore cannot by itself be used to classify
+complete immobility on this observed path.
+
+In the Space trial, the W prelude had already cleared fdc and produced nonzero
+body velocity before the queue capture. Subsequent body samples were 3.873 seconds
+apart and showed continued motion. The event trace and those endpoint samples do
+not establish jump takeoff, airtime, landing or an animation selection. A Space
+input is not proof of a completed jump. Neither trial identifies an individual
+handler effect or proves that an observed audio event caused movement.
+
+Both slots were restored and independently verified. The host remained ready
+and unfaulted; the research bottles were stopped, saves/settings restored and the
+original DLL verified. Requested capture intervals were 1000 ms, not exact frame
+windows: recorded envelopes include installation/marker and restoration timing.
+
+These results narrow the next investigation. The generic queued-event path is
+now observable, but these movement trials yielded no direct motion-release
+handler. Prioritize the already identified markup-update/motion-release route
+and observe its actual callback boundary. This does not rule out other queued
+event classes under different clips, actions or game states.

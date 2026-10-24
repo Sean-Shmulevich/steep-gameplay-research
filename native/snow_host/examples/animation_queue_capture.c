@@ -9,7 +9,7 @@
 #include <string.h>
 #include "snow_plugin.h"
 #include "snow_animation_queue_probe.h"
-static char config[MAX_PATH],trigger[MAX_PATH+16],output[MAX_PATH+16],done[MAX_PATH+16];
+static char config[MAX_PATH],trigger[MAX_PATH+16],output[MAX_PATH+16],done[MAX_PATH+16],armed[MAX_PATH+16];
 static volatile LONG cancelled;
 static unsigned duration;
 static struct {uint64_t base,size,component,owner,actor,world;} binding;
@@ -71,6 +71,8 @@ static DWORD WINAPI capture(LPVOID unused) {
     if(configured) {
         installed=SnowAnimationQueueProbe_InstallSlot();
         if(installed==1) {
+            FILE *marker=fopen(armed,"w");
+            if(marker){fputs("dispatch slot installed\n",marker);fclose(marker);}
             until=GetTickCount64()+duration;
             while(GetTickCount64()<until && !InterlockedCompareExchange(&cancelled,0,0))Sleep(1);
         }
@@ -102,8 +104,8 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
        strlen(api->config_path)+16>=MAX_PATH || GetPrivateProfileIntA("capture","enabled",0,api->config_path)!=1)return 1;
     strcpy(config,api->config_path);duration=GetPrivateProfileIntA("capture","milliseconds",500,config);
     if(duration<100 || duration>1000)return 1;
-    snprintf(trigger,sizeof trigger,"%s.trigger",config);snprintf(output,sizeof output,"%s.trace.jsonl",config);snprintf(done,sizeof done,"%s.done",config);
-    if(GetFileAttributesA(trigger)!=INVALID_FILE_ATTRIBUTES || GetFileAttributesA(done)!=INVALID_FILE_ATTRIBUTES)return 1;
+    snprintf(trigger,sizeof trigger,"%s.trigger",config);snprintf(output,sizeof output,"%s.trace.jsonl",config);snprintf(done,sizeof done,"%s.done",config);snprintf(armed,sizeof armed,"%s.armed",config);
+    if(GetFileAttributesA(trigger)!=INVALID_FILE_ATTRIBUTES || GetFileAttributesA(done)!=INVALID_FILE_ATTRIBUTES || GetFileAttributesA(armed)!=INVALID_FILE_ATTRIBUTES)return 1;
     if(!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_PIN,(LPCSTR)(uintptr_t)&capture,&pinned))return 1;
     plugin->struct_size=sizeof *plugin;plugin->api_version=SNOW_PLUGIN_API_VERSION;plugin->name="animation_queue_capture";plugin->version="experimental-1";plugin->on_unload=unload;
     HANDLE worker=CreateThread(NULL,0,capture,NULL,0,NULL);if(!worker)return 1;CloseHandle(worker);return 0;

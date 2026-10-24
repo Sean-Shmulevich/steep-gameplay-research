@@ -1,0 +1,115 @@
+{
+  "schema": "animation-dispatch-input-live-validation-v1",
+  "passed": true,
+  "evidence": "Original component dispatch bracketed during identity-checked SendInput; guarded body samples outside the capture",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "plugin_sha256": "9a23790f67bb374d5cfe853d711781104d0572b5e0827067eeafbdf29dc7dc7e",
+  "plugin_source_sha256": "f754e86946c9eb53ca1705e3e3cbe99682e7134cfd072a836ad4b78ac7760444",
+  "controller_sha256": "3e9fa966b4c7cbed6b4cf2ea3f1a51f9f70f3f72ed90c4a27f6f9bcabedfab45",
+  "evidence_hashes": {
+    "route-result.json": "24c45115fee4fde1744507b6db04511d2f6494ce8bb84646434f01ef7483de34",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "membership-reader-calls.json": "d4c27e34334c7648591e3cbdf3cf2859c04cc1b7535d7b51c22f7b72efc2fc27",
+    "input-events.jsonl": "39870a6854037f7ff8b3543f7f59a72f6db837e756668e7b620b0ea55c8cb27b",
+    "build/plugins/animation_queue_capture.ini.trace.jsonl": "f4d71c2dbf7ae9e962d6d820ae4b8931502d8da8a05181cbe57d59d9d02bd1c0"
+  },
+  "requested_capture_ms": 1000,
+  "records": 117,
+  "dropped": 0,
+  "all_before_after_samples_valid": true,
+  "caller_rva_counts": {
+    "0x8f2b8d": 117
+  },
+  "distinct_threads": 10,
+  "observed_entry_to_last_exit_seconds": 1.2335184,
+  "input": {
+    "scan": 57,
+    "api_accepted_down": true,
+    "api_accepted_up": true,
+    "foreground_verified": true,
+    "reported_hold_seconds": 0.1485582,
+    "reports_inside_capture": true,
+    "game_ingestion_directly_observed": false
+  },
+  "calls_by_report_phase": {
+    "before_keydown_report": 22,
+    "before_keyup_report": 14,
+    "after_keyup_report": 81
+  },
+  "nonempty_transitions": [],
+  "body_sample_interval_seconds": 3.87347,
+  "body_samples": {
+    "body_before": {
+      "position": [
+        -2312.982177734375,
+        -4273.3984375,
+        2385.857666015625
+      ],
+      "linear": [
+        -0.7858988046646118,
+        -0.11041933298110962,
+        -0.40466824173927307
+      ],
+      "fdc": 0,
+      "fc9": 1,
+      "links_matched": true,
+      "atomic_snapshot": false
+    },
+    "body_after": {
+      "position": [
+        -2338.115966796875,
+        -4280.3330078125,
+        2364.45263671875
+      ],
+      "linear": [
+        -8.091133117675781,
+        -2.284675121307373,
+        -14.841994285583496
+      ],
+      "fdc": 0,
+      "fc9": 1,
+      "links_matched": true,
+      "atomic_snapshot": false
+    },
+    "body_before_prelude": {
+      "position": [
+        -2312.955810546875,
+        -4273.34521484375,
+        2385.9326171875
+      ],
+      "linear": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fdc": 1,
+      "fc9": 1,
+      "links_matched": true,
+      "atomic_snapshot": false
+    }
+  },
+  "body_position_delta": [
+    -25.1337890625,
+    -6.9345703125,
+    -21.405029296875
+  ],
+  "body_displacement_units": 33.73382423113822,
+  "movement_prelude": "W held 500ms before queue capture",
+  "external_slot_restore_verified": true,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Input report timestamps are taken after SendInput; game ingestion is not directly recorded.",
+    "Observed body changes and event timing are not proof of input-to-event causality.",
+    "Individual event handler entry and effects were not instrumented.",
+    "Acquired actor ownership does not independently establish selected local-player identity.",
+    "Body snapshots are sequential and only link-guarded, not atomic or same-substep.",
+    "Capture duration is a requested interval, not an exact deterministic frame window."
+  ]
+}
