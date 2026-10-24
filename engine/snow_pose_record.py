@@ -34,3 +34,29 @@ def pose_submission_notification(request_byte):
     if not isinstance(request_byte,int) or not 0<=request_byte<=255:
         raise ValueError('Raw uint8 request required')
     return request_byte==1
+
+
+def store_pose_record(packed, previous_storage):
+    """Copy defined fields, preserving destination padding; independent buffers."""
+    if len(packed)!=0x120 or len(previous_storage)!=0x120:
+        raise ValueError('Exact 0x120 record sizes required')
+    packed=bytes(packed);out=bytearray(previous_storage)
+    out[:0xfa]=packed[:0xfa]
+    for start,end in ((0xfc,0x106),(0x108,0x112),(0x114,0x11d)):
+        out[start:end]=packed[start:end]
+    return bytes(out)
+
+
+def prepare_pose_submission(source, previous_storage, vector_mask,
+                            swap_byte, request_byte):
+    """Return stored fields and notification intent, without executing services.
+
+    Temporary constructor values do not survive into copied fields: conversion
+    overwrites all of them. Destination padding survives from previous storage.
+    Live object resolution, locking and notification effects remain external.
+    """
+    if not isinstance(swap_byte,int) or not 0<=swap_byte<=255:
+        raise ValueError('Raw uint8 swap flag required')
+    notify=pose_submission_notification(request_byte)
+    packed=pack_pose_record(source,bytes(0x120),vector_mask,swap_byte!=0)
+    return dict(storage=store_pose_record(packed,previous_storage),notify=notify)

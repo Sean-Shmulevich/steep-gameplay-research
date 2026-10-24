@@ -14921,3 +14921,28 @@ all 256 request bytes match exactly. Synthetic source, destination and mask
 bytes only, with no intercepted calls. These separate checks do not establish
 connected submission, temporary constructor defaults, live ownership, solver
 application, notification semantics or the actual runtime mask value.
+
+#### Connected destination storage
+
+`store_pose_record` reconstructs RVA 0x19419c0: copy defined fields and retain
+existing destination bytes at 0xfa..0xfb, 0x106..0x107, 0x112..0x113 and
+0x11d..0x11f. The outer wrapper targets linked-object+0x70. Its temporary
+constructor initializes values that conversion subsequently overwrites; temporary
+padding is never copied into destination padding. Thus `prepare_pose_submission`
+can compute final storage without inventing temporary constructor defaults.
+It accepts raw swap/request bytes, an explicit runtime mask and previous storage,
+and returns final storage plus notification intent. It does not execute the
+notification or resolve native pointers.
+
+[Connected validation](../../native/snow_host/pose_submission_validation.json)
+runs the original forwarding thunk through temporary construction, conversion,
+nonzero swap gating and field storage in 320 synthetic cases. Notification is
+intercepted at entry and returned without effects; its context/body arguments and
+observation of already-updated storage match. The other calls execute unchanged.
+This supersedes the earlier separate-fragment limitation for these storage steps,
+not for solver behavior or live ownership. Runtime mask initialization remains open.
+
+The notification entry at RVA 0x18b8380 initially rejects body-metadata flag bit0
+and a null body+0x10 link. Its admitted path enters protected calls before a body
+virtual call at slot0x28. Those protected calls and synchronization semantics
+remain unresolved; do not label this a proved wake or enable operation.

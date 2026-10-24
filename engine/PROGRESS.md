@@ -7360,3 +7360,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   and all 256 request bytes. Validation exposed an unresolved runtime mask;
   the API requires it explicitly rather than assuming XYZ/W semantics. Temporary
   defaults, connected storage/notification and solver consumption remain open.
+- Connected pose conversion to destination field storage and notification intent.
+  Original thunk/constructor/converter/swap/storage match 320 synthetic runs;
+  notification intercepted, with arguments and post-storage ordering verified.
+  Destination padding survives independently of temporary initialization. Actual
+  notification effects, runtime mask initialization and solver behavior stay open.

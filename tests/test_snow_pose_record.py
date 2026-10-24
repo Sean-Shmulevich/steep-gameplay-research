@@ -22,3 +22,13 @@ class PoseRecordTests(unittest.TestCase):
         self.assertEqual(result[:16],source[:16])
         self.assertEqual(result[16:32],source[12:28])
         self.assertEqual(pack_pose_record(source,initial,b'\0'*16)[:128],b'\0'*128)
+
+    def test_storage_retains_own_padding_not_temporary_padding(self):
+        from engine.snow_pose_record import store_pose_record, prepare_pose_submission
+        source=bytes(range(256));mask=b'\xff'*16;previous=b'\x55'*288
+        a=pack_pose_record(source,b'\xaa'*288,mask,True)
+        result=prepare_pose_submission(source,previous,mask,255,2)
+        self.assertEqual(result['storage'],store_pose_record(a,previous))
+        self.assertFalse(result['notify'])
+        for start,end in ((0xfa,0xfc),(0x106,0x108),(0x112,0x114),(0x11d,0x120)):
+            self.assertEqual(result['storage'][start:end],previous[start:end])
