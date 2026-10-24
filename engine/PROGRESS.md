@@ -7225,3 +7225,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Valid configuration only; protected invalid paths, mode selection and cache
   production remain open. Verified virtual slot+0x40 receives the cache output
   storage as the next producer lead; concrete receiver still unresolved.
+- Joined cached-basis callback receiver to actor+0x190 through query and summary
+  wrappers. Eighteen instruction checks preserve the argument and call ordering.
+  Frame publication precedes the basis callback on this actor path, so later cache
+  values cannot silently stand in for earlier frame inputs. No one-update delay
+  claimed; concrete callback, intervening writers and live freshness remain open.

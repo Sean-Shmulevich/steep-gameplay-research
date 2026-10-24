@@ -1,0 +1,12 @@
+{
+  "evidence": "static_instruction_check",
+  "checked_instructions": 18,
+  "scope": "Actor receiver load and pass-through to cached-basis callback; frame publication occurs earlier on the inspected actor path",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Selected instructions checked at known boundaries, not exhaustive dataflow or writer inventory",
+    "Concrete receiver constructor/vtable still unresolved",
+    "No live identity, callback outputs, update delay or cross-thread ordering proved"
+  ],
+  "game_files_included": false
+}

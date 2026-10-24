@@ -13720,3 +13720,42 @@ takes a separate failure route. The receiver's concrete type and callback body
 must be resolved before assigning the cached axes a controller/terrain meaning.
 Later normalization into other storage in this routine does not establish that
 the original cached vectors were overwritten or orthonormalized.
+
+### Cached-basis receiver ownership and publication order
+
+The receiver passed to the cache-producing slot is now joined to actor+0x190 on
+the inspected actor update path. At RVA 0x13ad741 that pointer is loaded into RBX;
+0x13ad762 passes it in R8 to 0x1407230. The query wrapper preserves it in RSI and
+tail-passes R8 to 0x1408c10. That function saves incoming R8 at entry RSP+0x18.
+After seven pushes its RBP is entry RSP-0x88, so the later RBP+0xa0 load recovers
+the same argument. At 0x14095e7 it becomes RDX for 0x1408690. This function calls
+the receiver's slot+0x40 with runtime+0xb40 as output storage. Concrete receiver
+construction, vtable identity and callback body remain unresolved. Shared field
+offsets in other objects are not evidence of that identity.
+
+The inspected actor path orders these operations as follows:
+
+```text
+prepare geometry update:
+    publish forward/inverse frames from body or current cached basis
+perform collision query and contact summary:
+    invoke actor-selected receiver's basis callback with cache output storage
+```
+
+Specifically, actor call 0x13ad6ee invokes 0x140a880, whose 0x140a8d1 call
+publishes frames through 0x13f8f20. Only later, actor call 0x13ad775 enters the
+query/summary path that reaches the basis callback. Therefore a post-callback
+cache read is not automatically the source of the already-published frames.
+This is a potential phase mismatch, not a proved one-update delay: other writers,
+additional invocations, callback failure and mode selection remain unaccounted
+for. The standalone frame APIs model one supplied source snapshot; they do not
+retroactively change an earlier publication.
+
+The [owner-chain receipt](../../native/snow_host/cached_basis_owner_chain.json)
+checks eighteen selected instructions against the analyzed image. This is static
+evidence, not an emulation or live observation. The next bounded live check should
+capture actor+0x190's vtable and the three cached vectors before/after the callback,
+alongside the separately published forward/inverse matrices and update identity.
+That would distinguish a basis writer from a retained-cache path and identify
+which snapshot the decay consumer actually uses. Pointer equality alone would
+not prove freshness or safe lifetime.
