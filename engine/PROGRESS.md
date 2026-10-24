@@ -7496,3 +7496,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   preparation result permits one original-group reuse. 384 native loop comparisons
   match with eligibility/acquisition services supplied. Preparation, migration,
   allocation and enclosing destruction remain external.
+- Recovered complete constraint-connected destination preparation. It seeds and
+  propagates components, uses the original group first, and leaves isolated bodies
+  for the next loop; the returned value counts components. 384 native comparisons
+  match with group acquisition supplied. Added composition test with recovered
+  destination completion; migration/allocation failure remain unresolved.

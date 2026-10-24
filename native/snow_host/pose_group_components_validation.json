@@ -1,0 +1,18 @@
+{
+  "cases": 384,
+  "matching": true,
+  "total_components": 415,
+  "scope": "Complete native destination-preparation routine with group acquisition supplied; destination bytes including untouched suffix, component count and acquisition order match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Both ordered constraint arrays, empty groups and disconnected components",
+    "Second-endpoint class gate and null pose endpoint",
+    "Repeated propagation, self edges, cycles and reversed edge order"
+  ],
+  "limits": [
+    "Stable retained topology and nonzero acquired destinations",
+    "Native allocation effects and pointer aliasing excluded",
+    "No claim about physical meanings of group classes"
+  ],
+  "game_files_included": false
+}

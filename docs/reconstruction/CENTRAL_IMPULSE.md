@@ -15906,3 +15906,55 @@ reuse flag takes the removal/virtual path; otherwise it returns false. Those
 outer operations and their failure behavior are not implemented or native-validated
 by this loop receipt. In particular, preparation-result semantics, migration,
 destruction and group ownership remain unresolved.
+
+### Constraint-connected destination preparation
+
+`engine.pose_group_components.prepare_pose_group_destinations` reconstructs
+RVA0x18e1b10..0x18e1dca for stable retained topology and nonaliasing destination
+storage. It clears exactly group.body_count destinations, leaving any suffix
+untouched. It then repeatedly scans link records followed by pose records in
+stored order. Only edges whose second body's metadata bit15 is set participate;
+the first body's class is not tested. A null second endpoint is skipped for pose
+records but not supported for link records.
+
+Each endpoint's body.index selects its destination slot. When exactly one endpoint
+has a destination, that value propagates to the other. When both are assigned,
+neither is changed. If both are null and seeding is allowed, both receive one
+new destination: the original group for the first seed, otherwise a supplied
+acquired group. Seeding is disabled until propagation reaches a pass with no
+changes. It is then re-enabled for a new pass; a no-change pass with seeding
+already enabled terminates. The returned integer counts seeds/components.
+
+```text
+clear destinations[0:body_count]
+components = 0; may_seed = true
+repeat:
+    changed = false
+    for edge in links then poses:
+        skip edge unless second endpoint qualifies
+        if both destination slots are null and may_seed:
+            destination = original_group if components == 0 else acquire_group()
+            assign both endpoints; components += 1
+            may_seed = false; changed = true
+        elif exactly one destination is null:
+            copy the assigned endpoint destination; changed = true
+    if not changed:
+        if may_seed: return components
+        may_seed = true
+```
+
+This resolves the previous destination loop's preparation-result meaning. A
+nonzero result means the original group has already been used for the first
+constraint-connected component. A zero result leaves the subsequent loop free
+to reuse it for one unassigned body. Isolated bodies remain null here; eligibility
+and their destination allocation happen in that subsequent loop. The independent
+test composes these two recovered stages, without claiming body migration.
+
+[384 complete native comparisons](../../native/snow_host/pose_group_components_validation.json)
+match all destination bytes, component counts and acquisition order with only
+group acquisition intercepted. Cases include both arrays, null pose endpoints,
+class filtering, self edges, cycles, reversed ordering and disconnected components.
+The independent API requires nonzero acquired destinations; allocation failure
+and mutable/aliased topology are not reconstructed. This is a structural connected
+component operation, not proof of a particular sleeping, collision or scheduling
+policy attached to those groups.
