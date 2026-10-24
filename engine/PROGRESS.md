@@ -7033,3 +7033,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Expanded 288-case validation runs both original helpers through final body
   velocities, intercepting only backend dispatch. Seventeen portable tests pass.
   Stored inertia/basis producers, freshness and live values remain unresolved.
+- Integrated directional/summed point submissions and world-inertia body arithmetic
+  into `markup_motion_sequence`, with explicit loop reachability and supplied
+  per-event geometry. Added a runnable authored example tracing pending, main/rider
+  linear motion and main angular effects separately. Twenty-one related tests pass.
+  This composes decoded local operations; live point-loop ordering/inputs remain open.

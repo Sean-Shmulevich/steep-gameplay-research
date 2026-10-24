@@ -12435,3 +12435,35 @@ production and freshness of the stored local inertia and basis remain outside th
 kernel. No live inertia values or isolated point-impulse effects were captured by
 this validation. Callers can compose `world_inverse_inertia` with
 `apply_point_impulse` using observed or explicitly synthetic body inputs.
+
+### Executable sequence including point submissions
+
+The motion-sequence bench now accepts `directional_points` and `summed_points`
+events. Both require explicit boolean `loop_reached`; false skips without reading
+record arrays or geometry. Reached events use the decoded submission loops and
+apply each submission in storage order to the main body through the point-impulse
+wrapper and world-inertia transformation. Rider and pending state are unchanged
+by these event types. The per-event trace preserves submissions and body effects
+separately, including suppression and requested backend dispatch.
+
+`main_geometry` supplies basis, local inverse inertia, local center and translation
+at that event. No interpolation, solver movement or transform producer is inferred.
+The directional event requires an already-resolved `combined_scale`, after its
+unmodeled outer gate/curve work; the summed event supplies both eligibility gates
+and the independent runtime scale. These APIs describe ordinary sequential calls
+with stable caller-supplied records and geometry, not native locking or concurrency.
+
+Run the composed authored example:
+
+```sh
+python3 -m engine.markup_motion_sequence engine/examples/markup_motion_with_points.json
+```
+
+After the earlier two-producer pending example, two off-center main-body impulses
+add linear velocity and produce opposite angular changes. Main linear velocity
+ends at [1,2,0], rider at [0.5,0,0], and main angular velocity returns from [0,0,3]
+to its initial [0,0,1]. This illustrates local composition, not a fitted live run.
+Twenty-one related tests cover the combined CLI, untouched caller input, unchanged
+rider/pending state, skipped loops and suppressed writes that still request dispatch.
+The paired live capture remains evidence for the earlier producer/wrapper boundary
+only; it does not establish these point-loop inputs or the example's event order.

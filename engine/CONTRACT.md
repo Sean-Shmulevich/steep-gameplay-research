@@ -243,3 +243,10 @@ velocities. Other forces, locks, object lifetime, native dispatch and position
 integration remain external. Nonfinite production stops inspection at the last
 finite state rather than inventing recovery. See CENTRAL_IMPULSE.md's ordered
 markup-to-body inspection contract.
+
+Motion-sequence point events: `directional_points`/`summed_points` require explicit
+boolean `loop_reached` and resolved loop inputs. Selected records submit in storage
+order to the main body only. Event-local `main_geometry` supplies basis, stored
+local inverse inertia, center and translation; no transform integration occurs.
+Each effect preserves wrapper suppression/dispatch decisions. Pending state and
+rider state remain unchanged. Native scheduling and record mutation are external.

@@ -59,3 +59,35 @@ class MotionSequenceTests(unittest.TestCase):
         result = json.loads(subprocess.check_output([sys.executable, '-m',
             'engine.markup_motion_sequence', str(EXAMPLE)], cwd=ROOT, text=True))
         self.assertEqual(result['status'], 'computed')
+
+
+class PointSequenceTests(unittest.TestCase):
+    def example(self):
+        return json.loads((ROOT/'engine/examples/markup_motion_with_points.json').read_text())
+
+    def test_pending_and_point_contributions_remain_separate(self):
+        data=self.example(); before=deepcopy(data); result=inspect(data)
+        self.assertEqual(data,before)
+        self.assertEqual(result['pending'],[0]*4)
+        self.assertEqual(result['bodies'][0]['linear'],[1,2,0])
+        self.assertEqual(result['bodies'][0]['angular'],[0,0,1])
+        self.assertEqual(result['events'][-2]['bodies'][0]['angular'],[0,0,3])
+        self.assertEqual(result['bodies'][1]['linear'],[.5,0,0])
+        self.assertEqual(result['bodies'][1]['angular'],[0,0,1])
+
+    def test_skipped_point_loop_needs_no_records_or_geometry(self):
+        data=self.example(); data['events']=[{'kind':'summed_points','loop_reached':False}]
+        self.assertEqual(inspect(data)['bodies'],data['bodies'])
+
+    def test_point_suppression_preserves_dispatch_requests(self):
+        data=self.example(); data['bodies'][0]['flags']=8
+        result=inspect(data)
+        self.assertEqual(result['bodies'][0]['linear'],[0]*3)
+        self.assertEqual(result['bodies'][0]['angular'],[0,0,1])
+        self.assertTrue(result['events'][-1]['result']['effects'][0]['post_dispatch_requested'])
+
+    def test_cli_with_points(self):
+        result=json.loads(subprocess.check_output([sys.executable,'-m',
+            'engine.markup_motion_sequence',str(ROOT/'engine/examples/markup_motion_with_points.json')],
+            cwd=ROOT,text=True))
+        self.assertEqual(result['bodies'][0]['linear'],[1,2,0])

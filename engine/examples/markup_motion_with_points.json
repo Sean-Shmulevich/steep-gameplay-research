@@ -1,0 +1,247 @@
+{
+  "schema": "markup-motion-sequence-v1",
+  "provenance": "authored_synthetic",
+  "pending_before": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "bodies": [
+    {
+      "linear": [
+        0,
+        0,
+        0
+      ],
+      "angular": [
+        0,
+        0,
+        1
+      ],
+      "inverse_mass": 0.5
+    },
+    {
+      "linear": [
+        0,
+        0,
+        0
+      ],
+      "angular": [
+        0,
+        0,
+        1
+      ],
+      "inverse_mass": 0.25
+    }
+  ],
+  "events": [
+    {
+      "kind": "produce",
+      "producer": {
+        "post_dispatch_state": {
+          "current_mode": 0,
+          "outer_state": 0,
+          "inner_state": 5
+        },
+        "vector_inputs": {
+          "direction": [
+            1,
+            0,
+            1
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "gain": 2
+        },
+        "rsqrt_seed": 1,
+        "world_interval": 0.016666666666666666
+      }
+    },
+    {
+      "kind": "consume",
+      "consumer_reached": false
+    },
+    {
+      "kind": "produce",
+      "producer": {
+        "post_dispatch_state": {
+          "current_mode": 0,
+          "outer_state": 0,
+          "inner_state": 5
+        },
+        "vector_inputs": {
+          "direction": [
+            1,
+            0,
+            1
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "gain": 2
+        },
+        "rsqrt_seed": 1,
+        "world_interval": 0.016666666666666666
+      }
+    },
+    {
+      "kind": "consume",
+      "consumer_reached": true
+    },
+    {
+      "kind": "consume",
+      "consumer_reached": true
+    },
+    {
+      "kind": "directional_points",
+      "loop_reached": true,
+      "combined_scale": 2,
+      "records": [
+        {
+          "enabled": true,
+          "direction": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "point": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "main_geometry": {
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "local_inverse_inertia": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "local_center": [
+          0,
+          0,
+          0
+        ],
+        "translation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "kind": "summed_points",
+      "loop_reached": true,
+      "gate_one": 7,
+      "gate_other": 0,
+      "runtime_scale": 0.5,
+      "records": [
+        {
+          "enabled": true,
+          "kind": 1,
+          "a": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "b": [
+            0,
+            3,
+            0,
+            0
+          ],
+          "point": [
+            -1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "main_geometry": {
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "local_inverse_inertia": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "local_center": [
+          0,
+          0,
+          0
+        ],
+        "translation": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}
