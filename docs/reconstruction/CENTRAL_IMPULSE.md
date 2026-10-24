@@ -14006,3 +14006,57 @@ threshold. Synthetic angles span [-6,6] radians; axes have finite nonzero length
 No calls are intercepted. Tests separately check a right-hand quarter turn with
 a non-unit axis, inclusive threshold behavior, trig service order, and zero-axis
 rejection. This does not prove activation or update cadence in live riding.
+
+
+### Fallback basis angles and consumption
+
+`engine.snow_basis_angles.apply_basis_angles` connects the shared rotation helper
+to the fallback branches at RVA 0x13fc0d2..0x13fc2bd. Entry requires that the
+preferred, explicit-triplet and direction-alignment branches did not take.
+Inputs are the post-prepass basis, primary angle at receiver+0x200, secondary
+angle at +0x204, the fifth argument's low byte, and clear byte at +0x263.
+Both angles are radians because they are passed directly to the rotation helper.
+Their producers, anatomical meanings and update cadence remain unresolved.
+
+For finite angles, the recovered state transition is:
+
+```text
+if primary_angle != 0:
+    basis0 = rotate(basis0, basis1, primary_angle, threshold=float32(1e-5))
+    basis2 = normalize_xyz(basis0 cross basis1)
+    # Leave secondary angle and clear byte untouched.
+elif secondary_angle != 0 and rebuild_byte != 0:
+    basis0 = rotate(basis0, basis1, secondary_angle, threshold=float32(1e-5))
+    basis2 = normalize_xyz(basis0 cross basis1)
+    basis0 = normalize_xyz(basis1 cross basis2)
+    if clear_byte != 0: secondary_angle = positive_zero
+    clear_byte = 0
+else:
+    # Keep the post-prepass basis and pending state unchanged.
+saved_basis = basis
+```
+
+Primary precedence does not depend on rebuild_byte. In that path the rotated
+axis 0 is not renormalized or projected after rotation; axis 1 is always retained.
+The secondary path additionally projects/rebuilds axis 0 through a normalized
+cross product. Consequently these paths are not interchangeable for non-unit or
+non-orthogonal inputs. Nonzero clear bytes consume the secondary angle only
+when its branch executes. A zero angle or disabled rebuild does not clear a
+pending byte. Signed zero compares as zero, and is retained unless the explicit
+store of positive zero occurs. The native angle comparisons also accept NaNs
+via unordered branches, which this finite-domain API excludes.
+
+The API returns detached basis/cache arrays and next secondary-angle/clear-byte
+state; it does not mutate the caller. Its branch label is authored diagnostics.
+Native output and cache are separate writes, not an atomic publication promise.
+Sine/cosine and reciprocal-square-root services remain explicit numerical inputs.
+No invented fallback handles singular crosses or missing upstream state.
+
+The [angle-branch receipt](../../native/snow_host/basis_angles_validation.json)
+checks 384 original-instruction cases, 128 each for primary, secondary and retain.
+The original rotation helper and dispatch-zero trig routines execute without
+intercepted calls. The portable implementation receives observed trig and rsqrt
+results. Both 48-byte output/cache arrays, the secondary-angle bits and clear
+byte match exactly. Fixtures include raw non-Boolean flag bytes, signed zeros,
+primary precedence and deferred consumption. This validates local state changes,
+not their live frequency or the full callback's prepass and branch selection.

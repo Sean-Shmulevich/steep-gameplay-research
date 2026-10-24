@@ -7263,3 +7263,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   arithmetic. Matched 320 full native-helper cases using observed trig returns,
   including 80 identity cases. Native trig services, exceptional values, caller
   angle/threshold producers and live branch activation remain explicit boundaries.
+- Connected fallback basis angle selection, rotation, cross normalization and
+  pending-angle consumption. Primary wins without rebuilding axis 0; secondary
+  rebuilds it and conditionally consumes its angle. Skipped paths retain pending
+  flags. Output/cache/angle/flag bits match 384 native cases across three branches.
+  Higher-priority paths, prepass, producers and live activation remain open.
