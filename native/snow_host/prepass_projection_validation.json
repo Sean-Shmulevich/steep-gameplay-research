@@ -1,0 +1,16 @@
+{
+  "cases": 384,
+  "paths": {
+    "fallback": 128,
+    "direct": 256
+  },
+  "bit_exact": true,
+  "scope": "Original direction rejection, fallback selection, normalization and auxiliary direction publication; observed rsqrt seeds supplied to model",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonsingular synthetic results; no native exceptional-value equivalence",
+    "Projection direction producer and earlier curve/geometry branches excluded",
+    "Later rotations and final immersion-dependent replacement excluded"
+  ],
+  "game_files_included": false
+}

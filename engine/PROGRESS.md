@@ -7284,3 +7284,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match 512 native fragments with two supplied curve-return interceptions.
   Initial geometry, curve producers, native discarded exceptions and live input
   meanings remain outside the finite scalar reconstruction.
+- Reconstructed prepass direction rejection, four-lane near-zero fallback,
+  fallback-axis Z sign, XYZ normalization and auxiliary publication. Both outputs
+  match 384 native cases (128 fallback) with observed rsqrt seeds. No implicit
+  projection-direction normalization or singular rescue added. Earlier direction
+  production, subsequent rotations and immersion replacement remain external.

@@ -14216,3 +14216,54 @@ are explicitly intercepted with supplied samples; the rest of this fragment
 executes original instructions. Entry flags reproduce the immediately preceding
 mode comparison. Geometry before this block, curve internals, runtime field
 producers, live activation and actual rotation are outside this receipt.
+
+
+### Initial prepass direction projection
+
+`engine.snow_prepass_projection.project_prepass_direction` reconstructs
+RVA 0x13fb775..0x13fb8a2. The selected direction is chosen earlier: a nonzero
+fourth-argument low byte selects published frame vector +0x90, while zero uses
+the incoming output's first vector. The fallback axis is published frame +0xa0.
+These offsets are relative to runtime+0x5e8 plus 0x140. The projection direction
+is produced by earlier slope/curve geometry, or is [0,0,1,0] on its direct-up
+path; that earlier selection is not reconstructed by this helper.
+
+For a supplied vector V and projection direction N, define the following with
+separate float32 rounding:
+
+```text
+d = V.x*N.x + (V.y*N.y + V.z*N.z)
+reject(V,N) = V - d*N                 # subtract on all four lanes
+P = reject(selected_direction,N)
+if all(abs(P.lane) <= float32(1e-5)):
+    s = 0 if fallback_axis.z == 0 else (+1 if fallback_axis.z > 0 else -1)
+    P = reject(s * fallback_axis,N)
+axis0 = normalize_xyz(P)
+auxiliary_direction = N
+```
+
+The native code does not divide by dot(N,N) or normalize N in this fragment.
+Thus interpreting this as ordinary orthogonal projection requires a unit N from
+its producer; the API does not silently impose that assumption. Dot products
+use XYZ, while subtraction, the near-zero gate and final scaling use four lanes.
+The fallback Z sign comes from the published frame axis before projection. Zero
+Z selects a zero multiplier; there is no second fallback before normalization.
+A nonzero W can prevent fallback despite a zero XYZ norm. Such singular outcomes
+are rejected by the portable normalization policy rather than given an invented
+rescue axis or claimed native behavior.
+
+The output first axis is normalized using an explicit rsqrt seed and the known
+refinement. The supplied projection direction is also published unchanged to a
+separate caller-provided output before optional rotations. This early auxiliary
+publication does not mean the eventual three-vector basis is final: later
+control rotations, final cross products and an immersion-dependent replacement
+can still change it. The latter uses the previously captured runtime+0x9f4 <= 0
+condition and remains outside this local helper.
+
+The [projection receipt](../../native/snow_host/prepass_projection_validation.json)
+checks 384 original-instruction cases: 256 direct and 128 fallback. Both first
+axis and auxiliary output match bit for bit with observed rsqrt seeds and no
+intercepted calls. Synthetic inputs include non-unit projection directions and
+fourth lanes. Unit tests cover fallback sign, no implicit direction normalization,
+and rejection of singular outcomes. No anatomical axis naming, upstream
+normalization guarantee, full-prepass equivalence or live activation is claimed.
