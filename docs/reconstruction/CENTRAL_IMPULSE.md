@@ -11761,3 +11761,48 @@ unfaulted. The bottle stopped, saves/settings were restored and the original DLL
 was verified. Next capture the specific callback or its guarded actor-state
 outputs alongside these transitions, preserving the distinction between a
 predicted notification and an observed listener execution.
+
+### ID-84 callback edge independence
+
+The callback at RVA 0x5c7040 does not read the incoming markup ID, value byte or
+sentinel. Both cached-state edges observed above therefore enter the same local
+callback logic if notification invokes it. This differs from ID 92's callback,
+which explicitly branches on the value byte. Neither edge of ID 84 should be
+named activation or release based only on its boolean direction.
+
+```python
+def notification_84(controller, ignored_id, ignored_value, ignored_sentinel):
+    if (controller.interface.available() & 0xff) == 0:
+        return
+    entity = controller.interface.entity()
+    actor = lookup(entity, actor_type_token())
+    if actor is None:
+        return
+    dispatch_motion_action_a(actor)  # return ignored; nested state decides action
+    vector = [0.0, 0.0, 0.0, 0.0]
+    vector_service(actor, vector)
+    accumulate_scaled_pending(actor, vector)
+```
+
+The services occur in that order. The vector service at 0x516ad0 enters the
+actor's motion dispatcher at +0x1010; it is not justified to replace it with a
+no-op. The final accumulator at 0x1373c10 consumes the vector after that service.
+Zero initialization does not prove the final vector is zero. The accumulator's
+arithmetic and guards are documented earlier in this guide.
+
+Adapter A at 0x536460 also enters the +0x1010 motion state machine. One branch
+reaches 0x536620 only when the inspected nested state selectors permit it. That
+helper tests the actor virtual-slot 0x4b0 predicate before clearing fdc and calling
+the release service. It does not unconditionally clear fc9. Existing dispatcher
+and release models remain the authority for those deeper state gates.
+
+[`markup_motion_callback.notification_84`](../../engine/markup_motion_callback.py)
+implements the observed orchestration with explicit supplied services. It returns
+an authored completion diagnostic, not the native ABI result. No live lookup,
+state-machine substitute, exception containment or rollback is provided.
+[Original-instruction validation](../../native/snow_host/markup_callback84_instruction_validation.json)
+compares 24 synthetic cases with the model: low-byte predicate behavior, null
+actor and values 0, 1 and 255. All external services are intercepted. The fixture
+also verifies the vector starts at positive zero and that modifications by the
+vector service reach the accumulator. These results explain what to observe in a
+live callback; they do not establish that the callback ran in the prior capture.

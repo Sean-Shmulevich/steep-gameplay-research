@@ -1,0 +1,19 @@
+{
+  "cases": 24,
+  "passed": true,
+  "callback_range_rva": [
+    "0x5c7040",
+    "0x5c70ac"
+  ],
+  "sha256": "786257eeb23b659db5a800d30a304561db50db38eb8e7fea2cbf4585420f0883",
+  "scope": "Original callback orchestration with all external services intercepted; not live callback execution",
+  "checked": [
+    "low-byte predicate",
+    "missing actor",
+    "rising and falling values",
+    "service order",
+    "zero vector initialization",
+    "modified vector forwarded"
+  ],
+  "game_files_included": false
+}

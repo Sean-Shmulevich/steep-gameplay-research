@@ -202,3 +202,9 @@ with external guards. It follows the documented build-specific query links and
 rejects unexpected provider tables/targets, over-64 record collections, incomplete
 reads or changed endpoints. It returns scalar metadata only. No lifetime pin,
 atomic snapshot, callback execution proof or nested selector values are provided.
+
+`markup_motion_callback.notification_84` preserves callback service order and
+low-byte availability gating with explicit entity/type/lookup, motion dispatch,
+in-out vector and accumulation services. It ignores incoming notification value
+as the inspected callback does. Native service internals and live object ownership
+remain external; returned diagnostics and Python exceptions are authored behavior.

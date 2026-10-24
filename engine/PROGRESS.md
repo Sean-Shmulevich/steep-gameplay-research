@@ -6949,3 +6949,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   values across 98 calls; ID 92 stays zero. All guards/restoration/cleanup passed.
   This validates live predicate/state correspondence, not individual listener
   execution or downstream motion release. Probe ABI is now 2 for selected states.
+- ID-84 callback orchestration now explicitly models edge independence: the
+  callback ignores the new value, resolves an actor, dispatches a state-dependent
+  action, then passes an initially zero vector through a service to accumulation.
+  Original instructions matched 24 stubbed-service cases. Live listener execution
+  and the selected state-machine branch remain unresolved.
