@@ -7455,3 +7455,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   until cleanup, and inactive tails remain. 320 native comparisons match with
   supplied callback/memmove services. Callback effects, registration, concurrency,
   reentrancy safety and module lifetime remain external.
+- Reconstructed pose observer registration/removal, joining the dispatcher lifecycle.
+  Append permits duplicates; removal selects first matching token even if disabled,
+  with deferred disable during dispatch versus immediate suffix compaction outside.
+  320 native registration/removal pairs match with supplied growth/memmove services.
+  Missing-token rejection is authored; allocation failure, concurrency and safe
+  module lifetime remain unresolved.

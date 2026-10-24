@@ -15580,3 +15580,38 @@ and appending. Registry replacement is covered by independent tests only. Native
 callback effects, registration methods, locking, safe module unload and concurrent
 mutation remain unresolved. This validates the dispatcher previously identified
 only statically; it does not establish a safe public native callback API.
+
+### Pose observer registration and removal
+
+`register_pose_observer` reconstructs RVA 0x18bb2c0..0x18bb30d. It appends the
+supplied callback token and enabled byte1, without checking for duplicates or a
+null token. If count equals capacity it requests capacity8 when empty, otherwise
+uint32(capacity*2), through supplied growth. It reloads count and storage after
+growth, copies a full16-byte record and increments count. The native temporary
+initializes only token and enable byte; its seven padding bytes are unspecified
+stack contents. The independent API therefore takes explicit padding and never
+silently labels zero padding as recovered behavior.
+
+`unregister_pose_observer` reconstructs RVA 0x18bb610..0x18bb694 for a retained
+matching member. It searches by callback token from index0, ignoring enabled
+status. When thread.active is nonzero, it clears the first match's enable byte
+and sets deferred_cleanup=1, leaving count and storage order intact. Otherwise
+it decrements count and shifts the active suffix left with memmove. Capacity and
+inactive tail bytes stay unchanged. Duplicates remain independently registered;
+repeated removal during dispatch can hit the same already-disabled first entry.
+
+The native search returns uint32(-1) when absent and has no following not-found
+check before address/count arithmetic. The independent API rejects absence before
+mutation as an authored safety boundary. It does not reproduce that invalid native
+access or claim removal is idempotent.
+
+[320 paired native comparisons](../../native/snow_host/pose_observer_membership_validation.json)
+cover320 registrations and320 removals with supplied growth and memmove services.
+Full record storage, count/capacity, thread flags, growth requests and compaction
+arguments match. Cases include duplicates, zero tokens, arbitrary padding and
+active versus inactive removal. Allocation failure, native missing-member execution,
+concurrency, module retention and callbacks already executing are excluded.
+
+These functions complete a serial registration/dispatch/removal model. They are
+not yet a safe native mod callback API: removal may only disable one duplicate,
+and neither path waits for in-flight callbacks or pins/unloads their modules.

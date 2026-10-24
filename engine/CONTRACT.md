@@ -257,3 +257,10 @@ post-callback registry reload and deferred reverse compaction over retained raw
 remain; inactive tails are preserved. Thread active is a byte, not a recursion
 counter. This serial normal-return model supplies no lifetime pin, synchronization,
 module unloading protocol or exception recovery.
+
+Pose observer membership: registration appends token/enable1 with explicit
+seven-byte padding and supplied capacity growth. Duplicates and zero tokens are
+not filtered. Removal finds the first matching token regardless of enabled state,
+then disables/defer-cleans during dispatch or shifts immediately outside dispatch.
+A missing member raises an authored pre-mutation error; native code has no such
+guard. Neither operation supplies concurrency safety or safe module unloading.

@@ -48,3 +48,51 @@ def dispatch_pose_observers(body, value, *, get_registry, thread_state, invoke):
                 registry=check(get_registry())
         thread_state['deferred_cleanup']=0
     return dict(called=called,removed_indices=removed)
+
+
+def register_pose_observer(registry, token, *, padding, grow):
+    """Append an enabled record, preserving supplied seven stack-padding bytes.
+
+    Growth is supplied; duplicate/null tokens are not filtered by native code.
+    No callable-token validation or module retention is implied.
+    """
+    if type(token) is not int or not 0<=token<=0xffffffffffffffff:
+        raise ValueError('Raw uint64 callback token required')
+    if len(padding)!=7:raise ValueError('Seven explicit padding bytes required')
+    count,capacity=registry['count'],registry['capacity']
+    if not 0<=count<=capacity<=0xffffffff:raise ValueError('Valid registry counts required')
+    if count==capacity:
+        grow(registry,8 if capacity==0 else (capacity*2)&0xffffffff)
+    count=registry['count']
+    if not 0<=count<len(registry['slots']):
+        raise ValueError('Growth service must provide retained writable storage')
+    registry['slots'][count]=struct.pack('<QB',token,1)+bytes(padding)
+    registry['count']=(count+1)&0xffffffff
+
+
+def unregister_pose_observer(registry, token, *, thread_state):
+    """Remove the first matching token; retained membership is a precondition.
+
+    A missing token raises before mutation as an authored guard. The inspected
+    native function has no not-found guard and would use index uint32(-1).
+    """
+    if type(token) is not int or not 0<=token<=0xffffffffffffffff:
+        raise ValueError('Raw uint64 callback token required')
+    count=registry['count']
+    if not 0<=count<0x80000000 or count>len(registry['slots']):
+        raise ValueError('Retained bounded registry required')
+    found=None
+    for index in range(count):
+        entry=registry['slots'][index]
+        if len(entry)!=16:raise ValueError('16-byte observer record required')
+        if struct.unpack_from('<Q',entry)[0]==token:
+            found=index;break
+    if found is None:raise ValueError('Callback membership required')
+    if thread_state['active']:
+        entry=registry['slots'][found]
+        registry['slots'][found]=entry[:8]+b'\x00'+entry[9:]
+        thread_state['deferred_cleanup']=1
+    else:
+        registry['count']=count-1
+        registry['slots'][found:count-1]=registry['slots'][found+1:count]
+    return found

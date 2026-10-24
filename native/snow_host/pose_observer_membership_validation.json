@@ -1,0 +1,20 @@
+{
+  "cases": 320,
+  "registration_calls": 320,
+  "removal_calls": 320,
+  "bit_exact": true,
+  "scope": "Native registration and removal; all retained record bytes, count/capacity, TLS flags, growth requests and compaction arguments match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Empty/full/spare registry, zero/doubled growth",
+    "Duplicate and zero callback tokens",
+    "Active deferred disable versus inactive immediate removal",
+    "First matching token even if already disabled; arbitrary padding preserved"
+  ],
+  "limits": [
+    "Growth and memmove bodies supplied as synthetic services",
+    "No allocation failure, missing-token native execution, concurrency or module-lifetime proof",
+    "Independent missing-member error is an authored guard"
+  ],
+  "game_files_included": false
+}
