@@ -7110,3 +7110,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   reproduces all 453 prior live pairs. A new Space-only live attempt delivered
   input but captured zero snow updates; recorded as inconclusive, with both slots
   and cleanup verified. Next attempt must establish active riding before Space.
+- Active-rider Space capture accepted 1070/1070 gate observations around 535
+  attributed snow updates. Public model matches both duration counters and timer
+  bits in every record: 169 refill, 44 positive-timer attenuation-branch and 322
+  expired updates. All ten scalars retain continuity across 534 adjacent pairs.
+  Both slots and cleanup verified. Actual stack gate multipliers and refill
+  saturation remain unobserved; no universal grounded or replay claim.

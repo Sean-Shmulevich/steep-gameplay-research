@@ -1,0 +1,170 @@
+{
+  "scope": "Observed wrapper entry/exit comparison, not instruction-local causality",
+  "capture_ok": true,
+  "counts": {
+    "attempted": 1070,
+    "accepted": 1070,
+    "finite_pairs": 535,
+    "duration_matches": 535,
+    "timer_matches": 535
+  },
+  "duration_branches": {
+    "above_threshold": 366,
+    "at_or_below_threshold": 169
+  },
+  "timer_actions": {
+    "expired": 322,
+    "refill": 169,
+    "attenuate": 44
+  },
+  "mismatch_examples": [],
+  "configuration_fields": [
+    "refill_divisor",
+    "duration",
+    "lower_one",
+    "lower_other",
+    "total_volume"
+  ],
+  "observed_configurations": [
+    [
+      2.5,
+      0.699999988079071,
+      0.10000000149011612,
+      0.33000001311302185,
+      0.009479999542236328
+    ]
+  ],
+  "observed_ranges": {
+    "immersion": [
+      0.0,
+      1.0
+    ],
+    "alternate": [
+      0.0,
+      3.8892428874969482
+    ],
+    "activity": [
+      0.0,
+      0.9492347240447998
+    ],
+    "timer": [
+      -3.8892428874969482,
+      0.26578572392463684
+    ],
+    "elapsed": [
+      0.006272250320762396,
+      0.012477199546992779
+    ],
+    "total_volume": [
+      0.009479999542236328,
+      0.009479999542236328
+    ],
+    "refill_divisor": [
+      2.5,
+      2.5
+    ],
+    "duration": [
+      0.699999988079071,
+      0.699999988079071
+    ],
+    "lower_other": [
+      0.33000001311302185,
+      0.33000001311302185
+    ],
+    "lower_one": [
+      0.10000000149011612,
+      0.10000000149011612
+    ]
+  },
+  "read_microseconds": {
+    "median": 15.6,
+    "p95": 19.9,
+    "max": 184.3
+  },
+  "snow_calls": 535,
+  "snow_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 535,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 535,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 535,
+    "other_calls": 0
+  },
+  "slots_restored": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_trace_sha256": "3ccd2a996b421049d9706cb9b34e9cb37fc71e5e9d73242ff3a23faeef9f9b44",
+  "limits": [
+    "Exit immersion supplied to duration model; inner producer not observed",
+    "Exit counters supplied to timer model; intervening writes not isolated",
+    "Actual stack gate values not observed; unit gates used only to evaluate timer branch",
+    "Sequential repeated samples are not atomic; no full-state determinism claim",
+    "No direct gate-stack observation, refill saturation coverage or universal airborne/grounded classification"
+  ],
+  "game_files_included": false,
+  "public_comparator_matches": 535,
+  "timer_segments": [
+    {
+      "first_record": 0,
+      "count": 105,
+      "timer_action": "expired"
+    },
+    {
+      "first_record": 105,
+      "count": 96,
+      "timer_action": "refill"
+    },
+    {
+      "first_record": 201,
+      "count": 26,
+      "timer_action": "attenuate"
+    },
+    {
+      "first_record": 227,
+      "count": 56,
+      "timer_action": "expired"
+    },
+    {
+      "first_record": 283,
+      "count": 73,
+      "timer_action": "refill"
+    },
+    {
+      "first_record": 356,
+      "count": 18,
+      "timer_action": "attenuate"
+    },
+    {
+      "first_record": 374,
+      "count": 161,
+      "timer_action": "expired"
+    }
+  ],
+  "adjacent_pairs": 534,
+  "between_wrapper_scalar_changes": {},
+  "warmup_verified": true,
+  "input_delivery": [
+    {
+      "scan_raw": 57,
+      "key_up": false,
+      "api_reported_sent": 1
+    },
+    {
+      "scan_raw": 57,
+      "key_up": true,
+      "api_reported_sent": 1
+    }
+  ]
+}

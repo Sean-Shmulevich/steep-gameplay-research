@@ -12940,3 +12940,45 @@ contact-return attenuation, expired negative remainder, intentional mismatch and
 invalid observations. The public comparator also reproduces all 453 duration and
 timer matches from the prior private live capture. Synthetic refill/attenuation
 tests do not upgrade the unsuccessful jump capture to live coverage.
+
+### Active-rider Space capture closes local timing branch coverage
+
+The next capture first sent a bounded 500 ms W input, required a change in the
+snow duration counters, and rechecked the same runtime/backlink before arming.
+It then delivered a 500 ms Space press/release. This produced 535 attributed
+snow updates and 1070/1070 accepted gate samples. Both slots restored and full
+launcher cleanup passed. See the
+[live transition receipt](../../native/snow_host/gate_transition_live_validation.json).
+
+The public comparison API matches duration counters and stored timer bitwise on
+all 535 records. Unlike the earlier capture, it includes both immersion branches
+and three timer actions:
+
+| Local observed/predicted branch | Updates |
+| --- | ---: |
+| Immersion above threshold | 366 |
+| Immersion at/below threshold | 169 |
+| Timer refill | 169 |
+| Positive-timer attenuation branch | 44 |
+| Timer expired | 322 |
+
+Two low-immersion intervals are followed by positive-timer intervals: 96 refill
+updates followed by 26 attenuation updates, then later 73 refill updates followed
+by 18 attenuation updates. Do not call these two jumps or infer collision details
+from the counters alone. Only one Space press/release was sent. Immersion spans
+0..1, activity duration reaches about 0.9492, and timer reaches about 0.2658.
+Refill saturation at the configured 0.7 duration was not reached.
+
+All ten sampled scalar fields remain identical between each exit and the next
+entry across 534 adjacent pairs. This strengthens whole-wrapper continuity in
+this trace, while leaving intermediate calls and transient state unobserved.
+Configuration matches the previous capture. Gate-reader median cost is 15.6
+microseconds, p95 19.9 and maximum 184.3, separately from the point channel.
+
+This closes the live stored-state comparison for refill and positive-timer
+countdown as well as expiration. The label attenuation identifies the decoded
+branch reached by observed timer inputs; the actual stack gate multipliers are
+still unobserved. Next, qualify those multipliers at their consumer or compare
+submission effects using captured inputs without confusing other forces with
+this contribution. Universal airborne/grounded classification, scheduler-wide
+ordering and deterministic replay remain outside this result.
