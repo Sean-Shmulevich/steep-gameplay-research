@@ -14523,3 +14523,50 @@ to the portable model. Profile curves and normal-Z lookup are explicitly
 intercepted with finite synthetic samples. The original lookup itself was
 validated separately. This closes local stage composition, not live resource
 identity, timing, native math portability or the full override callback.
+
+
+### Connected basis callback
+
+`engine.snow_basis_callback.basis_callback` joins the enabled-byte gate, connected
+prepass and post-prepass override dispatcher for RVA 0x13fbbf0..0x13fc2d9.
+Enabled byte zero returns false and preserves output without running services,
+writing the auxiliary direction, publishing the candidate gate or writing the
+saved basis. The independent API returns an unchanged detached incoming basis
+and explicit no-write diagnostics; it does not require prepass/override state
+for that disabled path.
+
+With enabled byte nonzero, the prepass runs before override selection. Its
+incoming axis is derived from incoming_basis, not an independently supplied
+possibly contradictory field. The preferred byte is also shared: override_state
+is the single source, and the API supplies it to the prepass control-angle stage.
+After the prepass, the dispatcher receives its computed output basis. The
+prepass candidate-gate change and auxiliary publication survive even if the
+selected override reuses the saved basis or replaces all three vectors. The
+native callback returns true after these enabled paths. No interpretation of
+that Boolean as a scheduler completion, grounding or animation-valid flag is
+assigned.
+
+Returned effects include basis, saved_basis where applicable, cache_written,
+auxiliary_written/direction, gate_written/byte and pending secondary-angle state.
+The nested prepass result and branch strings are authored diagnostics. Reuse
+skips the final cache write but does not skip the earlier prepass. Caller data
+is not mutated; native writes are sequential and this interface does not imply
+atomic publication or exception rollback. Curve services are resolved lazily so
+skipped branches do not require unused curve dependencies.
+
+The [complete-callback receipt](../../native/snow_host/basis_callback_validation.json)
+checks 288 continuous original entry-to-return runs. Outcomes include 32 each
+for disabled, preferred reuse, preferred rebuild, explicit triplet, alignment,
+primary angle and retain, plus 64 secondary-angle cases. Final basis, saved cache,
+auxiliary output, gate byte, pending-angle bits, clear byte, curve call ordering
+and returned Boolean match exactly. Disabled cases preserve sentinel auxiliary
+output and saved cache. Profile curves and normal-Z lookup remain explicitly
+intercepted services; native trig routines execute and their returns plus rsqrt
+seeds are supplied to the portable model.
+
+This establishes local callback composition over finite nonsingular synthetic
+inputs with valid configuration. It does not reconstruct the protected invalid
+configuration path, every math CPU variant, live input producers, lifetime
+handling or the scheduler phase connecting these outputs to velocity frames.
+The previous live capture identifies this callback but still does not establish
+which override branches execute during particular rider actions.

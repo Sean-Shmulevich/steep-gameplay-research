@@ -7314,3 +7314,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   auxiliary direction, gate and curve ordering, including near-up and replacement.
   Curves/normal-Z lookup supplied; native trig/rsqrt observed. Protected invalid
   configuration, live producer/phase ownership and full callback join remain open.
+- Joined enabled gate, complete recovered prepass and override dispatch into
+  a callback API with shared preferred state and explicit write diagnostics.
+  All eight outcomes match 288 continuous native entry-to-return runs, including
+  disabled preservation and prepass effects before cache reuse. Curve/lookup
+  samples supplied; trig/rsqrt observed. Live producers, timing and protected
+  invalid configuration remain unresolved; no full-engine equivalence claimed.

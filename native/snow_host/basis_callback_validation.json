@@ -1,0 +1,26 @@
+{
+  "cases": 288,
+  "branches": {
+    "preferred_reuse": 32,
+    "preferred_rebuild": 32,
+    "explicit_triplet": 32,
+    "alignment": 32,
+    "primary": 32,
+    "secondary": 64,
+    "retain": 32,
+    "disabled": 32
+  },
+  "bit_exact": true,
+  "scope": "Continuous original callback entry to return including valid-config prepass and override selection; disabled path included",
+  "intercepted_services": [
+    "Profile curves supply finite synthetic samples",
+    "Normal-Z lookup supplies explicit acos sample"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Native trig/rsqrt outputs observed and supplied to model",
+    "Finite nonsingular synthetic geometry; protected invalid-config path excluded",
+    "No live field producers, ownership or scheduler timing proof"
+  ],
+  "game_files_included": false
+}

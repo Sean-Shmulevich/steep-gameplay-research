@@ -39,8 +39,8 @@ def basis_prepass(state, curves, slope_angle, sine, cosine, reciprocal_sqrt_seed
     gain=None
     if normal[2]<f32(.999):
         gain=prepass_direction_gain(state['direction_control'],state['special_byte'],
-                                   state['speed_argument'],curves['direction_control'],
-                                   curves['direction_speed'])
+                                   state['speed_argument'],lambda x: curves['direction_control'](x),
+                                   lambda x: curves['direction_speed'](x))
     direction=slope_projection_direction(normal,state.get('rotation_axis'),selected,
                                          gain,state.get('depth'),slope_angle,sine,cosine,
                                          reciprocal_sqrt_seed)
@@ -49,15 +49,15 @@ def basis_prepass(state, curves, slope_angle, sine, cosine, reciprocal_sqrt_seed
     angle=control_prepass_angle(**state['control_angle'], mode_byte=mode,
                                 speed_argument=state['speed_argument'],
                                 immersion_argument=immersion,
-                                speed_curve=curves['control_speed'],
-                                immersion_curve=curves['control_immersion'])
+                                speed_curve=lambda x: curves['control_speed'](x),
+                                immersion_curve=lambda x: curves['control_immersion'](x))
     axis=projection['axis0']
     if angle['angle'] is not None:
         axis=rotate_basis_axis(axis,direction['direction'],angle['angle'],f32(1e-5),sine,cosine)
     finish=finish_prepass_basis(axis,direction['direction'],state['direct_angle'],
                                state['curve_angle'],state['speed_argument'],immersion,
-                               replace,[selected,frame[2],frame[0]],curves['finish_speed'],
-                               curves['finish_immersion'],sine,cosine,reciprocal_sqrt_seed)
+                               replace,[selected,frame[2],frame[0]],lambda x: curves['finish_speed'](x),
+                               lambda x: curves['finish_immersion'](x),sine,cosine,reciprocal_sqrt_seed)
     return {'basis':finish['basis'],'auxiliary_direction':direction['direction'],
             'gate_byte':angle['gate_byte'],'gate_written':angle['gate_written'],
             'replaced':replace,'direction_branch':direction['branch'],
