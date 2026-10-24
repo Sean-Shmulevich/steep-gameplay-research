@@ -1373,3 +1373,11 @@ See [animation dispatch observation and wrapper validation](../../docs/reconstru
 for the calling path, sampler, restoration contract, Wine fixture results and
 remaining live-capture work. Do not publish raw records: they include heap
 addresses for private correlation.
+
+
+`--animation-queue-capture-plugin` adds an explicitly triggered, bounded
+`plugins/animation_queue_capture.dll` for the analyzed game adapter. It requires
+fresh runtime identity fields and refuses a stale trigger. The first live run
+captured 63 component dispatch calls, including one AudioEventSeed queue drain,
+and restored the original slot. See the linked dispatch guide for the receipt
+and distinctions between component execution and individual handler effects.

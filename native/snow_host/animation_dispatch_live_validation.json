@@ -1,0 +1,72 @@
+{
+  "schema": "animation-dispatch-live-validation-v1",
+  "passed": true,
+  "evidence": "Original Kino component dispatch bracketed live through stable image-table slot replacement; no movement input",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "plugin_sha256": "ef9ccfaa11e9a4f836f9ad8b8aeae841138098c4b959bf0670a91af5760ffb81",
+  "source_hashes": {
+    "native/snow_host/examples/animation_queue_capture.c": "ab806ff3d5fa52152a15d6786c49de9c5abe7840f9067be1d4ee6abb11ebd292",
+    "native/snow_host/snow_animation_queue_probe.c": "fd2dcba946bc195e5e2f6ce05de542875179a9de8c9c000086f746cfbcd291e5",
+    "native/snow_host/snow_animation_queue_trace.c": "f20b0ee3efe718ed77aedea5a0b693dc715fab0910d9d9d2e7dea25ead1e7f69",
+    "native/snow_host/snow_animation_queue.c": "29e026c0b9974a497caa5eda0bdfb9a81ac9f3711b50a73bb2e79bad05b02041"
+  },
+  "controller_sha256": "4508423b5edd0fc88e45b859055562891969b5108e279f7caf9c9275fc34e844",
+  "evidence_hashes": {
+    "route-result.json": "9505ea94b821b3c4de0ca638f3d3bd3037b6b3df68b2ed257aa24f8726f2232b",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "build/plugins/animation_queue_capture.ini.trace.jsonl": "fa59aa103846057752862bd316da14d752b618d32122fe60b731aad055d9ee0f"
+  },
+  "requested_capture_ms": 500,
+  "records": 63,
+  "dropped": 0,
+  "all_before_after_samples_valid": true,
+  "caller_rva_counts": {
+    "0x8f2b8d": 63
+  },
+  "distinct_threads": 10,
+  "observed_entry_span_seconds": 0.7129573,
+  "observed_call_envelope_us": {
+    "min": 25.8,
+    "median": 29.5,
+    "max": 99.0
+  },
+  "nonempty_transitions": [
+    {
+      "record_index": 51,
+      "before_count": 1,
+      "after_count": 0,
+      "before_valid": 1,
+      "after_valid": 1,
+      "events": [
+        {
+          "table_rva": "0x1eecd58",
+          "handler_rva": "0xa45ec0",
+          "known_type": "AudioEventSeed",
+          "first_active": true,
+          "second_active": true,
+          "first_matches_acquired_world": true,
+          "second_matches_acquired_owner": true
+        }
+      ]
+    }
+  ],
+  "slot_restored": true,
+  "external_slot_restore_verified": true,
+  "engine_step_before": 2015,
+  "engine_step_after": 2345,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "Individual event handler entry and effects were not instrumented; nonempty-to-empty is observed at the component dispatch boundary.",
+    "Sampled event is audio-related; no markup notification or snow-motion release established.",
+    "Acquired actor ownership does not independently prove selected local-player identity.",
+    "Timing includes sampler overhead and is not a baseline performance measurement or physics-substep frequency.",
+    "Matching guards do not pin object lifetime or exclude intervening changes."
+  ]
+}

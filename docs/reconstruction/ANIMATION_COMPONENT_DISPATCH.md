@@ -205,7 +205,8 @@ provide the following observation signatures:
 | SoundSetEventSeed | 0x1eece18 | 0xa24490 | 0xa45ec0 | 0x75e600, return only |
 
 These are static signatures for this image. A derived payload may use a different
-table, and neither table has yet been observed in the captured actor's queue.
+table. The later live dispatch capture below observes the AudioEventSeed table;
+the SoundSetEventSeed table remains a static signature here.
 The names come from descriptors, not guesses from the surrounding functions.
 See the [type and annotation receipt](../../native/snow_host/animation_event_types_validation.json).
 
@@ -424,3 +425,76 @@ fault-injected. The fixture does not establish performance or all concurrent
 installer races. The next live integration must supply a fresh owner-aware reader
 and bound the time for which the Kino slot is replaced. The sampler and wrapper
 remain separate from event-specific gameplay effects.
+
+## Triggered capture plugin
+
+The optional [animation queue capture plugin](../../native/snow_host/examples/animation_queue_capture.c)
+connects the wrapper to the native sampler. Build it with
+`python3 scripts/build_snow_host.py --adapter steep --animation-queue-capture-plugin --out <external-directory>`.
+The build does not start the game. The plugin is disabled unless its adjacent
+`animation_queue_capture.ini` has `[capture]` and `enabled=1`. Its `milliseconds`
+setting must be 100..1000 and defaults to 500.
+
+Initialization starts a pinned worker waiting at most three minutes for
+`animation_queue_capture.ini.trigger`. It refuses a trigger or done marker already
+present at initialization. A controller must first acquire and validate fresh
+`component`, `owner`, `actor`, `world` and image `size`, append these hexadecimal
+values to the INI, then create the trigger. Never reuse addresses from an earlier
+session. Runtime identity acquisition remains outside this example plugin.
+
+Before installation it checks method/visitor signatures, actor table/self link,
+actor-to-owner/world links, and a complete queue sample. Each callback observation
+rechecks those actor links around the queue reader. The wrapper filters the exact
+component. The worker restores the slot after the bounded interval, retries
+restoration for at most two seconds, then closes/drains for at most two seconds.
+An outer controller must stop the session on failure; the plugin cannot guarantee
+restoration against a competing writer or prevent process termination.
+
+Only after restoration/drain does it write private `.trace.jsonl` records and a
+`.done` marker. The summary records installation/restoration outcomes, an explicit
+original-slot comparison, used/dropped records and clock frequency. Record rows
+contain raw addresses and must stay private. A done marker means output was
+written, not that capture or restoration succeeded; inspect the summary flags.
+The plugin does not issue movement input, pause the scheduler, or call event
+handlers itself. It forwards calls that the game makes through the replaced slot.
+
+
+## First live component dispatch capture
+
+The [live receipt](../../native/snow_host/animation_dispatch_live_validation.json)
+records 63 original Kino component dispatch calls in a requested 500 ms window,
+with no dropped records and all before/after queue samples accepted. Every
+recorded caller was RVA 0x8f2b8d, the return site in the inspected reverse batch
+visitor. The calls used ten distinct thread IDs. This closes the earlier
+membership-only boundary for this acquired component and visitor path. It does
+not prove every job dependency, a fixed thread assignment or a physics-substep
+relationship.
+
+Sixty-two records had empty queues before and after. One record entered with one
+non-null AudioEventSeed payload and returned with an empty queue. Its table RVA
+was 0x1eecd58 and delivery target 0xa45ec0. Both context handles were active: the
+first resolved to the acquired world and the second to the owning entity. This
+supports the earlier producer argument wiring on this captured instance; do not
+assume every other event route supplies the same types.
+
+The original component dispatch is bracketed directly. Individual event-handler
+entry and downstream effects are not separately hooked. The static drain predicts
+the known handler call for this queue state, but the live claim is the observed
+one-to-zero queue transition across component dispatch. No markup ID, motion
+release, audible output or player action is attributed to it.
+
+The original image slot was restored, checked by the plugin and independently by
+the controller. The host was still ready and unfaulted afterward; its engine step
+counter advanced from 2015 to 2345 between the controller's before/after checks.
+No movement input was sent. The outer launcher stopped the research bottle,
+restored saves/settings and verified the original DLL. The acquired actor's
+registry and boxed ownership routes agreed; independent selected-local-player
+identity remains outside this capture.
+
+Observed call envelopes ranged from 25.8 to 99 microseconds, median 29.5, including
+both guarded sampling passes and the original call. They are not uninstrumented
+costs or an overhead comparison. The multithreaded invocation evidence reinforces
+that recorder state and any future API at this boundary must handle calls on
+multiple workers. Next, a controlled movement/jump capture can test whether other
+event classes appear; a class-specific handler trace would be needed to establish
+their effects. Do not expand this audio result into a motion-release claim.
