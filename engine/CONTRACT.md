@@ -427,3 +427,10 @@ It copies inputs, runs `build_pose_link_rows` and returns readable new rows plus
 all retained raw bytes. JSON guards and inspection bounds are authored. Result
 storage represents cache seeding only; no solve, missing data, dispatcher
 admission or live identity is synthesized.
+
+Solver control: `run_pose_solver` accepts retained context bytes and explicit
+prepare/iterate services. It captures phase/count and storage descriptor, always
+prepares, resets the result-slot cursor once before iteration, and retains cursor
+changes thereafter. Only phase0x10000000 temporarily substitutes unit scalars and
+restores their original raw bits on normal return. Numerical solve, exceptions,
+thread safety and allocation remain external.

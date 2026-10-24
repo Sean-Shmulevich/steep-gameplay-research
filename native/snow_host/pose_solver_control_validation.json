@@ -1,0 +1,22 @@
+{
+  "schema": "pose-solver-control-validation-v1",
+  "cases": 384,
+  "passed": 384,
+  "method": "offline complete wrapper and original prepare/iterate loop; numerical prepare and iteration routines replaced by recording/mutating services",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1994e80",
+    "0x19e5aa0"
+  ],
+  "comparisons": [
+    "ordered service calls and captured descriptor",
+    "iteration cursor reset/retention",
+    "scalar bytes observed by services",
+    "all final context bytes"
+  ],
+  "limits": [
+    "No numerical row preparation or solver iteration executed.",
+    "Normal returns only; no exception unwinding or live concurrency claim.",
+    "All four phase masks, zero/nonzero iteration counts and raw scalar bit restoration covered."
+  ]
+}

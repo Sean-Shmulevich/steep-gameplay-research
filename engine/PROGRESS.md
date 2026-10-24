@@ -7636,3 +7636,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   fields and complete byte output. Verified CLI, input immutability, indexed
   profile selection, cache seeding and storage guards. No game files required;
   solving, dispatcher admission and live lifetime remain external.
+- Reconstructed common solver phase/count selection, captured storage descriptor,
+  one-time preparation, iterative cursor retention and temporary scalar restoration.
+  384 complete native wrapper/control runs match with numerical services replaced
+  by recording/mutating callbacks. Zero iterations still prepare. Numerical row
+  preparation and iteration remain the next unresolved consumers.

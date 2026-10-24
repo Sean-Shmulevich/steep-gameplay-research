@@ -17071,3 +17071,54 @@ behavior, provenance and CLI equivalence. The underlying builder has separate
 uninterrupted native validation; JSON parsing and presentation do not gain native
 equivalence from that evidence. Other builder families, physical units, solver
 iteration and live object lifetime remain outside this tool.
+
+### Solver preparation and iteration control
+
+`engine.pose_solver_control.run_pose_solver` reconstructs the wrapper0x1994e80
+and its internal control routine0x19e5aa0. Numerical preparation0x19e4710 and one
+iteration0x19e4d10 remain supplied services. The wrapper captures the context flags
+before invoking either service.
+
+```python
+phase = flags38 & 0x18000000
+special = phase == 0x10000000
+iterations = ((flags38 >> 16) & 0x7ff) if special else ((flags38 >> 2) & 0x3fff)
+saved = raw_bytes(context[0x0c:0x14])
+if special:
+    context.scalar_c = 1.0
+    context.scalar_10 = 1.0
+descriptor = capture_storage_descriptor(context)
+cursor = address_of(descriptor.result_pointer_slot)
+prepare(descriptor, cursor_by_reference)
+if iterations != 0:
+    cursor = address_of(descriptor.result_pointer_slot)
+    repeat iterations times:
+        iterate(descriptor, cursor_by_reference)
+if special:
+    context[0x0c:0x14] = saved
+```
+
+Preparation runs even for zero iterations. The cursor is reset once before the
+first iteration, not before every iteration. Changes made by an iteration persist
+into the next call. Flag changes made by services cannot alter the already captured
+iteration count or special-phase restoration decision. The two saved scalars are
+restored as raw bits on normal return, preserving signed zeros and NaN encodings.
+Other phases do not restore service writes to those fields. Exception unwinding
+and recovery behavior have not been established.
+
+The captured descriptor holds context+0x40 for row layout, and base plus uint32
+relative offsets+0x16c, +0x178, +0x170 and+0x174 for rows, results and the two body
+buffers respectively. Its final byte records the special phase. The API uses
+`descriptor_result_slot` as the initial cursor identity instead of exposing the
+native temporary stack address. Buffer labels describe the observed layout;
+full buffer ownership and numerical preparation are separate dependencies.
+
+[384 offline wrapper/control comparisons](../../native/snow_host/pose_solver_control_validation.json)
+execute both complete native control routines and replace only preparation and
+iteration with recording services. Those services mutate scalars, flags and the
+cursor. Tests compare ordered calls, captured descriptors, cursor transitions,
+scalar bytes seen by each service and the complete final context. All four phase
+masks and zero/nonzero iteration counts are covered. This proves control flow and
+normal-return restoration, not numerical convergence, solver equations or live
+thread safety. The next numerical targets are the preparation and iteration
+routines, particularly their consumers of the112-byte rows assembled above.
