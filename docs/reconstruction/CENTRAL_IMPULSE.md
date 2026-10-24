@@ -13111,3 +13111,31 @@ match bitwise, including opposite-direction threshold neighbors and signed zeros
 The emulator executes the helper without call interception and supplies its
 observed seed to the model in the opposite branch. Seven related portable tests
 pass. These cases do not establish live orientation output or downstream use.
+
+### Connected contact-group finalization
+
+`engine.snow_contact_reporting.finalize_contact_bucket` now composes the observed
+averaging, normal refinement, fixed-up rotation helper and empty-group branch.
+Its input is one unnormalized accumulated bucket. Its output uses `vector_slot`
+and `vector_slot_kind` to avoid presenting the overwritten slot as a normal:
+
+- Nonempty: divide point and weighted scalar by weight, normalize the normal with
+  explicit reciprocal-square-root seed/refinement, then overwrite the vector slot
+  with the raw rotation candidate. Kind is `rotation_candidate`.
+- Empty: replace point with supplied fallback XYZ and W=0. Preserve the input
+  vector slot, scalar, count and weight. Kind is `preserved`; no quaternion or
+  normal meaning is assigned without initialization evidence.
+
+The adapter does not normalize the ordinary quaternion candidate or clamp weight.
+It rejects a nonempty zero-weight or zero-length-normal group because those cases
+fall outside its finite arithmetic contract. That rejection is authored validation,
+not a recovered native recovery branch. Count is an explicit uint32.
+
+[256 connected original-instruction cases](../../native/snow_host/contact_finalizer_validation.json)
+execute RVA 0x140c720..0x140c806 including the actual rotation helper, without
+intercepting calls. Complete group outputs match bitwise for empty/nonempty cases,
+random prior data and both aligned/opposite normals. Hardware reciprocal-square-root
+seeds observed in the emulator are supplied to the independent model; no claim
+of cross-CPU approximate-instruction identity is made. Nine portable reporting
+and aggregation tests pass. This closes local finalizer composition, not native
+initialization, live aggregate attribution or later consumers.

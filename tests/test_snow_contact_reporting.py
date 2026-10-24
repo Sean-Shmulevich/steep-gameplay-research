@@ -62,3 +62,25 @@ class ContactRotationTests(unittest.TestCase):
         from engine.snow_contact_reporting import contact_up_rotation
         self.assertEqual(contact_up_rotation([0,0,-1,0],lambda _:1),[0,1,0,0])
         self.assertEqual(contact_up_rotation([1,0,0,0],lambda _:1),[0,1,0,1])
+
+
+class ContactFinalizerTests(unittest.TestCase):
+    def test_weighted_average_and_rotation_share_finalization(self):
+        from engine.snow_contact_reporting import finalize_contact_bucket
+        b=dict(count=2,weight=2,weighted_value=1,normal=[0,0,2,0],point=[2,4,6,2])
+        r=finalize_contact_bucket(b,[9,9,9,9],lambda x:1/(x**.5))
+        self.assertEqual(r['point'],[1,2,3,1])
+        self.assertEqual(r['value'],.5)
+        self.assertEqual(r['vector_slot'],[0,0,0,2])
+        self.assertEqual(b['normal'],[0,0,2,0])
+
+    def test_empty_preserves_vector_and_scalar_without_normalizing(self):
+        from engine.snow_contact_reporting import finalize_contact_bucket
+        b=dict(count=0,weight=0,weighted_value=7,normal=[1,2,3,4],point=[0]*4)
+        r=finalize_contact_bucket(b,[5,6,7,8],lambda _:self.fail('unexpected seed'))
+        self.assertEqual(r['point'],[5,6,7,0])
+        self.assertEqual(r['vector_slot'],[1,2,3,4])
+        self.assertEqual(r['value'],7)
+        self.assertEqual(r['vector_slot_kind'],'preserved')
+        b['count']=1
+        with self.assertRaises(ValueError):finalize_contact_bucket(b,[0]*4,lambda _:1)

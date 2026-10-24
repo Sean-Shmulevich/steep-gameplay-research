@@ -1,0 +1,12 @@
+{
+  "cases": 256,
+  "bit_exact": true,
+  "scope": "Connected original bucket finalization block including original rotation helper, no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite cases; nonempty nonzero normal and weight",
+    "Reciprocal sqrt seeds observed from emulation and supplied to independent model",
+    "Synthetic aggregate state and fallback point; no native initialization or downstream use proof"
+  ],
+  "game_files_included": false
+}

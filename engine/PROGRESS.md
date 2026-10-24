@@ -7134,3 +7134,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   emulated rsqrt seed; seven related tests pass. Empty groups only replace point.
   Finalizer composition, initialization and downstream quaternion use remain open;
   ordinary (0,0,0,2) output must not be treated as unit identity without evidence.
+- Composed contact-group finalization, preserving empty-group slot/scalar state
+  and exposing nonempty rotation candidates explicitly. Connected original block
+  plus real helper matches 256 synthetic cases with observed rsqrt seeds; nine
+  related tests pass. Zero-weight/zero-normal nonempty groups remain outside the
+  finite adapter contract. Initialization, live aggregate capture and consumers
+  remain open; no unit-quaternion or native recovery substitution introduced.

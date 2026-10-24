@@ -84,3 +84,35 @@ def contact_up_rotation(normal, reciprocal_sqrt_seed):
         factor=f32(correction*f32(.5*seed))
         return [0.0,factor,0.0,0.0]
     return [cross[0],cross[1],cross[2],f32(1.0+dot)]
+
+
+def finalize_contact_bucket(bucket, fallback_point, reciprocal_sqrt_seed):
+    """RVA 0x140c720..0x140c806 including the rotation helper.
+
+    Input is an accumulated group. Output names the phase-dependent vector slot
+    explicitly. Empty groups preserve it and the scalar, replacing only point XYZ.
+    Finite model rejects nonempty zero-weight/zero-normal cases instead of inventing
+    native NaN recovery. Seed callback is required for native rounding comparisons.
+    """
+    count=bucket['count']
+    if type(count) is not int or not 0 <= count <= 0xffffffff:
+        raise ValueError('Expected uint32 count')
+    vector=four(bucket['normal']);point=four(bucket['point'])
+    weight=f32(bucket['weight']);value=f32(bucket['weighted_value'])
+    if count == 0:
+        point=four(fallback_point);point[3]=0.0
+        kind='preserved'
+    else:
+        squared=norm_squared(vector)
+        if weight == 0 or squared <= 0:
+            raise ValueError('Finite finalizer requires nonzero weight and normal')
+        inverse=f32(1.0/weight)
+        value=f32(inverse*value)
+        point=[f32(inverse*x) for x in point]
+        seed=f32(reciprocal_sqrt_seed(squared))
+        factor=f32(f32(3.0-f32(f32(seed*squared)*seed))*f32(.5*seed))
+        normal=[f32(factor*x) for x in vector]
+        vector=contact_up_rotation(normal,reciprocal_sqrt_seed)
+        kind='rotation_candidate'
+    return dict(count=count,weight=weight,value=value,point=point,
+                vector_slot=vector,vector_slot_kind=kind)
