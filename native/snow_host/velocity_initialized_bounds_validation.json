@@ -1,0 +1,13 @@
+{
+  "cases": 256,
+  "bit_exact": true,
+  "initializer_bounds_floats_checked": 12,
+  "scope": "Original component-cap initializer and decay table initialization followed by connected velocity arithmetic through setter input",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Only finite floor helper intercepted; original decay lookup and exponential builder execute",
+    "SSE2 vector/scalar selectors forced in emulation; live CPU dispatch unobserved; frames/rates/configuration supplied",
+    "No native setter, downstream impulses or live attribution; other configuration supplied; initialized clamp globals retained without injection; later native writers and live values unproved"
+  ],
+  "game_files_included": false
+}

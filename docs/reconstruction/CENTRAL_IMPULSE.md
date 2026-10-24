@@ -13371,3 +13371,30 @@ and scalar-endpoint limitations in `reference.decay_exp` still apply.
 This closes table initialization and local lookup composition under the tested
 path. Frame/rate/configuration producers, native setter/backend behavior, later
 impulses and live velocity correspondence are still separate boundaries.
+
+### Shared velocity clamp initializer
+
+The snow correction's linear clamp globals are the same globals documented in
+[pose-follower evidence P2/P3](../systems/body/pose-follower/evidence.md).
+Rechecking initializer RVA 0x13ea620 confirms that its straight-line fragment
+0x13ea6b6..0x13ea76b installs linear XYZ lower/upper bounds of -120/+120 and
+angular XYZ lower/upper bounds of -100.53096771240234/+100.53096771240234.
+These are float32 component bounds. They do not cap vector magnitude to 120,
+and the angular defaults do not identify the player trick-rate limits.
+
+`engine.body_velocity_limits.initialized_velocity_limits()` exposes fresh bound
+arrays without reading game data. Callers can explicitly pass its linear arrays
+to `correct_linear_velocity`. No defaults are silently substituted for observed
+runtime values. Initializer invocation, subsequent writes and current live values
+remain unproved; the shared storage does not join the physical-pose body to the
+snow main body.
+
+The [initializer-to-consumer check](../../native/snow_host/velocity_initialized_bounds_validation.json)
+executes the original cap-writing fragment and checks all twelve bound floats.
+It then retains those globals while executing the decay initialization, lookup
+and connected velocity-correction instructions for 256 supplied cases, including
+large velocity components. Final velocity and selected speed match bitwise.
+Only the finite floor helper is intercepted. Earlier initialization calls and
+later native calls outside the selected fragment do not execute. This verifies
+the installed values and their local consumption, not process startup or a live
+configuration. The later speed-floor decision can still override a clamp.

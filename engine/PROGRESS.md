@@ -7176,3 +7176,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   through 256 matching velocity cases; only finite floor helper intercepted.
   Added reusable explicit-CPU-path sampler, removing the synthetic decay provider
   dependency. Live CPU dispatch and frame/rate/configuration producers remain open.
+- Joined snow linear clamps to the existing physical-pose cap initializer and
+  exposed explicit initializer defaults: linear XYZ +/-120, angular XYZ
+  +/-100.53096771240234. Original cap fragment checks all 12 floats, then 256
+  connected velocity cases match with initialized globals retained. Component
+  bounds are not magnitude limits or player trick limits. Later writers and
+  current live values remain unproved; no implicit runtime defaults installed.

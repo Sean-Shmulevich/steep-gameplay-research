@@ -1,7 +1,10 @@
 """Recovered local velocity-correction decisions with supplied upstream inputs.
 
 Evidence: CENTRAL_IMPULSE.md, Post-submission velocity setter and speed floor.
-Damping curves, frame transforms, activation and native setter remain external.
+Frame/rate producers, activation and native setter remain external. The decay
+table has an explicit initializer-backed sampler below. Component bounds may
+be supplied from body_velocity_limits.initialized_velocity_limits, but that
+does not establish the current live globals.
 """
 from math import sqrt
 from reference.central_impulse import f32
