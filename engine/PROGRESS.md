@@ -7248,3 +7248,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Read median 26 us, p95 43.1 us, max 556 us. Both slots, drain and full launcher
   cleanup verified. Callback execution and same-phase matrix freshness remain open;
   observed callback's gates and helper call now supply concrete static leads.
+- Decoded callback branch precedence and reconstructed explicit-vector override:
+  independent XYZ-length normalization scales all four lanes, reorders vectors
+  [1,2,0] and saves the resulting basis. Output/cache match 256 native cases with
+  observed rsqrt seeds. This is not orthogonalization; collinearity remains.
+  Prepass, higher-priority rotation paths and live branch execution remain open.

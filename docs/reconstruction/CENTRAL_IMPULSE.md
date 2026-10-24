@@ -13853,3 +13853,64 @@ basis replacements. Later gates read receiver+0x17d, +0x130 and +0x150; a branch
 copies receiver+0x270 to the first output vector. These are producer leads, not a
 complete basis formula. The table is referenced in constructor-range code near
 RVA 0x1383dbb. No sport name or universal receiver identity is assigned yet.
+
+### Explicit-vector basis override
+
+The live-identified callback at RVA 0x13fbbf0 has a priority-ordered selection,
+not one universal basis formula. Its enabled byte at receiver+0x262 is tested
+first; zero returns false without invoking the prepass. Otherwise 0x13fb3e0 runs
+before subsequent field reads and basis decisions. Its return value is not used
+as the callback's final success Boolean. The observed local order is:
+
+```text
+if enabled_byte == 0: return false
+run prepass with receiver, runtime, output and caller flags
+if preferred_byte != 0 and any(abs(vector130_lane) > float32(1e-5))
+                         and inhibit_byte == 0:
+    if rebuild_byte == 0:
+        output = receiver_saved_basis
+        return true
+    otherwise perform preferred-axis rotation/cross-product path
+elif explicit_triplet_byte != 0:
+    output = independently_normalized_explicit_triplet
+elif alignment_byte != 0:
+    perform cross-product alignment using supplied vector and prepass output
+else:
+    perform applicable angle path or retain prepass output
+save output into receiver_saved_basis
+return true
+```
+
+Here preferred_byte is receiver+0x17d, inhibit_byte is +0x150,
+explicit_triplet_byte is +0x261, alignment_byte is +0x260 and rebuild_byte is
+the fifth incoming argument's low byte. The four-lane threshold uses the same
+receiver+0x130 field pattern found in velocity-rate suppression, but this alone
+does not establish device/action semantics. Higher-priority branches can prevent
+the explicit-triplet branch even when its byte is nonzero. Runtime physical-frame
+mode is a different flag and must not be conflated with these receiver bytes.
+
+`engine.snow_basis_override.normalize_override_triplet` reconstructs the branch
+at 0x13fbf0f..0x13fbff1. Input vectors are receiver+0x220/+0x230/+0x240, evaluated
+in that order. For each vector, with separate float32 rounding:
+
+```text
+n = x*x + (y*y + z*z)
+s = supplied_hardware_rsqrt_seed(n)
+scale = (3 - (s*n)*s) * (0.5*s)
+normalized = scale * [x,y,z,w]
+output = [normalized_input1, normalized_input2, normalized_input0]
+```
+
+Length excludes W, but scaling includes W. Each vector is normalized separately;
+there is no orthogonalization or direction normalization beyond these lengths.
+Collinear inputs remain collinear and may later produce a singular frame. The
+API rejects zero/nonfinite norms by authored policy without inventing a native
+fallback. The native block writes output and then copies all three vectors to
+receiver+0x270/+0x280/+0x290 at 0x13fc29d..0x13fc2bd.
+
+The [explicit-triplet receipt](../../native/snow_host/basis_triplet_validation.json)
+checks 256 original-instruction cases through output and saved-cache publication,
+without intercepted calls. Both 48-byte results match given observed reciprocal
+square-root seeds. Prepass, gates, rotation paths, input producers and live branch
+execution remain outside this check. Identifying the callback live is not proof
+that this particular branch ran in that capture.
