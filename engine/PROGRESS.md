@@ -7219,3 +7219,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Both published transforms match 160 original-fragment cases. Cached-basis
   fallback, mode selection, intervening work and live freshness remain external;
   no rigid-transpose shortcut or anatomical-axis labels added.
+- Reconstructed cached-frame publication: basis reorder [2,0,1], preserved basis
+  W lanes, COM-minus-offset-direction translation and common full inverse.
+  Both transforms match 160 original-fragment cases with observed COM/seeds.
+  Valid configuration only; protected invalid paths, mode selection and cache
+  production remain open. Verified virtual slot+0x40 receives the cache output
+  storage as the next producer lead; concrete receiver still unresolved.

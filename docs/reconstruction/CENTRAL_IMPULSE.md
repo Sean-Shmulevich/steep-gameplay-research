@@ -13686,3 +13686,37 @@ are not reconstructed here. Consequently the bench still permits explicitly
 supplied independent frames; it must not automatically derive every frame from
 the body. Physical-branch basis ownership is now established, but the axes are
 not assigned anatomical forward/sideways labels without the shape convention.
+
+### Cached decay frame publication
+
+`engine.snow_velocity_frames.cached_decay_frames` adds the other local frame
+publication mode. In RVA 0x13f9151..0x13f9206, the source vectors at runtime
++0xb40/+0xb50/+0xb60 publish in order [2,0,1]. Their W lanes are copied unchanged,
+unlike the body getter branch which forces basis W to zero. Given the native
+physical center of mass, runtime+0xa40 direction and configuration+0xbc0 offset,
+translation XYZ is `f32(COM - f32(offset * direction))`; translation W is 1.
+There is no local direction normalization. The common full inverse then produces
+the decay transform. The API preserves this mode distinction rather than repairing
+the cached basis into an orthonormal matrix.
+
+The native configuration validity byte at config+0xbc4 must be nonzero to avoid
+a protected call, and a nonfinite offset can take another protected path. This
+reconstruction covers the finite valid-configuration branch. It does not emulate
+those calls or infer native exception recovery. Its center-of-mass argument is
+explicit; body transform, local COM cache validity and dirty-cache refresh remain
+the caller's responsibility.
+
+The [cached-frame receipt](../../native/snow_host/snow_cached_frames_validation.json)
+checks 160 synthetic bases, directions and offsets. Native COM retrieval, valid
+configuration branch, basis/translation publication and full inverse execute
+without intercepted calls. The independent API receives observed COM values and
+reciprocal seeds, then matches both 64-byte published transforms. Two disjoint
+native fragments are executed; intervening alternate-body and lock work is not.
+Live selection and frame freshness remain unproved.
+
+A verified producer lead is RVA 0x1408690: at 0x14086da it passes runtime+0xb40
+as output storage to the receiver's virtual slot+0x40 at 0x14086e1. A false return
+takes a separate failure route. The receiver's concrete type and callback body
+must be resolved before assigning the cached axes a controller/terrain meaning.
+Later normalization into other storage in this routine does not establish that
+the original cached vectors were overwritten or orthonormalized.

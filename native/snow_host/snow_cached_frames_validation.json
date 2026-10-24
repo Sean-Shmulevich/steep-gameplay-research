@@ -1,0 +1,12 @@
+{
+  "cases": 160,
+  "bit_exact": true,
+  "scope": "Original cached-basis publication, COM getter, offset translation, full inverse and publication; no intercepted calls; model receives observed COM and reciprocal seeds",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Two selected native fragments, not complete update",
+    "Finite well-conditioned synthetic cached bases, finite offset and valid config byte; branch selection, locks, cache production and invalid config omitted",
+    "Cross-CPU reciprocal seeds and live body identity/freshness unproved"
+  ],
+  "game_files_included": false
+}
