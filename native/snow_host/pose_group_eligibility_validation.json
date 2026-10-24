@@ -1,0 +1,18 @@
+{
+  "cases": 512,
+  "matching": true,
+  "true_cases": 189,
+  "scope": "Complete native group-selection predicate including original circular-link helper, no interception; result, unconditional link-helper entry and unchanged body bytes match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Strict threshold equality and negative thresholds",
+    "Empty and endpoint-dependent circular lists",
+    "Blocking link, status sentinel and flag2 rejection"
+  ],
+  "limits": [
+    "Synthetic finite vectors and well-formed retained rings",
+    "Vector identities/units and special-group meaning remain unresolved",
+    "Malformed-ring exception in independent model is authored"
+  ],
+  "game_files_included": false
+}

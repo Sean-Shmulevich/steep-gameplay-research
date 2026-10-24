@@ -15661,3 +15661,48 @@ this connection is not proof of wake, enable, force application or immediate
 solver execution. The next useful boundary is that protected wrapper and the
 membership/update helpers it invokes, rather than inventing a physical meaning
 for raw event2.
+
+### Pose group eligibility predicate
+
+`engine.pose_group_eligibility.pose_group_eligible` reconstructs RVA0x18e1dd0;
+`pose_links_clear` reconstructs its complete helper0x18bad90. The caller0x18e14f0
+uses this result to compare current body membership against context+0x410 and,
+after a mismatch path, to choose that group again. This is group-selection
+eligibility, not yet a proved sleep/wake criterion.
+
+The predicate reads XYZ vectors at body+0x1a0 and+0x1ac and scalar thresholds at
+context+0x45c/+0x460. For each vector, squared length is
+float32(float32(float32(x*x)+float32(y*y))+float32(z*z)). Both lengths must be
+strictly below their float32 squared thresholds. Equality fails; negative
+thresholds are squared without validation. The second magnitude is evaluated
+only if the first passes. Independently of magnitude success, the link helper
+always executes, and the final boolean requires both magnitude and link success.
+The API supports finite supplied inputs; their physical units remain unresolved.
+
+Link eligibility follows these exact rules:
+
+```text
+if body.blocking_link != null: return false
+head = body.first_link
+if head == null: return true
+link = head
+repeat:
+    if link.status32 != 0xffffffff: return false
+    if link.flags8 & 2: return false
+    link = link.next_first if link.first_body == body else link.next_second
+until link == head
+return true
+```
+
+Build-specific fields are body+0x90 for the blocking link and+0x80 for the head;
+record+0x80 status, +0x84 flags, +8 first endpoint, +0x20/+0x30 next links. No native
+null or malformed-cycle guard appears inside the ring. Independent malformed-ring
+errors are authored restrictions. The API uses supplied retained records and
+provides no native lifetime or concurrency guarantee.
+
+[512 complete native comparisons](../../native/snow_host/pose_group_eligibility_validation.json)
+execute both original helpers without interception. Results, unconditional link
+helper entry and unchanged body bytes match for strict boundaries, negative
+thresholds, empty/mixed-endpoint rings and blocker/sentinel/flag rejection. Of
+these cases189 pass. Vector field identity, threshold producers, special-group
+semantics and the protected outer notification wrapper remain unresolved.

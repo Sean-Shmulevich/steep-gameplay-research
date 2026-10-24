@@ -7466,3 +7466,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   event2 is ignored there. Main observer's event2 table reaches the same protected
   body/context entry as pose submission. This connects optional angular rows to
   an existing notification path without claiming wake/activation semantics.
+- Reconstructed body/group-selection eligibility: two strict squared-magnitude
+  thresholds plus an unconditional circular-link eligibility check. 512 complete
+  native cases match without interception, including endpoint-specific traversal
+  and blocker/status/flag rejection. Physical vector identities, threshold sources
+  and special-group semantics remain unproved; no sleep/wake label is assigned.
