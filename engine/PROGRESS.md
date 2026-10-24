@@ -7564,3 +7564,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   publication. 512 complete offline native cases match bit-for-bit without call
   interception. Caller reduces oversized groups to four; selector math and cached
   word's downstream physical meaning remain open.
+- Recovered geometric four-record selection and connected record-copy reduction.
+  Two projection passes, normalized tangent, later-index tie preference and allowed
+  duplicate indices are explicit. 512 selector and404 connected reduction native
+  comparisons pass with the rotation-matrix helper supplied. Exact matrix/trig
+  helper behavior and downstream cache-word semantics remain open.

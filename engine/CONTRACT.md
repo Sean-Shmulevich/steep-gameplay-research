@@ -325,3 +325,10 @@ It preserves float32 basis-dot order, copied fourth words, old-ID cache matching
 count gates and inactive bytes. The four-record bound comes from the inspected
 caller's reduction path; its selector remains external. Cached-word physical
 meaning, live transforms, contact generation and solver effects remain unresolved.
+
+Geometric row selection: `select_pose_link_rows` preserves float32 centroid,
+tangent selection/normalization, supplied-matrix transform, two projection passes
+and later-index ties. Duplicate indices are permitted. Axis-angle matrix behavior
+is a service; normal normalization is not added. `reduce_pose_link_records` applies
+the caller's >4 gate and snapshots four full records before overwriting active
+slots. Nonfinite/zero-tangent rejection is an authored domain restriction.

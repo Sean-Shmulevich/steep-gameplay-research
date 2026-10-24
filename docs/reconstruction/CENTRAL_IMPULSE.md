@@ -16449,3 +16449,58 @@ nonorthonormal bases and inactive padding. XYZ mask uses its recovered initializ
 value. These results connect payload layout to paired-frame point transformation
 and cache reuse without claiming the full key grouping, four-record selection,
 solver meaning, live body resolution or contact classification.
+
+### Geometric four-record selection
+
+`engine.pose_link_selection.select_pose_link_rows` reconstructs selector0x19989d0
+with axis-angle matrix helper0x18c10c0 supplied. Its inputs are strided XYZ points,
+a supplied normal and count. The connected caller uses48-byte records, points
+at record+0x10, and the first record's XYZ as normal. The runtime XYZ mask and
+zero comparison vector are established by initializers0xc7e60 and0xc7ea0.
+
+The selector accumulates a float32 centroid in input order. For normal(x,y,z),
+it chooses a tangent using strict comparisons:
+
+```
+if min(abs(x), abs(y)) < abs(z):
+    tangent = (z,0,-x) if abs(y) < abs(x) else (0,z,-y)
+else:
+    tangent = (y,-x,0)
+tangent *= float32(1 / float32(sqrt(dot(tangent,tangent))))
+```
+
+Comparisons use the actual rounded subtraction against zero; arithmetic in the
+implementation preserves this order. The normal itself is not normalized. Native
+code calls the matrix helper with the normal and literal float32 angle
+0.6456422805786133. The helper constructs a quaternion using half-angle sine and
+cosine, then a matrix. Its exact transcendental/matrix implementation remains a
+supplied service here, not a substitute rotation silently labeled recovered.
+
+The tangent is transformed as `row0*t.x + row1*t.y + row2*t.z`, with float32
+products and the inspected addition order. A first pass finds minimum and maximum
+projections of centered points along that axis. Ties replace the previous point.
+Let `span = minimum_point - maximum_point`; the second direction is the component
+formula for `normal cross span`. A second pass returns indices of minimum/maximum
+projections along span, followed by minimum/maximum along the second direction.
+Both passes start from positive/negative maximum finite float32. Each comparison
+uses a rounded subtraction against zero, and ties select the later input index.
+
+There is no uniqueness check. Coincident points can produce four identical
+indices; the selector still publishes count4. The independent API rejects empty,
+nonfinite or zero-tangent inputs instead of inventing a geometric fallback.
+Degenerate point sets with a valid normal remain supported.
+
+`reduce_pose_link_records` adds the inspected caller's count>4 gate and complete
+record-copy behavior0x1990040. It snapshots all four selected48-byte records
+before overwriting the first four input slots, preserving source aliasing and
+inactive tail records. It sets active count4 even if selected indices repeat.
+For count<=4 the caller skips selection and this API preserves the collection.
+
+[512 selector and404 connected reduction comparisons](../../native/snow_host/pose_link_selection_validation.json)
+execute original code with only the matrix helper supplied. They compare ordered
+indices, bit-exact normalized tangent, helper arguments, active count and full
+record arrays. Cases include finite random geometry, repeated points, axis-aligned
+and nonunit normals, arbitrary supplied matrices and tie-heavy integer points.
+The receipt establishes selection/copy behavior conditional on the matrix service;
+it does not establish the native rotation helper, physical contact semantics or
+solver cached-value interpretation.

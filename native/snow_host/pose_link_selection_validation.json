@@ -1,0 +1,22 @@
+{
+  "schema": "pose-link-selection-validation-v1",
+  "selector_cases": 512,
+  "reduction_cases": 404,
+  "passed": 916,
+  "method": "offline complete selector and connected reduction wrapper with rotation-matrix helper supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19989d0",
+  "comparisons": [
+    "four selected indices in order",
+    "bit-exact normalized tangent passed to matrix stage",
+    "rotation helper normal and angle arguments",
+    "output count four",
+    "complete reduced record arrays including inactive tails"
+  ],
+  "limits": [
+    "Axis-angle matrix helper replaced with supplied matrices; its trigonometric implementation remains external.",
+    "XYZ mask and zero comparison vector use inspected initializer values.",
+    "Finite nonempty geometry; zero-normal exceptional arithmetic excluded.",
+    "No uniqueness guarantee or contact semantic assertion."
+  ]
+}
