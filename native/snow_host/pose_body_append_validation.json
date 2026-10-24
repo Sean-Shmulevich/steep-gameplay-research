@@ -1,0 +1,17 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete native body append with supplied growth service; return, body bytes, count/capacity, all retained slots and publication-before-growth observations match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Both metadata classes at 65535 boundary",
+    "Zero and doubled growth requests",
+    "Growth-time count mutation and retained published body index"
+  ],
+  "limits": [
+    "Growth allocation/failure remains external; backing memory supplied even for zero request",
+    "No duplicate prevention, detach, locking or lifetime proof",
+    "Independent missing-slot error is authored, after membership publication"
+  ],
+  "game_files_included": false
+}

@@ -15751,3 +15751,41 @@ those services, not their native internals or the protected outer wrapper.
 Destination identities, ownership, detach/append effects, synchronization and
 physical consequences remain unresolved. No sleep/wake or activation claim follows
 from the structural group names.
+
+### Body group append
+
+`engine.pose_body_membership.append_pose_body` reconstructs RVA0x19573c0 and
+provides the append service used by the preceding body group-update flow. It is
+separate from pose-record append0x1957480: their class limits and initial-growth
+rules differ.
+
+```text
+if body.metadata.flags16 bit15 is set and group.count >= 65535:
+    return false
+body.group = group
+body.index = group.count
+if group.count == group.capacity:
+    grow(group, uint32(2 * group.capacity))
+slots = reload_group_slots()
+count = reload_group_count()
+slots[count] = body
+group.count = uint32(count + 1)
+return true
+```
+
+Body membership is +0x10/+0x1c; group slot-array/count/capacity are +0x10/+0x18/
++0x1c. Metadata bit15 clear bypasses the65535 limit. Zero capacity requests zero,
+without the pose-record helper's initial8 fallback. The supplied growth service
+owns storage provision; the independent API raises if no writable slot exists
+but retains the already-published body membership. No native failure recovery or
+rollback is invented. If growth changes count, insertion uses that new count
+while the body index retains its pre-growth value. This is native ordering, not
+a recommended callback mutation policy.
+
+[320 complete native comparisons](../../native/snow_host/pose_body_append_validation.json)
+match return, full retained body/slot bytes, count/capacity, growth request and
+publication order with a supplied growth service. Cases cover both classes at
+the65535 boundary, zero/doubled requests and growth-time count mutation. Tests
+provide backing storage even for a zero request; they do not establish allocator
+success or a normal zero-capacity lifecycle. Duplicate prevention, detach, locks,
+body ownership and native failure behavior remain unresolved.

@@ -7476,3 +7476,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   service-intercepted cases match ordering and callback mutations. Captured versus
   reloaded membership and metadata are explicit; native downstream effects and
   protected-wrapper behavior remain external.
+- Reconstructed group body append, replacing another group-update service boundary.
+  Metadata bit15 gates the65535 limit; zero capacity requests zero, unlike pose
+  record append. Membership/index publish before growth and count reload. 320
+  native cases match under supplied growth; allocation failure, detach and lifetime
+  remain external.
