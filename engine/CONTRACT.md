@@ -485,3 +485,10 @@ categories. Full settings mode zero groups multi-row payloads into category4/5;
 nonzero mode reserves two category6/7 rows per point. Counter wrap is preserved.
 Pose contributions, valid mode domain, grouped builders and live lifetime remain
 external. The prepass mode test must not be conflated with low-bit builder dispatch.
+
+Pose category prepass: `count_pose_categories` accumulates category deltas for raw
+resolved virtual types1..6, reusing the type2 six-row classifier. Type4 needs no
+second body; other recognized types pair categories by metadata bit15. Type3's
+word flag and type5's byte flags remain distinct. Unknown types contribute nothing.
+Virtual dispatch/type construction, physical class names and live storage lifetime
+remain supplied or unresolved.

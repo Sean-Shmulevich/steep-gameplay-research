@@ -1,0 +1,17 @@
+{
+  "schema": "pose-category-counts-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete pose-count dispatcher and all six native count routines, inline getter, type5 record copy and no-op cleanup; synthetic virtual type-return methods supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994ad0",
+  "comparisons": [
+    "all25 accumulated category counts",
+    "unchanged pose inline storage and other object bytes"
+  ],
+  "limits": [
+    "Virtual type results supplied by synthetic constant-return methods, not recovered class construction.",
+    "Finite type2 coefficients; raw flags and all six recognized types plus unknown values covered.",
+    "Counts do not establish physical pose names, animation equivalence or live lifetime."
+  ]
+}

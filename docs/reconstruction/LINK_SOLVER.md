@@ -751,3 +751,50 @@ single-payload counts against actual completed-builder output.
 This closes link planned-count production around the retained link/payload
 inputs. Pose-count contributions, body-index assignment, multi-row builder
 families and configuration validation remain separate work.
+
+### Pose category-count prepass
+
+`engine.pose_category_counts.count_pose_categories` reconstructs0x1994ad0 and
+its six recognized counting paths. It accepts the resolved uint32 result of each
+pose's virtual slot+0x10 as explicit input. The native dispatcher subtracts one
+and uses a six-entry jump table; values outside1..6 contribute nothing. Type4
+increments category24 without reading a second body. All other recognized types
+use second-body metadata word+0x50 bit15 to choose `b=0` when clear or `b=1` when set.
+
+| Raw type | Category contributions |
+| --- | --- |
+|1 | `counts[10+b] += 1` |
+|2 | Six-row classifier contributions below |
+|3 | `counts[22+b] += 1`, `counts[8+b] += 2`, plus `counts[14+b] += 1` if storage uint32+0x68 is nonzero |
+|4 | `counts[24] += 1` |
+|5 | `counts[10+b] += 1`, `counts[8+b] += 1 + 4*(storage byte+0x68 != 0)`, plus `counts[12+b] += 1` if byte+0x70 is nonzero |
+|6 | `counts[2+b] += 1` |
+
+Type2 uses the previously recovered six-row classifier in
+`engine.snow_pose_solver_counts.pose_solver_counts`. Its named count deltas map
+to categories8+b for doubled rows,10+b for hard-triple blocks,14+b for flagged or
+hard rows,16+b for first soft rows,18+b for second hard rows, and20+b for second
+soft rows. Every addition wraps to uint32 and preserves preexisting counters.
+This connects the classifier to actual planned category indices without changing
+its threshold/state logic.
+
+The inline storage getter0x1942bf0 returns pose+0x70. Type3 snapshots144 bytes;
+type5 copies a larger structured record through0x1943190 before inspecting the
+two bytes. Those bytes are copied unchanged, so the independent count API reads
+them directly from retained inline storage. The cleanup target used by both is
+0x75e600, inspected as `ret 0`; no hidden destruction effect is substituted.
+The type3+0x68 test is a full uint32 test, while type5 tests only a byte. These
+must not be merged into a common boolean interpretation.
+
+[512 complete native prepass comparisons](../../native/snow_host/pose_category_counts_validation.json)
+execute the original dispatcher, all six counting routines, inline getter,
+type5 copy and cleanup. Virtual type methods are supplied as synthetic constant
+return stubs. All25 accumulated counters match, and complete retained pose bytes
+stay unchanged. Cases cover all recognized/unknown types, metadata branches,
+flags, type2 thresholds and nonzero initial counters. This supplies counts, not
+original class construction, animation equivalence or physical names for raw types.
+
+Together with `count_pose_link_rows`, this fills the planned-count input consumed
+by the reconstructed layout initializer for retained link and pose records. Body
+index assignment, production of those records and the still unsupported numerical
+row categories remain separate boundaries.

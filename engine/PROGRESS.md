@@ -7683,3 +7683,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   counters. Zero-mode grouped payloads use categories4/5; other modes reserve paired
   tangents per point. Pose counts, grouped equations and body-index assignment
   remain unresolved.
+- Connected all six pose-type planned-count paths to25-category counters, reusing
+  the recovered type2 classifier and distinguishing word/byte flag tests. 512 native
+  prepasses match with only synthetic virtual type-return methods supplied; inline
+  getter, copy and no-op cleanup stay native. Link and pose counts now feed layout
+  from retained records. Class construction, body-index assignment and unsupported
+  numerical categories remain open.
