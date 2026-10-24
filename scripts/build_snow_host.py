@@ -11,6 +11,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--adapter', choices=('fixture', 'steep'), default='fixture')
     ap.add_argument('--capture-plugin', action='store_true', help='Build opt-in experimental update capture plugin; steep adapter only')
+    ap.add_argument('--markup-update-capture-plugin', action='store_true', help='Build opt-in typed markup update capture; steep adapter only')
     ap.add_argument('--animation-queue-capture-plugin', action='store_true', help='Build opt-in triggered animation queue dispatch capture; steep adapter only')
     ap.add_argument('--delegate-capture-plugin', action='store_true', help='Build opt-in experimental graphics/engine delegate capture; steep adapter only')
     ap.add_argument('--finalizer-capture-plugin', action='store_true', help='Build opt-in filtered finalizer capture; steep adapter only')
@@ -25,7 +26,7 @@ def main():
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--cc', default='x86_64-w64-mingw32-gcc')
     args = ap.parse_args()
-    if (args.animation_queue_capture_plugin or args.capture_plugin or args.delegate_capture_plugin or args.finalizer_capture_plugin or args.scheduler_phase_capture_plugin or args.command_manager_startup_plugin or args.command_manager_write_plugin or args.command_manager_execute_plugin or args.protection_context_snapshot_plugin or args.protection_continuation_control_plugin) and args.adapter != 'steep':
+    if (args.markup_update_capture_plugin or args.animation_queue_capture_plugin or args.capture_plugin or args.delegate_capture_plugin or args.finalizer_capture_plugin or args.scheduler_phase_capture_plugin or args.command_manager_startup_plugin or args.command_manager_write_plugin or args.command_manager_execute_plugin or args.protection_context_snapshot_plugin or args.protection_continuation_control_plugin) and args.adapter != 'steep':
         ap.error('capture plugins require --adapter steep')
     cc = shutil.which(args.cc)
     if not cc:
@@ -65,6 +66,8 @@ def main():
         build('plugins/protection_continuation_control.dll', ['examples/protection_continuation_control.c','snow_continuation_identity.c','snow_first_execute.c'], ['-shared'])
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
+    if args.markup_update_capture_plugin:
+        build('plugins/markup_update_capture.dll', ['examples/markup_update_capture.c','snow_markup_update_probe.c','snow_markup_update_trace.c','snow_markup_provider.c'], ['-shared'])
     if args.animation_queue_capture_plugin:
         build('plugins/animation_queue_capture.dll', ['examples/animation_queue_capture.c','snow_animation_queue_probe.c','snow_animation_queue_trace.c','snow_animation_queue.c'], ['-shared'])
     if args.delegate_capture_plugin:

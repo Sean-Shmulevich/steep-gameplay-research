@@ -11641,3 +11641,59 @@ Run `fixture.exe` with the absolute DLL path and one mode name: `normal`,
 slot. Game integration still requires a bounded controller/plugin, fresh
 component guards, the native provider reader, original-callsite verification,
 and restoration evidence. This DLL alone is not a completed game capture tool.
+
+### Triggered markup-update capture plugin
+
+The opt-in [`markup_update_capture.c`](../../native/snow_host/examples/markup_update_capture.c)
+plugin joins the native sampler and typed slot wrapper. Build it using
+`scripts/build_snow_host.py --adapter steep --markup-update-capture-plugin --out`
+with a build directory outside the repository. Its INI requires `[capture]`,
+`enabled=1`, and `milliseconds` between 100 and 1000. A private controller supplies
+fresh hexadecimal size/component/owner/actor/world fields, then creates the
+INI path plus `.trigger`. Saved addresses must never be reused across sessions.
+
+The worker waits at most 180 seconds. It checks original function/caller byte
+signatures, actor/self/entity/world relationships and the native provider chain,
+then temporarily replaces component table slot 0x4b0. It records float argument
+bits and before/after scalar metadata, restores the slot, and closes/drains the
+recorder. The plugin issues no movement input or original game calls of its own;
+the wrapper forwards calls made by the game. Module/context lifetime remains
+pinned for possible cached callers.
+
+The `.armed` marker follows successful installation; `.done` means trace output
+was written, not success. Inspect every summary flag and independently verify the
+restored slot. `.trace.jsonl` includes caller addresses and belongs in private
+session storage. Requested milliseconds are not an exact frame window; marker
+I/O, restoration and sample overhead affect the interval. Stale trigger/armed/done
+markers reject initialization. The controller must retain a session watchdog and
+cleanup path, including on timeout or failed guards.
+
+### First live markup-update boundary capture
+
+The [live receipt](../../native/snow_host/markup_update_live_validation.json)
+records 58 calls of the acquired motion component's slot 0x4b0 in a requested
+500 ms capture. Every caller was RVA 0x34df47, the return site immediately after
+that slot call in the inspected three-phase update routine. Nine distinct thread
+IDs appeared. This establishes execution of the component update route, not
+merely membership in a batch or the existence of a table entry.
+
+All 116 before/after native samples passed their guards. Each snapshot reported
+148 dispatcher notification records and zero graph query records. These counts
+refer to different collections: registered notification records are not the
+provider's currently available candidate records. No nested pairs or individual
+notification callbacks were captured. Empty boundaries cannot rule out records
+created and removed within the original call, nor do they show that any specific
+notification record was evaluated.
+
+The float argument varied across calls; its min/max/median are retained in the
+receipt without assigning units. The static caller loads this value from its
+helper result at +0x18 and forwards it through the phase calls. Neither its
+numerical scale nor correlation with wall time alone establishes a physics
+substep duration.
+
+The plugin restored the original slot and the controller independently verified
+it. No records were dropped. The host remained ready and unfaulted. The bottle
+stopped, saves/settings were restored and the original DLL hash matched. No
+movement input was sent. The next discriminating capture should include a
+controlled action and selected notification cached/query states at this boundary;
+a separate callback observation is still required to prove motion release.

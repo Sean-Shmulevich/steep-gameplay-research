@@ -1,0 +1,54 @@
+{
+  "scope": "Live component update entry/exit; not individual markup query or notification callback",
+  "requested_capture_ms": 500,
+  "summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 58,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "call_count": 58,
+  "caller_rvas": [
+    "0x34df47"
+  ],
+  "distinct_threads": 9,
+  "all_samples_accepted": true,
+  "record_counts": [
+    0
+  ],
+  "notification_counts": [
+    148
+  ],
+  "float_argument": {
+    "minimum": 0.009993700310587883,
+    "maximum": 0.02088009938597679,
+    "median": 0.012034500017762184,
+    "units_proved": false
+  },
+  "slot_original_independently_verified": true,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "movement_input_sent": false,
+  "selected_local_player_proved": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_evidence_sha256": {
+    "route-result.json": "111e832153c44c657cd5cc77e047c53b6cbc7e6bf18c5863fb9331ddb651040d",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "membership-reader-calls.json": "9c0a8b235e3542c5bdc27484c18dd3c8e7f3fc3d100a1a9d0dfd1590d1be39b5"
+  },
+  "game_files_included": false
+}

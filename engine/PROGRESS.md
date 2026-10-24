@@ -6938,3 +6938,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   float ABI forwarding, filtered capture, restoration, competing pointer handling
   and installation rejection. No game launch occurred. Native provider sampler
   integration and a bounded live update capture remain open.
+- Live typed markup update capture accepted 58 actual calls from the expected
+  phase caller on nine threads. All before/after samples passed: 148 dispatcher
+  notification records, zero provider candidates. Slot restoration independently
+  verified; host healthy and cleanup passed. Individual notification execution
+  and motion release remain open. Optional plugin builds through the public host
+  script using --markup-update-capture-plugin.
