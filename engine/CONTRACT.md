@@ -397,3 +397,10 @@ payload normal and selects a normalized tangent with a low-magnitude geometric
 fallback. The second direction is normal cross first. Float32 ordering is explicit;
 normal normalization, second-body motion, physical units, degenerate arithmetic
 and the rest of the solver rows are not supplied or inferred.
+
+Primary link response: `link_primary_response` consumes explicit paired-point
+separation, normal, first-body opposite-motion projection, recovered coefficient
+values and raw context fields1c/20. It gates the motion candidate by rounded
+subtraction, then selects the larger magnitude with position winning ties. All
+operations retain float32 order. Finite arithmetic, caller-supplied producers and
+unresolved physical units remain explicit boundaries.

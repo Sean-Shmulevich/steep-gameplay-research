@@ -1,0 +1,16 @@
+{
+  "schema": "pose-link-primary-response-validation-v1",
+  "cases": 768,
+  "passed": 768,
+  "method": "offline continuous primary response fragment without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1993d1e..0x1993d9e",
+  "comparisons": [
+    "all four broadcast response lanes bit-for-bit"
+  ],
+  "limits": [
+    "Prepared separation, motion projection and coefficient registers supplied.",
+    "Finite synthetic inputs with threshold equality, magnitude ties and signed zeros.",
+    "World-point producer, full row assembly and physical units not validated here."
+  ]
+}

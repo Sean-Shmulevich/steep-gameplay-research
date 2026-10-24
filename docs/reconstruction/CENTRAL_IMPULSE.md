@@ -16898,3 +16898,44 @@ unnormalized normals, zero motion and motion near the fallback threshold. Unit
 tests also distinguish point rotation from linear motion, local center subtraction,
 parallel motion and degenerate input. No live capture or original-engine
 equivalence is claimed.
+
+### Primary link row response selection
+
+`engine.pose_link_primary_response.link_primary_response` reconstructs
+0x1993d1e..0x1993d9e in the metadata-clear/single builder. It consumes the paired
+world-point separation, payload normal and the first-body opposite-motion
+projection used before tangent removal. Every arithmetic step below rounds to
+float32, with the XYZ dot reduced as `(x+y)+(z+0)`.
+
+```python
+delta = second_world_point - first_world_point
+q = dot(normal, negative_first_body_point_motion)
+position_candidate = (dot(delta, -normal) + context.field1c) * response_gain
+motion_candidate = q * combined_profile40 if (q - context.field20) < 0 else +0
+if (abs(position_candidate) - abs(motion_candidate)) < 0:
+    selected = motion_candidate
+else:
+    selected = position_candidate
+```
+
+`response_gain` is the value recovered by `link_response_coefficients`, including
+its threshold-dependent branch. `combined_profile40` is its `combined40` result.
+The context fields come from+0x1c and+0x20. Gate equality rejects the motion
+candidate. Magnitude equality retains the position candidate, including its sign.
+The output is broadcast into all four lanes and stored at primary solver row+0x10.
+This is selection by magnitude, not a scalar maximum or addition of candidates.
+
+The preceding instructions form separation from both transformed local points
+and their body translations. They also form the primary angular lever as the
+first transformed local offset plus half the separation. Those producer and row
+assembly instructions are static leads, not part of this fragment's validation.
+No restitution, penetration tolerance or time unit is assigned to the raw fields
+solely from the formula. The API requires finite arithmetic and does not reproduce
+NaN selection or overflow exception behavior.
+
+[768 offline native response comparisons](../../native/snow_host/pose_link_primary_response_validation.json)
+execute the continuous fragment without interception. All four result lanes match
+bit-for-bit, including threshold equality, opposite-sign magnitude ties and signed
+zeros. Inputs are prepared register values; this does not prove full builder or
+solver equivalence. A separate synthetic test connects recovered profile-response
+coefficients to this selection formula.

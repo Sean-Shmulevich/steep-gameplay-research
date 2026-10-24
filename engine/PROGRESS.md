@@ -7615,3 +7615,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   second direction. 768 continuous native fragments match both directions
   bit-for-bit without interception. Physical motion units, second-body effects
   and full primary/secondary solver row equations remain unresolved.
+- Recovered primary link response selection from signed separation and gated
+  projected motion. Larger magnitude wins; ties retain the separation candidate.
+  768 continuous native comparisons match all four response lanes, including gate
+  equality and signed zeros. Added coefficient-to-response composition coverage;
+  world-point production, full row assembly and physical units remain open.
