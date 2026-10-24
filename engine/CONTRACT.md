@@ -471,3 +471,10 @@ Body-state feedback: `write_pose_body_feedback` copies raw XYZ lanes from sequen
 body index fields, preserves all other bytes and processes repeated identities in
 order. Complete nonoverlapping storage and caller-established array association
 are required; no live lifetime or invalid-range behavior is supplied.
+
+Solver layout: `plan_pose_solver_layout` computes25 category starts, region offsets
+and size with recovered stride constants, uint32 arithmetic and uint16 body-count
+truncation. `initialize_pose_solver_storage` copies planned counts, clears separate
+append counters/results and preserves other retained bytes. Its domain requires
+sufficient nonwrapping storage. Allocation/release/failure behavior, category-count
+prepasses and body-index assignment remain external.

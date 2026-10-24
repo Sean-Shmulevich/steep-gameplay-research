@@ -1,0 +1,18 @@
+{
+  "schema": "pose-solver-layout-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "method": "offline complete original context allocation/layout routine on retained-capacity branch, original stride-table getter; memset supplied as byte-fill service",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19908d0",
+  "comparisons": [
+    "entire retained allocation including header, all three count/offset blocks, zeroed results and untouched tails",
+    "returned buffer identity",
+    "unchanged capacity and retained buffer pointer"
+  ],
+  "limits": [
+    "No allocation/release/failure path validation.",
+    "Original uint16 body-count truncation exercised; dangerous size-overflow execution excluded.",
+    "Upstream category-count prepass and body-index assignment remain unresolved."
+  ]
+}

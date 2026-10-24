@@ -656,3 +656,50 @@ the builder's body index and supplies traversal counts. It proves independent
 composition of this supported path, not native reconstruction of that association,
 counts or the entire frame scheduler. Individual stages and the connected solver
 have native evidence; one uninterrupted full engine-frame comparison remains open.
+
+### Solver category layout and count initialization
+
+`engine.pose_solver_layout.plan_pose_solver_layout` and
+`initialize_pose_solver_storage` reconstruct the layout arithmetic and retained
+buffer initialization of0x19908d0. The input is25 category counts from an earlier
+prepass, plus a body count. Getter0x19e5a90 supplies this fixed table of row strides
+in16-byte units, in category order:
+
+```
+7, 8, 7, 8, 13, 16, 7, 8, 7, 8, 8, 11, 5,
+5, 5, 6, 6, 7, 4, 5, 5, 6, 16, 22, 57
+```
+
+Category starts are prefix sums of `count * stride`, with uint32 wrap. Context
++0x40 stores these25 start offsets in16-byte units. Context+0xa4 stores25 builder
+append counters, initially zero. Context+0x108 stores the25 planned/traversal
+counts unchanged. This proves why traversal and append counts are distinct;
+traversal counts are not copied from the builder counters after construction.
+
+Rows begin at+0x190. After the row region come64-byte body-data records,32-byte
+body-state records and16-byte result records. Body slots use only the low16 bits
+of the input body count. Result count is the uint32 sum of all category counts.
+The original rounds each region to16-byte alignment, using uint32 arithmetic.
+The planner preserves those operations. The initializer requires enough retained
+storage and rejects wrapped layouts rather than emulating out-of-bounds writes.
+
+Initialization stores region offsets at+0x16c/+0x170/+0x174/+0x178, total size at
++0x17c, and clears the result append count at+0x180. It zeroes context+0x0c..+0x13
+and+0x30..+0x37, and updates flags to `(previous & 0x98000003) | 0x18000000`.
+Only result storage is cleared; prior row/body contents and unnamed header bytes
+are retained. Native allocation, release and failure behavior are outside this API.
+
+[256 native retained-buffer comparisons](../../native/snow_host/pose_solver_layout_validation.json)
+execute the complete original routine and stride-table getter, supplying only
+`memset` as a byte-fill service. The complete allocation, returned buffer identity
+and unchanged retained capacity match. Cases include all categories, zero counts,
+old header bits, preserved region contents and high bits in body count. Allocation
+branches and dangerous overflow execution are not part of this validation.
+
+Static caller0x1994da0 establishes the remaining count-producer leads. It clears a
+25-counter temporary block, counts links through0x1994bb0 when settings field+0x24
+is zero or0x1994cc0 otherwise, then counts poses through0x1994ad0. It passes those
+counts and the group's body count to0x19908d0, initializes context settings through
+0x1990ba0, and calls the solve orchestrator0x1993ed0. These prepass and body-index
+assignment details remain open; the layout reconstruction does not infer counts
+from already built rows.

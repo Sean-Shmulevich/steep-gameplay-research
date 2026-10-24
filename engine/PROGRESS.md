@@ -7671,3 +7671,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   → primary/tangent solve → body-writeback integration with explicit index/count
   association. Whole native frame composition and those association producers
   remain unresolved.
+- Recovered25-category solver layout and retained-buffer initialization. Planned
+  traversal counts are copied from prepass input while independent builder counters
+  start at zero. 256 complete native comparisons match all allocation bytes with
+  memset supplied; stride getter remains native. Body-count truncation and untouched
+  row/body regions are explicit. Located mode-dependent link-count and pose-count
+  prepasses; their semantics, allocation paths and body-index assignment stay open.
