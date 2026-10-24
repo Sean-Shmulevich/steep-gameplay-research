@@ -1029,3 +1029,20 @@ python3 -m engine.snow_pose_submission engine/examples/snow_pose_submission.json
 The fixture is authored synthetic data. This API preserves recovered axis order,
 packing and destination padding; it reports notification intent without executing
 body notifications or solver forces. Native phase ordering remains caller supplied.
+
+### Group partition inspection
+
+```sh
+python3 -m engine.pose_group_bench engine/examples/pose_group_partition.json --output /tmp/pose-group-partition.json
+```
+
+This offline inspector connects recovered constraint-component preparation,
+remaining-body destination selection, magnitude eligibility and body/constraint
+migration. The example is entirely synthetic. Output includes prepared and final
+assignments, remaining source destinations, all group memberships and explicit
+storage events. It does not launch the game or require game files.
+
+Group identities and resolved body-link eligibility are supplied. Python list
+growth is an authored storage service; original allocation, destruction, locking
+and physical solving remain external. See the
+[input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-group-partition-inspection).

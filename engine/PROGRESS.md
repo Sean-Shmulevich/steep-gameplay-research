@@ -7506,3 +7506,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   320 full native runs match all bytes without interception under preallocated
   storage. Pose-limit rejection leaves records detached; allocator branches and
   concurrent ownership remain external.
+- Added runnable JSON group-partition inspector connecting component preparation,
+  destination completion, magnitude eligibility and full migration. Synthetic
+  fixture, CLI verification and end-to-end membership tests pass. Supplied group
+  identities/link eligibility and authored list growth remain explicit; no live
+  access, physical solve or connected-native-equivalence claim.

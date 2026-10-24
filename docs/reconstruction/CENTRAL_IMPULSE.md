@@ -15996,3 +15996,42 @@ reprocessing. The pose-limit rejection has an independent boundary test and
 static instruction evidence, but is outside this native case set. Native growth,
 allocator failure, invalid destinations, concurrent membership changes and full
 physical solver effects remain unresolved.
+
+### Runnable group partition inspection
+
+`python3 -m engine.pose_group_bench engine/examples/pose_group_partition.json`
+connects component preparation, destination completion, the recovered magnitude
+predicate and migration. `--output PATH` writes JSON. The schema is
+`pose-group-partition-v1`, with explicit provenance `authored_synthetic` or
+`caller_supplied_observation` and sequence assertion `reached_multi_body_partition`.
+This assertion means earlier finalization has already selected the multi-body
+branch; the inspector does not invent its effects.
+
+Inputs supply unique nonzero uint64 body, constraint and group identities, source
+and special groups, an ordered pool of available group identities, at least two
+bodies, link/pose endpoints, two thresholds and initial capacity1..4096. Metadata
+flags are raw values. Bodies supply the two predicate vectors and a boolean
+`resolved_links_clear`. That boolean is an explicitly resolved external dependency;
+the inspector does not construct a native circular body-link list from the
+partition edges. Null second endpoints are allowed only for pose records.
+
+The required `authored_list_growth` policy provides retained Python storage. It
+records requests and bounds capacities to4096. Group acquisition consumes supplied
+identities in order and fails explicitly if exhausted. These are authored
+inspection boundaries, not native heap or recovery behavior. Input is copied;
+failed inspection does not mutate the caller's source document. That isolation
+is an API choice, not a claim of transactional native execution.
+
+Output contains component count, prepared destinations, assignments before
+migration, mutated destination storage/count, body/link/pose membership, group
+arrays including inactive tails, acquisition/growth events and the original-group
+reuse flag. The flag does not destroy a group. No callback notification, outer
+finalization, native allocation, resource release, scheduler or physical solver
+runs here.
+
+The example keeps bodies1/2 together through a constraint, routes isolated body3
+to the special group and body4 to a supplied new group. Tests cover that complete
+path, all-eligible empty-source behavior, exhausted identity supply, alias
+rejection, input immutability and the actual CLI. The constituent kernels have
+separate native receipts above; this composition does **not** yet have a continuous
+native execution comparison and must not be presented as original-game replay.
