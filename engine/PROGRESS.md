@@ -7161,3 +7161,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   original-instruction cases with explicit synthetic lookup provider; five
   related tests pass. Native table initialization, frame/rate producers and the
   contact-direction adjustment/clamps before speed floor remain unresolved.
+- Reconstructed early-immersion directional correction plus XYZ clamps between
+  decay and speed floor. Recovered 0.5 window and float32 dot/adjustment ordering;
+  direction, strength, disable and runtime bounds explicit. Matches 224 original
+  instruction cases and seven velocity tests. Whole-stage composition, actual
+  producers and live attribution remain open; no universal landing classifier.

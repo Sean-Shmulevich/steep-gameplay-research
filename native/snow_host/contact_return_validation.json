@@ -1,0 +1,16 @@
+{
+  "cases": 224,
+  "bit_exact": true,
+  "actions": {
+    "True": 32,
+    "False": 192
+  },
+  "scope": "Original directional correction and XYZ clamps; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite supplied direction, duration, strength, disable flag and clamp bounds",
+    "Native clamp globals injected with synthetic bounds",
+    "No live correction attribution or direction/control producer proof"
+  ],
+  "game_files_included": false
+}

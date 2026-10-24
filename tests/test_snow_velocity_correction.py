@@ -32,3 +32,21 @@ class DirectionalDecayTests(unittest.TestCase):
         r=directional_velocity_decay([1,2,3,0],[0,0,0],1,swap,swap,lambda _:1)
         self.assertEqual(r['frame_velocity'],[2,1,3,0])
         self.assertEqual(r['velocity'],[1,2,3,0])
+
+
+class ContactReturnTests(unittest.TestCase):
+    def run_case(self,**kw):
+        from engine.snow_velocity_correction import contact_return_candidate
+        args=dict(velocity=[0,0,-2,0],direction=[0,0,1,0],duration=0,strength=1,
+                  disabled=False,lower=[-100]*3,upper=[100]*3)
+        args.update(kw);return contact_return_candidate(**args)
+
+    def test_half_second_window_and_inward_only(self):
+        self.assertEqual(self.run_case()['velocity'],[0,0,0,0])
+        self.assertEqual(self.run_case(duration=.25)['velocity'],[0,0,-1,0])
+        self.assertFalse(self.run_case(duration=.5)['correction_applied'])
+        self.assertFalse(self.run_case(velocity=[0,0,2,0])['correction_applied'])
+
+    def test_disabled_still_clamps_and_no_normalization(self):
+        self.assertEqual(self.run_case(disabled=True,lower=[-1]*3)['velocity'],[0,0,-1,0])
+        self.assertEqual(self.run_case(direction=[0,0,2,0])['velocity'],[0,0,6,0])

@@ -13276,3 +13276,42 @@ A subsequent contact-direction adjustment and per-component clamps still lie
 between this result and the speed-floor kernel. Do not compose them directly and
 label the result the complete native correction. Next work should identify the
 lookup initializer and recover those intervening operations before live comparison.
+
+### Early-immersion directional correction and clamps
+
+The block at RVA 0x13f80dc..0x13f81c0 runs after the decay transforms and before
+the speed floor. When its byte flag is zero and runtime+0xa6c is below 0.5, it
+forms a four-lane dot product of corrected velocity V with runtime+0xa40 direction
+N. That duration is the previously recovered above-threshold immersion counter;
+it is not a universal landing/grounded flag.
+
+```text
+if not disabled and duration < 0.5:
+    dot = (V.y*N.y + V.w*N.w) + (V.x*N.x + V.z*N.z)
+    correction = (0.5-duration) * dot
+    correction = correction + correction
+    if correction < 0:
+        correction *= strength
+        V -= correction * N
+for axis in XYZ:
+    if lower[axis] > V[axis]: V[axis] = lower[axis]
+    elif V[axis] > upper[axis]: V[axis] = upper[axis]
+V.w = 0
+```
+
+Each multiply/add/subtract rounds to float32. Strength comes from configuration
++0x40 through runtime+0x15b0. The code does not normalize N or clamp strength here.
+The skip flag is produced earlier by a componentwise near-zero test of the caller
+input vector at +0x130; its gameplay/control meaning remains unresolved. The
+XYZ clamp globals at RVAs 0x3315958..0x331596c are runtime inputs, not the zero
+values present in the inspected preinitialization image.
+
+`engine.snow_velocity_correction.contact_return_candidate` implements this block
+with explicit direction, strength, disable flag and bounds. It returns both the
+pre-clamp adjustment and final candidate. The 0.5 window is recovered, not a tuning
+choice. [224 original-instruction cases](../../native/snow_host/contact_return_validation.json)
+match both intermediate and final vectors bitwise with synthetic runtime bounds,
+including durations on either side of 0.5, both flags, varying directions and
+strength signs. No calls are intercepted. Seven velocity-correction tests pass.
+This supplies the missing local stage between decay and speed floor; connected
+whole-stage validation, actual input producers and live attribution remain next.

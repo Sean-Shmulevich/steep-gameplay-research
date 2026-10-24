@@ -57,3 +57,31 @@ def directional_velocity_decay(velocity, rates, elapsed, to_frame, from_frame, s
         damped[axis]=f32(gains[axis]*local[axis])
     return dict(velocity=transform(damped,from_frame),frame_velocity=local,
                 decay_arguments=arguments,decay_gains=gains)
+
+
+def contact_return_candidate(velocity, direction, duration, strength, disabled, lower, upper):
+    """RVA 0x13f80dc..0x13f81c0: directional correction then XYZ clamps.
+
+    The 0.5 window is recovered. Direction/strength/disable flag and runtime
+    clamp values remain supplied. No normal normalization or bound repair.
+    """
+    if type(disabled) is not bool or len(lower)!=3 or len(upper)!=3:
+        raise ValueError('Explicit flag and three bounds per side required')
+    v=four(velocity);n=four(direction);duration=f32(duration)
+    applied=False
+    if not disabled and duration < f32(.5):
+        products=[f32(a*b) for a,b in zip(v,n)]
+        dot=f32(f32(products[1]+products[3])+f32(products[0]+products[2]))
+        correction=f32(f32(.5-duration)*dot)
+        correction=f32(correction+correction)
+        if correction < 0:
+            correction=f32(correction*f32(strength))
+            v=[f32(x-f32(correction*y)) for x,y in zip(v,n)]
+            applied=True
+    adjusted=v[:]
+    for axis in range(3):
+        lo,hi=f32(lower[axis]),f32(upper[axis])
+        if lo > v[axis]:v[axis]=lo
+        elif v[axis] > hi:v[axis]=hi
+    v[3]=0.0
+    return dict(velocity=v,adjusted_velocity=adjusted,correction_applied=applied)
