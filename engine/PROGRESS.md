@@ -7273,3 +7273,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   rotation/consumption. Matched output/cache/angle/flag bits in 384 native cases
   (128 reuse, 256 rebuild). Reuse avoids math and leaves pending state unchanged.
   Eligibility, prepass, angle/direction producers and live activation remain open.
+- Joined all seven post-prepass basis outcomes under native priority rules.
+  Connected selection/output/cache/pending-state matches 512 continuous native
+  cases with observed math results, including simultaneous flags and threshold
+  boundaries. Explicit cache-write diagnostics distinguish reuse from retention.
+  Enabled gate, prepass producers, live activation and timing remain unresolved.

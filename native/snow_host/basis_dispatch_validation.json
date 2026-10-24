@@ -1,0 +1,21 @@
+{
+  "cases": 512,
+  "branches": {
+    "preferred_reuse": 64,
+    "preferred_rebuild": 64,
+    "explicit_triplet": 64,
+    "alignment": 128,
+    "primary": 64,
+    "secondary": 64,
+    "retain": 64
+  },
+  "bit_exact": true,
+  "scope": "Continuous original post-prepass dispatcher through output/cache/pending state; original math calls execute, model receives observed trig and rsqrt results",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonsingular synthetic inputs; no native NaN gate semantics claimed",
+    "Enabled gate and prepass excluded; caller supplies mutually consistent post-prepass state",
+    "No live branch activation or update cadence proof"
+  ],
+  "game_files_included": false
+}

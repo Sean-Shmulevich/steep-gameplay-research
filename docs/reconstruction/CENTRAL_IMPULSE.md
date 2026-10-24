@@ -14114,3 +14114,47 @@ rsqrt results. Complete native rotation/trig helpers execute without intercepted
 calls. This validates the selected local path, not its eligibility or the full
 callback. Unit tests also cover the negative-angle convention, unused saved axes,
 and the absence of math-service calls on reuse.
+
+
+### Connected post-prepass basis dispatch
+
+`engine.snow_basis_dispatch.dispatch_basis` joins the recovered paths from
+RVA 0x13fbc44 through 0x13fc2bd. It starts after the enabled gate and prepass;
+all fields must describe a mutually consistent state at that boundary. It does
+not infer that boundary from a later live snapshot. Its state keys are authored
+functional names mapping to the fields documented in the preceding sections.
+Only selected-path operands are required; no default vectors or angles are
+invented for missing producers.
+
+For finite gate vectors, selection is preferred when preferred_byte is nonzero,
+any of all four preferred_gate_vector lanes has magnitude strictly greater than
+float32(1e-5), and inhibit_byte is zero. Otherwise nonzero explicit_triplet_byte
+wins over nonzero alignment_byte, followed by the fallback angle selection.
+The preferred path itself chooses saved-basis reuse versus rebuild according
+to rebuild_byte. Byte values retain nonzero semantics rather than requiring one.
+The native max/subtract/compare sequence has additional NaN behavior, excluded
+by this finite gate-vector API.
+
+Returned branch labels are preferred_reuse, preferred_rebuild, explicit_triplet,
+alignment, primary, secondary or retain. These are authored diagnostics, not
+original enums. The result includes basis, saved_basis, secondary_angle and
+clear_secondary_byte, using the local kernels' contracts above. `cache_written`
+is false only for preferred_reuse; even retaining the prepass basis republishes
+it to saved storage in the native path. The independent API returns detached
+arrays instead of performing memory writes. There is no atomicity, lifetime,
+thread-affinity or callback-enable guarantee supplied by this interface.
+
+The [connected-dispatch receipt](../../native/snow_host/basis_dispatch_validation.json)
+compares 512 continuous original-instruction cases from post-prepass selection
+through output/cache/pending-state publication. All seven outcomes are covered:
+64 each except alignment with 128. Original rotation/trig helpers execute without
+interception; the portable model receives observed trig results and rsqrt seeds.
+All output/cache bytes and pending angle/flag values match. Cases include
+simultaneous override flags, fourth-lane preferred activation, exact-threshold
+fallthrough and inhibition. Unit tests also omit unused lower-priority operands
+to ensure the independent dispatcher does not demand a producer for skipped work.
+
+This closes local branch composition, not the complete callback. Enabled-byte
+handling, the prepass at 0x13fb3e0, input producers, live branch frequency and
+cache-to-frame timing remain outstanding. The earlier live capture identified
+this callback but did not prove execution of any particular override path.
