@@ -12584,3 +12584,47 @@ bytes. Updated fixtures exercise all 746 read-failure positions, both capacity
 boundaries, repeated-value rejection and diagnostics. Native/sanitizer tests,
 44 focused tests and the expanded Windows build pass. Live acceptance with the
 expanded capacity remains unverified; the next capture must test it explicitly.
+
+### Expanded point sampler accepted; runtime scale is elapsed substep time
+
+The [expanded live capture](../../native/snow_host/point_inputs_live_validation.json)
+accepted all 870 point observations around 435 attributed snow-wrapper calls.
+Every ordinary body snapshot was also valid. Each accepted point observation
+completed two equal passes and 550 reads, with 26 directional and 44 summed
+records. Enabled-count pairs were (0,0) once, (26,0) twice and (26,44) in the other
+867 snapshots. These are boundary flags, not direct submission counts. The last
+summed list contained 32 kind-one records and 12 kind-two records.
+
+Complete point reads cost 281.2 microseconds median, 354.6 microseconds at the
+95th percentile and 935.4 microseconds maximum. Each wrapper samples twice, so
+this channel has material instrumentation cost. These timings do not describe
+uninstrumented game performance. Both recorder slots restored, no records dropped,
+and bottle/save/settings/DLL cleanup passed.
+
+The previously unnamed `runtime_scale` at runtime+0x1520 has a concrete timing
+producer on this route. The shared update keeps elapsed_dt in XMM6 and
+consumed_outer_dt in XMM7, then passes them as XMM2 and XMM1 respectively to
+RVA 0x140a880. That setter writes XMM1 to runtime+0x151c and XMM2 to +0x1520.
+Thus +0x1520 supplies elapsed substep time to the two point-submission loops;
+it is not an additional free tuning gain. Existing portable argument names remain
+compatible but callers on this route should supply the elapsed substep interval.
+
+All 435 post-update scale values matched their recorded elapsed argument bitwise.
+Only 64 pre-update values matched the current argument. Across all 434 consecutive
+record pairs, the next entry value matched the preceding exit value. The first
+entry value was 1.0. This is direct evidence that entry snapshots contain the
+previous stored interval until the setter runs. Reconstructing current-call
+impulses from entry data must account for that timing update.
+
+A further static lead narrows the gate producer: the shared update copies four
+1.0 float lanes from image-backed storage into a stack block and passes its
+address as argument two through RVA 0x1407230 to 0x1408c10. The later directional
+outer gate and summed kind-selected gates read that argument block at +0/+4/+8.
+This establishes initialization and the carrier path, not unchanged contents
+through all intervening helper calls. Before treating the gates as fixed ones,
+audit possible aliases or observe their values at use.
+
+The function also clears summed-record enabled bytes near its entry before later
+force work. Pre-update enabled records can therefore describe the preceding
+invocation. Accepted snapshots provide the missing data to inspect, but still do
+not replace producer-at-use observation or prove which point impulses executed.

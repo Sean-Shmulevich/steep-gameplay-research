@@ -1,0 +1,80 @@
+{
+  "scope": "Live snow-wrapper boundary point inputs, not submission-time values",
+  "ok": true,
+  "error": null,
+  "snow_calls": 435,
+  "ordinary_valid_samples": 870,
+  "point_attempted": 870,
+  "point_valid": 870,
+  "point_read_us": {
+    "median": 281.2,
+    "p95": 354.6,
+    "max": 935.4
+  },
+  "record_count_histogram": {
+    "(26, 44)": 870
+  },
+  "enabled_count_histogram": {
+    "(0, 0)": 1,
+    "(26, 0)": 2,
+    "(26, 44)": 867
+  },
+  "descriptor_histogram": {
+    "(0, 16)": 870
+  },
+  "snow_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 435,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 435,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 435,
+    "other_calls": 0
+  },
+  "markup_summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 92,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "both_slots_restored": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "game_files_included": false,
+  "private_evidence_sha256": {
+    "route-result.json": "f01e71c0c8d2f46cd30b91678a40a34696052ca75279f97dbdfabbf2191401e2",
+    "input-events.jsonl": "09bcbb8ef3a300e5b4249e1538ecd67bdef3033c0c52a3036bc627afb00d102d"
+  },
+  "diagnostic_histogram": {
+    "(0, 2, 550, 0, 3, 26, 44)": 870
+  },
+  "probe_abi": 9,
+  "scale_timing_comparison": {
+    "calls": 435,
+    "before_matches_current_elapsed": 64,
+    "after_matches_current_elapsed": 435,
+    "before_matches_preceding_after": 434
+  },
+  "last_summed_kind_counts": {
+    "1": 32,
+    "2": 12
+  }
+}

@@ -7055,3 +7055,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   retaining directional 32 and all identity/repeat guards. All 746 maximal-path
   read failures, sanitizer fixture, 44 focused tests and Windows build pass.
   Expanded-capacity live acceptance remains next; cleanup passed on diagnostic run.
+- Expanded point channel accepted all 870 snapshots around 435 attributed live
+  snow calls, with 26 directional/44 summed records. Complete read median 281.2 us;
+  captures restored/cleaned up with no drops. Runtime+0x1520 now joins to elapsed
+  substep time via inspected setter and 435/435 exit-bit matches; 434/434 next-entry
+  values equal preceding exits. Entry timing is stale until setter execution.
+  Gate stack initialization is a static all-ones lead; submission-time aliases and
+  record freshness still need checking before force attribution.
