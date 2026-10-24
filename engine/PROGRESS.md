@@ -7659,3 +7659,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   context bytes match. Explicit traversal counts and body buffers are supplied.
   Other populated categories are rejected; their equations and count/body-data
   producers remain unresolved.
+- Recovered solver body-data tensor transformation, scalar source and initial
+  motion-state construction, including metadata/body flag gates. 512 complete
+  producer cases match:384 without interception and128 with the damping-library
+  response supplied and arguments verified. Original tensor getter executes with
+  initialized TLS/static state. Damping math, earlier field producers, index
+  association and whole producer-to-solver composition remain open.

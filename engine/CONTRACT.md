@@ -457,3 +457,11 @@ only categories0 and6 and rejects any other populated category. Special phase
 skips tangents; zero iterations still prepare. Counts and body-data producers,
 other numerical families, live identity and full-engine convergence remain
 external despite uninterrupted native validation of this supported slice.
+
+Solver body buffers: `build_pose_body_buffers` transforms the selected body tensor,
+exports scalar124 and initializes motion state with gated external-vector and
+optional four-lane damping response. It returns records in input-array order.
+Metadata bit3 selects the shared zero tensor/scalar and bypasses state processing.
+Damping-library behavior is an explicit service, never an inferred approximation.
+Inputs remain constant; index association, TLS lifecycle and physical units remain
+caller obligations or unresolved producers.

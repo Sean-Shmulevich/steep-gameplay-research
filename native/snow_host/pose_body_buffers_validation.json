@@ -1,0 +1,18 @@
+{
+  "schema": "pose-body-buffers-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete body-buffer producer including original tensor getter with initialized TLS/static state;384 cases without interception,128 with damping-library response supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994560",
+  "comparisons": [
+    "all produced body-data/state bytes",
+    "untouched output tail storage",
+    "damping-library argument vectors and branch admission"
+  ],
+  "limits": [
+    "Damping-library implementation remains a supplied service; no pow approximation used.",
+    "Initialized getter state supplied, not native static initialization or TLS lifecycle validation.",
+    "Finite retained inputs; physical units and input-array/index association remain external."
+  ]
+}

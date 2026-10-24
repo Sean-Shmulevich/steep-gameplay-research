@@ -17285,3 +17285,53 @@ This is a verified solver slice, not an all-category engine solve or a live modd
 contract. Unit tests separately check normal/special phases, cached-state effects
 with zero iterations, distinct traversal versus append counts, and explicit
 rejection of unsupported populated categories.
+
+### Solver body-buffer production
+
+`engine.pose_body_buffers.build_pose_body_buffers` reconstructs0x1994560 around
+an explicit damping-library dependency. It emits64-byte solver-data and32-byte
+initial-state records in input body-array order. It does not read or assign body
+indices; the caller must preserve the association used by the row builders.
+
+The tensor getter0x1990af0 selects body+0x170 unless metadata byte+0x52 has bit3
+set. That branch selects a shared zero tensor initialized by the getter's static
+initialization path. Let `B0..B2` be body basis rows+0x40/+0x50/+0x60 and `I0..I2`
+the selected tensor rows. Fourth input lanes are masked to positive zero. For each
+component `j` in XYZ, the producer computes the following float32 vector sequence:
+
+```python
+Tj = (I1 * B1[j] + I0 * B0[j]) + I2 * B2[j]
+output_row_j = B2 * Tj.z + (B1 * Tj.y + B0 * Tj.x)
+```
+
+Every multiplication/addition rounds separately, retaining the stated order and
+all output lane bits. The fourth solver-data vector broadcasts body+0x124, or
+positive zero when metadata bit3 is set. These records supply the weighted tensor
+and linear scalar vectors consumed by the recovered numerical solver. This
+establishes their body-field source; their earlier producers and physical units
+are not yet established here.
+
+Initial state starts with XYZ from body+0x1a0 and+0x1ac, with zero fourth lanes.
+When metadata bit3 is clear, the producer adds `selected_vector * scalar` to the
+first vector. Body byte+0xaa bit3 selects a zero vector; otherwise the caller's XYZ
+vector is used. If body+0x1b8 is nonnull and scalar compares nonzero, a four-lane
+library call receives `1 - damping_vector` and the scalar broadcast. Its returned
+four lanes multiply the first state vector componentwise. Its fourth lane
+multiplies all lanes of the second state vector. When the call is not reached,
+the multiplier is one. Metadata bit3 bypasses both the increment and damping.
+
+The API requires `damping_response` when that branch is reached. It does not
+substitute `pow`, exponential damping or a tuned approximation for the original
+library routine0x1c453d0. Input scalar/vector and bodies must remain constant during
+this independent call; native callback mutation and static/TLS initialization are
+not reconstructed by this interface.
+
+[512 complete producer comparisons](../../native/snow_host/pose_body_buffers_validation.json)
+execute the original producer and tensor getter with explicit initialized TLS and
+static state. The first384 cases use no intercepted calls; the final128 supply the
+damping-library response and compare its exact input vectors and admission gates.
+All produced data/state bytes and untouched output tails match. Synthetic cases
+cover arbitrary finite basis/tensor rows, metadata and body flags, zero/nonzero
+scalars and empty body arrays. This closes body-buffer construction around one
+remaining numerical library dependency; whole producer-to-solver native composition
+and source units still require validation.
