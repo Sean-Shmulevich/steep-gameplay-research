@@ -7289,3 +7289,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match 384 native cases (128 fallback) with observed rsqrt seeds. No implicit
   projection-direction normalization or singular rescue added. Earlier direction
   production, subsequent rotations and immersion replacement remain external.
+- Reconstructed prepass final two rotations, curve-angle composition, cross
+  normalization and captured-basis replacement. Computed and final bases match
+  320 native cases, half replaced; two curve calls supplied, trig/rsqrt observed.
+  Replacement occurs after computation and preserves captured vector magnitudes;
+  final axis 2 is not normalized. Earlier producers and live cadence remain open.

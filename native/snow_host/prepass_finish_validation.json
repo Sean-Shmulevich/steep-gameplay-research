@@ -1,0 +1,16 @@
+{
+  "cases": 320,
+  "replaced": 160,
+  "bit_exact": true,
+  "scope": "Original final prepass rotations, normalization and captured-basis replacement; model receives observed trig/rsqrt results",
+  "intercepted_services": [
+    "Two curve calls return supplied samples"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonsingular synthetic inputs; upstream direction and angles supplied",
+    "Replacement decision supplied from earlier comparison; no live immersion cadence proof",
+    "Both computed and final output checked; no native exceptional-value equivalence"
+  ],
+  "game_files_included": false
+}

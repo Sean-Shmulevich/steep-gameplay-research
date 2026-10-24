@@ -14267,3 +14267,61 @@ intercepted calls. Synthetic inputs include non-unit projection directions and
 fourth lanes. Unit tests cover fallback sign, no implicit direction normalization,
 and rejection of singular outcomes. No anatomical axis naming, upstream
 normalization guarantee, full-prepass equivalence or live activation is claimed.
+
+
+### Final prepass basis construction
+
+`engine.snow_prepass_finish.finish_prepass_basis` reconstructs the tail at
+RVA 0x13fb9fa..0x13fbbca. Its first-axis input is the projected direction after
+any optional control-dependent rotation. N is the earlier auxiliary projection
+direction. With float32 arithmetic and the shared axis-rotation helper:
+
+```text
+axis2 = axis0 cross N
+axis0 = rotate(axis0, axis2, direct_angle, threshold=float32(1e-5))
+speed_gain = speed_curve(speed_argument)
+angle = speed_gain * curve_angle
+immersion_gain = immersion_curve(selected_immersion)
+angle = angle * immersion_gain
+axis2 = rotate(axis2, axis0, angle, threshold=float32(1e-5))
+axis1 = normalize_xyz(axis2 cross axis0)
+axis0 = normalize_xyz(axis1 cross axis2)
+computed_basis = [axis0, axis1, axis2]
+if previously_captured_primary_immersion_nonpositive:
+    output = [captured_selected_direction, captured_frame_a0, captured_frame_80]
+else:
+    output = computed_basis
+```
+
+The direct angle comes from receiver+0xc4, curve_angle from +0xc0. The speed
+curve is config+0xe8, sampled at frame-owner scalar +0. The immersion curve is
+config+0x120. The selected immersion is the same earlier config-byte selection
+used by the optional control-angle block. Both angles enter radian rotation
+helpers. No anatomical interpretation or controller mapping is assigned here.
+
+The replacement decision was captured near entry by comparing zero against
+runtime+0x9f4; for finite values it is true when that primary immersion is <=0.
+It is independent of whether the curve argument selected runtime+0x9f0 or +0x9f4.
+The three captured replacement vectors retain their original values and lengths;
+they are not normalized here. Captured selected direction is frame+0x90 for a
+nonzero fourth-argument byte, otherwise the incoming first output vector. The
+other two captured vectors are frame+0xa0 and frame+0x80 in that order.
+
+Native execution performs both rotations, both curve evaluations and both cross
+normalizations before this replacement. The independent helper preserves that
+service order, returning computed_basis separately as authored diagnostics.
+It does not short-circuit discarded work. Only axes 0 and 1 are normalized in
+the final cross rebuild; axis 2 retains its rotated cross-product magnitude.
+A generic orthonormal-basis helper would therefore impose an unsupported change.
+Finite nonsingular inputs are required; this API's rejection of singular work
+also applies when its result would subsequently be replaced. Native exceptional
+arithmetic and floating-point status are not reconstructed.
+
+The [final-prepass receipt](../../native/snow_host/prepass_finish_validation.json)
+checks 320 original-instruction cases, including 160 replacement cases. Both
+computed and final 48-byte bases match exactly. Native rotation and dispatch-zero
+trig helpers execute; two curve calls are intercepted with supplied samples.
+The portable model receives observed trig returns and rsqrt seeds. Curve argument
+order is checked. Entry geometry, the earlier comparison's producer and live
+cadence remain outside the receipt. Unit tests also check the retained third-axis
+magnitude and that replacement does not suppress curve evaluation.
