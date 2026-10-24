@@ -14793,3 +14793,51 @@ X paths. Tests cover threshold equality, positive-scale gating and fallback when
 override scale is nonpositive. Global default initialization, actual tuning,
 protected invalid-field handling and live solver response remain outside this
 local preparation.
+
+
+### Composite pose inertia-like producer
+
+`engine.snow_pose_inertia.composite_pose_coefficients` reconstructs the writer
+of frame-owner+0x180/+0x184/+0x188 at RVA 0x13f972c..0x13f9912. These are the
+three mass-like inputs later passed to the spring converter. A nonzero pointer
+at runtime+0xb90 selects the composite path; zero directly copies runtime
++0x950/+0x954/+0x958. The pointer's entity ownership remains unresolved here.
+
+On the composite path, total M comes from runtime+0x5f0, secondary m from
+config+0xbb8, primary position P from runtime+0x940, and secondary position Q
+from frame-owner+0x170. Base vector A is runtime+0x950 and B is runtime+0xcc0.
+The finite valid-field formula, with float32 rounding after every operation, is:
+
+```text
+a = M - m
+C = (m*Q + a*P) / M
+D = C - P
+E = C - Q
+terms(V) = [V.z*V.z + V.x*V.x,
+            V.y*V.y + V.x*V.x,
+            V.y*V.y + V.z*V.z]
+output = ((A + B) + terms(E)*m) + terms(D)*a
+```
+
+Center arithmetic uses all four lanes; only XYZ squared-distance sums contribute
+to the published coefficients. This is the form of diagonal parallel-axis
+contributions in storage order corresponding to Y, Z, X rotation axes. That is
+a mathematical inference from the expression, not yet proof of the base fields'
+physical type or original class names. No off-diagonal tensor entries or tensor
+rotations are computed by this fragment. Inputs P and Q must already share the
+intended coordinate representation; the API does not invent a transform.
+
+This evidence makes a single scalar rider-mass substitution inappropriate for
+these spring inputs: they can include separation-dependent rotational terms.
+The producer of base vector A/B, total mass, secondary mass and relative positions
+still needs tracing before assigning exact body identities or units. The
+preferred-mode consumer's extra Z*100 modifier applies after this publication.
+The independent API accepts explicit inputs, positive finite total mass and valid
+configuration; it does not emulate protected validity paths or zero divisors.
+
+The [composite receipt](../../native/snow_host/pose_inertia_validation.json)
+checks 320 original-instruction cases, 240 composite and 80 direct-copy, without
+intercepted calls. All three output bits match. Unit tests isolate X/Z separation
+and zero separation to verify sum order and default-copy independence. This
+establishes the local producer formula, not complete inertia ownership, solver
+behavior or live phase freshness.

@@ -1,0 +1,14 @@
+{
+  "cases": 320,
+  "paired_cases": 240,
+  "copy_cases": 80,
+  "bit_exact": true,
+  "scope": "Original composite frame coefficient producer and nonpaired copy branch; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite synthetic positive total mass and valid config field",
+    "Base vectors and position/mass producers supplied; rotational inertia interpretation is mathematical inference",
+    "No full tensor reconstruction or live solver response proof"
+  ],
+  "game_files_included": false
+}

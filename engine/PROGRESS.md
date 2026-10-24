@@ -7345,3 +7345,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match 320 native cases without intercepted calls. Default global initialization,
   live profile meaning, mass-like producer and connected solver response remain
   unresolved; no anatomical axes or units inferred from constants alone.
+- Traced spring mass-like vector to composite frame coefficients: base sums plus
+  mass-weighted squared separation around a shared center, or direct primary copy.
+  Formula has diagonal parallel-axis form in Y/Z/X order; 320 native cases match
+  without substitutions. Actual base/mass/position producers and tensor ownership
+  remain open; no single scalar rider-mass interpretation imposed.
