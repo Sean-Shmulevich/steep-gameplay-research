@@ -16267,3 +16267,44 @@ protected predecessor or successor. A separate independent composition test
 returns storage, reacquires the same token through the recovered pool helper,
 and reconstructs it, verifying that the free link becomes the table word while
 inactive inline bytes survive. No live lifetime or concurrent-reuse claim follows.
+
+### Runnable ordinary-group processing inspection
+
+The existing `engine.pose_group_bench` also accepts schema `pose-group-process-v1`
+with sequence `ordinary_group_process`. The supplied synthetic
+`engine/examples/pose_group_process.json` runs finalization, component preparation,
+destination selection, migration and context removal through the recovered outer
+processing routine. Zero and one body inputs exercise the recovered short paths;
+partition-only schema remains supported with its prior multi-body requirement.
+
+In addition to partition inputs, this schema requires a distinct
+`other_special_group` identity, raw byte `source_flag`, raw uint32
+`invalid_body_index`, each body's raw `kind8`, and `callback_policy: record_only`.
+The source starts as the sole member of the flag-selected context list; the other
+list, tracked list and pending-link list start empty. Those initial conditions
+and bounded Python list growth are explicit authored fixture choices. Acquired
+groups use supplied identities and are added to context.groups418. This adapter
+does not allocate native chunks or claim to run the native pool constructor.
+
+Finalization uses the recovered link filter, body traversal, list transfer and
+tracked-body append. Body virtual calls are recorded intents. The single-body
+path uses recovered constraint pruning/removal and append; link-clear calls are
+also intents. Multi-body preparation and migration use the same kernels as the
+partition inspector. When retirement is selected, context removal executes but
+the destructor is recorded with argument1 rather than executed. Retired source
+records remain in output for inspection; they are not live members or handles.
+No speculative cleanup of the tracked list or other callback effects is added.
+
+The result exposes `context`, `retirement_requested`, `destructor_intents`,
+ordered storage/service events and all retained record snapshots. Component and
+destination fields are null when the corresponding multi-body branch did not run.
+The all-eligible fixture removes the source group after temporary storage release;
+the mixed fixture retains it and publishes one acquired group. Tests also cover
+empty/single branches, constraint pruning, pending links, callback intents and
+CLI JSON output. Input remains unchanged through the authored deep-copy boundary.
+
+This full JSON composition has independent integration tests. The individual
+operations and continuous inner partition have the separate native receipts
+linked above; no continuous native receipt for this entire adapter is claimed.
+Native callback effects, protected synchronization, pool destruction, force solve,
+live ownership and arbitrary mod safety remain outside this inspector.

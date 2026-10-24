@@ -7545,3 +7545,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   interception. Added return/acquire/reconstruct composition test. Inactive inline
   tokens and unknown bytes survive construction; active counts define membership.
   The protected wrapper and concurrent reuse remain unresolved.
+- Extended the runnable group inspector through ordinary-group finalization and
+  retirement decisions, including empty/single branches and context arrays. Added
+  CLI fixture and integration cases for link staging, constraint pruning, acquired
+  group publication and all-eligible retirement. Unknown callback/destructor
+  effects remain recorded intents; diagnostic snapshots are not native handles.

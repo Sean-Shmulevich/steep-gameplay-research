@@ -1,0 +1,107 @@
+{
+  "schema": "pose-group-process-v1",
+  "provenance": "authored_synthetic",
+  "sequence": "ordinary_group_process",
+  "inputs": {
+    "source_group": 9,
+    "special_group": 10,
+    "available_groups": [
+      100,
+      101
+    ],
+    "storage_policy": "authored_list_growth",
+    "initial_capacity": 4,
+    "thresholds": [
+      1,
+      1
+    ],
+    "bodies": [
+      {
+        "token": 1,
+        "flags16": 32768,
+        "flags8": 0,
+        "first_vector": [
+          0,
+          0,
+          0
+        ],
+        "second_vector": [
+          0,
+          0,
+          0
+        ],
+        "resolved_links_clear": true,
+        "kind8": 2
+      },
+      {
+        "token": 2,
+        "flags16": 32768,
+        "flags8": 0,
+        "first_vector": [
+          0,
+          0,
+          0
+        ],
+        "second_vector": [
+          0,
+          0,
+          0
+        ],
+        "resolved_links_clear": true,
+        "kind8": 2
+      },
+      {
+        "token": 3,
+        "flags16": 32768,
+        "flags8": 8,
+        "first_vector": [
+          0,
+          0,
+          0
+        ],
+        "second_vector": [
+          0,
+          0,
+          0
+        ],
+        "resolved_links_clear": true,
+        "kind8": 2
+      },
+      {
+        "token": 4,
+        "flags16": 32768,
+        "flags8": 8,
+        "first_vector": [
+          2,
+          0,
+          0
+        ],
+        "second_vector": [
+          0,
+          0,
+          0
+        ],
+        "resolved_links_clear": true,
+        "kind8": 2
+      }
+    ],
+    "links": [
+      {
+        "token": 20,
+        "first": 1,
+        "second": 2
+      }
+    ],
+    "poses": [
+      {
+        "token": 30,
+        "first": 1,
+        "second": 2
+      }
+    ],
+    "other_special_group": 11,
+    "callback_policy": "record_only",
+    "source_flag": 1,
+    "invalid_body_index": 4294967295
+  }
+}

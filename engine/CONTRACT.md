@@ -298,3 +298,10 @@ unknown padding. Its returned copy is an authored interface. The separate
 `return_pose_group_storage` models first-word link write, usage decrement and head
 publication on an already resolved retained pool. It supplies no cleanup, locking,
 duplicate-return check, generation identity or live memory access.
+
+Ordinary-group inspection: `pose-group-process-v1` starts one supplied source in
+its flag-selected context list with empty tracked/pending lists. It connects the
+recovered processing operations using authored bounded storage and recorded-only
+body-virtual/link-clear/destructor services. Removed group snapshots stay in the
+result for diagnostics, not as live handles. The JSON adapter has independent
+integration tests, not a full continuous native equivalence claim.

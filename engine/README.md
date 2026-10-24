@@ -1046,3 +1046,17 @@ Group identities and resolved body-link eligibility are supplied. Python list
 growth is an authored storage service; original allocation, destruction, locking
 and physical solving remain external. See the
 [input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-group-partition-inspection).
+
+### Ordinary-group processing inspection
+
+```sh
+python3 -m engine.pose_group_bench engine/examples/pose_group_process.json --output /tmp/group-process.json
+```
+
+The `pose-group-process-v1` fixture connects finalization, empty/single/multiple
+body processing, context removal and recorded destructor requests. Results include
+context arrays, memberships, constraint records and ordered service events. The
+input requires `callback_policy: record_only`; body virtual calls, link clearing
+and destruction are reported as intents with their native effects unresolved.
+Retired group records remain as diagnostic snapshots. They are not usable handles.
+See the [contract and evidence limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-ordinary-group-processing-inspection).
