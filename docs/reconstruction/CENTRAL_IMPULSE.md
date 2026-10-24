@@ -16059,3 +16059,39 @@ The inspector's resolved-link input corresponds to true in these cases. Nonempty
 ring handling has its separate predicate receipt; it was not exercised in this
 connected comparison. There is no live scheduling, replay, physical force,
 allocator-failure or original-engine-equivalence claim.
+
+### Ordinary-group finalization
+
+`engine.pose_group_finalize.finalize_pose_group` reconstructs RVA0x18e11b0 with
+its body-loop helper0x1957340 and tracked-list append0x18e17e0. It returns early
+when group byte+0xa0 is zero or the group equals context+0x408/+0x410. For an
+admitted ordinary group, the sequence is:
+
+1. Traverse its captured link array. If the first endpoint's metadata kind byte
+   low nibble equals2, append that link to context.pending_links+0x490/+0x498.
+   Capacity growth is initial8/doubled. Reload the source slot after growth.
+2. Traverse the captured body array, invoking each body's virtual slot0x28. Clear
+   group byte+0xa0 only after the callbacks finish.
+3. Reload group index+0xc, swap-remove it from context.groups428 and repair the
+   moved group's index. Set this group's index to groups418's old count, then
+   append it there with initial8/doubled growth.
+4. Append its current bodies to context.tracked. This helper captures body and
+   old tracked counts before growth, publishes the combined count, then copies
+   body pointers. Duplicates are not filtered. With nonzero capacity, growth
+   doubles until sufficient; zero capacity requests exactly the required count.
+
+The Python API names these arrays structurally. It uses retained dictionaries
+and supplied growth/body-virtual services; it does not label the transition as
+sleep, wake, activation or physical motion. Callback effects and storage retention
+remain external. Native counts and inactive tails are preserved. API rejection
+of capacity wrap is authored; no native failure recovery is inferred.
+
+[320 complete native comparisons](../../native/snow_host/pose_group_finalize_validation.json)
+execute the outer routine and both original helpers with only body virtual0x28
+intercepted and sufficient preallocated capacity. Every context/group byte, array
+tail and callback order matches. Cases cover flags, special-group exclusions,
+kind filtering, empty/nonempty body arrays and moved-index repair. Independent
+tests additionally cover source-slot reload after supplied growth. Growth paths,
+callback mutation effects, concurrency and the classes' physical meanings remain
+outside this native receipt. This closes the structural finalization operation
+previously supplied to group update/partition, not the entire protected wrapper.

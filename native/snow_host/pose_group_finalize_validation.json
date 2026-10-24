@@ -1,0 +1,17 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete native ordinary-group finalizer including original body-loop and tracked-body append helpers; only body virtual40 intercepted; all context/group bytes, arrays and callback order match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Group flag and special-group skips",
+    "Link first-endpoint kind low-nibble filter",
+    "Body callbacks, group bucket transfer/index repair and tracked-body append"
+  ],
+  "limits": [
+    "Sufficient capacity; growth paths excluded from native comparison",
+    "Body virtual effects supplied",
+    "Stable retained arrays; no group-class physical semantics or concurrency proof"
+  ],
+  "game_files_included": false
+}

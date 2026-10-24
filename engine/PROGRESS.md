@@ -7516,3 +7516,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   sequence. All record/group/destination bytes, service order and reuse flag match
   the composition. Temporary storage/group acquisition supplied; growth, nonempty
   rings, outer finalization/destruction and live physics remain excluded.
+- Recovered ordinary-group finalization: filtered link staging, body virtual calls,
+  flag clear, context group-list transfer and tracked-body append. 320 complete
+  native comparisons match all context/group/array bytes with body virtual effects
+  supplied and preallocated capacity. Growth and physical class semantics remain
+  unresolved; protected outer notification still excluded.
