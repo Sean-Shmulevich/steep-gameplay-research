@@ -1,0 +1,69 @@
+{
+  "scope": "Live guarded provider membership; no callback execution or motion effect proved",
+  "runs": [
+    {
+      "accepted": false,
+      "failure": "AssertionError",
+      "ownership_attempts": null,
+      "boxed_actor_matches_registry": false,
+      "selected_local_player_proved": false,
+      "provider": null,
+      "provider_read_calls": null,
+      "movement_input_sent": false,
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "evidence_hashes": {
+        "boxed-provenance.json": "953e9dd507bb84bcc1864640ebb5bb2cac92008e69e722112e6ab0584a6dafc5",
+        "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+        "route-result.json": "fac69dae833fb6e212f371161bc22343dd5b81859929f090929ddd65c3426351"
+      }
+    },
+    {
+      "accepted": true,
+      "failure": null,
+      "ownership_attempts": [
+        {
+          "accepted": true,
+          "status": "bounded ownership traversal complete"
+        }
+      ],
+      "boxed_actor_matches_registry": true,
+      "selected_local_player_proved": false,
+      "provider": {
+        "provider_table_rva": 43030416,
+        "query_target_rva": 19868960,
+        "attachment_present": true,
+        "relative_records": true,
+        "records": [],
+        "endpoint_rechecked": true,
+        "atomic": false,
+        "pairs_observed": false,
+        "callback_execution_proved": false
+      },
+      "provider_read_calls": 11,
+      "movement_input_sent": false,
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "evidence_hashes": {
+        "boxed-provenance-0.json": "79ba4ab384aa0df987848292e62ad4bf64315987b7d9bf9fcf4f8d16df3332eb",
+        "membership-reader-calls.json": "53d1f98cd34ba5224c376ff9bf53d2e3619336c1246969e93636220f81549a53",
+        "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+        "route-result.json": "6329f3f371ad235a4cd0fb92dae7e6211d2043bf01521938b0c96876eed0895d"
+      }
+    }
+  ],
+  "first_rejection": "Ownership root guard changed before provider observation; provider not attempted",
+  "game_files_included": false
+}

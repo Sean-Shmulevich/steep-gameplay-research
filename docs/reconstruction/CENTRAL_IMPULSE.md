@@ -11508,3 +11508,30 @@ reads. These tests validate the observer's rejection behavior, not live graph
 membership. A live receipt remains required before claiming the rider's query
 uses this provider. Nested values and actual notification execution require
 separate observations even after that join succeeds.
+
+### Live provider join
+
+A [bounded live check](../../native/snow_host/markup_provider_live_validation.json)
+now connects the acquired snow actor's motion component and markup dispatcher to
+the expected provider table and query target. The registry actor and independently
+acquired boxed ownership route agreed. External guards included component table,
+component/controller backlinks, both markup-object links, actor table and actor
+self-pointer. Independent selected-local-player identity remains unproved.
+
+The accepted observation used 11 provider reader calls. The interface attachment
+was present and its graph collection used header-relative addressing, with zero
+records. All retained endpoint bytes matched on recheck. This proves the observed
+provider membership and an empty collection at sampling endpoints; it does not
+prove an atomic snapshot, an executed query, a notification, clip selection or a
+motion release. No movement input was sent.
+
+An earlier session rejected ownership acquisition because a root guard changed;
+it never reached the provider observer. The next session used up to three fresh
+ownership acquisitions without weakening the guards. Both sessions stopped the
+research bottle and verified saves/settings restoration and the original DLL.
+The private controller and raw addresses remain outside the repository.
+
+The next useful observation belongs inside the markup update boundary, where
+record production and consumption can be ordered. Repeated idle heap polling may
+miss temporary records. The copy/clear/partition writers are static leads for
+that possibility, not proof that this empty sample caught a specific phase.

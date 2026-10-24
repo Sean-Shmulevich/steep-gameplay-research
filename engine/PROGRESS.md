@@ -6921,3 +6921,8 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Added a bounded read-only markup provider observer with endpoint rechecks and
   explicit table/target guards. Synthetic rejection tests pass. The adapter is
   ready for a fresh live dispatcher join; no live receipt is claimed yet.
+- Live markup provider join accepted: registry/boxed actor ownership agreed,
+  expected interface table and query target matched, attachment was present,
+  and the guarded record collection was empty. One prior acquisition rejected
+  a changing root guard. Both sessions cleaned up successfully. This closes
+  provider membership for the observed instance, not query/callback execution.
