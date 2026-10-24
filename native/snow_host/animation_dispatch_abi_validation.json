@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "cases": 16,
+  "evidence": "Original batch visitor plus original slot278 dispatcher, synthetic receivers and intercepted method returns",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "a60816357a377a03e57040d4870d0292c2f58e474cc4bceee7e60aa979e7cafb",
+  "spans": [
+    {
+      "start_rva": "0x8f2b60",
+      "end_rva_exclusive": "0x8f2ba6",
+      "sha256": "ab22346079840ef9ec173afd73002cf79d1c9a459655dd4deb023d85de1b84ca"
+    },
+    {
+      "start_rva": "0x732320",
+      "end_rva_exclusive": "0x73232a",
+      "sha256": "efe0868abd01a4de0ced650558606e2e5941cc4ec5a3599b45380eec647d77a1"
+    }
+  ],
+  "verified": [
+    "Receiver is passed unchanged in RCX.",
+    "Reverse visitation is unchanged by tested integer result patterns."
+  ],
+  "limitations": [
+    "Kino drain itself and native recorder are not executed by this fixture.",
+    "No claim about other callers, floating/vector results, native unwinding or live installation."
+  ]
+}

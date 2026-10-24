@@ -340,3 +340,45 @@ Still required: a typed dispatch recorder, verified native calling/return
 convention, invocation-local sample storage, bounded output, retained forwarding
 for cached callers, and restoration of the stable image slot. A successful sampler
 check is not permission to install it on an arbitrary callback.
+
+## Dispatch recorder and inspected calling path
+
+[`snow_animation_queue_trace`](../../native/snow_host/snow_animation_queue_trace.h)
+now provides a separate typed recorder. Each reserved record brackets the original
+one-receiver call with independent queue observations, timestamps, thread ID,
+caller label, and the unchanged integer result bits. Only a reader result of one
+accepts a sample; other results zero that sample without suppressing the original.
+A fixed-capacity buffer avoids allocations. Overflow increments a drop counter
+and still forwards; closed callers forward without reading or recording.
+
+Close prevents new reservations. Drain waits for admitted calls, including calls
+that overflowed the buffer. Exact-size record reads are allowed only after close
+and drain. The module, original callback, reader and context must remain alive
+for cached callers afterward. Drain is not permission to unload. Recursive
+original calls reserve independent records; reservation order is not completion
+order. Exceptions or other nonlocal exits are outside the contract and can leave
+an admitted call permanently undrained. All record pointers remain private.
+
+The inspected visitor `0x1408f2b60` calls the configured receiver dispatcher with
+RCX=receiver, then decrements its array cursor without consuming RAX or a floating
+result. The event dispatcher `0x140732320` tail-jumps through receiver slot 0x278;
+the known Kino method adjusts RCX to its queue and passes suppression zero.
+[Sixteen original-instruction cases](../../native/snow_host/animation_dispatch_abi_validation.json)
+compose the visitor and event dispatcher with synthetic methods: counts 0/1/4/8
+and four integer return patterns preserve reverse visitation and receiver identity.
+The actual drain and recorder are not executed in that fixture. Other callers
+and floating/vector result conventions have not been qualified.
+
+The [recorder fixture](../../tests/fixtures/snow_animation_queue_trace_fixture.c)
+passes 800 concurrent calls with 17 reservations and 783 overflow forwards,
+recursive calls, independently rejected before/after samples, close during an
+in-flight original, cached calls after close, zero capacity, and read refusal
+before drain. Address/undefined-behavior sanitizers pass, and the recorder compiles
+as a Win64 object. See the [recorder receipt](../../native/snow_host/animation_queue_trace_validation.json).
+These fixtures do not establish native game-thread scheduling or overhead.
+
+Still required for live boundary capture: a pinned Windows wrapper and guarded
+installation/restoration of the stable Kino image-table slot, a fresh owner-aware
+reader binding, and a bounded capture controller. The trace core does not install
+itself. Before/after queue changes would establish observed dispatch-boundary
+behavior, not the effects of every individual event handler.

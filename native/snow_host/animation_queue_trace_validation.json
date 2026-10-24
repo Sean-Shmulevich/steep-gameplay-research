@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "evidence": "Authored concurrent recorder fixture with synthetic original and observer callbacks",
+  "source_hashes": {
+    "native/snow_host/snow_animation_queue_trace.c": "f20b0ee3efe718ed77aedea5a0b693dc715fab0910d9d9d2e7dea25ead1e7f69",
+    "native/snow_host/snow_animation_queue_trace.h": "513d5c787027f126589d5035db9de7e451306dc9b582ce2fcf089f50d9ca74d7",
+    "tests/fixtures/snow_animation_queue_trace_fixture.c": "85fe62b1c313ad8add5e095c50906eb4f5b0f1dcfb79df374f22d8a442410ec4",
+    "tests/test_animation_queue_trace.py": "767fa293a4e03fc129ab5481a097a6f6d15e52a44ab64fda27672769a566c045"
+  },
+  "checks": {
+    "concurrent_calls": 800,
+    "reserved_records": 17,
+    "overflow_forwards": 783,
+    "recursion": true,
+    "invalid_sample_clearing": true,
+    "close_during_original": true,
+    "cached_forward_after_close": true,
+    "zero_capacity": true,
+    "address_sanitizer": true,
+    "undefined_behavior_sanitizer": true,
+    "win64_object_compilation": true
+  },
+  "limitations": [
+    "No live hook or game callback execution.",
+    "Original callback and sampler behavior are synthetic in this fixture.",
+    "Close and drain permit reads, not unloading or callback/context destruction.",
+    "No native Windows runtime or exception-unwinding validation.",
+    "Callback overhead is not measured."
+  ]
+}
