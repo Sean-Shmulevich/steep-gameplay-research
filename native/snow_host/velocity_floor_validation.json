@@ -1,0 +1,17 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "actions": {
+    "candidate": 254,
+    "original": 37,
+    "original_direction_at_floor": 29
+  },
+  "scope": "Original speed-floor decision and vector arithmetic; supplied original/corrected velocities and computed speeds",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite vectors with W zero",
+    "Damping, activation, world transforms and setter not executed",
+    "No live speed-floor attribution"
+  ],
+  "game_files_included": false
+}

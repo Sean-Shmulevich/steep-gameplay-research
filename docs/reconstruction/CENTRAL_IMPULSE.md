@@ -13197,3 +13197,46 @@ The synthetic example explicitly asserts unchanged records. Twenty-seven related
 tests pass, including changed force vectors/points and unequal phase list lengths:
 submission uses its own vector while reporting magnitude and grouping reflect
 the later snapshot. Missing or contradictory continuity declarations reject.
+
+### Post-submission velocity setter and speed floor
+
+The intervening routine first reads main-body linear XYZ using RVA 0x18aa2d0.
+Its later helper at RVA 0x18aa520 directly writes body+0x1a0/+0x1a4/+0x1a8;
+it is the same linear setter identified by the pose-follower research. The caller
+passes force=true. Therefore this stage can replace linear velocity after the
+point submissions, in addition to its subsequent conditional central impulses.
+This is not just another additive force contribution.
+
+Before the setter at RVA 0x13f8230, the local block 0x13f81e0..0x13f8225 applies:
+
+```text
+if bypass or corrected_speed >= configured_floor:
+    selected = corrected_velocity
+    selected_speed = corrected_speed
+elif original_speed > configured_floor:
+    selected = (configured_floor * original_velocity) / original_speed
+    selected_speed = configured_floor
+else:
+    selected = original_velocity
+    selected_speed = original_speed
+```
+
+The direction in the middle branch is the original velocity's direction. This
+preserves a speed floor against the correction without accelerating an originally
+slower body to that floor. Multiplication precedes division per lane with float32
+rounding. Both surrounding producers clear W. The returned speed is assigned
+from the branch; it is not recomputed from the rounded output vector.
+
+Here the floor is configuration+4 through runtime+0x15b0; bypass is incoming
+R15B, produced earlier by testing the caller input scalar at +0x10c as positive.
+No control name is assigned to that scalar. Upstream curve evaluation, directional
+damping and frame transforms remain separate inputs to this local reconstruction.
+
+`engine.snow_velocity_correction.preserve_speed_floor` implements the finite
+branch. [320 original-instruction cases](../../native/snow_host/velocity_floor_validation.json)
+match selected velocity and returned speed bitwise: 254 keep the candidate,
+37 restore the original, and 29 restore original direction at the floor.
+Original/corrected vectors and their computed speeds are supplied to the snippet;
+the whole correction routine and setter are not emulated in this check. Three
+portable tests cover direction restoration, stationary/slower originals, equality
+and bypass. No live activation of this branch is claimed.

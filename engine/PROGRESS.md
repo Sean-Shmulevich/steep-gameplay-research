@@ -7151,3 +7151,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   snapshot; no silent phase reuse. Twenty-seven related tests and CLI pass,
   including differing phase counts/vectors/points. Native mutation exclusion and
   the extra body contribution remain unproved.
+- Identified the intervening body's helper as a direct linear-velocity setter.
+  Reconstructed its local speed-floor decision: keep corrected velocity, restore
+  original direction at floor, or preserve an originally slower velocity. Model
+  matches 320 original-instruction cases and three boundary tests. Upstream
+  damping/transforms, control naming and live branch attribution remain open.
