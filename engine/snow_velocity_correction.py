@@ -99,3 +99,16 @@ def correct_linear_velocity(original, rates, elapsed, to_frame, from_frame, samp
     contact=contact_return_candidate(decay['velocity'],direction,duration,strength,disabled,lower,upper)
     selected=preserve_speed_floor(original,contact['velocity'],floor,bypass)
     return dict(decay=decay,contact=contact,selected=selected)
+
+
+def build_velocity_decay_sampler(*, vector_path, scalar_path):
+    """Build the independently reconstructed native table once for reuse.
+
+    Initializer join: CENTRAL_IMPULSE.md, Native decay initializer joined to
+    velocity correction. CPU paths must be explicit; this does not inspect live
+    CPU dispatch or mutable native globals. No native table payload is loaded.
+    """
+    from reference.decay_exp import cooker_table
+    from reference.runtime_curve import evaluate
+    table=cooker_table(vector_path=vector_path,scalar_path=scalar_path)
+    return lambda argument:evaluate(argument,**table)

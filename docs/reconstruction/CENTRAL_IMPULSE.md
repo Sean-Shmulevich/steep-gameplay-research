@@ -13343,3 +13343,31 @@ initialization, upstream frame/rate/flag producers, early activation, subsequent
 impulses and live correspondence remain unresolved. The composed kernel must not
 be labeled the complete snow controller or used as evidence that all body motion
 within the wrapper is explained.
+
+### Native decay initializer joined to velocity correction
+
+The initializer at RVA 0x13d1200 loads the exact table destination 0x3314820 at
+0x13d12c3 and calls the previously reconstructed decay builder at 0x13fa6f0.
+Its arguments are the existing low=-10, high=0 and padding=0.0001 configuration.
+This resolves the earlier table-identity/initializer uncertainty; the velocity
+sampler is a consumer of that specific reconstructed table, not merely a similar
+lookup shape. Live CPU-path selection and possible later writes remain unobserved.
+
+The new [connected validation](../../native/snow_host/velocity_native_decay_validation.json)
+executes the initializer call fragment, original builder and original vector/scalar
+exponential routines under explicit SSE2 selectors. All 514 table floats match
+independently generated values. It then executes the original velocity arithmetic
+through decay lookups, correction, clamps and speed floor for 256 supplied cases.
+Final velocity and selected speed match bitwise. Only the finite floor helper is
+intercepted; the former synthetic decay-provider interception is removed.
+
+`engine.snow_velocity_correction.build_velocity_decay_sampler` builds the independent
+table once and returns a reusable callable for `correct_linear_velocity`. Both
+`vector_path` and `scalar_path` are required. It loads no game payload and does
+not read native globals. Callers must distinguish an explicitly selected arithmetic
+path from evidence of the live game's CPU dispatch. The existing supported-domain
+and scalar-endpoint limitations in `reference.decay_exp` still apply.
+
+This closes table initialization and local lookup composition under the tested
+path. Frame/rate/configuration producers, native setter/backend behavior, later
+impulses and live velocity correspondence are still separate boundaries.

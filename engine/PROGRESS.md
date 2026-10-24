@@ -7171,3 +7171,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   and selected speed; only decay provider intercepted. Nine tests preserve floor
   overrides of prior correction/clamps. Setter execution, subsequent impulses,
   lookup/input producers and live attribution remain external.
+- Joined velocity decay table to its exact initializer and existing independent
+  exponential builder. Original initialization plus native lookups now execute
+  through 256 matching velocity cases; only finite floor helper intercepted.
+  Added reusable explicit-CPU-path sampler, removing the synthetic decay provider
+  dependency. Live CPU dispatch and frame/rate/configuration producers remain open.

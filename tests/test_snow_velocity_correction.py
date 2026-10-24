@@ -74,3 +74,14 @@ class ConnectedCorrectionTests(unittest.TestCase):
                                   [0,0,1,0],1,1,True,[-5]*3,[5]*3,8,False)
         self.assertEqual(r['contact']['velocity'],[0,0,0,0])
         self.assertEqual(r['selected']['velocity'],[8,0,0,0])
+
+
+class NativeDecayJoinTests(unittest.TestCase):
+    def test_reusable_sampler_zero_time_and_axis_decay(self):
+        from engine.snow_velocity_correction import build_velocity_decay_sampler,directional_velocity_decay
+        sample=build_velocity_decay_sampler(vector_path='sse2',scalar_path='sse2')
+        identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0]]
+        self.assertEqual(directional_velocity_decay([4,4,4,0],[1,2,3],0,identity,identity,sample)['velocity'],[4,4,4,0])
+        v=directional_velocity_decay([4,4,4,0],[1,2,3],1,identity,identity,sample)['velocity']
+        self.assertTrue(0<v[2]<v[1]<v[0]<4)
+        with self.assertRaises(ValueError):build_velocity_decay_sampler(vector_path='sse2',scalar_path='fma')
