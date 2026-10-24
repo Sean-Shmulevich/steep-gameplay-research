@@ -187,7 +187,7 @@ def main():
         if args.experiment == 'host' and args.plan == 'update-capture':
             commands.append([cc, '-std=c11', '-Wall', '-Wextra', '-Werror', '-O2', '-shared', '-I', str(host),
                 '-o', str(build/'plugins/update_capture.dll'),
-                *[str(host/name) for name in ('examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c')]])
+                *[str(host/name) for name in ('examples/update_capture.c','steep_adapter.c','snow_update_probe.c','snow_point_inputs.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c')]])
             (build/'plugins/update_capture.ini').write_text('[capture]\nenabled=1\nseconds='+str(5 if args.capture_steering else 2)+'\nsteering_pulse='+str(int(args.capture_steering))+'\nattribute_jobs='+str(int(args.attribute_jobs))+'\nobserve_motion='+str(int(args.observe_motion))+'\nrequire_substeps='+str(int(args.require_substeps))+'\n')
         if args.load_at == 'startup':
             commands.append([cc, '-Wall', '-Wextra', '-Werror', '-O2', '-municode', '-o', str(build/'startup_launcher.exe'), str(host/'startup_launcher.c'), '-luser32'])

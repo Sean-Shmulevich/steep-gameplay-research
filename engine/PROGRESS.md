@@ -7044,3 +7044,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   All 490 read-failure positions, native/sanitizer fixtures and Windows compilation
   pass. Not yet installed in the live recorder; scalar gates/curve products and
   submission-time freshness remain open.
+- Integrated opt-in point-input channel into snow recorder ABI 8 with independent
+  validity and measured read duration; full Windows build and 44 focused tests
+  pass. First live attempt captured 449 attributed snow calls, all 898 ordinary
+  snapshots valid, but zero point snapshots accepted. Both slots and cleanup
+  verified. No point-input values inferred; rejection-stage diagnostics are next.

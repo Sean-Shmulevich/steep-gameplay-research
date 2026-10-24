@@ -1,8 +1,8 @@
 #ifndef SNOW_UPDATE_PROBE_H
 #define SNOW_UPDATE_PROBE_H
 #include "snow_update_snapshot.h"
-/* Experimental ABI v7: caller must use this exact header/build. Configure alone installs no hook.
- * v7 extends SnowUpdateRecord with optional history observations; rebuild readers.
+/* Experimental ABI v8: caller must use this exact header/build. Configure alone installs no hook.
+ * v8 extends snapshots with optional point-input observations; rebuild readers.
  * Configure once BEFORE publishing Dispatch; configuration is never retried.
  * Caller verifies executable identity, original target/signature and counter owners.
  * DLL pins itself. Close stops capture, not forwarding; never free supplied objects
@@ -20,6 +20,10 @@ SNOW_PROBE_API int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *, Snow
 /* Opt-in motion channel. NULL profile disables attribution, not motion. */
 SNOW_PROBE_API int SnowProbe_ConfigureObserved(const SnowUpdateBinding *, SnowUpdateOriginal,
                                              const SnowEntryProfile *, int observe_motion);
+/* Optional point-input profile. Both image arguments zero disables it.
+ * Caller verifies the image. Point failures do not discard ordinary snapshots. */
+SNOW_PROBE_API int SnowProbe_ConfigureDetailed(const SnowUpdateBinding *, SnowUpdateOriginal,
+    const SnowEntryProfile *, int observe_motion, uint64_t image_base, uint64_t image_size);
 SNOW_PROBE_API void SnowProbe_Dispatch(void *, float, float);
 SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
 /* Diagnostic lifetime counters include late forwarding after Close. Each field
@@ -28,7 +32,7 @@ SNOW_PROBE_API int SnowProbe_Close(size_t *used, size_t *dropped);
  * that a thread with a cached dispatch pointer cannot call later. */
 typedef struct { uint64_t selected_calls, other_calls; } SnowProbeDispatchCounts;
 SNOW_PROBE_API int SnowProbe_ReadDispatchCounts(SnowProbeDispatchCounts *);
-#define SNOW_PROBE_ABI_VERSION 7u
+#define SNOW_PROBE_ABI_VERSION 8u
 /* Query before configure/copy. Sized reads reject incompatible record buffers. */
 SNOW_PROBE_API uint32_t SnowProbe_ABIVersion(void);
 SNOW_PROBE_API size_t SnowProbe_RecordSize(void);

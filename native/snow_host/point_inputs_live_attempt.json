@@ -1,0 +1,59 @@
+{
+  "scope": "Live snow-wrapper boundary point inputs, not submission-time values",
+  "ok": true,
+  "error": null,
+  "snow_calls": 449,
+  "ordinary_valid_samples": 898,
+  "point_attempted": 898,
+  "point_valid": 0,
+  "point_read_us": {
+    "median": 13.2,
+    "p95": 17.5,
+    "max": 179.0
+  },
+  "record_count_histogram": {},
+  "enabled_count_histogram": {},
+  "runtime_scale_bits_histogram": {},
+  "descriptor_histogram": {},
+  "snow_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 449,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 449,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 449,
+    "other_calls": 0
+  },
+  "markup_summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 94,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "both_slots_restored": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "game_files_included": false,
+  "private_evidence_sha256": {
+    "route-result.json": "88b9ebd26f92241f9e85eddb791ecd1a32aa9d6bbcc528a0c720d2f8538924ed",
+    "input-events.jsonl": "b598869c2b46c5b5afd17c5368bcc537049785c5af44113c9482ceb4bc5deca4"
+  }
+}

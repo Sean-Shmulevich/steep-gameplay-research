@@ -15,11 +15,31 @@
 static const SnowHostApiV1 *host;
 static volatile LONG phase;
 static unsigned milliseconds;
-static int attribute_jobs, observe_motion;
+static int attribute_jobs, observe_motion, observe_points;
 static char output[MAX_PATH];
 static void number(FILE *f,float v) { if(isfinite(v)) fprintf(f,"%.9g",v); else fputs("null",f); }
 static void floats(FILE *f,const float *v,unsigned n) {
     fputc('[',f); for(unsigned i=0;i<n;i++) { if(i) fputc(',',f); number(f,v[i]); } fputc(']',f);
+}
+static void words(FILE *,const uint32_t *,unsigned);
+static void point_sample(FILE *f,const SnowPointInputs *p) {
+    fprintf(f,"{\"flags\":%u,\"kind\":%u,\"runtime_scale_bits\":%u,\"basis_column_bits\":",p->flags,p->kind,p->runtime_scale);
+    words(f,&p->basis[0][0],9);fputs(",\"local_inertia_column_bits\":",f);words(f,&p->local_inertia[0][0],9);
+    fputs(",\"translation_bits\":",f);words(f,p->translation,3);
+    fputs(",\"local_center_bits\":",f);words(f,p->local_center,3);
+    fputs(",\"directional\":[",f);
+    for(unsigned i=0;i<p->directional_count;i++) {
+        const SnowDirectionalInput *v=&p->directional[i];if(i)fputc(',',f);
+        fprintf(f,"{\"enabled\":%u,\"point_bits\":",v->enabled);words(f,v->point,4);
+        fputs(",\"direction_bits\":",f);words(f,v->direction,4);fputc('}',f);
+    }
+    fputs("],\"summed\":[",f);
+    for(unsigned i=0;i<p->summed_count;i++) {
+        const SnowSummedInput *v=&p->summed[i];if(i)fputc(',',f);
+        fprintf(f,"{\"enabled\":%u,\"kind\":%u,\"point_bits\":",v->enabled,v->kind);words(f,v->point,4);
+        fputs(",\"a_bits\":",f);words(f,v->a,4);fputs(",\"b_bits\":",f);words(f,v->b,4);fputc('}',f);
+    }
+    fputs("]}",f);
 }
 static void sample(FILE *f,const SnowUpdateSnapshot *s) {
     fprintf(f,"{\"valid\":%u,\"runtime\":\"%llx\",\"main\":\"%llx\",\"rider\":\"%llx\",\"request\":%llu,\"substep\":%llu,\"gates\":[%u,%u,%u,%u],\"pending\":",
@@ -31,7 +51,10 @@ static void sample(FILE *f,const SnowUpdateSnapshot *s) {
     fputs(",\"rider_linear\":",f); floats(f,s->linear[1],3);
     fputs(",\"main_angular\":",f); floats(f,s->angular[0],3);
     fputs(",\"rider_angular\":",f); floats(f,s->angular[1],3);
-    fputs(",\"inverse_mass\":",f); floats(f,s->inverse_mass,2); fputc('}',f);
+    fputs(",\"inverse_mass\":",f); floats(f,s->inverse_mass,2);
+    fprintf(f,",\"point_attempted\":%u,\"point_valid\":%u,\"point_read_ticks\":%llu",s->point_attempted,s->point_valid,(unsigned long long)s->point_read_ticks);
+    if(s->point_valid) {fputs(",\"point_inputs\":",f);point_sample(f,&s->point_inputs);}
+    fputc('}',f);
 }
 static void words(FILE *f,const uint32_t *v,unsigned n) {
     fputc('[',f);for(unsigned i=0;i<n;i++) { if(i) fputc(',',f);fprintf(f,"%u",v[i]); }fputc(']',f);
@@ -112,7 +135,19 @@ static int paused(void *user) {
         !ReadProcessMemory(GetCurrentProcess(),(void *)(uintptr_t)(profile.callable_table+0x10),&dispatcher,8,&got) || got!=8 || dispatcher!=0x1413cd590ull)) {
         host->log(host->context,"entry attribution route mismatch"); InterlockedExchange(&phase,3); return 0;
     }
-    int configured=SnowProbe_ConfigureObserved(&binding,original,attribute_jobs ? &profile : NULL,observe_motion);
+    uint64_t image_base=0,image_size=0;
+    if(observe_points) {
+        HMODULE image=GetModuleHandleA(NULL);
+        IMAGE_DOS_HEADER dos;IMAGE_NT_HEADERS64 nt;
+        if(!image || !ReadProcessMemory(GetCurrentProcess(),image,&dos,sizeof dos,&got) || got!=sizeof dos ||
+           dos.e_magic!=IMAGE_DOS_SIGNATURE || dos.e_lfanew<0 || dos.e_lfanew>0x100000 ||
+           !ReadProcessMemory(GetCurrentProcess(),(const char *)image+dos.e_lfanew,&nt,sizeof nt,&got) || got!=sizeof nt ||
+           nt.Signature!=IMAGE_NT_SIGNATURE || nt.OptionalHeader.Magic!=IMAGE_NT_OPTIONAL_HDR64_MAGIC) {
+            host->log(host->context,"point profile image header rejected");InterlockedExchange(&phase,3);return 0;
+        }
+        image_base=(uint64_t)(uintptr_t)image;image_size=nt.OptionalHeader.SizeOfImage;
+    }
+    int configured=SnowProbe_ConfigureDetailed(&binding,original,attribute_jobs ? &profile : NULL,observe_motion,image_base,image_size);
     if(!configured) {
         host->log(host->context,"capture configuration refused"); InterlockedExchange(&phase,3); return 0;
     }
@@ -134,9 +169,10 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     snprintf(output,sizeof output,"%s.trace.jsonl",api->config_path);
     attribute_jobs=GetPrivateProfileIntA("capture","attribute_jobs",0,api->config_path)==1;
     observe_motion=GetPrivateProfileIntA("capture","observe_motion",0,api->config_path)==1;
+    observe_points=GetPrivateProfileIntA("capture","observe_points",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-7";
+    plugin->name="update_capture"; plugin->version="experimental-8";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

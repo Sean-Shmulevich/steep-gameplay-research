@@ -5,6 +5,7 @@
 #include <stdatomic.h>
 #include "snow_batch_frame.h"
 #include "snow_motion_observation.h"
+#include "snow_point_inputs.h"
 /* Authored capture plumbing. No installation, game offsets, or ownership claims.
  * Initialize once before publishing. Context, records and callbacks must remain
  * alive for ALL callers, including calls after close. Never reopen/reinitialize.
@@ -18,6 +19,9 @@ typedef struct {
     int32_t preconsume_counter;
     float preconsume_timers[2];
     float pending[4], linear[2][3], angular[2][3], inverse_mass[2];
+    uint32_t point_attempted, point_valid;
+    uint64_t point_read_ticks;
+    SnowPointInputs point_inputs;
 } SnowUpdateSnapshot;
 /* Authored observation payload, not a native game object or public wire ABI.
  * All pointers are session-private provenance. No generation/freshness claim.

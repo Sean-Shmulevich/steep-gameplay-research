@@ -28,7 +28,7 @@ def main():
     out.mkdir(parents=True)
     native = ROOT/'native/snow_host'
     flags = [cc,'-std=c11','-O2','-Wall','-Wextra','-Werror','-I',str(native)]
-    sources = ['snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c',
+    sources = ['snow_update_probe.c','snow_point_inputs.c','snow_update_trace.c','snow_update_snapshot.c',
                'snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c']
     with (out/'build.log').open('w') as log:
         subprocess.run(flags+['-shared']+[str(native/s) for s in sources]+['-o',str(out/'probe.dll')],

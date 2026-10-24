@@ -43,6 +43,8 @@ int main(int argc,char **argv) {
     int attributed=valid_attribution || (argc==3 && !strcmp(argv[2],"attributed"));
     int conflict=argc==3 && !attributed;
     int (*configure_observed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *,int)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureObserved");
+    int (*configure_detailed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *,int,uint64_t,uint64_t)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureDetailed");
+    assert(configure_detailed);
     assert(configure_observed);
     int (*configure_attributed)(const SnowUpdateBinding *,SnowUpdateOriginal,const SnowEntryProfile *)=(void *)GetProcAddress(dll,"SnowProbe_ConfigureAttributed");
     int (*configure)(const SnowUpdateBinding *,SnowUpdateOriginal)=(void *)GetProcAddress(dll,"SnowProbe_Configure");
@@ -70,6 +72,11 @@ int main(int argc,char **argv) {
     f(main_body+0x1a0,10); f(main_body+0x1ac,3); f(rider+0x1ac,9);
     SnowUpdateBinding b={(uintptr_t)actor,(uintptr_t)table,(uintptr_t)world,(uintptr_t)&request,(uintptr_t)&substep};
     SnowUpdateRecord r; size_t used=0,dropped=0;
+    assert(!configure_detailed(&b,original,NULL,0,0x140000000ull,0));
+    assert(!configure_detailed(&b,original,NULL,0,0,0x4000000));
+    assert(!configure_detailed(&b,original,NULL,0,0x140000000ull,0x4000000));
+    assert(!configure_detailed(&b,original,NULL,2,0,0));
+
     SnowEntryProfile profile={1,2,3,(uintptr_t)table,0}; /* intentionally wrong route */
     SnowEntryRegisters entry={(uintptr_t)job,(uintptr_t)&range_base,1,0,0};
     if(valid_attribution) {

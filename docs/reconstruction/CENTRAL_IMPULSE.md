@@ -12497,3 +12497,45 @@ call, the summed loop's selected gate values, the directional loop's curve produ
 or matrix freshness. Those remain required additional observations. Integration
 must keep point-input acceptance separate from existing actor/body samples and
 measure overhead before treating the larger payload as routine telemetry.
+
+### Opt-in point channel in the snow recorder
+
+The update-capture plugin accepts `observe_points=1` in its `[capture]` INI section.
+It verifies the executable header and supplies the image base/size to the new
+`SnowProbe_ConfigureDetailed` entry point. Legacy configure calls leave this
+channel disabled. The experimental probe ABI is now 8 because its snapshot embeds
+the point-input payload; rebuild consumers and check ABI and record size.
+
+For an accepted ordinary body snapshot, the opt-in reader attempts the bounded
+point-input observation and requires its runtime/main-body identities to match.
+It records `point_attempted`, independent `point_valid` and `point_read_ticks`.
+Failure leaves the ordinary observation intact. Serialized point data contains raw
+float bits, descriptor bytes and records, without the sampler's heap pointers.
+Matrix bit arrays use native column order. Ordinary and point samples are
+sequential; acceptance does not establish simultaneous values or lifetime safety.
+
+The plugin retains the existing one-shot five-second maximum and fixed recorder
+capacity. The larger embedded record increases storage even with sampling disabled;
+opt-in controls reads, not record size. Public host, late-load and fixture builds
+now link the sampler. Forty-four focused native/analysis tests pass; the full
+Windows host/plugin and updated Windows fixture compile. Compilation does not
+substitute for running that fixture or validating live observation.
+
+### First live point-channel attempt: all point samples rejected
+
+The [first live attempt](../../native/snow_host/point_inputs_live_attempt.json)
+recorded 449 snow calls and 94 markup calls with no drops. All 898 ordinary body
+snapshots were valid, and every call had scheduler attribution. The independent
+point channel attempted 898 observations but accepted zero. Consequently this
+run establishes neither record counts nor geometry/inertia values. Zero accepted
+samples must not be interpreted as empty record lists or inactive force paths.
+
+Rejected attempts cost 13.2 microseconds median, 17.5 microseconds at the 95th
+percentile and 179 microseconds maximum. These measure the failing read path,
+not full successful point sampling. Both recorder slots restored independently;
+the bottle stopped and saves/settings/original DLL restoration passed.
+
+The sampler currently reports only rejection, so this evidence cannot distinguish
+an identity mismatch, array bound, read failure or changed repeated sample. The
+next implementation step is explicit bounded rejection diagnostics. Do not raise
+record limits or weaken identity checks without locating the failing guard first.
