@@ -17122,3 +17122,72 @@ masks and zero/nonzero iteration counts are covered. This proves control flow an
 normal-return restoration, not numerical convergence, solver equations or live
 thread safety. The next numerical targets are the preparation and iteration
 routines, particularly their consumers of the112-byte rows assembled above.
+
+### Primary row numerical preparation and iteration
+
+`engine.pose_primary_solver` reconstructs complete preparation0x19e55d0 and
+iteration0x19e5710. Both operate on the first uint16 body index and the row's
+uint32 result index. The second body index is not read by these routines.
+Body data has64 bytes, body state32 bytes and each result16 bytes. The descriptor
+result slot is followed by pointers to body data and body state.
+
+Let `d` be row+0x20, `a` row+0x30, and `M0..M3` the four vectors in the selected
+body-data record. All operations below round to float32. Dot products mask out
+the fourth lane and reduce as `(x+y)+(z+0)`, while state updates use all four lanes.
+
+```python
+weighted_linear = M3 * d
+weighted_angular = M2 * a.z + (M1 * a.y + M0 * a.x)
+denominator = (dot(weighted_angular, a) + dot(d, weighted_linear)) + row60.x
+row40 = broadcast(float32(1 / -denominator))
+state_linear += cached_result * weighted_linear
+state_angular += cached_result * weighted_angular
+```
+
+Preparation stores the reciprocal at row+0x40, filling the previously untouched
+field in the builder output. The original calculates four reciprocal lanes then
+broadcasts lane0; the finite independent implementation computes the surviving
+lane. Cached results are applied componentwise to both state vectors. This makes
+the earlier cache seeding observable as a body-state contribution, not merely
+retained bookkeeping. The exact physical units and body-data producer are still
+external dependencies.
+
+One iteration performs:
+
+```python
+speed = dot(a, state_angular) + dot(d, state_linear)
+candidate = row40 * (broadcast(speed) + row10) + old_result
+new_result = max(candidate, +0)  # lane-wise, ties choose positive zero
+change = new_result - old_result
+state_linear += change * weighted_linear
+state_angular += change * weighted_angular
+if row50_u64 != 0:
+    vector_at(row_base + 16 * row50_u64) += new_result
+result = new_result
+```
+
+The optional accumulation adds the new result, not its increment. In our recovered
+link builder the primary row's row50 is zero. The general routine nevertheless
+supports a nonzero row-relative vector slot; the API requires enough retained
+bytes to represent that storage and does not follow arbitrary pointers. Values
+are restricted to finite nonsingular arithmetic. Native NaN/MAXPS behavior,
+exception masks, aliases and invalid offsets have not been generalized.
+
+[512 numerical sequences](../../native/snow_host/pose_primary_solver_validation.json)
+execute complete original preparation followed by three complete iterations each,
+with no intercepted calls. All row, body-state and result bytes match after every
+stage, including untouched records and optional accumulation. That is512 native
+preparations and1536 native iterations. A separate synthetic composition test now
+runs builder output through actual reconstructed primary preparation/iteration
+and then feedback; it does not substitute an external result. Secondary tangent
+rows are deliberately outside that test's scope, so this is not a complete contact
+solve or a whole-engine convergence claim.
+
+The preparation dispatcher routes the layout's primary112-byte rows through this
+pair. It reads the primary traversal count at layout+0xc8, corresponding to
+context+0x108, and the secondary traversal count at layout+0xe0, context+0x120.
+These are distinct from the builder's incrementing counters+0xa4/+0xbc. Their
+population must be respected when connecting the whole dispatcher; equal counts
+must not be assumed merely because the builder test filled that many rows. The
+secondary112-byte preparation target is0x19ef170 and its numerical coupling
+remains the next unresolved part of this row family.

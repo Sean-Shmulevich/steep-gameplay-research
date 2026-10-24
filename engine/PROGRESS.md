@@ -7641,3 +7641,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   384 complete native wrapper/control runs match with numerical services replaced
   by recording/mutating callbacks. Zero iterations still prepare. Numerical row
   preparation and iteration remain the next unresolved consumers.
+- Recovered complete one-body primary preparation and iteration equations,
+  including reciprocal denominator, cached-result state contribution, nonnegative
+  accumulated results, state increments and optional row-relative accumulation.
+  512 native preparations plus1536 iterations match all bytes without interception.
+  Builder-to-primary-solve-to-feedback now uses computed results in a synthetic
+  test. Tangent coupling, body-data production and whole dispatch remain open.

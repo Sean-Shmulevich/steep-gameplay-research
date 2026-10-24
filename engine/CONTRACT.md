@@ -434,3 +434,11 @@ prepares, resets the result-slot cursor once before iteration, and retains curso
 changes thereafter. Only phase0x10000000 temporarily substitutes unit scalars and
 restores their original raw bits on normal return. Numerical solve, exceptions,
 thread safety and allocation remain external.
+
+Primary numerical solve: `prepare_pose_primary_row` fills reciprocal row40 and
+applies cached result lanes to the selected first-body state.
+`iterate_pose_primary_row` projects the row response, clamps accumulated results
+to nonnegative lanes and applies their increments to state. Optional row-relative
+accumulation requires retained extra bytes. Finite nonsingular arithmetic and
+supplied64-byte body data/32-byte state records are required. No tangent coupling,
+body-data producer, alias policy or complete solver convergence is claimed.
