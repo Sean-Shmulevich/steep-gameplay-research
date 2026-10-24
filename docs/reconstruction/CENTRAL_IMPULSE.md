@@ -14884,3 +14884,40 @@ unchanged. Synthetic cases cover selector bytes 0/1/2, positive/nonpositive
 frequency scales, shallow depth, override and preferred adjustment. This closes
 local composition without claiming actual game tuning, preceding composite
 producer timing, physical-mode dispatch or subsequent solver equivalence.
+
+### Pose record submission boundary
+
+`engine.snow_pose_record.pack_pose_record` converts a supplied 0x100-byte
+record into supplied initialized 0x120-byte storage. This is a byte-layout API,
+not a live pointer API. The runtime 16-byte vector mask is required explicitly.
+The saved image contains zero at that mask location; its initialization and live
+value have not been established. Assuming an XYZ-preserving/W-clearing mask
+would therefore overstate the evidence.
+
+The converter reads eight overlapping 16-byte windows at source offsets i*12,
+ANDs each with the mask and stores at destination i*16. It copies source
+0x60..0xd7 to destination 0x80..0xf7. For each of three tail groups beginning
+at source 0xd8, 0xe4 and 0xf0, it copies two individual flag bytes and the
+32-bit words at group+4 and group+8 into destination groups 0xf8, 0x104 and
+0x110. Finally source byte 0xfc goes to destination 0x11c. Other destination
+bytes retain their initialized values. No numerical conversion occurs.
+
+The submission wrapper optionally exchanges the first two 64-byte blocks.
+Its forwarding thunk supplies receiver+0x18 as the source and receiver+0x10
+as the linked destination object. Only request byte exactly 1 sets the
+notification argument; other nonzero values do not. Downstream, the converted
+record is copied through a field-copy routine to linked-object storage at +0x70,
+then an optional body-notification call runs. Its complete effects are unresolved.
+
+Build-specific evidence anchors: forwarding thunk RVA 0x13f7180, submission
+wrapper 0x18aee00, converter 0x1942450, mask 0x3336890 and field-copy wrapper
+0x1942440. The independently callable conversion and swap preserve arbitrary
+bit patterns, including nonfinite float representations. Input size validation
+is authored API behavior. Source/destination aliasing is excluded.
+
+[Validation receipt](../../native/snow_host/pose_record_validation.json):
+320 complete original converter runs, 320 separate native swap fragments and
+all 256 request bytes match exactly. Synthetic source, destination and mask
+bytes only, with no intercepted calls. These separate checks do not establish
+connected submission, temporary constructor defaults, live ownership, solver
+application, notification semantics or the actual runtime mask value.

@@ -7355,3 +7355,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   without intercepted calls; prepared arrays, final records and unchanged source
   coefficients verified. Synthetic profiles/defaults only; earlier producer phase,
   live body identities and downstream solver remain unresolved.
+- Recovered pose record packing, optional frame-block swap and exact-one
+  notification request. Verified 320 original conversions, 320 swap fragments
+  and all 256 request bytes. Validation exposed an unresolved runtime mask;
+  the API requires it explicitly rather than assuming XYZ/W semantics. Temporary
+  defaults, connected storage/notification and solver consumption remain open.

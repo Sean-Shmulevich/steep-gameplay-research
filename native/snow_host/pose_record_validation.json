@@ -1,0 +1,14 @@
+{
+  "conversion_cases": 320,
+  "frame_swap_cases": 320,
+  "notification_cases": 256,
+  "bit_exact": true,
+  "scope": "Complete original converter, separate native swap fragment and complete forwarding thunk; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic arbitrary source, initialized destination and explicit runtime masks; mask initialization unresolved; no live records",
+    "Separate fragments do not prove connected submission or solver application",
+    "Temporary construction, downstream storage, body notification and ownership remain external"
+  ],
+  "game_files_included": false
+}
