@@ -1,0 +1,19 @@
+{
+  "cases": 90,
+  "passed": true,
+  "range_rva": [
+    "0x516ae0",
+    "0x516ca9"
+  ],
+  "sha256": "b5369bf60ed4dec8342709c6abb206af6ed3bfba43fcd8b49997b887becf6f1d",
+  "scope": "Original local dispatcher with synthetic uncontended lock, deferred flags zero, thread-ID and vector callbacks intercepted",
+  "checks": [
+    "route",
+    "receiver depth",
+    "vector contents",
+    "native return",
+    "lock release",
+    "dispatch depth restored"
+  ],
+  "game_files_included": false
+}

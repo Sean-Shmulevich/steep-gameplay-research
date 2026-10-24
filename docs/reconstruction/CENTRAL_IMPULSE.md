@@ -11936,3 +11936,40 @@ without asserting a portable NaN payload. The virtual predicate and gain lookup
 are intercepted, and the fixture uses the embedded entity-transform path. External
 transform resolution, inactive handles and live callback selection remain outside
 this validation.
+
+### Motion vector dispatcher contract
+
+[`markup_vector_dispatch`](../../engine/markup_vector_dispatch.py) now connects
+the decoded local formulas to their state routes. Current mode is the motion
+machine field +8, not an incoming event number. The owner at +0x10 supplies outer
+state at +0x18 and child at +0x20; an inner state is read only on outer state zero.
+Receiver depth counts child links below that owner.
+
+| Current mode | Outer state | Inner state | Local operation | Receiver depth | Native return |
+| --- | --- | --- | --- | --- | --- |
+| Nonzero | Not read | Not read | Preserve existing output | None | 1 |
+| 0 | 1 | Not read | Projection helper 0x516f60 | 1 | 0 |
+| 0 | 3 | Not read | Direction helper 0x516cb0 | 1 | 0 |
+| 0 | 0 | 5 | Projection helper 0x516e70 | 2 | 0 |
+| 0 | Other combinations | As needed | Write four positive-zero lanes | None | 0 |
+
+The callback's return is ignored by the dispatcher. The dispatcher's own return
+distinguishes nonzero current mode from the mode-zero branch, not success of
+vector generation. A helper producing NaNs or a zero vector still receives the
+mode-zero return value. ID 84 ignores that result in turn.
+
+`select_vector_route` returns descriptive labels and `dispatch_vector` performs
+preserve/zero/external-callback behavior on caller-owned vector storage. These
+functions do not implement the native lock or deferred-transition epilogue.
+The caller must resolve fresh state and receiver ownership; no native execution
+permission follows from obtaining a route label.
+
+[90 original-instruction cases](../../native/snow_host/markup_vector_dispatch_instruction_validation.json)
+matched route, receiver depth, vector contents and return value. The actual
+uncontended lock acquire/release and active-dispatch depth instructions ran in the
+emulator; thread identity and vector callbacks were intercepted, and deferred
+flags were zero. Final lock ownership/depth and dispatch depth were checked.
+This is not validation of contention, reentrant state mutation, pending-transition
+processing or a guarantee that pre-update selectors survive ID-84's earlier
+motion action unchanged. The latter is why live selectors should be sampled at
+the relevant service boundary before attributing a vector to a branch.

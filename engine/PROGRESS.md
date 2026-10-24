@@ -6968,3 +6968,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   vector projection above 0.01. Parallel high-magnitude cases retain native NaN
   behavior instead of borrowing the other branches' fallback. Live activation
   and physical field units remain open.
+- Motion vector dispatcher now joins decoded formulas to exact state routes,
+  distinguishing preserve-output mode from zero-output fallback. Ninety original
+  instruction cases match routes, receiver depths, vectors and return values;
+  uncontended lock/depth cleanup also checked. Deferred transitions and live
+  service-boundary state selection remain open.

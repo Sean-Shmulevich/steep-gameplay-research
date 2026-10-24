@@ -222,3 +222,9 @@ gates and an explicit RSQRT seed service. It preserves the 0.01 magnitude gate,
 reverse-only fallback and unguarded cross normalization. Internal nonfinite
 results propagate; no invented parallel-vector recovery is supplied. Native
 predicate, transform resolution, units and state selection remain external.
+
+`markup_vector_dispatch` selects from raw uint32 current mode/outer/inner states.
+Nonzero mode preserves the four-lane output and returns 1; mode zero dispatches
+one of three external helpers or zeroes output, returning 0. Only needed state
+arguments are validated. Native locking, deferred work, live receiver resolution
+and callback exceptions remain outside this local orchestration contract.
