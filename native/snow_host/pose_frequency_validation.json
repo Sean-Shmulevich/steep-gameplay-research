@@ -1,0 +1,18 @@
+{
+  "cases": 320,
+  "axis_outcomes": {
+    "profile": 226,
+    "default": 572,
+    "override": 111,
+    "shallow": 51
+  },
+  "bit_exact": true,
+  "scope": "Original three-axis frequency preparation with native compiled curve calls and all finite valid-field branches",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic profiles and supplied initial defaults; no intercepted calls",
+    "Protected invalid-field paths and nonfinite arithmetic excluded",
+    "Physical axis labels and live profile identities unresolved"
+  ],
+  "game_files_included": false
+}

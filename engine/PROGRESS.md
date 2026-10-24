@@ -7340,3 +7340,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   ratios match 320 native cases with actual compiled evaluators and no call
   substitutions. Synthetic curves only; live profiles, frequency preparation,
   mass-like producer and solver behavior remain unresolved.
+- Recovered pose frequency preparation with positive-scale gating, supplied
+  defaults, override Z curve and shallow X=20 after curve evaluation. Outputs
+  match 320 native cases without intercepted calls. Default global initialization,
+  live profile meaning, mass-like producer and connected solver response remain
+  unresolved; no anatomical axes or units inferred from constants alone.

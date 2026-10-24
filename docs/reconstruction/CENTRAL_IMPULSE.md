@@ -14748,3 +14748,48 @@ bit for bit. Native speed-curve calls and inlined immersion evaluation execute
 without interception. This removes curve-return substitutions for this local
 preparation, but the synthetic tables do not establish actual game tuning,
 profile identity, physical units or the solver response.
+
+
+### Pose frequency preparation
+
+`engine.snow_pose_frequency.prepare_pose_frequencies` reconstructs
+RVA 0x13fb0e7..0x13fb34c. Its incoming XYZ defaults are copied earlier from a
+global three-float value at RVA 0x333bb28. The portable API requires those defaults
+explicitly; zero bytes in the static memory image do not prove initialized live
+values. Valid configuration and finite fields are preconditions.
+
+Frequency preparation runs Y, Z, X and stores XYZ at runtime+0xb70/+0xb74/+0xb78.
+For ordinary axes with a positive configured scale it samples the speed curve,
+then immersion curve, and computes `(speed_gain * scale) * immersion_gain` with
+a float32 rounding after each multiplication. A nonpositive scale preserves the
+incoming default and skips those curve calls. Profile fields relative to config:
+
+| Axis | Scale | Valid byte | Speed curve | Immersion curve |
+| --- | --- | --- | --- | --- |
+| X | +0x1c8 | +0x1cc | +0x1d0 | +0x208 |
+| Y | +0x240 | +0x244 | +0x248 | +0x280 |
+| Z | +0x2b8 | +0x2bc | +0x2c0 | +0x2f8 |
+
+There are two exceptions. If receiver+0x10c is positive and config+0x938 is
+positive, Z uses `override_curve(receiver_override) * config_override_scale`,
+where the curve is config+0x838 and the scale-valid byte is +0x93c. This skips the
+ordinary Z profile. Otherwise Z falls back to its ordinary positive-scale rule.
+For X, after both ordinary curve evaluations, runtime+0x9fc <=float32(0.03)
+selects the constant 20 instead of their product. This shallow rule only applies
+when X scale is positive; it does not replace an inactive axis's default. Both
+curves still execute before the constant is selected.
+
+The resulting values feed the previously reconstructed frequency-to-spring
+conversion. Their axis names here describe storage components, not anatomical
+pitch/roll/yaw. No unit label is inferred solely from the value 20. The override
+field is shared with earlier velocity/orientation branches, but its device or
+sport meaning remains unresolved.
+
+The [frequency receipt](../../native/snow_host/pose_frequency_validation.json)
+checks 320 original-fragment cases with no intercepted calls. Native compiled
+curve evaluations execute against synthetic profiles. All three output values
+match exactly across default retention, ordinary profiles, override Z and shallow
+X paths. Tests cover threshold equality, positive-scale gating and fallback when
+override scale is nonpositive. Global default initialization, actual tuning,
+protected invalid-field handling and live solver response remain outside this
+local preparation.
