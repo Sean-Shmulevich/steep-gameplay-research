@@ -1,0 +1,13 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete original axis-rotation helper including native dispatch-zero trigonometry; reconstructed wrapper receives observed trig return values",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonzero synthetic axes; 80 threshold-identity cases",
+    "Angles bounded to [-6,6] radians; no native exceptional-value equivalence",
+    "Trigonometric implementations remain explicit services in the portable helper",
+    "No live branch activation or caller angle producer proof"
+  ],
+  "game_files_included": false
+}

@@ -13957,3 +13957,52 @@ reciprocal-square-root seeds and no intercepted calls. Tests additionally cover
 preserving a non-unit middle axis, removing the parallel direction component,
 and rejecting a singular alignment without inventing recovery. This does not
 prove that the alignment branch ran in the earlier live capture.
+
+
+### Shared basis axis rotation
+
+`engine.snow_axis_rotation.rotate_basis_axis` reconstructs the finite-input
+arithmetic of RVA 0x36ba50..0x36bbb0, shared by the remaining angle-driven basis
+branches. Its arguments are destination, input vector, axis, angle, and an axis
+length threshold. Angle is in radians; the native helper halves it before
+calling sine at 0x1c808c0 and cosine at 0x1c803c0. There is no persistent state.
+The supplying caller's angle and threshold producers are not reconstructed here.
+
+With separately rounded float32 operations, its contract is:
+
+```text
+length = sqrt(axis.x*axis.x + (axis.y*axis.y + axis.z*axis.z))
+half = angle * 0.5
+scale = supplied_sine(half) / length
+q.xyz = scale * axis.xyz
+q.w = supplied_cosine(half)
+if length <= threshold: q = [0,0,0,1]
+d = vector.x*q.x + (vector.y*q.y + vector.z*q.z)
+c = packed_cross(q, vector)
+output = ((d*q + c*q.w) + (q.w*q.w - 0.5)*vector) * [2,2,2,0]
+```
+
+Both trig calls occur before the threshold selects identity. Axis W is discarded
+when constructing the quaternion; input vector W participates in packed
+arithmetic, with final output W multiplied by zero. This is not permission to
+replace every intermediate W with zero. The finite-domain API rejects zero axis
+length and nonfinite inputs/results by authored policy. The native helper still
+divides by length before selecting identity, so exceptional-value behavior and
+floating-point exception flags are outside this reconstruction.
+
+The XYZ expression is quaternion vector rotation in derived mathematical terms.
+It supports non-unit input axes because length normalization is internal. An
+identity selection preserves XYZ, but output W is not preserved. The exact
+packed multiply/add order is retained rather than replaced by a generic rotation
+library. The sine and cosine services explicitly separate the recovered wrapper
+from unresolved runtime math dispatch and large-angle reduction. Using Python
+`math.sin` and `math.cos` is an approximation service, not native bit equivalence.
+
+The [rotation receipt](../../native/snow_host/basis_rotation_validation.json)
+records 320 exact output matches against the complete original helper, including
+execution of its original dispatch-zero trig routines. The portable wrapper
+receives their observed return values. Eighty cases select identity through the
+threshold. Synthetic angles span [-6,6] radians; axes have finite nonzero lengths.
+No calls are intercepted. Tests separately check a right-hand quarter turn with
+a non-unit axis, inclusive threshold behavior, trig service order, and zero-axis
+rejection. This does not prove activation or update cadence in live riding.

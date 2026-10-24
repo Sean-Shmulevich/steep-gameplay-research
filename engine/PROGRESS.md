@@ -7258,3 +7258,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Output and saved cache match 256 original-instruction cases with observed
   rsqrt seeds. Non-unit preserved axes and singular-input rejection tested;
   prepass, direction producer, branch activation and live cadence remain open.
+- Reconstructed shared basis axis rotation with internal axis normalization,
+  inclusive length-threshold identity selection, and packed quaternion/vector
+  arithmetic. Matched 320 full native-helper cases using observed trig returns,
+  including 80 identity cases. Native trig services, exceptional values, caller
+  angle/threshold producers and live branch activation remain explicit boundaries.
