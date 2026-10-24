@@ -187,3 +187,78 @@ It does not identify event classes, prove this evaluator is active on the captur
 actor, or connect delivery to markup IDs 84/92. The next observation should identify
 a nonempty queue's event tables and handler calls, with owner and request identity,
 rather than search again for a generic three-array producer.
+
+## Named event types and delivery distinctions
+
+The metadata type checked by `0x140d8aa80` is now identified as `AnimEvent`:
+its target global at RVA 0x2e7fe38 points to descriptor RVA 0x2e85110, whose
+name field points to the literal `AnimEvent`. This names the optional resource
+metadata used by the timestamp filters; it does not name every queued payload.
+
+The producer's helper `0x1409c3670` recognizes two payload type families through
+separate descriptor-interval checks. Their concrete constructor-installed tables
+provide the following observation signatures:
+
+| Payload type | Table RVA | Type getter RVA | Delivery slot 0x50 | Preparation slot 0x60 |
+| --- | --- | --- | --- | --- |
+| AudioEventSeed | 0x1eecd58 | 0xa28270 | 0xa45ec0 | 0x75e600, return only |
+| SoundSetEventSeed | 0x1eece18 | 0xa24490 | 0xa45ec0 | 0x75e600, return only |
+
+These are static signatures for this image. A derived payload may use a different
+table, and neither table has yet been observed in the captured actor's queue.
+The names come from descriptors, not guesses from the surrounding functions.
+See the [type and annotation receipt](../../native/snow_host/animation_event_types_validation.json).
+
+The producer helper performs this local annotation:
+
+```python
+def annotate_event(payload, supplied_u32):
+    if payload is None:
+        return False
+    if is_a(payload, AudioEventSeed):
+        resource = payload.resource
+        if resource is not None and resource.byte_68 & 1 and supplied_u32 != 0:
+            resource.word32_64 = supplied_u32
+            return True
+    elif is_a(payload, SoundSetEventSeed):
+        resource = payload.resource
+        if resource is not None and resource.byte_40 & 1 and supplied_u32 != 0:
+            resource.word32_3c = supplied_u32
+            return True
+    return False
+```
+
+The `elif` is significant: an object accepted by the first type check does not
+fall through to the second when its resource gate fails. Thirty-six
+original-instruction cases cover both recognized families and an unrelated type,
+resource presence, flag gating, and values zero/one/uint32-max. Type predicates
+are intercepted; the helper's actual stores and return byte execute.
+
+In the timestamp producer, true optionally sets a caller-provided byte to one.
+False does **not** reject the event: both outcomes continue to preparation and
+queue append. Therefore this byte must not be exposed as a universal
+"event delivered" or "motion released" indication.
+
+Both named payloads share this delivery wrapper:
+
+```python
+def deliver_named_seed(seed, first_context, second_context, extra):
+    manager = load_global_manager()
+    # The wrapper ignores first_context and replaces extra with zero.
+    if seed.resource is not None:
+        resolved = resolve_resource(manager, seed.resource)
+        dispatch_seed(seed, second_context, resolved, 0)
+```
+
+The wrapper is `0x140a45ec0`, the global getter `0x1409b3e00`, the resource-gated
+helper `0x1408fd240`, and downstream dispatcher `0x1408fd290`. The latter obtains
+an object through resource virtual slot 0x50, stores a retained handle to the
+second context, selects a downstream submission path, then passes the object to
+a final helper at `0x140424750`.
+Those calls are statically inspected, not executed by the annotation fixture.
+Their final effects and synchronization are not reconstructed here.
+
+For the next live capture, retain the event table, delivery target and both
+context identities. Classify these two signatures separately from unknown
+payloads. The queue can carry audio-related events, so queue activity alone is
+not evidence of a markup notification or a snow-motion release.

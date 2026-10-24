@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "annotation_cases": 36,
+  "types": [
+    {
+      "name": "AudioEventSeed",
+      "descriptor_rva": "0x2e42c80",
+      "table_rva": "0x1eecd58",
+      "type_getter_rva": "0xa28270",
+      "delivery_rva": "0xa45ec0",
+      "prepare_rva": "0x75e600"
+    },
+    {
+      "name": "SoundSetEventSeed",
+      "descriptor_rva": "0x2e42de0",
+      "table_rva": "0x1eece18",
+      "type_getter_rva": "0xa24490",
+      "delivery_rva": "0xa45ec0",
+      "prepare_rva": "0x75e600"
+    }
+  ],
+  "metadata_type": "AnimEvent",
+  "source_image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "private_script_sha256": "cb8866696826f16d8712a1d070aafb9374993e06737727dde8366bc9a0c6704a",
+  "annotation_instruction_sha256": "686672979390467b1ddeb7c2674611fb664c726e61d1a111f512a90d4cc000bf",
+  "evidence": "Descriptor names, constructor and table slots inspected in mapped image; original annotation helper executed with synthetic resources and intercepted type predicates",
+  "limitations": [
+    "No live event instance or handler execution observed.",
+    "Type predicates intercepted in instruction cases; descriptor relationships checked separately.",
+    "Shared delivery wrapper and downstream allocation/dispatch are static findings only.",
+    "No audio output or motion-release relationship is established."
+  ]
+}
