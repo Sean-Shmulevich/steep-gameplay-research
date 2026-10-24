@@ -1,0 +1,21 @@
+{
+  "cases": 256,
+  "direction_paths": {
+    "rotated": 128,
+    "up": 64,
+    "corrected": 64
+  },
+  "bit_exact": true,
+  "scope": "Continuous original valid-config prepass entry to return; basis, auxiliary output, gate and curve argument ordering",
+  "intercepted_services": [
+    "Profile curve calls return explicit synthetic samples",
+    "Normal-Z angle lookup returns explicit acos sample"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Observed native trig and rsqrt outputs supplied to model",
+    "Finite nonsingular synthetic geometry; protected invalid-config path excluded",
+    "No live producer mapping, timing, memory ownership or full callback proof"
+  ],
+  "game_files_included": false
+}

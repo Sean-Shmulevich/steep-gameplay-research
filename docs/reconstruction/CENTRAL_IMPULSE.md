@@ -14474,3 +14474,52 @@ portable model receives observed trig results and rsqrt seeds. Direction bytes
 match exactly, including synthetic fourth lanes and non-unit vectors. The
 near-up bypass is covered by inspected instructions and a unit test, not this
 fragment corpus. Live producers, normal conventions and phase timing remain open.
+
+
+### Connected basis prepass
+
+`engine.snow_basis_prepass.basis_prepass` composes the recovered direction gain,
+slope geometry, direction projection, optional control angle and final basis
+construction. It covers the finite nonsingular path of RVA 0x13fb3e0..0x13fbbe8
+when config+3 is nonzero. Config+3 zero calls a protected target before normal
+entry selection; the independent API explicitly rejects that unresolved path.
+It accepts a coherent entry snapshot and named numerical/curve services rather
+than acquiring native memory or guessing missing producers.
+
+The composition preserves these important distinctions:
+
+- Any nonzero mode byte selects published frame vector 1 as the initial selected
+  direction; mode zero selects incoming_axis0. Only mode exactly 1 is eligible
+  for the optional control-angle/gate block.
+- Immersion selector exactly 1 selects primary_immersion; all other byte values
+  select alternate_immersion for curves. The final replacement decision always
+  uses primary_immersion <= 0, captured before geometry and curve calls.
+- Normal Z >=float32(0.999) bypasses gain and slope services. The remaining
+  projection, optional angle and finalization still run.
+- The auxiliary direction is the earlier slope-produced direction, not a vector
+  copied from the eventually replaced basis. It remains published even when
+  final basis replacement selects the captured vectors.
+- Prepass changes the candidate gate byte only when its exact mode/inhibit gate
+  allows that block. It does not mutate the later override flags or saved basis.
+
+`frame_basis` supplies published frame vectors +0x80/+0x90/+0xa0 in storage
+order. `control_angle` supplies the scalar/flag inputs of the local angle kernel;
+the connected API derives its mode, speed and selected immersion arguments.
+Named curves are direction_control, direction_speed, control_speed,
+control_immersion, finish_speed and finish_immersion, corresponding respectively
+to config offsets +8, +0x40, +0x158, +0x190, +0xe8 and +0x120. Their callable
+interface is an independent design choice. Callers own curve contents and sample
+provenance. State and curve containers are not mutated by the API. Returned
+branch labels and intermediate angles are authored inspection diagnostics.
+
+The [connected-prepass receipt](../../native/snow_host/basis_prepass_validation.json)
+executes the continuous original valid-configuration routine from entry through
+return in 256 cases. Final basis, auxiliary direction, candidate gate byte, curve
+arguments and service order match exactly. Direction paths include 128 rotated,
+64 near-up and 64 corrected cases. The corpus varies mode bytes 0/1/2, immersion
+selection, primary replacement, preferred/inhibit flags and signed gain inputs.
+Original trig helpers run; their results and rsqrt seeds are observed and supplied
+to the portable model. Profile curves and normal-Z lookup are explicitly
+intercepted with finite synthetic samples. The original lookup itself was
+validated separately. This closes local stage composition, not live resource
+identity, timing, native math portability or the full override callback.

@@ -7309,3 +7309,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   and W. Matched 320 native geometry fragments with supplied slope lookup and
   observed trig/rsqrt results. Near-up bypass tested separately; native lookup
   composition, full prepass and live vector meanings remain open.
+- Joined all recovered valid-config prepass stages into one inspection API.
+  Continuous original entry-to-return matches in 256 cases for final basis,
+  auxiliary direction, gate and curve ordering, including near-up and replacement.
+  Curves/normal-Z lookup supplied; native trig/rsqrt observed. Protected invalid
+  configuration, live producer/phase ownership and full callback join remain open.
