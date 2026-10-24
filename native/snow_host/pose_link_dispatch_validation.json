@@ -1,0 +1,18 @@
+{
+  "schema": "pose-link-dispatch-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete dispatcher with original array accessors and four builder bodies replaced by recording services",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994970",
+  "comparisons": [
+    "ordered builder selection and all four call arguments",
+    "unchanged payload bytes",
+    "post-callback context flags, link flags, count and replaced slot storage"
+  ],
+  "limits": [
+    "Builder equations are not executed by this validation.",
+    "128 cases enable callback mutations to distinguish captured gates from reloaded slots.",
+    "Retained synthetic storage only; no live lifetime or arbitrary callback safety claim."
+  ]
+}

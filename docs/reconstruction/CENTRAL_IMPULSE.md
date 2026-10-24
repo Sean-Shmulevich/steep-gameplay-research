@@ -16804,3 +16804,47 @@ Both outputs and retained input bytes match. A synthetic composition test passes
 the selected profiles into coefficient evaluation, independently checking that
 default profiles are not substituted. This does not validate other builder
 families or establish physical units.
+
+### Link builder dispatch
+
+`engine.pose_link_dispatch.dispatch_pose_link_builders` reconstructs0x1994970.
+It visits a supplied retained link-pointer range in order. A link participates
+only when its flag byte+0x84 has bit0 set. The dispatcher captures first/second
+body pointers, context flags+0x38 low two bits and the link payload count. It then
+reads bit15 of the second body's metadata word, reached through body+0x30 and
+metadata+0x50. That bit chooses a builder pair for the whole link.
+
+For each captured payload slot, the original getter reloads the payload array
+pointer and returns the payload pointer from the16-byte key/pointer entry. Payload
+flag+0x114 bit0 gates the call. With captured context mode zero, a payload count
+at+0x110 greater than one selects the multi path. Every other case selects the
+single path, including an enabled payload with count zero.
+
+| Second metadata bit15 | Captured mode zero and payload count >1 | Service | Native builder |
+| --- | --- | --- | --- |
+| Clear | Yes | `metadata_clear_multi` |0x1991da0 |
+| Clear | No | `metadata_clear_single` |0x19933d0 |
+| Set | Yes | `metadata_set_multi` |0x1991110 |
+| Set | No | `metadata_set_single` |0x1992800 |
+
+Every service receives `(context, first_body, second_body, payload)`. These names
+describe branch conditions, not physical classes. The profile lookup, response
+coefficients and result binding reconstructed above belong to
+`metadata_clear_single`; they must not silently stand in for the other three
+builders. In particular, a nonzero context mode can send a multi-row payload to
+that builder.
+
+Captured link gates, count, body pointers and mode remain unchanged for the
+current traversal even when a builder callback changes their source fields.
+Upcoming slot pointers, payload flags and payload row counts are read as traversal
+advances. A later link captures its own current context mode. The independent API
+requires retained storage and supplied builder services; it does not reconstruct
+all four builder bodies or permit freeing the traversed range from a callback.
+
+[512 full offline dispatcher comparisons](../../native/snow_host/pose_link_dispatch_validation.json)
+run original array accessors and intercept only the four builder calls with
+recording services. They compare ordered service selection, all call arguments,
+retained payload bytes and callback-mutated state. The last128 cases enable
+callbacks that replace payload slot storage and change mode, metadata, link count
+and enable flags. These cases distinguish captured state from subsequent reads.
+This validates dispatch, not solver output, concurrent mutation or live safety.

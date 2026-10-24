@@ -382,3 +382,11 @@ Null maps select defaults; null table results remain null. Resource storage,
 lifetime, kind semantics and other builder families remain external. Returned
 profiles may feed `link_response_coefficients`; this does not establish material
 names or a live atomic read contract.
+
+Link builder dispatch: `dispatch_pose_link_builders` traverses a retained pointer
+range and calls four explicitly supplied services. It captures mode, body pointers,
+payload count and second-body metadata branch per enabled link, while reloading
+payload slots and payload gates/counts during traversal. Single-path labels include
+zero-row payloads and nonzero modes with multiple rows. This defines the reachability
+of the recovered metadata-clear/single builder fragments; the other builder bodies,
+concurrent lifetime and callback destruction safety remain outside the contract.

@@ -7605,3 +7605,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   distinct entry slots, kind masking, absent-map fallback and shared selectors.
   Added lookup-to-coefficient composition coverage. Resource kind semantics,
   asset ownership, lifetime and other builder families remain unresolved.
+- Reconstructed four-way link-builder dispatch and the precise activation of the
+  profile/response builder. 512 full native dispatch comparisons pass with builder
+  bodies replaced by recording services;128 cases enable callback mutations.
+  Captured per-link mode/metadata/count and reloaded payload storage are explicit.
+  The other three builder equations and concurrent lifetime remain unresolved.
