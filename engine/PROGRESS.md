@@ -7022,3 +7022,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   selected scalar is eligibility only, not magnitude; the separate runtime scalar
   scales the summed vectors. Live activation, body arithmetic and upstream curve
   production remain unproved. Nine focused portable tests pass.
+- Added float32 point-impulse body arithmetic with type/force/suppression gates,
+  transformed local center and supplied world inverse inertia. Original wrapper
+  and arithmetic match 288 synthetic cases; matrix helpers and backend dispatch
+  are intercepted. Fourteen related portable tests pass, including post-pending
+  submission composition. Native inertia production and live activation remain
+  external, and provenance-locked mathematical sources remain unchanged.

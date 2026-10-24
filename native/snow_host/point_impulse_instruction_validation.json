@@ -1,0 +1,17 @@
+{
+  "cases": 288,
+  "evidence": "original wrapper and inner arithmetic with synthetic bodies",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "linear_angular_bits_match": true,
+  "matrix_helpers": "intercepted; second supplies explicit world inverse inertia",
+  "backend_dispatch": "intercepted; request order verified",
+  "coverage": [
+    "type nibble 2 and forced entry",
+    "suppression bit 8",
+    "translated and rotated local center",
+    "zero and positive inverse mass",
+    "off-diagonal inertia",
+    "unchanged state on suppressed writes"
+  ],
+  "live_execution_proved": false
+}

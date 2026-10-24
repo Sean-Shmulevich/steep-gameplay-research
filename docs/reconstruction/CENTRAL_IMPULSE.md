@@ -12347,3 +12347,56 @@ point-impulse loops and later helpers provide leads for explaining residual body
 changes, but observing those calls alone would not isolate the earlier central
 pending submission. A further live probe must distinguish their call sites and
 preserve the ordering already established by the paired wrapper capture.
+
+### Point-impulse body arithmetic
+
+`engine.point_impulse.apply_point_impulse` reconstructs the finite-input wrapper
+and body arithmetic used by the two post-pending loops. It preserves the central
+wrapper's type-nibble gate, forced entry, suppression bit and requested backend
+dispatch. The native point wrapper at RVA 0x18aa180 calls inner arithmetic at
+0x18be8a0. Two matrix helpers are external dependencies in this implementation;
+the caller supplies the resulting world inverse inertia explicitly.
+
+With float32 rounding after every operation, the mathematical structure is:
+
+```text
+if low_nibble(kind) == 2 and not force:
+    return unchanged
+if suppression_bit_8_is_clear:
+    linear += inverse_mass * impulse
+    center = basis * local_center + translation
+    angular_impulse = cross(point - center, impulse)
+    angular += inverse_world_inertia * angular_impulse
+if force:
+    request_backend_dispatch()
+```
+
+The implementation preserves the inspected multiply/add ordering instead of
+using unrestricted host-precision matrix/vector expressions. Public matrices use
+row-major arrays; the native storage has padded columns. Center transformation
+uses the local center at body+0x128 and basis/translation at body+0x40/+0x70.
+The impulse and point are XYZ inputs; no timestep multiplication occurs here.
+The caller's selected timestep or runtime scaling belongs to upstream submission.
+
+This is a precision- and wrapper-specific companion to the older mathematical
+`reference.snow.apply_point_impulse`, not a silent replacement of that source.
+The current module does not build/cache world inertia, pin bodies, acquire locks,
+integrate orientation or execute backend dispatch. Zero inverse mass alone does
+not suppress the angular arithmetic; supplied inverse inertia still determines
+that effect. Suppression bit 8 prevents both velocity writes, even when force
+still requests downstream dispatch.
+
+[Original-instruction validation](../../native/snow_host/point_impulse_instruction_validation.json)
+ran 288 synthetic cases through the original wrapper and inner arithmetic.
+Both matrix helpers were intercepted and the second supplied the chosen world
+inertia; backend dispatch was intercepted. Linear and angular outputs matched
+bitwise, and helper/dispatch call order matched. Cases include type values 0, 2,
+18 and 255, force, suppression, rotated/translated local centers, off-diagonal
+inertia and zero/positive inverse masses. This does not validate matrix production
+or establish which point impulses ran during the live paired capture.
+
+Fourteen portable tests across point arithmetic, submission loops and motion
+sequences pass, including composition of a summed-loop submission into the new
+body model. The remaining measurement inputs for those contributions are each
+active record's vectors/point, runtime scale, body center/basis and world inertia,
+with their values at the actual submission boundary rather than a later snapshot.
