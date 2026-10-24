@@ -13759,3 +13759,31 @@ alongside the separately published forward/inverse matrices and update identity.
 That would distinguish a basis writer from a retained-cache path and identify
 which snapshot the decay consumer actually uses. Pointer equality alone would
 not prove freshness or safe lifetime.
+
+### Bounded frame-input observer
+
+`native/snow_host/snow_frame_inputs.{h,c}` prepares the owner-chain check without
+launching the game or invoking a callback. `snow_frame_inputs_observe` accepts an
+exact-read service, fresh actor identity and trusted image bounds. It validates
+the inspected actor/runtime tables, actor self-link and runtime backlink, then
+reads actor+0x190's receiver table and slot+0x40 target, frame owner, configuration
+mode byte, elapsed bits, three cached basis vectors and both published matrices.
+
+At most 46 reads of at most 16 bytes are issued. Two complete samples must agree
+including pointer identities. Output is zero on every failure. Pointer additions
+are range-checked; receiver table and callback must lie within supplied image
+bounds. Those range checks do not establish executable-page permissions or make
+the callback safe to invoke. All float lanes remain raw bits, including NaNs.
+
+The pointer fields are private session identities, not stable API handles. This
+observer adds no hook, write, callback invocation, process launch or recorder ABI
+change. Caller identity provenance, callback-phase attribution, lock/lifetime
+guarantees and scheduler generation remain external. Equality across two samples
+does not detect ABA, pin objects, or prove cache-to-matrix freshness.
+
+The native fixture covers all 46 read-failure positions, every cached/forward/
+inverse lane changing between samples, receiver/configuration/owner identity
+changes, equal-data owner replacement, image/range rejection and NaN preservation.
+Native compilation/execution, AddressSanitizer/UndefinedBehaviorSanitizer and
+Win64 cross-compilation pass. Recorder integration, overhead measurement and live
+receiver identification remain next; these tests do not establish live safety.

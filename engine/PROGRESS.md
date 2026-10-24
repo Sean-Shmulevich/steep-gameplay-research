@@ -7230,3 +7230,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Frame publication precedes the basis callback on this actor path, so later cache
   values cannot silently stand in for earlier frame inputs. No one-update delay
   claimed; concrete callback, intervening writers and live freshness remain open.
+- Added standalone bounded read-only frame observer for receiver table/callback,
+  cached basis, published transforms and mode/elapsed state. Requires two equal
+  identity-inclusive samples; at most 46 reads of <=16 bytes and zero on failure.
+  All read-failure positions, matrix-lane changes, equal-data owner replacement,
+  bounds and NaN preservation pass fixtures, sanitizers and Win64 compilation.
+  No recorder integration, launch or live identity/freshness claim yet.
