@@ -1,0 +1,22 @@
+{
+  "schema": "pose-group-lifecycle-validation-v1",
+  "constructor_cases": 384,
+  "pool_return_fragment_cases": 384,
+  "passed": 768,
+  "method": "offline Unicorn; full constructor and visible pool-return fragment without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "rvas": [
+    "0x19570f0",
+    "0x19572f4..0x1957302"
+  ],
+  "comparisons": [
+    "all 168 group bytes",
+    "constructor return identity",
+    "all 56 pool bytes"
+  ],
+  "limits": [
+    "Pool-return entry starts after unresolved protected call with resolved pool identity.",
+    "No deleting wrapper, cleanup or synchronization executes in this receipt.",
+    "Retained synthetic storage only; address reuse is not a lifetime guarantee."
+  ]
+}

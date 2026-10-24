@@ -7540,3 +7540,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native comparisons match pool bytes, chunk tails and storage-service arguments.
   Reused first words hold free links before construction; address reuse is not
   object identity. Protected synchronization and native lifetime safety stay open.
+- Reconstructed group constructor and visible pool-return publication. 384 full
+  constructor cases and384 return-fragment cases match all bytes without call
+  interception. Added return/acquire/reconstruct composition test. Inactive inline
+  tokens and unknown bytes survive construction; active counts define membership.
+  The protected wrapper and concurrent reuse remain unresolved.

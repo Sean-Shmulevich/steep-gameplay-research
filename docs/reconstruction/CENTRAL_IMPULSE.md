@@ -16235,3 +16235,35 @@ services intercepted. Cases include returned entries, chunk exhaustion/advance,
 new chunks, growth, usage wrap and null allocator results. Protected calls in the
 outer acquisition and deletion wrappers remain unresolved, so this is a serial
 storage model and does not establish safe concurrent allocation or native handles.
+
+### Group reconstruction after pool reuse
+
+`engine.pose_group_lifecycle.construct_pose_group` reproduces constructor
+RVA0x19570f0 over168 supplied bytes. It writes the supplied context-list index
+at+0xc, group table at+0, inline body pointer+0x20 with count0/capacity4, inline
+link pointer+0x50 with count0/capacity8, null pose pointer/count/capacity, and zero
+two-byte flags at+0xa0. It returns a copied byte record as an authored Python
+interface; native code writes in place and returns the same pointer.
+
+The constructor does not clear bytes+8..+0xb, either inline array's inactive
+entries, or bytes+0xa2..+0xa7. Reused storage can therefore contain old token-like
+values while its active counts are zero. Treating the inline tail as active
+membership, or treating untouched bytes as newly initialized state, is invalid.
+The module accepts explicit table/token identities and never reads a live address.
+
+`return_pose_group_storage` reconstructs only the visible publication fragment
+RVA0x19572f4..0x1957302 after cleanup and the first protected call. It reads the
+pool's old free head, writes that value to the returning group's first word,
+decrements uint32 usage with wrap, then publishes the group as free head. It
+requires an already resolved retained pool and a supplied first-word writer.
+It does not invoke the destructor, acquire synchronization or reject duplicate
+returns. The full protected wrapper remains outside this serial operation.
+
+[384 constructor and384 return-fragment comparisons](../../native/snow_host/pose_group_lifecycle_validation.json)
+match every group/pool byte with no instruction interception. Constructor cases
+also check returned identity; return cases include usage underflow. The return
+fragment begins with the pool already resolved, so this does not validate its
+protected predecessor or successor. A separate independent composition test
+returns storage, reacquires the same token through the recovered pool helper,
+and reconstructs it, verifying that the free link becomes the table word while
+inactive inline bytes survive. No live lifetime or concurrent-reuse claim follows.

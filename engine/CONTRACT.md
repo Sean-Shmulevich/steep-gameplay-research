@@ -291,3 +291,10 @@ fields and supplied free-link reader, chunk allocator and chunk-list growth.
 It preserves free-list precedence,168-byte slot arithmetic and uint16/uint32
 wrap. Returned tokens identify storage only. Construction, synchronization,
 generation identity and native allocator failure handling remain external.
+
+Group reconstruction after reuse: `construct_pose_group` replaces only defined
+constructor fields in168 supplied bytes and preserves inactive inline entries and
+unknown padding. Its returned copy is an authored interface. The separate
+`return_pose_group_storage` models first-word link write, usage decrement and head
+publication on an already resolved retained pool. It supplies no cleanup, locking,
+duplicate-return check, generation identity or live memory access.
