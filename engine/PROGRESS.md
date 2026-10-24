@@ -7707,3 +7707,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   callback mutations, repeated identities and raw-bit preservation. Method
   implementation and physical correction semantics remain unresolved; this does
   not claim the complete secondary pass is reconstructed.
+- Resolved the secondary body method for constructor0x18a8e70 and reconstructed
+  its translation, offset handling, axis-angle rotation and orthonormalization.
+  512 full native-method comparisons pass with scalar sine/cosine responses
+  supplied and native matrix helpers intact. Secondary-wrapper composition changes
+  the transform while restoring motion. General scalar-library internals, other
+  body classes and uninterrupted whole-secondary-pass validation remain open.

@@ -1,0 +1,17 @@
+{
+  "schema": "pose-body-integration-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete body transform update with native quaternion, composition and orthonormalization helpers; scalar sine/cosine supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18befb0",
+  "comparisons": [
+    "all retained body bytes",
+    "scalar-library call order and half-angle arguments"
+  ],
+  "limits": [
+    "Supplied float32 sine/cosine responses are test services, not a recovered scalar library.",
+    "Finite nondegenerate basis; zero and exact angular threshold covered.",
+    "Constructor-selected table only; not every live body class or whole scheduler."
+  ]
+}

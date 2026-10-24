@@ -512,3 +512,10 @@ state XYZ pairs, invokes supplied virtual-slot+0x10 with exactly1.0, and restore
 all24 prior motion bytes on normal return. Other method effects persist. Count is
 captured while later slots/state reload. The method's native effects, exceptions,
 aliases and live ownership remain outside this contract.
+
+Body integration: `integrate_pose_body` reconstructs the transform method selected
+by constructor0x18a8e70. It rotates/re-orthonormalizes above angular threshold2^-23,
+translates around the local offset, and preserves motion. General half-angle
+sine/cosine responses remain an explicit service. Finite nondegenerate arithmetic,
+this constructor-selected class and retained storage define the current domain;
+other virtual implementations and live class coverage are not assumed.

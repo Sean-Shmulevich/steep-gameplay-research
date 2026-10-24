@@ -934,3 +934,64 @@ include zero through18 entries, repeated bodies, arbitrary raw float encodings,
 method-side motion overwrites and changes to later slots/state. The checks prove
 the temporary assignment and restoration around that service, not its native
 implementation or a complete secondary solve. No live game session was used.
+
+### Constructor-selected body transform integration
+
+The secondary-pass virtual method is now resolved for a concrete constructor
+path. Constructor0x18a8e70 installs table0x29c99a8 at body+0. Its slot+0x10 contains
+0x18befb0. The same routine is called directly by group poststep helper0x1957a90.
+This is evidence for this constructed class, not proof that every live body uses
+that table. Destructor0x18be6b0 also reinstalls the table.
+
+`engine.pose_body_integration.integrate_pose_body` reconstructs0x18befb0 through
+0x18bf429. Its inputs are basis XYZ rows at+0x40/+0x50/+0x60, translation+0x70,
+local offset+0x128, linear motion+0x1a0, angular motion+0x1ac and a supplied scalar.
+It writes only the basis and translation XYZ components. In simplified algebra:
+
+```python
+center = position + transform(basis, local_offset)
+speed = length(angular_motion)
+if speed > float32(2**-23):
+    axis = angular_motion / length(angular_motion)
+    half_angle = float32(float32(speed * scalar) * 0.5)
+    sine, cosine = supplied_scalar_library(half_angle)
+    rotation = quaternion_basis(axis * sine, cosine)
+    rotated = [transform(rotation, row) for row in basis]
+    first = normalize(rotated[0])
+    orthogonal = rotated[1] - first * dot(first, rotated[1])
+    third = normalize(cross(first, orthogonal))
+    basis = [first, cross(third, first), third]
+position = center + scalar * linear_motion - transform(basis, local_offset)
+```
+
+The implementation preserves the inspected float32 operation order. The axis
+normalization denominator and the initial speed use separately evaluated square
+sums. The exact threshold does not enter the rotation branch. When the branch is
+skipped, the basis is not normalized. Offset subtraction is performed even then,
+so it must not be algebraically cancelled against the earlier addition.
+The supplied scalar's application is explicit; this alone does not assign units
+to every caller's input.
+
+Axis-angle helper0x18c10c0 calls scalar sine0x1c808c0 and cosine0x1c803c0, then the
+already reconstructed quaternion helper0x18c1140. Basis composition0x18c16e0 and
+orthonormalization0x18bb100 stay native in the comparison harness. General scalar
+sine/cosine internals are not yet reconstructed: the public API requires a
+`half_angle_trig` service when the rotation branch is reached. Test use of host
+sine/cosine supplies comparison values; it is not silently claimed as the native
+library implementation.
+
+[512 complete native integration comparisons](../../native/snow_host/pose_body_integration_validation.json)
+match every retained body byte and both scalar-library arguments, with only the
+sine/cosine responses supplied. Cases include positive/negative scalars,
+non-orthonormal input bases, nonzero offsets, zero angular motion and the exact
+threshold. Inputs and intermediate arithmetic are finite and nondegenerate;
+exceptional numeric behavior remains outside the API contract.
+
+For this body class, composing the secondary wrapper with this method changes
+position/orientation while restoring ordinary motion. An independent composition
+test verifies translation changes and motion restoration. The full native
+secondary wrapper plus this method has not yet been compared as one uninterrupted
+execution. Row production, other body classes and whole-group orchestration remain
+separate boundaries. The earlier section's unresolved virtual-method effects are
+therefore narrowed to class coverage and integration evidence, rather than an
+unknown effect for this constructor-selected path.
