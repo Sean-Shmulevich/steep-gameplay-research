@@ -1039,3 +1039,49 @@ The inspector uses the constructor-selected integration method directly; it does
 not identify a native class from input bytes. Arbitrary game state is not enough
 to justify that choice. Row generation, solving, collision handling, native object
 lifetime and the scheduler remain outside this entry point.
+
+### Secondary link row refresh
+
+`engine.pose_link_secondary_rows.refresh_pose_secondary_link_rows` reconstructs
+secondary dispatcher0x1993e50 and both branches of0x1990c70. This is a refresh of
+existing primary rows, not a fresh geometric row build. The dispatcher zeros
+context append counters+0xa4/+0xa8, traverses enabled links, and processes enabled
+payloads in order. Second-body metadata bit15 selects category0, stride112, or
+category1, stride128. The original row result indices and geometric fields must
+already be present from the preceding build.
+
+For each payload row, define `N` as its normal and `P1/P2` as its two local points.
+The first body always uses its local offset `C1`. Category1 also uses the second
+body offset `C2`; category0 uses zero for that second offset. Each relevant center
+is translation plus the basis-transformed offset. The native float32 order for
+each point is deliberately retained:
+
+```python
+center = translation + (Bz*Cz + (By*Cy + Bx*Cx))
+local = point - offset
+world = ((Bx*local.x + center) + By*local.y) + Bz*local.z
+error = dot(-N, world2 - world1) + float32(2 * context.field1c)
+response = min(float32(-context.field18 * error), positive_zero)
+```
+
+For category0, `center2` is the second translation directly. The dot product uses
+XYZ masking followed by two horizontal additions. The clamp preserves the SSE
+minimum's second-operand zero at equality. The implementation's supported domain
+is finite retained arithmetic; exceptional floating-point behavior is not claimed.
+The point expressions must not be replaced with an algebraically simplified
+transform, or with the first-pass helper's different addition grouping.
+
+The selected retained row receives the response broadcast at+0x10 and eight zero
+bytes at+0x50. The16-byte result selected by its existing uint32 index at+4 is
+cleared. Body headers, direction/angular-direction vectors, inverse coefficients,
+remaining padding, other result entries and planned traversal counts are left
+alone. Payloads are not rewritten. The independent adapter exposes the two
+category counters and retained row arrays explicitly; it does not allocate them.
+
+[512 full native dispatcher/refresh comparisons](../../native/snow_host/pose_link_secondary_rows_validation.json)
+match all context, row and result bytes with both metadata branches, multiple
+links/payloads, disabled gates and zero through four payload rows. Original array
+getters execute without interception. Existing headers and row storage are supplied
+as test inputs. This establishes the refresh behavior, not their first-pass
+production or a whole secondary solve. Category1 numerical solving remains an
+explicit unsupported boundary in `solve_pose_link_rows`.

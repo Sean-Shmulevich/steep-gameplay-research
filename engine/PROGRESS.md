@@ -7719,3 +7719,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   runnable JSON inspector with explicit response matching, synthetic example,
   before/after transform/motion and retained output bytes. Secondary row production,
   numerical solve and other live classes remain outside this composition check.
+- Recovered secondary link row refresh for both metadata branches. The pass reuses
+  first-pass geometry and result indices, updates clamped position-error response,
+  and clears per-row accumulation/results. 512 complete native dispatcher/helper
+  comparisons match without interception. This connects the existing primary-row
+  build to secondary solve preparation; category1 numerical solving and complete
+  group orchestration remain unresolved.

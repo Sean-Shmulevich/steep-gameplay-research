@@ -526,3 +526,10 @@ checks supplied trig response arguments. Missing, mismatched and unused response
 reject. The fixture is authored synthetic; its scalar-library responses are not
 claimed as native observations. Native wrapper→method composition is separately
 validated without interception by replaying observed scalar-library outputs.
+
+Secondary rows: `refresh_pose_secondary_link_rows` resets two append counters,
+refreshes enabled retained primary rows by metadata category, broadcasts a clamped
+position-error response, zeros row+0x50 and clears the existing indexed result.
+Geometry, headers and planned traversal counts persist. First-pass row storage,
+finite arithmetic and valid indices are required. Both refresh categories are
+recovered; category1 numerical solving is still unsupported.

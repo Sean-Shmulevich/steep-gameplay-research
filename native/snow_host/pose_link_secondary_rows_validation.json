@@ -1,0 +1,19 @@
+{
+  "schema": "pose-link-secondary-rows-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete secondary dispatcher and both native row-refresh branches with original payload getters; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1993e50",
+    "0x1990c70"
+  ],
+  "comparisons": [
+    "all context, row and result bytes including preserved geometry and counters"
+  ],
+  "limits": [
+    "Finite retained geometry and original row headers/results supplied; no first-pass row producer or numerical solver in this check.",
+    "Both metadata branches covered; category1 numerical solve remains unsupported.",
+    "No native allocation, aliasing or live ownership validation."
+  ]
+}
