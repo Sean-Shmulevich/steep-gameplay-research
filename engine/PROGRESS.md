@@ -7188,3 +7188,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases with original curve evaluations on synthetic tables. Upstream scalar
   producers, input-vector meaning, profile reachability and live attribution
   remain external; no steering/braking semantic label inferred.
+- Reconstructed the preceding decay-drive selection, including sign-product
+  suppression, squared drive, 0.7/0.3 scaling and direct override. Joined its
+  positive-input flag to speed-floor bypass and its gated flag to an inline
+  configuration selection. Both scalar outputs and flags match 384 original
+  instruction cases without interception. Field semantics, earlier producers
+  and live activation remain open; no blanket configuration override inferred.

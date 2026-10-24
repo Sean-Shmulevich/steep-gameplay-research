@@ -13448,3 +13448,48 @@ All four rate lanes and the Boolean match bitwise across 194 ordinary and 126
 suppressed cases. Tests cover exact threshold equality, W-only suppression,
 gain-after-clamp and the separate Z path. This closes a local rate producer,
 not live input semantics or the entire upstream profile-selection path.
+
+### Upstream velocity decay drive selection
+
+`engine.snow_velocity_correction.select_velocity_decay_drive` reconstructs the
+finite scalar branch at RVA 0x13f7cf1..0x13f7df6. This runs after the entry gate
+requiring runtime immersion+0x9f0 > float32(0.01). That activation is external
+to the helper. Its argument names describe arithmetic roles, not gameplay actions.
+
+```text
+positive = override_value > 0
+if float32(product_a * product_b) < 0 and retention_byte == 0 and not positive:
+    drive_value = 0
+selected_drive = float32(drive_value * drive_value)
+scaled_drive = float32(selected_drive * float32(0.3))
+additive_rate = float32(float32(float32(0.7) * runtime_scale)
+                       * max_second_on_equal(override_value, scaled_drive))
+inline_configuration_selected = positive and override_inhibit_byte == 0
+if inline_configuration_selected:
+    additive_rate = override_value
+    selected_drive = override_value
+speed_floor_bypassed = positive
+```
+
+Every multiply rounds independently to float32. The 0.7 constant is stored as a
+double equal to float32(0.7), absolute-valued then converted to float32. The raw
+byte tests distinguish zero from every nonzero byte, not just 0 versus 1. In the
+direct branch `selected_drive` is the unsquared override; do not square it again.
+Its later consumers are not reconstructed by this helper.
+
+Field provenance in the caller input record: product_a is +0x1ac, product_b is
++0x20, retention_byte is +0x1b9, override_value is +0x10c, drive_value is +0x1b0
+and override_inhibit_byte is +0x165. Runtime scale is runtime+0xa68. The resulting
+additive_rate feeds both curve-result additions in the next rate-assembly stage.
+The positive flag survives in R15B and bypasses the later speed-floor decision.
+The inline flag survives in R12B; at 0x13f7f40..0x13f7f53 it selects caller
+input+0x168 instead of runtime's configuration pointer at +0x15b0 for a scalar
+load. This does not mean that all later configuration reads use that choice:
+the contact strength and speed-floor paths still have their separately traced
+loads. Neither flag establishes a brake, tuck, jump or trick semantic name.
+
+The [drive selection receipt](../../native/snow_host/decay_drive_selection_validation.json)
+checks 384 original-instruction cases without intercepted calls. Both scalar
+outputs and both flags match exactly, with 95 direct overrides, 289 ordinary
+selections and 189 positive-input speed-floor bypasses. Upstream field producers,
+runtime selection and live activation remain open.

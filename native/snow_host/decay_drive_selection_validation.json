@@ -1,0 +1,18 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "branches": {
+    "direct_override": 95,
+    "ordinary": 289,
+    "floor_bypass": 189
+  },
+  "scope": "Original upstream scalar drive selection, no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite supplied caller fields and runtime scale",
+    "Initial immersion activation gate not executed",
+    "Gameplay meanings and upstream producers unresolved",
+    "No curve selection, decay, body setter or live attribution"
+  ],
+  "game_files_included": false
+}

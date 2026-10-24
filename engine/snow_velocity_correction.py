@@ -11,6 +11,35 @@ from reference.central_impulse import f32
 from .snow_post_pending import four
 
 
+def select_velocity_decay_drive(product_a, product_b, retention_byte,
+                                override_value, drive_value, runtime_scale,
+                                override_inhibit_byte):
+    """Finite upstream selection at RVA 0x13f7cf1..0x13f7df6.
+
+    Argument names describe local arithmetic, not recovered gameplay actions.
+    Activation (runtime immersion > float32(.01)) is external. Byte fields are
+    raw uint8 values, not assumed Boolean. See CENTRAL_IMPULSE.md, Upstream
+    velocity decay drive selection, for field provenance and override ordering.
+    """
+    for value in (retention_byte,override_inhibit_byte):
+        if type(value) is not int or not 0 <= value <= 255:
+            raise ValueError('Raw uint8 fields required')
+    product_a,product_b,override_value,drive_value,runtime_scale=map(
+        f32,(product_a,product_b,override_value,drive_value,runtime_scale))
+    positive=override_value > 0
+    if f32(product_a*product_b) < 0 and retention_byte == 0 and not positive:
+        drive_value=0.0
+    selected=f32(drive_value*drive_value)
+    scaled=f32(selected*f32(.3))
+    larger=override_value if override_value > scaled else scaled
+    additive=f32(f32(f32(.7)*runtime_scale)*larger)
+    inline=positive and override_inhibit_byte == 0
+    if inline:
+        additive=selected=override_value
+    return dict(additive_rate=additive,selected_drive=selected,
+                speed_floor_bypassed=positive,inline_configuration_selected=inline)
+
+
 def assemble_velocity_decay_rates(base_rate, xy_curve_value, z_curve_value,
                                   additive_rate, xy_gain, suppression_vector):
     """Finite local rate assembly at RVA 0x13f7e93..0x13f7f40.
