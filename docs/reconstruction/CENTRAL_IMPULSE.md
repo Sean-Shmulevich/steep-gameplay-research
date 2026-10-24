@@ -14707,3 +14707,44 @@ All six coefficients and three disabled fields match bit for bit. Cases include
 zero masses/frequencies, the upper stiffness clamp, negative frequencies and
 signed damping ratios. This validates local coefficient construction, not the
 original solver, effective-mass producer or live motion response.
+
+
+### Pose damping-ratio profiles
+
+`engine.snow_pose_damping.prepare_pose_damping` reconstructs the three-axis ratio
+preparation at RVA 0x13fae6e..0x13fb0e7. This path precedes the pose spring
+conversion. Each profile is selected from config+0x3d8; no contact-volume profile
+resolver is called here. The curve argument is the frame-owner scalar +0 for
+speed and the earlier selected runtime immersion for the other curve. Config
+byte +2 exactly 1 selects runtime+0x9f4; other values select +0x9f0.
+
+For each axis, the code samples the speed curve first, evaluates its compiled
+immersion curve, then stores:
+
+```text
+ratio = float32(float32(speed_curve(speed) * scale) * immersion_curve(immersion))
+```
+
+Evaluation/store order is Y, Z, X; returned/stored array order is XYZ at
+runtime+0xb7c/+0xb80/+0xb84. Relative to config+0x3d8, the field mapping is:
+
+| Source axis | Immersion curve | Speed curve | Scale | Scale-valid byte |
+| --- | --- | --- | --- | --- |
+| X | +0xb8 | +0xf0 | +0x208 | +0x20c |
+| Y | +0x128 | +0x160 | +0x210 | +0x214 |
+| Z | +0x198 | +0x1d0 | +0x218 | +0x21c |
+
+The native immersion lookup is inlined while speed uses the standard compiled
+curve helper. Both share the recovered start/index-scale/clamped-segment
+semantics. No ratio clamp or forced positivity is added after multiplication;
+curve contents determine normal behavior. The portable interface accepts resolved
+compiled curves and finite scales. It assumes valid native field gates and does
+not emulate protected invalid-configuration/nonfinite handlers.
+
+The [damping-profile receipt](../../native/snow_host/pose_damping_validation.json)
+checks 320 original-fragment cases with synthetic four-segment curves, including
+below/above-domain inputs and signed scales. All three stored ratio values match
+bit for bit. Native speed-curve calls and inlined immersion evaluation execute
+without interception. This removes curve-return substitutions for this local
+preparation, but the synthetic tables do not establish actual game tuning,
+profile identity, physical units or the solver response.

@@ -1,0 +1,12 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Original three-axis damping preparation with native curve evaluators and inline compiled lookup; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic valid compiled curves and finite scale fields",
+    "Configuration validity and selected-immersion provenance assumed",
+    "No live profile identity or force/solver response proof"
+  ],
+  "game_files_included": false
+}

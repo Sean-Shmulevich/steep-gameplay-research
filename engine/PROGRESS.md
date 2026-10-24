@@ -7335,3 +7335,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match 320 complete native runs without math substitutions. Caller preferred
   mode scales only mass-like Z by 100; actual mass/axis meaning, curve preparation
   and solver consumer remain unresolved.
+- Recovered pose damping-ratio preparation from per-axis speed curves, scales
+  and immersion curves, preserving Y/Z/X evaluation and XYZ storage. All three
+  ratios match 320 native cases with actual compiled evaluators and no call
+  substitutions. Synthetic curves only; live profiles, frequency preparation,
+  mass-like producer and solver behavior remain unresolved.
