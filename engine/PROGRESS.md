@@ -6918,3 +6918,6 @@ cases. This is not wired into a live host API and does not pin manager or module
   operations. Optional clearing affects bit 0, while the observed query requires
   bit 1. The two partition destinations and live scheduler ownership remain
   unnamed and unverified; no runtime behavior was added from this evidence alone.
+- Added a bounded read-only markup provider observer with endpoint rechecks and
+  explicit table/target guards. Synthetic rejection tests pass. The adapter is
+  ready for a fresh live dispatcher join; no live receipt is claimed yet.

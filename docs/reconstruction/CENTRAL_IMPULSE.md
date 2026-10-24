@@ -11482,3 +11482,29 @@ a record remains visible also depends on which destination becomes the queried
 collection, its key and interval gates, and its lifetime. Next trace the caller's
 source/destination owners and verify the live query provider before attributing
 this partition to a particular rider action.
+
+### Guarded provider observation
+
+[`capture_markup_provider`](../../engine/markup_provider_observation.py) provides
+an authored read-only adapter for the static provider join. The caller must first
+verify the process/image and acquire a fresh dispatcher with external identity
+guards. The adapter follows dispatcher+0x38, owner+0xb0, interface+0x20,
+attachment+0x80 and graph+0x1a10. It requires interface table RVA 0x2909790 and
+slot 0xb8 target RVA 0x12f2d20; a mismatch rejects the observation.
+
+A null attachment yields an explicit absent result, corresponding to the query's
+early false return. Otherwise the adapter accepts at most 64 records and reads
+only the key, scalar +0x54 bits, interval bits and flag byte. All acquired pointers,
+headers, scalar records and external guards are compared again before returning.
+No nested pair arrays, live pointers, game calls, callbacks or writes are exposed.
+Failure produces no partial result. Transport timeouts and process identity are
+the caller's responsibility; the adapter is bounded but does not stop workers or
+pin objects. Equal sequential reads are not an atomic snapshot and cannot detect
+an intervening change that returns to the same bytes.
+
+Synthetic tests cover the four packed-address modes, null attachment, empty and
+oversized collections, wrong provider/target, changed record contents and short
+reads. These tests validate the observer's rejection behavior, not live graph
+membership. A live receipt remains required before claiming the rider's query
+uses this provider. Nested values and actual notification execution require
+separate observations even after that join succeeds.

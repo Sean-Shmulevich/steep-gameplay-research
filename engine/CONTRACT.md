@@ -196,3 +196,9 @@ remain external. See CENTRAL_IMPULSE.md, Animation-interface markup query.
 caller-owned pair arrays. It validates both uint32 words and selects on the second;
 no record producer or live graph access is implied. The non-null-context collector
 branch is excluded.
+
+Markup provider observation accepts a caller-verified image and fresh dispatcher
+with external guards. It follows the documented build-specific query links and
+rejects unexpected provider tables/targets, over-64 record collections, incomplete
+reads or changed endpoints. It returns scalar metadata only. No lifetime pin,
+atomic snapshot, callback execution proof or nested selector values are provided.
