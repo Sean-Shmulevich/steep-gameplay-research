@@ -7156,3 +7156,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   original direction at floor, or preserve an originally slower velocity. Model
   matches 320 original-instruction cases and three boundary tests. Upstream
   damping/transforms, control naming and live branch attribution remain open.
+- Reconstructed directional velocity decay composition: frame transform,
+  Z/Y/X lookups at -dt*rate, per-axis scaling and return transform. Matches 128
+  original-instruction cases with explicit synthetic lookup provider; five
+  related tests pass. Native table initialization, frame/rate producers and the
+  contact-direction adjustment/clamps before speed floor remain unresolved.

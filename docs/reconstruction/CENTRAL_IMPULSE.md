@@ -13240,3 +13240,39 @@ Original/corrected vectors and their computed speeds are supplied to the snippet
 the whole correction routine and setter are not emulated in this check. Three
 portable tests cover direction restoration, stationary/slower originals, equality
 and bypass. No live activation of this branch is claimed.
+
+### Directional decay before velocity correction
+
+RVA 0x13f7faf..0x13f80d7 transforms current linear velocity using supplied native
+columns at frame+0xc0/+0xd0/+0xe0. Each output lane is accumulated in the order
+`(z*C2 + y*C1) + x*C0`, with float32 rounding per operation. W is then zeroed.
+It evaluates the fixed-size runtime lookup at RVA 0x1402840 three times:
+
+```text
+local = transform_to_frame(current_linear_velocity)
+for axis in [Z, Y, X]:
+    argument[axis] = -float32(elapsed * rate[axis])
+    local[axis] = float32(lookup(argument[axis]) * local[axis])
+corrected = transform_from_frame(local)
+corrected.w = 0
+```
+
+The return transform uses columns at frame+0x80/+0x90/+0xa0 and the same arithmetic
+order. No translation is applied. Frame identity, inverse relationship and
+orthogonality require their producer evidence; the local API does not assume them.
+The lookup uses a 256-segment table at RVA 0x3314820 whose inspected image contents
+are zero before runtime initialization. Similarity to the existing decay-table
+research does not by itself prove this table's initializer or live values.
+
+`engine.snow_velocity_correction.directional_velocity_decay` exposes the local
+composition with explicit frame columns, rates, elapsed time and scalar lookup
+provider. It returns frame velocity, lookup arguments/gains and corrected velocity.
+[128 original-instruction cases](../../native/snow_host/directional_decay_validation.json)
+match transforms, Z/Y/X call inputs/order and final scaling bitwise, while the
+lookup helper is intercepted with a synthetic scalar provider. This validates
+composition, not the native lookup contents. Five related portable tests pass.
+
+A subsequent contact-direction adjustment and per-component clamps still lie
+between this result and the speed-floor kernel. Do not compose them directly and
+label the result the complete native correction. Next work should identify the
+lookup initializer and recover those intervening operations before live comparison.

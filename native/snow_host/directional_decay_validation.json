@@ -1,0 +1,12 @@
+{
+  "cases": 128,
+  "bit_exact": true,
+  "scope": "Original velocity frame transforms, decay-call inputs/order and output scaling",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Runtime decay lookup intercepted with supplied synthetic scalar provider",
+    "Frames, rates and elapsed time supplied; no producer or native table identity proof",
+    "No contact-direction correction, clamp, speed floor, setter or live attribution"
+  ],
+  "game_files_included": false
+}
