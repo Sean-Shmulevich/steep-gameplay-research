@@ -13914,3 +13914,46 @@ without intercepted calls. Both 48-byte results match given observed reciprocal
 square-root seeds. Prepass, gates, rotation paths, input producers and live branch
 execution remain outside this check. Identifying the callback live is not proof
 that this particular branch ran in that capture.
+
+
+### Direction-aligned basis override
+
+`engine.snow_basis_override.align_override_basis` reconstructs the alignment
+branch at RVA 0x13fc003..0x13fc0cd and its common saved-cache publication.
+Reachability follows the priority gates above: the preferred path and explicit
+triplet path must not take, and receiver+0x260 must be nonzero. The caller supplies
+the post-prepass output basis and direction from receiver+0x210. These are
+coordinate-frame vectors; no anatomical axis names or physical units are proved.
+
+```text
+axis1 = post_prepass_basis[1]                 # preserved, not normalized
+axis2 = normalize_xyz(direction cross axis1)
+axis0 = normalize_xyz(axis1 cross axis2)
+output = [axis0, axis1, axis2]
+saved_basis = output
+```
+
+The cross products use packed four-lane multiply/subtract/shuffle operations.
+For finite inputs, XYZ matches the conventional cross product; W is calculated
+as a subtraction of products, not overwritten with an authored constant.
+Normalization uses the same XYZ sum and reciprocal-square-root refinement as
+the explicit-triplet branch, scaling all four lanes. The portable implementation
+preserves each float32 operation and accepts the hardware estimate explicitly.
+Axis 1 retains its original magnitude and W. Axes 0 and 2 replace the incoming
+values completely. In ordinary real arithmetic, the rebuilt axis 0 follows the
+component of the supplied direction perpendicular to axis 1. That geometric
+interpretation is derived; floating-point operation order remains authoritative.
+
+The API returns the basis without mutating caller storage. Native instructions
+also copy it into the receiver cache. Zero or parallel directions produce a
+singular cross; the portable API rejects zero/nonfinite norms by authored policy.
+No native repair, fallback axis, or successful handling of degenerate inputs is
+claimed. Update cadence and direction producer remain unresolved.
+
+The [alignment receipt](../../native/snow_host/basis_alignment_validation.json)
+checks 256 finite synthetic cases against original instructions through both
+48-byte output and saved-cache publication. Both match bit for bit with observed
+reciprocal-square-root seeds and no intercepted calls. Tests additionally cover
+preserving a non-unit middle axis, removing the parallel direction component,
+and rejecting a singular alignment without inventing recovery. This does not
+prove that the alignment branch ran in the earlier live capture.

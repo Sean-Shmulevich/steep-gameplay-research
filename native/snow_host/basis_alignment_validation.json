@@ -1,0 +1,12 @@
+{
+  "cases": 256,
+  "bit_exact": true,
+  "scope": "Original direction-alignment branch and output cache publication; no intercepted calls; portable kernel receives observed rsqrt seeds",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonzero synthetic vectors; no degeneracy fallback inferred",
+    "Branch gates and prepass excluded; no full callback or live execution proof",
+    "Cross-CPU reciprocal-square-root seeds remain external"
+  ],
+  "game_files_included": false
+}

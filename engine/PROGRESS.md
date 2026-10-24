@@ -7253,3 +7253,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   [1,2,0] and saves the resulting basis. Output/cache match 256 native cases with
   observed rsqrt seeds. This is not orthogonalization; collinearity remains.
   Prepass, higher-priority rotation paths and live branch execution remain open.
+- Reconstructed direction-aligned basis branch: preserve axis 1, normalize
+  direction cross axis 1 into axis 2, then axis 1 cross axis 2 into axis 0.
+  Output and saved cache match 256 original-instruction cases with observed
+  rsqrt seeds. Non-unit preserved axes and singular-input rejection tested;
+  prepass, direction producer, branch activation and live cadence remain open.
