@@ -15461,3 +15461,48 @@ is supplied to the independent service to isolate that explicit math dependency.
 Cases cover both layouts, states2/3/uint32 maximum and result-counter wrap. Native
 world-vector preparation, bound configuration producers, other axes, downstream
 solve and live body behavior are still outside this connected implementation.
+
+### Optional angular drive row
+
+`engine.snow_pose_drive_row.build_pose_drive_row` implements helper RVA 0x19f3750.
+"Drive" is a descriptive reconstruction name, not a recovered class identity or
+proof of a player motor. It consumes four-lane axis, target, current, cap and
+strength vectors, a raw mode, two context scalars and explicit row storage fields.
+
+For mode2, value=target. Other modes compute each lane with separate float32
+rounding and SSE tie behavior:
+
+```text
+value = (target - current) * context_scalar
+value = max_sse(value, sign_bit_negate(cap))
+value = min_sse(value, cap)
+packed = [-value.x, -value.y, -value.z, strength.x * context_scale]
+```
+
+SSE min/max select the second operand on equality, including signed zero. Negative
+caps are not repaired. The independent API rejects nonfinite supplied vectors
+and packed outputs; this restriction is authored, not native error handling.
+Mode2 does not require current/cap/context_scalar arithmetic inputs.
+
+The helper writes packed at row+0x10, a zero vector at +0x20 and axis at +0x30.
+Zero class additionally writes sign-bit-negated axis at +0x50. Nonzero class uses
+80-byte rows with base context+0x78/count+0xdc; zero uses96 bytes with base+0x7c/
+count+0xe0. Placement uses uint32(base+stride*count), shifted left4, plus the row
+region offset. Class/result counts advance with uint32 wrapping; row+4 receives
+the old result count. All unspecified bytes remain intact. Context+0xc supplies
+context_scalar and +0x10 supplies context_scale; their physical units are open.
+
+[512 complete native comparisons](../../native/snow_host/pose_drive_row_validation.json)
+match all row/context bytes, placement and return pointers without interception.
+Cases cover both classes, direct/difference modes, negative caps, signed zero and
+counter wrapping. These are synthetic offline cases, not live body-response proof.
+
+Static caller connection: RVA 0x19e6fab requires the first angular state to be
+nonzero and pose storage+0xf8 enabled. It selects one of two prepared axes based
+on record swap byte+0x59, broadcasts storage+0xfc as target and +0x100 as strength,
+and calls the helper with mode2 and zero current/cap. It completes both body-index
+header words. If storage+0xf9 is zero and two body/context presence checks pass,
+it calls RVA 0x18a7f60 with argument2. That service's effects are unresolved here.
+The next two axes repeat this structure with 12-byte optional records. Caller
+geometry, optional-field producers and downstream solver response remain open;
+only the helper, not this full caller branch, has executable validation in this pass.

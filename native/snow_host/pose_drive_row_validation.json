@@ -1,0 +1,17 @@
+{
+  "cases": 512,
+  "bit_exact": true,
+  "scope": "Complete original optional angular row helper without interception; all row/context bytes, placement and returned pointer match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Both class layouts",
+    "Mode 2 direct target and other-mode difference/clamp path",
+    "Signed zero, negative caps and counter wrapping"
+  ],
+  "limits": [
+    "Synthetic finite inputs; no live game execution",
+    "Context scalar/scale and strength units unresolved",
+    "Caller selection, notification side effects and downstream solve excluded"
+  ],
+  "game_files_included": false
+}

@@ -7440,3 +7440,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   headers. 384 continuous native caller comparisons match complete rows/context
   and final pointer using observed atan2 outputs. Bounds are neither sorted nor
   clamped. Bound configuration, earlier geometry and downstream solve remain open.
+- Recovered optional angular drive-row helper: direct-target mode2 or scaled/clamped
+  difference, packed XYZ response plus separately scaled strength, both layouts
+  and wrapping counters. 512 complete native cases match all bytes and return
+  pointers. Static pose caller uses mode2 and optional per-axis records; units,
+  geometry selection, notification effects and downstream solve remain unresolved.
