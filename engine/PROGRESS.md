@@ -7501,3 +7501,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   for the next loop; the returned value counts components. 384 native comparisons
   match with group acquisition supplied. Added composition test with recovered
   destination completion; migration/allocation failure remain unresolved.
+- Recovered complete body/link/pose migration across prepared destinations. Body
+  swap removal updates destination slots; constraints follow first-endpoint group.
+  320 full native runs match all bytes without interception under preallocated
+  storage. Pose-limit rejection leaves records detached; allocator branches and
+  concurrent ownership remain external.

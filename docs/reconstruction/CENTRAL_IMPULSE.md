@@ -15958,3 +15958,41 @@ The independent API requires nonzero acquired destinations; allocation failure
 and mutable/aliased topology are not reconstructed. This is a structural connected
 component operation, not proof of a particular sleeping, collision or scheduling
 policy attached to those groups.
+
+### Group migration and constraint ownership
+
+`engine.pose_group_migration.migrate_pose_group` reconstructs RVA0x1957720..0x1957a0d
+with caller-owned retained group/body/link/pose dictionaries and destination array.
+The mutable destination count equals source body count on entry. For each slot:
+
+- A destination equal to the source leaves that body in place.
+- Otherwise the source body slot is replaced by the last active body and source
+  count decreases. If the slot was not last, the moved body's membership/index
+  and corresponding destination slot are repaired.
+- The destination count decreases. The removed body's membership/index are
+  published to its target before any capacity growth, then it is appended there.
+- The replacement slot is processed again; destination ordering changes along
+  with source body ordering. Inactive tails remain intact.
+
+Body transfer inlines append and does not apply the standalone body-append
+helper's metadata-class65535 rejection. Body and link capacities request doubled
+capacity on equality, including zero-to-zero. These are supplied growth services
+in the independent API; it raises on missing writable storage after preceding
+mutations, without an invented rollback.
+
+After all body transfers, link records and then pose records move according to
+the **first endpoint's current group**. The second endpoint is not checked here.
+Each moved record is swap-removed with index repair, then appended to that group.
+Pose records first clear group/index. If target pose count is already65535 or
+higher, they stay detached; the helper has already removed them from the source.
+Accepted pose append uses initial8/doubled growth, unlike body/link append.
+No link-clear or destruction service runs in this migration path.
+
+[320 complete native comparisons](../../native/snow_host/pose_group_migration_validation.json)
+execute the original routine without interception using sufficient preallocated
+capacity. Every group/body/link/pose byte, destination slot, active count and
+inactive tail matches. Cases cover empty/mixed destinations and swapped-slot
+reprocessing. The pose-limit rejection has an independent boundary test and
+static instruction evidence, but is outside this native case set. Native growth,
+allocator failure, invalid destinations, concurrent membership changes and full
+physical solver effects remain unresolved.

@@ -1,0 +1,18 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete native migration routine, no intercepted calls, sufficient preallocated capacity; all group/body/link/pose bytes, destination array and active count match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Empty through eight-body groups and mixed destinations",
+    "Swap-last reprocessing and unchanged source destinations",
+    "Both constraint families follow first endpoint membership",
+    "Preserved inactive array tails"
+  ],
+  "limits": [
+    "Growth/allocator branches excluded from native comparison",
+    "Pose 65535 rejection covered by independent boundary test and static instructions only",
+    "Valid retained memberships and stable topology; no concurrency or physical solve proof"
+  ],
+  "game_files_included": false
+}
