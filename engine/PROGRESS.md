@@ -6998,3 +6998,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   and probe ABI 4. Eight focused tests, the 54-position read-failure sanitizer
   fixture and full Windows host/plugin build pass. Live numerical comparison is
   pending; no callback execution or consumer timing claim is added.
+- Live projection comparison: 94 updates and 188 accepted actor samples; both
+  ID-84 edge-associated pending changes match decoded projection plus world-time
+  accumulation bit-for-bit across four lanes, using observed gain 15 and boundary
+  inputs. The normalization seed is mathematical, not captured. Published scalar
+  receipt regression and 14 focused tests pass. Direct listener execution and
+  pending consumer timing remain unresolved; cleanup passed.

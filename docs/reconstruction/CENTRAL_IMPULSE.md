@@ -12175,3 +12175,35 @@ opt-in capture plugin build succeeds. These are authored-fixture and build check
 this extension has not yet been validated in the live game. The next experiment
 must compare observed source/gain inputs with the pending delta and retain any
 normalization-seed uncertainty rather than claiming bit-exact live equivalence.
+
+### Live projection inputs explain two pending writes
+
+The [projection receipt](../../native/snow_host/markup_projection_live_validation.json)
+records 94 original update calls with 188 accepted actor samples. Projection inputs
+were present in 107 samples. The controlled input was W held for 500 ms within a
+1000 ms requested capture. All records fit the buffer. The original slot was
+independently verified after restoration; the host remained ready and unfaulted.
+The bottle stopped and saves, settings and original DLL checks passed.
+
+At records 50 and 69, ID-84 changed 0->1 and 1->0 respectively. Both before/after
+states were 0/0/5. The pending buffer changed from zero to nonzero in each call.
+Direction, normal, gain and interval matched between the two boundaries of each
+call. The gain was 15 for both; direction and normal fourth lanes were zero.
+
+Applying the decoded projection and then float32-ordered world-interval scaling
+reproduces all four pending lanes bit-for-bit in both cases. The normal and interval
+differed between the two events. This comparison uses a float32-rounded mathematical
+reciprocal-square-root seed, not a seed captured from native execution. Equality
+of these final results does not establish equality of intermediate seeds or prove
+this seed policy works for other inputs. No coefficient was fitted to these outputs.
+
+`tests/test_markup_projection_live_receipt.py` replays the published scalar
+comparisons through the independent kernels. It is a regression against recorded
+observations, not another live experiment. Fourteen focused formula/bench/receipt
+tests pass. Raw process traces and pointers remain private.
+
+This advances the evidence from temporal correlation to a numerical explanation
+of two live pending changes. It still does not directly observe the ID-84 listener,
+exclude another writer with the same arithmetic, or prove unchanged inputs within
+the update. The next unresolved connection is the consumer that applies and clears
+pending motion, including its job order relative to these producer boundaries.

@@ -1,0 +1,168 @@
+{
+  "scope": "Live boundary inputs numerically explain two pending accumulations; no direct callback or consumer execution proof",
+  "probe_abi": 4,
+  "calls": 94,
+  "accepted_actor_samples": 188,
+  "projection_input_samples": 107,
+  "seed_provenance": "float32-rounded mathematical reciprocal sqrt; not observed native RSQRT seed",
+  "summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 94,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "comparisons": [
+    {
+      "record": 50,
+      "id84_cached": [
+        0,
+        1
+      ],
+      "state_before_and_after": [
+        0,
+        0,
+        5
+      ],
+      "inputs_equal_at_boundaries": true,
+      "pending_before": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pending_after": [
+        -4.517683982849121,
+        -2.146010637283325,
+        -2.2421011924743652,
+        0.0
+      ],
+      "direction": [
+        -0.9638049602508545,
+        -0.2666083574295044,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        -0.508665144443512,
+        0.1945759356021881,
+        0.838689386844635,
+        0.0
+      ],
+      "gain": 15.0,
+      "interval": 0.012180100195109844,
+      "fourth_lanes_zero": true,
+      "vector": [
+        -12.363566398620605,
+        -5.872996807098389,
+        -6.135968208312988,
+        0.0
+      ],
+      "predicted_pending": [
+        -4.517683982849121,
+        -2.146010637283325,
+        -2.2421011924743652,
+        0.0
+      ],
+      "error": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bit_equal": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "record": 69,
+      "id84_cached": [
+        1,
+        0
+      ],
+      "state_before_and_after": [
+        0,
+        0,
+        5
+      ],
+      "inputs_equal_at_boundaries": true,
+      "pending_before": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pending_after": [
+        -4.155930519104004,
+        -2.062046527862549,
+        -2.3420209884643555,
+        0.0
+      ],
+      "direction": [
+        -0.9638049602508545,
+        -0.2666083574295044,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        -0.5460937023162842,
+        0.1686284840106964,
+        0.8205766081809998,
+        0.0
+      ],
+      "gain": 15.0,
+      "interval": 0.011548900045454502,
+      "fourth_lanes_zero": true,
+      "vector": [
+        -11.995169639587402,
+        -5.951639175415039,
+        -6.75972318649292,
+        0.0
+      ],
+      "predicted_pending": [
+        -4.155930519104004,
+        -2.062046527862549,
+        -2.3420209884643555,
+        0.0
+      ],
+      "error": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bit_equal": [
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "slot_original_independently_verified": true,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_evidence_sha256": {
+    "route-result.json": "5cb5a9f44aa89d72174a171410121a67814664a2f497d7b15f30d905d1ec1dbf",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "input-events.jsonl": "bc120b3b359691e58a19912cdceca4ed29bbffd1c30c600cb8fff6fb77243cc1"
+  },
+  "game_files_included": false
+}
