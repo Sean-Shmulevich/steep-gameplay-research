@@ -17039,3 +17039,35 @@ row assembly for this family only. Other three builder families, solver iteratio
 live lifetime and physical units remain unresolved. Retained storage capacity,
 valid indices and finite arithmetic are required; no native allocation failure or
 concurrent mutation behavior is invented.
+
+### Runnable link-builder inspection
+
+`python3 -m engine.pose_link_builder_bench engine/examples/pose_link_builder.json`
+runs the complete reconstructed metadata-clear/single row builder without game
+files. `--output PATH` writes its JSON report. The bundled fixture is authored
+synthetic data and produces one primary row, two secondary rows and a cached-word
+seed. It does not execute the physics solver.
+
+The `pose-link-builder-v1` schema requires explicit provenance and sequence
+`reached_metadata_clear_single`. Inputs include complete prior payload bytes,
+body frames and motion fields, symbolic resource/profile identities, scalar modes,
+context fields/counters and complete retained primary/secondary/result storage as
+hex arrays. Profile resources may use default pointers or the recovered kind6/7
+byte-map/table branches. Maps use JSON lists of uint8 values; pointer tables use
+symbolic identity lists. These are retained-data representations, not game heap
+addresses. Dispatcher admission remains caller supplied.
+
+The inspector copies inputs before execution. It reports initial/final counters,
+readable newly written rows, updated payload bytes and every retained storage row
+as hex. Result storage stays raw so cached NaN bit patterns are not mistaken for
+JSON numeric values. Readable row fields must serialize as finite JSON numbers.
+No missing prior bytes, capacities, profiles or resource defaults are invented.
+Inspection limits of4096 storage rows and1048576 map entries, JSON validation and
+error handling are authored safeguards rather than recovered native behavior.
+
+Tests cover the sample's direction/response/cache outputs, padding preservation,
+input immutability, indexed profile selection, insufficient storage, zero-row
+behavior, provenance and CLI equivalence. The underlying builder has separate
+uninterrupted native validation; JSON parsing and presentation do not gain native
+equivalence from that evidence. Other builder families, physical units, solver
+iteration and live object lifetime remain outside this tool.

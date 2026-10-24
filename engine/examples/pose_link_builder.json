@@ -1,0 +1,140 @@
+{
+  "schema": "pose-link-builder-v1",
+  "provenance": "authored_synthetic",
+  "sequence": "reached_metadata_clear_single",
+  "inputs": {
+    "payload_hex": "0000000000000000000000000000000000000000000000000000803f0000000000000000000000000000000000000000000000000000000000000040000000000000404000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000",
+    "first_body": {
+      "index1c": 7,
+      "entries": [
+        "resource"
+      ],
+      "frame": {
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "translation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "offset128": [
+        0,
+        0,
+        0
+      ],
+      "motion1a0": [
+        1,
+        0,
+        0
+      ],
+      "motion1ac": [
+        0,
+        0,
+        0
+      ]
+    },
+    "second_body": {
+      "index1c": 8,
+      "entries": [
+        "resource"
+      ],
+      "frame": {
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "translation": [
+          0,
+          0,
+          0
+        ]
+      },
+      "offset128": [
+        0,
+        0,
+        0
+      ],
+      "motion1a0": [
+        1,
+        0,
+        0
+      ],
+      "motion1ac": [
+        0,
+        0,
+        0
+      ]
+    },
+    "resources": {
+      "resource": {
+        "kind28": 0,
+        "default20": "profile"
+      }
+    },
+    "profiles": {
+      "profile": {
+        "field30": 0.5,
+        "field40": 0.25,
+        "field60": 100000000000000.0,
+        "field64": 2
+      }
+    },
+    "modes": {
+      "field30": 0,
+      "field40": 0,
+      "field60": 0,
+      "field64": 0
+    },
+    "context": {
+      "primary_count": 0,
+      "secondary_count": 0,
+      "result_count": 0,
+      "flags38": 12,
+      "scalar_c": 2,
+      "factor14": 0.5,
+      "field1c": 0,
+      "field20": 0,
+      "primary_rows_hex": [
+        "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5"
+      ],
+      "secondary_rows_hex": [
+        "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+        "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a"
+      ],
+      "result_rows_hex": [
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000",
+        "00000000000000000000000000000000"
+      ]
+    }
+  }
+}

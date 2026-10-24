@@ -7631,3 +7631,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match all retained row, payload and result bytes without intercepted calls.
   Tests cover untouched storage and builder-to-feedback with supplied results.
   Other builder families, actual solver iteration and live lifetime remain open.
+- Added a standalone JSON/CLI inspector for complete single-family link row
+  assembly, with a synthetic fixture, symbolic profile resources, readable row
+  fields and complete byte output. Verified CLI, input immutability, indexed
+  profile selection, cache seeding and storage guards. No game files required;
+  solving, dispatcher admission and live lifetime remain external.

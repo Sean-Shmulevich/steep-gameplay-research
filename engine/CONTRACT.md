@@ -420,3 +420,10 @@ seeding, without running a solver. Zero to four payload rows, sufficient capacit
 valid identities and finite nonsingular arithmetic are required. Full native
 validation covers default profile lookup; other families and live ownership are
 excluded. Earlier fragment-only row-assembly limits are superseded for this family.
+
+Link-builder inspection: `pose-link-builder-v1` requires explicit reached-family
+selection, provenance, complete prior bytes, capacities and symbolic resources.
+It copies inputs, runs `build_pose_link_rows` and returns readable new rows plus
+all retained raw bytes. JSON guards and inspection bounds are authored. Result
+storage represents cache seeding only; no solve, missing data, dispatcher
+admission or live identity is synthesized.

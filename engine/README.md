@@ -1073,3 +1073,17 @@ includes selected source indices, transformed points, raw cached words, preserve
 padding and complete result bytes. It needs no binary or game files. Inputs must
 already represent one key group; sorting, payload acquisition and solver effects
 are outside the inspector. See the [input contract](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-link-payload-inspection).
+
+### Link solver-row inspection
+
+```sh
+python3 -m engine.pose_link_builder_bench engine/examples/pose_link_builder.json --output /tmp/link-builder.json
+```
+
+This synthetic example runs the complete reconstructed metadata-clear/single link
+builder. It exposes primary/tangent row directions, angular directions, response
+values, result indices, coefficients and cache seeding. Complete prior storage is
+required, and complete output bytes accompany the readable fields. Resource and
+profile identities are symbolic; no game binary or private tools are needed.
+This builds solver rows but does not solve them. See the
+[input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-link-builder-inspection).
