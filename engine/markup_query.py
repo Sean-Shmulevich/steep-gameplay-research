@@ -60,3 +60,29 @@ def query_markup(records, key, selector, collect_values):
             if selector_matches(selector, collect_values(i)):
                 return i
     return None
+
+
+def query_markup_records(records, key, selector):
+    """Inspect complete records through the observed null-context query route.
+
+    Each record is (key, start_bits, end_bits, flags, pairs), where each pair
+    contains two uint32 words. The native collector copies all pairs on this
+    route; selection reads the second word. Record production remains external.
+    The return is an inspection index, not the original boolean ABI.
+    """
+    rows = []
+    values = []
+    for record in records:
+        if len(rows) >= 4096:
+            raise ValueError('at most 4096 records required')
+        record_key, start, end, flags, pairs = record
+        words = []
+        for pair in pairs:
+            if len(words) >= 4096:
+                raise ValueError('at most 4096 pairs per record required')
+            first, second = pair
+            _uint(first, 32)
+            words.append(_uint(second, 32))
+        rows.append((record_key, start, end, flags))
+        values.append(words)
+    return query_markup(rows, key, selector, values.__getitem__)

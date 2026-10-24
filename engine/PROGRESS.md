@@ -6909,3 +6909,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   motion notifications to candidate eligibility and graph production; live
   query-provider identity and notification execution remain unverified. See
   [query evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#animation-interface-markup-query).
+- The markup query's null-context collector is now decoded as a copy of existing
+  record pairs. `query_markup_records` exposes this route without an external
+  collector callback. Another 1,440 original-instruction cases include the
+  collector; allocator/copy services remain intercepted. Graph record producers
+  and live ownership remain open.

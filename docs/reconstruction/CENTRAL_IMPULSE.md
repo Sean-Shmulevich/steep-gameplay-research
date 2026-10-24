@@ -11372,3 +11372,43 @@ the selector does not further reject an eligible record after collection.
 The next check is a fresh guarded join from dispatcher query owner to interface
 and table, followed by graph-record observation at the actual markup update.
 No generic queued-event callback is required by this static query route.
+
+### Null-context collector resolved
+
+Further inspection narrows the collector boundary above. The query packet's
+first pointer is zero on this route. At `0x12e9d40`, that skips the optional
+context comparison and leaves the source index at zero. The record starts with
+another packed collection header, using the same bit-62/bit-61 address rule and
+low-29-bit count. Its elements are two uint32 words, eight bytes per pair.
+
+```python
+# This query always passes context=None and starts with empty temporary storage.
+source_index = 0
+pairs_to_copy = record.pairs[source_index:]
+if pairs_to_copy:
+    old_count = len(temporary)
+    grow_destination(old_count, len(pairs_to_copy))
+    copy_bytes(temporary, old_count * 8, pairs_to_copy, len(pairs_to_copy) * 8)
+# Selector logic inspects each copied pair's second word.
+```
+
+This path does not generate selector values or call gameplay handlers. It copies
+existing record data. Destination growth and memory management remain external;
+this observation is not a claim about their side effects or failure behavior.
+The optional non-null-context branch is outside this query's contract.
+
+[`query_markup_records`](../../engine/markup_query.py) now accepts complete
+caller-supplied records with paired values, without an unknown collector callback.
+It preserves the original first-match selection while returning the index for
+inspection. Input validation and limits are authored, and it does not mutate
+input records or acquire live memory.
+
+The [extended instruction receipt](../../native/snow_host/markup_query_collector_validation.json)
+repeats all 1,440 cases with the original collector instructions included. Only
+initialization, destination growth, byte copy and cleanup services are intercepted.
+The fixture checks collector order, growth/copy counts, query packet fields and
+final boolean results. Both source and destination address flag modes are tested
+in matching combinations; independent cross-combinations were not exhaustively
+covered. Record production, live provider identity and concurrent mutation remain
+unresolved. This supersedes the unknown-collector boundary for the null-context
+route only, not for every caller of the collector.

@@ -192,3 +192,7 @@ mode-2 flag gating, selector rules and collection-before-selection ordering.
 The returned index is an authored diagnostic; native code returns a boolean.
 Graph acquisition, record production, allocation, update timing and live identity
 remain external. See CENTRAL_IMPULSE.md, Animation-interface markup query.
+`query_markup_records` supplies the decoded null-context collector behavior from
+caller-owned pair arrays. It validates both uint32 words and selects on the second;
+no record producer or live graph access is implied. The non-null-context collector
+branch is excluded.

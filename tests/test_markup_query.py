@@ -32,3 +32,22 @@ class MarkupQueryTests(unittest.TestCase):
         with self.assertRaises(ValueError):selector_matches(-1,[])
         with self.assertRaises(ValueError):candidate_eligible(0,True,0,0)
         with self.assertRaises(ValueError):query_markup([(0,0,0,2)]*4097,0,0,lambda i:[])
+
+
+class CompleteMarkupRecordTests(unittest.TestCase):
+    def test_second_word_selection_and_empty_records(self):
+        from engine.markup_query import query_markup_records
+        rows = [(3,0,0,2,[(7,8)]), (3,0,0,2,[(99,7)])]
+        self.assertEqual(query_markup_records(rows,3,7),1)
+        self.assertEqual(query_markup_records(rows,3,0xffffffff),0)
+        self.assertIsNone(query_markup_records(rows,3,0))
+        self.assertEqual(query_markup_records([(3,0,0,2,[])],3,0),0)
+        self.assertIsNone(query_markup_records([(3,0,0,0,[(0,7)])],3,7))
+
+    def test_validation_and_input_preservation(self):
+        from engine.markup_query import query_markup_records
+        pairs = [[1,7]]
+        self.assertEqual(query_markup_records([(3,0,0,2,pairs)],3,7),0)
+        self.assertEqual(pairs,[[1,7]])
+        with self.assertRaises(ValueError):
+            query_markup_records([(3,0,0,2,[(-1,7)])],3,7)
