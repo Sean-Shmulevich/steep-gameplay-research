@@ -14375,3 +14375,49 @@ Both modes cover -0.5 and its neighboring float32 values, signed zero, and rando
 inputs. Unit tests check the threshold's speed-curve suppression and sampling
 order. Finite inputs only; original curve contents, runtime flag meaning and
 live resulting orientations remain unresolved.
+
+
+### Normal-Z angle table initialization
+
+`engine.snow_slope_angle.build_slope_angle_table` joins the initializer slice
+at RVA 0x13d125e..0x13d1286, builder 0x13f9a00 and lookup 0x14026c0. The initializer
+sets low=-1, high=1 and relative padding=float32(0.0005), writing the table at
+RVA 0x33137f0. This is distinct from the decay exponential table, despite sharing
+the same 256-segment slope/intercept construction pattern.
+
+The builder samples 64 four-lane batches through 0x1c453e0, which dispatches to
+0x1c46490, then samples the final endpoint through scalar helper 0x1c88a8c.
+Observed samples follow arccosine: over all 256 vector sample positions the
+maximum absolute difference from Python math.acos is about 2.92e-7 radians;
+the scalar endpoint at +1 returns zero. The input grid is:
+
+```text
+step = float32((1 - (-1)) / 256)
+x[i] = float32(float32(i * step) + (-1)), i=0..256
+sample[i] = native_acos(x[i])
+```
+
+The portable API requires separate vector and scalar acos services rather than
+embedding the observed table. It reuses the recovered table builder, preserving
+float32 slope/intercept order. Start is low-width*padding. Index scale is
+256 / (((padding+1)*width) + (low-start)), with separate float32 rounding.
+The lookup uses the existing recovered floor/index/clamp/multiply/add sequence.
+It does not evaluate acos directly at runtime.
+
+Padding expands the indexing interval beyond [-1,1], while the coefficients
+still derive from samples on [-1,1]. End clamps therefore evaluate the first or
+last linear segment at a padded boundary; they do not clamp the output angle
+to [0,pi]. Slight extrapolation beyond that range is possible. The prepass uses
+this lookup only below its earlier normal-Z threshold of float32(0.999), then
+multiplies by the signed-input gain and -0.5 before sine/cosine. If the supplied
+normal is unit length, acos(normal.z) is its inclination from +Z in derived
+geometry. No upstream unit-normal guarantee is supplied by this table alone.
+
+The [angle-table receipt](../../native/snow_host/slope_angle_table_validation.json)
+runs the original initializer slice, full builder and native sample routines
+without intercepted calls. All table bytes match the independent builder when
+it receives the observed native samples. Another 407 original lookup results
+match, including padded/out-of-domain positions. Native acos internals remain
+explicit services, so this is not a portable bit-exact acos reconstruction.
+Unit tests use labeled platform-math samples to check service batching and
+padded lookup behavior. No sampled game table payload is included in the repo.

@@ -1,0 +1,14 @@
+{
+  "samples": 257,
+  "lookups": 407,
+  "bit_exact": true,
+  "vector_acos_max_absolute_error_against_math": 2.919163772929778e-07,
+  "scope": "Original initializer slice and complete builder, then original lookup; observed native acos samples supplied to independent builder",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Native acos implementations not independently reconstructed here",
+    "No game table payload published; sample callbacks remain explicit",
+    "Finite lookup inputs; no live configuration/timing proof"
+  ],
+  "game_files_included": false
+}

@@ -7299,3 +7299,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   skips speed evaluation; equality applies it. Gain/call order matches 400 native
   fragments with supplied curve samples. Normal-Z table helper and projection
   geometry, curve payloads and gameplay flag meanings remain unresolved.
+- Identified normal-Z lookup initialization as 257 arccos samples on [-1,1],
+  with relative padding 0.0005. Reused exact table construction/evaluation;
+  complete native-built table and 407 lookups match using observed acos samples.
+  Sample routines execute without interceptions, but independent acos services
+  remain external. Padded endpoints extrapolate; no angle clamp was invented.
