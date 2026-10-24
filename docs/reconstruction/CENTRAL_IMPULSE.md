@@ -15386,3 +15386,44 @@ and row helpers. Every row/context byte, offset and returned pointer matches wit
 observed native atan2 output supplied to the independent service. Both metadata
 classes and hard/soft paths are included. Earlier frame transformation, other
 row states, additional axes, allocation lifetime and body response remain open.
+
+### Angular limit-row helper
+
+`engine.snow_pose_limit_row.build_pose_limit_row` reconstructs the complete
+helper at RVA 0x19f2590. Inputs are prepared four-lane axis, angle, sign and bound
+vectors, a context scalar, raw flags, placement fields and existing row bytes.
+The names describe the caller-facing interpretation; bound/sign producers and
+physical units remain external. Each arithmetic operation below rounds to float32:
+
+```text
+residual = angle * sign + bound
+term = context_scalar * residual
+if not all_four_lanes(residual >= 0):
+    gain = 0.4 if (context_flags & 0x18000000) == 0x08000000 else +0
+    term = gain * term
+axis_term = axis * sign
+```
+
+The comparison includes W. A negative W alone selects the gained branch for
+all lanes. Zero, including negative zero, satisfies the nonnegative comparison.
+There is no angle calculation or normalization inside this helper.
+
+Nonzero class selects seven-vector/112-byte rows, base context+0x60 and count+0xc4.
+Zero class selects eight-vector/128-byte rows, base+0x64 and count+0xc8. Placement
+is row-region offset+16*uint32(base+stride*count). The selected class count and
+shared result counter+0x180 increment with uint32 wrapping. Old result index is
+written at row+4. Term is written at +0x10, axis_term at +0x30; +0x20 and +0x60
+receive zero vectors. Only eight bytes at +0x50 are cleared; +0x58 remains intact.
+Zero class also writes axis*sign-bit-negated(sign) at +0x70. Every other byte is
+preserved, including the body-index header that the caller must complete.
+
+The independent API returns detached bytes, relative placement and next counts;
+it does not allocate or mutate native storage. Finite-input/intermediate checks
+are authored restrictions, not recovered native error handling.
+[512 complete native comparisons](../../native/snow_host/pose_limit_row_validation.json)
+match every row/context byte and returned pointer without intercepted calls.
+Coverage includes both layouts, all four masked phase states, W-only negative
+residuals, zero boundaries, signed zero and class/result counter wrapping. This is
+synthetic offline execution of the original helper, not live solver validation.
+Caller bound construction, phase semantics, context scalar units and downstream
+body response remain unresolved.

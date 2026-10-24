@@ -1,0 +1,20 @@
+{
+  "cases": 512,
+  "bit_exact": true,
+  "ungained_cases": 264,
+  "gained_cases": 248,
+  "scope": "Complete original angular limit-row helper, no interception; every row and context byte, placement and return pointer compared",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Both class layouts and noncanonical nonzero class byte",
+    "All four phase-bit states",
+    "All-nonnegative, fourth-lane-negative, zero-boundary and randomized residuals",
+    "Signed zero and class/result counter wrap"
+  ],
+  "limits": [
+    "Synthetic finite prepared vectors; no live execution",
+    "Bound/sign producers and caller header completion remain external",
+    "Context scalar units, phase meanings and downstream solve remain unresolved"
+  ],
+  "game_files_included": false
+}

@@ -7430,3 +7430,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   row/context bytes and returned pointers using observed atan2 results. Body indices
   come from ordered body+0x1c low16 values. Earlier world-vector preparation, other
   states/axes and downstream solve remain external.
+- Completed angular limit-row helper: four-lane bound residual, all-lane branch,
+  phase-gated gain, 112/128-byte layouts, preserved holes and wrapping counters.
+  512 complete native comparisons match every row/context byte and returned
+  pointer without interception. Bound/sign production, caller header completion,
+  context units and actual solve remain external; no live game was run.
