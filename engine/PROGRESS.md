@@ -7665,3 +7665,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   response supplied and arguments verified. Original tensor getter executes with
   initialized TLS/static state. Damping math, earlier field producers, index
   association and whole producer-to-solver composition remain open.
+- Recovered raw solver-state feedback into body motion fields. 512 full native
+  comparisons match all body bytes, including duplicate identities, unrolled/tail
+  paths and raw nonfinite encodings. Added synthetic body-producer → link-builder
+  → primary/tangent solve → body-writeback integration with explicit index/count
+  association. Whole native frame composition and those association producers
+  remain unresolved.

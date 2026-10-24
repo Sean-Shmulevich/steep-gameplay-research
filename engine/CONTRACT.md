@@ -465,3 +465,9 @@ Metadata bit3 selects the shared zero tensor/scalar and bypasses state processin
 Damping-library behavior is an explicit service, never an inferred approximation.
 Inputs remain constant; index association, TLS lifecycle and physical units remain
 caller obligations or unresolved producers.
+
+Body-state feedback: `write_pose_body_feedback` copies raw XYZ lanes from sequential
+32-byte state records into retained body fields1a0/1ac. It ignores fourth lanes and
+body index fields, preserves all other bytes and processes repeated identities in
+order. Complete nonoverlapping storage and caller-established array association
+are required; no live lifetime or invalid-range behavior is supplied.

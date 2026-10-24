@@ -1,0 +1,17 @@
+{
+  "schema": "pose-body-feedback-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete original body-state feedback routine without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994240",
+  "comparisons": [
+    "all body bytes including untouched fields",
+    "unchanged context and source state records"
+  ],
+  "limits": [
+    "Retained aligned pointer ranges with0..18 entries, including repeated identities.",
+    "Raw copied words may encode NaNs/infinities; no floating-point arithmetic or normalization.",
+    "No overlapping source/destination storage, live ownership or malformed pointer-range behavior claim."
+  ]
+}

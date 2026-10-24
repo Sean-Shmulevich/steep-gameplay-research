@@ -17335,3 +17335,33 @@ cover arbitrary finite basis/tensor rows, metadata and body flags, zero/nonzero
 scalars and empty body arrays. This closes body-buffer construction around one
 remaining numerical library dependency; whole producer-to-solver native composition
 and source units still require validation.
+
+### Solver body-state feedback
+
+`engine.pose_body_feedback.write_pose_body_feedback` reconstructs0x1994240 for
+valid retained body-pointer ranges. The original takes the state buffer from
+context plus uint32 offset+0x174 and advances32 bytes per body-array entry. For
+each entry it copies raw state bytes0..11 to body+0x1a0 and state bytes16..27 to
+body+0x1ac. The two fourth lanes are ignored. No arithmetic, normalization,
+metadata gate or body-index lookup occurs in this routine.
+
+Body array order establishes the association, matching the producer's sequential
+output order. Duplicate identities are not deduplicated; later state entries
+replace earlier motion-field writes. Bytes outside+0x1a0..+0x1b7, including the
+pointer at+0x1b8, remain unchanged. The independent API rejects incomplete retained
+records and excludes overlapping source/destination storage and concurrent edits.
+It does not reproduce malformed native pointer-range behavior.
+
+[512 complete native feedback comparisons](../../native/snow_host/pose_body_feedback_validation.json)
+execute without interception over0..18 entries, covering both the four-body
+unrolled path and scalar tail, repeated identities and arbitrary raw words.
+Complete body buffers match, and context/source state buffers remain unchanged.
+Raw NaN, infinity and signed-zero encodings are copied without interpretation.
+
+A synthetic integration test now builds body buffers from body fields, assembles
+a link triplet, runs primary/tangent solving, and writes the resulting state into
+retained body motion fields. The test explicitly associates producer output with
+the builder's body index and supplies traversal counts. It proves independent
+composition of this supported path, not native reconstruction of that association,
+counts or the entire frame scheduler. Individual stages and the connected solver
+have native evidence; one uninterrupted full engine-frame comparison remains open.
