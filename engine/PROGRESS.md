@@ -7420,3 +7420,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   untouched bytes. All row/context bytes and returned pointer match 384 full native
   runs using observed atan2 outputs. Caller header completion, scalar units and
   subsequent solver/body effects remain unresolved.
+- Completed hard angular pose-row helper, including 64/80-byte layouts, counters,
+  preserved bytes and phase-masked gain0.4 versus0. 384 full native comparisons
+  match all row/context bytes and return pointers with observed atan2 results.
+  Zero gain still computes angle and emits a row. Caller header completion, phase
+  meanings, scalar units and actual solve remain unresolved.

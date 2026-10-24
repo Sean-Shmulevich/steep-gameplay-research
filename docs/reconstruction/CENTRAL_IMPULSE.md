@@ -15333,3 +15333,28 @@ service. Both row layouts and near-zero scalar branches are covered. This closes
 the selected-fields limitation of the preceding response validation for this
 helper only. Caller-written headers, subsequent solver stages, scalar units and
 physical body response remain unresolved.
+
+### Hard pose-row helper
+
+`engine.snow_pose_hard_row.build_hard_pose_row` reconstructs helper RVA 0x19f2870.
+It uses the same explicit signed-angle service as the soft builder, but gain is
+float32(0.4) only when (context_flags & 0x18000000)==0x08000000, otherwise +0.
+Each angular term is float32(gain*float32(angle*context_scalar)). The angle is
+still evaluated and the row is still written when gain is zero. Signed zero is
+preserved; zero gain is not evidence that row construction was skipped.
+
+Nonzero class selects 64-byte rows, base-row context+0x88 and class count+0xec.
+Zero class selects 80-byte rows, base-row+0x8c and count+0xf0. Relative placement
+uses the same uint32 row-index arithmetic followed by a 4-bit left shift and
+row-region offset addition as the soft helper. The shared result count+0x180 and
+selected class count advance with uint32 wrapping. Old result index goes to row+4,
+angular term to +0x10, axis to +0x20 and, only for zero class, sign-bit-negated
+axis to +0x40. All other supplied row bytes are retained. No softness coefficient
+is written by this helper.
+
+[384 complete native comparisons](../../native/snow_host/pose_hard_builder_validation.json)
+cover both layouts and all four masked phase combinations. Every row byte,
+context byte, offset and returned pointer matches using observed native atan2
+outputs. No native calls are replaced. The independent service boundary remains;
+these tests do not prove platform atan2 equivalence. Phase semantics, context
+scalar units, caller-completed headers and downstream solve remain unresolved.
