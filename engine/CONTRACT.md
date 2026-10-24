@@ -442,3 +442,11 @@ to nonnegative lanes and applies their increments to state. Optional row-relativ
 accumulation requires retained extra bytes. Finite nonsingular arithmetic and
 supplied64-byte body data/32-byte state records are required. No tangent coupling,
 body-data producer, alias policy or complete solver convergence is claimed.
+
+Tangent numerical solve: `prepare_pose_tangent_row` computes reciprocal response
+without row60 and applies cached result lanes. `iterate_pose_tangent_row` uses
+row60 times the linked primary result as per-lane bounds, ignores row10, and applies
+old-minus-new result to the first body. Min/max ordering and signed-zero operand
+selection remain explicit. Finite arithmetic and retained data are required;
+no joint tangent limit, whole-system convergence or universal grip interpretation
+is implied.

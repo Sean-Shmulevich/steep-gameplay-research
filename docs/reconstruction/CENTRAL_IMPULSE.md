@@ -17191,3 +17191,62 @@ population must be respected when connecting the whole dispatcher; equal counts
 must not be assumed merely because the builder test filled that many rows. The
 secondary112-byte preparation target is0x19ef170 and its numerical coupling
 remains the next unresolved part of this row family.
+
+### Tangent row numerical preparation and coupling
+
+`engine.pose_tangent_solver` reconstructs complete preparation0x19ef170 and
+iteration0x19f2050 for the one-body112-byte secondary rows. The preparation
+uses the same weighted direction vectors and cached-result state application as
+the primary routine, but its reciprocal denominator does not add row+0x60.
+That field instead controls the subsequent primary-result-dependent bound.
+
+With float32 rounding after each operation, preparation computes:
+
+```python
+weighted_linear = M3 * d
+weighted_angular = M2 * a.z + (M1 * a.y + M0 * a.x)
+denominator = dot(weighted_angular, a) + dot(d, weighted_linear)
+row40 = broadcast(1 / -denominator)
+state_linear += old_result * weighted_linear
+state_angular += old_result * weighted_angular
+```
+
+The linked primary result index is the uint32 at row+0x50. Iteration computes each
+lane independently, preserving SSE min/max operand selection on equal values:
+
+```python
+bound = row60 * results[row50_u32]
+speed = dot(a, state_angular) + dot(d, state_linear)
+candidate = broadcast(-speed) * row40 + old_result
+new_result = max(min(candidate, bound), -bound)
+change = old_result - new_result
+state_linear += change * weighted_linear
+state_angular += change * weighted_angular
+result = new_result
+```
+
+Unlike the primary iteration, the state increment is old minus new. Row+0x10 is
+not read by this routine, despite the builder storing response/limit-looking
+values there. Do not apply a generic row solver that consumes those values here.
+The two tangent rows each clamp against their linked primary result; this local
+routine does not compute a joint two-dimensional magnitude limit. Negative bounds
+retain the original sequential min/max behavior rather than being reordered.
+Finite min/max ties take the second operand, preserving signed-zero behavior.
+
+This closes the consumer of combined profile field30 for this builder family:
+it scales the linked primary result to bound the tangent result. That is direct
+arithmetic evidence for a friction-like coupling, while field naming, original
+units and the wider material model still require their producers. The code does
+not justify treating this coefficient as a universal snow grip parameter.
+
+[512 tangent numerical sequences](../../native/snow_host/pose_tangent_solver_validation.json)
+run complete native preparation and three complete native iterations per case
+without interception. All retained row, state and result bytes match after every
+stage, including unrelated records. Cases allow the linked index to equal the
+current index and use negative linked results to exercise inverted bounds.
+A synthetic integration test builds a primary/two-tangent triplet, prepares all
+three and iterates them in primary-then-tangents order. Its primary result bounds
+the tangent update and changes the first body's state. This composition is a
+Python integration test, not yet an uninterrupted native whole-solver comparison.
+Other row families, traversal-count production, body-data production, original
+units and live identity remain unresolved.

@@ -7647,3 +7647,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   512 native preparations plus1536 iterations match all bytes without interception.
   Builder-to-primary-solve-to-feedback now uses computed results in a synthetic
   test. Tangent coupling, body-data production and whole dispatch remain open.
+- Recovered tangent preparation and primary-result-bounded iteration. Field30's
+  consumer now directly scales tangent limits; iteration ignores row10 and applies
+  old-minus-new result to state. 512 native preparations and1536 iterations match
+  all bytes without interception. A built primary/two-tangent triplet runs through
+  the reconstructed equations in an integration test. Full native composition,
+  traversal-count and body-data producers remain open.
