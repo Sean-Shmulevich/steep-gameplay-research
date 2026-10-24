@@ -13074,3 +13074,40 @@ match both complete groups bitwise across negative/zero/positive weights,
 translated/random frames, zero-side classification, prior sums and uint32 count
 wrap. Five reporting/aggregate portable tests pass. This does not establish live
 weight meanings, frame identity, final normals or a landing classifier.
+
+### Aggregate normal slot becomes a rotation candidate
+
+Inspection of the finalizer narrows the output contract. For nonempty groups,
+RVA 0x140c73e forms reciprocal weight, averages the weighted scalar and point,
+and normalizes the accumulated XYZ normal using a hardware reciprocal-square-root
+seed followed by one refinement. It then calls RVA 0x292a40 with source vector
+(0,0,1), the normalized normal, and float32 threshold 1e-5. The destination is the
+same four-float slot previously holding the normal sum. This is a phase-dependent
+slot, not a persistent normal vector.
+
+The ordinary helper result is an unnormalized quaternion candidate:
+
+```text
+xyz = cross(world_up, normal)
+w = 1 + dot(world_up, normal)
+```
+
+If dot is negative and every cross lane is within the threshold, the fixed +Z
+source takes a deterministic +Y-axis fallback with w=0. The fallback axis length
+uses the helper's reciprocal-square-root refinement. The ordinary branch does
+not normalize its quaternion result. In particular, matching up vectors yield
+(0,0,0,2), not the unit identity quaternion. Downstream consumers must be traced
+before deciding where or whether normalization is performed.
+
+The empty-group branch only replaces the point with XYZ from owner+0x1f0 and
+clears W via a mask. It does not run the normal-to-rotation helper. The previous
+slot contents and initialization therefore matter for empty groups.
+
+`engine.snow_contact_reporting.contact_up_rotation` implements the fixed-source
+helper specialization with explicit reciprocal-square-root seed input. It does
+not yet compose averaging/normalization or native empty-state initialization.
+[286 full original-helper cases](../../native/snow_host/contact_rotation_validation.json)
+match bitwise, including opposite-direction threshold neighbors and signed zeros.
+The emulator executes the helper without call interception and supplies its
+observed seed to the model in the opposite branch. Seven related portable tests
+pass. These cases do not establish live orientation output or downstream use.

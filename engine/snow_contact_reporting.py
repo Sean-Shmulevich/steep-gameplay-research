@@ -65,3 +65,22 @@ def accumulate_contact_bucket(buckets, record, frame_columns):
     for key,value in [('point',point),('normal',normal)]:
         bucket[key]=[f32(f32(weight*x)+old) for x,old in zip(value,four(bucket[key]))]
     return out
+
+
+def contact_up_rotation(normal, reciprocal_sqrt_seed):
+    """Fixed +Z-source specialization of RVA 0x292a40, threshold float32(1e-5).
+
+    Returns the native unnormalized quaternion candidate. The opposite-direction
+    fallback uses a supplied hardware reciprocal-square-root seed, preserving its
+    refinement rounding. This does not assert downstream quaternion normalization.
+    """
+    n=four(normal)
+    cross=[f32(f32(0.0*n[2])-n[1]), f32(n[0]-f32(0.0*n[2])),
+           f32(f32(0.0*n[1])-f32(0.0*n[0])),0.0]
+    dot=f32(f32(0.0*n[0])+f32(f32(0.0*n[1])+n[2]))
+    if dot < 0 and all(abs(x) <= f32(1e-5) for x in cross):
+        seed=f32(reciprocal_sqrt_seed(1.0))
+        correction=f32(3.0-f32(f32(seed*1.0)*seed))
+        factor=f32(correction*f32(.5*seed))
+        return [0.0,factor,0.0,0.0]
+    return [cross[0],cross[1],cross[2],f32(1.0+dot)]

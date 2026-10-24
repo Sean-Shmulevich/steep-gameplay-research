@@ -51,3 +51,14 @@ class ContactBucketTests(unittest.TestCase):
         for weight in [0,-1]:
             r['weight']=weight
             self.assertEqual(accumulate_contact_bucket(self.buckets(),r,frame),self.buckets())
+
+
+class ContactRotationTests(unittest.TestCase):
+    def test_up_is_not_unit_quaternion(self):
+        from engine.snow_contact_reporting import contact_up_rotation
+        self.assertEqual(contact_up_rotation([0,0,1,0],lambda _:1),[0,0,0,2])
+
+    def test_opposite_and_tilted(self):
+        from engine.snow_contact_reporting import contact_up_rotation
+        self.assertEqual(contact_up_rotation([0,0,-1,0],lambda _:1),[0,1,0,0])
+        self.assertEqual(contact_up_rotation([1,0,0,0],lambda _:1),[0,1,0,1])

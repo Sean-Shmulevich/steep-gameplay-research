@@ -7128,3 +7128,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   fold matches 320 original-instruction cases, including zero boundary/count wrap;
   five reporting/aggregate tests pass. Frame semantics, final normalization and
   downstream classification remain external; no live aggregate claim.
+- Identified phase-dependent contact aggregate storage: normalized normal is
+  overwritten by a +Z-to-normal unnormalized quaternion candidate. Added fixed-up
+  helper specialization matching 286 complete original-helper cases with explicit
+  emulated rsqrt seed; seven related tests pass. Empty groups only replace point.
+  Finalizer composition, initialization and downstream quaternion use remain open;
+  ordinary (0,0,0,2) output must not be treated as unit identity without evidence.
