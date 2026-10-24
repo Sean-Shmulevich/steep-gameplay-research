@@ -12284,3 +12284,66 @@ The next useful narrowing is inside the wrapper: identify a callable boundary
 bracketing the pending consumer without including unrelated forces, or account
 for those other force contributions from observed inputs. Repeating the outer
 capture alone cannot establish that final arithmetic attribution.
+
+### Post-pending point-impulse loops
+
+Inspection after the pending clear identifies two additional submission loops
+before two further helper calls and function return. Thus the outer snow-wrapper
+velocity difference cannot be reduced to pending consumption without accounting
+for these paths and earlier work. Their live activation is not yet observed.
+
+The first loop is reached only after an outer positive-scalar gate and curve
+assembly. With the already-computed combined scale supplied, its local behavior is:
+
+```text
+enter(runtime_lock)
+for record in directional_records_in_storage_order:
+    if record.enabled_byte != 0:
+        impulse.xyzw = float32(combined_scale * record.direction.xyzw)
+        point_impulse(main_body, impulse, record.point, force=true)
+leave(runtime_lock)
+```
+
+The combined scale is formed, with float32 rounding at each multiplication, from
+the transformed/clamped curve result, a second curve result, runtime+0x1590,
+the positive outer scalar and runtime+0x1520. The new portable loop accepts this
+resolved product; it does not guess the curve inputs, physical units or meanings.
+The record stride is 0x140; point, direction and enable are at +0x80, +0x90 and
++0xa4. These are build-specific evidence anchors, not portable API fields.
+
+The second loop has distinct eligibility and magnitude inputs:
+
+```text
+enter(runtime_lock)
+for record in summed_records_in_storage_order:
+    selected_gate = gate_one if record.kind_byte == 1 else gate_other
+    if record.enabled_byte != 0 and selected_gate > 0:
+        impulse.xyzw = float32(float32(record.a.xyzw + record.b.xyzw) * runtime_scale)
+        point_impulse(main_body, impulse, record.point, force=true)
+leave(runtime_lock)
+```
+
+The selected gate is not multiplied into the impulse. All non-one byte kinds use
+the other gate. Record stride is 0x50; vectors are at +0x10/+0x20, point at +0x30,
+kind at +0x48 and enable at +0x49. Runtime scale is read at +0x1520. Positive gates
+with zero scale still submit zero impulses. No rider submission occurs in either
+loop. Both loops call the point-impulse entry RVA 0x18aa180 rather than the pending
+consumer's central-impulse entry; downstream body and angular effects are not
+implemented by these new submission models.
+
+`engine.snow_post_pending` exposes both finite-input submission lists. Their order,
+impulse bits, point addresses, main-body receiver, force byte and enclosing lock
+calls matched [320 original-instruction cases](../../native/snow_host/post_pending_loops_validation.json):
+64 directional and 256 summed. Locks and point-impulse calls were intercepted;
+no body arithmetic or concurrency behavior was exercised. The original loops
+reload container count/storage after calls, while the portable model assumes
+stable supplied records. Container mutation, nonfinite inputs and full first-loop
+curve production remain outside the validated scope. Nine focused portable tests
+for these loops and the motion sequence also pass.
+
+The pending threshold and clear are inline operations in this inspected region;
+there is no separate direct-call boundary around that small block here. The
+point-impulse loops and later helpers provide leads for explaining residual body
+changes, but observing those calls alone would not isolate the earlier central
+pending submission. A further live probe must distinguish their call sites and
+preserve the ordering already established by the paired wrapper capture.

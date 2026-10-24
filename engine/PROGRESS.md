@@ -7016,3 +7016,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Captured 108 markup and 442 attributed snow calls with no drops; both slots and
   all cleanup verified. Other forces prevent attributing whole-wrapper velocity
   changes solely to pending impulse; inner-consumer interception remains open.
+- Decoded two post-pending point-impulse submission loops and exposed their local
+  finite-input models in `engine.snow_post_pending`. Original instructions match
+  320 synthetic cases with locks/body calls intercepted. The second loop's type-
+  selected scalar is eligibility only, not magnitude; the separate runtime scalar
+  scales the summed vectors. Live activation, body arithmetic and upstream curve
+  production remain unproved. Nine focused portable tests pass.

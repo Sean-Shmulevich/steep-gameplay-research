@@ -1,0 +1,16 @@
+{
+  "evidence": "original-instruction emulation with synthetic inputs",
+  "cases": {
+    "directional": 64,
+    "summed": 256
+  },
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "lock_and_point_impulse_calls": "intercepted; order, arguments and float32 impulse bits checked",
+  "body_arithmetic_executed": false,
+  "live_execution_proved": false,
+  "limits": [
+    "First loop begins after outer gate and combined scalar production",
+    "Container mutation and lock semantics not modeled",
+    "Finite scalars only; no native NaN claim"
+  ]
+}
