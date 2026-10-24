@@ -6992,3 +6992,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   falling edge also coincides with pending accumulation. Both boundaries are
   state 0/0/5. All 208 float-argument/world-interval comparisons match bits.
   Direct listener execution and live source/gain-to-delta comparison remain open.
+
+- Extended native actor observation with guarded projection direction/gain inputs
+  for outer selector 1 and nested selector 5. Capture serialization uses raw bits
+  and probe ABI 4. Eight focused tests, the 54-position read-failure sanitizer
+  fixture and full Windows host/plugin build pass. Live numerical comparison is
+  pending; no callback execution or consumer timing claim is added.

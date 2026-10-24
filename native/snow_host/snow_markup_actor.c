@@ -25,6 +25,19 @@ static int sample(SnowEntryRead r,void *ctx,uint64_t actor,uint64_t base,SnowMar
             s->inner_present=1;
         }
     }
+    if(s->outer_present && (s->outer_state==1 || (s->inner_present && s->inner_state==5))) {
+        uint64_t parent=s->outer_state==1?s->state_owner:s->state_child;
+        if(!ptr(r,ctx,parent+0x20,&s->vector_receiver)||!valid(s->vector_receiver,0x18))return 0;
+        if(!ptr(r,ctx,s->vector_receiver+0x10,&s->vector_owner)||!valid(s->vector_owner,0x730))return 0;
+        if(!ptr(r,ctx,s->vector_owner+0x40,&p)||p!=actor)return 0;
+        if(!rd(r,ctx,s->vector_owner+0x720,b,16))return 0;
+        for(unsigned i=0;i<4;i++)s->direction_bits[i]=u32(b+4*i);
+        if(!ptr(r,ctx,s->vector_owner+0x50,&s->gain_handle)||!rd(r,ctx,s->gain_handle,b,16))return 0;
+        s->gain_payload=u64(b);s->gain_status=u32(b+12);
+        if(!(s->gain_status&0x80000000)||!valid(s->gain_payload,0xe4))return 0;
+        if(!word(r,ctx,s->gain_payload+0xe0,&s->projection_gain_bits))return 0;
+        s->projection_inputs_present=1;
+    }
     if(!rd(r,ctx,actor+0x168,b,8))return 0;
     s->runtime=u64(b);
     if(s->runtime){

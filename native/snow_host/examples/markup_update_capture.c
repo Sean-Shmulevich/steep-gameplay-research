@@ -59,6 +59,7 @@ static void write_snapshot(FILE *f,const SnowMarkupUpdateSnapshot *s,unsigned va
     fprintf(f,"\"valid\":%u",s->actor_valid);
     if(valid && s->actor_valid) {
         fprintf(f,",\"mode\":%u,\"outer_present\":%u,\"outer\":%u,\"inner_present\":%u,\"inner\":%u,\"runtime_present\":%u,\"world_interval_bits\":%u,\"gain_state\":%u,\"reverse\":%u,\"fc9\":%u,\"fdc\":%u",a->current_mode,a->outer_present,a->outer_state,a->inner_present,a->inner_state,a->runtime_present,a->world_interval_bits,a->gain_state,(unsigned)a->reverse_fallback,(unsigned)a->fc9,(unsigned)a->fdc);
+        fprintf(f,",\"projection_inputs_present\":%u,\"direction_bits\":[%u,%u,%u,%u],\"projection_gain_bits\":%u,\"gain_status\":%u",a->projection_inputs_present,a->direction_bits[0],a->direction_bits[1],a->direction_bits[2],a->direction_bits[3],a->projection_gain_bits,a->gain_status);
         fprintf(f,",\"pending_bits\":[%u,%u,%u,%u],\"normal_bits\":[%u,%u,%u,%u],\"current_bits\":[%u,%u,%u,%u]",a->pending_bits[0],a->pending_bits[1],a->pending_bits[2],a->pending_bits[3],a->normal_bits[0],a->normal_bits[1],a->normal_bits[2],a->normal_bits[3],a->current_bits[0],a->current_bits[1],a->current_bits[2],a->current_bits[3]);
     }
     fputs("}}",f);

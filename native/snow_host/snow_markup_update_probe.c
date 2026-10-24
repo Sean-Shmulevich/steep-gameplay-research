@@ -14,7 +14,7 @@ static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
 }
 static uint64_t ticks(void) {LARGE_INTEGER q;QueryPerformanceCounter(&q);return q.QuadPart;}
 static uint64_t thread_id(void) {return GetCurrentThreadId();}
-uint32_t SnowMarkupUpdateProbe_ABIVersion(void) {return 3;}
+uint32_t SnowMarkupUpdateProbe_ABIVersion(void) {return 4;}
 size_t SnowMarkupUpdateProbe_RecordSize(void) {return sizeof(SnowMarkupUpdateRecord);}
 uint64_t SnowMarkupUpdateProbe_ClockFrequency(void) {LARGE_INTEGER q;return QueryPerformanceFrequency(&q)?(uint64_t)q.QuadPart:0;}
 int SnowMarkupUpdateProbe_Configure(uint64_t address,SnowMarkupUpdateOriginal original,

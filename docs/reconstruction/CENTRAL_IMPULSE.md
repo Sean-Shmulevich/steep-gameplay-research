@@ -12146,3 +12146,32 @@ for every callback path or game state.
 The next focused observation is the vector source/gain at this state and the
 specific callback/service boundary. That can distinguish a numerically explained
 pending delta from the current temporal and structural correlation.
+
+
+### Projection-input observation contract
+
+The actor sampler now follows the decoded vector receiver for outer selector 1
+and nested selector 5. It requires the vector owner's actor backlink to match
+and the gain handle's active bit to be set. It captures four raw direction lanes
+and the gain's float32 bits, alongside the existing normal, interval and pending
+buffer. Other routes report `projection_inputs_present=0`; they do not invent
+projection inputs. An invalid expected projection chain rejects the actor sample.
+The provider sample can still be accepted independently.
+
+Both repeated actor samples include these new fields and ownership links. Equal
+reads do not pin object lifetime or establish an atomic snapshot. Direction and
+gain are observed at update boundaries, not necessarily at their internal use.
+Their coordinate frame and physical units are not newly established by this
+extension. Comparing XYZ formulas also requires checking the captured fourth lane.
+
+The capture plugin serializes the raw input bits and presence/status fields but
+omits the added heap pointers. Embedded record layout changes raise the probe ABI
+to 4; consumers must check both ABI and record size and rebuild accordingly.
+Historical ABI-3 live receipts remain valid for their original scope.
+
+Validation: eight focused native/build/bench tests pass, as does the actor fixture
+under ASan/UBSan with all 54 read-failure positions. The complete Windows host and
+opt-in capture plugin build succeeds. These are authored-fixture and build checks;
+this extension has not yet been validated in the live game. The next experiment
+must compare observed source/gain inputs with the pending delta and retain any
+normalization-seed uncertainty rather than claiming bit-exact live equivalence.
