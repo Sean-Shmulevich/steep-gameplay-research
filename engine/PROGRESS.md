@@ -7511,3 +7511,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   fixture, CLI verification and end-to-end membership tests pass. Supplied group
   identities/link eligibility and authored list growth remain explicit; no live
   access, physical solve or connected-native-equivalence claim.
+- Added continuous native partition validation:320 caller segments execute original
+  preparation, destination completion, eligibility/link checks and migration in
+  sequence. All record/group/destination bytes, service order and reuse flag match
+  the composition. Temporary storage/group acquisition supplied; growth, nonempty
+  rings, outer finalization/destruction and live physics remain excluded.

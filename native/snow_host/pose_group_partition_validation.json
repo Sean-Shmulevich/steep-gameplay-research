@@ -1,0 +1,19 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Continuous original multi-body caller segment from temporary allocation through preparation, destination completion, native eligibility/link predicate, migration and temporary release; full group/record/destination bytes and remaining reuse flag match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Two through eight bodies; both constraint arrays and metadata classes",
+    "Connected and isolated bodies, strict vector eligibility",
+    "Original/special/acquired destinations and swap migration",
+    "Storage service order and preserved tails"
+  ],
+  "limits": [
+    "Temporary allocation/release and group acquisition supplied",
+    "Preallocated destination group capacity; growth branches excluded",
+    "Empty body link rings; inspector resolved-link service set true",
+    "Outer finalization/destruction and live physics excluded"
+  ],
+  "game_files_included": false
+}

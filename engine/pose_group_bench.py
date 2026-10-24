@@ -89,7 +89,7 @@ def inspect(document):
         component_count=components,prepared_destinations=prepared,assigned_destinations=assigned,
         remaining_destinations=working,original_group_reuse_available=unused,
         groups=groups,bodies=bodies,links=links,poses=poses,storage_events=events,
-        limits=['Recovered kernels composed; this inspector has no connected native execution receipt',
+        limits=['Connected kernels validated offline with supplied storage services; JSON adapter is independently tested',
                 'Resolved link eligibility supplied; native link acquisition and lifetime excluded',
                 'List growth and supplied group identities are authored storage services',
                 'No outer finalization, destruction, physics solve, live access or concurrency'])

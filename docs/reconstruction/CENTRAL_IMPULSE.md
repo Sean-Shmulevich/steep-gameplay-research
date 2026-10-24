@@ -16035,3 +16035,27 @@ path, all-eligible empty-source behavior, exhausted identity supply, alias
 rejection, input immutability and the actual CLI. The constituent kernels have
 separate native receipts above; this composition does **not** yet have a continuous
 native execution comparison and must not be presented as original-game replay.
+
+#### Continuous native partition validation
+
+The preceding inspector section records its initial separate-kernel evidence.
+A subsequent [320-case continuous comparison](../../native/snow_host/pose_group_partition_validation.json)
+now executes the original multi-body caller segment RVA0x18e2e6f..0x18e2f5a,
+starting with temporary allocation and ending after temporary release. Original
+component preparation, destination completion, magnitude/link eligibility and
+migration execute together without substituting those helpers. Only temporary
+allocation/release and destination-group acquisition use supplied services.
+
+The independent composition matches complete group/body/link/pose bytes, mutable
+destination count/storage, service order and final original-group reuse flag.
+Cases contain2..8 bodies, both constraint families, both endpoint classes,
+connected/isolated bodies and strict-threshold eligibility. This supersedes the
+lack of a connected receipt for these numerical/structural stages. The JSON
+parser and storage adapter are still independently tested rather than native code.
+
+Scope remains bounded: target groups have enough capacity, body link rings are
+empty, and outer group finalization/removal/destruction is outside the segment.
+The inspector's resolved-link input corresponds to true in these cases. Nonempty
+ring handling has its separate predicate receipt; it was not exercised in this
+connected comparison. There is no live scheduling, replay, physical force,
+allocator-failure or original-engine-equivalence claim.
