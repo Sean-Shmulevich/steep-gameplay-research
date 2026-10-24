@@ -13787,3 +13787,36 @@ changes, equal-data owner replacement, image/range rejection and NaN preservatio
 Native compilation/execution, AddressSanitizer/UndefinedBehaviorSanitizer and
 Win64 cross-compilation pass. Recorder integration, overhead measurement and live
 receiver identification remain next; these tests do not establish live safety.
+
+### Opt-in frame recorder channel
+
+Probe ABI 11 adds `basis_attempted`, `basis_valid`, `basis_read_ticks` and a
+`SnowFrameInputs` payload to each ordinary snapshot. Rebuild readers against
+the current header and use the version/record-size queries before copying.
+`SnowProbe_ConfigureChannels` now accepts mask 4 for basis/frame observations,
+alongside mask 1 for points and mask 2 for gate state. Unknown bits still reject;
+the older detailed configure function remains point-only.
+
+Set `observe_frames=1` in the update-capture plugin's `[capture]` section to
+enable the channel. It defaults off. It runs only after the ordinary snapshot
+passes its validity guard, checks that the sampled runtime matches that snapshot,
+and records its read duration separately. A frame-read failure does not discard
+ordinary, point or gate observations. It also does not call the basis producer.
+
+Private JSONL includes the receiver/table/callback/owner/configuration identities,
+mode byte, elapsed bits and flattened cached/forward/inverse raw uint32 lanes.
+Invalid samples omit the payload while retaining attempt/validity/timing fields.
+The matrices are ordered native vectors, not row/column-converted rendering data.
+These files contain session-private identities and are not public payloads.
+
+Recorder observations bracket the existing actor update, not slot+0x40 itself.
+They can identify the receiver and show changes across the update, but cannot
+alone prove which callback wrote a lane or which publication a consumer used.
+Per-channel samples are sequential, not one atomic cross-channel observation.
+
+The source-backed JSON formatter test checks raw NaN/signed-zero preservation and
+invalid-payload omission. Existing concurrent trace tests now preserve the new
+fields. The observer fixture, seven trace tests and 37 capture/analysis tests pass;
+the Win64 host and capture-plugin build succeeds. All three build paths include
+the new observer source. No game was launched; live acceptance and overhead are
+still unmeasured.

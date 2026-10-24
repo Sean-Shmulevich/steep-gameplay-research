@@ -35,6 +35,14 @@ static void snapshot(void *actor,SnowUpdateSnapshot *out) {
         }
         QueryPerformanceCounter(&end);out->gate_read_ticks=(uint64_t)(end.QuadPart-start.QuadPart);
     }
+    if((input_channels&4) && (out->valid&SNOW_SNAPSHOT_VALID)) {
+        LARGE_INTEGER start,end;QueryPerformanceCounter(&start);out->basis_attempted=1;
+        out->basis_valid=snow_frame_inputs_observe(read_memory,NULL,binding.actor,point_base,point_size,&out->basis_inputs)==1;
+        if(out->basis_valid && out->basis_inputs.runtime!=out->runtime) {
+            out->basis_valid=0;memset(&out->basis_inputs,0,sizeof out->basis_inputs);
+        }
+        QueryPerformanceCounter(&end);out->basis_read_ticks=(uint64_t)(end.QuadPart-start.QuadPart);
+    }
 }
 static int motion_snapshot(void *context,void *actor,SnowMotionObservation *out) {
     (void)context;
@@ -79,7 +87,7 @@ int SnowProbe_ConfigureDetailed(const SnowUpdateBinding *b,SnowUpdateOriginal or
 }
 int SnowProbe_ConfigureChannels(const SnowUpdateBinding *b,SnowUpdateOriginal original,
     const SnowEntryProfile *profile,int motion,uint64_t image_base,uint64_t image_size,unsigned channels) {
-    if((channels&~3u) || (channels && !image_base))return 0;
+    if((channels&~7u) || (channels && !image_base))return 0;
     if(motion!=0 && motion!=1)return 0;
     if(profile && (!b || profile->actor_table!=b->actor_table || !profile->job_table ||
        !profile->callable_table || !profile->return_address))return 0;

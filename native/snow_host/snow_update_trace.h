@@ -7,6 +7,7 @@
 #include "snow_motion_observation.h"
 #include "snow_point_inputs.h"
 #include "snow_gate_inputs.h"
+#include "snow_frame_inputs.h"
 /* Authored capture plumbing. No installation, game offsets, or ownership claims.
  * Initialize once before publishing. Context, records and callbacks must remain
  * alive for ALL callers, including calls after close. Never reopen/reinitialize.
@@ -27,6 +28,9 @@ typedef struct {
     uint32_t gate_attempted, gate_valid;
     uint64_t gate_read_ticks;
     SnowGateInputs gate_inputs;
+    uint32_t basis_attempted, basis_valid;
+    uint64_t basis_read_ticks;
+    SnowFrameInputs basis_inputs;
 } SnowUpdateSnapshot;
 /* Authored observation payload, not a native game object or public wire ABI.
  * All pointers are session-private provenance. No generation/freshness claim.

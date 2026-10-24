@@ -15,7 +15,7 @@
 static const SnowHostApiV1 *host;
 static volatile LONG phase;
 static unsigned milliseconds;
-static int attribute_jobs, observe_motion, observe_points, observe_gates;
+static int attribute_jobs, observe_motion, observe_points, observe_gates, observe_frames;
 static char output[MAX_PATH];
 static void number(FILE *f,float v) { if(isfinite(v)) fprintf(f,"%.9g",v); else fputs("null",f); }
 static void floats(FILE *f,const float *v,unsigned n) {
@@ -73,6 +73,15 @@ static void sample(FILE *f,const SnowUpdateSnapshot *s) {
         fprintf(f,",\"lower_other_bits\":%u",g->lower_other);
         fprintf(f,",\"lower_one_bits\":%u",g->lower_one);
         fputc('}',f);
+    }
+    fprintf(f,",\"basis_attempted\":%u,\"basis_valid\":%u,\"basis_read_ticks\":%llu",s->basis_attempted,s->basis_valid,(unsigned long long)s->basis_read_ticks);
+    if(s->basis_valid) {
+        const SnowFrameInputs *b=&s->basis_inputs;
+        fprintf(f,",\"basis_inputs\":{\"receiver\":\"%llx\",\"receiver_table\":\"%llx\",\"callback\":\"%llx\",\"owner\":\"%llx\",\"config\":\"%llx\",\"physical_mode\":%u,\"elapsed_bits\":%u,\"cached_basis_bits\":",
+            (unsigned long long)b->receiver,(unsigned long long)b->receiver_table,(unsigned long long)b->callback,
+            (unsigned long long)b->owner,(unsigned long long)b->config,b->physical_mode,b->elapsed);
+        words(f,&b->cached_basis[0][0],12);fputs(",\"forward_bits\":",f);words(f,&b->forward[0][0],16);
+        fputs(",\"inverse_bits\":",f);words(f,&b->inverse[0][0],16);fputc('}',f);
     }
     fputc('}',f);
 }
@@ -156,7 +165,7 @@ static int paused(void *user) {
         host->log(host->context,"entry attribution route mismatch"); InterlockedExchange(&phase,3); return 0;
     }
     uint64_t image_base=0,image_size=0;
-    if(observe_points || observe_gates) {
+    if(observe_points || observe_gates || observe_frames) {
         HMODULE image=GetModuleHandleA(NULL);
         IMAGE_DOS_HEADER dos;IMAGE_NT_HEADERS64 nt;
         if(!image || !ReadProcessMemory(GetCurrentProcess(),image,&dos,sizeof dos,&got) || got!=sizeof dos ||
@@ -167,7 +176,7 @@ static int paused(void *user) {
         }
         image_base=(uint64_t)(uintptr_t)image;image_size=nt.OptionalHeader.SizeOfImage;
     }
-    int configured=SnowProbe_ConfigureChannels(&binding,original,attribute_jobs ? &profile : NULL,observe_motion,image_base,image_size,(observe_points?1u:0u)|(observe_gates?2u:0u));
+    int configured=SnowProbe_ConfigureChannels(&binding,original,attribute_jobs ? &profile : NULL,observe_motion,image_base,image_size,(observe_points?1u:0u)|(observe_gates?2u:0u)|(observe_frames?4u:0u));
     if(!configured) {
         host->log(host->context,"capture configuration refused"); InterlockedExchange(&phase,3); return 0;
     }
@@ -190,6 +199,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     attribute_jobs=GetPrivateProfileIntA("capture","attribute_jobs",0,api->config_path)==1;
     observe_motion=GetPrivateProfileIntA("capture","observe_motion",0,api->config_path)==1;
     observe_gates=GetPrivateProfileIntA("capture","observe_gates",0,api->config_path)==1;
+    observe_frames=GetPrivateProfileIntA("capture","observe_frames",0,api->config_path)==1;
     observe_points=GetPrivateProfileIntA("capture","observe_points",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;

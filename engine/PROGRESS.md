@@ -7236,3 +7236,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   All read-failure positions, matrix-lane changes, equal-data owner replacement,
   bounds and NaN preservation pass fixtures, sanitizers and Win64 compilation.
   No recorder integration, launch or live identity/freshness claim yet.
+- Integrated frame observer as independent opt-in ABI 11 channel, mask 4 and
+  update_capture observe_frames=1. Runtime matching, separate validity/read timing
+  and raw-bit/private-identity JSON output preserve existing channels. Observer,
+  concurrent trace and serialization/capture tests pass; Win64 host/plugin builds.
+  Actor-update bracketing is not callback attribution. No live acceptance or
+  overhead result yet; older readers must rebuild for the larger record.

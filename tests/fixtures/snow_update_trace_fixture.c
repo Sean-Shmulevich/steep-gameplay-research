@@ -18,6 +18,11 @@ static void read_state(void *actor, SnowUpdateSnapshot *s) {
     s->linear[0][0]=(float)*(int *)actor; s->angular[0][1]=7;
     s->gate_attempted=1;s->gate_valid=1;s->gate_read_ticks=23;
     s->gate_inputs.timer=(uint32_t)*(int *)actor;
+    s->basis_attempted=1;s->basis_valid=1;s->basis_read_ticks=47;
+    s->basis_inputs.elapsed=(uint32_t)*(int *)actor;
+    s->basis_inputs.cached_basis[2][3]=0x7fc12345;
+    s->basis_inputs.forward[3][2]=0x80000000;
+    s->basis_inputs.inverse[3][3]=0x3f800000;
     s->gate_inputs.immersion=0x7fc12345; /* Preserve raw bits through recorder. */
 }
 static void original(void *actor,float elapsed,float derivative) {
@@ -200,6 +205,12 @@ int main(void) {
         assert(rows[i].before.gate_read_ticks==23 && rows[i].after.gate_read_ticks==23);
         assert(rows[i].after.gate_inputs.timer==rows[i].before.gate_inputs.timer+1);
         assert(rows[i].before.gate_inputs.immersion==0x7fc12345);
+        assert(rows[i].before.basis_attempted && rows[i].after.basis_valid);
+        assert(rows[i].before.basis_read_ticks==47);
+        assert(rows[i].after.basis_inputs.elapsed==rows[i].before.basis_inputs.elapsed+1);
+        assert(rows[i].before.basis_inputs.cached_basis[2][3]==0x7fc12345);
+        assert(rows[i].after.basis_inputs.forward[3][2]==0x80000000);
+        assert(rows[i].after.basis_inputs.inverse[3][3]==0x3f800000);
         assert(rows[i].entry_tick<rows[i].exit_tick);
     }
     mode=3; init(128); atomic_store(&entered,0); atomic_store(&release_call,0);
