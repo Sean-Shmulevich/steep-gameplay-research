@@ -11595,3 +11595,49 @@ broken backlinks, wrong provider table, oversize rejection and null attachment.
 Native tests and ASan/UBSan pass; the source compiles for Windows x64. Recorder
 lifecycle tests also pass with the expanded snapshot. No Windows execution,
 slot installation or live update capture is claimed for this sampler yet.
+
+### Windows markup-update slot wrapper
+
+[`snow_markup_update_probe.h`](../../native/snow_host/snow_markup_update_probe.h)
+and [implementation](../../native/snow_host/snow_markup_update_probe.c) expose an
+experimental ABI-1 wrapper for the typed update recorder. Configuration specifies
+the image data slot, original receiver-plus-float function, one component filter
+and supplied reader/context; it does not install. Other components forward
+without sampling. The original return value is intentionally outside the ABI.
+
+Installation accepts an aligned committed non-executable image slot in the
+original function's module, checks its expected pointer, then swaps only that
+pointer with compare/exchange. It restores page protection and pins the wrapper
+and target modules. Restore replaces only its own pointer, preserves competitors,
+and can be retried. Call restore after any installation attempt, then close and
+drain. The callbacks and reader context must remain valid for cached callers;
+module pinning alone does not preserve caller-owned context. The capture limit
+is 256 records. No code instructions are patched by this wrapper.
+
+[Five authored Windows fixture runs under Wine](../../native/snow_host/markup_update_probe_wine_validation.json)
+passed in separate processes: normal installation, competing replacement,
+heap-slot rejection, closed-before-install and changed-original rejection.
+The fixture checks negative-zero float argument bits through the installed slot,
+receiver filtering, before/after sampling, exact record size, original pointer and
+page-protection restoration, and quiet-NaN forwarding through a cached wrapper
+pointer after close and FreeLibrary. The wrapper remains pinned. This exercises
+the Windows x64 receiver-plus-float ABI in an authored fixture, not the game's
+callsite. No game was launched; the research bottle was stopped afterward.
+
+The [fixture source](../../tests/fixtures/snow_markup_update_probe_fixture.c)
+and compile-only unittest are included. An example standalone build from the
+repository root, using a Windows x64 MinGW compiler, is:
+
+```sh
+x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror -shared \
+  native/snow_host/snow_markup_update_probe.c \
+  native/snow_host/snow_markup_update_trace.c -o probe.dll
+x86_64-w64-mingw32-gcc -std=c11 -O2 -Wall -Wextra -Werror \
+  -I native/snow_host tests/fixtures/snow_markup_update_probe_fixture.c -o fixture.exe
+```
+
+Run `fixture.exe` with the absolute DLL path and one mode name: `normal`,
+`conflict`, `heap`, `closed` or `changed`. It touches only its own authored test
+slot. Game integration still requires a bounded controller/plugin, fresh
+component guards, the native provider reader, original-callsite verification,
+and restoration evidence. This DLL alone is not a completed game capture tool.

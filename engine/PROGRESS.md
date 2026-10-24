@@ -6934,3 +6934,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   and double-samples up to eight scalar records. Native and sanitizer fixtures
   cover 46 read-failure positions and identity/content rejection; Windows x64
   compilation passes. Integration with a Windows update wrapper remains open.
+- Windows typed markup-update wrapper passes five standalone Wine fixture modes:
+  float ABI forwarding, filtered capture, restoration, competing pointer handling
+  and installation rejection. No game launch occurred. Native provider sampler
+  integration and a bounded live update capture remain open.

@@ -1,0 +1,30 @@
+{
+  "scope": "Authored Windows fixture under Wine; no game launch",
+  "modes": {
+    "normal": {
+      "exit_code": 0,
+      "passed": true
+    },
+    "conflict": {
+      "exit_code": 0,
+      "passed": true
+    },
+    "heap": {
+      "exit_code": 0,
+      "passed": true
+    },
+    "closed": {
+      "exit_code": 0,
+      "passed": true
+    },
+    "changed": {
+      "exit_code": 0,
+      "passed": true
+    }
+  },
+  "bottle_stopped": true,
+  "binary_sha256": {
+    "probe.dll": "7e4487be094a3a7059bef220c800c22125460cda3f79933c0190dd560dc50542",
+    "fixture.exe": "174bad9515359067271f2431d3ccec9130e4acdb68c11cf1225f96146cb0d140"
+  }
+}
