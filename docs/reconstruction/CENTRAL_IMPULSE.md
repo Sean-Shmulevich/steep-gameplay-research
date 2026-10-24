@@ -15119,3 +15119,25 @@ request sizes/alignment, final capacity/count/index, slot content and return mat
 Native resize uses 16-byte alignment and category 0x37. Failed allocations and
 concurrent writes are excluded. The model's grow service is external even though
 the validation executes the original resize helper.
+
+#### Pose group removal and stale tail slots
+
+`remove_pose_record` reconstructs RVA 0x1958160 for retained valid members.
+The routine captures record.index, decrements group.count, copies the last active
+slot into the removed slot, then sets removed record.group to zero and index to
+uint32 max. If the removed index is below the new count, it sets the moved
+record's group and index to the destination membership. Capacity and the inactive
+tail slot remain unchanged. Removing the last record still leaves its pointer in
+that inactive slot. A readable slot is therefore not proof of active membership.
+
+The independent API requires valid membership before mutation and a supplied map
+of retained token-to-record objects. This guard is authored: the native routine
+performs no equivalent membership validation. It neither frees records nor
+removes their other body/context links. It does not supply locks or safe unload.
+
+[320 native cases](../../native/snow_host/pose_remove_validation.json) compare
+complete slot arrays, count/capacity and all retained record bytes, including
+first/middle/last removals and single-record groups, with no intercepted calls.
+Unit tests also exercise append/remove and rejected repeated removal. Static
+callers at RVA 0x18e18e1 and 0x18e2531 lead to the surrounding removal lifecycle;
+these are leads, not evidence of completed destruction or solver synchronization.

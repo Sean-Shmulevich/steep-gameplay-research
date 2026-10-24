@@ -7390,3 +7390,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases match under successful allocator stubs. Missing writable storage raises
   an explicit authored boundary after publication; no native rollback, duplicate
   prevention or allocator-failure handling is claimed.
+- Recovered pose group removal: swap last active slot, clear removed membership,
+  repair moved index, retain capacity and stale inactive tail pointer. 320 native
+  cases match full arrays and retained records without interception. Added append/
+  remove tests; safe-membership validation is authored. Other body/context unlinking,
+  locking, destruction and solver consumers remain unresolved.

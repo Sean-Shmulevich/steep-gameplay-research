@@ -46,3 +46,24 @@ def append_pose_record(group, record, *, grow):
     group['slots'][index]=record['token']
     group['count']=(index+1)&0xffffffff
     return True
+
+
+def remove_pose_record(group, record, records):
+    """Remove a retained member with native swap-last behavior.
+
+    records maps opaque tokens to retained mutable records. Valid membership is
+    an authored precondition; the native routine has no such safety guard.
+    Capacity and inactive tail slots remain unchanged. No body unlink or free.
+    """
+    count=group['count'];index=record['index']
+    if not (0<count<=len(group['slots']) and 0<=index<count
+            and record['group']==group['token']
+            and group['slots'][index]==record['token']):
+        raise ValueError('Retained valid membership required')
+    last=group['slots'][count-1]
+    moved=records[last] if index<count-1 else None
+    group['count']=count-1
+    group['slots'][index]=last
+    record['group']=0;record['index']=0xffffffff
+    if moved is not None:
+        moved['group']=group['token'];moved['index']=index

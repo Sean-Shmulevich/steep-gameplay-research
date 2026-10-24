@@ -1,0 +1,11 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete original group removal; active count, full slots including inactive tail, all retained record bytes; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic unique valid members only; native invalid-membership behavior not reproduced",
+    "No locking, body-list unlinking, destruction or pointer lifetime guarantee"
+  ],
+  "game_files_included": false
+}
