@@ -519,3 +519,10 @@ translates around the local offset, and preserves motion. General half-angle
 sine/cosine responses remain an explicit service. Finite nondegenerate arithmetic,
 this constructor-selected class and retained storage define the current domain;
 other virtual implementations and live class coverage are not assumed.
+
+Body integration inspector: `pose_body_integration_bench.inspect` copies retained
+body bytes, requires provenance and an explicit direct/secondary sequence, and
+checks supplied trig response arguments. Missing, mismatched and unused responses
+reject. The fixture is authored synthetic; its scalar-library responses are not
+claimed as native observations. Native wrapper→method composition is separately
+validated without interception by replaying observed scalar-library outputs.

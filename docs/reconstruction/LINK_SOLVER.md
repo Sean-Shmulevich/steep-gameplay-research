@@ -995,3 +995,47 @@ execution. Row production, other body classes and whole-group orchestration rema
 separate boundaries. The earlier section's unresolved virtual-method effects are
 therefore narrowed to class coverage and integration evidence, rather than an
 unknown effect for this constructor-selected path.
+
+### Connected secondary application and native integration
+
+The preceding uninterrupted-execution boundary now has a dedicated comparison.
+[256 native composition cases](../../native/snow_host/pose_secondary_integration_validation.json)
+enter0x19906b0, dispatch through the actual constructor-selected table0x29c99a8,
+execute0x18befb0 and its original matrix and scalar-library helpers, and return
+without call interception. Observation hooks record sine/cosine arguments and
+results; the independent implementation replays those results through its explicit
+service. Every retained body byte matches after the sequence, including ordinary
+motion restoration and persistent transform changes.
+
+Cases contain zero through six entries, repeated body identities, nonzero local
+offsets, and both translation-only and angular updates. Repeated identities
+accumulate transform updates while retaining the prior ordinary motion after each
+call. This strengthens the composed-method evidence, but does not reconstruct the
+scalar library, prove other body-class dispatch, or execute secondary row building
+and solving. It is an offline emulation check, not live scheduler validation.
+
+### Runnable body integration inspection
+
+```sh
+python3 -m engine.pose_body_integration_bench engine/examples/pose_body_integration.json --output /tmp/body-integration.json
+```
+
+The `pose-body-integration-v1` JSON schema requires explicit provenance and one of
+two sequences: `body_integration` applies a supplied scalar directly;
+`secondary_application` installs a supplied32-byte state, applies the recovered
+fixed scalar1.0 and restores ordinary motion. Both operate on a copied complete
+retained body byte array, return before/after basis, translation and motion, and
+include all output body bytes. No source fixture is modified.
+
+`trig_responses` explicitly supplies each reached half-angle, sine and cosine.
+The inspector checks the half-angle's float32 bits and rejects missing, mismatched
+or unused responses. It does not evaluate an undeclared host-math substitute.
+The included example is authored synthetic, including its host-math-generated
+response values. It demonstrates a rotating and translating secondary update
+that preserves ordinary motion. The schema, size bounds and input errors are
+inspection policy, not recovered native validation.
+
+The inspector uses the constructor-selected integration method directly; it does
+not identify a native class from input bytes. Arbitrary game state is not enough
+to justify that choice. Row generation, solving, collision handling, native object
+lifetime and the scheduler remain outside this entry point.

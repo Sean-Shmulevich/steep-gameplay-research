@@ -1,0 +1,20 @@
+{
+  "schema": "pose-secondary-integration-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "method": "offline original secondary wrapper, actual constructor-selected vtable dispatch, transform integration and original scalar library; observation hooks only, no call interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19906b0",
+    "0x18befb0"
+  ],
+  "comparisons": [
+    "all retained body bytes after uninterrupted native composition",
+    "native sine/cosine arguments matched against reconstruction requests"
+  ],
+  "limits": [
+    "Independent implementation replays observed native sine/cosine responses; scalar library remains external to reconstruction.",
+    "Finite retained inputs, repeated body identities and zero through six entries; no whole scheduler or live class coverage.",
+    "Secondary row production and numerical solve are not executed in this comparison."
+  ]
+}

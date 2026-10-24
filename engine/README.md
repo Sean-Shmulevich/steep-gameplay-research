@@ -1087,3 +1087,15 @@ required, and complete output bytes accompany the readable fields. Resource and
 profile identities are symbolic; no game binary or private tools are needed.
 This builds solver rows but does not solve them. See the
 [input contract and limits](../docs/reconstruction/LINK_SOLVER.md#runnable-link-builder-inspection).
+
+### Body integration inspection
+
+```sh
+python3 -m engine.pose_body_integration_bench engine/examples/pose_body_integration.json --output /tmp/body-integration.json
+```
+
+Inspects the constructor-selected body transform update, directly or through the
+secondary-state wrapper. The synthetic example rotates/translates the body while
+preserving ordinary motion. Sine/cosine responses are explicit inputs checked
+against the requested half-angle. This does not run collision detection or the
+solver. See [the contract and native composition evidence](../docs/reconstruction/LINK_SOLVER.md#runnable-body-integration-inspection).

@@ -7713,3 +7713,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   supplied and native matrix helpers intact. Secondary-wrapper composition changes
   the transform while restoring motion. General scalar-library internals, other
   body classes and uninterrupted whole-secondary-pass validation remain open.
+- Validated256 uninterrupted native secondary-wrapper→actual vtable→integration
+  cases, including native sine/cosine execution. Independent arithmetic replays
+  observed scalar outputs; it does not yet reconstruct that library. Added a
+  runnable JSON inspector with explicit response matching, synthetic example,
+  before/after transform/motion and retained output bytes. Secondary row production,
+  numerical solve and other live classes remain outside this composition check.
