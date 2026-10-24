@@ -12467,3 +12467,33 @@ Twenty-one related tests cover the combined CLI, untouched caller input, unchang
 rider/pending state, skipped loops and suppressed writes that still request dispatch.
 The paired live capture remains evidence for the earlier producer/wrapper boundary
 only; it does not establish these point-loop inputs or the example's event order.
+
+### Bounded native point-input sampler
+
+`snow_point_inputs.{h,c}` adds a read-only observation helper for inputs needed by
+the post-pending loops. Given a freshly attributed actor and externally verified
+image identity, it checks the actor table/self link, runtime table/backlink and
+main-body/descriptor chain. It captures native-column basis and local inertia,
+translation, local center, descriptor flags/kind, runtime+0x1520 scale, and both
+record lists with their raw float32 bits. Portable row-major matrix consumers must
+transpose this column representation explicitly; padding lanes are not sampled.
+
+Each list is limited to 32 records. Larger counts reject the whole observation;
+no partial list is presented as complete. Empty lists need no valid storage
+pointer. The helper performs at most 490 reads on its current maximal path, under
+a declared 512-read ceiling, with each read at most 16 bytes. It performs two equal
+full samples, zeroing output on any mismatch, invalid link, oversized list or read
+failure. This does not provide an atomic snapshot, lock, lifetime pin or ABA check.
+
+The native fixture exercises every one of 490 read-failure positions, changed
+runtime scale between passes, overflow counts, a broken runtime backlink, invalid
+storage pointers, maximum-size lists and empty lists. Native execution and
+ASan/UBSan pass. Windows x64 compilation also passes after a formatting warning
+was corrected. No live integration, Windows execution or capture-overhead claim
+is made in this pass.
+
+The sampler deliberately does not infer record eligibility at the actual point
+call, the summed loop's selected gate values, the directional loop's curve product,
+or matrix freshness. Those remain required additional observations. Integration
+must keep point-input acceptance separate from existing actor/body samples and
+measure overhead before treating the larger payload as routine telemetry.

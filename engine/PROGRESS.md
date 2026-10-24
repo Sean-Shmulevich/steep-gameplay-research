@@ -7038,3 +7038,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   per-event geometry. Added a runnable authored example tracing pending, main/rider
   linear motion and main angular effects separately. Twenty-one related tests pass.
   This composes decoded local operations; live point-loop ordering/inputs remain open.
+- Added bounded native point-input observation for body basis/local inertia,
+  geometry, descriptor flags, runtime scale and up to 32 records per post-pending
+  list. Two equal samples required; oversized or changing data rejects entirely.
+  All 490 read-failure positions, native/sanitizer fixtures and Windows compilation
+  pass. Not yet installed in the live recorder; scalar gates/curve products and
+  submission-time freshness remain open.
