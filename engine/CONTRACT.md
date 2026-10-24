@@ -305,3 +305,10 @@ recovered processing operations using authored bounded storage and recorded-only
 body-virtual/link-clear/destructor services. Removed group snapshots stay in the
 result for diagnostics, not as live handles. The JSON adapter has independent
 integration tests, not a full continuous native equivalence claim.
+
+Link payload clearing: `clear_pose_link_payloads` captures the source array and
+extent, then either returns nonnull payloads through a supplied service or resets
+raw count110 and appends them to a supplied destination. It clears source count
+only after normal completion and preserves entry bytes. Payload meaning, protected
+return synchronization and lifetime remain external. Missing nested collections
+in group-inspection inputs are not implicitly treated as empty.

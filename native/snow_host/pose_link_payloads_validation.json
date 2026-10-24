@@ -1,0 +1,19 @@
+{
+  "schema": "pose-link-payloads-validation-v1",
+  "cases": 384,
+  "passed": 384,
+  "method": "offline original traversal; protected return block and destination growth supplied; payload reset helper executes natively",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1958720",
+  "comparisons": [
+    "source and destination descriptor bytes",
+    "all source pairs and destination array tails",
+    "all 288 bytes per supplied payload",
+    "release and growth order/arguments"
+  ],
+  "limits": [
+    "Protected block 0x19587e9..0x1958818 replaced by a supplied release service.",
+    "No native pool publication, synchronization or real release is validated.",
+    "Transfer branch has retained nonnull payloads; malformed storage and live ownership excluded."
+  ]
+}

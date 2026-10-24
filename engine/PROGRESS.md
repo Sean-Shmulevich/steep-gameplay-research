@@ -7550,3 +7550,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   CLI fixture and integration cases for link staging, constraint pruning, acquired
   group publication and all-eligible retirement. Unknown callback/destructor
   effects remain recorded intents; diagnostic snapshots are not native handles.
+- Decoded link-clear as nested payload-array traversal rather than endpoint
+  deletion. Added forward release/optional-transfer model, including native
+  payload+0x110 reset and destination growth. 384 offline comparisons match with
+  protected return blocks and growth supplied. Payload meaning and pool locking
+  remain unresolved; inspector keeps aggregate intent when nested data is absent.

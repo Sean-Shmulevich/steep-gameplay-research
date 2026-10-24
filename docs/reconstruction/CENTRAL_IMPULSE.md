@@ -16308,3 +16308,46 @@ operations and continuous inner partition have the separate native receipts
 linked above; no continuous native receipt for this entire adapter is claimed.
 Native callback effects, protected synchronization, pool destruction, force solve,
 live ownership and arbitrary mod safety remain outside this inspector.
+
+### Link payload clearing and transfer
+
+The constraint-pruning service RVA0x1958b90 adds0x48 to the link record and calls
+RVA0x1958720 with a null second argument. It therefore clears a nested collection,
+not the link endpoints themselves. That collection has pointer+0x10/count+0x18
+relative to the nested object, or link+0x58/+0x60. Entries are16 bytes; the helper
+uses each entry's second word as an opaque payload pointer and leaves the first
+word untouched.
+
+`engine.pose_link_payloads.clear_pose_link_payloads` captures the source array
+and active extent before traversing in forward order. With null destination it
+skips null payloads and sends each non-null payload through an explicit release
+service corresponding to the protected pool-return block. Only after normal
+completion does it set the source count to zero. Source entry bytes and capacity
+remain unchanged. The visible native publication writes a free-list link into
+the payload, decrements a pool count and changes its head; protected calls around
+that publication remain unresolved. This model does not perform native releases.
+
+The helper also contains a non-null-destination branch. It calls0x1986020 on each
+payload, which writes uint32 zero at payload+0x110, then appends the same pointer
+to the destination collection at+0x10/+0x18/+0x1c. Full capacity grows to8 from
+zero or doubles with uint32 wrap. The helper reloads destination count/storage
+after growth, preserves duplicates and finally clears source count. It does not
+null-check payloads in this branch. No current caller selecting that transfer
+branch is established by the two direct references found here; the known clear
+wrapper and adjacent teardown caller both pass null.
+
+The Python API accepts retained `{key,payload}` entries and payload dictionaries
+with raw `count110`. This name does not assign physical semantics to that field.
+It retains captured source storage across callback changes, reads future entries
+as visited, and adds no finally-based count clear on service failure. Supplied
+storage/return services own all unmodeled side effects.
+
+[384 offline comparisons](../../native/snow_host/pose_link_payloads_validation.json)
+execute original traversal and the original reset helper. Destination growth and
+the entire protected return block are supplied. Cases match descriptors, source
+pairs, destination tails, all288 supplied payload bytes and service order. They
+cover both branches, duplicates, null release entries and capacity growth. This
+replaces the opaque link-clear traversal with recovered behavior, while its
+protected payload return remains external. The runnable group inspector still
+records the aggregate clear intent until a caller supplies these nested payload
+collections; it does not invent empty collections for missing data.
