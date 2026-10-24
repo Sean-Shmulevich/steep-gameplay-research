@@ -6926,3 +6926,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   and the guarded record collection was empty. One prior acquisition rejected
   a changing root guard. Both sessions cleaned up successfully. This closes
   provider membership for the observed instance, not query/callback execution.
+- Typed receiver-plus-float markup update recorder core passes native concurrent
+  lifecycle and float-bit fixtures, ASan/UBSan, and Windows x64 compilation.
+  It forwards cached/overflow calls and requires retained callback lifetime.
+  No hook installation or live sampling is included yet.

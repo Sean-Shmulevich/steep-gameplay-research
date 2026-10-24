@@ -11535,3 +11535,37 @@ The next useful observation belongs inside the markup update boundary, where
 record production and consumption can be ordered. Repeated idle heap polling may
 miss temporary records. The copy/clear/partition writers are static leads for
 that possibility, not proof that this empty sample caught a specific phase.
+
+### Typed markup-update recorder core
+
+[`snow_markup_update_trace.h`](../../native/snow_host/snow_markup_update_trace.h)
+and [implementation](../../native/snow_host/snow_markup_update_trace.c) add an
+independent recorder for a receiver-plus-float call. The target candidate is the
+motion component's slot 0x4b0, which preserves XMM1 into the markup update. This
+core does not install a hook, resolve a component or sample live graph memory.
+Its reader is supplied externally; snapshot fields are authored diagnostics,
+not a recovered object layout. A native guarded reader remains to be connected.
+
+The recorder forwards the float argument and records its raw 32-bit encoding,
+component, caller, thread and entry/exit timestamps. The original callback is
+void-typed because the inspected caller ignores its result; preserving arbitrary
+return registers is not part of this contract. It never interprets the float as
+a duration or animation weight. The producer's units remain a separate question.
+
+A fixed reservation buffer avoids allocation on the call path. Overflow and
+calls arriving after close still invoke the original without sampling. Closing
+blocks new reservations; drain waits for admitted calls to finish. Only then can
+records be read. Close/drain does not permit unloading: cached callers may still
+invoke the wrapper, so its code, callbacks and context must remain valid. Readers
+must return exactly one to accept a sample; other results zero it. Original or
+reader nonlocal exits are not contained and can leave the recorder undrained.
+Reservation order does not establish execution order across worker threads.
+
+The [native fixture](../../tests/fixtures/snow_markup_update_trace_fixture.c)
+checks 800 calls on eight threads with 17 reservations and 783 overflow forwards,
+recursive calls, invalid samples, close during an active call, late forwarding,
+zero capacity and argument-bit preservation for zero, negative zero, infinity and
+quiet NaN. Native execution passed with address/undefined-behavior sanitizers;
+the core also compiled with MinGW for Windows x64. These are fixture and compile
+results, not Windows execution or live game ABI validation. Installation, guarded
+sampling and live callback execution remain the next integration work.
