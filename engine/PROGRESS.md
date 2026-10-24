@@ -7425,3 +7425,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match all row/context bytes and return pointers with observed atan2 results.
   Zero gain still computes angle and emits a row. Caller header completion, phase
   meanings, scalar units and actual solve remain unresolved.
+- Joined reached state0 angular caller selection to hard/soft row builders and
+  completed body-index headers. 384 continuous native caller fragments match all
+  row/context bytes and returned pointers using observed atan2 results. Body indices
+  come from ordered body+0x1c low16 values. Earlier world-vector preparation, other
+  states/axes and downstream solve remain external.

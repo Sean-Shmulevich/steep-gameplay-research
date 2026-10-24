@@ -15358,3 +15358,31 @@ context byte, offset and returned pointer matches using observed native atan2
 outputs. No native calls are replaced. The independent service boundary remains;
 these tests do not prove platform atan2 equivalence. Phase semantics, context
 scalar units, caller-completed headers and downstream solve remain unresolved.
+
+### State0 angular row caller
+
+`engine.snow_pose_angular_row.build_pose_angular_spring_row` joins the first
+state0 angular caller branch to the hard/soft helpers. RVA 0x19e6bf2 loads the
+stored row values; 0x19e6c32 selects the state branch. For state0, stiffness is
+broadcast and compared against float32(1e12), testing XYZ comparison bits. Finite
+stiffness below the threshold selects soft helper 0x19f2990, otherwise hard helper
+0x19f2870. Only the selected layout/counter family is used.
+
+After either helper, 0x19e6d33 writes the low16 second body index to row+2 and
+0x19e6d38 writes low16 first index to row+0. Earlier instructions 0x19e6119 and
+0x19e611d load these indices from the ordered bodies' +0x1c fields. This supplies
+the first four bytes left untouched by both helpers. Row+4 still holds the
+helper-generated result index, and remaining untouched bytes are preserved.
+
+The independent API requires reached state0, supplied world-space vectors and
+hard/soft layout descriptors. It selects the helper, completes body-index headers
+and returns its counter/placement results. Body indices are caller-provided raw
+values, not inferred from saved pointers or assumed to be stable across frames.
+The input stiffness/damping are the stored coefficients, not frequency/ratio.
+
+[384 native caller-fragment cases](../../native/snow_host/pose_angular_caller_validation.json)
+execute 0x19e6bf2 through 0x19e6d3b continuously, including complete original math
+and row helpers. Every row/context byte, offset and returned pointer matches with
+observed native atan2 output supplied to the independent service. Both metadata
+classes and hard/soft paths are included. Earlier frame transformation, other
+row states, additional axes, allocation lifetime and body response remain open.

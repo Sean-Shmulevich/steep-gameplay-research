@@ -1,0 +1,14 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "max_platform_atan2_difference": 1.1773720709484792e-07,
+  "scope": "Original state0 angular caller fragment including hard/soft selection, full native helpers and header completion; atan2 arguments/output observed without substitution; all row bytes, relative placement, context counters and returned pointer match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic finite nonsingular stiffness/damping/context inputs",
+    "Independent API requires an explicit atan2 service; native output supplied for comparison",
+    "Context scalar units and extracted-count meaning not established",
+    "Other row states, earlier world-space vector preparation and downstream body response are excluded"
+  ],
+  "game_files_included": false
+}
