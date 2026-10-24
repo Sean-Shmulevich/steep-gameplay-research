@@ -15706,3 +15706,48 @@ helper entry and unchanged body bytes match for strict boundaries, negative
 thresholds, empty/mixed-endpoint rings and blocker/sentinel/flag rejection. Of
 these cases189 pass. Vector field identity, threshold producers, special-group
 semantics and the protected outer notification wrapper remain unresolved.
+
+### Body group update ordering
+
+`engine.pose_group_update.update_pose_body_group` reconstructs RVA0x18e14f0 through
+its tail dispatch to0x18e11b0. Body/context dictionaries expose retained structural
+fields; downstream services remain supplied and may mutate those dictionaries.
+The helper captures body+0x10 as `group` before its first gate. If metadata byte
++0x52 bit3 is clear, it directly finalizes that captured group. Otherwise:
+
+```text
+was_special = captured_group == context.group410
+if low_byte(eligible(context, body)) != was_special:
+    detach(context, body)
+    if low_byte(body.virtual8(1)) != 0:
+        metadata = reload_body_metadata()
+        if metadata.flags16 bit15 is clear:
+            destination = context.group408
+        elif metadata.flags8 bit3 and low_byte(eligible(context, body)) != 0:
+            destination = context.group410
+        else:
+            destination = acquire_group(context)
+            if reloaded_metadata.kind8 low_nibble == 2:
+                body.virtual40()
+        append(destination, body)
+    group = reload_body_group()
+finalize(context, group)
+```
+
+`eligible` can use the preceding recovered magnitude/link predicate, but is an
+explicit service here so changed inputs between queries remain observable.
+Detach is0x18e23c0, acquire0x18e19c0, append0x19573c0 and finalize0x18e11b0.
+The predicate/membership comparison is captured before the first predicate call;
+if no mismatch occurs, finalization uses the original group even if that service
+changed body membership. A mismatch reloads the body group after the virtual and
+optional append sequence, including when virtual8 returns low-byte zero. Group
+acquisition is followed by a metadata reload; it can affect the virtual40 gate.
+
+[512 native orchestration comparisons](../../native/snow_host/pose_group_update_validation.json)
+match call ordering/arguments, supplied callback mutations and final return with
+all downstream services intercepted. Cases cover low-byte returns, repeated
+eligibility and metadata/group mutation. These checks prove orchestration under
+those services, not their native internals or the protected outer wrapper.
+Destination identities, ownership, detach/append effects, synchronization and
+physical consequences remain unresolved. No sleep/wake or activation claim follows
+from the structural group names.

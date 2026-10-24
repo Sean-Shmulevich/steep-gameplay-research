@@ -7471,3 +7471,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native cases match without interception, including endpoint-specific traversal
   and blocker/status/flag rejection. Physical vector identities, threshold sources
   and special-group semantics remain unproved; no sleep/wake label is assigned.
+- Reconstructed body group-update orchestration around eligibility mismatch,
+  detach/virtual operations, destination selection and finalization. 512 native
+  service-intercepted cases match ordering and callback mutations. Captured versus
+  reloaded membership and metadata are explicit; native downstream effects and
+  protected-wrapper behavior remain external.

@@ -1,0 +1,18 @@
+{
+  "cases": 512,
+  "matching": true,
+  "scope": "Complete native body group-update orchestration with all downstream services intercepted; call ordering/arguments, callback-mutated body state and final return match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Metadata gate and captured group comparison",
+    "Low-byte virtual return and repeated eligibility",
+    "Metadata mutation, selected group and final group reload",
+    "Original captured group retained when no reassignment occurs"
+  ],
+  "limits": [
+    "Downstream eligibility, detach, allocation, virtual, append and finalize effects supplied",
+    "Protected outer wrapper and native lifetime/concurrency excluded",
+    "No sleep/wake or physical motion equivalence claimed"
+  ],
+  "game_files_included": false
+}

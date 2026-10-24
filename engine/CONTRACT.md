@@ -264,3 +264,9 @@ not filtered. Removal finds the first matching token regardless of enabled state
 then disables/defer-cleans during dispatch or shifts immediately outside dispatch.
 A missing member raises an authored pre-mutation error; native code has no such
 guard. Neither operation supplies concurrency safety or safe module unloading.
+
+Body group updates: `update_pose_body_group` operates on retained mutable body and
+context dictionaries with explicit eligibility, detach, virtual, acquire, append
+and finalize services. It preserves captured membership comparison and metadata/
+group reload points. Services own physical effects, storage, locking and failures;
+no rollback, native lifetime protection or sleep/wake semantics are supplied.
