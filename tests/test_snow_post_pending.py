@@ -86,3 +86,17 @@ class PointActivityTests(unittest.TestCase):
         self.assertEqual((a['activity'],a['alternate']),(0,.375))
         b=update_point_activity(0,a['activity'],a['alternate'],.125)
         self.assertEqual((b['activity'],b['alternate']),(.125,0))
+
+
+class ActivityFoldTests(unittest.TestCase):
+    def test_positive_only_without_unit_clamp(self):
+        from engine.snow_post_pending import normalized_positive_activity
+        self.assertEqual(normalized_positive_activity([-3,0,2,4],2),3)
+        self.assertEqual(normalized_positive_activity([],2),0)
+
+    def test_fold_feeds_duration_threshold(self):
+        from engine.snow_post_pending import normalized_positive_activity, update_point_activity
+        value=normalized_positive_activity([.002,.002],2)
+        result=update_point_activity(value,0,0,.125)
+        self.assertEqual(result['alternate'],.125)
+        with self.assertRaises(ValueError):normalized_positive_activity([],0)

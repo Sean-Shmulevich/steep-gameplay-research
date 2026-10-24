@@ -7078,3 +7078,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   accumulator/alternate and advances activity. Added kernel matching 162 original
   cases; 29 related tests pass. Accumulator semantics and intervening helper
   writes remain unresolved; no grounded/airborne labels inferred.
+- Resolved the duration accumulator's local producer as a float32 positive-only
+  fold of selected cell-helper returns divided by a supplied configuration scalar.
+  Added independent kernel matching 160 original-instruction cases; 31 related
+  portable tests pass. Helper return units, selection/geometry, divisor semantics
+  and live attribution remain external. No immersion or grounded label inferred.

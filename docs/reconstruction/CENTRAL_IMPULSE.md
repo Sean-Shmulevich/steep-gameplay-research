@@ -12739,3 +12739,36 @@ later gate-timer block were not executed in this validation, so composing the tw
 kernels assumes those calls do not change the relevant fields. That assumption
 must be checked or replaced by observations before claiming the complete native
 producer-to-gate path. No live run was added for this pass.
+
+### Positive helper-return accumulator
+
+The accumulator producer is now locally resolved. In the snow routine beginning
+at RVA 0x1408c10, XMM10 starts at zero. After each selected cell-helper call,
+RVA 0x140907c retains its return only when positive. RVA 0x1409101 divides the
+sum by the scalar at `[runtime+0x15a8]+0x164`, then stores runtime+0x9f0.
+
+```text
+accumulator = float32(0)
+for value in already_selected_cell_helper_returns:
+    if value > 0:
+        accumulator = float32(accumulator + value)
+accumulator = float32(accumulator / supplied_divisor)
+```
+
+`engine.snow_post_pending.normalized_positive_activity` exposes this finite-input
+kernel. Values are converted to float32 before comparison and accumulation.
+It preserves selected-record order and does not clamp the result to one. Zero
+divisors raise an adapter error; this is not the native division failure policy.
+The result can feed `update_point_activity`, whose threshold/reset rules remain
+unchanged. Selection, geometry and individual helper bodies are not implemented
+by this kernel. Neither the return units nor the divisor's physical meaning is
+established, so names such as volume, immersion or grounded remain hypotheses.
+
+[160 original-instruction cases](../../native/snow_host/point_activity_fold_validation.json)
+execute the positive-return fold and final division snippets with supplied
+returns and divisors. Outputs match bitwise for empty and nonempty input,
+negative/zero/positive contributions, and positive and negative nonzero divisors.
+Thirty-one related portable tests pass, including a result above one and feeding
+the duration threshold. No live accumulator attribution or full helper execution
+is claimed. The next dependency is the selected helper returns and denominator
+producer, followed by checking intervening writes before gate consumption.

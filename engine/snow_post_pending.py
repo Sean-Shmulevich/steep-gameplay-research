@@ -98,3 +98,21 @@ def update_point_activity(accumulator, activity, alternate, elapsed):
                     alternate=f32(alternate+elapsed), branch='above_threshold')
     return dict(accumulator=0.0, activity=f32(activity+elapsed),
                 alternate=0.0, branch='at_or_below_threshold')
+
+
+def normalized_positive_activity(contributions, divisor):
+    """Fold already-selected cell-helper returns, then divide by supplied scalar.
+
+    Evidence: CENTRAL_IMPULSE.md, Positive helper-return accumulator.
+    Native selection/geometry/helpers remain external. Nonpositive returns do
+    not contribute to this accumulator. No clamp to one is introduced.
+    """
+    total = f32(0)
+    for contribution in contributions:
+        contribution = f32(contribution)
+        if contribution > 0:
+            total = f32(total+contribution)
+    divisor = f32(divisor)
+    if divisor == 0:
+        raise ValueError('nonzero activity divisor required')
+    return f32(total/divisor)

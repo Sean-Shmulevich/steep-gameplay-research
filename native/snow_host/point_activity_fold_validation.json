@@ -1,0 +1,12 @@
+{
+  "cases": 160,
+  "evidence": "original fold and normalization instruction snippets",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "bit_exact": true,
+  "limits": [
+    "Cell selection, geometry and helper returns supplied, not executed",
+    "Finite values and nonzero divisor",
+    "Divisor physical meaning not established",
+    "No live accumulator attribution"
+  ]
+}
