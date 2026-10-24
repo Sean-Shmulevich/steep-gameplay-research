@@ -1,0 +1,11 @@
+{
+  "cases": 360,
+  "evidence": "original local timer and gate-update instructions with synthetic inputs",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "bit_exact": true,
+  "limitations": [
+    "Upstream activity/alternate producers not executed",
+    "Finite inputs and nonzero configuration denominators only",
+    "No live timer or gate values observed"
+  ]
+}

@@ -42,3 +42,31 @@ class GateAttenuationTests(unittest.TestCase):
         self.assertEqual(attenuate_point_gates(1,1,4,2,0,0,1),(1,-1))
         with self.assertRaises(ValueError):
             attenuate_point_gates(1,1,0,0,0,0,1)
+
+
+class GateTimerTests(unittest.TestCase):
+    def run_timer(self, **overrides):
+        from engine.snow_post_pending import update_point_gate_timer
+        values=dict(gate_one=1,gate_other=1,timer=.5,activity=0,alternate=1,
+                    elapsed=.25,refill_divisor=2,duration=1,lower_one=0,
+                    lower_other=0,upper=1)
+        values.update(overrides)
+        return update_point_gate_timer(**values)
+
+    def test_refill_precedes_alternate_and_does_not_attenuate(self):
+        result=self.run_timer(activity=4)
+        self.assertEqual(result,dict(timer=1,gate_one=1,gate_other=1,action='refill'))
+
+    def test_expiration_keeps_negative_remainder_and_gates(self):
+        result=self.run_timer(elapsed=.75)
+        self.assertEqual(result,dict(timer=-.25,gate_one=1,gate_other=1,action='expired'))
+        self.assertEqual(self.run_timer(elapsed=.5)['action'],'expired')
+
+    def test_remaining_timer_drives_squared_and_linear_blends(self):
+        result=self.run_timer()
+        self.assertEqual(result,dict(timer=.25,gate_one=.5625,gate_other=.75,action='attenuate'))
+        self.assertEqual(self.run_timer(alternate=0)['action'],'retain')
+
+    def test_skipped_branch_does_not_require_configuration(self):
+        self.assertEqual(self.run_timer(alternate=0,refill_divisor=None,duration=None,
+            lower_one=None,lower_other=None,upper=None)['timer'],.5)

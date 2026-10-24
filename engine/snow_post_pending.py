@@ -55,3 +55,32 @@ def attenuate_point_gates(gate_one, gate_other, input_scalar, denominator,
     blend_one = f32(f32(f32(high-low_one)*weight)+low_one)
     blend_other = f32(f32(f32(high-low_other)*weight)+low_other)
     return (f32(f32(blend_one*blend_one)*one), f32(blend_other*other))
+
+
+def update_point_gate_timer(gate_one, gate_other, timer, activity, alternate,
+                            elapsed, refill_divisor, duration, lower_one,
+                            lower_other, upper):
+    """Finite local state machine at RVA 0x14092f8; field meanings unresolved.
+
+    Positive activity refills without attenuating. Otherwise positive alternate
+    decrements the stored timer, attenuating only while its new value is positive.
+    Expiration stores zero/negative remainder without clamping or gate mutation.
+    """
+    one, other, timer, activity, alternate, elapsed = map(f32,
+        (gate_one, gate_other, timer, activity, alternate, elapsed))
+    if activity > 0:
+        divisor, duration = f32(refill_divisor), f32(duration)
+        if divisor == 0:
+            raise ValueError('nonzero refill divisor required')
+        timer = min(f32(f32(duration/divisor)*activity), duration)
+        action = 'refill'
+    elif alternate > 0:
+        timer = f32(timer-elapsed)
+        action = 'expired'
+        if timer > 0:
+            one, other = attenuate_point_gates(one, other, timer, duration,
+                                              lower_one, lower_other, upper)
+            action = 'attenuate'
+    else:
+        action = 'retain'
+    return dict(timer=timer, gate_one=one, gate_other=other, action=action)

@@ -7068,3 +7068,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   shows almost all summed vectors/points change inside wrappers, with no field
   changes between successive exits/entries. Submission-time gate values and
   post-submission mutation remain unresolved; initial ones are not safe defaults.
+- Reconstructed the timer branch around point-gate attenuation: activity refills,
+  otherwise alternate decrements and attenuates only with positive remaining time.
+  Expiration preserves nonpositive remainder and leaves gates untouched. Full
+  local branch/timer/gate behavior matches 360 original-instruction cases;
+  27 related portable tests pass. Trigger producers and live gate values remain open.

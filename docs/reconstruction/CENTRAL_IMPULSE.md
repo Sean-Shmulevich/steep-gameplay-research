@@ -12669,3 +12669,42 @@ not a proven per-record lifetime identity. Together with the earlier enabled-byt
 clear and elapsed-time setter, this shows why entry records cannot simply be used
 as current-call submission inputs. Exit data are candidate produced values, but
 still require checking for changes after actual submission.
+
+### Timer controlling point-gate attenuation
+
+The local predecessor of the gate mutation is now modeled by
+`update_point_gate_timer` in `engine.snow_post_pending`. Descriptive names below
+are ordinal field roles, not established gameplay semantics. Inputs `activity`
+and `alternate` are runtime+0xa70 and +0xa6c; timer storage is runtime+0xab4.
+Configuration divisor and duration are +0x30/+0x34 on runtime+0x15b0.
+
+```text
+if activity > 0:
+    timer = min((duration / refill_divisor) * activity, duration)
+    # gates unchanged; this branch takes precedence
+elif alternate > 0:
+    timer = timer - elapsed_substep_time
+    if timer > 0:
+        apply_point_gate_attenuation_using(timer)
+else:
+    retain timer and gates
+```
+
+All operations round to float32. Expiration stores the zero or negative remainder;
+it does not clamp to zero, attenuate, or reset the gates. Positive refill changes
+only timer storage in this local block. The gate mutation uses the decremented
+timer as its input scalar. This closes the immediate branch and persistent-state
+context around the earlier isolated blend formula.
+
+[360 original-instruction cases](../../native/snow_host/point_gate_timer_validation.json)
+execute both branch selection and gate arithmetic. Timer and gate bits match for
+positive/zero/negative triggering values, refill saturation, exact expiration,
+overshoot and zero elapsed time. Upstream trigger production is not executed and
+physical/gameplay meanings remain unresolved. Portable finite-input validation
+rejects zero denominators on evaluated branches; that is not a native error policy.
+Configuration inputs on skipped branches are not evaluated.
+
+Twenty-seven related portable tests pass, including precedence, retained negative
+remainder and unequal squared/linear attenuation. No live timer or gate observation
+is claimed. The next data join is these trigger/timer fields and their producer,
+not an assumption that every enabled summed record uses unit gates.
