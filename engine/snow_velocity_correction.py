@@ -11,6 +11,34 @@ from reference.central_impulse import f32
 from .snow_post_pending import four
 
 
+def assemble_velocity_decay_rates(base_rate, xy_curve_value, z_curve_value,
+                                  additive_rate, xy_gain, suppression_vector):
+    """Finite local rate assembly at RVA 0x13f7e93..0x13f7f40.
+
+    Curve results and already-selected base rate are supplied. XY share a rate;
+    Z has a separate curve and no xy_gain multiplication. The supplied four-lane
+    vector is tested componentwise, including W. Its semantic producer remains
+    unresolved; the returned flag also disables the later contact correction.
+    Evidence: CENTRAL_IMPULSE.md, Per-axis velocity decay rate assembly.
+    """
+    base_rate,xy_curve_value,z_curve_value,additive_rate,xy_gain = map(
+        f32,(base_rate,xy_curve_value,z_curve_value,additive_rate,xy_gain))
+    vector=four(suppression_vector)
+    def clamp_unit(value):
+        return 0.0 if value < 0 else (1.0 if value > 1 else value)
+    xy=clamp_unit(f32(xy_curve_value+additive_rate))
+    z=clamp_unit(f32(z_curve_value+additive_rate))
+    # SSE MAX selects its second operand on equality; retain signed-zero choice.
+    xy=base_rate if base_rate > xy else xy
+    z=base_rate if base_rate > z else z
+    xy=f32(xy*xy_gain)
+    disabled=any(abs(x) > f32(.00001) for x in vector)
+    rates=[xy,xy,z,0.0]
+    if disabled:
+        rates=[f32(x*f32(.01)) for x in rates]
+    return dict(rates=rates,contact_correction_disabled=disabled)
+
+
 def speed(vector):
     squares=[f32(x*x) for x in vector[:3]]
     return f32(sqrt(f32(squares[0]+f32(squares[1]+squares[2]))))

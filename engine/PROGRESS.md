@@ -7182,3 +7182,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   connected velocity cases match with initialized globals retained. Component
   bounds are not magnitude limits or player trick limits. Later writers and
   current live values remain unproved; no implicit runtime defaults installed.
+- Reconstructed per-axis decay-rate assembly: shared XY rate, separate Z curve,
+  XY-only gain after clamps, and four-component threshold reducing rates to 1%
+  while disabling subsequent contact correction. Matches 320 original-instruction
+  cases with original curve evaluations on synthetic tables. Upstream scalar
+  producers, input-vector meaning, profile reachability and live attribution
+  remain external; no steering/braking semantic label inferred.

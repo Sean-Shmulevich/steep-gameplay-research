@@ -1,0 +1,17 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "actions": {
+    "normal": 194,
+    "suppressed": 126
+  },
+  "scope": "Original rate-assembly instructions and both compiled curve evaluations; only finite floor helper intercepted",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic curve tables and finite upstream state supplied",
+    "Base-rate and additive-rate producers remain external",
+    "Input-vector meaning and live rate attribution remain unproved",
+    "No subsequent velocity decay, body setter or solver executed"
+  ],
+  "game_files_included": false
+}

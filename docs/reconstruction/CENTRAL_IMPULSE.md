@@ -13398,3 +13398,53 @@ Only the finite floor helper is intercepted. Earlier initialization calls and
 later native calls outside the selected fragment do not execute. This verifies
 the installed values and their local consumption, not process startup or a live
 configuration. The later speed-floor decision can still override a clamp.
+
+### Per-axis velocity decay rate assembly
+
+The preceding block at RVA 0x13f7e93..0x13f7f40 assembles the rates consumed by
+the directional decay stage. `engine.snow_velocity_correction.assemble_velocity_decay_rates`
+implements its finite local arithmetic, with curve results and upstream scalars
+supplied explicitly. In the following pseudocode each arithmetic operation rounds
+to float32; `max_second_on_equal` preserves the SSE operand choice on equality:
+
+```text
+xy = clamp(xy_curve_value + additive_rate, 0, 1)
+z  = clamp(z_curve_value  + additive_rate, 0, 1)
+xy = max_second_on_equal(base_rate, xy) * xy_gain
+z  = max_second_on_equal(base_rate, z)
+rates = [xy, xy, z, 0]
+disabled = any(abs(component) > float32(0.00001)
+               for component in suppression_vector_XYZW)
+if disabled:
+    rates = rates * float32(0.01)
+```
+
+The XY gain follows the clamp, so the resulting rate need not be <=1. It does
+not multiply the Z rate. The suppression test includes W, uses a strict greater
+comparison and is componentwise, not a vector-length test. Its Boolean is also
+the disable flag for the later contact-direction correction. Reducing decay to
+1% means weaker velocity decay for positive elapsed time and rates; it does not
+mean reducing body velocity to 1%.
+
+Native provenance: RSI is the selected profile plus 0x3d8. The XY and Z curves
+are at RSI+0 and RSI+0x38, both sampled by 0x13dbea0 with the same selected
+immersion scalar in XMM10. The branch at 0x13f7e13 selects runtime+0x9f4 when
+profile byte RSI+0x220 equals 1, otherwise runtime+0x9f0. Reachability through
+the preceding protected branch is not reconstructed here. XY gain is a separate
+curve result from RSI+0x80, sampled with caller input+0x24. Base rate arrives
+in XMM6, additive rate in XMM7, and the tested vector is caller input+0x130.
+The semantic names of those caller inputs and upstream scalar producers remain
+open. Do not label the vector steering, braking or a surface normal yet.
+
+For composition, pass the returned `rates[:3]` to `correct_linear_velocity` and
+its `contact_correction_disabled` to that function's `disabled` argument. Both
+values must come from the same rate-assembly result. Native phase freshness and
+activation are still supplied by the caller, not established by this API.
+
+The [rate assembly receipt](../../native/snow_host/decay_rate_assembly_validation.json)
+checks 320 original-instruction cases, including both original compiled-curve
+evaluations on synthetic tables. Only the finite floor helper is intercepted.
+All four rate lanes and the Boolean match bitwise across 194 ordinary and 126
+suppressed cases. Tests cover exact threshold equality, W-only suppression,
+gain-after-clamp and the separate Z path. This closes a local rate producer,
+not live input semantics or the entire upstream profile-selection path.
