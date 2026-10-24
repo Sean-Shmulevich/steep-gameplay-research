@@ -7304,3 +7304,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   complete native-built table and 407 lookups match using observed acos samples.
   Sample routines execute without interceptions, but independent acos services
   remain external. Padded endpoints extrapolate; no angle clamp was invented.
+- Connected inclination/gain to auxiliary-direction rotation and <=0.03
+  correction. Four-lane dot/rejection/normalization preserves non-unit vectors
+  and W. Matched 320 native geometry fragments with supplied slope lookup and
+  observed trig/rsqrt results. Near-up bypass tested separately; native lookup
+  composition, full prepass and live vector meanings remain open.

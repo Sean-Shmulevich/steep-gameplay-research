@@ -1,0 +1,20 @@
+{
+  "cases": 320,
+  "paths": {
+    "rotated": 160,
+    "corrected": 160
+  },
+  "bit_exact": true,
+  "scope": "Original slope-angle quaternion direction and optional four-lane correction; observed native trig/rsqrt supplied to model",
+  "intercepted_services": [
+    "Slope-angle lookup replaced with explicit math.acos sample"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonsingular synthetic inputs below normal-Z threshold",
+    "Up-path threshold covered by static instructions and unit test, not this fragment corpus",
+    "Original lookup separately validated; curve gain and vector producers supplied",
+    "No live contact interpretation or basis timing proof"
+  ],
+  "game_files_included": false
+}

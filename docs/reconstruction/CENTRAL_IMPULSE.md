@@ -14421,3 +14421,56 @@ match, including padded/out-of-domain positions. Native acos internals remain
 explicit services, so this is not a portable bit-exact acos reconstruction.
 Unit tests use labeled platform-math samples to check service batching and
 padded lookup behavior. No sampled game table payload is included in the repo.
+
+
+### Slope-driven auxiliary direction
+
+`engine.snow_prepass_direction.slope_projection_direction` reconstructs the
+geometry that produces the earlier projection direction. If runtime+0xa40's Z
+lane is >=float32(0.999), the prepass chooses [0,0,1,0] without slope lookup,
+curve-gain calculation or correction. Otherwise the recovered signed-input gain
+and normal-Z lookup produce the rotation:
+
+```text
+inclination = slope_angle_lookup(normal.z)
+product = float32(inclination * gain)
+N = rotate([0,0,1,0], runtime_axis_a20, -product, threshold=float32(1e-5))
+```
+
+The native code at 0x13fb5ab..0x13fb6c1 constructs the quaternion inline using
+half_angle=float32(product * -0.5). Its finite-domain XYZ output matches the
+shared rotation helper's arithmetic when supplied that negative full angle.
+The rotation axis is runtime+0xa20 and is normalized internally, while the
+normal is runtime+0xa40. Their upstream geometric relationship is not inferred.
+The native inline code adds cross and dot terms in the opposite operand order
+to the shared helper; for the checked finite domain their rounded sum is the
+same. Exceptional values and floating-point status remain excluded.
+
+When runtime+0x9fc is <=float32(0.03), the following correction also runs at
+0x13fb6cc..0x13fb759. Its selected direction is the captured direction used by
+the subsequent projection, and all arithmetic rounds to float32:
+
+```text
+dot4(A,B) = (A.y*B.y + A.w*B.w) + (A.x*B.x + A.z*B.z)
+T = selected_direction - dot4(selected_direction, normal) * normal
+C = N - dot4(T,N) * T
+N = normalize_four_lanes(C)
+```
+
+Neither normal nor T is normalized or divided by its squared length in these
+corrections. They therefore should not be replaced with generic orthogonal
+projection calls. The final norm includes W, unlike the XYZ normalizations in
+many surrounding branches, and scales all four lanes with one rsqrt refinement.
+A four-lane selected direction can consequently produce nonzero output W.
+The API rejects singular/nonfinite norms by authored policy without inventing
+native recovery. The depth-like +0x9fc field is distinct from the immersion
+arguments at +0x9f0/+0x9f4; this threshold does not establish a grounded test.
+
+The [direction receipt](../../native/snow_host/prepass_direction_validation.json)
+compares 320 original-fragment cases: 160 rotated-only and 160 corrected. The
+slope lookup is explicitly intercepted with a supplied math.acos sample; its
+actual compiled lookup was validated separately. Native trig executes, and the
+portable model receives observed trig results and rsqrt seeds. Direction bytes
+match exactly, including synthetic fourth lanes and non-unit vectors. The
+near-up bypass is covered by inspected instructions and a unit test, not this
+fragment corpus. Live producers, normal conventions and phase timing remain open.
