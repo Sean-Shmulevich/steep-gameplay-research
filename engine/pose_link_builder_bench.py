@@ -1,6 +1,6 @@
 """Offline JSON inspection of the recovered single-family link row builder.
 
-Evidence: CENTRAL_IMPULSE.md, Runnable link-builder inspection.
+Evidence: LINK_SOLVER.md, Runnable link-builder inspection.
 """
 import argparse
 import copy

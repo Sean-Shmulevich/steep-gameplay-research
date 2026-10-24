@@ -1,6 +1,6 @@
 """Connected primary/tangent slice of recovered solver traversal.
 
-Evidence: CENTRAL_IMPULSE.md, Connected primary and tangent solver slice.
+Evidence: LINK_SOLVER.md, Connected primary and tangent solver slice.
 """
 import struct
 from .pose_solver_control import run_pose_solver

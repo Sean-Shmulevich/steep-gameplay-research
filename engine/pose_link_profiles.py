@@ -1,6 +1,6 @@
 """Recovered paired-body profile lookup for one link builder family.
 
-Evidence: CENTRAL_IMPULSE.md, Paired link profile resolution.
+Evidence: LINK_SOLVER.md, Paired link profile resolution.
 """
 import struct
 

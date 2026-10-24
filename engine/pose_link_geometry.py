@@ -1,6 +1,6 @@
 """Recovered paired-point world geometry for the metadata-clear/single builder.
 
-Evidence: CENTRAL_IMPULSE.md, Link paired-point world geometry.
+Evidence: LINK_SOLVER.md, Link paired-point world geometry.
 """
 import math
 from reference.central_impulse import f32

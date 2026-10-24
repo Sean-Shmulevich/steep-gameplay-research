@@ -1,6 +1,6 @@
 """Recovered link-builder dispatch, with builder bodies supplied as services.
 
-Evidence: CENTRAL_IMPULSE.md, Link builder dispatch.
+Evidence: LINK_SOLVER.md, Link builder dispatch.
 """
 import struct
 

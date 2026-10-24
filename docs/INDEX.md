@@ -225,3 +225,5 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 ## Studio map decoding update
 
 See [map decoding update](reconstruction/MAP_DECODING_UPDATE.md) for the pinned terrain container, height/class/material codec, floor-height and map-structure specifications.
+
+- [Link row construction and numerical solving](reconstruction/LINK_SOLVER.md): profile resolution, complete supported builder, primary/tangent equations, body buffers and feedback.

@@ -1,6 +1,6 @@
 """Recovered point-motion tangent selection for metadata-clear/single links.
 
-Evidence: CENTRAL_IMPULSE.md, Link point-motion tangent basis.
+Evidence: LINK_SOLVER.md, Link point-motion tangent basis.
 """
 import math
 from reference.central_impulse import f32

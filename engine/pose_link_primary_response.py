@@ -1,6 +1,6 @@
 """Recovered primary link row response selection.
 
-Evidence: CENTRAL_IMPULSE.md, Primary link row response selection.
+Evidence: LINK_SOLVER.md, Primary link row response selection.
 """
 import math
 from reference.central_impulse import f32

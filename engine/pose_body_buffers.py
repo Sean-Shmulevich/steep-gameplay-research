@@ -1,6 +1,6 @@
 """Recovered per-body solver-data and initial-state construction.
 
-Evidence: CENTRAL_IMPULSE.md, Solver body-buffer production.
+Evidence: LINK_SOLVER.md, Solver body-buffer production.
 """
 import math
 import struct

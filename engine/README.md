@@ -1086,4 +1086,4 @@ values, result indices, coefficients and cache seeding. Complete prior storage i
 required, and complete output bytes accompany the readable fields. Resource and
 profile identities are symbolic; no game binary or private tools are needed.
 This builds solver rows but does not solve them. See the
-[input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-link-builder-inspection).
+[input contract and limits](../docs/reconstruction/LINK_SOLVER.md#runnable-link-builder-inspection).

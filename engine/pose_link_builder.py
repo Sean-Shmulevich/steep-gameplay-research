@@ -1,6 +1,6 @@
 """Independent assembly of the recovered metadata-clear/single link builder.
 
-Evidence: CENTRAL_IMPULSE.md, Connected single-family link row builder.
+Evidence: LINK_SOLVER.md, Connected single-family link row builder.
 """
 import struct
 from reference.central_impulse import f32

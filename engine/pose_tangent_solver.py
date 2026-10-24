@@ -1,6 +1,6 @@
 """Recovered one-body tangent preparation and primary-result-bounded iteration.
 
-Evidence: CENTRAL_IMPULSE.md, Tangent row numerical preparation and coupling.
+Evidence: LINK_SOLVER.md, Tangent row numerical preparation and coupling.
 """
 import math
 import struct

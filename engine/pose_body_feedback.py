@@ -1,6 +1,6 @@
 """Recovered raw solver-state writeback into body motion fields.
 
-Evidence: CENTRAL_IMPULSE.md, Solver body-state feedback.
+Evidence: LINK_SOLVER.md, Solver body-state feedback.
 """
 
 

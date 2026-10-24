@@ -1,6 +1,6 @@
 """Recovered one-body primary-row preparation and projected iteration.
 
-Evidence: CENTRAL_IMPULSE.md, Primary row numerical preparation and iteration.
+Evidence: LINK_SOLVER.md, Primary row numerical preparation and iteration.
 """
 import math
 import struct

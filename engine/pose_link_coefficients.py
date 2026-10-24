@@ -1,6 +1,6 @@
 """Recovered paired-profile scalar combination and row response coefficients.
 
-Evidence: CENTRAL_IMPULSE.md, Link profile combination and response gate.
+Evidence: LINK_SOLVER.md, Link profile combination and response gate.
 """
 import math
 from reference.central_impulse import f32

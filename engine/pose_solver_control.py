@@ -1,6 +1,6 @@
 """Recovered solver wrapper and prepare/iterate control flow.
 
-Evidence: CENTRAL_IMPULSE.md, Solver preparation and iteration control.
+Evidence: LINK_SOLVER.md, Solver preparation and iteration control.
 """
 import struct
 
