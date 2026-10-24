@@ -7435,3 +7435,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   512 complete native comparisons match every row/context byte and returned
   pointer without interception. Bound/sign production, caller header completion,
   context units and actual solve remain external; no live game was run.
+- Connected angular bound-pair caller: one signed angle, upper-minus-angle then
+  angle-minus-lower, opposite axis signs, sequential row counters and both body
+  headers. 384 continuous native caller comparisons match complete rows/context
+  and final pointer using observed atan2 outputs. Bounds are neither sorted nor
+  clamped. Bound configuration, earlier geometry and downstream solve remain open.

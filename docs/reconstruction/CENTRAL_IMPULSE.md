@@ -15427,3 +15427,37 @@ residuals, zero boundaries, signed zero and class/result counter wrapping. This 
 synthetic offline execution of the original helper, not live solver validation.
 Caller bound construction, phase semantics, context scalar units and downstream
 body response remain unresolved.
+
+### Angular bound pair caller
+
+`engine.snow_pose_angular_row.build_pose_angular_limit_pair` joins the first
+angular caller's nonzero/non-one state branch to the signed-angle helper and two
+limit-row helpers. The reached caller fragment is RVA 0x19e6bf2 through 0x19e6d3b.
+State1 skips row generation; state0 uses the spring selection documented above.
+Other states take this pair branch, not just state2. The API models that branch
+once reached; it does not infer state from gameplay.
+
+The stored row's lower and upper values are +4 and +8 relative to its state word.
+For the first angular row these are pose storage+0xc0/+0xc4, copied into caller
+frame+0x1a0/+0x1a4. The caller broadcasts each scalar and computes one signed angle
+from the prepared axis/reference/target vectors. It then emits, in order:
+
+```text
+upper row: sign = -1; bound = upper; residual = (-angle) + upper
+lower row: sign = +1; bound = sign_bit_negate(lower); residual = angle + (-lower)
+```
+
+Each expression retains the helper's float32 multiply/add order. Constants are
+four-lane -1 and +1; the latter is loaded earlier at RVA 0x19e6940. No sorting,
+clamping, interval wrapping or duplicate-angle evaluation occurs in this branch.
+Each row uses the preceding row's updated class/result counters. Both headers
+receive the ordered body indices truncated to low16; the second helper's pointer
+is the caller fragment's final returned row pointer.
+
+[384 native caller comparisons](../../native/snow_host/pose_angular_limit_pair_validation.json)
+match both complete rows, full supplied context block and final pointer. Native
+angle/atan2 and both helpers execute without substitution; observed atan2 output
+is supplied to the independent service to isolate that explicit math dependency.
+Cases cover both layouts, states2/3/uint32 maximum and result-counter wrap. Native
+world-vector preparation, bound configuration producers, other axes, downstream
+solve and live body behavior are still outside this connected implementation.

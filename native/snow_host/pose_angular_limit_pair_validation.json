@@ -1,0 +1,14 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "max_platform_atan2_difference": 1.1782119857528528e-07,
+  "scope": "Original nonzero/non-one angular caller fragment including angle evaluation, both limit helpers and header completion; atan2 arguments/output observed without substitution; all row bytes, relative placement, context counters and returned pointer match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic finite vectors and bounds; states 2, 3 and uint32 maximum",
+    "Independent API requires an explicit atan2 service; native output supplied for comparison",
+    "Context scalar units and phase semantics not established",
+    "Other row states, earlier world-space vector preparation and downstream body response are excluded"
+  ],
+  "game_files_included": false
+}
