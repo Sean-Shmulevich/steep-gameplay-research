@@ -16197,3 +16197,41 @@ pool+0x30 and decrement pool+0x28, surrounded by protected calls. Ordinary-group
 retirement supplies argument1 and therefore selects that pool branch. Protected
 call semantics, pool retention, allocator implementation and concurrent reuse
 remain unresolved. Do not substitute a general heap free for that path.
+
+### Group pool acquisition
+
+`engine.pose_group_pool.acquire_pose_group_storage` reconstructs RVA0x18b5c00,
+called by ordinary-group acquisition before constructor0x19570f0. The pool has
+chunk-list pointer+8, uint16 count/capacity+0x10/+0x12, current chunk+0x18,
+uint16 chunk/slot indices+0x20/+0x22, uint16 slots-per-chunk/alignment+0x24/+0x26,
+uint32 usage count+0x28 and free-list head+0x30.
+
+If the free list is nonempty, the routine reads the first word of its head as the
+next link, increments usage with uint32 wrap, publishes that next link, and returns
+the old head. It neither clears that word nor constructs a group. The deleting
+wrapper's visible return sequence writes the old free head into this same first
+word, decrements usage, and publishes the returned group as head. Thus a retired
+object's former table word becomes a free-list link. A reused address does not
+establish identity continuity across retirement and construction.
+
+Otherwise, acquisition uses 168-byte slots. With no current chunk it records the
+old chunk count as current index, requests slots_per_chunk*168 bytes through
+allocator virtual slot8 with supplied alignment and reason47, and stores the
+result. If the chunk list is full, capacity grows from zero to8 or doubles with
+uint16 wrap through a supplied service. It then appends the current pointer and
+increments the uint16 chunk count. There is no null-allocation guard in this
+routine; the model preserves that behavior without claiming it is safe.
+
+The return token is current_chunk + slot_index*168. Slot index increments with
+uint16 wrap. Reaching slots_per_chunk advances to the next existing chunk when
+available, otherwise clears current chunk and both indices. Usage increments
+before return. Allocation, list growth and retained-memory reads remain services;
+no locking or construction is supplied by this helper.
+
+[384 complete native acquisition comparisons](../../native/snow_host/pose_group_pool_validation.json)
+match returned tokens, all56 pool bytes, chunk-array tails and allocator/growth
+arguments. They execute the original routine offline with those two storage
+services intercepted. Cases include returned entries, chunk exhaustion/advance,
+new chunks, growth, usage wrap and null allocator results. Protected calls in the
+outer acquisition and deletion wrappers remain unresolved, so this is a serial
+storage model and does not establish safe concurrent allocation or native handles.

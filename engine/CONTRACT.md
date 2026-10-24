@@ -285,3 +285,9 @@ It preserves capacity gates, pose/link/body release order and final table change
 Allocator virtual effects are supplied; pointed-to elements are never traversed.
 This is not object deletion or a safe native unload operation. Protected pool
 return in the deleting wrapper remains outside the implementation.
+
+Group pool acquisition: `acquire_pose_group_storage` uses explicit retained pool
+fields and supplied free-link reader, chunk allocator and chunk-list growth.
+It preserves free-list precedence,168-byte slot arithmetic and uint16/uint32
+wrap. Returned tokens identify storage only. Construction, synchronization,
+generation identity and native allocator failure handling remain external.

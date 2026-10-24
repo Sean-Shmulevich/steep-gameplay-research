@@ -7535,3 +7535,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   All168 group bytes and allocator call order match. Cleanup releases collection
   storage without traversing elements. Retirement argument1 selects a separate
   protected pool-return path; that wrapper is not modeled as a heap free.
+- Recovered group pool acquisition and its connection to destructor free-list
+  publication: returned entries precede168-byte chunk slots. 384 complete offline
+  native comparisons match pool bytes, chunk tails and storage-service arguments.
+  Reused first words hold free links before construction; address reuse is not
+  object identity. Protected synchronization and native lifetime safety stay open.

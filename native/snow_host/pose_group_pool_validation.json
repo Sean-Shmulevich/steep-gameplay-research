@@ -1,0 +1,19 @@
+{
+  "schema": "pose-group-pool-validation-v1",
+  "cases": 384,
+  "passed": 384,
+  "method": "offline Unicorn complete acquisition routine; allocator and chunk-list growth supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b5c00",
+  "comparisons": [
+    "return token",
+    "all 56 pool bytes",
+    "chunk array including inactive tail",
+    "allocation and growth arguments/order"
+  ],
+  "limits": [
+    "Synthetic pool storage; no real allocations or locks.",
+    "Protected caller wrappers, constructor and pool return excluded.",
+    "Allocator null returns preserved, not treated as safe failure recovery."
+  ]
+}
