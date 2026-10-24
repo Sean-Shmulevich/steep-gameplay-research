@@ -14060,3 +14060,57 @@ results. Both 48-byte output/cache arrays, the secondary-angle bits and clear
 byte match exactly. Fixtures include raw non-Boolean flag bytes, signed zeros,
 primary precedence and deferred consumption. This validates local state changes,
 not their live frequency or the full callback's prepass and branch selection.
+
+
+### Preferred basis rebuild
+
+`engine.snow_basis_angles.apply_preferred_basis` reconstructs the preferred
+path at RVA 0x13fbc82..0x13fbefd, including common cache publication on rebuild.
+The caller must establish the preferred gates described above: nonzero byte at
+receiver+0x17d, at least one of the four receiver+0x130 lanes exceeding float32
+1e-5 in magnitude, and zero inhibit byte at +0x150. Prepass runs before those
+reads. This helper does not guess what enables these fields.
+
+With rebuild_byte zero, the native path copies saved basis +0x270/+0x280/+0x290
+into output and returns success without republishing the cache. It does not
+inspect the preferred direction/angle or consume a secondary angle. The portable
+result includes a detached copy of unchanged saved state, not a claim that the
+native code rewrites it.
+
+Otherwise, the reconstructed sequence is:
+
+```text
+basis0 = saved_basis0
+basis1 = supplied_preferred_axis                 # receiver+0x140
+basis2 = normalize_xyz(basis0 cross basis1)
+basis1 = rotate(basis1, basis2, -preferred_angle, threshold=float32(1e-5))
+basis0 = normalize_xyz(basis1 cross basis2)
+if secondary_angle != 0:
+    apply the secondary-angle rebuild and consumption sequence above
+saved_basis = basis
+```
+
+The preferred angle is receiver+0x154. The instruction flips its sign bit before
+passing it to the rotation helper. The finite implementation preserves the
+negative sign, including signed zero. The primary fallback angle at +0x200 does
+not participate in this path. Saved axes 1 and 2 are copied initially in native
+code but overwritten before they affect the rebuilt result. Axis 1 is rotated
+without normalizing its length; axes 0 and 2 are normalized by cross products.
+The secondary sequence shares the already recovered operations and consumption
+rules. If its angle is zero, its pending clear byte is left untouched.
+
+The API accepts finite nonsingular rebuilding inputs with explicit trig and
+reciprocal-square-root services. Reuse does not request those services or inspect
+unused preferred direction/angle inputs. Singular crosses are rejected by the
+portable normalization policy; this does not reconstruct native failure recovery.
+Direction/angle producers, coordinate interpretation, prepass changes and live
+activation remain unresolved.
+
+The [preferred-path receipt](../../native/snow_host/basis_preferred_validation.json)
+records 384 original-instruction comparisons: 128 reuse and 256 rebuild cases,
+with optional secondary rotation and raw pending-clear bytes. Output, saved
+cache, secondary-angle bits and clear byte match exactly with observed trig and
+rsqrt results. Complete native rotation/trig helpers execute without intercepted
+calls. This validates the selected local path, not its eligibility or the full
+callback. Unit tests also cover the negative-angle convention, unused saved axes,
+and the absence of math-service calls on reuse.

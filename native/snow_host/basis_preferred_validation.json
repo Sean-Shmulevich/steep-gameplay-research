@@ -1,0 +1,16 @@
+{
+  "cases": 384,
+  "branches": {
+    "preferred_reuse": 128,
+    "preferred_rebuild": 256
+  },
+  "bit_exact": true,
+  "scope": "Original preferred-path reuse/rebuild, complete rotation helper and cache/angle/flag publication; no intercepted calls; model receives observed trig and rsqrt results",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonsingular synthetic inputs only",
+    "Entry assumes preferred-path eligibility; gates, prepass and producers excluded",
+    "No live activation or cadence proof; native exceptional values and alternate trig dispatch excluded"
+  ],
+  "game_files_included": false
+}

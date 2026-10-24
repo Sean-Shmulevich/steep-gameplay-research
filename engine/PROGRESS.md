@@ -7268,3 +7268,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   rebuilds it and conditionally consumes its angle. Skipped paths retain pending
   flags. Output/cache/angle/flag bits match 384 native cases across three branches.
   Higher-priority paths, prepass, producers and live activation remain open.
+- Reconstructed preferred basis reuse/rebuild: saved axis 0 plus supplied axis,
+  negative preferred-angle rotation, cross normalization, optional secondary
+  rotation/consumption. Matched output/cache/angle/flag bits in 384 native cases
+  (128 reuse, 256 rebuild). Reuse avoids math and leaves pending state unchanged.
+  Eligibility, prepass, angle/direction producers and live activation remain open.
