@@ -5,7 +5,8 @@ Evidence: CENTRAL_IMPULSE.md, Multi-body destination assignment.
 
 
 def assign_pose_group_destinations(context, group, destinations, *, count,
-                                   preparation_result, eligible, acquire_group):
+                                   preparation_result, eligible, acquire_group,
+                                   resolve_body=lambda body: body):
     """Fill null entries in place; preserve seeded destinations.
 
     Group slots are read each iteration. Eligibility and acquisition are supplied;
@@ -18,7 +19,7 @@ def assign_pose_group_destinations(context, group, destinations, *, count,
     reuse_available=(preparation_result==0)
     for index in range(count):
         if destinations[index]:continue
-        body=group['slots'][index]
+        body=resolve_body(group['slots'][index])
         if body['metadata']['flags8']&8 and eligible(context,body)&255:
             destinations[index]=context['group410']
         elif reuse_available:

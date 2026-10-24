@@ -270,3 +270,11 @@ context dictionaries with explicit eligibility, detach, virtual, acquire, append
 and finalize services. It preserves captured membership comparison and metadata/
 group reload points. Services own physical effects, storage, locking and failures;
 no rollback, native lifetime protection or sleep/wake semantics are supplied.
+
+Ordinary-group processing: `process_pose_group` captures body count after supplied
+finalization, handles empty/single-body retirement, and connects multi-body
+preparation, destination completion, migration and temporary release. Slots are
+body tokens resolved through retained dictionaries. Retirement uses the saved
+reuse decision, not a later count. Single-body append failure is ignored as in
+the inspected caller. Services own allocation, destruction and failure effects;
+no rollback, concurrency guarantee or safe native retirement API is supplied.

@@ -1,0 +1,21 @@
+{
+  "schema": "pose-group-process-validation-v1",
+  "cases": 384,
+  "passed": 384,
+  "retired_cases": 74,
+  "method": "offline Unicorn execution of complete outer routine with all called services intercepted",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e2de0",
+  "comparisons": [
+    "return low byte",
+    "ordered service arguments",
+    "destination selection",
+    "context special-group reload",
+    "post-finalize body count"
+  ],
+  "limits": [
+    "All called services supplied; this receipt validates orchestration, not their internals.",
+    "Synthetic retained bodies and storage; no game launch or live observation.",
+    "Allocation failure, destructor effects, concurrency and protected outer caller excluded."
+  ]
+}

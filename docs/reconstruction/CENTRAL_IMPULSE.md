@@ -16115,3 +16115,40 @@ mutation rather than reproducing an invalid native write.
 match both full arrays, context bytes and every retained group byte without
 interception. Cases cover flag0/1/255 and single/first/middle/last removal. Resource
 release, native destructor effects and concurrent lifetime safety remain unresolved.
+
+### Ordinary-group processing and retirement
+
+`engine.pose_group_process.process_pose_group` reconstructs the complete outer
+routine RVA0x18e2de0..0x18e2fa1. It first finalizes the group, then captures its
+body count. Empty groups are removed from the context and receive virtual slot0
+with argument1. A single body remains unless metadata byte+0x52 bit3 and the
+eligibility result's low byte are nonzero. When admitted, the routine removes
+that body, reloads context.group410, appends there, then retires the source group.
+The append return is ignored, including failure. This is recovered ordering,
+not an independently safe transfer API.
+
+For multiple bodies it requests uint32(count*8) temporary bytes, prepares
+constraint-connected destinations, and fills remaining destinations with the
+recovered selection loop. The original captured count and storage are restored
+to the descriptor before migration. Temporary storage is released after normal
+migration return. Retirement depends on the saved original-group reuse flag:
+zero prepared components and no subsequent original-group assignment permits
+retirement. The caller does not decide retirement by checking the post-migration
+body count. Removal precedes virtual destruction; the return indicates that this
+normal retirement path ran.
+
+The API uses token slots and a retained body mapping. Destination selection now
+accepts a resolver so it can read current token slots without copying a body list.
+All service effects, including finalization, preparation, migration and destruction,
+are explicit. The previously reconstructed functions can supply those services;
+this module does not silently invent native allocation or destructor behavior.
+Failure propagation has no added rollback or finally-based release.
+
+[384 complete outer-routine comparisons](../../native/snow_host/pose_group_process_validation.json)
+execute original instructions in offline emulation with called services intercepted.
+They match return values, service arguments/order, destination arrays, post-finalize
+counts and special-group reloads. Cases include empty/single/multiple groups,
+seeded components, original-group reuse, low-byte eligibility and append failure.
+This validates orchestration. The earlier continuous partition receipt separately
+executes the internal preparation/selection/migration helpers. Neither receipt
+proves native destruction effects, live lifetime safety or protected outer callers.

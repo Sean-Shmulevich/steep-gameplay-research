@@ -7525,3 +7525,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Swap-last removal repairs only the moved group's index; removed fields and tails
   remain unchanged. 256 complete native comparisons match without interception.
   Destruction/resource release remain separate unresolved operations.
+- Connected complete ordinary-group processing, including empty/single-body paths,
+  post-finalization count capture, temporary-storage sequencing and retirement.
+  384 offline native outer-routine comparisons match with all services supplied.
+  Retirement follows the saved reuse decision; single-body append return is
+  ignored. Native destruction, allocator failure and protected callers remain open.
