@@ -7,7 +7,7 @@ static uint64_t u64(const unsigned char *b){return u32(b)|((uint64_t)u32(b+4)<<3
 static int rd(SnowEntryRead r,void *ctx,uint64_t a,void *b,size_t n){return valid(a,n)&&r(ctx,a,b,n)==1;}
 static int ptr(SnowEntryRead r,void *ctx,uint64_t a,uint64_t *v){unsigned char b[8];if(!rd(r,ctx,a,b,8))return 0;*v=u64(b);return valid(*v,1);}
 static int sample(SnowEntryRead r,void *ctx,uint64_t c,uint64_t base,SnowMarkupUpdateSnapshot *s){
-    unsigned char b[17];uint64_t p;memset(s,0,sizeof *s);s->component=c;
+    unsigned char b[20];uint64_t p;memset(s,0,sizeof *s);s->component=c;
     if(!ptr(r,ctx,c,&p)||p!=base+0x1e789b8)return 0;
     if(!ptr(r,ctx,c+0x6c8,&s->controller)||!valid(s->controller,0x630))return 0;
     if(!ptr(r,ctx,s->controller,&p)||p!=base+0x1e7d4b0)return 0;
@@ -16,6 +16,15 @@ static int sample(SnowEntryRead r,void *ctx,uint64_t c,uint64_t base,SnowMarkupU
     if(!ptr(r,ctx,s->controller+0x388,&p)||p!=s->markup)return 0;
     if(!rd(r,ctx,s->markup+0x68,b,12))return 0;
     s->notification_data=u64(b);s->notification_count=(uint32_t)b[10]|(uint32_t)b[11]<<8;
+    if(s->notification_count>4096)return 0;
+    for(unsigned i=0;i<2;i++) {
+        SnowMarkupNotification *v=&s->notifications[i];v->id=i?92:84;
+        if(v->id>=s->notification_count)continue;
+        if(!valid(s->notification_data,(size_t)s->notification_count*20)||
+           !rd(r,ctx,s->notification_data+v->id*20,b,20))return 0;
+        v->present=1;v->key=u32(b);v->selector=u32(b+4);v->pending_bits=u32(b+8);
+        v->branch=b[12];v->force=b[13];v->cached=b[14];v->link_count_bits=u32(b+16);
+    }
     if(!ptr(r,ctx,s->markup+0x50,&s->query_owner)||!valid(s->query_owner,0xb8))return 0;
     if(!ptr(r,ctx,s->query_owner+0xb0,&s->interface)||!valid(s->interface,0x28))return 0;
     if(!ptr(r,ctx,s->interface,&p)||p!=base+0x2909790)return 0;

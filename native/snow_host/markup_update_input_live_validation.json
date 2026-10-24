@@ -1,0 +1,82 @@
+{
+  "scope": "Live controlled-input markup update and reconstructed predicate comparison; no direct notification callback trace",
+  "probe_abi": 2,
+  "requested_capture_ms": 1000,
+  "input": {
+    "scan": 17,
+    "requested_hold_ms": 500,
+    "api_accepted": true,
+    "report_interval_seconds": 0.493813,
+    "both_reports_inside_callback_envelope": true,
+    "game_ingestion_proved": false
+  },
+  "summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 98,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "calls": 98,
+  "threads": 9,
+  "caller_rvas": [
+    "0x34df47"
+  ],
+  "all_samples_accepted": true,
+  "provider_count_histogram": {
+    "0": 64,
+    "1": 2,
+    "4": 19,
+    "3": 11,
+    "6": 2
+  },
+  "transitions": [
+    {
+      "record": 51,
+      "id": 84,
+      "before": 0,
+      "after": 1,
+      "seconds_from_key_down_report": 0.3497137,
+      "query_key": 12582914,
+      "selector": 4294967295,
+      "candidate_count_before": 1
+    },
+    {
+      "record": 72,
+      "id": 84,
+      "before": 1,
+      "after": 0,
+      "seconds_from_key_down_report": 0.6263319,
+      "query_key": 12582914,
+      "selector": 4294967295,
+      "candidate_count_before": 3
+    }
+  ],
+  "predicate_comparisons": 196,
+  "predicate_matches": 196,
+  "id92_cached_always_zero": true,
+  "slot_restored_independently_verified": true,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_evidence_sha256": {
+    "route-result.json": "ddc1718c5cfd6094c810caaf1513712c57b7118eae5008f87a4708256673c1d3",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "input-events.jsonl": "ced15eafa0f76b565bab8164839559982c71a3c9c602f0e51d560023ae7e858b",
+    "membership-reader-calls.json": "aea758bc05c39d35641593e34be8b435b66598c085012527cb634968f4dbd338"
+  },
+  "game_files_included": false
+}

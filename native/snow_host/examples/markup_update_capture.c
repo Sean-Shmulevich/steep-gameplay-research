@@ -47,6 +47,11 @@ static void write_snapshot(FILE *f,const SnowMarkupUpdateSnapshot *s,unsigned va
         const SnowMarkupScalarRecord *r=&s->records[i];
         fprintf(f,"%s{\"key\":%u,\"scalar54_bits\":%u,\"start_bits\":%u,\"end_bits\":%u,\"flags\":%u}",i?",":"",r->key,r->scalar54_bits,r->start_bits,r->end_bits,(unsigned)r->flags);
     }
+    fputs("],\"notifications\":[",f);
+    for(unsigned i=0;valid && i<2;i++) {
+        const SnowMarkupNotification *v=&s->notifications[i];
+        fprintf(f,"%s{\"id\":%u,\"present\":%u,\"key\":%u,\"selector\":%u,\"pending_bits\":%u,\"link_count_bits\":%u,\"branch\":%u,\"force\":%u,\"cached\":%u}",i?",":"",v->id,v->present,v->key,v->selector,v->pending_bits,v->link_count_bits,(unsigned)v->branch,(unsigned)v->force,(unsigned)v->cached);
+    }
     fputs("]}",f);
 }
 static DWORD WINAPI capture(LPVOID unused) {

@@ -6944,3 +6944,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   verified; host healthy and cleanup passed. Individual notification execution
   and motion release remain open. Optional plugin builds through the public host
   script using --markup-update-capture-plugin.
+- Controlled W-input capture now connects live graph candidates to ID-84 cached
+  transitions 0->1->0. Decoded predicate matches all 196 selected-ID post-update
+  values across 98 calls; ID 92 stays zero. All guards/restoration/cleanup passed.
+  This validates live predicate/state correspondence, not individual listener
+  execution or downstream motion release. Probe ABI is now 2 for selected states.

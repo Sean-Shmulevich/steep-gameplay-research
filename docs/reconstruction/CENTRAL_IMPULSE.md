@@ -11697,3 +11697,67 @@ stopped, saves/settings were restored and the original DLL hash matched. No
 movement input was sent. The next discriminating capture should include a
 controlled action and selected notification cached/query states at this boundary;
 a separate callback observation is still required to prove motion release.
+
+### Selected notification-state sampling
+
+The native sampler now includes IDs 84 and 92 when their indices exist in the
+dispatcher's notification array. For each it reads query key, selector, pending
+index bits, branch byte, force byte, cached byte and signed-link-count bits.
+Raw integer bits are preserved rather than interpreting negative sentinel values
+as positive counts. Missing indices are explicit absent records; counts above
+4096 reject. No listener descriptors are copied or modified.
+
+This extends the native sampler's previous count-only notification observation.
+Both sequential samples include the selected fields, so changes between those
+passes reject the whole sample. The eight-provider-record case now uses 50 read
+callbacks, each at most 20 bytes, within the declared 56-call bound. Tests cover
+all 50 read-failure positions, absent notification indices, the oversized-count
+gate and the decoded selected fields; ASan/UBSan passed.
+
+The expanded record changes the experimental Windows probe ABI from 1 to 2.
+Consumers must check both ABIVersion and RecordSize and rebuild against the new
+header. The older five-mode Wine receipt documents ABI 1. It is not retroactively
+claimed as execution validation of ABI 2. A cached-value transition across the
+original component update would still not prove which listener executed; reader
+snapshots are distinct from direct callback tracing.
+
+### Controlled-input cached-state transitions
+
+A [live ABI-2 capture](../../native/snow_host/markup_update_input_live_validation.json)
+recorded 98 original update calls across nine threads, all from RVA 0x34df47.
+All before/after samples passed, no records were dropped, and both reports from
+the gated W-input helper fell inside the captured call envelope. The helper held
+scan 17 for a requested 500 ms; API acceptance and report timestamps do not prove
+the game's ingestion time or causality by themselves.
+
+Provider candidates appeared: the before-sample count was zero for 64 calls,
+one for two, three for eleven, four for nineteen and six for two. ID 84 changed
+cached value 0 -> 1 across call 51, then 1 -> 0 across call 72. Its key was
+0x00c00002, selector all-ones, branch zero, force zero and link count one. ID 92
+remained cached zero with key 0x00c0000b. Pending indices stayed all-ones.
+
+For each selected ID in each call, the reconstructed key/interval/bit-1 predicate
+was evaluated on the before-sample graph records. All 196 predicted booleans
+matched the after-sample cached values. This is a live cross-check of the decoded
+predicate against original state updates, beyond the earlier emulator fixtures.
+Because both selectors are all-ones, nested pair contents cannot reject an
+otherwise eligible candidate on the decoded query path; they were not sampled.
+The comparison does not validate other selector modes against live records.
+
+On the rising transition, the matching candidate had flag byte 3. On the falling
+transition, the observed candidates had keys 0x80000001, 0x80000002 and 0x80000003,
+with no matching ID-84 key. Those keys are identifiers, not decoded animation
+names. The predicate correctly distinguishes absence of the matching record from
+a universal empty collection.
+
+This connects graph eligibility with the notification's cached-state changes
+across actual component updates. It still does not directly bracket query entry,
+listener execution or the downstream motion-release handler. Static notifier
+logic predicts notification on these changes with the observed positive link
+count, but no individual callback invocation or physical effect is claimed.
+
+Original slot restoration was independently verified; the host stayed ready and
+unfaulted. The bottle stopped, saves/settings were restored and the original DLL
+was verified. Next capture the specific callback or its guarded actor-state
+outputs alongside these transitions, preserving the distinction between a
+predicted notification and an observed listener execution.

@@ -6,7 +6,7 @@
 #else
 #define SNOW_MARKUP_API
 #endif
-/* Experimental ABI 1. Configure never installs. Caller verifies the image,
+/* Experimental ABI 2. Configure never installs. Caller verifies the image,
  * original calling convention, slot, fresh component and reader provenance.
  * One configuration/install attempt; modules stay pinned for cached callers.
  * Reader/context must outlive all possible calls, not merely capture/drain.

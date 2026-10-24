@@ -30,7 +30,7 @@ int main(int argc,char **argv) {
     uint64_t (*frequency)(void)=(void *)GetProcAddress(dll,"SnowMarkupUpdateProbe_ClockFrequency");
     SnowMarkupUpdateOriginal dispatch=(void *)GetProcAddress(dll,"SnowMarkupUpdateProbe_Dispatch");
     assert(configure && install && restore && close_trace && read_record && abi && size && frequency && dispatch);
-    assert(abi()==1 && size()==sizeof(SnowMarkupUpdateRecord) && frequency()>0);
+    assert(abi()==2 && size()==sizeof(SnowMarkupUpdateRecord) && frequency()>0);
     unsigned value=0,other=0;size_t used=0,dropped=0;SnowMarkupUpdateRecord row;
     write_slot((void *)original);DWORD old;assert(VirtualProtect(table,4096,PAGE_READONLY,&old));
     void *address=table,*heap=NULL;
