@@ -7100,3 +7100,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Existing configure APIs retain channel selection; all public build paths link
   the sampler. Windows host/plugin build and 45 focused tests pass, including
   concurrent recorder payload preservation. New channel not yet tested live.
+- First ABI 10 gate capture accepted 906/906 observations around 453 attributed
+  snow calls. Duration pairs and stored timer match local models bitwise for all
+  453, but only above-threshold/expired branches occurred. No refill or live
+  attenuation claim. Gate read median 15.5 us, p95 19.7 us; both slots and full
+  cleanup verified. Next target is a low-immersion interval and contact return.

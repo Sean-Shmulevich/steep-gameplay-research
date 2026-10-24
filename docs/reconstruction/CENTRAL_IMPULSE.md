@@ -12878,3 +12878,36 @@ and raw NaN bits across concurrent before/after records. The new channel has not
 yet been exercised in the live game. Next is a bounded capture with gate and
 point channels enabled, followed by comparing predicted duration/timer changes
 against accepted observations and reporting read cost separately.
+
+### First live gate-state comparison
+
+The ABI 10 channel accepted 906/906 samples around 453 attributed snow updates,
+with no dropped records. Both hook slots restored and the bounded launcher
+verified stopped bottle, restored saves/settings and original DLL. The
+[public receipt](../../native/snow_host/gate_inputs_live_validation.json) contains
+aggregate results and a private trace hash, not game payloads or heap addresses.
+
+Every observed duration pair matches `update_point_activity` bitwise when given
+entry durations, exit immersion and exit elapsed time. Every stored timer matches
+`update_point_gate_timer` using entry timer and exit duration/configuration values.
+These are wrapper-boundary consistency checks; supplied exit values do not prove
+internal producer order or exclude transient writes by intervening calls.
+
+Coverage is narrow and explicit: all 453 records have immersion above threshold
+and take the expired timer branch. Immersion ranges approximately 0.9872..1.0;
+activity remains zero, alternate grows, and the timer becomes increasingly
+negative. This independently supports preserving negative timer remainder rather
+than clamping it. It does not test refill, positive-timer attenuation, or actual
+stack gate values. No landing or airborne transition is inferred.
+
+Observed configuration is stable: refill divisor 2.5, duration approximately 0.7,
+lower-one approximately 0.1, lower-other approximately 0.33, total hull volume
+0.009479999542236328. The volume agrees with the previously documented selected
+hull calculation. Scalar read cost per boundary has median 15.5 microseconds,
+95th percentile 19.7 and maximum 135.0; two observations occur per wrapper.
+These timings exclude the separate point channel and are not total overhead.
+
+The next useful live scenario is an observed low-immersion interval followed by
+contact return. Require actual branch evidence before counting a jump/landing
+attempt as coverage. Check refill first, then positive-timer attenuation, while
+continuing to distinguish predicted stack gates from directly observed gates.

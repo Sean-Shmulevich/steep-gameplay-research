@@ -1,0 +1,114 @@
+{
+  "scope": "Observed wrapper entry/exit comparison, not instruction-local causality",
+  "capture_ok": true,
+  "counts": {
+    "attempted": 906,
+    "accepted": 906,
+    "finite_pairs": 453,
+    "duration_matches": 453,
+    "timer_matches": 453
+  },
+  "duration_branches": {
+    "above_threshold": 453
+  },
+  "timer_actions": {
+    "expired": 453
+  },
+  "mismatch_examples": [],
+  "configuration_fields": [
+    "refill_divisor",
+    "duration",
+    "lower_one",
+    "lower_other",
+    "total_volume"
+  ],
+  "observed_configurations": [
+    [
+      2.5,
+      0.699999988079071,
+      0.10000000149011612,
+      0.33000001311302185,
+      0.009479999542236328
+    ]
+  ],
+  "observed_ranges": {
+    "immersion": [
+      0.9872168302536011,
+      1.0
+    ],
+    "alternate": [
+      0.010444399900734425,
+      4.4368510246276855
+    ],
+    "activity": [
+      0.0,
+      0.0
+    ],
+    "timer": [
+      -4.4368510246276855,
+      -0.010444399900734425
+    ],
+    "elapsed": [
+      0.0062638502568006516,
+      0.013091499917209148
+    ],
+    "total_volume": [
+      0.009479999542236328,
+      0.009479999542236328
+    ],
+    "refill_divisor": [
+      2.5,
+      2.5
+    ],
+    "duration": [
+      0.699999988079071,
+      0.699999988079071
+    ],
+    "lower_other": [
+      0.33000001311302185,
+      0.33000001311302185
+    ],
+    "lower_one": [
+      0.10000000149011612,
+      0.10000000149011612
+    ]
+  },
+  "read_microseconds": {
+    "median": 15.5,
+    "p95": 19.7,
+    "max": 135.0
+  },
+  "snow_calls": 453,
+  "snow_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 453,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 453,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 453,
+    "other_calls": 0
+  },
+  "slots_restored": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_trace_sha256": "c8a205e0fe58dcbe708ff3b8d6e6354958bc3b0fd352e3a739a43c31a96299ed",
+  "limits": [
+    "Exit immersion supplied to duration model; inner producer not observed",
+    "Exit counters supplied to timer model; intervening writes not isolated",
+    "Actual stack gate values not observed; unit gates used only to evaluate timer branch",
+    "Sequential repeated samples are not atomic; no full-state determinism claim",
+    "Only above-threshold immersion and expired timer branches observed; no refill or positive-timer attenuation coverage"
+  ],
+  "game_files_included": false
+}
