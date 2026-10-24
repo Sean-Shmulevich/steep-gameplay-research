@@ -15535,3 +15535,48 @@ This supports callback dispatch as the local interpretation, not a direct force
 or velocity setter. Callback identities/effects, registration mutation rules,
 recursive use, synchronization and failure handling remain unresolved. The
 observer loop itself has not been executable-validated in this pass.
+
+### Pose observer dispatch and deferred compaction
+
+`engine.pose_observers.dispatch_pose_observers` reconstructs the serial dispatcher
+at RVA 0x18a7f60..0x18a804e. It accepts a body token, raw uint32 notification value,
+a registry getter, thread-state dictionary and explicit callback service. Registry
+records are retained 16-byte values: callback token at byte0 and enable byte8.
+The independent interface restricts count to a valid retained range below2^31;
+that validation is authored, not a native bounds check.
+
+```text
+registry = get_registry()
+thread.active = 1
+index = 0
+while index < registry.count:
+    if registry.records[index].enabled != 0:
+        invoke(registry.records[index].callback, body, value)
+        registry = get_registry()
+    index += 1
+thread.active = 0
+if thread.deferred_cleanup != 0:
+    for index descending from registry.count - 1 to 0:
+        if registry.records[index].enabled == 0:
+            registry.count -= 1
+            move trailing active records left by one record
+            registry = get_registry()
+    thread.deferred_cleanup = 0
+```
+
+The loop count is dynamic. Callback-appended entries can run in the current
+invocation; disabling a later entry prevents its invocation. Registry replacement
+continues at the next index, not index0. Disabled entries remain when deferred
+cleanup is zero. Compaction retains stale inactive tail bytes and capacity; it
+does not destroy callback modules or release their storage. The active flag is
+one byte, not a nesting counter, so this model supplies no reentrancy protection.
+Callback exceptions propagate without an invented finally/rollback guarantee.
+
+[320 native dispatcher comparisons](../../native/snow_host/pose_observers_validation.json)
+match callback order/arguments/active flags, full final record storage, count,
+thread flags and removal order. Original dispatcher instructions run with supplied
+synthetic callback and memmove services. Cases include callback-driven disabling
+and appending. Registry replacement is covered by independent tests only. Native
+callback effects, registration methods, locking, safe module unload and concurrent
+mutation remain unresolved. This validates the dispatcher previously identified
+only statically; it does not establish a safe public native callback API.

@@ -7450,3 +7450,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases match row/context bytes and intercepted notification arguments. Static
   notification inspection identifies an enabled-observer loop with deferred
   removal; callbacks, concurrency and physical effects remain external.
+- Reconstructed pose observer dispatch and deferred reverse compaction. Dynamic
+  callback additions can run in the same invocation; disabled entries persist
+  until cleanup, and inactive tails remain. 320 native comparisons match with
+  supplied callback/memmove services. Callback effects, registration, concurrency,
+  reentrancy safety and module lifetime remain external.

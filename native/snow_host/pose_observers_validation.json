@@ -1,0 +1,17 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete native observer dispatcher with synthetic callback and memmove services; callback order/arguments/active flag, final record bytes/count, TLS flags and removal order match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Empty and mixed enabled registries",
+    "Deferred cleanup on/off and retained inactive tails",
+    "Callback disables a later entry and appends an entry visited in the same dispatch"
+  ],
+  "limits": [
+    "Native callback bodies and memmove implementation replaced by supplied services",
+    "Registry replacement covered by independent tests only",
+    "Serial normal-return behavior; no concurrency, lifetime or reentrancy safety claim"
+  ],
+  "game_files_included": false
+}

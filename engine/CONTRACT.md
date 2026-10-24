@@ -250,3 +250,10 @@ order to the main body only. Event-local `main_geometry` supplies basis, stored
 local inverse inertia, center and translation; no transform integration occurs.
 Each effect preserves wrapper suppression/dispatch decisions. Pending state and
 rider state remain unchanged. Native scheduling and record mutation are external.
+
+Pose observer dispatch: `dispatch_pose_observers` preserves dynamic count iteration,
+post-callback registry reload and deferred reverse compaction over retained raw
+16-byte records. Callbacks and registry storage are supplied. Disabled records can
+remain; inactive tails are preserved. Thread active is a byte, not a recursion
+counter. This serial normal-return model supplies no lifetime pin, synchronization,
+module unloading protocol or exception recovery.
