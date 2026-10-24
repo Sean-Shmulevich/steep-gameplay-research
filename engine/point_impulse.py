@@ -27,3 +27,20 @@ def apply_point_impulse(linear, angular, impulse, point, inverse_mass,
                  f32(r[2]*torque[2])) for r in inertia]
     result['angular'] = tuple(f32(d+w) for d,w in zip(delta,vector(angular)))
     return dict(result, center=center, angular_impulse=torque)
+
+
+def world_inverse_inertia(basis, local_inverse_inertia):
+    """Native two-stage matrix product: local * transpose(basis), then basis * it.
+
+    No orthonormality or symmetry substitution; finite row-major 3x3 inputs.
+    This evaluates stored inputs, not their producer or cache freshness.
+    """
+    if len(basis) != 3 or len(local_inverse_inertia) != 3:
+        raise ValueError('3x3 matrices required')
+    rotation = [vector(row) for row in basis]
+    local = [vector(row) for row in local_inverse_inertia]
+    def product(a, b):
+        return [[f32(f32(f32(a[i][0]*b[0][j])+f32(a[i][1]*b[1][j]))+
+                     f32(a[i][2]*b[2][j])) for j in range(3)] for i in range(3)]
+    transposed = list(zip(*rotation))
+    return product(rotation, product(local, transposed))

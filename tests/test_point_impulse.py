@@ -1,5 +1,5 @@
 import unittest
-from engine.point_impulse import apply_point_impulse
+from engine.point_impulse import apply_point_impulse, world_inverse_inertia
 from engine.snow_post_pending import summed_submissions
 
 I=[[1,0,0],[0,1,0],[0,0,1]]
@@ -41,3 +41,18 @@ class PointImpulseTests(unittest.TestCase):
         submission=summed_submissions([r],3,0,.5)[0]
         result=self.apply(impulse=submission['impulse'][:3],point=submission['point'][:3],force=submission['force'])
         self.assertEqual(result['angular'],(0,0,2))
+
+
+class WorldInertiaTests(unittest.TestCase):
+    def test_rotation_reorients_anisotropic_inertia(self):
+        basis=[[0,-1,0],[1,0,0],[0,0,1]]
+        self.assertEqual(world_inverse_inertia(basis,[[2,0,0],[0,3,0],[0,0,4]]),
+                         [[3,0,0],[0,2,0],[0,0,4]])
+
+    def test_nonsymmetric_input_not_silently_symmetrized(self):
+        local=[[1,2,3],[4,5,6],[7,8,9]]
+        self.assertEqual(world_inverse_inertia(I,local),local)
+
+    def test_nonorthogonal_basis_not_replaced_by_inverse(self):
+        self.assertEqual(world_inverse_inertia([[2,0,0],[0,3,0],[0,0,4]],I),
+                         [[4,0,0],[0,9,0],[0,0,16]])

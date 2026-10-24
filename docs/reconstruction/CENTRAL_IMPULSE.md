@@ -12400,3 +12400,38 @@ sequences pass, including composition of a summed-loop submission into the new
 body model. The remaining measurement inputs for those contributions are each
 active record's vectors/point, runtime scale, body center/basis and world inertia,
 with their values at the actual submission boundary rather than a later snapshot.
+
+### World-inertia transformation executed end to end
+
+The matrix dependency above is now narrowed. `world_inverse_inertia(basis, local)`
+in `engine.point_impulse` reconstructs the two helpers used by point-impulse body
+arithmetic. With row-major public matrices and float32 rounding on every product
+and addition:
+
+```text
+intermediate = local_inverse_inertia * transpose(basis)
+world_inverse_inertia = basis * intermediate
+```
+
+Each three-term dot product adds terms zero and one before term two. The first
+helper reads the stored local matrix at body+0x170 and the basis at body+0x40.
+The second uses the intermediate buffer as both input and output. The original
+helper computes temporaries before storing, allowing this particular alias.
+The pure Python helper returns a fresh matrix and does not model arbitrary native
+buffer aliasing or padding bytes.
+
+The [expanded instruction validation](../../native/snow_host/point_impulse_matrix_instruction_validation.json)
+executes the original point wrapper, inner arithmetic and both matrix helpers.
+Only backend dispatch is intercepted. Across 288 cases, final linear and angular
+velocities match bit-for-bit. Rotated/translated body centers, off-diagonal inertia,
+zero/positive inverse masses and wrapper gates remain covered. Additional synthetic
+nonsymmetric and nonorthogonal matrices exercise operation order without relying
+on physical symmetry or orthonormality. Those stress matrices are not claims about
+valid live body states. The prior helper-stubbed receipt remains separate.
+
+Seventeen portable tests across point arithmetic, post-pending loops and the
+motion sequence pass. World-inertia arithmetic is now implemented; discovery,
+production and freshness of the stored local inertia and basis remain outside this
+kernel. No live inertia values or isolated point-impulse effects were captured by
+this validation. Callers can compose `world_inverse_inertia` with
+`apply_point_impulse` using observed or explicitly synthetic body inputs.

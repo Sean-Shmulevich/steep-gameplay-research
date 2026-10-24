@@ -7028,3 +7028,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   are intercepted. Fourteen related portable tests pass, including post-pending
   submission composition. Native inertia production and live activation remain
   external, and provenance-locked mathematical sources remain unchanged.
+- Closed the point-impulse matrix arithmetic dependency: float32 two-stage
+  `basis * (local_inverse_inertia * transpose(basis))` now executes independently.
+  Expanded 288-case validation runs both original helpers through final body
+  velocities, intercepting only backend dispatch. Seventeen portable tests pass.
+  Stored inertia/basis producers, freshness and live values remain unresolved.
