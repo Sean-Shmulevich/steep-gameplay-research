@@ -12911,3 +12911,32 @@ The next useful live scenario is an observed low-immersion interval followed by
 contact return. Require actual branch evidence before counting a jump/landing
 attempt as coverage. Check refill first, then positive-timer attenuation, while
 continuing to distinguish predicted stack gates from directly observed gates.
+
+### Space-only attempt and reusable comparison API
+
+A subsequent 500 ms Space press/release attempt delivered both input events, but
+recorded zero snow-wrapper calls. The markup recorder did execute and both slots
+restored; cleanup passed. The
+[attempt receipt](../../native/snow_host/gate_jump_live_attempt.json) is explicitly
+inconclusive. Controller completion is not gameplay readiness or branch coverage.
+Before another jump attempt, activate riding with W and require positive snow
+update evidence; Space delivery alone is insufficient.
+
+`engine.snow_gate_comparison.compare_gate_transition(before, after)` is now a
+portable analysis API. Supply two accepted `gate_inputs` dictionaries from the
+same attributed wrapper record. The caller remains responsible for identity,
+validity and ordering. The function validates uint32 bit encodings, marks
+nonfinite observations and changed configuration untested, and compares predicted
+duration/timer bits to observed exits. It reports each match separately.
+
+It supplies exit immersion to the duration model and exit counters to the timer
+model; this preserves the live check's limited causal scope. It does not compare
+actual stack gate values. Synthetic unit gates are used only to evaluate the
+existing timer routine, and no gate prediction is returned. A timer evaluation
+outside the finite model returns `timer_matches=None`, not a passing result.
+
+Sixteen comparison/kernel tests pass, including threshold equality, refill,
+contact-return attenuation, expired negative remainder, intentional mismatch and
+invalid observations. The public comparator also reproduces all 453 duration and
+timer matches from the prior private live capture. Synthetic refill/attenuation
+tests do not upgrade the unsuccessful jump capture to live coverage.

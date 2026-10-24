@@ -7105,3 +7105,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   453, but only above-threshold/expired branches occurred. No refill or live
   attenuation claim. Gate read median 15.5 us, p95 19.7 us; both slots and full
   cleanup verified. Next target is a low-immersion interval and contact return.
+- Added reusable gate-transition comparison API with explicit untested states,
+  separate duration/timer verdicts and raw-bit checks. Sixteen related tests pass;
+  reproduces all 453 prior live pairs. A new Space-only live attempt delivered
+  input but captured zero snow updates; recorded as inconclusive, with both slots
+  and cleanup verified. Next attempt must establish active riding before Space.

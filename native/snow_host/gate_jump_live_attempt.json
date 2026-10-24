@@ -1,0 +1,58 @@
+{
+  "scope": "Observed wrapper entry/exit comparison, not instruction-local causality",
+  "capture_ok": true,
+  "counts": {},
+  "duration_branches": {},
+  "timer_actions": {},
+  "mismatch_examples": [],
+  "configuration_fields": [],
+  "observed_configurations": [],
+  "observed_ranges": {},
+  "read_microseconds": null,
+  "snow_calls": 0,
+  "snow_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 0,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": false,
+    "direct_substep_records": 0,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 0,
+    "other_calls": 0
+  },
+  "slots_restored": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_trace_sha256": "d983bae1ab7218fd7f5a3e35a287351704696b4d3cec23d8345321d7b9937a8e",
+  "limits": [
+    "Exit immersion supplied to duration model; inner producer not observed",
+    "Exit counters supplied to timer model; intervening writes not isolated",
+    "Actual stack gate values not observed; unit gates used only to evaluate timer branch",
+    "Sequential repeated samples are not atomic; no full-state determinism claim",
+    "capture_ok describes controller/restoration completion only; zero snow records cannot establish gameplay or formula coverage"
+  ],
+  "experiment_outcome": "inconclusive_no_snow_updates",
+  "game_files_included": false,
+  "input_delivery": [
+    {
+      "scan_raw": 57,
+      "key_up": false,
+      "api_reported_sent": 1
+    },
+    {
+      "scan_raw": 57,
+      "key_up": true,
+      "api_reported_sent": 1
+    }
+  ]
+}
