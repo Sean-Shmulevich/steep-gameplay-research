@@ -228,3 +228,9 @@ Nonzero mode preserves the four-lane output and returns 1; mode zero dispatches
 one of three external helpers or zeroes output, returning 0. Only needed state
 arguments are validated. Native locking, deferred work, live receiver resolution
 and callback exceptions remain outside this local orchestration contract.
+
+`engine.markup_pending.queue_world_scaled_pending` models the finite-input
+four-lane accumulation after native entity/runtime/world presence gates. It
+rounds interval*30, vector multiplication and addition separately to float32.
+The interval is ordinary world time in seconds, not a proved substep duration.
+No pointer acquisition, lock or body-velocity update is supplied.

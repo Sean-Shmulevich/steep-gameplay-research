@@ -1,0 +1,12 @@
+{
+  "arithmetic_cases": 200,
+  "early_guard_cases": 3,
+  "passed": true,
+  "scope": "Original accumulator instructions, synthetic four-lane values and pointer guards; alias and absent-input-read checks",
+  "range_rva": [
+    "0x1373c10",
+    "0x1373c59"
+  ],
+  "sha256": "ffcb7d33d00b9cf4287c5c64afeb7abfd325df54e35652c12c63fc599f0482ea",
+  "game_files_included": false
+}

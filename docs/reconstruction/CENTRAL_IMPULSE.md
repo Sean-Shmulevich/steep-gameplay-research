@@ -11973,3 +11973,45 @@ This is not validation of contention, reentrant state mutation, pending-transiti
 processing or a guarantee that pre-update selectors survive ID-84's earlier
 motion action unchanged. The latter is why live selectors should be sampled at
 the relevant service boundary before attributing a vector to a branch.
+
+### World-interval-scaled callback accumulation
+
+The ID-84 callback's final service, RVA 0x1373c10, is a distinct producer from
+the unscaled queue leaf documented earlier. It first requires actor+0x10 entity,
+actor+0x168 runtime and entity+0x60 world pointers to be non-null. Failure at any
+of those gates returns without reading the input vector. Otherwise:
+
+```python
+scale = float32(world.interval * 30.0)
+for lane in range(4):
+    runtime.pending[lane] = float32(
+        float32(scale * input_vector[lane]) + runtime.pending[lane])
+```
+
+The world interval is the float at world+0x1060. The
+[world-clock producer and accessor](INPUT_TO_ACTION_ROUTE.md)
+identify it as processed milliseconds divided by 1000, supporting seconds. It
+is not established as the physics substep interval. The constant is exactly
+30.0. Thus an interval of 1/60 supplies a scale of 0.5 in this producer; the
+subsequent pending consumer separately applies body inverse mass. Do not apply
+this factor to the plain queue leaf or infer the vector's physical units from
+the factor alone.
+
+All four lanes participate, including W. The instruction order multiplies interval
+by 30 before multiplying the vector, then adds the existing pending value. It
+performs no locking or direct velocity mutation. The native MOVAPS operands require
+aligned vectors. A source aliasing the pending buffer is loaded before the final
+store, so the operation is accumulation of its prior value, not sequential lane
+updates reading partially changed data.
+
+[`queue_world_scaled_pending`](../../engine/markup_pending.py) implements the
+finite-float32 arithmetic after pointer gates. [Original-instruction validation](../../native/snow_host/markup_pending_instruction_validation.json)
+matched 200 arithmetic cases including five intervals, all four lanes and source
+aliasing, plus three early-null cases with an unmapped input pointer. Those cases
+verify the guards avoid input reads. The portable kernel takes values directly
+and does not resolve pointers or provide synchronization.
+
+This closes the arithmetic link from the callback's state-dependent vector to the
+pending buffer. Live callback execution, which vector-state branch was selected,
+its interval/input values and the pending consumer's relative timing still need
+observation before claiming an end-to-end measured physical effect.

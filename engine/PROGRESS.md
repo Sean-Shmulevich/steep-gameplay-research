@@ -6973,3 +6973,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   instruction cases match routes, receiver depths, vectors and return values;
   uncontended lock/depth cleanup also checked. Deferred transitions and live
   service-boundary state selection remain open.
+- Connected ID-84's final service to pending accumulation: multiply its four-lane
+  vector by float32(30 * ordinary world interval), then accumulate with float32
+  ordering. Two hundred original arithmetic cases plus three early-null guards
+  pass, including source/pending aliasing. Live callback-to-consumer timing remains
+  unresolved; this scaling is distinct from the plain queue leaf.
