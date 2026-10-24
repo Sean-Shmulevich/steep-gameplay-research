@@ -29,3 +29,16 @@ class PostPendingTests(unittest.TestCase):
         self.assertEqual(result[0]['impulse'],[0,-2,-1,0])
         self.assertEqual(record['a'],[1,2,3,0])
         self.assertEqual(summed_submissions([record],-1,0,1),[])
+
+
+class GateAttenuationTests(unittest.TestCase):
+    def test_squared_and_linear_lanes_differ(self):
+        from engine.snow_post_pending import attenuate_point_gates
+        self.assertEqual(attenuate_point_gates(1,1,1,2,0,0,1),(.25,.5))
+        self.assertEqual(attenuate_point_gates(2,3,2,2,.5,.25,1),(.5,.75))
+
+    def test_no_hidden_clamp_and_zero_denominator_rejected(self):
+        from engine.snow_post_pending import attenuate_point_gates
+        self.assertEqual(attenuate_point_gates(1,1,4,2,0,0,1),(1,-1))
+        with self.assertRaises(ValueError):
+            attenuate_point_gates(1,1,0,0,0,0,1)

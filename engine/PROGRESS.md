@@ -7062,3 +7062,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   values equal preceding exits. Entry timing is stale until setter execution.
   Gate stack initialization is a static all-ones lead; submission-time aliases and
   record freshness still need checking before force attribution.
+- Found explicit mutation of the initially all-ones point gates: lane one uses
+  a squared blend, lane two a linear blend. Added finite local arithmetic matching
+  192 original-instruction cases; 23 related tests pass. Live record comparison
+  shows almost all summed vectors/points change inside wrappers, with no field
+  changes between successive exits/entries. Submission-time gate values and
+  post-submission mutation remain unresolved; initial ones are not safe defaults.

@@ -38,3 +38,20 @@ def summed_submissions(records, gate_one, gate_other, runtime_scale):
         result.append(dict(index=i, impulse=[f32(f32(x+y)*scale) for x,y in zip(a,b)],
                            point=four(record['point']), force=True))
     return result
+
+
+def attenuate_point_gates(gate_one, gate_other, input_scalar, denominator,
+                          lower_one, lower_other, upper):
+    """Already-entered local gate update; caller supplies outer branch decision.
+
+    Source block at RVA 0x1409362. Upper is incoming XMM11, not assumed one.
+    No clamping; zero denominator is outside this finite portable contract.
+    """
+    one, other, value, denom, low_one, low_other, high = map(f32,
+        (gate_one, gate_other, input_scalar, denominator, lower_one, lower_other, upper))
+    if denom == 0:
+        raise ValueError('nonzero denominator required')
+    weight = f32(f32(denom-value)/denom)
+    blend_one = f32(f32(f32(high-low_one)*weight)+low_one)
+    blend_other = f32(f32(f32(high-low_other)*weight)+low_other)
+    return (f32(f32(blend_one*blend_one)*one), f32(blend_other*other))

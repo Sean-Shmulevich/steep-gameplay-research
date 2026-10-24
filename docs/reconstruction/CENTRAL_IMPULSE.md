@@ -12628,3 +12628,44 @@ The function also clears summed-record enabled bytes near its entry before later
 force work. Pre-update enabled records can therefore describe the preceding
 invocation. Accepted snapshots provide the missing data to inspect, but still do
 not replace producer-at-use observation or prove which point impulses executed.
+
+### Gate block mutation and record freshness
+
+The all-ones gate initialization is not preserved unconditionally. The inspected
+local block at RVA 0x1409362 reads the argument-two block and writes lanes +4 and
++8 before the later point loops. Given supplied incoming `upper`, scalar `x`,
+configuration values `denominator`, `lower_one`, `lower_other`, and old gates,
+its finite-input formula is:
+
+```text
+weight = (denominator - x) / denominator
+blend_one = (upper - lower_one) * weight + lower_one
+blend_other = (upper - lower_other) * weight + lower_other
+gate_one *= blend_one * blend_one
+gate_other *= blend_other
+```
+
+Every operation rounds to float32; no clamp is inserted. `upper` is incoming
+XMM11 rather than an assumed constant. The configuration fields are +0x34,
++0x3c and +0x38 respectively on the runtime+0x15b0 object. The portable
+`attenuate_point_gates` exposes this already-entered block. Its outer activation
+branch and input producers remain external; zero denominator is rejected by the
+portable finite contract rather than assigned invented native behavior.
+
+[192 original-instruction cases](../../native/snow_host/point_gate_attenuation_validation.json)
+match bitwise, including extrapolation and negative inputs. Lanes zero and three
+remain unchanged in this block. This is not a claim that they are immutable
+throughout the function. Twenty-three related portable tests pass. The recovered
+mutation rules out treating the initialized gate pair as fixed ones during all
+summed submissions; values at use or a complete producer chain are still needed.
+
+The existing accepted live capture also supplies a
+[record freshness comparison](../../native/snow_host/point_record_freshness_validation.json).
+Across 435 wrappers, all 11,310 directional points changed within their call,
+as did 7,853 directional vectors. Of 19,140 summed record comparisons, 19,096
+changed each of point, vector A and vector B. Across all 434 consecutive exit/entry
+pairs, none of those record fields changed. Index pairing is a comparison method,
+not a proven per-record lifetime identity. Together with the earlier enabled-byte
+clear and elapsed-time setter, this shows why entry records cannot simply be used
+as current-call submission inputs. Exit data are candidate produced values, but
+still require checking for changes after actual submission.

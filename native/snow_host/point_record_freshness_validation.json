@@ -1,0 +1,52 @@
+{
+  "scope": "Record-index comparisons at accepted wrapper boundaries; not identity generations or submission observations",
+  "calls": 435,
+  "source_sha256": "f01e71c0c8d2f46cd30b91678a40a34696052ca75279f97dbdfabbf2191401e2",
+  "lists": {
+    "directional": {
+      "within_comparisons": 11310,
+      "between_comparisons": 11284,
+      "fields": {
+        "enabled": {
+          "within_changed": 26,
+          "between_changed": 0
+        },
+        "point_bits": {
+          "within_changed": 11310,
+          "between_changed": 0
+        },
+        "direction_bits": {
+          "within_changed": 7853,
+          "between_changed": 0
+        }
+      }
+    },
+    "summed": {
+      "within_comparisons": 19140,
+      "between_comparisons": 19096,
+      "fields": {
+        "enabled": {
+          "within_changed": 44,
+          "between_changed": 0
+        },
+        "kind": {
+          "within_changed": 0,
+          "between_changed": 0
+        },
+        "point_bits": {
+          "within_changed": 19096,
+          "between_changed": 0
+        },
+        "a_bits": {
+          "within_changed": 19096,
+          "between_changed": 0
+        },
+        "b_bits": {
+          "within_changed": 19096,
+          "between_changed": 0
+        }
+      }
+    }
+  },
+  "game_files_included": false
+}
