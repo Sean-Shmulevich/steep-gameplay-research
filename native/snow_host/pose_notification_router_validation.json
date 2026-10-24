@@ -1,0 +1,12 @@
+{
+  "cases": 256,
+  "match": true,
+  "scope": "Complete native auxiliary observer router; original event selection and body-link load, downstream services intercepted",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Target service effects remain external",
+    "No assertion of registration at runtime or callback ordering",
+    "Main context observer contains unresolved protected calls"
+  ],
+  "game_files_included": false
+}

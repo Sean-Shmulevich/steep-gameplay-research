@@ -15615,3 +15615,49 @@ concurrency, module retention and callbacks already executing are excluded.
 These functions complete a serial registration/dispatch/removal model. They are
 not yet a safe native mod callback API: removal may only disable one duplicate,
 and neither path waits for in-flight callbacks or pins/unloads their modules.
+
+### Registered pose notification consumers
+
+Direct registration references identify two callback families, without proving
+which are installed in a particular live session:
+
+- RVA 0x18da8d0 registers callback0x18da5e0 when its receiver+0x18 count is zero,
+  before adding an entry through0x18da700. Protected surrounding calls prevent
+  a complete synchronization contract here.
+- RVA 0x19a4370 initializes its component list through virtual slot8, registers
+  two other callback families, then registers callback0x18b8670 in the observer
+  registry. Teardown0x19a4320 removes0x18b8670 before reverse component virtual32
+  calls. This is static lifecycle evidence, not a live installation receipt.
+
+`engine.pose_notification_router.route_auxiliary_pose_notification` reconstructs
+callback0x18da5e0. It reads manager identity from the build-specific global, then
+routes only these raw event values:
+
+| Event | Service target | Supplied object |
+| --- | --- | --- |
+| 10 | RVA0x18dad60 | Original body |
+| 11 | RVA0x18dac90 | Body+0xb0 link |
+| 12 | RVA0x18daf80 | Original body |
+| All others | None | No nested body read |
+
+[256 native comparisons](../../native/snow_host/pose_notification_router_validation.json)
+match event routing and target arguments while intercepting downstream services.
+The Python API takes the manager and nested-link reader explicitly. Its boolean
+routing result is authored; native service return values are not reconstructed.
+No semantic event names or service effects are inferred.
+
+The other callback,0x18b8670, explicitly skips events10..12, resolves
+body+0x30 -> +0x20 -> +0x20 and checks the final context for null. Its raw0..9
+jump table includes event2 ->0x18b8727 ->0x18b8380(context,body). Thus optional
+angular-row notification2 reaches the same entry used by pose-record submission,
+while the auxiliary callback ignores it. Other table entries route to separate
+body/context operations; they are not decoded by this router implementation.
+
+The shared0x18b8380 entry initially rejects metadata flag bit0 and missing body
+membership. Its admitted path passes through protected calls before references
+to0x18e14f0 and body virtual slot0x28. Linear disassembly around protected call
+returns is insufficient to establish the complete executed path. Consequently
+this connection is not proof of wake, enable, force application or immediate
+solver execution. The next useful boundary is that protected wrapper and the
+membership/update helpers it invokes, rather than inventing a physical meaning
+for raw event2.

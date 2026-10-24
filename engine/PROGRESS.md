@@ -7461,3 +7461,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   320 native registration/removal pairs match with supplied growth/memmove services.
   Missing-token rejection is authored; allocation failure, concurrency and safe
   module lifetime remain unresolved.
+- Identified two statically registered pose notification consumers. Reconstructed
+  auxiliary events10/11/12 routing with256 native service-intercepted comparisons;
+  event2 is ignored there. Main observer's event2 table reaches the same protected
+  body/context entry as pose submission. This connects optional angular rows to
+  an existing notification path without claiming wake/activation semantics.
