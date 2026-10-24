@@ -1,0 +1,29 @@
+{
+  "schema": "pose-link-rotation-validation-v1",
+  "selector_cases": 512,
+  "reduction_cases": 404,
+  "quaternion_matrix_cases": 256,
+  "passed": 1172,
+  "method": "offline complete selector and connected reduction wrapper including original rotation and scalar trigonometry; observation hook does not modify execution",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "rvas": [
+    "0x19989d0",
+    "0x1990040",
+    "0x18c10c0",
+    "0x18c1140"
+  ],
+  "comparisons": [
+    "four selected indices in order",
+    "bit-exact normalized tangent passed to matrix stage",
+    "rotation helper normal and angle arguments",
+    "output count four",
+    "complete reduced record arrays including inactive tails",
+    "all matrix bytes including untouched fourth lanes"
+  ],
+  "limits": [
+    "Fixed-angle specialization validated against scalar trig dispatch flag zero; other dispatch paths and angles excluded.",
+    "XYZ mask and zero comparison vector use inspected initializer values.",
+    "Finite nonempty geometry; zero-normal exceptional arithmetic excluded.",
+    "No uniqueness guarantee or contact semantic assertion."
+  ]
+}

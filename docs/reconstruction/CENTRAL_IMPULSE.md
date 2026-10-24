@@ -16504,3 +16504,47 @@ and nonunit normals, arbitrary supplied matrices and tie-heavy integer points.
 The receipt establishes selection/copy behavior conditional on the matrix service;
 it does not establish the native rotation helper, physical contact semantics or
 solver cached-value interpretation.
+
+### Fixed-angle selector rotation
+
+The default selector now uses `engine.pose_link_rotation.selector_rotation_basis`.
+This supersedes the preceding section's supplied-matrix boundary for the specific
+literal angle and inspected scalar trigonometric path. Explicit matrix services
+remain supported for experiments or other observed runtime results.
+
+At angle0.6456422805786133, helper0x18c10c0 rounds half-angle multiplication to
+float32, then calls scalar functions0x1c808c0 and0x1c803c0. Offline execution of
+those original functions with their dispatch flag zero produces:
+
+| Value | Float32 bits | Float32 value |
+| --- | --- | --- |
+| Half-angle sine | 0x3ea26db4 | 0.31724321842193604 |
+| Half-angle cosine | 0x3f72c6b0 | 0.9483442306518555 |
+
+The fixed-angle implementation multiplies each supplied normal component by the
+sine value, appends the cosine as W, and applies the recovered quaternion matrix
+helper0x18c1140. Neither stage normalizes its input. This specialization reproduces
+the inspected fixed-angle evaluation; it does not claim a general sine/cosine
+implementation or equivalence across the library's other dispatch paths.
+
+For quaternion(x,y,z,w), let dx=2*x, dy=2*y, dz=2*z, then xx=x*dx, yy=y*dy,
+zz=z*dz, xy=dy*x, xz=dz*x, yz=dz*y, wx=dx*w, wy=dy*w, wz=dz*w. Every operation
+rounds separately to float32. The stored XYZ rows are:
+
+```
+[1-(zz+yy), xy+wz,     xz-wy]
+[xy-wz,     1-(zz+xx), yz+wx]
+[xz+wy,     yz-wx,     1-(yy+xx)]
+```
+
+The native helper preserves the fourth lane in each16-byte row. The Python
+`quaternion_basis` returns only the defined XYZ rows. Its general finite-input
+arithmetic is independently validated, including nonunit quaternions.
+
+[512 complete selectors,404 connected reductions and256 quaternion matrix cases](../../native/snow_host/pose_link_rotation_validation.json)
+match with no native calls replaced. Selector/reduction runs include the original
+matrix and scalar sine/cosine routines; an observation hook reads arguments without
+altering execution. Matrix cases compare all48 output bytes including retained
+fourth lanes. This closes the fixed-angle service dependency under the recorded
+dispatch condition. Zero-normal exceptional arithmetic, other trig dispatch paths,
+physical contact semantics and cached-word solver meaning remain excluded.

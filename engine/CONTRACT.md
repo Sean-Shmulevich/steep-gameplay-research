@@ -332,3 +332,10 @@ and later-index ties. Duplicate indices are permitted. Axis-angle matrix behavio
 is a service; normal normalization is not added. `reduce_pose_link_records` applies
 the caller's >4 gate and snapshots four full records before overwriting active
 slots. Nonfinite/zero-tangent rejection is an authored domain restriction.
+
+Fixed-angle selector rotation: default selection now uses the recovered
+quaternion-to-matrix operation order and fixed half-sine/cosine float bits from
+original scalar evaluation at the selector literal. No normal/quaternion
+normalization is inserted. This closes the supplied-matrix dependency only for
+that angle and the validated scalar dispatch path; other angles are rejected and
+an explicit matrix service remains available.

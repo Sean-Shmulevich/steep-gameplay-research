@@ -7569,3 +7569,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   duplicate indices are explicit. 512 selector and404 connected reduction native
   comparisons pass with the rotation-matrix helper supplied. Exact matrix/trig
   helper behavior and downstream cache-word semantics remain open.
+- Closed the selector's fixed-angle rotation dependency using original scalar
+  half-angle results plus recovered quaternion matrix arithmetic. 512 selectors,
+  404 connected reductions and256 matrix cases match with no native calls replaced.
+  Default selection now runs independently; general trig, other library dispatch
+  paths, degenerate normals and downstream cached-word semantics remain excluded.

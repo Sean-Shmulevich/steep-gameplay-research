@@ -1,19 +1,20 @@
-"""Recovered geometric four-index selector with explicit rotation service.
+"""Recovered geometric four-index selector with fixed-angle rotation and optional supplied service.
 
 Evidence: CENTRAL_IMPULSE.md, Geometric four-record selection.
 """
 import math
 from reference.central_impulse import f32
+from .pose_link_rotation import selector_rotation_basis
 
 SELECTOR_ANGLE=f32(0.6456422805786133)
 LIMIT=f32(3.4028234663852886e38)
 
 
-def select_pose_link_rows(points, normal, *, rotation_basis):
+def select_pose_link_rows(points, normal, *, rotation_basis=selector_rotation_basis):
     """Return four indices, allowing duplicates and selecting later ties.
 
-    rotation_basis(normal, angle) supplies the native axis-angle matrix helper's
-    first three XYZ rows. That helper's transcendental evaluation stays external.
+    The default matrix uses the recovered fixed-angle half-sine/cosine values.
+    Callers can supply a different observed matrix service explicitly.
     Finite nonempty points and a nondegenerate normal/tangent are API preconditions.
     """
     points=[[f32(x) for x in p] for p in points];normal=[f32(x) for x in normal]
@@ -57,7 +58,7 @@ def select_pose_link_rows(points, normal, *, rotation_basis):
     return dict(indices=indices,center=center,tangent=tangent,axis=axis,span=span,cross=cross)
 
 
-def reduce_pose_link_records(collection, *, rotation_basis):
+def reduce_pose_link_records(collection, *, rotation_basis=selector_rotation_basis):
     """Apply the inspected caller's >4 gate and snapshot-copy four selected rows.
 
     Active slots are 48-byte records. Normal is first record XYZ; selection points
