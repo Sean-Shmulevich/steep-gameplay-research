@@ -23,3 +23,26 @@ def attach_pose_record(context, record, first_body, second_body, request_byte,
         if first_group!=second_group:
             merge_groups(context,first_body,second_body)
     return append_record(first_body['group'],record)
+
+
+def append_pose_record(group, record, *, grow):
+    """Append to a supplied valid group array, with native publication order.
+
+    group: token, count, capacity, slots. record: token plus mutable group/index.
+    grow(group, requested_capacity) must supply writable slots on normal return.
+    No allocator failure recovery, duplicate prevention or lifetime pin is added.
+    """
+    count=group['count']
+    if type(count) is not int or not 0<=count<=0xffffffff:
+        raise ValueError('Unsigned group count required')
+    if count>=65535:return False
+    record['group']=group['token'];record['index']=count
+    capacity=group['capacity']
+    if count==capacity:
+        grow(group,8 if capacity==0 else (capacity*2)&0xffffffff)
+    index=group['count']
+    if not 0<=index<len(group['slots']):
+        raise ValueError('Missing writable storage after publication; native failure behavior unresolved')
+    group['slots'][index]=record['token']
+    group['count']=(index+1)&0xffffffff
+    return True

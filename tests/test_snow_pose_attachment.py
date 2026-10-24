@@ -21,3 +21,22 @@ class PoseAttachmentTests(unittest.TestCase):
         self.assertEqual(events,[1,1]);events.clear()
         attach_pose_record(None,9,a,None,1,**services)
         self.assertEqual(events,[])
+
+    def test_append_limit_and_growth_publication_order(self):
+        from engine.snow_pose_attachment import append_pose_record
+        group=dict(token=10,count=0,capacity=0,slots=[]);record=dict(token=20)
+        def grow(g,n):
+            self.assertEqual((record['group'],record['index']),(10,0))
+            self.assertEqual(n,8);g['slots']=[None]*n;g['capacity']=n
+        self.assertTrue(append_pose_record(group,record,grow=grow))
+        self.assertEqual(group['slots'][0],20);self.assertEqual(group['count'],1)
+        original=dict(record);group['count']=65535
+        self.assertFalse(append_pose_record(group,record,grow=lambda *a:self.fail('growth at limit')))
+        self.assertEqual(record,original)
+
+    def test_append_does_not_invent_growth_failure_rollback(self):
+        from engine.snow_pose_attachment import append_pose_record
+        group=dict(token=10,count=0,capacity=0,slots=[]);record=dict(token=20)
+        with self.assertRaises(ValueError):append_pose_record(group,record,grow=lambda *a:False)
+        self.assertEqual(record,dict(token=20,group=10,index=0))
+        self.assertEqual(group['count'],0)

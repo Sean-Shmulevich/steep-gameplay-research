@@ -7385,3 +7385,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   services that mutate group links: merge uses captured references; append reloads
   the first group's current reference. Actual preparation/merge/append effects,
   registration gates and solver consumption remain external.
+- Reconstructed pose group append with unsigned 65535 limit, membership-before-
+  growth publication and 8/doubled capacity requests. 224 native append/resize
+  cases match under successful allocator stubs. Missing writable storage raises
+  an explicit authored boundary after publication; no native rollback, duplicate
+  prevention or allocator-failure handling is claimed.

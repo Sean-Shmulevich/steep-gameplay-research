@@ -15094,3 +15094,28 @@ record. Growth and consumer synchronization are not established. A separate
 same-context registration path at 0x18b9ce0 also maintains a context+0x58 array
 and body-linked lists through 0x195c170. Do not conflate these collections or
 assume attachment means solver execution has completed.
+
+#### Pose group append contract
+
+`append_pose_record` reconstructs RVA 0x1957480 for supplied writable group
+arrays. An unsigned count at least 65535 returns false without changing record
+membership or requesting growth. Otherwise it publishes record.group and
+record.index from the current group/count before growing storage. Equal count
+and capacity request capacity 8 if zero, otherwise twice the capacity. The
+routine reloads array/count after growth, writes the record, increments count
+and returns true. It performs no duplicate check or rollback.
+
+The independent API uses group token/count/capacity/slots and a record token with
+mutable group/index fields. A supplied grow service owns storage. Failure to
+supply writable storage raises an authored boundary error after membership
+publication; this is not a recovered native failure policy. No synchronization,
+body lifetime or safe unload contract follows from successful append.
+
+[224 native cases](../../native/snow_host/pose_append_validation.json) execute
+both append and its resize helper RVA 0x1958210, intercepting only successful
+allocation/reallocation. Counts include 0, 1, 7, 8, 65534, 65535 and uint32 max,
+with growth and spare-capacity cases. Membership publication before allocation,
+request sizes/alignment, final capacity/count/index, slot content and return match.
+Native resize uses 16-byte alignment and category 0x37. Failed allocations and
+concurrent writes are excluded. The model's grow service is external even though
+the validation executes the original resize helper.

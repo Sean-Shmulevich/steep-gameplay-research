@@ -1,0 +1,10 @@
+{
+  "cases": 224,
+  "scope": "Complete original append and resize routines; allocator services intercepted with successful storage; publication order, limit, capacity, index and return checked",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic valid arrays and successful allocation/reallocation only",
+    "Allocator failure, concurrent mutation, duplicate attachment and solver consumption excluded"
+  ],
+  "game_files_included": false
+}
