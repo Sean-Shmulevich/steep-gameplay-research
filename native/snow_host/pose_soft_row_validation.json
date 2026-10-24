@@ -1,0 +1,13 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "scope": "Original soft-row builder prefix through coefficient and angle-gain preparation, both layout branches; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic finite nonsingular stiffness/damping/context inputs",
+    "Stops before angle helper and final row writes",
+    "Context scalar units and extracted-count meaning not established",
+    "No full solver row or body response validation"
+  ],
+  "game_files_included": false
+}

@@ -7405,3 +7405,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   old components and metadata/type gates skip publication. 384 complete native
   single-record loops match without interception. Physical output meaning, result
   production and downstream consumption remain unresolved.
+- Recovered soft pose-row stiffness/damping combination with context scalar and
+  extracted 14-bit count. Near-zero scalar retains stiffness and uses gain0.4;
+  otherwise ratio-based coefficient/gain formulas preserve float32 order. 384
+  original-prefix cases match both layouts without interception. Scalar units,
+  count semantics, angle helper and complete row generation remain unresolved.

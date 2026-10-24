@@ -15224,3 +15224,41 @@ missing indices, absent second bodies and metadata/type skips. Output bytes matc
 and input storage remains unchanged. Solver result generation, live ordering and
 concurrent ownership are excluded. The unchanged-output case is not proof that
 the solver ran or that a previous result belongs to the current simulation step.
+
+### Soft pose-row coefficient preparation
+
+Type2 row generation RVA 0x19e5da0 selects helper 0x19f2990 for a state0
+soft row. For the first of the latter three rows, the caller broadcasts stored
+stiffness at storage+0xc8 and damping at +0xcc into four-lane arguments. Hard
+rows instead use 0x19f2870. Other row-state branches use different helpers.
+
+`engine.snow_pose_soft_row.soft_pose_row_parameters` reconstructs the coefficient
+and angle-gain arithmetic in the soft helper. Let k and c be supplied stiffness
+and damping lanes, s the scalar read from solver-context+0xc, and
+n=(context_flags>>2)&0x3fff. Context scalar units and count meaning are unresolved;
+do not silently substitute frame delta time or iteration count.
+
+For abs(float32(s)) <= float32(1e-6), coefficient=k and angle_gain=float32(0.4).
+Otherwise, per lane with float32 rounding after every operation:
+
+```text
+scaled = float32(float32(n) * s)
+ratio = float32(k / scaled)
+denominator = float32(ratio + c)
+coefficient = float32(s * float32(1 / denominator))
+angle_gain = float32(ratio / denominator)
+```
+
+The original recomputes ratio for the gain path. The helper writes coefficient
+at generated-row+0x40 for one metadata class and +0x50 for the other. It later
+calls an angular helper and writes angle*context_scalar*angle_gain to row+0x10;
+that helper and the complete row are not implemented by this coefficient API.
+The 0.4 fallback is established here, but has not been connected to any earlier
+live observation with the same numeric value.
+
+[384 native cases](../../native/snow_host/pose_soft_row_validation.json) run the
+original builder prefix through gain preparation, in both row-layout branches,
+with no intercepted calls. Four-lane coefficient and gain match bit-for-bit.
+Finite nonsingular inputs only; zero-count division outside the near-zero branch
+and other exceptional arithmetic are explicitly excluded. Negative scalar
+threshold cases are included, not asserted to occur during gameplay.
