@@ -7010,3 +7010,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   fourth-lane dispatch and no repeated application. Eleven sequence/bench/receipt
   tests pass. Scheduler ordering, prepass effects and live consumer execution remain
   external; no source changes to provenance-locked reference routines.
+- Paired live markup/snow observation now links two formula-explained writes to
+  the next selected actor snow-wrapper calls. Pending bits match at entry and
+  are zero at return; gaps are 0.711 and 0.4642 ms, with ordinal-zero attribution.
+  Captured 108 markup and 442 attributed snow calls with no drops; both slots and
+  all cleanup verified. Other forces prevent attributing whole-wrapper velocity
+  changes solely to pending impulse; inner-consumer interception remains open.

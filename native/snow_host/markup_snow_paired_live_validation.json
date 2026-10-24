@@ -1,0 +1,390 @@
+{
+  "ok": true,
+  "error": null,
+  "markup_calls": 108,
+  "snow_calls": 442,
+  "qpf_matches": true,
+  "events": [
+    {
+      "markup_record": 57,
+      "pending_after": [
+        -4.231974124908447,
+        -2.010291337966919,
+        -2.1003050804138184,
+        0.0
+      ],
+      "overlapping_snow_records": [],
+      "next_snow": [
+        {
+          "index": 0,
+          "delay_ms": 0.711,
+          "elapsed": 0.0114097996,
+          "derivative": 0.0114097996,
+          "attribution_valid": 1,
+          "frame_valid": 1,
+          "substep_ordinal": 0,
+          "selected_count": 1,
+          "before_valid": 7,
+          "after_valid": 7,
+          "gates": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "pending_before": [
+            -4.23197412,
+            -2.01029134,
+            -2.10030508,
+            0
+          ],
+          "pending_after": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "pending_matches_markup_bits": true,
+          "main_linear_before": [
+            0,
+            0,
+            0
+          ],
+          "main_linear_after": [
+            -0.75720787,
+            -0.347889125,
+            -0.348809958
+          ],
+          "inverse_mass": [
+            0.175808728,
+            0.0500000007
+          ]
+        },
+        {
+          "index": 1,
+          "delay_ms": 20.5585,
+          "elapsed": 0.00707166642,
+          "derivative": 0.0212149993,
+          "attribution_valid": 1,
+          "frame_valid": 1,
+          "substep_ordinal": 0,
+          "selected_count": 3,
+          "before_valid": 7,
+          "after_valid": 7,
+          "gates": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "pending_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "pending_after": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "pending_matches_markup_bits": false,
+          "main_linear_before": [
+            -0.190470681,
+            -0.467009664,
+            -0.364651293
+          ],
+          "main_linear_after": [
+            -0.191947401,
+            -0.461800188,
+            -0.291264445
+          ],
+          "inverse_mass": [
+            0.175808728,
+            0.0500000007
+          ]
+        }
+      ],
+      "projection_prediction_bit_equal": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "id84_cached": [
+        0,
+        1
+      ],
+      "source_boundary_inputs": {
+        "source_boundary": "before",
+        "direction": [
+          -0.9638049602508545,
+          -0.2666083574295044,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          -0.508665144443512,
+          0.1945759356021881,
+          0.838689386844635,
+          0.0
+        ],
+        "gain": 15.0,
+        "interval": 0.011409799568355083,
+        "fourth_lanes_zero": true,
+        "vector": [
+          -12.363566398620605,
+          -5.872996807098389,
+          -6.135968208312988,
+          0.0
+        ],
+        "predicted_pending": [
+          -4.231974124908447,
+          -2.010291337966919,
+          -2.1003050804138184,
+          0.0
+        ],
+        "error": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bit_equal": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "impulse_only_delta_v_estimate": [
+        -0.7440179878290673,
+        -0.35342676303738213,
+        -0.3692519645994911
+      ],
+      "observed_wrapper_delta_v": [
+        -0.75720787,
+        -0.347889125,
+        -0.348809958
+      ]
+    },
+    {
+      "markup_record": 81,
+      "pending_after": [
+        -4.151756286621094,
+        -2.0599753856658936,
+        -2.3396687507629395,
+        0.0
+      ],
+      "overlapping_snow_records": [],
+      "next_snow": [
+        {
+          "index": 31,
+          "delay_ms": 0.4642,
+          "elapsed": 0.0115373004,
+          "derivative": 0.0115373004,
+          "attribution_valid": 1,
+          "frame_valid": 1,
+          "substep_ordinal": 0,
+          "selected_count": 1,
+          "before_valid": 7,
+          "after_valid": 7,
+          "gates": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "pending_before": [
+            -4.15175629,
+            -2.05997539,
+            -2.33966875,
+            0
+          ],
+          "pending_after": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "pending_matches_markup_bits": true,
+          "main_linear_before": [
+            -0.629250586,
+            0.0562176779,
+            -0.376616329
+          ],
+          "main_linear_after": [
+            -1.34282744,
+            -0.353401542,
+            -0.690105498
+          ],
+          "inverse_mass": [
+            0.175808728,
+            0.0500000007
+          ]
+        },
+        {
+          "index": 32,
+          "delay_ms": 11.5447,
+          "elapsed": 0.00961820036,
+          "derivative": 0.00961820036,
+          "attribution_valid": 1,
+          "frame_valid": 1,
+          "substep_ordinal": 0,
+          "selected_count": 1,
+          "before_valid": 7,
+          "after_valid": 7,
+          "gates": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "pending_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "pending_after": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "pending_matches_markup_bits": false,
+          "main_linear_before": [
+            -1.27240884,
+            -0.209929079,
+            -0.632364988
+          ],
+          "main_linear_after": [
+            -1.2530092,
+            -0.261568844,
+            -0.550741255
+          ],
+          "inverse_mass": [
+            0.175808728,
+            0.0500000007
+          ]
+        }
+      ],
+      "projection_prediction_bit_equal": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "id84_cached": [
+        1,
+        0
+      ],
+      "source_boundary_inputs": {
+        "source_boundary": "before",
+        "direction": [
+          -0.9638049602508545,
+          -0.2666083574295044,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          -0.5460937023162842,
+          0.1686284840106964,
+          0.8205766081809998,
+          0.0
+        ],
+        "gain": 15.0,
+        "interval": 0.011537300422787666,
+        "fourth_lanes_zero": true,
+        "vector": [
+          -11.995169639587402,
+          -5.951639175415039,
+          -6.75972318649292,
+          0.0
+        ],
+        "predicted_pending": [
+          -4.151756286621094,
+          -2.0599753856658936,
+          -2.3396687507629395,
+          0.0
+        ],
+        "error": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bit_equal": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "impulse_only_delta_v_estimate": [
+        -0.7299149917168579,
+        -0.36216165226523017,
+        -0.4113341870129814
+      ],
+      "observed_wrapper_delta_v": [
+        -0.713576854,
+        -0.4096192199,
+        -0.31348916899999996
+      ]
+    }
+  ],
+  "scope": "Paired live markup and snow-wrapper boundaries; not direct inner-consumer interception",
+  "markup_probe_abi": 4,
+  "snow_probe_abi": 7,
+  "markup_summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 108,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "snow_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 442,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 442,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 442,
+    "other_calls": 0
+  },
+  "both_slots_independently_restored": true,
+  "same_actor_verified": true,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "game_files_included": false,
+  "private_evidence_sha256": {
+    "route-result.json": "c09b8334298768af7e7031eb7fba3d6f34b9a2f89bee98b1f586c03afc4cbe92",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "input-events.jsonl": "73cdb56486d80190c90bad7b991a5e229dc541da2ace06e4c0f34d8e3b9c2618"
+  },
+  "limits": [
+    "Mathematical RSQRT seed, not a captured hardware seed",
+    "Sequential guarded snapshots are not atomic or lifetime pins",
+    "No direct listener or inner consumer interception",
+    "Whole snow wrapper includes other forces; impulse-only delta is a derived estimate",
+    "Single bounded session; no universal scheduler order claim"
+  ]
+}

@@ -12244,3 +12244,43 @@ activation, threshold retention, no double application, nonfinite stopping and C
 execution. Together with the vector bench and recorded-scalar regression, eleven
 tests pass. No new original-instruction or live consumer observation is claimed.
 The exact live consumer invocation and competing clear paths remain unresolved.
+
+### Paired live producer and snow-wrapper boundaries
+
+A [paired capture](../../native/snow_host/markup_snow_paired_live_validation.json)
+recorded 108 markup updates and 442 selected actor snow-wrapper calls in one
+bounded session. Both recorders used the same 10 MHz performance counter. The
+snow recorder was configured through a brief host pause/resume; its five-second
+window contained the one-second markup window and 500 ms W-input interval.
+Both slots were independently checked after restoration. No records were dropped;
+all 442 snow calls had job and frame attribution. Save/settings/DLL restoration
+and bottle shutdown passed. No other actor reached the selected snow recorder.
+
+| Markup record / ID-84 edge | Next snow record | Gap after markup return | Pending at snow entry | Pending at snow return |
+| --- | --- | --- | --- | --- |
+| 57 / 0->1 | 0 | 0.711 ms | Bitwise equal to markup output | Four zero lanes |
+| 81 / 1->0 | 31 | 0.4642 ms | Bitwise equal to markup output | Four zero lanes |
+
+No snow call interval overlapped either producer interval. Both snow calls had
+wrapper gates [1,0,1,1], and attribution identified ordinal zero with selected
+substep count one. Both motion writes again match the projection and world-scaled
+accumulation formulas in all four float32 lanes, using the mathematical seed
+policy described above. This adds two cases in a second live session.
+
+The first snow call after each producer therefore observes the produced pending
+value and returns after that value has cleared. This closes the previous gap
+between separately recorded producer and wrapper boundaries for these events.
+It does not directly intercept the inner consumer, rule out another clearing
+operation inside the wrapper, or establish universal cross-job order.
+
+Main-body velocity changes across these wrappers are not equal to pending times
+inverse mass alone. Other snow forces and prepass operations share the boundary.
+The receipt preserves observed velocity differences separately from a derived
+impulse-only estimate; neither is promoted to an isolated impulse measurement.
+The immediately following recorded snow call sees zero pending before and after,
+consistent with single consumption rather than repeated application.
+
+The next useful narrowing is inside the wrapper: identify a callable boundary
+bracketing the pending consumer without including unrelated forces, or account
+for those other force contributions from observed inputs. Repeating the outer
+capture alone cannot establish that final arithmetic attribution.
