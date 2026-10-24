@@ -7089,3 +7089,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   selected submerged volume / total hull volume, superseding the wholly unnamed
   accumulator interpretation. Static evidence only; full clipping float32 parity
   and live volume attribution remain open, and immersion is not universal grounded.
+- Audited the gap between immersion-duration updates and point-gate consumption:
+  several calls intervene, including protected branches, so preservation remains
+  unproved. Added standalone bounded read-only gate-input observer for state,
+  configuration and shape volume. Fifteen related tests, all 26 read failures,
+  scalar/identity mutation fixtures, sanitizers and Windows compilation pass.
+  Recorder integration and live attribution remain next; no game launched.

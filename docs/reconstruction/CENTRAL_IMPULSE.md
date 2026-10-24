@@ -12816,3 +12816,35 @@ not executed by it. Do not relabel the threshold as universal grounded state:
 material selection, rock/ice profiles and later writes still matter. Full
 float32 clipping equivalence, live volume attribution, shape lifetime and any
 intervening writes before timer consumption remain separate verification work.
+
+### Counter-to-gate boundary and observation adapter
+
+The duration update is not immediately adjacent to gate consumption. Direct
+calls between them include RVAs 0x13fd1d0, 0x1405100, 0x1c80fb8, 0x13fec20 and
+0x140dd60. Some paths contain protected branches. A scan for direct field writes
+or a single unwind fragment does not establish that nested calls preserve state.
+Do not compose the two kernels as a proven complete native path yet.
+
+The standalone [gate-input observer](../../native/snow_host/snow_gate_inputs.h)
+provides the missing read-only instrumentation primitive. Supply an exact-read
+callback, freshly established actor identity and the verified image range to
+`snow_gate_inputs_observe`. It returns raw float32 bits for immersion, alternate
+and activity durations, gate timer, elapsed time, total hull volume, refill
+divisor, configured duration and both lower blend values. It also retains private
+actor/runtime/shape/config identities for matching observations in one session.
+
+The adapter checks actor table/self, runtime table/backlink, pointer ranges and
+two identical complete samples. It performs at most 26 reads of at most 16 bytes,
+zeros output on rejection and performs no native writes. Nonfinite scalar bits
+are retained as observations, not silently converted into valid model inputs.
+Repeated equality does not prove atomicity, ownership or absence of address reuse.
+No transient gate-stack values or final submission scale are claimed.
+
+Native fixtures cover all 26 read-failure positions, mutation of every scalar,
+changed shape identity with identical values, bad backlink, null/overflowing
+pointers and preserved NaN bits. Fifteen related tests pass; the fixture passes
+address/undefined-behavior sanitizers and the source compiles with MinGW. It is
+not yet linked into the recorder, and no live observation is claimed. Next,
+integrate it as an opt-in channel with independent validity and measured read
+cost. Wrapper entry/exit can test whole-update transitions; it cannot by itself
+isolate intervening calls or prove submission-time values.
