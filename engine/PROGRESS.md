@@ -6959,3 +6959,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   portable finite-XYZ implementation matches 104 original-instruction cases
   bitwise using captured emulator seeds. Live state selection and field units
   remain unproved; other vector-state branches remain open.
+- Selector-1's separate vector helper now matches the existing projection kernel
+  in 104 original-instruction cases. Selector-3's state-to-gain mapping is exposed
+  as a raw-bit helper and matches 56 cases. Full selector-3 vector behavior, state
+  semantics and live branch membership remain open.

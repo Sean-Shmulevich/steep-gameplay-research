@@ -19,3 +19,15 @@ class SnowVectorTests(unittest.TestCase):
     def test_invalid_inputs(self):
         with self.assertRaises(ValueError):snow_vector([0,0],[0,0,1],1,None)
         with self.assertRaises(ValueError):snow_vector([0,0,float('nan')],[0,0,1],1,None)
+
+
+class Branch3GainTests(unittest.TestCase):
+    def test_mapping_and_bit_preservation(self):
+        from engine.markup_snow_vector import branch3_gain_bits
+        for state,offset in [(0,0x60),(2,0x5c),(5,0x5c),(9,0x1a8)]:
+            calls=[]
+            def read(field):calls.append(field);return 0x7fc12345
+            self.assertEqual(branch3_gain_bits(state,read),0x7fc12345)
+            self.assertEqual(calls,[offset])
+        for state in (1,3,4,6,7,8,10,0xffffffff):
+            self.assertEqual(branch3_gain_bits(state,lambda _:self.fail('unexpected field read')),0)

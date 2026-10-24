@@ -1,0 +1,11 @@
+{
+  "cases": 56,
+  "passed": true,
+  "scope": "Original gain-selector instructions with synthetic active handle; no state-name inference",
+  "range_rva": [
+    "0x519640",
+    "0x5196ba"
+  ],
+  "sha256": "7a56f93af57a6718fcb379d6719220e2aa0b02b424a91e5a938a33429c4b072d",
+  "game_files_included": false
+}

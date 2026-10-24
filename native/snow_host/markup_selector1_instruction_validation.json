@@ -1,0 +1,14 @@
+{
+  "cases": 104,
+  "passed": true,
+  "range_rva": [
+    "0x516f60",
+    "0x516faf",
+    "0x519580",
+    "0x519639"
+  ],
+  "sha256": "edcd210450ab1ba96f45011df82df22efaeadfb697c50b923ffae87938acad54",
+  "scope": "Original SIMD instructions, synthetic finite XYZ inputs, active handle; model uses captured emulator RSQRT seed",
+  "bitwise_xyz_matches": 104,
+  "game_files_included": false
+}

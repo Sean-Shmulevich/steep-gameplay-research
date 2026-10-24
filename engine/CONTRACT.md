@@ -214,3 +214,6 @@ branch for finite XYZ inputs and zero fourth lanes. It preserves float32 order,
 componentwise 1e-5 fallback and one RSQRT refinement, using a caller-supplied seed.
 It assumes no unit normal. Live state selection, active-handle resolution and
 hardware estimate equivalence remain external; nonfinite input is rejected.
+`markup_snow_vector.branch3_gain_bits` maps an unnamed uint32 state to one supplied
+payload field and preserves its float bits. Other states return positive-zero
+bits. It does not resolve the native global/handle or infer state/sport names.

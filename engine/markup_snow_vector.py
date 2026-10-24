@@ -34,3 +34,20 @@ def snow_vector(direction, normal, gain, reciprocal_sqrt_seed):
     refined=f32(f32(3.0-f32(f32(seed*length2)*seed))*f32(0.5*seed))
     unit=[f32(refined*v) for v in c]
     return [f32(gain*v) for v in cross(unit,n)]
+
+
+def branch3_gain_bits(state, read_payload_field):
+    """Decode RVA 0x519640's state-to-field choice, returning raw float bits.
+
+    The caller resolves the active global payload. Unrecognized states return
+    positive zero without reading a payload field. State numbers are unnamed.
+    """
+    if type(state) is not int or not 0 <= state <= 0xffffffff:
+        raise ValueError('uint32 state required')
+    offset = {0:0x60,2:0x5c,5:0x5c,9:0x1a8}.get(state)
+    if offset is None:
+        return 0
+    bits = read_payload_field(offset)
+    if type(bits) is not int or not 0 <= bits <= 0xffffffff:
+        raise ValueError('uint32 float bits required')
+    return bits

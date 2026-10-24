@@ -11856,3 +11856,43 @@ Most importantly, the live ID-84 transitions do not yet prove selector 0/5 was
 active. A next actor-state capture should include the dispatcher selector tree,
 these direction/scale inputs and pending-vector output before attributing the
 newly decoded projection to the observed rider movement.
+
+### Shared selector-1 projection and selector-3 gain
+
+Outer selector 1's helper at 0x516f60 reads the same active-handle payload gain
+(+0xe0), invokes 0x519580 to construct the vector, and scales the returned vector.
+The latter helper repeats the nested-selector-5 cross-product normalization and
+near-parallel fallback, without applying gain itself. The
+[selector-1 instruction receipt](../../native/snow_host/markup_selector1_instruction_validation.json)
+compares 104 finite XYZ cases with `snow_vector`; all XYZ bits match using the
+captured emulator RSQRT seed. This establishes shared local arithmetic despite
+the different call structure, not shared authored state names or live activation.
+
+Outer selector 3 uses a different gain helper at 0x519640. It reads the actor's
+uint32 field +0xfcc and selects a float from the active payload reached through
+a global manager's +0x20 handle:
+
+| Actor state value | Payload float offset |
+| --- | --- |
+| 0 | +0x60 |
+| 2 or 5 | +0x5c |
+| 9 | +0x1a8 |
+| Any other uint32 | Return positive zero; no payload-field read |
+
+[`branch3_gain_bits`](../../engine/markup_snow_vector.py) exposes this mapping
+with a supplied payload-field reader and raw float bits. It does not assign sport
+names to the state values. [56 original-instruction cases](../../native/snow_host/markup_gain_instruction_validation.json)
+matched the mapping, including negative-zero and NaN bit patterns, absent matches
+and high-bit state values. The global pointer is still loaded by native code on
+the default path, although its payload is not dereferenced there; the portable
+helper models field selection, not that global memory access.
+
+The selector-3 vector helper at 0x516cb0 first tests actor virtual slot 0x458.
+If true it scales an entity transform direction. Otherwise it examines the length
+of actor vector +0x250, chooses an entity-direction fallback at low magnitude,
+and at greater magnitude computes a normal-relative projection using actor+0x210.
+The entity-direction fallback can be sign-flipped by actor byte +0x1b4. Both
+branches use the new gain selector. That full branch, its threshold and degenerate
+cross-product behavior are not yet implemented or validated here. In particular,
+its higher-magnitude branch does not visibly share the explicit cross-near-zero
+gate of 0x519580, so blindly reusing `snow_vector` would change its behavior.
