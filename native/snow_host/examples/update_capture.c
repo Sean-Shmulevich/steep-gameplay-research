@@ -15,7 +15,7 @@
 static const SnowHostApiV1 *host;
 static volatile LONG phase;
 static unsigned milliseconds;
-static int attribute_jobs, observe_motion, observe_points;
+static int attribute_jobs, observe_motion, observe_points, observe_gates;
 static char output[MAX_PATH];
 static void number(FILE *f,float v) { if(isfinite(v)) fprintf(f,"%.9g",v); else fputs("null",f); }
 static void floats(FILE *f,const float *v,unsigned n) {
@@ -58,6 +58,22 @@ static void sample(FILE *f,const SnowUpdateSnapshot *s) {
         fprintf(f,",\"point_diagnostic\":{\"stage\":%u,\"pass\":%u,\"reads\":%u,\"read_failed\":%u,\"count_valid\":%u,\"directional_count\":%llu,\"summed_count\":%llu}",d->stage,d->pass,d->reads,d->read_failed,d->count_valid,(unsigned long long)d->directional_count,(unsigned long long)d->summed_count);
     }
     if(s->point_valid) {fputs(",\"point_inputs\":",f);point_sample(f,&s->point_inputs);}
+    fprintf(f,",\"gate_attempted\":%u,\"gate_valid\":%u,\"gate_read_ticks\":%llu",s->gate_attempted,s->gate_valid,(unsigned long long)s->gate_read_ticks);
+    if(s->gate_valid) {
+        const SnowGateInputs *g=&s->gate_inputs;
+        fputs(",\"gate_inputs\":{",f);
+        fprintf(f,"\"immersion_bits\":%u",g->immersion);
+        fprintf(f,",\"alternate_bits\":%u",g->alternate);
+        fprintf(f,",\"activity_bits\":%u",g->activity);
+        fprintf(f,",\"timer_bits\":%u",g->timer);
+        fprintf(f,",\"elapsed_bits\":%u",g->elapsed);
+        fprintf(f,",\"total_volume_bits\":%u",g->total_volume);
+        fprintf(f,",\"refill_divisor_bits\":%u",g->refill_divisor);
+        fprintf(f,",\"duration_bits\":%u",g->duration);
+        fprintf(f,",\"lower_other_bits\":%u",g->lower_other);
+        fprintf(f,",\"lower_one_bits\":%u",g->lower_one);
+        fputc('}',f);
+    }
     fputc('}',f);
 }
 static void words(FILE *f,const uint32_t *v,unsigned n) {
@@ -140,7 +156,7 @@ static int paused(void *user) {
         host->log(host->context,"entry attribution route mismatch"); InterlockedExchange(&phase,3); return 0;
     }
     uint64_t image_base=0,image_size=0;
-    if(observe_points) {
+    if(observe_points || observe_gates) {
         HMODULE image=GetModuleHandleA(NULL);
         IMAGE_DOS_HEADER dos;IMAGE_NT_HEADERS64 nt;
         if(!image || !ReadProcessMemory(GetCurrentProcess(),image,&dos,sizeof dos,&got) || got!=sizeof dos ||
@@ -151,7 +167,7 @@ static int paused(void *user) {
         }
         image_base=(uint64_t)(uintptr_t)image;image_size=nt.OptionalHeader.SizeOfImage;
     }
-    int configured=SnowProbe_ConfigureDetailed(&binding,original,attribute_jobs ? &profile : NULL,observe_motion,image_base,image_size);
+    int configured=SnowProbe_ConfigureChannels(&binding,original,attribute_jobs ? &profile : NULL,observe_motion,image_base,image_size,(observe_points?1u:0u)|(observe_gates?2u:0u));
     if(!configured) {
         host->log(host->context,"capture configuration refused"); InterlockedExchange(&phase,3); return 0;
     }
@@ -173,10 +189,11 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     snprintf(output,sizeof output,"%s.trace.jsonl",api->config_path);
     attribute_jobs=GetPrivateProfileIntA("capture","attribute_jobs",0,api->config_path)==1;
     observe_motion=GetPrivateProfileIntA("capture","observe_motion",0,api->config_path)==1;
+    observe_gates=GetPrivateProfileIntA("capture","observe_gates",0,api->config_path)==1;
     observe_points=GetPrivateProfileIntA("capture","observe_points",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-9";
+    plugin->name="update_capture"; plugin->version="experimental-10";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

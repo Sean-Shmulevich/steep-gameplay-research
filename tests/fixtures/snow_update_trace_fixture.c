@@ -16,6 +16,9 @@ static uint64_t thread_id(void) { return 1; } /* Fixture only; not a native TID.
 static void read_state(void *actor, SnowUpdateSnapshot *s) {
     atomic_fetch_add(&reads,1); s->valid=1; s->runtime=(uintptr_t)actor;
     s->linear[0][0]=(float)*(int *)actor; s->angular[0][1]=7;
+    s->gate_attempted=1;s->gate_valid=1;s->gate_read_ticks=23;
+    s->gate_inputs.timer=(uint32_t)*(int *)actor;
+    s->gate_inputs.immersion=0x7fc12345; /* Preserve raw bits through recorder. */
 }
 static void original(void *actor,float elapsed,float derivative) {
     assert(elapsed==0.125f && derivative==0.5f);
@@ -193,6 +196,10 @@ int main(void) {
         assert(rows[i].before.valid && rows[i].after.valid);
         assert(rows[i].after.linear[0][0]==rows[i].before.linear[0][0]+1);
         assert(rows[i].before.angular[0][1]==rows[i].after.angular[0][1]);
+        assert(rows[i].before.gate_attempted && rows[i].after.gate_valid);
+        assert(rows[i].before.gate_read_ticks==23 && rows[i].after.gate_read_ticks==23);
+        assert(rows[i].after.gate_inputs.timer==rows[i].before.gate_inputs.timer+1);
+        assert(rows[i].before.gate_inputs.immersion==0x7fc12345);
         assert(rows[i].entry_tick<rows[i].exit_tick);
     }
     mode=3; init(128); atomic_store(&entered,0); atomic_store(&release_call,0);

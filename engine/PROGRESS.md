@@ -7095,3 +7095,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   configuration and shape volume. Fifteen related tests, all 26 read failures,
   scalar/identity mutation fixtures, sanitizers and Windows compilation pass.
   Recorder integration and live attribution remain next; no game launched.
+- Integrated independent opt-in gate-state observations into recorder ABI 10 and
+  update_capture JSONL, with runtime matching, validity and separate read timing.
+  Existing configure APIs retain channel selection; all public build paths link
+  the sampler. Windows host/plugin build and 45 focused tests pass, including
+  concurrent recorder payload preservation. New channel not yet tested live.

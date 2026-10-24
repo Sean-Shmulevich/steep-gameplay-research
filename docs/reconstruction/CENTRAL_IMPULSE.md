@@ -12848,3 +12848,33 @@ not yet linked into the recorder, and no live observation is claimed. Next,
 integrate it as an opt-in channel with independent validity and measured read
 cost. Wrapper entry/exit can test whole-update transitions; it cannot by itself
 isolate intervening calls or prove submission-time values.
+
+### Gate channel integrated into the bounded recorder
+
+Probe ABI 10 now embeds independently valid gate observations in each ordinary
+snow entry/exit snapshot. Rebuild all readers against the same headers.
+`SnowProbe_ConfigureChannels` accepts mask 1 for point records and mask 2 for gate
+state, or both. Unknown bits and enabled channels without an image range reject
+before configuration. Existing configure entry points retain their previous
+channel selection. Configuration still installs no hook by itself.
+
+Set `observe_gates=1` in the update-capture plugin's `[capture]` INI section to
+request the new channel. It defaults off and does not require `observe_points`.
+The plugin validates the image header before supplying its range. For ordinary
+valid snapshots, the probe samples gate state, checks the accepted runtime
+identity against the ordinary snapshot, and measures its own performance-counter
+cost. Failure leaves the ordinary and point observations intact.
+
+JSONL exports `gate_attempted`, `gate_valid`, `gate_read_ticks` and, only when
+accepted, `gate_inputs` with named raw `*_bits` scalars. Extra private pointers
+are not serialized by this channel. A disabled/unattempted channel must not be
+interpreted as an observed zero. Entry/exit remains a wrapper boundary, not the
+internal counter-to-timer boundary.
+
+The standalone Windows host/probe/plugin build passes with the new source linked
+through all three public build paths. Forty-five focused portable tests pass;
+the recorder fixture additionally preserves gate timing, changing timer values
+and raw NaN bits across concurrent before/after records. The new channel has not
+yet been exercised in the live game. Next is a bounded capture with gate and
+point channels enabled, followed by comparing predicted duration/timer changes
+against accepted observations and reporting read cost separately.

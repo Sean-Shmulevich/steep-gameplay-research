@@ -11,6 +11,7 @@ static LONG ready;
 static SnowEntryProfile entry_profile;
 static int attributed, motion_enabled;
 static uint64_t point_base,point_size;
+static unsigned input_channels;
 static volatile LONG64 selected_calls,other_calls;
 static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
     (void)ctx; SIZE_T got=0;
@@ -18,13 +19,21 @@ static int read_memory(void *ctx,uint64_t at,void *dst,size_t n) {
 }
 static void snapshot(void *actor,SnowUpdateSnapshot *out) {
     (void)actor; snow_update_snapshot(read_memory,NULL,&binding,out);
-    if(point_base && (out->valid&SNOW_SNAPSHOT_VALID)) {
+    if((input_channels&1) && (out->valid&SNOW_SNAPSHOT_VALID)) {
         LARGE_INTEGER start,end; QueryPerformanceCounter(&start);out->point_attempted=1;
         out->point_valid=snow_point_inputs_observe_detailed(read_memory,NULL,binding.actor,point_base,point_size,&out->point_inputs,&out->point_diagnostic)==1;
         if(out->point_valid && (out->point_inputs.runtime!=out->runtime || out->point_inputs.body!=out->main_body)) {
             out->point_valid=0;out->point_diagnostic.stage=31;memset(&out->point_inputs,0,sizeof out->point_inputs);
         }
         QueryPerformanceCounter(&end);out->point_read_ticks=(uint64_t)(end.QuadPart-start.QuadPart);
+    }
+    if((input_channels&2) && (out->valid&SNOW_SNAPSHOT_VALID)) {
+        LARGE_INTEGER start,end;QueryPerformanceCounter(&start);out->gate_attempted=1;
+        out->gate_valid=snow_gate_inputs_observe(read_memory,NULL,binding.actor,point_base,point_size,&out->gate_inputs)==1;
+        if(out->gate_valid && out->gate_inputs.runtime!=out->runtime) {
+            out->gate_valid=0;memset(&out->gate_inputs,0,sizeof out->gate_inputs);
+        }
+        QueryPerformanceCounter(&end);out->gate_read_ticks=(uint64_t)(end.QuadPart-start.QuadPart);
     }
 }
 static int motion_snapshot(void *context,void *actor,SnowMotionObservation *out) {
@@ -33,11 +42,11 @@ static int motion_snapshot(void *context,void *actor,SnowMotionObservation *out)
 }
 static uint64_t ticks(void) { LARGE_INTEGER q; QueryPerformanceCounter(&q); return (uint64_t)q.QuadPart; }
 static uint64_t thread_id(void) { return GetCurrentThreadId(); }
-static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,const SnowEntryProfile *profile,int motion,uint64_t image_base,uint64_t image_size) {
+static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,const SnowEntryProfile *profile,int motion,uint64_t image_base,uint64_t image_size,unsigned channels) {
     HMODULE module; SnowUpdateSnapshot check;
     if(!b || !original) return 0;
     if(InterlockedCompareExchange(&ready,1,0)!=0) return 0;
-    binding=*b;point_base=image_base;point_size=image_size;
+    binding=*b;point_base=image_base;point_size=image_size;input_channels=channels;
     attributed=profile!=NULL; motion_enabled=motion;
     if(profile) entry_profile=*profile;
     if(!snow_update_snapshot(read_memory,NULL,&binding,&check) ||
@@ -49,30 +58,35 @@ static int configure(const SnowUpdateBinding *b,SnowUpdateOriginal original,cons
     InterlockedExchange(&ready,2); return 1;
 }
 int SnowProbe_Configure(const SnowUpdateBinding *b,SnowUpdateOriginal original) {
-    return configure(b,original,NULL,0,0,0);
+    return configure(b,original,NULL,0,0,0,0);
 }
 int SnowProbe_ConfigureAttributed(const SnowUpdateBinding *b,SnowUpdateOriginal original,
                                   const SnowEntryProfile *profile) {
     if(!profile || !b || profile->actor_table!=b->actor_table || !profile->job_table ||
        !profile->callable_table || !profile->return_address) return 0;
-    return configure(b,original,profile,0,0,0);
+    return configure(b,original,profile,0,0,0,0);
 }
 int SnowProbe_ConfigureObserved(const SnowUpdateBinding *b,SnowUpdateOriginal original,
                                 const SnowEntryProfile *profile,int motion) {
     if(motion!=0 && motion!=1) return 0;
     if(profile && (!b || profile->actor_table!=b->actor_table || !profile->job_table ||
                    !profile->callable_table || !profile->return_address)) return 0;
-    return configure(b,original,profile,motion,0,0);
+    return configure(b,original,profile,motion,0,0,0);
 }
 int SnowProbe_ConfigureDetailed(const SnowUpdateBinding *b,SnowUpdateOriginal original,
     const SnowEntryProfile *profile,int motion,uint64_t image_base,uint64_t image_size) {
+    return SnowProbe_ConfigureChannels(b,original,profile,motion,image_base,image_size,image_base?1u:0u);
+}
+int SnowProbe_ConfigureChannels(const SnowUpdateBinding *b,SnowUpdateOriginal original,
+    const SnowEntryProfile *profile,int motion,uint64_t image_base,uint64_t image_size,unsigned channels) {
+    if((channels&~3u) || (channels && !image_base))return 0;
     if(motion!=0 && motion!=1)return 0;
     if(profile && (!b || profile->actor_table!=b->actor_table || !profile->job_table ||
        !profile->callable_table || !profile->return_address))return 0;
     if((image_base==0)!=(image_size==0))return 0;
     if(image_base && (!b || image_base<0x10000 || image_base>=UINT64_C(0x800000000000)-image_size ||
        image_size<0x2918eb0 || image_size>0x40000000 || b->actor_table!=image_base+0x1e7a350))return 0;
-    return configure(b,original,profile,motion,image_base,image_size);
+    return configure(b,original,profile,motion,image_base,image_size,channels);
 }
 typedef struct { const SnowEntryRegisters *entry; uint64_t actor; uint32_t elapsed,consumed; } EntryContext;
 static int attribute_entry(void *context,SnowEntryAttribution *out,SnowBatchFrame *frame) {
