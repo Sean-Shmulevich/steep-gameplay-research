@@ -1,0 +1,14 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "max_platform_atan2_difference": 1.1824664269965979e-07,
+  "scope": "Complete original soft-row builder including native angular helper; atan2 arguments/output observed without substitution; all row bytes, relative placement, context counters and returned pointer match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic finite nonsingular stiffness/damping/context inputs",
+    "Independent API requires an explicit atan2 service; native output supplied for comparison",
+    "Context scalar units and extracted-count meaning not established",
+    "This helper leaves row headers and other bytes untouched; caller completion and body response remain unresolved"
+  ],
+  "game_files_included": false
+}

@@ -15300,3 +15300,36 @@ The earlier prefix-only coefficient receipt remains valid; this newer receipt
 extends execution through the full builder while comparing selected reconstructed
 fields. It does not establish full-row equivalence, iterative solve behavior,
 context scalar units or physical body response.
+
+#### Complete soft-row helper storage contract
+
+`build_soft_pose_row` extends the reconstructed response to every write made by
+RVA 0x19f2990. Nonzero class byte selects stride5 in 16-byte units, base-row
+context+0x90 and counter+0xf4; zero selects stride6, base-row+0x94 and counter+0xf8.
+The relative row offset is:
+
+```text
+context.row_region_offset + (uint32(base_row + class_count*stride) << 4)
+```
+
+The row-region offset is context+0x16c. The original increments the selected
+class counter and context result counter+0x180 with uint32 wrapping, stores the
+old result counter at row+4, and returns the row pointer. It writes the angular
+term at +0x10 and axis at +0x20. Nonzero class stores the soft coefficient at
++0x40. Zero class stores sign-bit-inverted axis at +0x40, including W and signed
+zero, and the coefficient at +0x50. No other row bytes are touched by this helper.
+In particular, this is not a complete initialized solver record by itself.
+
+The independent API takes initialized row bytes and explicit placement fields,
+returning detached row bytes, relative offset and next counters. It does not
+allocate memory or write a live pointer. Its all-or-error return is authored;
+native counters are updated before the angular helper runs.
+
+[384 full-helper comparisons](../../native/snow_host/pose_soft_builder_validation.json)
+check every row byte, complete supplied context block, returned pointer and
+placement under varied base/count/result indices, including result-counter wrap.
+Native atan2 executes and is observed, with its output supplied to the independent
+service. Both row layouts and near-zero scalar branches are covered. This closes
+the selected-fields limitation of the preceding response validation for this
+helper only. Caller-written headers, subsequent solver stages, scalar units and
+physical body response remain unresolved.

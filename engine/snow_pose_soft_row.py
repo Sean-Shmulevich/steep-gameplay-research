@@ -43,3 +43,33 @@ def soft_pose_row_response(stiffness, damping, context_scalar, context_flags,
     result['angle']=angle
     result['angle_term']=[f32(scaled*g) for g in result['angle_gain']]
     return result
+
+
+def build_soft_pose_row(initial_row, *, class_byte, base_row, class_count,
+                        row_region_offset, result_count, stiffness, damping,
+                        context_scalar, context_flags, axis, reference, target,
+                        atan2):
+    """Return the helper's full row writes and next counters for supplied storage.
+
+    Relative placement is arithmetic only; no allocation or native memory access.
+    Untouched bytes come from initial_row. Math-service failure is not a native
+    rollback guarantee; this detached API publishes only on normal return.
+    """
+    import struct
+    if type(class_byte) is not int or not 0<=class_byte<=255:raise ValueError('Raw class byte required')
+    for value in (base_row,class_count,row_region_offset,result_count):
+        if type(value) is not int or not 0<=value<=0xffffffff:raise ValueError('Raw uint32 placement fields required')
+    stride=5 if class_byte else 6
+    if len(initial_row)!=16*stride:raise ValueError('Initial row size must match selected class')
+    relative_offset=row_region_offset+(((base_row+class_count*stride)&0xffffffff)<<4)
+    response=soft_pose_row_response(stiffness,damping,context_scalar,context_flags,axis,reference,target,atan2=atan2)
+    out=bytearray(initial_row)
+    struct.pack_into('<I',out,4,result_count)
+    struct.pack_into('<4f',out,0x10,*response['angle_term'])
+    axis_bytes=struct.pack('<4f',*axis);out[0x20:0x30]=axis_bytes
+    if not class_byte:
+        out[0x40:0x50]=struct.pack('<4I',*(x^0x80000000 for x in struct.unpack('<4I',axis_bytes)))
+    struct.pack_into('<4f',out,0x40 if class_byte else 0x50,*response['coefficient'])
+    return dict(row=bytes(out),relative_offset=relative_offset,
+                next_class_count=(class_count+1)&0xffffffff,
+                next_result_count=(result_count+1)&0xffffffff,response=response)

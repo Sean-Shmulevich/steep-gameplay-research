@@ -7415,3 +7415,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   builder runs match angle arguments, selected coefficient/angular/axis fields;
   native atan2 results observed and supplied for comparison. Full row allocation,
   remaining fields, scalar units and body response stay unresolved.
+- Completed soft-row helper storage reconstruction: 80/96-byte layouts, placement,
+  class/result counter increments, old result index, sign-bit-negated axis and
+  untouched bytes. All row/context bytes and returned pointer match 384 full native
+  runs using observed atan2 outputs. Caller header completion, scalar units and
+  subsequent solver/body effects remain unresolved.
