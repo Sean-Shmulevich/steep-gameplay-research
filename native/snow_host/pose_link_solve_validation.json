@@ -1,0 +1,23 @@
+{
+  "schema": "pose-link-solve-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "method": "offline complete builder followed by uninterrupted original solver wrapper, preparation dispatcher and iteration dispatcher; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19933d0",
+    "0x1994e80"
+  ],
+  "comparisons": [
+    "complete context including restored scalars",
+    "all retained primary and tangent row bytes",
+    "all result and body-state bytes",
+    "unchanged body data"
+  ],
+  "limits": [
+    "Only primary112-byte and tangent112-byte categories populated; other categories empty.",
+    "Traversal counts and body-data/state records supplied between builder and solver, not recovered producers.",
+    "Four phase masks, zero/nonzero iteration counts and traversal counts below built extents covered.",
+    "No live identity, complete engine or all-category solver equivalence claim."
+  ]
+}

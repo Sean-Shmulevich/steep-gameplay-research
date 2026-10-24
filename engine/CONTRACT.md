@@ -450,3 +450,10 @@ old-minus-new result to the first body. Min/max ordering and signed-zero operand
 selection remain explicit. Finite arithmetic and retained data are required;
 no joint tangent limit, whole-system convergence or universal grip interpretation
 is implied.
+
+Connected link solve: `solve_pose_link_rows` connects wrapper control and primary/
+tangent numerical routines with explicit context traversal counts. It supports
+only categories0 and6 and rejects any other populated category. Special phase
+skips tangents; zero iterations still prepare. Counts and body-data producers,
+other numerical families, live identity and full-engine convergence remain
+external despite uninterrupted native validation of this supported slice.

@@ -17250,3 +17250,38 @@ the tangent update and changes the first body's state. This composition is a
 Python integration test, not yet an uninterrupted native whole-solver comparison.
 Other row families, traversal-count production, body-data production, original
 units and live identity remain unresolved.
+
+### Connected primary and tangent solver slice
+
+`engine.pose_link_solve.solve_pose_link_rows` connects the recovered phase/count
+wrapper to numerical preparation and iteration for the primary112-byte and
+secondary112-byte categories. It accepts explicit retained context bytes, row
+arrays, body-data/state records and results. Primary traversal count comes from
+context+0x108 and secondary count from+0x120. Builder append counters are not used
+as a substitute. Other row-category counts must be zero or the API rejects the
+request instead of silently dropping work.
+
+Preparation visits all selected primary rows, then all selected tangent rows.
+Each iteration repeats that order. Phase mask0x10000000 prepares and iterates only
+primary rows; the other three phase masks include tangents. Zero iterations still
+run preparation, which can modify state through cached results. The common wrapper
+retains its temporary unit-scalar substitution/restoration and captured count policy.
+The supported numerical routines do not alter the descriptor cursor.
+
+[256 connected native cases](../../native/snow_host/pose_link_solve_validation.json)
+first execute the complete original link builder, then supply explicit traversal
+counts and body buffers and execute the original solver wrapper to return. The
+wrapper, preparation dispatcher, iteration dispatcher and numerical row routines
+run uninterrupted without intercepted calls. Every retained row, result,
+body-state and context byte matches the independent implementation. Body data is
+unchanged. Cases span all four phase masks, zero/nonzero iteration counts,0..4
+built payload rows and traversal extents smaller than the built row ranges.
+
+This supersedes the earlier lack of native composition evidence for these two
+categories only. The handoff between builder and solver still supplies counts and
+body buffers; their native production is not claimed reconstructed. Other row
+categories stay empty in validation and are rejected by the independent API.
+This is a verified solver slice, not an all-category engine solve or a live modding
+contract. Unit tests separately check normal/special phases, cached-state effects
+with zero iterations, distinct traversal versus append counts, and explicit
+rejection of unsupported populated categories.

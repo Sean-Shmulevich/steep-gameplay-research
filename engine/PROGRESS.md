@@ -7653,3 +7653,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   all bytes without interception. A built primary/two-tangent triplet runs through
   the reconstructed equations in an integration test. Full native composition,
   traversal-count and body-data producers remain open.
+- Connected primary/tangent solving through recovered phase and traversal rules.
+  256 cases execute the original builder then uninterrupted native solver wrapper,
+  dispatch and numerical routines with no interception; all row/result/state/
+  context bytes match. Explicit traversal counts and body buffers are supplied.
+  Other populated categories are rejected; their equations and count/body-data
+  producers remain unresolved.
