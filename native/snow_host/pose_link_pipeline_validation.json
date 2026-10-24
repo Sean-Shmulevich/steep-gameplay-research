@@ -1,0 +1,21 @@
+{
+  "schema": "pose-link-pipeline-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline continuous original caller segment, including reduction, selector, scalar trig and updater without call interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x198fd21..0x198fd9b",
+  "comparisons": [
+    "all 288 payload bytes",
+    "bit-exact float32 transformed points",
+    "cached-word match precedence and count gates",
+    "untouched inactive rows and padding",
+    "complete reduced input array including tails",
+    "caller count and entry flag publication"
+  ],
+  "limits": [
+    "XYZ mask and zero vector use recovered initializer values; scalar trig dispatch flag is zero.",
+    "Finite synthetic points and arbitrary finite bases; no live body resolution.",
+    "Key grouping and payload acquisition occur before this segment; cached-word solver semantics excluded."
+  ]
+}

@@ -7574,3 +7574,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   404 connected reductions and256 matrix cases match with no native calls replaced.
   Default selection now runs independently; general trig, other library dispatch
   paths, degenerate normals and downstream cached-word semantics remain excluded.
+- Connected flag replacement, optional geometric reduction and paired-frame cache
+  update as one callable record-group pipeline. 512 continuous original caller
+  segments match payload and input-array bytes without call interception, including
+  original scalar trig. Earlier key grouping/acquisition, physical flag meaning
+  and cached-word solver consumption remain unresolved.

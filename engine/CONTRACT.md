@@ -339,3 +339,10 @@ original scalar evaluation at the selector literal. No normal/quaternion
 normalization is inserted. This closes the supplied-matrix dependency only for
 that angle and the validated scalar dispatch path; other angles are rejected and
 an explicit matrix service remains available.
+
+Record-group payload processing: `process_pose_link_record_group` requires one
+already reached nonempty key group, retained payload bytes, finite frames and an
+explicit resolved entry flag. It connects flag replacement, optional four-record
+reduction and payload update in copied storage. The upstream raw-byte pair gate
+is separate. Sorting, payload lookup/acquisition, cached-word solver meaning,
+protected operations and native lifetime remain outside this API.

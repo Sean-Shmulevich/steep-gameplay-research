@@ -16548,3 +16548,40 @@ altering execution. Matrix cases compare all48 output bytes including retained
 fourth lanes. This closes the fixed-angle service dependency under the recorded
 dispatch condition. Zero-normal exceptional arithmetic, other trig dispatch paths,
 physical contact semantics and cached-word solver meaning remain excluded.
+
+### Connected record-group payload processing
+
+`engine.pose_link_pipeline.process_pose_link_record_group` connects the reached
+caller segment0x198fd21..0x198fd9b. Given one nonempty group of48-byte records and
+an existing288-byte payload, it clears payload byte+0x114 bit0 and ORs the supplied
+resolved boolean, reduces groups larger than4 using the recovered geometric
+selector, then updates the payload through the paired-frame/cached-word updater.
+The native segment derives count from the record-span byte difference divided
+by48. The Python adapter takes an explicit list and returns copied payload/record
+storage, active count and selected indices. Those diagnostics and copy isolation
+are authored interface choices; native code edits the records in place.
+
+The upstream flag calculation is exposed separately as `paired_entry_flag`.
+It tests raw byte+0x44 from each selected72-byte entry: both bit2 and bit4 must be
+set in both bytes. Its code evaluates `(flag >> 2) & flag & 4`. Physical names for
+these bits are unresolved. The connected API requires an explicit boolean rather
+than guessing those flags from sport, grounded state or material.
+
+A small record group skips the selector entirely, including its normal/tangent
+requirements. A larger group uses the first record's normal, selects four indices
+with the established tie behavior, copies full records before overwriting them,
+and preserves the inactive input tail. Payload update snapshots old identifiers
+and cached words before writing selected rows. The original inactive payload
+rows and row-tail bytes remain intact; only bit0 of the flag byte is replaced.
+The input list must already be one reached key group. This function does not sort,
+match cache entries, acquire payload storage or infer absent record groups.
+
+[512 continuous original caller-segment comparisons](../../native/snow_host/pose_link_pipeline_validation.json)
+execute flag replacement, optional record reduction, geometric selection, original
+scalar trig/matrix helpers and payload updating without call interception. Cases
+cover1..12 input records, both flag values, mixed old counts/IDs, arbitrary finite
+body bases and preserved tails. All288 payload bytes, the complete input array and
+caller active count match. Runtime masks use their recovered initialized values
+and scalar trig dispatch flag is zero. This adds connected evidence beyond the
+individual helper receipts; it still excludes earlier grouping/acquisition,
+protected services, live identity and the cached word's downstream solver meaning.
