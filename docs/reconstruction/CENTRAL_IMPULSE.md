@@ -13820,3 +13820,36 @@ fields. The observer fixture, seven trace tests and 37 capture/analysis tests pa
 the Win64 host and capture-plugin build succeeds. All three build paths include
 the new observer source. No game was launched; live acceptance and overhead are
 still unmeasured.
+
+### First live frame-channel capture
+
+The [ABI 11 live receipt](../../native/snow_host/frame_inputs_live_validation.json)
+records 560 attributed snow updates with 1,120/1,120 accepted frame observations
+and no dropped records. The existing bounded controller established activity
+with a 500 ms forward input, then delivered a 500 ms Space input during a
+five-second capture. API delivery is not itself a classification of rider motion.
+The frame channel ran with point and gate channels disabled.
+
+All observations reported physical mode byte 1. The receiver table was image
+RVA 0x2915be0 and its slot+0x40 target was RVA 0x13fbbf0 throughout. This identifies
+the concrete callback candidate for the next static pass. Bracketing the actor
+update does not establish that this virtual callback executed on every record.
+There were zero eligible cached-mode pairs, so no cached-frame latency conclusion
+is supported by this experiment.
+
+Frame-read duration was median 26.0 microseconds, p95 43.1 microseconds and maximum
+556.0 microseconds in this run. The maximum is retained; median cost must not
+stand in for worst-case overhead. This is measured observer time under one setup,
+not a native simulation interval or an overhead-free capture guarantee.
+
+Both recorder slots returned to their original targets, capture drained, and the
+bounded launcher verified bottle shutdown, save/settings restoration and original
+DLL hash. Raw records, live pointers and input receipts remain private; the public
+receipt includes aggregate counts, build-relative code identities and trace hash.
+
+Initial static inspection of the observed callback shows an early false return
+when receiver+0x262 is zero. Otherwise it calls RVA 0x13fb3e0 before conditional
+basis replacements. Later gates read receiver+0x17d, +0x130 and +0x150; a branch
+copies receiver+0x270 to the first output vector. These are producer leads, not a
+complete basis formula. The table is referenced in constructor-range code near
+RVA 0x1383dbb. No sport name or universal receiver identity is assigned yet.

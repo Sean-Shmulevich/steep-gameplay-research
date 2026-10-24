@@ -7242,3 +7242,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   concurrent trace and serialization/capture tests pass; Win64 host/plugin builds.
   Actor-update bracketing is not callback attribution. No live acceptance or
   overhead result yet; older readers must rebuild for the larger record.
+- First ABI 11 live frame capture accepted 1120/1120 samples across 560 attributed
+  updates with no drops. All mode bytes were 1, identifying receiver table
+  RVA 0x2915be0 and callback RVA 0x13fbbf0; no cached-mode timing evidence.
+  Read median 26 us, p95 43.1 us, max 556 us. Both slots, drain and full launcher
+  cleanup verified. Callback execution and same-phase matrix freshness remain open;
+  observed callback's gates and helper call now supply concrete static leads.

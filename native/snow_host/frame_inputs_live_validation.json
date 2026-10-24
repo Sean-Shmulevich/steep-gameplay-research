@@ -1,0 +1,65 @@
+{
+  "records": 560,
+  "attempted": 1120,
+  "accepted": 1120,
+  "modes": {
+    "1": 1120
+  },
+  "callback_rvas": [
+    "0x13fbbf0"
+  ],
+  "receiver_table_rvas": [
+    "0x2915be0"
+  ],
+  "cached_pair_comparison": {
+    "eligible_cached_pairs": 0,
+    "before_cache_matches_after_frame": 0,
+    "after_cache_matches_after_frame": 0,
+    "cache_changed": 0,
+    "frame_changed": 0
+  },
+  "read_us": {
+    "median": 26.0,
+    "p95": 43.1,
+    "max": 556.0
+  },
+  "capture_summary": {
+    "kind": "summary",
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "records": 560,
+    "dropped": 0,
+    "qpf": 10000000,
+    "substep_available": true,
+    "direct_substep_records": 560,
+    "dispatch_counts_valid": 1,
+    "selected_calls": 560,
+    "other_calls": 0
+  },
+  "route_ok": true,
+  "route_error": null,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "trace_sha256": "7d81e40a812e827b2324451f8cca7757c66f618affe87ab1c58bdf7e40b5668c",
+  "evidence": "live_actor_update_observation",
+  "probe_abi": 11,
+  "game_files_included": false,
+  "slot_restoration": {
+    "snow": true,
+    "markup": true
+  },
+  "limits": [
+    "Only physical mode 1 observed; zero eligible cached-mode pairs",
+    "Actor-update bracketing does not observe callback entry or prove its execution",
+    "Double-sample agreement is not atomicity, lifetime pinning or cross-phase freshness",
+    "Observed callback identity is one inspected build/session; no universal sport/type claim",
+    "Raw traces and pointer identities remain private"
+  ]
+}
