@@ -5,10 +5,14 @@ Byte buffers are supplied independent records; no game payload is bundled.
 """
 
 
-def pack_pose_record(source, initialized_destination, vector_mask, swapped=False):
+# Recovered initializer value; callers can override for observed/modified state.
+POSE_VECTOR_MASK = b'\xff'*12 + b'\x00'*4
+
+def pack_pose_record(source, initialized_destination, vector_mask=POSE_VECTOR_MASK, swapped=False):
     """Pack 0x100 source bytes into supplied 0x120 initialized storage.
 
-    The runtime 16-byte bit mask is an explicit dependency. Preserve untouched
+    The default mask is the recovered initializer value. Explicit runtime
+    masks remain supported. Preserve untouched
     padding. Optional swap exchanges only the first two
     64-byte frame blocks, as the submission wrapper does after conversion.
     """
@@ -47,8 +51,8 @@ def store_pose_record(packed, previous_storage):
     return bytes(out)
 
 
-def prepare_pose_submission(source, previous_storage, vector_mask,
-                            swap_byte, request_byte):
+def prepare_pose_submission(source, previous_storage, vector_mask=POSE_VECTOR_MASK,
+                            swap_byte=0, request_byte=0):
     """Return stored fields and notification intent, without executing services.
 
     Temporary constructor values do not survive into copied fields: conversion

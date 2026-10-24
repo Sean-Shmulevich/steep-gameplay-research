@@ -14946,3 +14946,26 @@ The notification entry at RVA 0x18b8380 initially rejects body-metadata flag bit
 and a null body+0x10 link. Its admitted path enters protected calls before a body
 virtual call at slot0x28. Those protected calls and synchronization semantics
 remain unresolved; do not label this a proved wake or enable operation.
+
+#### Pose mask initializer recovered
+
+The preceding unresolved-mask notes describe the earlier evidence state. A
+subsequent reference scan found initializer RVA 0x0c7e60. It copies the 16-byte
+constant at RVA 0x29ca1a0 into runtime storage RVA 0x3336890 and returns. The
+constant is three 0xffffffff words followed by zero. A pointer to the initializer
+appears at RVA 0x1df0260 among neighboring function pointers. This identifies the
+initializer and its value, but does not by itself prove live startup ordering or
+exclude later writes.
+
+`POSE_VECTOR_MASK` now supplies that recovered value as the default for packing
+and submission preparation. Each packed vector consequently preserves the source
+XYZ bit patterns and clears W. Explicit masks remain supported for observed or
+modified runtime states. The saved image's zero storage is not evidence that
+active gameplay uses a zero mask.
+
+The connected validation now executes the original initializer before submission
+in 160 of its 320 cases, starting from arbitrary mask bytes and checking the
+result. The remaining 160 retain arbitrary supplied masks. Final storage and
+notification-boundary checks still match exactly. This closes the static mask
+producer gap; notification effects, solver consumption and live ownership remain
+outside this validation.

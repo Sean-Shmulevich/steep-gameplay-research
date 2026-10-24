@@ -32,3 +32,14 @@ class PoseRecordTests(unittest.TestCase):
         self.assertFalse(result['notify'])
         for start,end in ((0xfa,0xfc),(0x106,0x108),(0x112,0x114),(0x11d,0x120)):
             self.assertEqual(result['storage'][start:end],previous[start:end])
+
+    def test_initializer_default_preserves_xyz_and_clears_w(self):
+        from engine.snow_pose_record import POSE_VECTOR_MASK, prepare_pose_submission
+        source=bytes(range(256));previous=b'\x55'*288
+        self.assertEqual(POSE_VECTOR_MASK,b'\xff'*12+b'\0'*4)
+        implicit=prepare_pose_submission(source,previous)
+        explicit=prepare_pose_submission(source,previous,POSE_VECTOR_MASK,0,0)
+        self.assertEqual(implicit,explicit)
+        for i in range(8):
+            self.assertEqual(implicit['storage'][16*i:16*i+12],source[12*i:12*i+12])
+            self.assertEqual(implicit['storage'][16*i+12:16*i+16],b'\0'*4)

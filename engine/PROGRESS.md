@@ -7365,3 +7365,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   notification intercepted, with arguments and post-storage ordering verified.
   Destination padding survives independently of temporary initialization. Actual
   notification effects, runtime mask initialization and solver behavior stay open.
+- Located and executed pose vector-mask initializer: three all-one XYZ words
+  and zero W. Recovered value is now the packing/submission default, with explicit
+  overrides retained. Connected native validation passes 160 initialized-mask and
+  160 arbitrary-mask cases. Static producer gap closed; live initialization timing,
+  notification effects and solver consumption are still unproved.
