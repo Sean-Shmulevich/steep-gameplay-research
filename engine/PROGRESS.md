@@ -7620,3 +7620,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   768 continuous native comparisons match all four response lanes, including gate
   equality and signed zeros. Added coefficient-to-response composition coverage;
   world-point production, full row assembly and physical units remain open.
+- Recovered paired local-to-world point geometry feeding primary response,
+  preserving first-body offset subtraction/readdition and float32 cancellation.
+  512 offline comparisons across original geometry fragments match all XYZ bits;
+  caller registers are prepared between fragments. Added geometry-to-response
+  composition. Full uninterrupted builder and remaining row assembly stay open.

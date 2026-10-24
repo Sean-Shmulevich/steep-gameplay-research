@@ -404,3 +404,9 @@ values and raw context fields1c/20. It gates the motion candidate by rounded
 subtraction, then selects the larger magnitude with position winning ties. All
 operations retain float32 order. Finite arithmetic, caller-supplied producers and
 unresolved physical units remain explicit boundaries.
+
+Link paired geometry: `link_point_geometry` transforms explicit local payload
+points with caller-supplied frames. It preserves first offset128 subtraction and
+world-center readdition, returning both arms, world points and second-minus-first
+separation. Float32 cancellation is part of the behavior. Units, frame validity,
+round-trip identity and uninterrupted whole-builder equivalence are not implied.

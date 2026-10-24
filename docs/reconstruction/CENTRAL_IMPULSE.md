@@ -16939,3 +16939,44 @@ bit-for-bit, including threshold equality, opposite-sign magnitude ties and sign
 zeros. Inputs are prepared register values; this does not prove full builder or
 solver equivalence. A separate synthetic test connects recovered profile-response
 coefficients to this selection formula.
+
+### Link paired-point world geometry
+
+`engine.pose_link_geometry.link_point_geometry` supplies the world geometry used
+by the metadata-clear/single builder. It retains the first-body local offset
+subtraction and world-space readdition. In this pseudocode, each operation rounds
+to float32; `B.x`, `B.y`, `B.z` denote the stored basis rows, scaled as vectors.
+
+```python
+def transform(B, v):
+    return B.z * v.z + (B.x * v.x + B.y * v.y)
+
+first_center_world = first_translation + transform(first_basis, first_offset128)
+first_arm = transform(first_basis, first_point - first_offset128)
+second_arm = transform(second_basis, second_point)
+first_world = first_arm + first_center_world
+second_world = second_translation + second_arm
+separation = second_world - first_world
+```
+
+Basis rows come from body+0x40/+0x50/+0x60, translations from+0x70, and the first
+local offset from+0x128. Points are the already transformed local payload fields.
+The first arm is also the offset used by the point-motion calculation. These sums
+must not be simplified to a direct first-point transform. For example, with an
+identity basis, point x=1 and offset x=2^25, the recovered subtraction/readdition
+produces world x=0 in float32 rather than1. This example exposes operation order;
+it is not a claim about ordinary game coordinate ranges.
+
+The result's `separation` feeds `link_primary_response`. No inverse-transform or
+orthonormal-frame assumption is imposed. Frame interpretation and units remain
+caller obligations, and this API does not promise that transforming a payload
+point back to world space reproduces its earlier source bits.
+
+[512 offline geometry comparisons](../../native/snow_host/pose_link_geometry_validation.json)
+execute original center-transform0x1993479..0x19934b3, point-subtraction
+0x199381b..0x1993837 and paired-geometry0x1993a35..0x1993ada fragments. The validator
+retains the native computed center and local offset between fragments but prepares
+caller registers explicitly; it is not an uninterrupted full-builder comparison.
+All XYZ bits match for both arms, both world points, center and separation.
+Synthetic cases include nonorthogonal bases and large-offset cancellation. A
+composition test connects separation to the recovered primary response formula.

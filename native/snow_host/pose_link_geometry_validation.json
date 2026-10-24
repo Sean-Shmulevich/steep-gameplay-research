@@ -1,0 +1,23 @@
+{
+  "schema": "pose-link-geometry-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline original center transform, local subtraction and paired geometry fragments; caller register preparation between fragments, no calls intercepted",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1993479..0x19934b3",
+    "0x199381b..0x1993837",
+    "0x1993a35..0x1993ada"
+  ],
+  "comparisons": [
+    "center world point",
+    "both transformed arms",
+    "both world points",
+    "signed separation, all XYZ bits"
+  ],
+  "limits": [
+    "Fragments executed separately with retained computed center/local offset.",
+    "Finite synthetic nonorthogonal bases; not a full uninterrupted builder run.",
+    "No physical units, inverse-transform identity or solver equivalence claim."
+  ]
+}
