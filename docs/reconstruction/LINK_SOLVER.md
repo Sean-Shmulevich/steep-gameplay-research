@@ -798,3 +798,50 @@ Together with `count_pose_link_rows`, this fills the planned-count input consume
 by the reconstructed layout initializer for retained link and pose records. Body
 index assignment, production of those records and the still unsupported numerical
 row categories remain separate boundaries.
+
+### Solver context settings initialization
+
+`engine.pose_solver_settings.initialize_pose_solver_settings` reconstructs the
+complete initializer0x1990ba0. It writes the supplied scalar to context+0x10 and
+`float32(1 / scalar)` to+0x0c. This establishes a producer relationship between
+two previously explicit inputs: body-buffer construction receives the stored
+scalar through context+0x10, while profile-response equations use its reciprocal
+from+0x0c. They are not independent settings in this native path. Physical units
+of the original supplied scalar remain unresolved; the API does not label it as
+seconds solely from this reciprocal relationship.
+
+The following settings-to-context transfers copy raw four-byte words, including
+any nonfinite encodings, without arithmetic:
+
+| Settings offset | Context offset |
+| --- | --- |
+|+0x08,+0x0c,+0x10 |+0x00,+0x04,+0x08 |
+|+0x2c,+0x30 |+0x14,+0x18 |
+|+0x1c,+0x18 |+0x1c,+0x20 |
+|+0x34,+0x38,+0x3c |+0x24,+0x28,+0x2c |
+
+The supplied group token is stored at context+0x30. Flags become:
+
+```python
+flags = (previous_flags & 0x80000000)
+flags |= settings.u32(0x24) & 3
+flags |= (settings.byte(0x21) & 1) << 29
+flags |= (settings.byte(0x14) & 1) << 30
+flags |= (settings.u16(0x2a) & 0x7ff) << 16
+flags |= (settings.u16(0x28) & 0x3fff) << 2
+```
+
+Only the low bit of each byte source is used, not a generic nonzero test. Phase
+bits27/28 are cleared here; the orchestrator subsequently sets them for its
+passes. The packed iteration fields feed `run_pose_solver` directly. The low-two-bit
+mode copy also explains why builder dispatch uses a narrower mode than the earlier
+full-word zero/nonzero prepass selection. Configuration-domain checks that make
+those selections consistent remain upstream.
+
+[512 complete native initializer comparisons](../../native/snow_host/pose_solver_settings_validation.json)
+match all context bytes without interception, using arbitrary settings/header
+bits, opaque group tokens and finite positive/negative scalars. Settings remain
+unchanged. Tests connect layout initialization, settings and solver control, and
+verify phase reset, raw copies, low-bit flags and reciprocal values. Zero/nonfinite
+scalar inputs, reciprocal overflow, overlapping buffers and live pointer lifetime
+are outside the independent API domain. No row storage is reset by this initializer.

@@ -492,3 +492,10 @@ second body; other recognized types pair categories by metadata bit15. Type3's
 word flag and type5's byte flags remain distinct. Unknown types contribute nothing.
 Virtual dispatch/type construction, physical class names and live storage lifetime
 remain supplied or unresolved.
+
+Solver settings: `initialize_pose_solver_settings` copies raw settings words,
+stores the group token, packs mode/iteration/control flags and clears phase bits.
+It writes scalar10 and its float32 reciprocal scalar_c, establishing their native
+producer relationship. Finite nonzero reciprocal arithmetic is required; physical
+units, upstream settings validation, overlapping buffers and live token lifetime
+remain external. Existing row/layout storage is preserved.

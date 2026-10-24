@@ -7689,3 +7689,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   getter, copy and no-op cleanup stay native. Link and pose counts now feed layout
   from retained records. Class construction, body-index assignment and unsupported
   numerical categories remain open.
+- Recovered complete context settings initialization. Stored scalar10 and scalar_c
+  are reciprocal-related inputs to body production and coefficient equations;
+  iteration fields, low-bit flags, raw settings copies and phase reset are explicit.
+  512 full native comparisons match every context byte without interception.
+  Layout→settings→solver-control composition passes; upstream units/configuration
+  validation and body-index assignment remain unresolved.

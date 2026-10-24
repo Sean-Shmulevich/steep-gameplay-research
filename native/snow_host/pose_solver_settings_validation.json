@@ -1,0 +1,17 @@
+{
+  "schema": "pose-solver-settings-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete original context settings initializer without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1990ba0",
+  "comparisons": [
+    "all context bytes including copied raw words, scalar reciprocal and packed flags",
+    "unchanged settings bytes"
+  ],
+  "limits": [
+    "Finite nonzero scalar and finite reciprocal; exceptional division excluded.",
+    "Group token treated as opaque, no live identity or pointer dereference.",
+    "Scalar physical units and upstream settings producer remain unresolved."
+  ]
+}
