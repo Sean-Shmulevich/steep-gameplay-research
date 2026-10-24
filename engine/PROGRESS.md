@@ -7116,3 +7116,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   expired updates. All ten scalars retain continuity across 534 adjacent pairs.
   Both slots and cleanup verified. Actual stack gate multipliers and refill
   saturation remain unobserved; no universal grounded or replay claim.
+- Reconstructed the post-submission contact-reporting leaf. It accepts enabled
+  kind-1 records at nonnegative gates, while summed impulses require positive
+  gates. Added independent report/maxima/sum model matching 320 full original-leaf
+  cases with no intercepted calls; 16 related tests pass. Reports alone do not
+  prove impulse application. Live reporting and downstream aggregate consumers
+  remain external; native report storage capacity is not validated by the leaf.

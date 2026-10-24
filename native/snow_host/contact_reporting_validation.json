@@ -1,0 +1,12 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete original contact-reporting leaf; synthetic records, aggregate and storage; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite scalar/vector cases",
+    "Native storage supplied with sufficient capacity; no allocation or lifetime proof",
+    "Not live reporting or final aggregate consumer validation"
+  ],
+  "game_files_included": false
+}

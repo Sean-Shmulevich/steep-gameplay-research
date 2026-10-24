@@ -12982,3 +12982,50 @@ still unobserved. Next, qualify those multipliers at their consumer or compare
 submission effects using captured inputs without confusing other forces with
 this contribution. Universal airborne/grounded classification, scheduler-wide
 ordering and deterministic replay remain outside this result.
+
+### Post-submission contact reporting
+
+The gate block has multiple distinct consumers. After timer mutation, its +8
+lane scales a curve-derived value passed to the triangle-contact helpers.
+The later directional impulse loop uses the separate +0 lane in its combined
+scale. The summed impulse loop selects +4 for kind 1 and +8 otherwise, and uses
+that selected value only as a strict-positive submission gate. Do not multiply
+the final summed impulse by the gate a second time.
+
+After point submissions, RVA 0x140c580 passes the same selected +4/+8 scalar to
+reporting leaf RVA 0x1410150. This leaf accepts enabled records of kind exactly 1
+when the selected gate is **nonnegative**. Thus zero permits a report while the
+point-impulse loop rejects submission. For finite inputs its local behavior is:
+
+```text
+if not record.enabled or record.kind != 1 or selected_gate < 0:
+    return
+append(point=record.point, a=record.a, identifier=record.uint16_id,
+       magnitude=sqrt(a.x*a.x + (a.y*a.y + a.z*a.z)))
+for vector in [a, b]:
+    if squared_xyz_magnitude(vector) > previous_maximum_squared:
+        replace maximum_squared and maximum_vector
+    accumulated_vector += vector
+```
+
+Every multiply, addition and square root follows float32 boundaries. Equal
+squared magnitudes retain the previous maximum vector. Copies and sums include
+all four lanes, but magnitudes use XYZ only. The native record identifier is at
++0x4a. The leaf increments a report count and writes a 0x30-byte report slot;
+it contains no capacity check. It does not write the input record or apply a
+body impulse. Later aggregate consumers remain a separate dependency.
+
+`engine.snow_contact_reporting.report_contact` implements this local behavior
+with caller-supplied state and authored Python list storage. That storage is not
+a claim about native allocation or overflow behavior. The
+[320-case validation](../../native/snow_host/contact_reporting_validation.json)
+executes the entire original leaf without intercepted calls and matches report
+count, slot fields, maxima and sums bitwise. Cases vary enabled state, kind,
+negative/signed-zero/positive gates and finite vectors. Sixteen related tests
+pass, including zero-gate report without impulse submission, maximum ties and
+fourth-lane accumulation. This is synthetic instruction validation, not live
+reporting evidence.
+
+A downstream contact report therefore cannot by itself prove a force was applied.
+Keep submitted impulse events, reporting events and aggregate output separate
+when exposing them to mods or using them to explain measured rider motion.
