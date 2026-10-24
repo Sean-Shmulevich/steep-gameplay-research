@@ -1,0 +1,11 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Original weighted bucket admission, transform classification and fold instructions; synthetic inputs",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite input cases; supplied frame and record weights",
+    "No final normalization, fallback, consumers or live attribution"
+  ],
+  "game_files_included": false
+}

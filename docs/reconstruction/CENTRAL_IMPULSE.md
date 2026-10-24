@@ -13029,3 +13029,48 @@ reporting evidence.
 A downstream contact report therefore cannot by itself prove a force was applied.
 Keep submitted impulse events, reporting events and aggregate output separate
 when exposing them to mods or using them to explain measured rider motion.
+
+### Weighted two-group contact accumulation
+
+The code after reporting, RVA 0x140c5f1..0x140c6a9, admits records whose scalar
+at +0x40 is strictly positive. It does not repeat the enabled/kind/gate tests from
+the reporting leaf. Reporting, impulse submission and aggregate membership must
+therefore remain separate decisions.
+
+For supplied native frame columns C0..C3, it evaluates the record point P using
+float32 steps in this order:
+
+```text
+y = float32(float32(P.z * C2.y) + C3.y)
+y = float32(y + float32(P.y * C1.y))
+y = float32(y + float32(P.x * C0.y))
+group = 1 if y <= 0 else 0
+```
+
+The SIMD mask inspected at the classification site preserves XYZ and clears W;
+it does not take absolute values. No front/back or left/right anatomical label
+is assigned without tracing the frame producer. Translation can change group
+selection. The values accumulated are the original point/normal, not transformed
+coordinates:
+
+```text
+count = uint32(count + 1)
+weight_sum = float32(weight + weight_sum)
+weighted_value = float32(float32(record.value * weight) + weighted_value)
+point_sum = float32(float32(weight * record.point) + point_sum)
+normal_sum = float32(float32(weight * record.normal) + normal_sum)
+```
+
+Vector operations include all four lanes. Record normal is at +0, point at
++0x30, weight at +0x40 and the unnamed weighted scalar at +0x44. Each destination
+group occupies 0x30 bytes. The later phase divides point/value sums by weight and
+normalizes the normal sum; its fallback and downstream consumers are not part
+of this local fold.
+
+`engine.snow_contact_reporting.accumulate_contact_bucket` implements the
+selection/fold with two supplied groups and four frame columns. The
+[320 original-instruction cases](../../native/snow_host/contact_bucket_validation.json)
+match both complete groups bitwise across negative/zero/positive weights,
+translated/random frames, zero-side classification, prior sums and uint32 count
+wrap. Five reporting/aggregate portable tests pass. This does not establish live
+weight meanings, frame identity, final normals or a landing classifier.

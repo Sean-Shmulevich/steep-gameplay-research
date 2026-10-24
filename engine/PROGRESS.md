@@ -7122,3 +7122,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases with no intercepted calls; 16 related tests pass. Reports alone do not
   prove impulse application. Live reporting and downstream aggregate consumers
   remain external; native report storage capacity is not validated by the leaf.
+- Reconstructed weighted two-group contact accumulation separately from report
+  and impulse eligibility. Positive weight admits; transformed point Y selects
+  the group, while original point/normal vectors accumulate. Independent float32
+  fold matches 320 original-instruction cases, including zero boundary/count wrap;
+  five reporting/aggregate tests pass. Frame semantics, final normalization and
+  downstream classification remain external; no live aggregate claim.

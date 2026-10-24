@@ -37,3 +37,31 @@ def report_contact(state, record, selected_gate):
             result['max_'+name]=vector[:]
         result['sum_'+name]=[f32(x+y) for x,y in zip(four(result['sum_'+name]),vector)]
     return result
+
+
+def accumulate_contact_bucket(buckets, record, frame_columns):
+    """Local weighted bucket fold in RVA 0x140c5f1..0x140c6a9.
+
+    Supply two unnormalized buckets and four native frame columns. Positive
+    weight controls admission independently of enabled/kind/report eligibility.
+    Classification uses transformed point Y; accumulation uses original vectors.
+    Final averaging, normal normalization and fallback are separate operations.
+    """
+    if len(buckets) != 2 or len(frame_columns) != 4:
+        raise ValueError('Expected two buckets and four frame columns')
+    out=deepcopy(buckets)
+    weight=f32(record['weight'])
+    if weight <= 0:
+        return out
+    columns=[four(v) for v in frame_columns]
+    point=four(record['point']); normal=four(record['normal'])
+    y=f32(f32(point[2]*columns[2][1])+columns[3][1])
+    y=f32(y+f32(point[1]*columns[1][1]))
+    y=f32(y+f32(point[0]*columns[0][1]))
+    bucket=out[int(y <= 0)]
+    bucket['count']=(bucket['count']+1)&0xffffffff
+    bucket['weight']=f32(weight+f32(bucket['weight']))
+    bucket['weighted_value']=f32(f32(f32(record['value'])*weight)+f32(bucket['weighted_value']))
+    for key,value in [('point',point),('normal',normal)]:
+        bucket[key]=[f32(f32(weight*x)+old) for x,old in zip(value,four(bucket[key]))]
+    return out

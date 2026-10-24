@@ -29,3 +29,25 @@ class ContactReportingTests(unittest.TestCase):
     def test_disabled_other_kind_negative_gate_skip(self):
         for r,g in [(record(enabled=False),1),(record(kind=2),1),(record(),-1)]:
             self.assertEqual(report_contact(state(),r,g),state())
+
+
+class ContactBucketTests(unittest.TestCase):
+    def buckets(self):
+        return [dict(count=0,weight=0,weighted_value=0,point=[0]*4,normal=[0]*4) for _ in range(2)]
+
+    def test_frame_classifies_but_original_point_accumulates(self):
+        from engine.snow_contact_reporting import accumulate_contact_bucket
+        frame=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,-3,0,1]]
+        r=dict(point=[1,2,3,1],normal=[0,0,1,0],weight=2,value=.25,enabled=False,kind=2)
+        out=accumulate_contact_bucket(self.buckets(),r,frame)
+        self.assertEqual(out[0]['count'],0)
+        self.assertEqual(out[1],dict(count=1,weight=2,weighted_value=.5,point=[2,4,6,2],normal=[0,0,2,0]))
+
+    def test_zero_side_and_weight_rejection(self):
+        from engine.snow_contact_reporting import accumulate_contact_bucket
+        frame=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
+        r=dict(point=[1,0,3,1],normal=[0,0,1,0],weight=1,value=2)
+        self.assertEqual(accumulate_contact_bucket(self.buckets(),r,frame)[1]['count'],1)
+        for weight in [0,-1]:
+            r['weight']=weight
+            self.assertEqual(accumulate_contact_bucket(self.buckets(),r,frame),self.buckets())
