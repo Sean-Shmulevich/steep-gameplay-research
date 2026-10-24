@@ -1,0 +1,18 @@
+{
+  "cases": 384,
+  "matching": true,
+  "scope": "Original multi-body destination-selection loop; eligibility/acquisition supplied; all destination bytes, service order and remaining reuse flag match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Seeded destinations preserved",
+    "Special-group selection and low-byte predicate",
+    "At most one original-group reuse when preparation result is zero",
+    "Special-group identity reloaded after predicate"
+  ],
+  "limits": [
+    "Preceding assignment preparation, allocation, migration and destruction excluded",
+    "Synthetic retained body/destination arrays",
+    "No physical group semantics or native lifetime proof"
+  ],
+  "game_files_included": false
+}

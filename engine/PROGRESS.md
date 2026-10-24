@@ -7491,3 +7491,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   320 native service-intercepted cases match order and mutation visibility. Array
   extents are captured per traversal; later arrays reload. Group processing,
   synchronization and storage lifetime remain external.
+- Recovered multi-body destination selection inside ordinary-group processing.
+  Seeded destinations remain, eligible bodies select group410, and a zero upstream
+  preparation result permits one original-group reuse. 384 native loop comparisons
+  match with eligibility/acquisition services supplied. Preparation, migration,
+  allocation and enclosing destruction remain external.

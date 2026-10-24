@@ -15862,3 +15862,47 @@ special-group identity after local removal, captured loop extents, changed slot
 values, later-array reload, duplicate tracked entries and no match. This closes
 context-detach orchestration, not ordinary-group processing, storage lifetime,
 protected-wrapper synchronization or native destruction semantics.
+
+### Multi-body destination assignment
+
+`engine.pose_group_destinations.assign_pose_group_destinations` reconstructs
+RVA0x18e2eb3..0x18e2f2f within ordinary-group processing0x18e2de0. It consumes an
+explicit captured count, prepared destination array, preparation-result uint32,
+retained group body slots and supplied eligibility/acquisition services.
+
+```text
+reuse_available = preparation_result == 0
+for index in captured_body_count:
+    if destinations[index] != null: continue
+    body = reload_group_slots()[index]
+    if body.metadata.flags8 bit3 and low_byte(eligible(context, body)) != 0:
+        destinations[index] = context.group410
+    elif reuse_available:
+        destinations[index] = original_group
+        reuse_available = false
+    else:
+        destinations[index] = acquire_group(context)
+return reuse_available
+```
+
+Seeded destinations bypass body inspection entirely. Only a null destination
+consumes the one-time original-group reuse option, and eligible bodies do not
+consume it. The special group is read after the predicate, allowing a service to
+change it. An acquired null value is stored as returned without retry. The loop
+selects destinations; it does not itself migrate bodies or apply forces.
+
+[384 native loop comparisons](../../native/snow_host/pose_group_destinations_validation.json)
+match destination bytes, service order and final reuse flag with eligibility and
+acquisition supplied. Counts0..8, seeded/null entries, raw preparation results,
+low-byte predicate results and changed special-group identity are covered.
+
+Static enclosing flow:0x18e2de0 first finalizes the original group and reads body
+count. Empty groups go through context removal0x18e2660 then group virtual slot0
+with argument1. A singleton can move to group410 when metadata bit3 and eligibility
+pass, followed by that same removal/virtual sequence. The multi-body branch
+allocates8*count bytes, calls0x18e1b10 to prepare destinations, executes this loop,
+then calls0x1957720 for migration and releases temporary storage. A remaining
+reuse flag takes the removal/virtual path; otherwise it returns false. Those
+outer operations and their failure behavior are not implemented or native-validated
+by this loop receipt. In particular, preparation-result semantics, migration,
+destruction and group ownership remain unresolved.
