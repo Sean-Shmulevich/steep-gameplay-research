@@ -67,7 +67,7 @@ def main():
     if args.command_manager_startup_plugin:
         build('plugins/command_manager_startup.dll', ['examples/command_manager_startup.c'], ['-shared'])
     if args.markup_update_capture_plugin:
-        build('plugins/markup_update_capture.dll', ['examples/markup_update_capture.c','snow_markup_update_probe.c','snow_markup_update_trace.c','snow_markup_provider.c'], ['-shared'])
+        build('plugins/markup_update_capture.dll', ['examples/markup_update_capture.c','snow_markup_update_probe.c','snow_markup_update_trace.c','snow_markup_provider.c','snow_markup_actor.c'], ['-shared'])
     if args.animation_queue_capture_plugin:
         build('plugins/animation_queue_capture.dll', ['examples/animation_queue_capture.c','snow_animation_queue_probe.c','snow_animation_queue_trace.c','snow_animation_queue.c'], ['-shared'])
     if args.delegate_capture_plugin:

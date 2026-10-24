@@ -38,8 +38,10 @@ static int owner_matches(void) {
 }
 static int observe(void *ctx,void *component,SnowMarkupUpdateSnapshot *s) {
     (void)ctx;
-    return (uintptr_t)component==binding.component && owner_matches() &&
-        snow_markup_provider_observe(read_mem,NULL,binding.component,binding.base,binding.size,s) && owner_matches();
+    if((uintptr_t)component!=binding.component || !owner_matches() ||
+       !snow_markup_provider_observe(read_mem,NULL,binding.component,binding.base,binding.size,s))return 0;
+    s->actor_valid=snow_markup_actor_observe(read_mem,NULL,binding.actor,binding.base,binding.size,&s->actor_state)==1;
+    return owner_matches();
 }
 static void write_snapshot(FILE *f,const SnowMarkupUpdateSnapshot *s,unsigned valid) {
     fprintf(f,"{\"valid\":%u,\"count\":%u,\"notification_count\":%u,\"attachment_present\":%u,\"rows\":[",valid,s->record_count,s->notification_count,(unsigned)(s->attachment!=0));
@@ -52,7 +54,14 @@ static void write_snapshot(FILE *f,const SnowMarkupUpdateSnapshot *s,unsigned va
         const SnowMarkupNotification *v=&s->notifications[i];
         fprintf(f,"%s{\"id\":%u,\"present\":%u,\"key\":%u,\"selector\":%u,\"pending_bits\":%u,\"link_count_bits\":%u,\"branch\":%u,\"force\":%u,\"cached\":%u}",i?",":"",v->id,v->present,v->key,v->selector,v->pending_bits,v->link_count_bits,(unsigned)v->branch,(unsigned)v->force,(unsigned)v->cached);
     }
-    fputs("]}",f);
+    fputs("],\"actor_state\":{",f);
+    const SnowMarkupActorSnapshot *a=&s->actor_state;
+    fprintf(f,"\"valid\":%u",s->actor_valid);
+    if(valid && s->actor_valid) {
+        fprintf(f,",\"mode\":%u,\"outer_present\":%u,\"outer\":%u,\"inner_present\":%u,\"inner\":%u,\"runtime_present\":%u,\"world_interval_bits\":%u,\"gain_state\":%u,\"reverse\":%u,\"fc9\":%u,\"fdc\":%u",a->current_mode,a->outer_present,a->outer_state,a->inner_present,a->inner_state,a->runtime_present,a->world_interval_bits,a->gain_state,(unsigned)a->reverse_fallback,(unsigned)a->fc9,(unsigned)a->fdc);
+        fprintf(f,",\"pending_bits\":[%u,%u,%u,%u],\"normal_bits\":[%u,%u,%u,%u],\"current_bits\":[%u,%u,%u,%u]",a->pending_bits[0],a->pending_bits[1],a->pending_bits[2],a->pending_bits[3],a->normal_bits[0],a->normal_bits[1],a->normal_bits[2],a->normal_bits[3],a->current_bits[0],a->current_bits[1],a->current_bits[2],a->current_bits[3]);
+    }
+    fputs("}}",f);
 }
 static DWORD WINAPI capture(LPVOID unused) {
     (void)unused;ULONGLONG until=GetTickCount64()+180000;

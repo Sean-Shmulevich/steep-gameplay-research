@@ -12091,3 +12091,58 @@ both are sampled around one original update call, a boundary state does not prov
 the state used inside ID-84's vector service: its preceding action may perform
 transitions. Such a combined capture can identify candidate correlations and
 narrow where a direct service/callback observation is needed.
+
+### Combined provider and actor capture
+
+The capture plugin now samples actor state after each accepted provider sample,
+with an independent `actor_valid` flag. An actor rejection does not erase a valid
+provider sample. A failed outer actor/entity/world identity recheck still rejects
+the entire observation. This keeps partial acceptance explicit instead of treating
+unsampled actor fields as zeros. The experimental probe ABI is now 3 because its
+record embeds the actor snapshot; rebuild consumers and check version/size.
+
+Provider and actor observations are sequential, not one simultaneous snapshot.
+Each performs its own repeated-read checks. Combined acceptance therefore cannot
+prove the actor state was unchanged at the instant the provider fields were read,
+and neither establishes internal callback ordering. The additional read overhead
+also means capture timing should not be compared directly with uninstrumented
+performance. All raw float fields are serialized as uint32 bits for later analysis.
+
+### Live actor correlation at markup edges
+
+The [combined live receipt](../../native/snow_host/markup_actor_live_validation.json)
+contains 104 update calls from RVA 0x34df47 during a controlled W-input trial.
+All 208 provider samples and all 208 actor samples were accepted. The input
+helper's key-down/up reports both fell inside the callback envelope. No records
+were dropped; restoration was independently checked, the host remained ready and
+unfaulted, and bottle/save/settings/DLL cleanup passed.
+
+Two calls bracketed ID-84 cached transitions:
+
+| Record | Cached transition | State before and after | fdc before -> after | Pending buffer |
+| --- | --- | --- | --- | --- |
+| 56 | 0 -> 1 | current 0, outer 0, inner 5 | 1 -> 0 | Zero -> nonzero XYZ |
+| 79 | 1 -> 0 | current 0, outer 0, inner 5 | 0 -> 0 | Zero -> nonzero XYZ |
+
+The fc9 byte stayed one. These were the only nonzero pending snapshots among
+208 samples; other samples contained zero. That does not identify the operation
+that subsequently cleared or consumed the buffer. A later call changed the outer
+state from 0 to 3 across the update without an ID-84 cached transition.
+
+Both transition boundaries match the nested-selector-5 vector route and the
+mode/state gate leading toward the unconditioned-by-fc9 release helper. The
+observed rising-edge fdc change and two pending accumulations are consistent with
+the decoded ID-84 service order. They do not directly prove listener invocation,
+that the internal state stayed unchanged throughout the call, or that no other
+writer contributed. The vector-owner direction and active gain were not sampled,
+so the projection formula has not yet been compared with these live deltas.
+
+The update's float argument matched the sampled world+0x1060 interval bit-for-bit
+in all 208 before/after comparisons. Together with the existing clock producer,
+this supports identifying this observed argument as the ordinary world interval
+in seconds. It does not make it a physics-substep interval or prove the equality
+for every callback path or game state.
+
+The next focused observation is the vector source/gain at this state and the
+specific callback/service boundary. That can distinguish a numerically explained
+pending delta from the current temporal and structural correlation.

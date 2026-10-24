@@ -1,0 +1,126 @@
+{
+  "scope": "Live update-boundary correlation of selected markup states, actor selectors and pending vector; not direct listener execution",
+  "probe_abi": 3,
+  "requested_capture_ms": 1000,
+  "calls": 104,
+  "summary": {
+    "kind": "summary",
+    "compatible": 1,
+    "guarded": 1,
+    "configured": 1,
+    "installed": 1,
+    "restored": 1,
+    "drained": 1,
+    "slot_original": 1,
+    "used": 104,
+    "dropped": 0,
+    "frequency": 10000000
+  },
+  "caller_rvas": [
+    "0x34df47"
+  ],
+  "all_provider_and_actor_samples_accepted": true,
+  "argument_interval_bit_matches": 208,
+  "argument_interval_comparisons": 208,
+  "transitions": [
+    {
+      "record": 56,
+      "id84_cached": [
+        0,
+        1
+      ],
+      "state_before": [
+        0,
+        0,
+        5
+      ],
+      "state_after": [
+        0,
+        0,
+        5
+      ],
+      "fdc": [
+        1,
+        0
+      ],
+      "fc9": [
+        1,
+        1
+      ],
+      "pending_before": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pending_after": [
+        -4.053049087524414,
+        -1.925297498703003,
+        -2.011505365371704,
+        0.0
+      ],
+      "world_interval": 0.01092739962041378,
+      "argument_matches_interval": true
+    },
+    {
+      "record": 79,
+      "id84_cached": [
+        1,
+        0
+      ],
+      "state_before": [
+        0,
+        0,
+        5
+      ],
+      "state_after": [
+        0,
+        0,
+        5
+      ],
+      "fdc": [
+        0,
+        0
+      ],
+      "fc9": [
+        1,
+        1
+      ],
+      "pending_before": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pending_after": [
+        -3.8572771549224854,
+        -1.894824743270874,
+        -2.025200605392456,
+        0.0
+      ],
+      "world_interval": 0.010557400062680244,
+      "argument_matches_interval": true
+    }
+  ],
+  "nonzero_pending_samples": 2,
+  "input_api_accepted": true,
+  "input_report_envelope_overlap": true,
+  "slot_original_independently_verified": true,
+  "host_ready_after": true,
+  "host_faulted_after": false,
+  "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "private_evidence_sha256": {
+    "route-result.json": "8f8065f877f6aba1a64b5dcc469a4f68969b599bcb279320e5c8bf6ff8952814",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "input-events.jsonl": "6b51b68508ce6b010920f00544428c03d40c89698e955d935a75c78197a2f8df",
+    "membership-reader-calls.json": "354ed90a9bfdc4cef463f9e53c86f7bc1bea72e5de3280c05ba696a999714187"
+  },
+  "game_files_included": false
+}

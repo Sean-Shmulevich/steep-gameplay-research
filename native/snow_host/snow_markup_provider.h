@@ -1,6 +1,7 @@
 #ifndef SNOW_MARKUP_PROVIDER_H
 #define SNOW_MARKUP_PROVIDER_H
 #include "snow_entry_attribution.h"
+#include "snow_markup_actor.h"
 #define SNOW_MARKUP_RECORD_LIMIT 8
 /* Private observation layout, not a game object or stable wire ABI. */
 typedef struct { uint32_t key,scalar54_bits,start_bits,end_bits;uint8_t flags; } SnowMarkupScalarRecord;
@@ -14,6 +15,8 @@ typedef struct {
     uint32_t record_count,notification_count;
     SnowMarkupScalarRecord records[SNOW_MARKUP_RECORD_LIMIT];
     SnowMarkupNotification notifications[2];
+    uint32_t actor_valid;
+    SnowMarkupActorSnapshot actor_state;
 } SnowMarkupUpdateSnapshot;
 /* Caller establishes fresh component provenance and verified process/image.
  * Two identical sequential samples required. No pin, atomicity, game calls,

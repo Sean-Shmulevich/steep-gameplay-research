@@ -6987,3 +6987,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   selectors, world interval and pending vector. Forty read-failure positions,
   mutation, backlinks, skipped state reads and null runtime pass native/sanitizer
   fixtures; Windows compilation passes. Live integration remains next.
+- Combined live markup/actor capture: 104 updates, all provider/actor samples
+  accepted. ID-84 rising edge coincides with fdc 1->0 and a nonzero pending vector;
+  falling edge also coincides with pending accumulation. Both boundaries are
+  state 0/0/5. All 208 float-argument/world-interval comparisons match bits.
+  Direct listener execution and live source/gain-to-delta comparison remain open.
