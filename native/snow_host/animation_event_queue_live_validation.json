@@ -1,0 +1,45 @@
+{
+  "schema": "animation-event-queue-live-validation-v1",
+  "passed": true,
+  "scope": "Bounded passive observations of an owned Kino component acquired through source membership",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "reader_sha256": "6f14004a83d9a04b8553d69deedd4a38796120f0b696ac830891bf26287cf642",
+  "controller_sha256": "68b5e070e474934c65f670eb3735fb2d99edf00998cfa44f7a5970e9d0647ed9",
+  "evidence_hashes": {
+    "route-result.json": "5f48de65f14a2aaa6bc40e8f261296f9051bfabdf4915f00f2ce7ad6c92e0d1d",
+    "queue-reader-calls.json": "98e27e90f17a2dc6371f280fdf5018cf0c23e100ed2dc9bb02a46bce47a7bb00",
+    "result.json": "47d2075e206ba574ba9e33dbc4716c0988e6f744c273512a153c94e9cfbe3794",
+    "boxed-provenance.json": "203aff9ff349ffd453f23cc322f4cbaa6cc89c54d147fcc09f87583dc5a89519"
+  },
+  "accepted_samples": 8,
+  "counts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "rejected_samples": 0,
+  "transport_calls": 32,
+  "first_to_last_read_seconds": 0.445592,
+  "movement_input_sent": false,
+  "handler_hook_installed": false,
+  "independent_local_player_identity_proved": false,
+  "callback_execution_established": false,
+  "atomic_snapshot": false,
+  "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+  },
+  "limitations": [
+    "All observed queues were empty; no live event type or handle decoding was exercised.",
+    "Polling can miss events produced and drained between observations.",
+    "Actor acquisition and matching component ownership do not independently establish selected local-player identity.",
+    "Matching endpoint guards are not a lifetime pin or atomic snapshot."
+  ]
+}

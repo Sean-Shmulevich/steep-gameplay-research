@@ -262,3 +262,43 @@ For the next live capture, retain the event table, delivery target and both
 context identities. Classify these two signatures separately from unknown
 payloads. The queue can carry audio-related events, so queue activity alone is
 not evidence of a markup notification or a snow-motion release.
+
+## Bounded queue observation API
+
+[`capture_event_queue`](../../engine/animation_event_observation.py) accepts a
+process-identity-checked `readv` transport, fresh component/owner addresses, image
+base/size and external identity guards. The caller must verify the compatible
+image; this module does not hash a remote executable or acquire a player.
+
+It requires the known Kino table and owner backlink, and reads the three queue
+headers. Counts must agree, fit each header's low-14-bit capacity and not exceed
+64. Larger or inconsistent queues fail instead of returning a partial absence.
+The event and handle-pointer arrays, event tables, in-image handler slots, and
+handle payload/status fields are retained for an endpoint recheck. Reference
+counts are not part of pointer resolution and are excluded from this comparison.
+Reads are batched at 32 ranges. Null events skip handle dereferences, matching
+the original drain. Context payloads and out-of-image tables are not dereferenced.
+
+Results contain event table/handler RVAs, known type names, handle validity and
+capture-local context aliases. Equality with the supplied owner/component is
+reported separately. No heap addresses or raw memory bytes appear in the returned
+observation. Aliases cannot be compared across captures. The transport's private
+logs may still contain addresses and must not be published.
+
+A successful recheck is not an atomic snapshot or a lifetime pin. A changed
+pointer/status/header causes rejection, but an intervening change and restoration
+can escape detection. Empty queues can be observed before production or after
+drain. Neither an empty queue nor a populated queue proves handler execution.
+Synthetic tests cover classification, alias resolution, inactive and null paths,
+foreign tables, inconsistent/oversized headers, mutation rejection, and transport
+failure. Live validation is reported separately from those adapter tests.
+
+The first [live queue receipt](../../native/snow_host/animation_event_queue_live_validation.json)
+contains eight accepted empty-queue samples across approximately 0.446 seconds,
+using 32 transport calls. Fresh registry acquisition matched the boxed actor
+route; the Kino receiver was selected from owned DispatchAnimEvents membership.
+No movement input or event-handler hook was used. The research bottle stopped,
+saves/settings were restored and the original DLL verified. This exercises the
+live identity/header/empty-queue path only; nonempty decoding remains synthetic.
+The next experiment should observe an enqueue or dispatch boundary, since repeating
+idle polling cannot distinguish absent events from events drained between reads.
