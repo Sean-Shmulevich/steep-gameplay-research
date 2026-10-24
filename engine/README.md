@@ -1019,3 +1019,13 @@ to inspect the connected prepass, override selection and pending-angle effects.
 platform math; ordered supplied math observations are also supported with input
 and consumption checks. No game files or live memory access are required. See
 [the input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-basis-callback-inspection).
+
+Inspect recovered spring coefficients through pose record storage:
+
+```sh
+python3 -m engine.snow_pose_submission engine/examples/snow_pose_submission.json --output /tmp/pose-submission.json
+```
+
+The fixture is authored synthetic data. This API preserves recovered axis order,
+packing and destination padding; it reports notification intent without executing
+body notifications or solver forces. Native phase ordering remains caller supplied.

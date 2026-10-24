@@ -14969,3 +14969,40 @@ result. The remaining 160 retain arbitrary supplied masks. Final storage and
 notification-boundary checks still match exactly. This closes the static mask
 producer gap; notification effects, solver consumption and live ownership remain
 outside this validation.
+
+### Spring coefficients to submitted pose storage
+
+`engine.snow_pose_submission.prepare_spring_submission` joins the recovered
+spring conversion with record publication. Inputs are three mass-like coefficients,
+frequencies and damping ratios, the existing 0x100-byte source record, existing
+0x120-byte destination storage and swap/request bytes. The recovered vector mask
+is the default; explicit masks remain supported. Inputs are detached records.
+
+The source starts at wrapper+0x18. Thus spring flag offsets wrapper+0xb4/0xc8/0xdc
+become source+0x9c/0xb0/0xc4, and stiffness/damping pairs wrapper+0xc0/0xd4/0xe8
+become source+0xa8/0xbc/0xd0. These become destination+0xc8/0xdc/0xf0. Record
+order remains input axes Y/Z/X; unrelated source fields and destination padding
+are preserved. The optional swap affects only the two frame blocks, not springs.
+
+The API computes spring records, writes these fields and calls the recovered
+submission preparation. It returns updated source/storage and notification intent.
+It does not supply native intervening work, scheduler timing, locks, object
+ownership or force application. The caller must establish reachability and order.
+
+[Validation](../../native/snow_host/pose_spring_submission_validation.json): 320
+synthetic sequences execute the original spring routine, then the original full
+submission chain. Updated source and final destination match bit-for-bit, including
+zero mass, zero frequency, stiffness ceiling and signed ratios. Notification
+entry is intercepted; arguments and already-written storage are checked, but its
+effects are excluded. Sequential native calls do not prove original phase timing.
+
+Run the authored synthetic example with:
+
+```sh
+python3 -m engine.snow_pose_submission engine/examples/snow_pose_submission.json --output /tmp/pose-submission.json
+```
+
+The `snow-pose-submission-v1` inspector requires provenance and an explicit
+`caller_asserted_prepare_then_submit` sequence label. Input source/storage are hex
+byte strings, not addresses. Output contains records, resulting byte strings and
+limits. The synthetic fixture is an inspection input, not a gameplay calibration.

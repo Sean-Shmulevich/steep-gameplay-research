@@ -1,0 +1,14 @@
+{
+  "cases": 320,
+  "initializer_cases": 160,
+  "bit_exact": true,
+  "scope": "Original spring coefficient conversion followed by connected original forwarding thunk, temporary construction, conversion, conditional swap and destination storage; notification dispatch arguments and post-storage ordering checked",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Body notification intercepted and returned without executing its effects",
+    "Synthetic retained objects; 160 cases execute recovered mask initializer, 160 supply arbitrary masks; live timing and ownership not established",
+    "Constructor bytes overwritten by conversion; only final destination and notification boundary are compared",
+    "No solver application or concurrent scheduling validation; sequential calls do not prove native intervening work or timing"
+  ],
+  "game_files_included": false
+}

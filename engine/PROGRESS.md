@@ -7370,3 +7370,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   overrides retained. Connected native validation passes 160 initialized-mask and
   160 arbitrary-mask cases. Static producer gap closed; live initialization timing,
   notification effects and solver consumption are still unproved.
+- Connected spring coefficient output to pose source fields and destination
+  storage, with a runnable JSON inspector and synthetic fixture. 320 sequential
+  original spring/submission runs match updated source and destination exactly;
+  notification arguments/order checked with effects intercepted. Original phase
+  timing, intervening work and force application remain external.
