@@ -1,0 +1,17 @@
+{
+  "schema": "pose-link-profiles-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete paired lookup fragment without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1993514..0x19935ee",
+  "comparisons": [
+    "both selected profile tokens",
+    "unchanged resource descriptors, body entry arrays and payload bytes"
+  ],
+  "limits": [
+    "Caller-supplied retained entries/maps/tables; kind semantics and asset resource ownership unresolved.",
+    "Only one row-builder family lookup validated.",
+    "No profile lifetime guarantee, material naming or live selection claim."
+  ]
+}

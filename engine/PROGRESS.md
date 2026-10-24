@@ -7600,3 +7600,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native cases match bit-for-bit without interception. Derived-gate integration
   covers seed admission/bypass. Physical profile names, scalar units, resource
   lookup and remaining row assembly remain unresolved.
+- Recovered paired entry/resource profile lookup for the inspected row builder.
+  512 complete offline native fragments match without interception, including
+  distinct entry slots, kind masking, absent-map fallback and shared selectors.
+  Added lookup-to-coefficient composition coverage. Resource kind semantics,
+  asset ownership, lifetime and other builder families remain unresolved.

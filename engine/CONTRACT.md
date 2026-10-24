@@ -371,5 +371,14 @@ Link profile coefficients: `combine_link_scalar` preserves raw-mode combination,
 float32 operation order and signed-zero tie choices. `link_response_coefficients`
 connects fields30/40/60/64 to response and cache-seeding gate using explicit context
 scalar/factor/flags. Field64 is not evaluated at/above the recovered threshold.
-Profiles/modes are supplied; physical units, profile lookup, singular arithmetic
-and full row equations remain outside the contract.
+Profile fields/modes are supplied; physical units, singular arithmetic and full
+row equations remain outside the contract.
+
+
+Paired profile lookup: `resolve_pose_link_profiles` selects retained entry resources
+using payload pair indices, then resolves opaque profile tokens through the
+kind6/kind7 byte maps or default pointer. Both endpoints share the payload selector.
+Null maps select defaults; null table results remain null. Resource storage,
+lifetime, kind semantics and other builder families remain external. Returned
+profiles may feed `link_response_coefficients`; this does not establish material
+names or a live atomic read contract.

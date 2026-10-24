@@ -16726,8 +16726,8 @@ geometric-mean products rather than inventing native exception behavior.
 
 The connected0x19935ee..0x1993701 fragment combines profile fields+0x30,+0x40,
 +0x60 and conditionally+0x64 using four separately supplied mode values. Earlier
-code resolves the profiles through per-entry/resource branches; that lookup and
-the physical meanings of these fields remain outside this reconstruction.
+code resolves the profiles through per-entry/resource branches, now reconstructed
+in the paired lookup below. Physical meanings of these fields remain unresolved.
 `link_response_coefficients` preserves the following arithmetic:
 
 ```
@@ -16762,4 +16762,45 @@ context inputs are supplied. Cases include default modes, signed-zero ties and
 threshold branches. An independent composition test feeds the derived gate into
 cache seeding and checks both admission outcomes. Singular denominators, negative
 root products and other exceptional arithmetic remain outside the Python domain;
-full profile lookup, row assembly and solver iteration remain unresolved.
+resource ownership, row assembly and solver iteration remain unresolved.
+
+### Paired link profile resolution
+
+`engine.pose_link_profiles.resolve_pose_link_profiles` reconstructs the complete
+paired lookup fragment at0x1993514..0x19935ee for the0x19933d0 builder family.
+Each body supplies an entry array through+0xb8. Payload uint16 indices at+0x48
+and+0x4a select72-byte entries, whose+0x10 pointers select resource descriptors.
+Both resource pointers are captured before either profile is resolved.
+
+Both endpoints use the same payload selector. This is a structural observation,
+not evidence that the two bodies have the same material or resource kind.
+
+```python
+resource_a = first_body.entries[payload.u16(0x48)].resource
+resource_b = second_body.entries[payload.u16(0x4a)].resource
+
+def profile(resource):
+    kind = resource.kind28 & 0x7fff
+    if kind == 6 and resource.map60 is not null:
+        return resource.table50[resource.map60[payload.u16(0x3e)]]
+    if kind == 7 and resource.mapb0 is not null:
+        return resource.tablea0[resource.mapb0[payload.u32(0x3c) >> 1]]
+    return resource.default20
+```
+
+Maps contain byte indices into pointer tables. The short selector is the high
+half of the same raw32-bit word used by kind7. Kind7 discards only its low bit.
+A null map falls back to the default profile; a selected null profile does not.
+The independent API returns opaque profile tokens. Callers retain the resources,
+map storage, tables and profile objects and pass the selected profile fields to
+`link_response_coefficients`. Resource-kind names, asset ownership and lifetime
+rules remain unknown. No memory synchronization or live lookup is implemented.
+
+[512 offline native lookup comparisons](../../native/snow_host/pose_link_profiles_validation.json)
+execute the entire paired fragment without intercepted calls. Cases vary both
+entry indices, resource kinds, map presence, byte selections and raw profile
+pointers. Unselected entries contain different pointers to catch wrong indexing.
+Both outputs and retained input bytes match. A synthetic composition test passes
+the selected profiles into coefficient evaluation, independently checking that
+default profiles are not substituted. This does not validate other builder
+families or establish physical units.
