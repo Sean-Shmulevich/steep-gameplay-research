@@ -13139,3 +13139,34 @@ seeds observed in the emulator are supplied to the independent model; no claim
 of cross-CPU approximate-instruction identity is made. Nine portable reporting
 and aggregation tests pass. This closes local finalizer composition, not native
 initialization, live aggregate attribution or later consumers.
+
+### Runnable contact-output inspection
+
+The public `engine.snow_contact_bench` composes the reconstructed summed submission,
+reporting, weighted grouping and finalization kernels. Run the synthetic example:
+
+```sh
+python3 -m engine.snow_contact_bench engine/examples/snow_contact_outputs.json
+```
+
+`inspect(document)` accepts schema `snow-contact-bench-v1` with explicit provenance,
+records, both selected gates, elapsed time, initial report state, two initial
+buckets, frame columns and fallback point. It returns impulse vectors, reports,
+accumulated/finalized groups and per-record report/group decisions separately.
+Inputs are copied. No game process, payload or asset is required.
+
+The authored example deliberately produces no impulses, one report and two
+nonempty groups: its enabled kind-1 record has gate zero, while its kind-2 record
+is disabled but has positive aggregate weight. Raising the kind-1 gate to any
+positive tested value adds the same timestep-scaled impulse; the gate is not
+multiplied into that impulse again. This is an inspection example, not a captured
+physical situation or proposed controller tuning.
+
+The bench supplies a mathematical reciprocal-square-root seed and labels that
+substitution in every result. Native state initialization, record freshness
+across phases, intermediate mutations, body application and final consumers are
+outside its scope. In particular, the native call between submission and
+reporting has not been proved to preserve every record; reuse of one supplied
+record array is an explicit composition assumption. Twenty-five related tests
+pass, including phase distinctions, unchanged inputs and gate eligibility versus
+magnitude. The CLI example also executes successfully.

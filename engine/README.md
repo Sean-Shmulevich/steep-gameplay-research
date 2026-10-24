@@ -991,3 +991,12 @@ inspects decoded motion-state vector formulas and world-scaled pending accumulat
 Inputs include explicit post-dispatch state and RSQRT seed. The bundled example is
 synthetic; it does not emulate state transitions or run the game. See
 [scope and JSON fields](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-vector-to-pending-inspection).
+
+
+### Contact-output inspection bench
+
+Run `python3 -m engine.snow_contact_bench engine/examples/snow_contact_outputs.json`
+to inspect summed impulse submissions, contact reports and finalized weighted
+groups separately. `--output PATH` saves JSON. The example is synthetic; it uses
+supplied initialization/frame data and a mathematical reciprocal-square-root seed.
+No game files are needed. See [the contract and limitations](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-contact-output-inspection).

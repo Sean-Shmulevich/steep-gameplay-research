@@ -7140,3 +7140,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   related tests pass. Zero-weight/zero-normal nonempty groups remain outside the
   finite adapter contract. Initialization, live aggregate capture and consumers
   remain open; no unit-quaternion or native recovery substitution introduced.
+- Added runnable contact-output bench composing summed submissions, reports,
+  weighted groups and finalization with explicit supplied-state/freshness limits.
+  Synthetic example demonstrates report without impulse and aggregation without
+  reporting. Twenty-five related tests and CLI example pass. Mathematical rsqrt
+  seed is labeled; no native initialization, cross-phase freshness or solver claim.

@@ -1,0 +1,168 @@
+{
+  "schema": "snow-contact-bench-v1",
+  "provenance": "authored_synthetic",
+  "records": [
+    {
+      "kind": 1,
+      "enabled": true,
+      "identifier": 1,
+      "a": [
+        0,
+        0,
+        3,
+        0
+      ],
+      "b": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "point": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "normal": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "weight": 1,
+      "value": 0.25
+    },
+    {
+      "kind": 2,
+      "enabled": false,
+      "identifier": 2,
+      "a": [
+        0,
+        0,
+        3,
+        0
+      ],
+      "b": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "point": [
+        0,
+        -1,
+        0,
+        1
+      ],
+      "normal": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "weight": 2,
+      "value": 0.5
+    }
+  ],
+  "gate_one": 0,
+  "gate_other": 1,
+  "elapsed": 0.125,
+  "report_state": {
+    "records": [],
+    "max_a_squared": 0,
+    "max_b_squared": 0,
+    "max_a": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "max_b": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "sum_a": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "sum_b": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "buckets": [
+    {
+      "count": 0,
+      "weight": 0,
+      "weighted_value": 0,
+      "point": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "count": 0,
+      "weight": 0,
+      "weighted_value": 0,
+      "point": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "frame_columns": [
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "fallback_point": [
+    0,
+    0,
+    0,
+    1
+  ]
+}
