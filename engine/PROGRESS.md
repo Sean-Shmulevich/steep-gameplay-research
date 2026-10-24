@@ -7579,3 +7579,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   segments match payload and input-array bytes without call interception, including
   original scalar trig. Earlier key grouping/acquisition, physical flag meaning
   and cached-word solver consumption remain unresolved.
+- Added runnable JSON/CLI link-payload inspector with a synthetic six-to-four
+  example, transformed point pairs, raw cache-word carryover and preserved byte
+  diagnostics. Tests cover input immutability, key-width grouping, small-group
+  bypass, guards and CLI output. No binary required; native grouping/acquisition,
+  solver semantics and live lifetime remain explicit exclusions.

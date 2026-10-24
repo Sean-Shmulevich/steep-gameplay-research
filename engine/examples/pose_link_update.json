@@ -1,0 +1,183 @@
+{
+  "schema": "pose-link-update-v1",
+  "provenance": "authored_synthetic",
+  "sequence": "reached_record_group",
+  "inputs": {
+    "previous_payload_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a500000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a564000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a501000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a565000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a502000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a566000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a503000000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a567000000a5a5a5a5a5a5a5a5a5a5a5a504000000a5a5a5a5a5a5a5a5a5a5a5a5",
+    "key_width": 32,
+    "first_index": 2,
+    "second_index": 3,
+    "first_entry_flags": 20,
+    "second_entry_flags": 255,
+    "first_frame": {
+      "basis": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        1,
+        2,
+        3
+      ]
+    },
+    "second_frame": {
+      "basis": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation": [
+        1,
+        2,
+        3
+      ]
+    },
+    "records": [
+      {
+        "field00": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "first_point": [
+          -2,
+          -2,
+          0
+        ],
+        "row_id": 0,
+        "second_point": [
+          8,
+          18,
+          5
+        ],
+        "detail": 7
+      },
+      {
+        "field00": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "first_point": [
+          2,
+          -2,
+          0
+        ],
+        "row_id": 1,
+        "second_point": [
+          12,
+          18,
+          5
+        ],
+        "detail": 7
+      },
+      {
+        "field00": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "first_point": [
+          -2,
+          2,
+          0
+        ],
+        "row_id": 2,
+        "second_point": [
+          8,
+          22,
+          5
+        ],
+        "detail": 7
+      },
+      {
+        "field00": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "first_point": [
+          2,
+          2,
+          0
+        ],
+        "row_id": 3,
+        "second_point": [
+          12,
+          22,
+          5
+        ],
+        "detail": 7
+      },
+      {
+        "field00": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "first_point": [
+          0,
+          0,
+          0
+        ],
+        "row_id": 4,
+        "second_point": [
+          10,
+          20,
+          5
+        ],
+        "detail": 7
+      },
+      {
+        "field00": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "first_point": [
+          0,
+          1,
+          0
+        ],
+        "row_id": 5,
+        "second_point": [
+          10,
+          21,
+          5
+        ],
+        "detail": 7
+      }
+    ]
+  }
+}

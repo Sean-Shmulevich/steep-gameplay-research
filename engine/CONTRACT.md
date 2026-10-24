@@ -346,3 +346,10 @@ explicit resolved entry flag. It connects flag replacement, optional four-record
 reduction and payload update in copied storage. The upstream raw-byte pair gate
 is separate. Sorting, payload lookup/acquisition, cached-word solver meaning,
 protected operations and native lifetime remain outside this API.
+
+Link-payload inspection: `pose-link-update-v1` requires complete prior bytes and
+one reached key group with explicit16/32-bit grouping mode. It packs structural
+record fields and exposes recovered reduction/update results, raw cache words and
+retained padding. Input bounds, finite checks and JSON diagnostics are authored;
+no missing bytes, native acquisition, physical cache semantics or solver behavior
+are invented. Synthetic bundled fixtures contain no game payloads.

@@ -1060,3 +1060,16 @@ input requires `callback_policy: record_only`; body virtual calls, link clearing
 and destruction are reported as intents with their native effects unresolved.
 Retired group records remain as diagnostic snapshots. They are not usable handles.
 See the [contract and evidence limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-ordinary-group-processing-inspection).
+
+### Link-payload geometry and cache inspection
+
+```sh
+python3 -m engine.pose_link_bench engine/examples/pose_link_update.json --output /tmp/link-update.json
+```
+
+This synthetic example reduces six records to four, transforms both point sets
+through supplied body frames and carries cached words forward by row ID. Output
+includes selected source indices, transformed points, raw cached words, preserved
+padding and complete result bytes. It needs no binary or game files. Inputs must
+already represent one key group; sorting, payload acquisition and solver effects
+are outside the inspector. See the [input contract](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-link-payload-inspection).

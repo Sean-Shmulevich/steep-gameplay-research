@@ -16585,3 +16585,43 @@ caller active count match. Runtime masks use their recovered initialized values
 and scalar trig dispatch flag is zero. This adds connected evidence beyond the
 individual helper receipts; it still excludes earlier grouping/acquisition,
 protected services, live identity and the cached word's downstream solver meaning.
+
+### Runnable link-payload inspection
+
+`engine.pose_link_bench` exposes the connected pipeline as schema
+`pose-link-update-v1`, sequence `reached_record_group`. The example
+`engine/examples/pose_link_update.json` is wholly authored synthetic data and
+requires no external game payload. Provenance must be `authored_synthetic` or
+`caller_supplied_observation`; the latter does not imply independent verification.
+
+Inputs supply all288 previous payload bytes as hex, two frames with XYZ basis
+rows/translations, uint16 pair indices, raw entry flag bytes and1..4096 records.
+The record-count limit is an authored inspection bound. Each record contains:
+
+- `field00`: four finite float32 values. XYZ supplies the selector's normal for
+  the first record of an oversized group; the fourth word remains structurally named.
+- `first_point` and `second_point`: finite XYZ values copied into the48-byte input
+  layout and transformed by the recovered updater.
+- `row_id`: raw uint32 at record+0x1c, used for cached-word matching.
+- `detail`: raw uint32 at record+0x2c. Explicit `key_width`16 or32 defines the
+  grouping comparison. All supplied records must match under that width.
+
+The adapter does not sort or acquire groups. It checks the caller's single-group
+assertion, packs these structural fields, derives the raw paired-entry bit gate,
+and runs the recovered pipeline. Previous bytes are mandatory, so unknown padding
+or inactive cache entries are not silently fabricated. Synthetic fixture bytes
+and arbitrary cached words are visibly labeled as authored inputs.
+
+Output reports selected source indices, whether reduction ran, active rows,
+transformed point pairs, row IDs, raw uint32 cached words, pair indices and retained
+four-byte row tails. It also returns complete payload and input-array hex, allowing
+byte comparison without guessing physical units or cached-word interpretation.
+Nonfinite output is rejected instead of emitting invalid JSON. Input validation,
+hex representation and diagnostic fields are authored interfaces; the numerical
+pipeline has the separate continuous native receipt above.
+
+The fixture selects indices[2,1,0,3] from six inputs and carries cached words
+[102,101,100,103]. Tests verify those results, transformed coordinates, retained
+padding, <=4 selector bypass,16/32-bit key grouping, malformed input rejection,
+input immutability and CLI output. The inspector does not access the live game,
+execute a solver, apply impulses, allocate native payloads or establish lifetime.
