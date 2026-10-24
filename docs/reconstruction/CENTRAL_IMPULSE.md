@@ -16980,3 +16980,62 @@ caller registers explicitly; it is not an uninterrupted full-builder comparison.
 All XYZ bits match for both arms, both world points, center and separation.
 Synthetic cases include nonorthogonal bases and large-offset cancellation. A
 composition test connects separation to the recovered primary response formula.
+
+### Connected single-family link row builder
+
+`engine.pose_link_builder.build_pose_link_rows` now connects the recovered pieces
+for the complete0x19933d0 metadata-clear/single builder. It resolves paired
+profiles once, computes the shared coefficients and processes each retained
+payload row. Each row consumes one primary112-byte slot, two secondary112-byte
+slots and three sequential result indices. Context counters+0xa4/+0xbc count the
+primary/secondary rows; +0x180 counts result indices. The independent API exposes
+retained arrays and counters rather than process-relative storage addresses.
+
+For each row it combines `link_point_geometry`, `link_tangent_basis`,
+`link_primary_response`, result binding and conditional cached-result seeding.
+The original first-body motion projection and tangent fourth lane are exposed as
+diagnostics by the tangent helper so assembly preserves signed-zero lanes too.
+With `r` the first arm, `delta` the paired separation and `n` the payload normal,
+the primary angular lever is `r + float32(0.5 * delta)` componentwise. The primary
+direction is `-n`; its angular direction is `cross(lever, -n)`. Both secondary
+angular directions are `cross(r, tangent)`.
+
+| Row field | Primary | Each secondary |
+| --- | --- | --- |
+| +0x00/+0x02 | First/second body uint16 indices | Same |
+| +0x04 | Primary result index | Its own sequential result index |
+| +0x10 | Selected response broadcast | First3 lanes `float32(dot(delta,tangent)*0)`, fourth lane FLT_MAX |
+| +0x20 | Negated normal, fourth lane negative zero | Tangent direction with recovered fourth lane |
+| +0x30 | Lever cross direction, fourth lane zero | First arm cross tangent, fourth lane zero |
+| +0x50 | Eight zero bytes | Primary result index in first4 bytes |
+| +0x60 | Cache-seeding gate broadcast | Combined profile field30 broadcast |
+
+Other bytes remain untouched, including+0x40..+0x4f. Secondary response lanes are
+not unconditionally assigned positive zero: multiplication by zero preserves a
+negative sign for a negative finite dot product. The first tangent's fourth lane
+also preserves the projection/fallback path's signed zero. These details matter
+for byte-exact reconstruction even where they do not change ordinary arithmetic.
+
+The first result index is published in the payload feedback field. A zero gate
+seeds that result with the raw prior cache word broadcast to four lanes; a nonzero
+gate leaves existing result bytes unchanged. The separate seeding helper retains
+its previously established unordered comparison behavior, while this connected
+API remains restricted to finite nonsingular coefficient arithmetic. It supplies
+no solver iteration and does not synthesize the result subsequently fed back.
+
+[512 uninterrupted full-builder comparisons](../../native/snow_host/pose_link_builder_validation.json)
+execute0x19933d0 to return, including original profile combination calls, without
+interception. They compare every retained primary/secondary row byte, complete
+payloads, all result storage and three counters. Cases cover0..4 rows, nonzero
+initial counters, zero/nonzero point motion, both coefficient branches, all six
+combination modes and arbitrary cached bits. The native resource descriptors use
+the default-profile branch; indexed resolution has separate fragment validation.
+No builder calls, geometry helpers or coefficient arithmetic are replaced.
+
+Unit tests cover preservation of unused rows/padding, both cache-seed outcomes,
+zero-row allocation and a builder-to-feedback composition with an explicitly
+supplied external solver result. This supersedes the earlier lack of connected
+row assembly for this family only. Other three builder families, solver iteration,
+live lifetime and physical units remain unresolved. Retained storage capacity,
+valid indices and finite arithmetic are required; no native allocation failure or
+concurrent mutation behavior is invented.

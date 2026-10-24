@@ -43,4 +43,6 @@ def link_tangent_basis(basis, point, center, motion1a0, motion1ac, normal):
     if length==0 or not math.isfinite(length):raise ValueError('Finite nonzero tangent length required')
     inverse=f32(1.0/length)
     first=[f32(x*inverse) for x in tangent]
-    return dict(first=first,second=cross(n,first),fallback=fallback)
+    lane3=0.0 if fallback else f32(-0.0-f32(projection*0.0))
+    return dict(first=first,second=cross(n,first),fallback=fallback,
+                first_lane3=f32(lane3*inverse),opposite_motion_projection=projection)

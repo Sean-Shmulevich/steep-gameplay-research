@@ -410,3 +410,13 @@ points with caller-supplied frames. It preserves first offset128 subtraction and
 world-center readdition, returning both arms, world points and second-minus-first
 separation. Float32 cancellation is part of the behavior. Units, frame validity,
 round-trip identity and uninterrupted whole-builder equivalence are not implied.
+
+Connected link builder: `build_pose_link_rows` implements the metadata-clear/single
+family using explicit body/profile resources and retained row/result storage.
+It resolves profiles, computes coefficients, allocates by supplied counters and
+writes one primary plus two secondary rows per payload row. Untouched bytes and
+signed-zero lanes survive. It updates result indices and conditional raw cache
+seeding, without running a solver. Zero to four payload rows, sufficient capacity,
+valid identities and finite nonsingular arithmetic are required. Full native
+validation covers default profile lookup; other families and live ownership are
+excluded. Earlier fragment-only row-assembly limits are superseded for this family.

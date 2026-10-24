@@ -7625,3 +7625,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   512 offline comparisons across original geometry fragments match all XYZ bits;
   caller registers are prepared between fragments. Added geometry-to-response
   composition. Full uninterrupted builder and remaining row assembly stay open.
+- Connected the complete metadata-clear/single link builder: profile lookup,
+  coefficients, paired geometry, tangent/primary response, all three solver rows,
+  counter/index publication and cache seeding. 512 uninterrupted full native runs
+  match all retained row, payload and result bytes without intercepted calls.
+  Tests cover untouched storage and builder-to-feedback with supplied results.
+  Other builder families, actual solver iteration and live lifetime remain open.

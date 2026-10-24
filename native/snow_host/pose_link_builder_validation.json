@@ -1,0 +1,19 @@
+{
+  "schema": "pose-link-builder-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline uninterrupted full metadata-clear/single builder, including original profile combiners, without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19933d0",
+  "comparisons": [
+    "all retained primary/secondary row bytes, including untouched padding and unused rows",
+    "complete payload bytes",
+    "result storage bytes",
+    "three allocation/result counters"
+  ],
+  "limits": [
+    "Synthetic retained storage and default profile resource branch; indexed profile lookup separately validated.",
+    "Only this builder family; no solver iteration or live lifetime.",
+    "Finite geometry and nonsingular profile arithmetic; arbitrary raw cached result words."
+  ]
+}
