@@ -53,6 +53,10 @@ static void sample(FILE *f,const SnowUpdateSnapshot *s) {
     fputs(",\"rider_angular\":",f); floats(f,s->angular[1],3);
     fputs(",\"inverse_mass\":",f); floats(f,s->inverse_mass,2);
     fprintf(f,",\"point_attempted\":%u,\"point_valid\":%u,\"point_read_ticks\":%llu",s->point_attempted,s->point_valid,(unsigned long long)s->point_read_ticks);
+    if(s->point_attempted) {
+        const SnowPointDiagnostic *d=&s->point_diagnostic;
+        fprintf(f,",\"point_diagnostic\":{\"stage\":%u,\"pass\":%u,\"reads\":%u,\"read_failed\":%u,\"count_valid\":%u,\"directional_count\":%llu,\"summed_count\":%llu}",d->stage,d->pass,d->reads,d->read_failed,d->count_valid,(unsigned long long)d->directional_count,(unsigned long long)d->summed_count);
+    }
     if(s->point_valid) {fputs(",\"point_inputs\":",f);point_sample(f,&s->point_inputs);}
     fputc('}',f);
 }
@@ -172,7 +176,7 @@ __declspec(dllexport) int SnowMod_Initialize(const SnowHostApiV1 *api,SnowPlugin
     observe_points=GetPrivateProfileIntA("capture","observe_points",0,api->config_path)==1;
     host=api; milliseconds=seconds*1000;
     plugin->struct_size=sizeof *plugin; plugin->api_version=SNOW_PLUGIN_API_VERSION;
-    plugin->name="update_capture"; plugin->version="experimental-8";
+    plugin->name="update_capture"; plugin->version="experimental-9";
     plugin->on_pause=paused; plugin->on_resume=resumed;
     return 0;
 }

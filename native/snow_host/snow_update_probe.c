@@ -20,9 +20,9 @@ static void snapshot(void *actor,SnowUpdateSnapshot *out) {
     (void)actor; snow_update_snapshot(read_memory,NULL,&binding,out);
     if(point_base && (out->valid&SNOW_SNAPSHOT_VALID)) {
         LARGE_INTEGER start,end; QueryPerformanceCounter(&start);out->point_attempted=1;
-        out->point_valid=snow_point_inputs_observe(read_memory,NULL,binding.actor,point_base,point_size,&out->point_inputs)==1;
+        out->point_valid=snow_point_inputs_observe_detailed(read_memory,NULL,binding.actor,point_base,point_size,&out->point_inputs,&out->point_diagnostic)==1;
         if(out->point_valid && (out->point_inputs.runtime!=out->runtime || out->point_inputs.body!=out->main_body)) {
-            out->point_valid=0;memset(&out->point_inputs,0,sizeof out->point_inputs);
+            out->point_valid=0;out->point_diagnostic.stage=31;memset(&out->point_inputs,0,sizeof out->point_inputs);
         }
         QueryPerformanceCounter(&end);out->point_read_ticks=(uint64_t)(end.QuadPart-start.QuadPart);
     }

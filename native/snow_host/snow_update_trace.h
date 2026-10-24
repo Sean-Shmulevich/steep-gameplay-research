@@ -22,6 +22,7 @@ typedef struct {
     uint32_t point_attempted, point_valid;
     uint64_t point_read_ticks;
     SnowPointInputs point_inputs;
+    SnowPointDiagnostic point_diagnostic;
 } SnowUpdateSnapshot;
 /* Authored observation payload, not a native game object or public wire ABI.
  * All pointers are session-private provenance. No generation/freshness claim.

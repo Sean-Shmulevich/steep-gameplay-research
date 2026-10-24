@@ -7049,3 +7049,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   pass. First live attempt captured 449 attributed snow calls, all 898 ordinary
   snapshots valid, but zero point snapshots accepted. Both slots and cleanup
   verified. No point-input values inferred; rejection-stage diagnostics are next.
+- Added point rejection diagnostics. A second live run localized all 934 failures
+  to summed-list capacity: counts were 26 directional/44 summed, with successful
+  reads and no earlier guard failures. Increased only summed capacity to 64,
+  retaining directional 32 and all identity/repeat guards. All 746 maximal-path
+  read failures, sanitizer fixture, 44 focused tests and Windows build pass.
+  Expanded-capacity live acceptance remains next; cleanup passed on diagnostic run.

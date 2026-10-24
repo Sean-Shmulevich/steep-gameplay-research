@@ -12539,3 +12539,48 @@ The sampler currently reports only rejection, so this evidence cannot distinguis
 an identity mismatch, array bound, read failure or changed repeated sample. The
 next implementation step is explicit bounded rejection diagnostics. Do not raise
 record limits or weaken identity checks without locating the failing guard first.
+
+### Point-input rejection diagnostics
+
+Probe ABI 9 adds a separate diagnostic record: stage, sample pass, read count,
+read-failure flag, count-valid bits and any successfully read directional/summed
+counts. These are partial diagnostic observations, not accepted geometry or list
+snapshots. The point payload remains zeroed on rejection. Ordinary snapshots
+retain their independent validity.
+
+Stages 10..18 identify actor table, actor self, runtime pointer, runtime table,
+runtime backlink, main body, descriptor, descriptor bytes and runtime scale.
+Stages 19/20 identify matrices and center/translation. Stages 21/22 identify the
+directional count/storage; 23/24 the summed count/storage; 25/26 their address
+ranges; 27/28 record reads. Stage 30 means the two completed samples differ;
+31 means point runtime/body did not match the ordinary snapshot. Stage 1 is an
+invalid API argument/profile; zero means accepted. A stage alone does not imply
+a memory-read failure: the separate flag distinguishes callback refusal from
+value/identity/range checks.
+
+Diagnostics add no game reads or relaxed checks. Fixture checks cover acceptance,
+first-pass count overflow, exact read-failure classification and second-pass value
+change. All 490 failure positions remain covered; native and sanitizer fixtures,
+44 focused tests and the Windows host/plugin build pass.
+
+### Live rejection localized to the summed-list capacity
+
+The [diagnostic repeat](../../native/snow_host/point_inputs_live_diagnostic.json)
+captured 467 attributed snow calls, with 934 valid ordinary snapshots and 934
+rejected point attempts. Every diagnostic was stage 23, first pass, after 20 reads,
+with no read failure. Both count reads were valid: 26 directional records and 44
+summed records. The summed count exceeded the then-current 32-record bound.
+This establishes the rejection cause for this run; it does not establish that the
+remaining reads or repeated-sample checks would pass with a larger bound.
+
+Both recorder slots restored and all cleanup passed. Median rejection-path cost
+was 12.8 microseconds; this still does not measure successful complete sampling.
+No point geometry or record contents are accepted from this attempt.
+
+Based on those observed counts, the sampler now has separate limits of 32
+directional and 64 summed records. All other guards remain unchanged. Maximal
+reads increase to 746 under a declared 768-read ceiling; each read remains <=16
+bytes. Updated fixtures exercise all 746 read-failure positions, both capacity
+boundaries, repeated-value rejection and diagnostics. Native/sanitizer tests,
+44 focused tests and the expanded Windows build pass. Live acceptance with the
+expanded capacity remains unverified; the next capture must test it explicitly.
