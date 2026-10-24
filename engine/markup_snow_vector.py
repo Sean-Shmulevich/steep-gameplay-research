@@ -51,3 +51,37 @@ def branch3_gain_bits(state, read_payload_field):
     if type(bits) is not int or not 0 <= bits <= 0xffffffff:
         raise ValueError('uint32 float bits required')
     return bits
+
+
+def branch3_vector(current, normal, entity_direction, gain, *, direct_direction,
+                   reverse_fallback, reciprocal_sqrt_seed):
+    """RVA 0x516cb0 for finite XYZ inputs, implicit zero fourth lanes.
+
+    Preserves the missing cross-degeneracy guard: a parallel high-magnitude
+    vector may produce NaNs. Seed provider must model RSQRT(0) if that occurs.
+    Booleans are resolved low-byte predicates supplied by the caller.
+    """
+    if any(len(v)!=3 for v in (current,normal,entity_direction)):
+        raise ValueError('XYZ vectors required')
+    if type(direct_direction) is not bool or type(reverse_fallback) is not bool:
+        raise ValueError('resolved boolean gates required')
+    v,n,d = [list(map(f32,x)) for x in (current,normal,entity_direction)]
+    gain=f32(gain)
+    def rounded(x):
+        try:return struct.unpack('<f',struct.pack('<f',x))[0]
+        except OverflowError:return math.copysign(math.inf,x)
+    def cross(a,b):
+        return [rounded(rounded(a[j]*b[k])-rounded(a[k]*b[j])) for j,k in [(1,2),(2,0),(0,1)]]
+    def length2(a):
+        squares=[rounded(x*x) for x in a]
+        return rounded(rounded(squares[1]+0.0)+rounded(squares[0]+squares[2]))
+    if direct_direction:
+        direction=d
+    elif rounded(math.sqrt(length2(v))) <= f32(0.01):
+        direction=[-x for x in d] if reverse_fallback else d
+    else:
+        c=cross(n,v);squared=length2(c)
+        seed=rounded(reciprocal_sqrt_seed(squared))
+        reciprocal=rounded(rounded(3.0-rounded(rounded(seed*squared)*seed))*rounded(0.5*seed))
+        direction=cross([rounded(reciprocal*x) for x in c],n)
+    return [rounded(gain*x) for x in direction]

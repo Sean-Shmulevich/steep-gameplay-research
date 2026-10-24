@@ -31,3 +31,17 @@ class Branch3GainTests(unittest.TestCase):
             self.assertEqual(calls,[offset])
         for state in (1,3,4,6,7,8,10,0xffffffff):
             self.assertEqual(branch3_gain_bits(state,lambda _:self.fail('unexpected field read')),0)
+
+
+class Branch3VectorTests(unittest.TestCase):
+    def test_direct_and_reversed_low_magnitude(self):
+        from engine.markup_snow_vector import branch3_vector
+        def no_seed(x):self.fail('normalization must not run')
+        args=([0,0,0],[0,0,1],[1,0,0],2)
+        self.assertEqual(branch3_vector(*args,direct_direction=True,reverse_fallback=True,reciprocal_sqrt_seed=no_seed),[2.,0.,0.])
+        self.assertEqual(branch3_vector(*args,direct_direction=False,reverse_fallback=True,reciprocal_sqrt_seed=no_seed),[-2.,-0.,-0.])
+
+    def test_parallel_high_magnitude_is_not_replaced_with_fallback(self):
+        from engine.markup_snow_vector import branch3_vector
+        result=branch3_vector([0,0,2],[0,0,1],[1,0,0],1,direct_direction=False,reverse_fallback=False,reciprocal_sqrt_seed=lambda x:float('inf'))
+        self.assertTrue(all(math.isnan(x) for x in result))

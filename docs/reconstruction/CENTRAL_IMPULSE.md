@@ -11896,3 +11896,43 @@ branches use the new gain selector. That full branch, its threshold and degenera
 cross-product behavior are not yet implemented or validated here. In particular,
 its higher-magnitude branch does not visibly share the explicit cross-near-zero
 gate of 0x519580, so blindly reusing `snow_vector` would change its behavior.
+
+### Selector-3 vector calculation resolved
+
+The finite-XYZ arithmetic of 0x516cb0 is now implemented by
+[`branch3_vector`](../../engine/markup_snow_vector.py). This supersedes the earlier
+unimplemented-vector boundary, while leaving live state selection, transform
+ownership, arbitrary fourth-lane behavior and hardware RSQRT fidelity open.
+The supplied direct-direction gate is the low-byte result of actor slot 0x458;
+the reverse flag comes from actor+0x1b4. `v` is actor+0x250, `n` actor+0x210 and
+`d` the resolved entity transform's +0x10 vector.
+
+```python
+if direct_direction:
+    output = gain * d                 # reverse flag ignored
+elif float32(sqrt(dot(v, v))) <= float32(0.01):
+    output = gain * (-d if reverse_fallback else d)
+else:
+    c = cross(n, v)
+    seed = hardware_rsqrt_estimate(dot(c, c))
+    reciprocal_length = (3 - (seed * dot(c, c)) * seed) * (0.5 * seed)
+    output = gain * cross(reciprocal_length * c, n)
+```
+
+Operations retain the native float32 order in the implementation. The magnitude
+threshold is 0.01 in the stored vector's unproved units. The nonzero predicate
+branch bypasses both magnitude and reverse-flag handling. In the projection
+branch there is no small-cross guard. For parallel vectors with magnitude above
+the threshold, RSQRT(0) and subsequent arithmetic produce NaNs under the emulator's
+masked-exception configuration. This is an observed local degenerate result, not
+proof that such inputs arise during gameplay. Replacing it with an invented
+fallback would alter the recovered behavior.
+
+[416 original-instruction fixture cases](../../native/snow_host/markup_branch3_instruction_validation.json)
+cover direct/fallback/projection branches, both reverse states, the magnitude
+boundary, parallel inputs and randomized finite XYZ vectors. Finite output lanes
+match bitwise using captured emulator RSQRT seeds; NaN lanes match classification
+without asserting a portable NaN payload. The virtual predicate and gain lookup
+are intercepted, and the fixture uses the embedded entity-transform path. External
+transform resolution, inactive handles and live callback selection remain outside
+this validation.

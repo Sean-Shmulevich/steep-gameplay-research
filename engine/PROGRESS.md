@@ -6963,3 +6963,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   in 104 original-instruction cases. Selector-3's state-to-gain mapping is exposed
   as a raw-bit helper and matches 56 cases. Full selector-3 vector behavior, state
   semantics and live branch membership remain open.
+- Selector-3 vector arithmetic now matches 416 original-instruction cases:
+  direct entity direction, optional reversed low-magnitude fallback, and current
+  vector projection above 0.01. Parallel high-magnitude cases retain native NaN
+  behavior instead of borrowing the other branches' fallback. Live activation
+  and physical field units remain open.

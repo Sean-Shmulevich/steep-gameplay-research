@@ -217,3 +217,8 @@ hardware estimate equivalence remain external; nonfinite input is rejected.
 `markup_snow_vector.branch3_gain_bits` maps an unnamed uint32 state to one supplied
 payload field and preserves its float bits. Other states return positive-zero
 bits. It does not resolve the native global/handle or infer state/sport names.
+`markup_snow_vector.branch3_vector` accepts finite XYZ inputs, resolved boolean
+gates and an explicit RSQRT seed service. It preserves the 0.01 magnitude gate,
+reverse-only fallback and unguarded cross normalization. Internal nonfinite
+results propagate; no invented parallel-vector recovery is supplied. Native
+predicate, transform resolution, units and state selection remain external.

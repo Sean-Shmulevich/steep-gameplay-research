@@ -1,0 +1,13 @@
+{
+  "cases": 416,
+  "passed": true,
+  "nan_output_cases": 2,
+  "scope": "Original branch3 instructions with synthetic embedded entity transform; predicate and gain stubbed; captured emulator RSQRT seed",
+  "comparison": "bitwise finite XYZ outputs; NaN classification only for nonfinite lanes",
+  "range_rva": [
+    "0x516cb0",
+    "0x516e66"
+  ],
+  "sha256": "6fced2b7f1da6428f98cf80a8bf977696f24f8f8244fe8bee97ae61ed64530f7",
+  "game_files_included": false
+}
