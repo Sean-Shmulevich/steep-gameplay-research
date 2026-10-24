@@ -7320,3 +7320,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   disabled preservation and prepass effects before cache reuse. Curve/lookup
   samples supplied; trig/rsqrt observed. Live producers, timing and protected
   invalid configuration remain unresolved; no full-engine equivalence claimed.
+- Added runnable JSON basis-callback inspector and synthetic example. Explicit
+  approximate platform math or ordered supplied observations; checks kind/input
+  bits and full trace consumption without upgrading provenance. Example consumes
+  its secondary angle; contract tests cover disabled/unreached paths and mismatch
+  rejection. No native scheduler replay, live mutation or payload bundled.

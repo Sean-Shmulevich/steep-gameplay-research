@@ -1,0 +1,161 @@
+{
+  "schema": "snow-basis-bench-v1",
+  "provenance": "authored_synthetic",
+  "phase_continuity": "caller_asserted_stable_inputs",
+  "callback_reached": true,
+  "math": {
+    "mode": "platform_approximation"
+  },
+  "enabled_byte": 1,
+  "incoming_basis": [
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      -1,
+      0,
+      0
+    ]
+  ],
+  "prepass": {
+    "config_valid_byte": 1,
+    "immersion_selector_byte": 1,
+    "mode_byte": 1,
+    "frame_basis": [
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "primary_immersion": 0.5,
+    "alternate_immersion": 0.8,
+    "normal": [
+      0.6,
+      0,
+      0.8,
+      0
+    ],
+    "rotation_axis": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "direction_control": 0.25,
+    "special_byte": 0,
+    "depth": 0.1,
+    "speed_argument": 5,
+    "direct_angle": 0.1,
+    "curve_angle": 0.2,
+    "control_angle": {
+      "inhibit_byte": 0,
+      "candidate_byte": 1,
+      "suppress_byte": 0,
+      "retention_byte": 0,
+      "prior_gate_byte": 0,
+      "control_a": 1,
+      "control_b": 1,
+      "sign_gain": 1,
+      "override": 0,
+      "drive": 0.5,
+      "base_angle": 0.1,
+      "added_angle": 0.2,
+      "candidate_gain": 1
+    }
+  },
+  "overrides": {
+    "preferred_byte": 0,
+    "explicit_triplet_byte": 0,
+    "alignment_byte": 0,
+    "primary_angle": 0,
+    "secondary_angle": 0.15,
+    "rebuild_byte": 1,
+    "clear_secondary_byte": 1
+  },
+  "curves": {
+    "direction_control": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "direction_speed": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "control_speed": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "control_immersion": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "finish_speed": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "finish_immersion": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  }
+}

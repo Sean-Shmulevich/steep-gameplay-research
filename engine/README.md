@@ -1009,3 +1009,13 @@ candidate. `--output PATH` saves stage diagnostics as JSON. Curves, inputs and
 frames in the example are synthetic. Reachability, phase consistency, CPU path
 and bounds source are explicit; no native body is modified. See
 [the input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-contact-volume-to-velocity-inspection).
+
+
+### Snow orientation callback inspection
+
+Run `python3 -m engine.snow_basis_bench engine/examples/snow_basis_callback.json`
+to inspect the connected prepass, override selection and pending-angle effects.
+`--output PATH` saves JSON. The synthetic example uses explicitly approximate
+platform math; ordered supplied math observations are also supported with input
+and consumption checks. No game files or live memory access are required. See
+[the input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-basis-callback-inspection).

@@ -14570,3 +14570,46 @@ configuration path, every math CPU variant, live input producers, lifetime
 handling or the scheduler phase connecting these outputs to velocity frames.
 The previous live capture identifies this callback but still does not establish
 which override branches execute during particular rider actions.
+
+
+### Runnable basis callback inspection
+
+Run `python3 -m engine.snow_basis_bench engine/examples/snow_basis_callback.json`
+from the repository root. Add `--output PATH` to write the result. The example
+is authored synthetic state with constant profile curves, not a captured game
+frame. It needs no binary, assets or private files. This inspector exercises the
+connected callback without modifying a live game or integrating a rigid body.
+
+Input schema `snow-basis-bench-v1` requires provenance (`authored_synthetic` or
+`caller_supplied_observation`), phase_continuity=`caller_asserted_stable_inputs`,
+and Boolean callback_reached. False reachability returns not_evaluated without
+requiring runtime payloads. Evaluated inputs supply enabled_byte, incoming_basis,
+prepass state, override state and a named curves registry. Curve entries are
+compiled start/index_scale/segments tables accepted by the recovered evaluator.
+Skipped paths do not invoke their curve services. The callback's earlier section
+and the stage contracts define the state fields; byte flags retain raw uint8
+semantics. Disabled execution requires no prepass/override/curve payloads.
+
+Math mode must be explicit:
+
+- `platform_approximation` uses Python sine/cosine and reciprocal square root.
+  Its slope-angle table is independently built using platform acos samples and
+  the recovered padded table recipe. This mode does not claim original math bits.
+- `supplied_sequence` requires an ordered calls array with kind, input and value
+  fields. Kinds are slope_angle, sin, cos and rsqrt. Every executed service checks
+  the next kind and input's float32 bits, including signed zero. Exhausted,
+  mismatched or unused observations fail rather than silently falling back.
+  A supplied sequence's native provenance is a caller assertion, not proved by
+  matching this inspector. Synthetic sequences remain synthetic.
+
+Result schema `snow-basis-result-v1` retains provenance and consistency labels,
+records the math mode and executed calls, and reports callback effects: final
+basis, cache/auxiliary/gate write diagnostics, pending-angle state and prepass
+inspection data. Inputs are copied and not mutated. The trace is a numerical
+service sequence, not a scheduler replay, timing capture or live-memory snapshot.
+
+Tests check the example's secondary-angle consumption, reproduction from its
+own synthetic supplied sequence, rejection of mismatches and extra observations,
+input immutability, disabled execution and unreached evaluation. These are bench
+contract tests; original-instruction comparison remains the separate callback
+receipt. No coverage or live equivalence claim follows from a runnable example.
