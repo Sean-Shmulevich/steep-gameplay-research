@@ -2,11 +2,7 @@
 #define SNOW_MARKUP_UPDATE_TRACE_H
 #include <stdint.h>
 #include <stddef.h>
-typedef struct {
-    uintptr_t component;
-    uint32_t record_count, notification_count;
-    uint32_t query_flags, cached_value;
-} SnowMarkupUpdateSnapshot;
+#include "snow_markup_provider.h"
 #include <stdatomic.h>
 /* Authored receiver-plus-float update recorder. Forwards the float argument
  * unchanged and records its raw bits. No return-value ABI claim: the inspected

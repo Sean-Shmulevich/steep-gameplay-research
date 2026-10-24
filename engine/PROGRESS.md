@@ -6930,3 +6930,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   lifecycle and float-bit fixtures, ASan/UBSan, and Windows x64 compilation.
   It forwards cached/overflow calls and requires retained callback lifetime.
   No hook installation or live sampling is included yet.
+- Native markup provider sampler now verifies component/controller/provider links
+  and double-samples up to eight scalar records. Native and sanitizer fixtures
+  cover 46 read-failure positions and identity/content rejection; Windows x64
+  compilation passes. Integration with a Windows update wrapper remains open.

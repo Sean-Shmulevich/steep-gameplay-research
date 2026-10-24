@@ -11569,3 +11569,29 @@ quiet NaN. Native execution passed with address/undefined-behavior sanitizers;
 the core also compiled with MinGW for Windows x64. These are fixture and compile
 results, not Windows execution or live game ABI validation. Installation, guarded
 sampling and live callback execution remain the next integration work.
+
+### Native provider sampler
+
+[`snow_markup_provider.h`](../../native/snow_host/snow_markup_provider.h) and
+[implementation](../../native/snow_host/snow_markup_provider.c) provide the
+bounded native reader needed by the typed recorder. Its snapshot replaces the
+recorder core's initial placeholder diagnostics. It follows component/controller
+backlinks, both markup links and the proved provider chain, requiring the known
+component, controller and provider tables and query target. The caller still owns
+fresh actor/component provenance and verified image/process identity.
+
+It samples notification-array pointer/count, attachment state, packed graph header
+and up to eight scalar records. It does not dereference the notification array or
+nested pair data. Two full snapshots must agree; rejected reads zero the output.
+This requires at most 46 read callbacks for eight records, each at most 17 bytes;
+the declared public bound is 56. No allocation, writes or game calls occur.
+Snapshots include private addresses and must be sanitized before publication.
+Equal snapshots do not provide lifetime pinning, atomicity or ABA protection.
+
+The [fixture](../../tests/fixtures/snow_markup_provider_fixture.c) checks all four
+packed address modes, including a negative relative displacement, eight-record
+sampling, every one of the 46 read-failure positions, mutation between passes,
+broken backlinks, wrong provider table, oversize rejection and null attachment.
+Native tests and ASan/UBSan pass; the source compiles for Windows x64. Recorder
+lifecycle tests also pass with the expanded snapshot. No Windows execution,
+slot installation or live update capture is claimed for this sampler yet.
