@@ -1,0 +1,12 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Complete original spring conversion including native square root; all coefficients and three enabled flags",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite inputs, nonnegative mass-like values and finite products",
+    "No force solver execution or semantic identification of mass-like producer",
+    "Exceptional native arithmetic excluded"
+  ],
+  "game_files_included": false
+}

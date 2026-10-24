@@ -14659,3 +14659,51 @@ auxiliary vector match exactly; the source cache remains unchanged. Unit tests
 check normalization order, nonzero W shortening XYZ, W-only axes, and source
 immutability. Finite nonzero norms only; callback success, live record ownership,
 consumer semantics and scheduler timing remain external.
+
+
+### Pose spring coefficient conversion
+
+`engine.snow_pose_springs.pose_spring_coefficients` reconstructs the complete
+helper at RVA 0x140cc00..0x140cd7a. The successful physical-mode basis caller
+invokes 0x13fad40 to prepare two three-component control arrays, then this helper
+receives the record at runtime+0x700, a frame-owner+0x180 vector, runtime+0xb70,
+and runtime+0xb7c. The latter arrays act as frequencies and damping ratios in
+the coefficient conversion. The frame vector is mass-like by its mathematical
+role; its actual producer and physical units remain unresolved.
+
+For each source component, with float32 rounding after every operation:
+
+```text
+raw = ((frequency * mass_like) * frequency) * float32(39.47842025756836)
+k = min(float32(999999995904), max(float32(1.0000000116860974e-7), raw))
+c = float32(sqrt(float32(k * mass_like))) * float32(ratio + ratio)
+```
+
+These correspond to k=4*pi^2*m*f^2 and c=2*zeta*sqrt(k*m) in derived standard
+spring notation. The square root sees the clamped k, not the raw product. A
+zero mass-like value therefore gives the minimum stiffness but zero damping.
+Negative frequency inputs still square through the multiplication sequence;
+negative damping ratios remain negative, without an invented clamp. The portable
+API excludes negative mass-like values and nonfinite intermediate products by
+explicit finite-domain policy; it does not emulate native exceptional arithmetic.
+
+The helper processes source components Y, Z, X, writing stiffness/damping pairs
+at record+0xc0/+0xc4, +0xd4/+0xd8 and +0xe8/+0xec respectively. It clears the
+associated disabled fields at +0xb4, +0xc8 and +0xdc. There is no solver dispatch
+or force application inside this conversion. The pose record's axis conventions
+must not be identified as anatomical axes without further consumer evidence.
+
+Its upstream caller normally passes frame-owner+0x180 directly, but when the
+preferred byte at receiver+0x17d is nonzero it copies that vector and multiplies
+only Z by 100 before this helper. That modifier is inspected caller evidence,
+not part of this pure conversion API, and is another reason not to substitute a
+single guessed rider mass. Upstream frequency/ratio curves, initialization
+fallbacks and the actual solver consumer remain to be reconstructed.
+
+The [spring receipt](../../native/snow_host/pose_springs_validation.json) compares
+320 complete original-helper runs, including the native square root, with no
+intercepted calls or observed math returns supplied to the portable kernel.
+All six coefficients and three disabled fields match bit for bit. Cases include
+zero masses/frequencies, the upper stiffness clamp, negative frequencies and
+signed damping ratios. This validates local coefficient construction, not the
+original solver, effective-mass producer or live motion response.

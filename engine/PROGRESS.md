@@ -7330,3 +7330,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   publish auxiliary and two supplied XYZ fields. All fields/cache preservation
   match 320 native cases. Failure reset, later physical-mode work, pose consumer
   semantics and timing remain unresolved; pose and decay frames stay distinct.
+- Recovered pose spring conversion k=4*pi^2*m*f^2 with stiffness clamps and
+  c=2*ratio*sqrt(k*m), source order Y/Z/X and enabled-field writes. All coefficients
+  match 320 complete native runs without math substitutions. Caller preferred
+  mode scales only mass-like Z by 100; actual mass/axis meaning, curve preparation
+  and solver consumer remain unresolved.
