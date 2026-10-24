@@ -6914,3 +6914,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   collector callback. Another 1,440 original-instruction cases include the
   collector; allocator/copy services remain intercepted. Graph record producers
   and live ownership remain open.
+- Static graph-record writers now connect copy, clear and key-based partition
+  operations. Optional clearing affects bit 0, while the observed query requires
+  bit 1. The two partition destinations and live scheduler ownership remain
+  unnamed and unverified; no runtime behavior was added from this evidence alone.

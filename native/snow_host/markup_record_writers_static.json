@@ -1,0 +1,42 @@
+{
+  "evidence": "Static instruction inspection only",
+  "ranges": [
+    {
+      "start_rva": "0x12fca20",
+      "end_rva_exclusive": "0x12fcbc5",
+      "sha256": "b330a1ccb9f8c8b020be730768a11f7d0a3bdd96bc5ac2b0eddd6a2766bdd946"
+    },
+    {
+      "start_rva": "0x1317050",
+      "end_rva_exclusive": "0x13172af",
+      "sha256": "68f4840c291df736c1c0ca86a349a55d1882f57e3817e5ebe96708985652e758"
+    },
+    {
+      "start_rva": "0x128fd70",
+      "end_rva_exclusive": "0x128fe70",
+      "sha256": "a7d90b5ee50d1102840e7e4547a1bcdc886de210bdb63a669fed51b0ef92b924"
+    },
+    {
+      "start_rva": "0x12fbc20",
+      "end_rva_exclusive": "0x12fbde7",
+      "sha256": "a133ba9c224c49b36d3577f9c0e53483e09b8515302d0e9c79f5445d9e830ffc"
+    },
+    {
+      "start_rva": "0x126fbf0",
+      "end_rva_exclusive": "0x126fc59",
+      "sha256": "c80049a4dfbb8914c7cda1230f5ac75e66fe245f993822b6d5d9f1fb6589db94"
+    },
+    {
+      "start_rva": "0x12ca700",
+      "end_rva_exclusive": "0x12ca7a5",
+      "sha256": "8a925af129ca144e8f5417c38bd1a84e5fdf5ba9d004d4ac5cfc668ba14caebd"
+    }
+  ],
+  "unresolved": [
+    "live provider ownership",
+    "scheduler timing",
+    "nested copy and allocation",
+    "registry semantics"
+  ],
+  "game_files_included": false
+}

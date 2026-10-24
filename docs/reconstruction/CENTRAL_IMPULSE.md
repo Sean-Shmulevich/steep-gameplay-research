@@ -11412,3 +11412,73 @@ in matching combinations; independent cross-combinations were not exhaustively
 covered. Record production, live provider identity and concurrent mutation remain
 unresolved. This supersedes the unknown-collector boundary for the null-context
 route only, not for every caller of the collector.
+
+### Graph-record copy and partition writers
+
+Static inspection now identifies writers of the same `+0x1a10` collection
+layout. These are candidate upstream routes, not a proved live-player call chain.
+The [static range receipt](../../native/snow_host/markup_record_writers_static.json)
+identifies the inspected instruction ranges. No execution coverage is claimed
+for this receipt.
+
+At `0x12fca20`, the first argument supplies a source collection and the second a
+destination. The function reserves combined capacity, then appends each source
+record in order using `0x128fd70`. Each append sets destination byte `+0x1a28`
+to one. If the third argument's low byte is nonzero, it clears bit 0 of the newly
+appended record's `+0x60` flag byte. It does not clear bit 1.
+
+```python
+reserve(destination, destination.count + source.count)
+for record in source:
+    append_record(destination, record)  # nested copy/allocation services external
+    destination.marker = 1
+    if clear_bit_zero:
+        destination.last.flags &= 0xfe
+```
+
+The copy helper explicitly copies the key at +0x50 and the three 32-bit fields at
++0x54, +0x58 and +0x5c. It transfers flag bits 0 through 3 individually, preserving
+the destination's upper nibble. Its nested copy service at `0x125bd60` remains an
+unresolved ownership/allocation boundary. Do not model this as a raw shallow copy
+of all 0x68 bytes or assume that upper flag bits come from the source.
+
+At `0x1317050`, source is the third argument; the first and second arguments are
+two destinations. Each source record is copied into temporary storage, its scalar
+fields and low flag nibble are transferred, and bit 0 is optionally cleared.
+The record key goes to `0x12fbc20`, which chooses the destination:
+
+```python
+for record in source:
+    temporary = copy_record_with_external_nested_storage(record)
+    if clear_bit_zero:
+        temporary.flags &= 0xfe
+    if recognized_key(record.key, optional_key_table):
+        append_record(second_destination, temporary)
+        second_destination.marker = 1
+    else:
+        append_record(first_destination, temporary)
+        first_destination.marker = 1
+    release_temporary_storage()
+```
+
+`recognized_key` first calls `0x12fbd00` on a global registry. That helper performs
+an unsigned lower-bound search in a uint32 key collection, then tests equality.
+If not found and the optional table is non-null, it scans 24-byte entries and
+compares each uint32 at +0x10 with the key. The registry's semantic category,
+ordering producer and optional table's owner are not yet established; assigning
+names such as active, disabled or locomotion to the two destinations would be
+premature.
+
+A caller inside `0x12ca440` copies a collection to temporary storage, clears the
+original through `0x126fbf0`, and calls the partition routine twice with different
+sources and opposite clear-bit-zero conditions. The clear helper calls an
+external cleanup routine for a nonempty collection and resets its low-29-bit
+count. This establishes an actual copy/clear/partition sequence in static code;
+it does not establish how often it executes or which scheduler phase owns it.
+
+The immediate implication for the known markup query is narrow but useful:
+clearing record bit 0 does not reject its mode-2 query, which tests bit 1. Whether
+a record remains visible also depends on which destination becomes the queried
+collection, its key and interval gates, and its lifetime. Next trace the caller's
+source/destination owners and verify the live query provider before attributing
+this partition to a particular rider action.
