@@ -1360,3 +1360,16 @@ failing field/lane and the copied IEEE-754 bits, for example
 a usable player snapshot or relax validation. A lane diagnostic does not identify
 the writer or distinguish bad simulation state from an incorrect body layout.
 No process address is included in this error detail.
+
+### Animation event queue probe
+
+The standalone build also produces `snow_animation_queue_probe.dll`, an opt-in
+experimental ABI-1 dispatch recorder with a 256-record buffer and exact receiver
+filter. Loading it does not install a hook. It requires explicit configuration,
+verified callback/slot provenance and a reader/context retained for all possible
+calls. It is not a general event-injection API.
+
+See [animation dispatch observation and wrapper validation](../../docs/reconstruction/ANIMATION_COMPONENT_DISPATCH.md#windows-queue-probe-wrapper)
+for the calling path, sampler, restoration contract, Wine fixture results and
+remaining live-capture work. Do not publish raw records: they include heap
+addresses for private correlation.

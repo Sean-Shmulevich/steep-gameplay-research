@@ -45,6 +45,7 @@ def main():
     build('plugins/player_logger.dll', ['examples/player_logger.c'], ['-shared'])
     build('snow_update_probe.dll', ['snow_update_probe.c','snow_update_trace.c','snow_update_snapshot.c','snow_entry_attribution.c','snow_batch_frame.c','snow_entry_thunk.S','snow_motion_observation.c'], ['-shared'])
     build('snow_action_probe.dll', ['snow_action_probe.c','snow_action_trace.c'], ['-shared'])
+    build('snow_animation_queue_probe.dll', ['snow_animation_queue_probe.c','snow_animation_queue_trace.c','snow_animation_queue.c'], ['-shared'])
     build('snow_delegate_probe.dll', ['snow_delegate_probe.c','snow_delegate_trace.c','snow_update_snapshot.c','snow_motion_observation.c'], ['-shared'])
     build('snow_finalizer_probe.dll', ['snow_finalizer_probe.c','snow_delegate_trace.c'], ['-shared'])
     if args.command_manager_write_plugin:

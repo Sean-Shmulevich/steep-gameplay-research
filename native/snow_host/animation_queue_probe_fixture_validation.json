@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "evidence": "Compiled Win64 DLL and authored executable fixture executed under Wine; no game launched",
+  "source_hashes": {
+    "native/snow_host/snow_animation_queue_probe.c": "fd2dcba946bc195e5e2f6ce05de542875179a9de8c9c000086f746cfbcd291e5",
+    "native/snow_host/snow_animation_queue_probe.h": "a4bfc9e7e78edfffa17d3adb8db08fde76e96d118ce2ab6397cb65611d2a6d22",
+    "native/snow_host/snow_animation_queue_trace.c": "f20b0ee3efe718ed77aedea5a0b693dc715fab0910d9d9d2e7dea25ead1e7f69",
+    "native/snow_host/snow_animation_queue.c": "29e026c0b9974a497caa5eda0bdfb9a81ac9f3711b50a73bb2e79bad05b02041",
+    "tests/fixtures/snow_animation_queue_probe_fixture.c": "2e36fcd37b49b7d06f9f0a4f5f33408ed2088f20a61fc2ecb51a4100ab92e589",
+    "scripts/build_snow_host.py": "35818f97d63f4284866638266c4baf70998a01e32bdfa07a8c35e8474812f477"
+  },
+  "fixture_result_sha256": "f0142f06ca8f9209c66c3ba6f620c76515a4a734b41360c1adc903ce46aa6b55",
+  "artifact_hashes": {
+    "probe_dll": "03ce21c2e20721c2ee6d38db0982a5b004300c77dcfa7fbde0b1457709c65258",
+    "fixture_exe": "a4eccaa7a95015d412600c0b6e602798c44d05710f4defbb55df76350cc55148"
+  },
+  "cases": [
+    {
+      "mode": "normal",
+      "returncode": 0,
+      "stdout": "PASS: capture, filter, restoration, pinning and cached forwarding\n"
+    },
+    {
+      "mode": "conflict",
+      "returncode": 0,
+      "stdout": "PASS: capture, filter, restoration, pinning and cached forwarding\n"
+    },
+    {
+      "mode": "heap",
+      "returncode": 0,
+      "stdout": "PASS: refused installation without modifying slot\n"
+    },
+    {
+      "mode": "closed",
+      "returncode": 0,
+      "stdout": "PASS: refused installation without modifying slot\n"
+    },
+    {
+      "mode": "changed",
+      "returncode": 0,
+      "stdout": "PASS: refused installation without modifying slot\n"
+    }
+  ],
+  "bottle_stopped": true,
+  "standalone_fixture_host_build_passed": true,
+  "limitations": [
+    "Synthetic original and queue reader, not game callback execution.",
+    "No native Windows-machine validation.",
+    "No injected VirtualProtect failure or complete installer race coverage.",
+    "Caller owns reader/context lifetime and fresh component provenance.",
+    "No live game capture or performance measurement."
+  ]
+}

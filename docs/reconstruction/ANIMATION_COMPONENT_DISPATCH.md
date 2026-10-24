@@ -382,3 +382,45 @@ installation/restoration of the stable Kino image-table slot, a fresh owner-awar
 reader binding, and a bounded capture controller. The trace core does not install
 itself. Before/after queue changes would establish observed dispatch-boundary
 behavior, not the effects of every individual event handler.
+
+## Windows queue probe wrapper
+
+[`snow_animation_queue_probe`](../../native/snow_host/snow_animation_queue_probe.h)
+adds an experimental ABI-1 Windows wrapper. The standalone host build produces
+`snow_animation_queue_probe.dll` without launching the game. Configure supplies
+one slot, its expected original method, an exact receiver filter, and a bounded
+reader/context. It does not install. The caller verifies the executable and
+fresh component provenance. Filtering by an address is not a lifetime guarantee
+and cannot distinguish later reuse of that address.
+
+The wrapper has 256 fixed records. Other receivers forward without sampling.
+Configuration pins the wrapper module; installation also pins the target image.
+Only an aligned, committed, nonexecutable image slot in the original method's
+module qualifies. The slot must still contain that method. Installation uses a
+compare/exchange and restores its recorded page protection. There is one install
+attempt per configuration; restore is retryable and only replaces this wrapper's
+pointer. A competing pointer is preserved and reported as a conflict. Restore
+must be attempted even after installation reports failure, before close/drain.
+Control operations must be serialized by the controller.
+
+The reader and its context are caller-owned and must survive all possible
+forwarding calls. The wrapper does not pin an arbitrary reader DLL or own that
+context. Neither module pinning nor close/drain proves native object lifetime.
+No automatic hook or game launch is performed by loading the DLL.
+
+The [Windows fixture](../../tests/fixtures/snow_animation_queue_probe_fixture.c)
+ran successfully under the research Wine runtime in five separate processes:
+normal capture; a competing slot pointer with later restoration retry; a heap
+slot; close before installation; and a changed original target. It checked ABI
+exports, exact record size, clock availability, selected-receiver filtering,
+integer result preservation, page-protection restoration, cached forwarding after
+close, and retained code after `FreeLibrary`. The three refusal modes performed
+no capture and left the slot unchanged. The research bottle was stopped afterward.
+See the [receipt](../../native/snow_host/animation_queue_probe_fixture_validation.json).
+
+This is an authored executable/observer fixture, not game execution or native
+Windows-machine validation. VirtualProtect failure/rollback branches were not
+fault-injected. The fixture does not establish performance or all concurrent
+installer races. The next live integration must supply a fresh owner-aware reader
+and bound the time for which the Kino slot is replaced. The sampler and wrapper
+remain separate from event-specific gameplay effects.
