@@ -1,0 +1,102 @@
+{
+  "schema": "markup-motion-sequence-v1",
+  "provenance": "authored_synthetic",
+  "pending_before": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "bodies": [
+    {
+      "linear": [
+        0,
+        0,
+        0
+      ],
+      "angular": [
+        0,
+        0,
+        1
+      ],
+      "inverse_mass": 0.5
+    },
+    {
+      "linear": [
+        0,
+        0,
+        0
+      ],
+      "angular": [
+        0,
+        0,
+        1
+      ],
+      "inverse_mass": 0.25
+    }
+  ],
+  "events": [
+    {
+      "kind": "produce",
+      "producer": {
+        "post_dispatch_state": {
+          "current_mode": 0,
+          "outer_state": 0,
+          "inner_state": 5
+        },
+        "vector_inputs": {
+          "direction": [
+            1,
+            0,
+            1
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "gain": 2
+        },
+        "rsqrt_seed": 1,
+        "world_interval": 0.016666666666666666
+      }
+    },
+    {
+      "kind": "consume",
+      "consumer_reached": false
+    },
+    {
+      "kind": "produce",
+      "producer": {
+        "post_dispatch_state": {
+          "current_mode": 0,
+          "outer_state": 0,
+          "inner_state": 5
+        },
+        "vector_inputs": {
+          "direction": [
+            1,
+            0,
+            1
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "gain": 2
+        },
+        "rsqrt_seed": 1,
+        "world_interval": 0.016666666666666666
+      }
+    },
+    {
+      "kind": "consume",
+      "consumer_reached": true
+    },
+    {
+      "kind": "consume",
+      "consumer_reached": true
+    }
+  ]
+}

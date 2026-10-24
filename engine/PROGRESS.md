@@ -7004,3 +7004,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   inputs. The normalization seed is mathematical, not captured. Published scalar
   receipt regression and 14 focused tests pass. Direct listener execution and
   pending consumer timing remain unresolved; cleanup passed.
+- Added runnable `engine.markup_motion_sequence` connecting existing markup-vector
+  and pending-consumer kernels in explicit caller order. Synthetic scenarios cover
+  skipped consumption, accumulation, different body inverse masses, suppression,
+  fourth-lane dispatch and no repeated application. Eleven sequence/bench/receipt
+  tests pass. Scheduler ordering, prepass effects and live consumer execution remain
+  external; no source changes to provenance-locked reference routines.

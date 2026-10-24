@@ -234,3 +234,12 @@ four-lane accumulation after native entity/runtime/world presence gates. It
 rounds interval*30, vector multiplication and addition separately to float32.
 The interval is ordinary world time in seconds, not a proved substep duration.
 No pointer acquisition, lock or body-velocity update is supplied.
+
+Markup motion sequence inspection: `markup-motion-sequence-v1` supplies ordered
+produce/consume events, four-lane pending state and main/optional-rider body states.
+Consumer reachability is an explicit caller boolean after any unmodeled prepass;
+it is not inferred from actor snapshots. Only decoded local arithmetic changes
+velocities. Other forces, locks, object lifetime, native dispatch and position
+integration remain external. Nonfinite production stops inspection at the last
+finite state rather than inventing recovery. See CENTRAL_IMPULSE.md's ordered
+markup-to-body inspection contract.

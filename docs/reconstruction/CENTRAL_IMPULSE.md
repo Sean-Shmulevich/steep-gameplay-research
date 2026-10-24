@@ -12207,3 +12207,40 @@ of two live pending changes. It still does not directly observe the ID-84 listen
 exclude another writer with the same arithmetic, or prove unchanged inputs within
 the update. The next unresolved connection is the consumer that applies and clears
 pending motion, including its job order relative to these producer boundaries.
+
+### Ordered markup-to-body inspection
+
+`python3 -m engine.markup_motion_sequence engine/examples/markup_motion_sequence.json`
+composes the existing vector producer and pending consumer in a caller-supplied
+sequence. The ordering is an inspection input, not a reconstructed scheduler.
+The example is authored synthetic data; it supplies two body inverse masses and
+never reads the game or assumes those masses describe the player.
+
+Contract:
+
+- Input pending state has four finite float32 lanes. Bodies are main then optional
+  rider, with explicit linear/angular velocities, inverse mass and descriptor flags.
+- A `produce` event supplies the existing post-dispatch vector request and explicit
+  normalization seed. It uses the current pending state and ordinary world interval.
+- A `consume` event requires an explicit boolean `consumer_reached`. False retains
+  pending and body state. True means the caller asserts that earlier wrapper gates,
+  preparation and force prepass have already completed; their effects must already
+  be reflected in supplied state. It is not permission to bypass those gates live.
+- Reached consumers apply the decoded inclusive four-lane threshold, main-before-
+  rider submissions and post-lock clearing. No actual lock or downstream native
+  dispatch is executed. Body suppression may prevent a velocity change without
+  preventing pending clear. Angular velocity is unchanged by this local operation.
+- Nonfinite producer output stops the sequence and reports the last finite state.
+  This is an explicit inspection restriction, not native recovery behavior.
+
+Outputs include each event's before/after pending state and body results, allowing
+retention, accumulation and repeated consumption to be inspected. The example
+queues twice around a skipped consumer, consumes once, then attempts consumption
+again with a zero buffer. It produces main delta-v [1,0,0] and rider delta-v
+[0.5,0,0] because the same impulse meets different synthetic inverse masses.
+
+Six sequence tests cover accumulation, skipped work, suppression, fourth-lane-only
+activation, threshold retention, no double application, nonfinite stopping and CLI
+execution. Together with the vector bench and recorded-scalar regression, eleven
+tests pass. No new original-instruction or live consumer observation is claimed.
+The exact live consumer invocation and competing clear paths remain unresolved.
