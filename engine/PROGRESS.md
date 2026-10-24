@@ -6902,3 +6902,10 @@ cases. This is not wired into a live host API and does not pin manager or module
 - Third DispatchAnimEvents capture passes unchanged guards without retries: four source/storage receivers; the known motion component is absent. One KinoComponent belongs to the acquired actor entity at source/storage index 3, with table 0x1f289d0 and slot-0x278 method 0xdd37a0. Cleanup passes. Membership is not execution.
 - Followed that method to its embedded queue drain. Added a portable ordered call planner preserving independent handle sign-bit resolution, null-event skips and suppression. Thirty-two original-instruction cases match with event handlers intercepted; 18 focused Python tests pass.
 - Refcount cleanup, queue producer, event type semantics and connection to markup IDs 84/92 remain unresolved. Static predecessor edges from two Ai::UpdateAfterPhysics jobs provide scheduling leads, not live synchronization proof.
+
+- Animation markup query now has a portable key/interval/flag/selector model.
+  A private original-instruction fixture matched 1,440 synthetic cases, with
+  collection services intercepted. This narrows the known all-ones-selector
+  motion notifications to candidate eligibility and graph production; live
+  query-provider identity and notification execution remain unverified. See
+  [query evidence](../docs/reconstruction/CENTRAL_IMPULSE.md#animation-interface-markup-query).

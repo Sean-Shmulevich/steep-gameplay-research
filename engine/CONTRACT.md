@@ -185,3 +185,10 @@ saved-pointer comparison and uint32 CAS retry as supplied services. A mismatch
 still reads candidate.count; successful CAS does not recheck source identity.
 Caller must keep every observed candidate readable. This is not a standalone
 concurrent lifetime pin or safe source-replacement operation.
+
+Markup query: `markup_query.query_markup` consumes caller-supplied key, float-bit
+interval and flag records plus an external paired-value collector. It preserves
+mode-2 flag gating, selector rules and collection-before-selection ordering.
+The returned index is an authored diagnostic; native code returns a boolean.
+Graph acquisition, record production, allocation, update timing and live identity
+remain external. See CENTRAL_IMPULSE.md, Animation-interface markup query.

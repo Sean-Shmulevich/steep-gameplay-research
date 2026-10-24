@@ -11308,3 +11308,67 @@ body-unit convention. Main velocity and pending impulse remain zero. This is a
 stationary live baseline, not an impulse-response experiment, universal tuning
 value, or proof of physical units. It makes the two bodies and their mass fields
 available for later request-correlated tests without invoking a setter.
+
+## Animation-interface markup query
+
+The branch-zero query helper at RVA `0xdda430` loads its receiver's `+0xb0`
+interface and tail-calls slot `0xb8`. The inspected Kino factory installs table
+RVA `0x2909790` on its returned interface; that table's slot resolves to
+`0x12f2d20`. This is a static factory/type join. The live dispatcher's query
+owner and that provider identity have not yet been joined in one guarded capture.
+
+The query follows `interface+0x20 -> +0x80 -> +0x1a10` to a collection header.
+Its count is the low 29 bits of the header's second word; records are 0x68 bytes.
+The first word is header-relative only when bit 62 is set and bit 61 is clear;
+otherwise it is absolute. These are build-specific layouts, not public API fields.
+
+For each record, the key at +0x50 must match. Its float at +0x58 must not be
+strictly greater than FLT_MAX, and its float at +0x5c must not be strictly less
+than zero. Unordered comparisons do not reject under masked SIMD exceptions.
+These are coarse interval checks, not an evaluation of the current clip clock.
+The query packet requests flag bit 1, so the record's byte at +0x60 must contain
+that bit. The helper at `0x12fbdf0` then collects paired values through
+`0x12e9d40`; their producer and meaning remain external to this reconstruction.
+
+```python
+for record in graph_records:
+    if record.key != query_key:
+        continue
+    if record.start > FLT_MAX or 0.0 > record.end:
+        continue
+    if not record.flags & 2:
+        continue
+    values = collect_second_words(record)  # still runs for selector ALL_ONES
+    if selector == 0xffffffff:
+        accepted = True
+    elif selector == 0:
+        accepted = all(value == 0 for value in values)
+    else:
+        accepted = any(value == selector for value in values)
+    destroy_temporary_collection()
+    if accepted:
+        return True
+return False
+```
+
+Empty collections accept selectors zero and all-ones, but reject other selectors.
+The native function returns a boolean; the independent
+[`markup_query.py`](../../engine/markup_query.py) additionally returns the first
+accepted record index for inspection. Its 4096-record limit and argument checks
+are authored safeguards. It acquires no live objects and provides no scheduler,
+clock, locking or native allocation policy.
+
+[Original-instruction validation](../../native/snow_host/markup_query_instruction_validation.json)
+compared 1,440 synthetic cases with the portable model, including all four
+relative-address flag combinations, key mismatch, record flags, empty/mixed
+selector collections, float limits, infinity and quiet NaN. Original query and
+selector instructions ran in an emulator; collection initialization, population
+and cleanup were intercepted. Collector ordering and cleanup counts were checked.
+This proves neither the collector implementation nor live player behavior.
+
+Previously observed markup IDs 84 and 92 used keys `0x00c00002` and `0x00c0000b`
+with selector `0xffffffff`. If their live provider is the inspected interface,
+the selector does not further reject an eligible record after collection.
+The next check is a fresh guarded join from dispatcher query owner to interface
+and table, followed by graph-record observation at the actual markup update.
+No generic queued-event callback is required by this static query route.

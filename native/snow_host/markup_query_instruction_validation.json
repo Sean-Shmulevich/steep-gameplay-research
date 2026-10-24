@@ -1,0 +1,14 @@
+{
+  "cases": 1440,
+  "passed": true,
+  "instruction_ranges": {
+    "12f2d20:12f2e4d": "de703f8fca1a34fd3ce0fd0d9c1b6c559f9061ae2a817fa9ba64b3997a7761d3",
+    "12fbdf0:12fc040": "2e41453d6489fe954efd08a23a6c4f1612caac565fb3e9bf7d0f8d1c7d9d0ea5"
+  },
+  "external_stubs": [
+    "collection initialization",
+    "paired-value collector",
+    "collection cleanup"
+  ],
+  "scope": "Original query and selector instructions, synthetic records; not live player identity"
+}
