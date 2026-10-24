@@ -7395,3 +7395,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases match full arrays and retained records without interception. Added append/
   remove tests; safe-membership validation is authored. Other body/context unlinking,
   locking, destruction and solver consumers remain unresolved.
+- Found direct type2 solver-preparation dispatch from the registered pose array.
+  Recovered six-row hard/soft/state2/flagged counting and special hard-triple block;
+  384 complete native cases match the full counter block without interception.
+  Submission inspector optionally reports these counts. Type2 row generation and
+  result-publication leads identified; actual forces and solve timing remain open.

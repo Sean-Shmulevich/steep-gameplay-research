@@ -1,0 +1,12 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "scope": "Complete original type2 count preparation with native getter; full uint32 counter block and input preservation; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic finite row coefficients, state words and flags",
+    "Count categories describe branches; original physical row meanings unproved",
+    "No solver row generation, iterative solve or body response"
+  ],
+  "game_files_included": false
+}

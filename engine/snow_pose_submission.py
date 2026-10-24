@@ -9,6 +9,7 @@ from pathlib import Path
 import struct
 from .snow_pose_springs import pose_spring_coefficients
 from .snow_pose_pair import order_pose_bodies
+from .snow_pose_solver_counts import pose_solver_counts
 from .snow_pose_record import POSE_VECTOR_MASK, prepare_pose_submission
 
 
@@ -38,6 +39,7 @@ def inspect(document):
     if document.get('sequence')!='caller_asserted_prepare_then_submit':
         raise ValueError('Explicit sequence assertion required')
     args=dict(document['inputs'])
+    solver_flags=args.pop('solver_second_body_flags16',None)
     pair=None
     if 'body_pair' in args:
         if 'swap_byte' in args:raise ValueError('Supply body_pair or swap_byte, not both')
@@ -49,6 +51,7 @@ def inspect(document):
     return dict(schema=document['schema'],provenance=document['provenance'],
                 source=result['source'].hex(),storage=result['storage'].hex(),
                 notify=result['notify'],records=result['records'],body_pair=pair,
+                solver_counts=pose_solver_counts(result['storage'],solver_flags) if solver_flags is not None else None,
                 limits=['No solver or notification effects executed',
                         'Caller supplies phase ordering and retained record state',
                         'No native object lookup or live mutation'])

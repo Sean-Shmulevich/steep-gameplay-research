@@ -15141,3 +15141,51 @@ first/middle/last removals and single-record groups, with no intercepted calls.
 Unit tests also exercise append/remove and rejected repeated removal. Static
 callers at RVA 0x18e18e1 and 0x18e2531 lead to the surrounding removal lifecycle;
 these are leads, not evidence of completed destruction or solver synchronization.
+
+### Pose solver preparation classifier
+
+The group pose array has a direct solver-preparation reader. RVA 0x1994da0
+passes group+0x90/count+0x98 to the type dispatcher 0x1994ad0. Its six-entry
+jump table maps virtual type2 to 0x19e5b00. A later dispatcher 0x19905f0 maps
+type2 to 0x19e5da0. The latter is a row-generation lead, not yet reconstructed.
+The surrounding 0x1993ed0 sequence includes pose preparation, a common work
+routine and result publication. Full scheduler ownership remains unproved.
+
+`engine.snow_pose_solver_counts.pose_solver_counts` implements the complete
+0x19e5b00 classifier. It reads the converted record through getter 0x1942bf0
+and uses second-body metadata bit15 to select one of two counter banks.
+Six 20-byte rows start at storage offsets 0x80,0x94,0xa8,0xbc,0xd0,0xe4.
+Each has a uint32 state and coefficient at row+12. A coefficient at least
+float32(1e12) is classified as hard. These names describe branches; original
+physical meanings of all six rows remain unresolved.
+
+For the first three rows: state0 adds either hard or soft count; state2 adds a
+state2 count and also soft when below threshold; other states add nothing.
+For the last three: state0 adds hard or soft; other states add state2 count only
+when exactly2, and add a flagged count whenever their byte at 0xf8/0x104/0x110
+is nonzero. Thus these state words cannot generally be treated as booleans.
+
+When all first three rows are hard state0, the routine counts one special block
+and suppresses individual first-row hard/soft/state2 accounting. Otherwise the
+first hard count joins flagged rows, first soft is retained and first state2 joins
+second state2. The combined state2 count is doubled. Second hard and soft counts
+are always retained. Counter increments use uint32 wraparound in the original.
+
+Independent output fields correspond to counter-bank offsets: doubled_rows 0x20,
+hard_triple_blocks 0x28, flagged_or_hard_rows 0x38, first_soft_rows 0x40,
+second_hard_rows 0x48 and second_soft_rows 0x50. Add4 to these offsets for a
+bit15-set second body. The independent function returns deltas rather than owning
+the native scratch counter block.
+
+[384 native cases](../../native/snow_host/pose_solver_counts_validation.json)
+execute the complete classifier and getter with no intercepted calls. All 100
+counter-block bytes match after adding deltas to arbitrary initial uint32 values;
+input record preservation is checked. Synthetic finite coefficients, arbitrary
+state words, both metadata classes and special-block cases are included.
+Nonfinite coefficients, row generation, iteration and body response remain open.
+
+The submission inspector accepts optional `solver_second_body_flags16` and then
+reports counts from its resulting storage. This is explicit caller metadata for
+the ordered second body, not inferred from sport, a stale pointer or original
+input order. The example supplies synthetic zero flags. No full native timing or
+connected solve is claimed by this inspection composition.
