@@ -7559,3 +7559,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   payload-row serialization map. 384 original row-copy fragments and384 complete
   key-removal runs match without interception. Identified a keyed cache consumer;
   physical field meanings, full producer and tagged-stream framing remain open.
+- Recovered complete paired-frame payload updater: two point transforms, old-ID
+  cached-word carryover with first-match precedence, pair-index writes and count
+  publication. 512 complete offline native cases match bit-for-bit without call
+  interception. Caller reduces oversized groups to four; selector math and cached
+  word's downstream physical meaning remain open.

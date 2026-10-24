@@ -318,3 +318,10 @@ into64 supplied prior bytes, preserving the last four bytes. It neither admits
 fields nor controls active count. Packed link keys truncate to16/16/32 bits;
 `remove_link_key` removes the last matching entry by swap-last without releasing
 payloads. Physical key/row meanings and full stream framing remain unresolved.
+
+Paired-frame payload update: `update_pose_link_payload` accepts288 retained bytes,
+0..4 supplied48-byte records, two finite XYZ bases/translations and pair indices.
+It preserves float32 basis-dot order, copied fourth words, old-ID cache matching,
+count gates and inactive bytes. The four-record bound comes from the inspected
+caller's reduction path; its selector remains external. Cached-word physical
+meaning, live transforms, contact generation and solver effects remain unresolved.

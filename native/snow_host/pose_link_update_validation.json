@@ -1,0 +1,19 @@
+{
+  "schema": "pose-link-update-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete native updater without call interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x198fdc0",
+  "comparisons": [
+    "all 288 payload bytes",
+    "bit-exact float32 transformed points",
+    "cached-word match precedence and count gates",
+    "untouched inactive rows and padding"
+  ],
+  "limits": [
+    "XYZ mask supplied as its recovered initializer value.",
+    "Finite synthetic points and arbitrary finite bases; no live body resolution.",
+    "Caller grouping/reduction and cached-word solver semantics excluded."
+  ]
+}

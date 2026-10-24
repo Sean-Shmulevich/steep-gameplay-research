@@ -16399,3 +16399,53 @@ and complete entry arrays including tails. Tests cover row offsets0..3, duplicat
 keys, width truncation and missing matches. This adds a usable local record decoder
 and proves key composition without claiming that the complete payload producer,
 contact solver or tagged-stream parser is reconstructed.
+
+### Paired-frame payload update
+
+`engine.pose_link_update.update_pose_link_payload` reconstructs the complete
+RVA0x198fdc0 updater. Its caller0x198f910 groups48-byte incoming records by their
++0x2c key, obtains or reuses the matching payload, and invokes a reduction path
+when the group's count exceeds4 before this updater. The reducer uses selector
+0x19989d0 and copies four selected records through0x1990040. That selection
+mathematics is not implemented here. The updater API explicitly accepts0..4
+records; native caller reduction supplies this bound on the inspected path.
+
+Each record is first copied verbatim into the first48 bytes of a64-byte payload
+row at payload+0x10 + i*64. The two XYZ vectors at record+0x10 and+0x20 then pass
+through distinct body frames. For each frame with basis rows b0,b1,b2 and
+translation t, the result is:
+
+```
+d = float32(point - translation)       # each XYZ subtraction separately
+local[j] = float32(float32(bj.x*d.x + bj.y*d.y)
+                   + float32(bj.z*d.z + 0))
+```
+
+Each product is also rounded separately to float32. This describes basis-row
+dot products; it is an inverse rigid transform only when those supplied basis
+rows satisfy the required rotation convention. The model imposes no normalization
+or orthonormality. Native masks W to zero for frames/points. Results replace row
+XYZ at+0x10 and+0x20, preserving the fourth words copied from the input.
+
+Before writing any row, the routine snapshots four old IDs at payload+0x2c,
++0x6c,+0xac,+0xec and their cached words at+0x40,+0x80,+0xc0,+0x100. Cached words
+are admitted only when unsigned oldcount is greater than the corresponding index;
+otherwise their values are zero. For each new record, record+0x1c is compared to
+all four saved IDs in reverse order. Matching values replace the candidate, so
+the earliest old row wins when IDs repeat. No arithmetic changes the matched
+32-bit word. This is proven cache preservation; interpreting it as a warm-start
+impulse still requires a downstream solver consumer.
+
+The updater stores that word at row+0x30, clears row+0x34, and writes supplied
+uint16 pair indices at row+0x38/+0x3a. Row+0x3c..+0x3f stays untouched. After all
+rows it writes newcount at payload+0x110; unused old rows remain intact. Zero new
+records therefore only changes count. The API's immutable output and finite-input
+checks are authored boundaries, not native failure behavior.
+
+[512 complete native updater comparisons](../../native/snow_host/pose_link_update_validation.json)
+match all288 supplied payload bytes without intercepting calls. They include
+0..4 records, oldcount0..4 and0xffffffff, repeated/missing IDs, arbitrary finite
+nonorthonormal bases and inactive padding. XYZ mask uses its recovered initializer
+value. These results connect payload layout to paired-frame point transformation
+and cache reuse without claiming the full key grouping, four-record selection,
+solver meaning, live body resolution or contact classification.
