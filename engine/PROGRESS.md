@@ -7380,3 +7380,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   constructor swap matches 400 native cases, including absent/aliased second
   bodies. Submission inspector can derive swap from caller-supplied pair metadata.
   Body-class meanings, key producers and live pairing lifetime remain unresolved.
+- Traced pose type2 registration to body-group attachment and reconstructed its
+  service ordering. All 256 request bytes match native dispatch under intercepted
+  services that mutate group links: merge uses captured references; append reloads
+  the first group's current reference. Actual preparation/merge/append effects,
+  registration gates and solver consumption remain external.

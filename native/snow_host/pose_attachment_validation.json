@@ -1,0 +1,11 @@
+{
+  "cases": 256,
+  "scope": "Complete original attachment dispatcher with service calls intercepted; ordered arguments, captured decisions, reload and forwarded return checked",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic body/group identities; services intentionally mutate group links",
+    "Preparation, merge and append service internals not executed",
+    "No native locking, lifetime or solver completion guarantee"
+  ],
+  "game_files_included": false
+}

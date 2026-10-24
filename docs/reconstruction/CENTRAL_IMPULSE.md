@@ -15048,3 +15048,49 @@ The pose submission JSON inspector optionally accepts `inputs.body_pair` with
 It derives the swap byte from this metadata; supplying both body_pair and swap_byte
 is rejected. This assumes the construction-time pairing remains applicable to the
 submitted record and does not establish live identity or lifetime.
+
+### Pose body-group attachment
+
+The pose object's primary virtual slot0x10 returns integer 2 through RVA
+0x0d4bb20. This is a numeric type result; no original class name is asserted.
+Creation RVA 0x18aef00 chooses between registration paths by comparing the two
+body metadata context references. The unequal-context path calls 0x18b8470,
+which gates onward attachment to 0x18e16c0. These upstream registration gates
+are not implemented by the following local dispatcher.
+
+`engine.snow_pose_attachment.attach_pose_record` reconstructs 0x18e16c0 with
+explicit preparation, merge and append services. The record retains first and
+optional second body references; group references come from body+0x10.
+
+```text
+if second_body exists:
+    first_group = first_body.group
+    second_group = second_body.group
+    if request_byte != 0:
+        prepare(context, first_group)
+        prepare(context, second_group)
+    if first_group != second_group:
+        merge(context, first_body, second_body)
+return append(first_body.group, record)  # reload after services
+```
+
+The preparation flag is nonzero, unlike the exact-one submission notification
+thunk. Equal groups still receive two preparation calls. Group equality is tested
+on captured references even if preparation changes body links. Append reloads the
+first body's group after merge. Absence of a second body skips both preparation
+and merge. Services run serially on normal return; no rollback, lifetime pin,
+lock ownership or safe native mutation is implied.
+
+[Validation](../../native/snow_host/pose_attachment_validation.json) executes the
+complete original dispatcher for all 256 request bytes, varying absent/equal/
+different groups. Intercepted services intentionally mutate group links to verify
+capture-versus-reload semantics. Ordered arguments and append's forwarded return
+match. The actual preparation, merge and append implementations remain external.
+
+Static continuation leads: preparation 0x18e11b0; merge 0x18e20f0; append
+0x1957480. Append checks group count+0x98 against 65535, records group/index at
+record+0x60/+0x68, grows the group+0x90 pointer array when needed and appends the
+record. Growth and consumer synchronization are not established. A separate
+same-context registration path at 0x18b9ce0 also maintains a context+0x58 array
+and body-linked lists through 0x195c170. Do not conflate these collections or
+assume attachment means solver execution has completed.
