@@ -7350,3 +7350,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Formula has diagonal parallel-axis form in Y/Z/X order; 320 native cases match
   without substitutions. Actual base/mass/position producers and tensor ownership
   remain open; no single scalar rider-mass interpretation imposed.
+- Joined valid-config pose profiles, immersion selection, preferred coefficient
+  scaling and spring conversion. Complete native preparation matches 192 runs
+  without intercepted calls; prepared arrays, final records and unchanged source
+  coefficients verified. Synthetic profiles/defaults only; earlier producer phase,
+  live body identities and downstream solver remain unresolved.

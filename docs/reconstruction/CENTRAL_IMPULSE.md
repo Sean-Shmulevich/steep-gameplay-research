@@ -14841,3 +14841,46 @@ intercepted calls. All three output bits match. Unit tests isolate X/Z separatio
 and zero separation to verify sum order and default-copy independence. This
 establishes the local producer formula, not complete inertia ownership, solver
 behavior or live phase freshness.
+
+
+### Connected pose spring preparation
+
+`engine.snow_pose_controls.prepare_pose_controls` composes the complete valid
+configuration path of RVA 0x13fad40..0x13fb3d8: damping-ratio profiles, frequency
+selection, preferred-state coefficient adjustment, then spring conversion.
+It requires explicit initialized defaults, profile tables and the previously
+published frame coefficients. Those coefficients may be produced by the earlier
+composite kernel, but this API does not recompute them at a potentially different
+phase or assert their live freshness.
+
+Config byte +2 exactly 1 selects primary immersion, otherwise alternate immersion.
+Damping preparation runs first, then frequency selection. Native initialization
+copies the supplied global default triplet to both arrays; all three damping
+components are subsequently overwritten on this valid path, while inactive
+frequency axes retain their defaults. The independent composition directly
+produces the final damping values without promising identical intermediate
+memory writes.
+
+Before spring conversion, any nonzero preferred byte copies the frame coefficient
+vector and multiplies only its third component by float32(100). The original
+published vector remains untouched. Conversion still processes source axes
+Y/Z/X, so the changed third component affects the second spring record. This
+adjustment is applied to the inertia-like coefficient, not frequency or damping
+ratio, and must not be implemented as a universal frequency boost.
+
+The result returns selected immersion, frequencies with branch diagnostics,
+damping ratios, the adjusted coefficient copy and three spring records. It
+contains no native pointer acquisition, locks or solver invocation. Invalid
+configuration is rejected explicitly rather than following protected handlers.
+Curve payloads and scalar producers remain supplied. The body identities and
+units of the inertia-like base fields are still unresolved.
+
+The [connected preparation receipt](../../native/snow_host/pose_controls_validation.json)
+compares 192 complete original entry-to-return executions with no intercepted
+calls. Original compiled profile evaluators and square roots run throughout.
+Both prepared triplets, all six stiffness/damping fields and all three cleared
+disabled fields match exactly. The source frame coefficient vector is verified
+unchanged. Synthetic cases cover selector bytes 0/1/2, positive/nonpositive
+frequency scales, shallow depth, override and preferred adjustment. This closes
+local composition without claiming actual game tuning, preceding composite
+producer timing, physical-mode dispatch or subsequent solver equivalence.

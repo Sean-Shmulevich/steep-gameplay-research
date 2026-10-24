@@ -1,0 +1,12 @@
+{
+  "cases": 192,
+  "bit_exact": true,
+  "scope": "Complete original valid-config pose preparation including profile evaluations, preferred-axis modifier and spring conversion; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic profile tables and explicit initialized defaults/frame coefficients",
+    "Protected invalid-config paths, nonfinite arithmetic and live producer identity excluded",
+    "Earlier composite coefficient producer and later solver application not included"
+  ],
+  "game_files_included": false
+}
