@@ -208,3 +208,9 @@ low-byte availability gating with explicit entity/type/lookup, motion dispatch,
 in-out vector and accumulation services. It ignores incoming notification value
 as the inspected callback does. Native service internals and live object ownership
 remain external; returned diagnostics and Python exceptions are authored behavior.
+
+`markup_snow_vector.snow_vector` implements the decoded nested-selector-5 vector
+branch for finite XYZ inputs and zero fourth lanes. It preserves float32 order,
+componentwise 1e-5 fallback and one RSQRT refinement, using a caller-supplied seed.
+It assumes no unit normal. Live state selection, active-handle resolution and
+hardware estimate equivalence remain external; nonfinite input is rejected.

@@ -11806,3 +11806,53 @@ actor and values 0, 1 and 255. All external services are intercepted. The fixtur
 also verifies the vector starts at positive zero and that modifications by the
 vector service reach the accumulator. These results explain what to observe in a
 live callback; they do not establish that the callback ran in the prior capture.
+
+### Snow-state vector output
+
+The vector dispatcher at RVA 0x516ae0 selects by the current motion-state tree
+while holding its recursive lock. With dispatcher field +8 equal to zero, outer
+selector 3 calls 0x516cb0, selector 1 calls 0x516f60, and selector 0 with child
+selector 5 calls 0x516e70. Other selectors zero the output. When dispatcher +8 is
+nonzero it leaves the supplied vector untouched. Deferred-transition processing
+and unlocking follow. Thus the post-dispatch state, not just the markup value,
+determines which vector feeds the accumulator.
+
+The nested-selector-5 helper at 0x516e70 has now been decoded. Let `u` be the
+owner's four-lane vector at +0x720, `n` the actor vector at +0x210 and `g` the
+float at +0xe0 of the active handle payload reached through owner+0x50. Semantic
+names and units of these fields remain unproved. For finite XYZ inputs with
+fourth lane zero, the local calculation is:
+
+```python
+c = cross(n, u)
+if all(abs(lane) <= float32(1e-5) for lane in c):
+    output = g * u
+else:
+    length2 = dot(c, c)
+    seed = hardware_rsqrt_estimate(length2)
+    reciprocal_length = (3 - (seed * length2) * seed) * (0.5 * seed)
+    output = g * cross(reciprocal_length * c, n)
+```
+
+Every multiply/add/subtract rounds as float32 in the inspected SIMD order.
+For unit `n`, the nondegenerate mathematical expression is the normalized
+projection of `u` onto the plane perpendicular to `n`, scaled by `g`. That
+interpretation assumes a unit normal; the binary does not normalize `n` here.
+A nonunit `n` changes output magnitude. Near-parallel inputs use the original
+scaled direction instead of a zero projection. Do not replace that fallback.
+
+[`markup_snow_vector.snow_vector`](../../engine/markup_snow_vector.py) implements
+this finite-XYZ branch with explicit reciprocal-square-root seed injection.
+[104 synthetic original-instruction cases](../../native/snow_host/markup_snow_vector_instruction_validation.json)
+matched XYZ output bits exactly using the emulator's captured RSQRT estimate,
+including nonunit normals, near-parallel fallback and randomized finite vectors.
+This does not establish the physical CPU's approximation, arbitrary fourth-lane
+behavior, NaN/overflow handling or live branch selection. Finite-input validation
+is an authored restriction. The active handle and its payload are supplied by
+the fixture; inactive handle behavior is not modeled as a safe null result.
+
+The other two state branches and their vector producers remain separate leads.
+Most importantly, the live ID-84 transitions do not yet prove selector 0/5 was
+active. A next actor-state capture should include the dispatcher selector tree,
+these direction/scale inputs and pending-vector output before attributing the
+newly decoded projection to the observed rider movement.

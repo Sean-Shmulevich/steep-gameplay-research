@@ -6954,3 +6954,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   action, then passes an initially zero vector through a service to accumulation.
   Original instructions matched 24 stubbed-service cases. Live listener execution
   and the selected state-machine branch remain unresolved.
+- Decoded ID-84's nested-selector-5 vector producer: scaled tangent projection
+  with a near-parallel original-direction fallback and RSQRT refinement. The
+  portable finite-XYZ implementation matches 104 original-instruction cases
+  bitwise using captured emulator seeds. Live state selection and field units
+  remain unproved; other vector-state branches remain open.
