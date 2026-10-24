@@ -15789,3 +15789,37 @@ the65535 boundary, zero/doubled requests and growth-time count mutation. Tests
 provide backing storage even for a zero request; they do not establish allocator
 success or a normal zero-capacity lifecycle. Duplicate prevention, detach, locks,
 body ownership and native failure behavior remain unresolved.
+
+### Body removal and attached constraint pruning
+
+`remove_body_constraints` reconstructs RVA0x1958030..0x195815b;
+`remove_pose_body` reconstructs its caller0x1957fc0..0x1958022. The outer context
+detach routine0x18e23c0 calls this pair before additional context-wide cleanup.
+
+Constraint pruning first scans the group's +0x40/+0x48 array backwards. A record
+matches when either endpoint+8/+0x10 equals the body. It calls link-clear service
+0x1958b90, then reloads that record's index+0x80, decrements count, replaces its
+slot with the last active pointer and sets its index to0xffffffff. If a member
+moved into an active slot, that member's index is repaired. Clear service effects
+remain supplied; no claim that this merely clears a boolean is made.
+
+Next it scans pose records at group+0x90/+0x98 backwards. Matching endpoints cause
+swap-last removal using the traversal index, clearing record.group+0x60 and
+index+0x68 and repairing moved membership/index. This branch does not call a
+record destructor or the link-clear service. Capacity and inactive tail pointers
+are retained in both arrays.
+
+After pruning, body removal reloads body.index+0x1c, decrements group.count+0x18,
+swaps the last body into that slot and repairs moved group/index if needed. It
+then clears removed body.group+0x10 and loads the removed-index sentinel from
+RVA0x29ca124. The independent API requires that sentinel explicitly rather than
+assuming it equals the literal0xffffffff used by the constraint removals. Its
+valid-membership precheck is authored; native code trusts the supplied member.
+
+[256 connected native comparisons](../../native/snow_host/pose_body_remove_validation.json)
+execute body removal and both complete array-pruning loops with only link-clear
+intercepted. All group/body/link/pose bytes, retained tails and clear-service order
+match. Cases cover mixed endpoints, empty arrays, first/middle/last removal and
+varied supplied runtime sentinels. This closes body-array and attached-pose removal,
+not the full context detach operation, link-clear effects, concurrent mutation,
+object destruction or native storage lifetime.

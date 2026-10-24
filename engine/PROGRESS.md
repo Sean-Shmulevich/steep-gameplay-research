@@ -7481,3 +7481,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   record append. Membership/index publish before growth and count reload. 320
   native cases match under supplied growth; allocation failure, detach and lifetime
   remain external.
+- Recovered body removal with both attached-constraint pruning loops. Matching
+  endpoints are removed in reverse traversal, moved indices repaired, and body
+  membership cleared after pruning. 256 connected native cases match all record/
+  group bytes and retained tails with link-clear supplied. Full context detach,
+  destruction and lifetime remain unresolved.

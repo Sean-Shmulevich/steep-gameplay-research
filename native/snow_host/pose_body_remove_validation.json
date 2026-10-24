@@ -1,0 +1,17 @@
+{
+  "cases": 256,
+  "bit_exact": true,
+  "scope": "Native body removal and complete constraint-array pruning; link-clear service intercepted; all group/body/link/pose bytes, array tails and clear order match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Empty and mixed endpoint constraint arrays",
+    "Reverse pruning and moved member index repair",
+    "First/middle/last body removal and varied runtime body sentinel"
+  ],
+  "limits": [
+    "Link-clear effects remain external",
+    "Valid retained unique membership assumed",
+    "No destruction, allocation, concurrency or lifetime guarantees"
+  ],
+  "game_files_included": false
+}

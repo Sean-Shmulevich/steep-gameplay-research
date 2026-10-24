@@ -27,3 +27,22 @@ class BodyMembershipTests(unittest.TestCase):
         append_pose_body(group,body,grow=grow)
         self.assertEqual(body['index'],1)
         self.assertEqual(group['slots'],[7,0])
+
+    def test_body_removal_detaches_both_constraint_families(self):
+        from engine.pose_body_membership import remove_body_constraints,remove_pose_body
+        g=dict(token=9,count=2,capacity=2,slots=[1,2],link_count=2,
+               link_slots=[10,11],pose_count=2,pose_slots=[20,21])
+        bodies={i:dict(token=i,group=9,index=i-1) for i in (1,2)}
+        links={10:dict(first=1,second=2,index=0),11:dict(first=2,second=3,index=1)}
+        poses={20:dict(first=2,second=1,index=0,group=9),21:dict(first=2,second=3,index=1,group=9)}
+        seen=[]
+        def detach(group,token):
+            remove_body_constraints(group,token,links=links,poses=poses,
+                                    clear_link=lambda item:seen.append(item['index']))
+        remove_pose_body(g,bodies[1],bodies=bodies,remove_constraints=detach,invalid_index=0xffffffff)
+        self.assertEqual(seen,[0]);self.assertEqual(g['slots'],[2,2])
+        self.assertEqual(g['link_slots'],[11,11]);self.assertEqual(g['pose_slots'],[21,21])
+        self.assertEqual((g['count'],g['link_count'],g['pose_count']),(1,1,1))
+        self.assertEqual(bodies[2]['index'],0);self.assertEqual(poses[21]['index'],0)
+        self.assertEqual(poses[20]['group'],0);self.assertEqual(links[10]['index'],0xffffffff)
+        self.assertEqual(bodies[1]['group'],0)
