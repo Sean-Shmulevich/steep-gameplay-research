@@ -1,0 +1,24 @@
+{
+  "schema": "pose-link-result-binding-validation-v1",
+  "binding_cases": 384,
+  "seeding_cases": 384,
+  "passed": 768,
+  "method": "offline original builder fragments without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "rvas": [
+    "0x1993903..0x19939ad",
+    "0x1993c25..0x1993c54"
+  ],
+  "comparisons": [
+    "three solver-row result indices",
+    "payload feedback index",
+    "context counter including uint32 wrap",
+    "linked-row primary reference",
+    "raw broadcast cache bits and preserved result branches"
+  ],
+  "limits": [
+    "One builder family only; full row equations and dispatch excluded.",
+    "Gate coefficient supplied; native UCOMISS unordered behavior tested with emulator exception defaults.",
+    "No solver iteration or physical impulse/unit claim."
+  ]
+}

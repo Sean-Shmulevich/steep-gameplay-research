@@ -7589,3 +7589,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   512 complete native comparisons match without interception. Integration test
   carries feedback through the next matching geometry update. Result-index writers,
   cached-value consumption and physical solver units remain open.
+- Connected one row-builder family's result-index publication and conditional
+  cache seeding to recovered feedback. Three sequential indices are reserved; the
+  first is cached and can receive a four-lane broadcast of the prior result word.
+  384 binding and384 seeding fragments match without interception. Added complete
+  cache-cycle composition with an explicitly supplied solver result; full row
+  equations, coefficient meaning and other dispatch families remain open.

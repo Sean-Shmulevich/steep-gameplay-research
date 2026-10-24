@@ -16673,3 +16673,43 @@ result bits including nonfinite float encodings. An independent integration test
 writes feedback and then performs a matching geometry update, retaining the
 solver-written cache word while resetting its result index. No solve or live
 object access occurs in these tests; indices and result storage are supplied.
+
+### Link result binding and cache seeding
+
+One builder family's cache loop is now connected. In0x19933d0, payload-row pointer
+r11 addresses payload+0x30 plus row stride64. Fragment0x1993903..0x19939ad reserves
+three sequential result indices through context uint32 counter+0x180. Each index
+is written to its solver row+4. The first index is also written to payload-row
++0x34, exactly the field read by link feedback. Counter increments wrap at32 bits.
+`engine.pose_link_result_binding.bind_pose_link_results` reproduces these writes
+over supplied payload/solver rows; it does not allocate row storage or build their
+equations. It applies to this inspected family, not all four dispatch targets.
+
+Later, fragment0x1993c25..0x1993c54 writes that primary index into the third linked
+row+0x50. It compares a previously computed float32 coefficient against zero using
+UCOMISS/JNE. Equal or unordered permits reading the cached payload-row word+0x30,
+broadcasting its raw bits into all four lanes, and writing the16-byte result slot
+at context + offset178 + primary_index*16. A finite nonzero gate or infinity skips
+the result write while still publishing the linked-row reference. Signed zeros
+both seed; NaNs follow the unordered branch under the tested emulator exception
+state. No alternate floating-point exception-mode guarantee is implied.
+
+`seed_pose_link_result` exposes the unresolved coefficient as raw `gate_bits`.
+It preserves cached bits exactly, including NaN payload encodings. The coefficient
+is produced earlier in the row builder and is not yet assigned a physical name.
+No result-row overwrite is performed on the non-seeding path.
+
+This establishes a conditional solver-result seeding mechanism: previous solver
+lane0 survives matching geometry, is copied into the next result slot on this
+builder path, then post-solve feedback can replace the cached word. Calling that
+mechanism a cached solver initial value is justified; normal/friction impulse
+classification and physical units are still unproved. Complete equations and the
+other dispatch families remain open.
+
+[384 index-binding and384 cache-seeding comparisons](../../native/snow_host/pose_link_result_binding_validation.json)
+execute original fragments without interception. They match all three solver
+rows, payload feedback index, counter wrap, linked-row reference and result bits.
+An independent composition test connects binding, seeding, a clearly supplied
+external result, feedback and next geometry update. The fixture does not compute
+a solver iteration. This closes index provenance for one family without claiming
+a complete constraint solver or native scheduling/lifetime safety.

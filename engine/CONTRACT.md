@@ -359,3 +359,10 @@ arrays and complete16-byte result rows. Link flag84 bit0 and payload flag114 bit
 gate processing; context flag38 bit29 chooses raw lane0 copy versus zero. Result
 indices are supplied through payload rows. This identifies cache provenance, not
 physical units, native lifetime or the missing row-builder index publication.
+
+Link result binding: `bind_pose_link_results` reserves three uint32 result indices
+and publishes the first as payload feedback index for the inspected builder
+family. `seed_pose_link_result` publishes the linked primary reference and
+broadcasts cached bits only for zero/unordered gate comparison. Row allocation,
+gate production, full equations, exception modes and other families remain
+external. Supplied solver results in tests are not simulated original solves.
