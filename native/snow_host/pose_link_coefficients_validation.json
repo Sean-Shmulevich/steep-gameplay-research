@@ -1,0 +1,23 @@
+{
+  "schema": "pose-link-coefficients-validation-v1",
+  "combiner_cases": 512,
+  "response_cases": 512,
+  "passed": 1024,
+  "method": "offline complete scalar combiner and connected original profile-response fragment without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "rvas": [
+    "0x1990830",
+    "0x19935ee..0x1993701"
+  ],
+  "comparisons": [
+    "scalar float32 bits including signed-zero ties",
+    "profile30/profile40 combinations",
+    "response coefficient",
+    "cache-seeding gate in both stack locations"
+  ],
+  "limits": [
+    "Profiles and combination modes supplied; resource lookup and physical field names unresolved.",
+    "Finite values and nonsingular denominators; exceptional arithmetic excluded.",
+    "Full row assembly and solver iterations not executed."
+  ]
+}

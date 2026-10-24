@@ -366,3 +366,10 @@ family. `seed_pose_link_result` publishes the linked primary reference and
 broadcasts cached bits only for zero/unordered gate comparison. Row allocation,
 gate production, full equations, exception modes and other families remain
 external. Supplied solver results in tests are not simulated original solves.
+
+Link profile coefficients: `combine_link_scalar` preserves raw-mode combination,
+float32 operation order and signed-zero tie choices. `link_response_coefficients`
+connects fields30/40/60/64 to response and cache-seeding gate using explicit context
+scalar/factor/flags. Field64 is not evaluated at/above the recovered threshold.
+Profiles/modes are supplied; physical units, profile lookup, singular arithmetic
+and full row equations remain outside the contract.

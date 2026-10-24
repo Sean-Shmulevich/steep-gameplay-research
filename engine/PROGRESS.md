@@ -7595,3 +7595,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   384 binding and384 seeding fragments match without interception. Added complete
   cache-cycle composition with an explicitly supplied solver result; full row
   equations, coefficient meaning and other dispatch families remain open.
+- Recovered six-mode paired-profile scalar combination and the coefficient that
+  gates cached-result seeding. 512 combiner and512 connected profile-response
+  native cases match bit-for-bit without interception. Derived-gate integration
+  covers seed admission/bypass. Physical profile names, scalar units, resource
+  lookup and remaining row assembly remain unresolved.

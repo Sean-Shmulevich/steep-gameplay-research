@@ -16713,3 +16713,53 @@ An independent composition test connects binding, seeding, a clearly supplied
 external result, feedback and next geometry update. The fixture does not compute
 a solver iteration. This closes index provenance for one family without claiming
 a complete constraint solver or native scheduling/lifetime safety.
+
+### Link profile combination and response gate
+
+`engine.pose_link_coefficients.combine_link_scalar` reconstructs0x1990830.
+Its raw uint32 mode selects min0, max1, sum2, product3, arithmetic mean4 or
+sqrt(product)5; other modes return positive zero. Minimum/maximum use rounded
+`second-first` comparisons. On equality minimum retains the first operand and
+maximum retains the second, preserving signed-zero distinctions. Every arithmetic
+step rounds to float32. The independent API excludes nonfinite inputs and negative
+geometric-mean products rather than inventing native exception behavior.
+
+The connected0x19935ee..0x1993701 fragment combines profile fields+0x30,+0x40,
++0x60 and conditionally+0x64 using four separately supplied mode values. Earlier
+code resolves the profiles through per-entry/resource branches; that lookup and
+the physical meanings of these fields remain outside this reconstruction.
+`link_response_coefficients` preserves the following arithmetic:
+
+```
+s = context.scalar_c
+k = combine(profileA.field60, profileB.field60, mode60)
+response = -float32(s * context.factor14)
+seed_gate = +0
+if k < float32(1e12):
+    n = (context.flags38 >> 2) & 0x3fff
+    scaled = float32(float32(n) * s)
+    c = combine(profileA.field64, profileB.field64, mode64)
+    denominator = float32(float32(c * scaled) + k)
+    ratio = float32(s / denominator)
+    response = -float32(ratio * k)
+    seed_gate = float32(ratio * scaled)
+```
+
+Combined field30/field40 are produced before this branch and returned separately.
+The actual threshold float is999999995904.0. Equality takes the initial-response,
+zero-gate branch and never reads field64. The gate is the value subsequently
+compared against zero in the cached-result seeding fragment. Under positive,
+nonzero inputs the below-threshold branch produces a nonzero gate and bypasses
+that seed, whereas the at/above-threshold branch permits it. Zero factors/counts,
+rounding and exceptional values must not be generalized from that ordinary case.
+No stiffness/damping, time-step or material interpretation is assigned solely from
+the formula's shape.
+
+[512 complete combiner and512 connected response-fragment comparisons](../../native/snow_host/pose_link_coefficients_validation.json)
+execute original instructions without interception, matching float32 bits for
+combined values, response and both gate storage locations. Modes, profiles and
+context inputs are supplied. Cases include default modes, signed-zero ties and
+threshold branches. An independent composition test feeds the derived gate into
+cache seeding and checks both admission outcomes. Singular denominators, negative
+root products and other exceptional arithmetic remain outside the Python domain;
+full profile lookup, row assembly and solver iteration remain unresolved.
