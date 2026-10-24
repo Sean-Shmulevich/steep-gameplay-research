@@ -15189,3 +15189,38 @@ reports counts from its resulting storage. This is explicit caller metadata for
 the ordered second body, not inferred from sport, a stale pointer or original
 input order. The example supplies synthetic zero flags. No full native timing or
 connected solve is claimed by this inspection composition.
+
+### Pose solver feedback publication
+
+`engine.snow_pose_feedback.publish_pose_feedback` reconstructs the per-record
+behavior of RVA 0x1994080, called after the common work routine by 0x1993ed0.
+It skips records when first-body metadata byte+0x52 bit0 is set, when a present
+second body's same bit is set, or when virtual slot0x10 does not return type2.
+Otherwise getter 0x1942bf0 returns the stored pose record.
+
+If its first three row states at 0x80/0x94/0xa8 are zero and coefficients at
+0x8c/0xa0/0xb4 are each at least float32(1e12), all three outputs come from XYZ
+of one 16-byte solver result row indexed by object+0x190. The other two indices
+are ignored. A uint32-max first index preserves all previous outputs.
+
+Otherwise indices object+0x190/+0x194/+0x198 are handled independently. Each
+non-sentinel index copies the first 32-bit component of that result row into
+object+0x19c/+0x1a0/+0x1a4 respectively. Missing indices preserve individual old
+values, rather than zeroing them. Result rows start at solver-context plus the
+uint32 offset stored at context+0x178; index stride is16. No arithmetic is applied
+to copied words, so the independent API preserves raw result bits.
+
+This corroborates distinct combined and separate row layouts in preparation.
+It does not establish that the output triplet is a force, impulse, position or
+velocity. Its producer, downstream consumers and physical units remain unresolved.
+The API takes previous bytes, body flag bytes, type, storage, indices and supplied
+result rows, and returns output bytes plus authored per-component write diagnostics.
+Finite classifier coefficients and valid retained rows are explicit requirements.
+
+[384 native cases](../../native/snow_host/pose_feedback_validation.json) execute
+the complete original loop for a single record, including its original type and
+record getters with no intercepted calls. Cases cover combined/separate layouts,
+missing indices, absent second bodies and metadata/type skips. Output bytes match
+and input storage remains unchanged. Solver result generation, live ordering and
+concurrent ownership are excluded. The unchanged-output case is not proof that
+the solver ran or that a previous result belongs to the current simulation step.

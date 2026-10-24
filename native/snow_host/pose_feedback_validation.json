@@ -1,0 +1,12 @@
+{
+  "cases": 384,
+  "bit_exact": true,
+  "scope": "Complete native single-record feedback loop, including native type getter and record getter; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic finite classifier inputs and arbitrary result bit patterns",
+    "Solver result production and physical meanings unproved",
+    "Valid retained indices except native uint32-max sentinel; no concurrency or lifetime guarantee"
+  ],
+  "game_files_included": false
+}

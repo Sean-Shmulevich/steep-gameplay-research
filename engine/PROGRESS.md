@@ -7400,3 +7400,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   384 complete native cases match the full counter block without interception.
   Submission inspector optionally reports these counts. Type2 row generation and
   result-publication leads identified; actual forces and solve timing remain open.
+- Recovered pose solver feedback publication: combined XYZ result row for a hard
+  state0 triple, otherwise independent first-component rows. Missing indices retain
+  old components and metadata/type gates skip publication. 384 complete native
+  single-record loops match without interception. Physical output meaning, result
+  production and downstream consumption remain unresolved.
