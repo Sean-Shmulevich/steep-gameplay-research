@@ -6983,3 +6983,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   state and normalization seed. CLI/integration tests pass. Synthetic example
   output is labeled; state transitions, live callback and consumer timing remain
   external, and nonfinite outputs are reported without fabricated recovery.
+- Added native actor-state/pending sampler for joining markup updates to motion
+  selectors, world interval and pending vector. Forty read-failure positions,
+  mutation, backlinks, skipped state reads and null runtime pass native/sanitizer
+  fixtures; Windows compilation passes. Live integration remains next.

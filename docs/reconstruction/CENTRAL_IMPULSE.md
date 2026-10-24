@@ -12055,3 +12055,39 @@ native entity/runtime/world presence gates already passed. This makes the decode
 formula chain usable while keeping the unresolved scheduler and callback links
 visible. Tests cover the CLI example, preservation of caller input, skip/zero
 routes, missing seeds and explicit nonfinite results.
+
+### Actor state and pending-vector sampler
+
+[`snow_markup_actor.h`](../../native/snow_host/snow_markup_actor.h) and
+[implementation](../../native/snow_host/snow_markup_actor.c) provide a separate
+native read-only snapshot for the next update-boundary capture. It verifies the
+known actor table and self-link, resolves entity/world, and reads world interval
+bits. It follows motion current mode and only the selector-tree links needed by
+the decoded routing rules: outer state is absent for nonzero mode, and inner
+state is absent unless outer state is zero. Absent is explicit, not state zero.
+
+When actor.runtime is present, the sampler checks its table and actor backlink
+before reading four pending-vector lanes. It also records actor normal/current
+vector bits, gain-selector state, reverse-fallback byte and fc9/fdc bytes. It does
+not interpret those bytes as universal grounded or immobility predicates.
+A null runtime is represented explicitly and does not authorize pending-buffer
+access. Fresh acquisition and selected-local-player provenance belong to the
+caller. The current API requires entity/world to exist.
+
+Two equal sequential samples are required; failures zero the output. The deepest
+implemented route takes 40 reads, at most 16 bytes each, below the declared limit
+of 48. These snapshots contain private addresses and need sanitization before
+publication. They are not atomic, cannot detect all intermediate changes or ABA,
+and do not pin any object. The sampler issues no game call, lock or write.
+
+The [fixture](../../tests/fixtures/snow_markup_actor_fixture.c) exercises all 40
+read-failure positions, pending mutation between passes, actor/runtime backlink
+failure, mode-dependent skipped pointer reads and a null runtime. Native execution
+and ASan/UBSan passed; Windows x64 compilation passed after fixing a compiler
+warning. No live capture or Windows execution of this sampler is claimed yet.
+
+This sampler is intentionally separate from notification observation. Even when
+both are sampled around one original update call, a boundary state does not prove
+the state used inside ID-84's vector service: its preceding action may perform
+transitions. Such a combined capture can identify candidate correlations and
+narrow where a direct service/callback observation is needed.
