@@ -7610,3 +7610,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   bodies replaced by recording services;128 cases enable callback mutations.
   Captured per-link mode/metadata/count and reloaded payload storage are explicit.
   The other three builder equations and concurrent lifetime remain unresolved.
+- Recovered link point-motion tangent construction, including transformed local
+  offset, cross-plus-add motion, normal projection, low-magnitude fallback and
+  second direction. 768 continuous native fragments match both directions
+  bit-for-bit without interception. Physical motion units, second-body effects
+  and full primary/secondary solver row equations remain unresolved.

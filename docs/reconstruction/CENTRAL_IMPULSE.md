@@ -16848,3 +16848,53 @@ retained payload bytes and callback-mutated state. The last128 cases enable
 callbacks that replace payload slot storage and change mode, metadata, link count
 and enable flags. These cases distinguish captured state from subsequent reads.
 This validates dispatch, not solver output, concurrent mutation or live safety.
+
+### Link point-motion tangent basis
+
+`engine.pose_link_tangents.link_tangent_basis` reconstructs the tangent calculation
+inside the metadata-clear/single builder. The continuous native fragment is
+0x199381b..0x1993a35. Prologue0x199341e..0x19934d4 supplies the first body's basis
+rows+0x40/+0x50/+0x60, local offset+0x128, and vectors+0x1a0/+0x1ac. The payload
+row supplies its first local point at row+0x10 and direction at row+0. XYZ masks
+exclude their fourth lanes. No second-body motion vector enters this calculation.
+
+In the following structural pseudocode, every multiply, add, subtraction, square
+root and division rounds to float32. The implementation preserves the original
+sum order, including the final zero lane in horizontal dot reductions.
+
+```python
+local = first_point - first_body.offset128
+r = basis_z * local.z + (local.x * basis_x + basis_y * local.y)
+opposite_motion = -(cross(first_body.vector1ac, r) + first_body.vector1a0)
+t = opposite_motion - dot(opposite_motion, normal) * normal
+if float32(dot(t, t) - float32(1e-6)) < 0:
+    x, y, z = normal
+    if float32(min(abs(x), abs(y)) - abs(z)) < 0:
+        t = [z, 0, -x] if float32(abs(y) - abs(x)) < 0 else [0, z, -y]
+    else:
+        t = [y, -x, 0]
+first_direction = t * float32(1 / float32(sqrt(dot(t, t))))
+second_direction = cross(normal, first_direction)
+```
+
+The arithmetic supports linear-like and angular-like roles for the two motion
+vectors, but their units and complete producer contract remain unresolved. The
+normal is not normalized here. Consequently the projection is only the usual
+orthogonal projection when its normal has unit length, and the second direction
+is not explicitly normalized. The native code subtracts the float32 threshold
+before comparing against zero; the API preserves that operation rather than
+replacing it with a differently rounded test. It rejects zero/nonfinite tangent
+lengths instead of inventing fallback output for degenerate inputs.
+
+Later stores place these first/second directions at+0x20 in the two secondary
+solver rows. Their full equations and the primary row's response remain separate
+work. This finding establishes direction construction, not a complete friction
+model or second-body relative-velocity model.
+
+[768 continuous offline native comparisons](../../native/snow_host/pose_link_tangents_validation.json)
+match both output vectors bit-for-bit without intercepted calls. Caller registers
+and runtime masks are supplied. Cases cover arbitrary nonorthogonal bases,
+unnormalized normals, zero motion and motion near the fallback threshold. Unit
+tests also distinguish point rotation from linear motion, local center subtraction,
+parallel motion and degenerate input. No live capture or original-engine
+equivalence is claimed.

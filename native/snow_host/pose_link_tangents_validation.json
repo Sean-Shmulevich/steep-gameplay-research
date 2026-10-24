@@ -1,0 +1,16 @@
+{
+  "schema": "pose-link-tangents-validation-v1",
+  "cases": 768,
+  "passed": 768,
+  "method": "offline continuous point transform, motion projection, fallback and tangent normalization fragment without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x199381b..0x1993a35",
+  "comparisons": [
+    "both output direction vectors bit-for-bit"
+  ],
+  "limits": [
+    "Prepared caller registers and runtime XYZ/zero constants supplied.",
+    "Finite synthetic inputs, including nonorthogonal bases and unnormalized normals.",
+    "No claim of physical units, whole row-builder equivalence or second-body relative-motion contribution."
+  ]
+}

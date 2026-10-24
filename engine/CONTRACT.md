@@ -390,3 +390,10 @@ payload slots and payload gates/counts during traversal. Single-path labels incl
 zero-row payloads and nonzero modes with multiple rows. This defines the reachability
 of the recovered metadata-clear/single builder fragments; the other builder bodies,
 concurrent lifetime and callback destruction safety remain outside the contract.
+
+Link tangent basis: `link_tangent_basis` transforms the first local point relative
+to offset128, combines vectors1ac/1a0 through cross-plus-add, projects against the
+payload normal and selects a normalized tangent with a low-magnitude geometric
+fallback. The second direction is normal cross first. Float32 ordering is explicit;
+normal normalization, second-body motion, physical units, degenerate arithmetic
+and the rest of the solver rows are not supplied or inferred.
