@@ -1,0 +1,17 @@
+{
+  "cases": 512,
+  "bit_exact": true,
+  "scope": "Original first optional angular caller and native row helper; all row/context bytes and observer arguments match; observer dispatcher intercepted",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Both class layouts",
+    "State/enable skips, axis swap and notification gates",
+    "Signed zero and counter wrapping"
+  ],
+  "limits": [
+    "Synthetic finite inputs; no live game execution",
+    "Context scalar/scale and strength units unresolved",
+    "Observer dispatcher effects and downstream solve excluded; notification is an intent only"
+  ],
+  "game_files_included": false
+}

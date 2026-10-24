@@ -7445,3 +7445,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   and wrapping counters. 512 complete native cases match all bytes and return
   pointers. Static pose caller uses mode2 and optional per-axis records; units,
   geometry selection, notification effects and downstream solve remain unresolved.
+- Connected first optional angular caller with state/enable gates, swap-selected
+  axis, scalar broadcast, body headers and notification intent. 512 native caller
+  cases match row/context bytes and intercepted notification arguments. Static
+  notification inspection identifies an enabled-observer loop with deferred
+  removal; callbacks, concurrency and physical effects remain external.

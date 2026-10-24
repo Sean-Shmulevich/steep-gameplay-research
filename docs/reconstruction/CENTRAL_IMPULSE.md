@@ -15506,3 +15506,32 @@ it calls RVA 0x18a7f60 with argument2. That service's effects are unresolved her
 The next two axes repeat this structure with 12-byte optional records. Caller
 geometry, optional-field producers and downstream solver response remain open;
 only the helper, not this full caller branch, has executable validation in this pass.
+
+### Optional angular caller and observer boundary
+
+`build_optional_pose_drive` connects the first optional angular caller fragment
+RVA 0x19e6fab..0x19e7071 to the row helper. State0 skips immediately; otherwise a
+zero enable byte skips. Any other state, including state1, can emit this optional
+row. A nonzero swap byte selects the alternate prepared axis. The caller broadcasts
+target/strength scalars, uses mode2, completes both low16 body-index headers and
+only then considers notification. The notification is requested exactly when its
+suppression byte is zero and both the body group and metadata context links are
+present. The API returns that intent alongside detached row bytes; it does not
+invoke callbacks or imply native object retention.
+
+[512 connected native comparisons](../../native/snow_host/pose_drive_caller_validation.json)
+cover skips, both classes, swap selection and notification gates. Every row/context
+byte matches; intercepted notification calls receive the first body and raw value2.
+Only the observer dispatcher is intercepted. This advances the preceding static
+caller connection to executable comparison, without claiming callback effects.
+
+Static inspection of notification routine RVA 0x18a7f60 shows an observer dispatcher:
+it sets thread-local byte+0x27bd, walks a dynamically counted array of 16-byte
+records, and calls enabled entries with the original body and integer argument.
+After calls it reloads the global registry. On completion it clears the active
+byte. If thread-local byte+0x27bc is set, it removes disabled entries in reverse
+index order by moving trailing records, then clears that deferred-cleanup byte.
+This supports callback dispatch as the local interpretation, not a direct force
+or velocity setter. Callback identities/effects, registration mutation rules,
+recursive use, synchronization and failure handling remain unresolved. The
+observer loop itself has not been executable-validated in this pass.
