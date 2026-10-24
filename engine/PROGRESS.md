@@ -7073,3 +7073,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Expiration preserves nonpositive remainder and leaves gates untouched. Full
   local branch/timer/gate behavior matches 360 original-instruction cases;
   27 related portable tests pass. Trigger producers and live gate values remain open.
+- Identified local producers for point-gate timer inputs as mutually exclusive
+  duration counters selected by accumulator > float32(0.001). Equality resets
+  accumulator/alternate and advances activity. Added kernel matching 162 original
+  cases; 29 related tests pass. Accumulator semantics and intervening helper
+  writes remain unresolved; no grounded/airborne labels inferred.

@@ -84,3 +84,17 @@ def update_point_gate_timer(gate_one, gate_other, timer, activity, alternate,
     else:
         action = 'retain'
     return dict(timer=timer, gate_one=one, gate_other=other, action=action)
+
+
+def update_point_activity(accumulator, activity, alternate, elapsed):
+    """Local mutually exclusive duration update at RVA 0x1409146.
+
+    No grounded/contact semantic is inferred from the accumulator threshold.
+    """
+    accumulator, activity, alternate, elapsed = map(f32,
+        (accumulator, activity, alternate, elapsed))
+    if accumulator > f32(.001):
+        return dict(accumulator=accumulator, activity=0.0,
+                    alternate=f32(alternate+elapsed), branch='above_threshold')
+    return dict(accumulator=0.0, activity=f32(activity+elapsed),
+                alternate=0.0, branch='at_or_below_threshold')

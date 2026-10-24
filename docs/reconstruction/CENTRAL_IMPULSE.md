@@ -12708,3 +12708,34 @@ Twenty-seven related portable tests pass, including precedence, retained negativ
 remainder and unequal squared/linear attenuation. No live timer or gate observation
 is claimed. The next data join is these trigger/timer fields and their producer,
 not an assumption that every enabled summed record uses unit gates.
+
+### Local producers of the gate-timer duration inputs
+
+The earlier block at RVA 0x1409146 updates both timer triggers in the same snow
+routine. `update_point_activity` models it with finite float32 arithmetic:
+
+```text
+if accumulator > float32(0.001):
+    alternate += elapsed_substep_time
+    activity = 0
+else:
+    activity += elapsed_substep_time
+    alternate = 0
+    accumulator = 0
+```
+
+Accumulator is runtime+0x9f0; alternate and activity are +0xa6c/+0xa70. The
+threshold's inspected bits are 0x3a83126f. Equality takes the second branch.
+This identifies the two triggers as mutually exclusive accumulated durations on
+this local path, rather than arbitrary controls. The accumulator's producer and
+physical meaning remain unresolved; do not label the branches grounded/airborne
+or contact/no-contact from this threshold alone.
+
+[162 original-instruction cases](../../native/snow_host/point_activity_validation.json)
+match accumulator and both duration outputs bitwise, including adjacent floats
+around the threshold, zero elapsed time and prior nonzero counters. Twenty-nine
+related portable tests pass. Intervening calls between this producer and the
+later gate-timer block were not executed in this validation, so composing the two
+kernels assumes those calls do not change the relevant fields. That assumption
+must be checked or replaced by observations before claiming the complete native
+producer-to-gate path. No live run was added for this pass.

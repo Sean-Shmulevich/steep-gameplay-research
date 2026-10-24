@@ -70,3 +70,19 @@ class GateTimerTests(unittest.TestCase):
     def test_skipped_branch_does_not_require_configuration(self):
         self.assertEqual(self.run_timer(alternate=0,refill_divisor=None,duration=None,
             lower_one=None,lower_other=None,upper=None)['timer'],.5)
+
+
+class PointActivityTests(unittest.TestCase):
+    def test_threshold_equality_resets_alternate(self):
+        from engine.snow_post_pending import update_point_activity
+        result=update_point_activity(.001,.25,2,.125)
+        self.assertEqual(result['activity'],.375)
+        self.assertEqual(result['alternate'],0)
+        self.assertEqual(result['accumulator'],0)
+
+    def test_switch_resets_previous_duration(self):
+        from engine.snow_post_pending import update_point_activity
+        a=update_point_activity(.1,2,.25,.125)
+        self.assertEqual((a['activity'],a['alternate']),(0,.375))
+        b=update_point_activity(0,a['activity'],a['alternate'],.125)
+        self.assertEqual((b['activity'],b['alternate']),(.125,0))

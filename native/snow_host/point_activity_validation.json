@@ -1,0 +1,12 @@
+{
+  "cases": 162,
+  "evidence": "original local activity-duration instructions with synthetic inputs",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "bit_exact": true,
+  "threshold_bits": 981668463,
+  "limitations": [
+    "Accumulator producer and intervening helper effects not executed",
+    "Finite inputs only",
+    "No grounded or contact semantic established"
+  ]
+}
