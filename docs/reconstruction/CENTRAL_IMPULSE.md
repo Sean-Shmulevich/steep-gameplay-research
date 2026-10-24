@@ -13595,3 +13595,51 @@ and returned identity match. Allocation/insertion, map clearing, cell admission,
 asset resolution and live player attribution are not exercised by this check.
 This closes the score's meaning and its collision-profile ownership link while
 keeping those runtime boundaries explicit.
+
+### Runnable contact-volume to velocity inspection
+
+Run the authored composition with no game payload:
+
+```sh
+python3 -m engine.snow_velocity_bench engine/examples/snow_velocity_profile.json --output /tmp/snow-velocity-result.json
+```
+
+`snow-velocity-bench-v1` composes the recovered volume-profile selection, upstream
+drive calculation, profile curve evaluation, rate assembly, initialized decay
+lookup, frame transforms, contact correction, bounds and speed-floor decision.
+Its result ends at the velocity candidate supplied to the native setter. It does
+not assign a live body, integrate position or replace the complete snow update.
+The bundled curves, profile identities, volumes and frames are authored synthetic
+fixtures. Existing per-stage instruction receipts remain their own bounded checks;
+this bench has not been compared with one continuous native execution across the
+protected gate, profile resolution, lock and body getter.
+
+Required input groups:
+
+| Field | Meaning |
+| --- | --- |
+| `provenance` | `authored_synthetic` or `caller_supplied_observation`; not an automatic evidence upgrade |
+| `phase_continuity` | Must be `caller_asserted_stable_inputs`; freshness across intervening native calls is not inferred |
+| `stages_reached` | Explicit Boolean; false returns `not_evaluated` without a velocity candidate |
+| `profile_volumes` | Completed map entries with unique nonzero snapshot keys and accumulated volume |
+| `base_curves` | Unique snapshot keys paired with compiled curves; selected curve must exist when evaluated |
+| `drive` | Arguments to `select_velocity_decay_drive` |
+| `profile` | Arguments to `evaluate_velocity_decay_profile`, excluding derived additive rate and selected base curve |
+| `decay_cpu` | Explicit vector/scalar paths for the reconstructed exponential table |
+| `bounds_source` | `initializer_defaults` or `supplied`; supplied mode requires `bounds.lower/upper` |
+| `velocity` | Original velocity, elapsed time, both frames, correction direction/duration/strength and speed floor |
+
+The bench derives rates, contact-disable flag and speed-floor bypass once, passing
+them to the downstream stage. It does not allow independently overriding these
+derived arguments. Inline configuration selection remains a diagnostic; it is
+not used to invent a replacement for the independently supplied strength or floor.
+Initial immersion activation and protected-path reachability are not inferred
+from the inner curve threshold. The caller supplies frames without an assumption
+that they are orthogonal or mutual inverses.
+
+Results retain each stage's diagnostics, selected profile identity, bound source
+and explicit unresolved boundaries. Input data is not mutated. Tests cover a
+dominant-profile change affecting final velocity, override propagation to floor
+bypass, missing/null selected profiles, explicit continuity, contradictory bound
+sources and skipped stages. These are composition checks on synthetic inputs,
+not evidence of native scheduling or whole-controller equivalence.

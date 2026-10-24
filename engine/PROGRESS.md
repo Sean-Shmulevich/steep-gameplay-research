@@ -7207,3 +7207,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   fold does not discard negative helper returns. Original addition, resolver and
   tree successor match 300 supplied trees without interception. Geometry admission,
   map lifecycle, asset resolution and live profile identity remain external.
+- Added runnable JSON velocity bench composing volume-profile selection, drive,
+  curves/rates and correction through setter input. Preserves explicit stage
+  reachability, caller-asserted input consistency, CPU paths and bounds source;
+  missing selected curves do not fall back. Synthetic tests prove profile changes
+  affect velocity and override flags reach floor bypass. No continuous native
+  comparison across protected code/locks or live body mutation is claimed.

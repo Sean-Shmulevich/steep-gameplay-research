@@ -1,0 +1,159 @@
+{
+  "schema": "snow-velocity-bench-v1",
+  "provenance": "authored_synthetic",
+  "phase_continuity": "caller_asserted_stable_inputs",
+  "stages_reached": true,
+  "profile_volumes": [
+    {
+      "profile_key": 10,
+      "volume": 0.75
+    },
+    {
+      "profile_key": 20,
+      "volume": 0.25
+    }
+  ],
+  "base_curves": [
+    {
+      "profile_key": 10,
+      "curve": {
+        "start": 0,
+        "index_scale": 1,
+        "segments": [
+          [
+            0,
+            0.2
+          ]
+        ]
+      }
+    },
+    {
+      "profile_key": 20,
+      "curve": {
+        "start": 0,
+        "index_scale": 1,
+        "segments": [
+          [
+            0,
+            0.8
+          ]
+        ]
+      }
+    }
+  ],
+  "drive": {
+    "product_a": 0,
+    "product_b": 0,
+    "retention_byte": 0,
+    "override_value": 0,
+    "drive_value": 0,
+    "runtime_scale": 1,
+    "override_inhibit_byte": 0
+  },
+  "profile": {
+    "immersion": 0.5,
+    "alternate_immersion": 0.25,
+    "selector_byte": 0,
+    "gain_argument": 0,
+    "base_argument": 0,
+    "xy_curve": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "z_curve": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "gain_curve": {
+      "start": 0,
+      "index_scale": 1,
+      "segments": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "suppression_vector": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "bounds_source": "initializer_defaults",
+  "decay_cpu": {
+    "vector_path": "sse2",
+    "scalar_path": "sse2"
+  },
+  "velocity": {
+    "original": [
+      10,
+      0,
+      0,
+      0
+    ],
+    "elapsed": 0.1,
+    "to_frame": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "from_frame": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "direction": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "duration": 1,
+    "strength": 1,
+    "floor": 0
+  }
+}

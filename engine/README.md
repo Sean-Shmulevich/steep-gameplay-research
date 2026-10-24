@@ -1000,3 +1000,12 @@ to inspect summed impulse submissions, contact reports and finalized weighted
 groups separately. `--output PATH` saves JSON. The example is synthetic; it uses
 supplied initialization/frame data and a mathematical reciprocal-square-root seed.
 No game files are needed. See [the contract and limitations](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-contact-output-inspection).
+
+### Snow velocity inspection bench
+
+Run `python3 -m engine.snow_velocity_bench engine/examples/snow_velocity_profile.json`
+to inspect contact-volume profile selection through the reconstructed velocity
+candidate. `--output PATH` saves stage diagnostics as JSON. Curves, inputs and
+frames in the example are synthetic. Reachability, phase consistency, CPU path
+and bounds source are explicit; no native body is modified. See
+[the input contract and limits](../docs/reconstruction/CENTRAL_IMPULSE.md#runnable-contact-volume-to-velocity-inspection).
