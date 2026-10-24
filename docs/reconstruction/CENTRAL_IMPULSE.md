@@ -16625,3 +16625,51 @@ The fixture selects indices[2,1,0,3] from six inputs and carries cached words
 padding, <=4 selector bypass,16/32-bit key grouping, malformed input rejection,
 input immutability and CLI output. The inspector does not access the live game,
 execute a solver, apply impulses, allocate native payloads or establish lifetime.
+
+### Link solver-result feedback
+
+The cached payload word now has a proven post-solve writer. Orchestrator0x1993ed0
+builds link rows through0x1994970, invokes the common solver wrapper0x1994e80, then
+calls link feedback0x1994470 before body/pose feedback. This static call order
+connects the previously traced payload update to solver-result storage without
+identifying the result's physical units.
+
+`engine.pose_link_feedback.write_pose_link_feedback` reconstructs complete
+0x1994470. It traverses the supplied link span, requires link byte+0x84 bit0,
+captures that link's payload count, and obtains each payload through its16-byte
+key/pointer entry. It then requires payload byte+0x114 bit0 and captures row count
+at+0x110. For each64-byte row:
+
+```
+if context.flags38 & 0x20000000:
+    result_index = row.uint32_at_0x34
+    row.uint32_at_0x30 = result_rows[result_index].lane0_bits
+else:
+    row.uint32_at_0x30 = 0
+```
+
+The native result base is context plus uint32 offset+0x178; each result is16
+bytes. Native code loads all16 bytes and stores only lane0, with no floating-point
+arithmetic. Disabling context bit29 zeroes eligible cache words without reading
+indices or results. Disabling either link/payload bit leaves their cache words
+unchanged. Context flags are reloaded per row, and payload slot storage is read
+per iteration after capturing count. The independent API assumes retained storage
+and serial execution; it does not provide concurrent-snapshot semantics.
+
+This identifies the carried field as cached solver-result lane0. It does not yet
+prove normal impulse, friction impulse, constraint force or their units. Payload
+update clears the adjacent result index to zero; a later builder must establish
+the index used by feedback. The four selected builder paths visible in0x1994970
+are0x1991da0/0x19933d0 when second-body metadata bit15 is clear, and
+0x1991110/0x1992800 when it is set. Within each pair, context low2 bits zero and
+payload count>1 choose the first routine; otherwise the second. Their result-index
+publication and exact cached-value consumption remain the next boundary.
+
+[512 complete feedback comparisons](../../native/snow_host/pose_link_feedback_validation.json)
+execute the original routine and array accessors without interception. They match
+all payload bytes, unchanged link/key-pointer arrays, context and result storage.
+Cases cover both enable gates, context bit29,0..4 payload rows and arbitrary raw
+result bits including nonfinite float encodings. An independent integration test
+writes feedback and then performs a matching geometry update, retaining the
+solver-written cache word while resetting its result index. No solve or live
+object access occurs in these tests; indices and result storage are supplied.

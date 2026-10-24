@@ -7584,3 +7584,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   diagnostics. Tests cover input immutability, key-width grouping, small-group
   bypass, guards and CLI output. No binary required; native grouping/acquisition,
   solver semantics and live lifetime remain explicit exclusions.
+- Identified and reconstructed post-solve link cache feedback. Context bit29
+  selects raw solver-result lane0 copy versus zero under link/payload enable gates.
+  512 complete native comparisons match without interception. Integration test
+  carries feedback through the next matching geometry update. Result-index writers,
+  cached-value consumption and physical solver units remain open.

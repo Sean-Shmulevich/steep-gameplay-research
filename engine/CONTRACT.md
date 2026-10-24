@@ -353,3 +353,9 @@ record fields and exposes recovered reduction/update results, raw cache words an
 retained padding. Input bounds, finite checks and JSON diagnostics are authored;
 no missing bytes, native acquisition, physical cache semantics or solver behavior
 are invented. Synthetic bundled fixtures contain no game payloads.
+
+Link solver feedback: `write_pose_link_feedback` requires retained link/payload
+arrays and complete16-byte result rows. Link flag84 bit0 and payload flag114 bit0
+gate processing; context flag38 bit29 chooses raw lane0 copy versus zero. Result
+indices are supplied through payload rows. This identifies cache provenance, not
+physical units, native lifetime or the missing row-builder index publication.

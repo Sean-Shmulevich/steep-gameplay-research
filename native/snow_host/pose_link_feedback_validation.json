@@ -1,0 +1,19 @@
+{
+  "schema": "pose-link-feedback-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline complete feedback routine and original array accessors without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994470",
+  "comparisons": [
+    "all payload bytes",
+    "unchanged link descriptors and pointer arrays",
+    "unchanged context and solver result records",
+    "raw cache bits including nonfinite float encodings"
+  ],
+  "limits": [
+    "Retained synthetic arrays with0..4 rows; no solve or live identity.",
+    "Result indices supplied; builder publication and physical units unresolved.",
+    "Context bit29 selects copy versus zero; other solver stages excluded."
+  ]
+}
