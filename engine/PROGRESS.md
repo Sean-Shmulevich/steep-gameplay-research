@@ -7325,3 +7325,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   bits and full trace consumption without upgrading provenance. Example consumes
   its secondary angle; contract tests cover disabled/unreached paths and mismatch
   rejection. No native scheduler replay, live mutation or payload bundled.
+- Recovered successful callback publication: separately four-lane-normalize
+  cache vectors in order 2/1/0, store XYZ pose rows in 0/1/2 order, preserve cache,
+  publish auxiliary and two supplied XYZ fields. All fields/cache preservation
+  match 320 native cases. Failure reset, later physical-mode work, pose consumer
+  semantics and timing remain unresolved; pose and decay frames stay distinct.

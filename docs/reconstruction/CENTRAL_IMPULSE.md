@@ -14613,3 +14613,49 @@ own synthetic supplied sequence, rejection of mismatches and extra observations,
 input immutability, disabled execution and unreached evaluation. These are bench
 contract tests; original-instruction comparison remains the separate callback
 receipt. No coverage or live equivalence claim follows from a runnable example.
+
+
+### Successful basis pose publication
+
+`engine.snow_basis_publication.publish_basis_pose` reconstructs the caller's
+accepted-callback fragment at RVA 0x14086ec..0x140884e. The caller 0x1408690 passes
+runtime+0xb40 as callback output and a zero-initialized auxiliary stack vector,
+then tests the callback return's low byte. Success enters this publication.
+Failure takes a different locked record/reset path at 0x1408b97; it is not a
+silent identity-basis fallback and is not modeled by this helper.
+
+The successful fragment first copies the callback auxiliary direction to
+frame-owner+0x100, where frame-owner is runtime+0x5e8 plus 0x140. It then processes
+the three cache vectors in source order 2,1,0. Each uses a four-lane norm:
+
+```text
+n = (y*y + w*w) + (x*x + z*z)
+s = supplied_rsqrt_seed(n)
+scale = (3 - (s*n)*s) * (0.5*s)
+pose_vector.xyz = scale * cache_vector.xyz
+```
+
+Every operation rounds to float32. Native stores XYZ only, in original source
+order 0,1,2 at runtime+0x754/+0x760/+0x76c, within the record beginning +0x700.
+The source cache at +0xb40/+0xb50/+0xb60 is not overwritten. This creates a
+separate normalized representation; it does not retroactively normalize the
+callback's outputs or saved receiver basis. Because W contributes to the norm
+but is not stored, the resulting XYZ length can be below one. A W-only source
+axis has a valid four-lane norm yet publishes zero XYZ. No orthogonalization is
+performed, so collinearity remains possible.
+
+The fragment also copies frame-owner+0x70 XYZ to runtime+0x748, and runtime+0x940
+XYZ to +0x718. The API keeps these as frame_vector70_xyz and runtime_vector940_xyz
+without assigning unproved position/velocity semantics. Subsequent work depends
+on the physical-mode byte and other receiver flags; that work is outside this
+publication kernel. Decay-frame publication uses the cache through a separate
+producer and ordering path, so these pose vectors must not be substituted for
+those cache inputs merely because both represent orientation.
+
+The [publication receipt](../../native/snow_host/basis_publication_validation.json)
+checks 320 original-instruction cases with observed rsqrt seeds and no
+intercepted calls. All nine pose components, both copied XYZ vectors and the
+auxiliary vector match exactly; the source cache remains unchanged. Unit tests
+check normalization order, nonzero W shortening XYZ, W-only axes, and source
+immutability. Finite nonzero norms only; callback success, live record ownership,
+consumer semantics and scheduler timing remain external.

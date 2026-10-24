@@ -1,0 +1,12 @@
+{
+  "cases": 320,
+  "bit_exact": true,
+  "scope": "Original accepted-callback publication fragment; pose fields, auxiliary vector and unchanged cache checked",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Finite nonzero four-lane synthetic norms; observed rsqrt seeds supplied",
+    "Callback success assumed; failure path and subsequent physical-mode work excluded",
+    "Pose record purpose and live consumer timing remain unresolved"
+  ],
+  "game_files_included": false
+}
