@@ -7201,3 +7201,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   base-curve validation; protected reachability, profile ownership/population and
   live input meanings remain open. Located resolver's maximum-score traversal
   as the next ownership lead, without treating it as a live profile identity.
+- Joined base decay-curve selection to collision-profile accumulated clipping
+  volumes. Reconstructed map fold and greatest-volume selection, including
+  unsigned-key tie ordering and null results; unlike total immersion, the map
+  fold does not discard negative helper returns. Original addition, resolver and
+  tree successor match 300 supplied trees without interception. Geometry admission,
+  map lifecycle, asset resolution and live profile identity remain external.

@@ -13539,3 +13539,59 @@ and the finite floor helper is intercepted. All cases match bitwise. The API
 exposes selected immersion and curve results for inspection. Native protected
 gate reachability, table construction/ownership and live input meanings remain
 separate from this arithmetic result.
+
+### Contact-volume ownership of the base decay curve
+
+The base-profile resolver now joins an existing producer identified in
+[contact ownership evidence](../systems/snow/contact-ownership/evidence.md),
+edge 5. Runtime+0xab8 maps cell+0x100 selected collision-profile pointers to
+accumulated cell clipping-helper results. The profile key originates in the
+selected collision-material query, not in the backend mask. The separate mask
+count map at runtime+0xaf8 and retained mask at runtime+0xb38 are not this map.
+
+Fresh instruction inspection confirms the distinction between the two volume
+accumulators. At RVA 0x140907c..0x1409085, a positive helper return contributes
+to total immersion volume. At 0x140908a..0x14090b0, that return contributes to
+the selected profile's map entry regardless of its sign. The entry lookup at
+0x13edb30 compares unsigned pointer-sized keys and initializes new float payloads
+to zero. Null-profile cells and other geometry gates occur earlier; callers must
+not add rejected cells merely because this local fold accepts finite values.
+
+`engine.snow_profile_selection.accumulate_profile_volumes` accepts already-admitted
+cell contributions in their execution order and performs the float32 fold.
+`select_volume_profile` consumes unique map entries, walks unsigned keys in
+ascending order and applies the native >= comparison from an initial maximum
+of -1. Equal volume totals choose the greatest unsigned key. This is a pointer
+ordering consequence within a snapshot, not a stable material priority. It can
+change if object addresses change. The public keys are opaque uint64 identities,
+not authored resource identifiers or reusable heap addresses.
+
+```text
+volumes = empty map
+for admitted_cell in execution_order:
+    key = admitted_cell.selected_profile
+    volumes[key] = float32(admitted_cell.helper_return + volumes.get(key, 0))
+winner = null
+maximum = -1
+for key in ascending_unsigned_key_order(volumes):
+    if volumes[key] >= maximum:
+        maximum = volumes[key]
+        winner = key
+# Only after resolving winner in the same snapshot:
+resolved_base_curve = profile(winner).curve_at_ab0
+```
+
+There is no retained previous winner in this resolver. Empty maps return null;
+finite entries all below -1 also leave null. The consumer's safety for a null
+result has not been established, and the reconstructed API supplies no invented
+fallback. Native map reset calls were identified in the earlier geometry-update
+research; their invocation/freshness is still external to this standalone fold.
+
+The [volume selection receipt](../../native/snow_host/profile_volume_selection_validation.json)
+checks 300 synthetic ordered trees, including high-bit keys, 43 maximum ties and
+19 null results. Original addition instructions, the complete resolver and its
+native tree-successor helper execute without interception. Stored volume floats
+and returned identity match. Allocation/insertion, map clearing, cell admission,
+asset resolution and live player attribution are not exercised by this check.
+This closes the score's meaning and its collision-profile ownership link while
+keeping those runtime boundaries explicit.

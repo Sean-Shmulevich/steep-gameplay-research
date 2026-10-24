@@ -1,0 +1,14 @@
+{
+  "cases": 300,
+  "bit_exact": true,
+  "tie_cases": 43,
+  "null_results": 19,
+  "scope": "Original volume-add instructions, complete resolver and native tree-successor helper on synthetic ordered trees; no intercepted calls",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Synthetic admitted helper returns and tree topology supplied",
+    "Native allocation, insertion, clearing, geometric admission and live ownership not exercised",
+    "No curve consumer or solver executed; no current native pointers published"
+  ],
+  "game_files_included": false
+}
