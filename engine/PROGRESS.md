@@ -7521,3 +7521,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   native comparisons match all context/group/array bytes with body virtual effects
   supplied and preallocated capacity. Growth and physical class semantics remain
   unresolved; protected outer notification still excluded.
+- Recovered flag-selected context group removal before retirement's virtual call.
+  Swap-last removal repairs only the moved group's index; removed fields and tails
+  remain unchanged. 256 complete native comparisons match without interception.
+  Destruction/resource release remain separate unresolved operations.

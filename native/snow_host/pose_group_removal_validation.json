@@ -1,0 +1,16 @@
+{
+  "cases": 256,
+  "bit_exact": true,
+  "scope": "Complete native context group removal, no interception; both full arrays, context bytes and all retained group bytes match",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "coverage": [
+    "Flag zero/nonzero selection",
+    "Single/first/middle/last removal",
+    "Moved index repair, unchanged removed fields and inactive tails"
+  ],
+  "limits": [
+    "Valid retained membership only; independent missing-member guard is authored",
+    "No group destructor, resource release or concurrent lifetime guarantee"
+  ],
+  "game_files_included": false
+}

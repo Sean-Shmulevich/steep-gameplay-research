@@ -16095,3 +16095,23 @@ tests additionally cover source-slot reload after supplied growth. Growth paths,
 callback mutation effects, concurrency and the classes' physical meanings remain
 outside this native receipt. This closes the structural finalization operation
 previously supplied to group update/partition, not the entire protected wrapper.
+
+### Context group removal
+
+`engine.pose_group_removal.remove_pose_group` reconstructs RVA0x18e2660..0x18e26e8.
+Group flag+0xa0 selects context.groups418 when zero, groups428 otherwise. It
+captures group.index+0xc, decrements the selected count, copies the last active
+group into that slot and repairs the moved group's index when the slot is still
+active. Capacity, inactive tail and the removed group's own index/flag remain
+unchanged. It does not clear a membership pointer or call a destructor.
+
+This is the context removal immediately preceding virtual slot0(argument1) in
+the ordinary-group retirement branches. Removing the list entry and destroying
+the object are separate operations. A valid retained member is an authored API
+precondition; the independent model rejects stale/missing membership before any
+mutation rather than reproducing an invalid native write.
+
+[256 complete native comparisons](../../native/snow_host/pose_group_removal_validation.json)
+match both full arrays, context bytes and every retained group byte without
+interception. Cases cover flag0/1/255 and single/first/middle/last removal. Resource
+release, native destructor effects and concurrent lifetime safety remain unresolved.
