@@ -7166,3 +7166,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   direction, strength, disable and runtime bounds explicit. Matches 224 original
   instruction cases and seven velocity tests. Whole-stage composition, actual
   producers and live attribution remain open; no universal landing classifier.
+- Composed velocity decay, early-immersion adjustment, clamps and speed floor.
+  Connected original instruction range matches 256 cases through final velocity
+  and selected speed; only decay provider intercepted. Nine tests preserve floor
+  overrides of prior correction/clamps. Setter execution, subsequent impulses,
+  lookup/input producers and live attribution remain external.

@@ -13315,3 +13315,31 @@ including durations on either side of 0.5, both flags, varying directions and
 strength signs. No calls are intercepted. Seven velocity-correction tests pass.
 This supplies the missing local stage between decay and speed floor; connected
 whole-stage validation, actual input producers and live attribution remain next.
+
+### Connected local velocity-correction path
+
+`engine.snow_velocity_correction.correct_linear_velocity` now composes decay,
+contact-direction correction, component clamps and the final speed-floor decision.
+It returns diagnostics for every stage. Original velocity, frames, rates, lookup
+provider, duration, strength, flags, bounds and floor remain explicit inputs.
+
+[256 connected original-instruction cases](../../native/snow_host/velocity_correction_joined_validation.json)
+execute the continuous original range 0x13f7faf..0x13f8225. Final velocity and
+reported selected speed match bitwise, as do lookup argument values and call
+order. The only intercepted function is the runtime decay sampler, supplied with
+the same synthetic scalar provider used by the independent model. Random frames,
+velocities and configuration exercise stage interactions. No native setter or
+following central-impulse path executes in this check.
+
+The final floor uses the original velocity. It can therefore restore inward
+motion that the earlier correction removed. It can also return a component above
+an earlier clamp bound; no second clamp follows in this local path. These are
+consequences of the inspected order, not recommendations for a replacement
+controller. Tests preserve them rather than enforcing an invented final bound.
+Nine related portable tests pass.
+
+This closes local arithmetic composition through setter input. Native lookup
+initialization, upstream frame/rate/flag producers, early activation, subsequent
+impulses and live correspondence remain unresolved. The composed kernel must not
+be labeled the complete snow controller or used as evidence that all body motion
+within the wrapper is explained.

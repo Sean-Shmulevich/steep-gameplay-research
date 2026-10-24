@@ -50,3 +50,27 @@ class ContactReturnTests(unittest.TestCase):
     def test_disabled_still_clamps_and_no_normalization(self):
         self.assertEqual(self.run_case(disabled=True,lower=[-1]*3)['velocity'],[0,0,-1,0])
         self.assertEqual(self.run_case(direction=[0,0,2,0])['velocity'],[0,0,6,0])
+
+
+class ConnectedCorrectionTests(unittest.TestCase):
+    def test_floor_can_override_complete_inward_removal(self):
+        from engine.snow_velocity_correction import correct_linear_velocity
+        identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0]]
+        args=dict(original=[0,0,-4,0],rates=[1]*3,elapsed=.1,to_frame=identity,
+                  from_frame=identity,sample_decay=lambda _: .5,direction=[0,0,1,0],
+                  duration=0,strength=1,disabled=False,lower=[-100]*3,upper=[100]*3,
+                  floor=2,bypass=False)
+        r=correct_linear_velocity(**args)
+        self.assertEqual(r['decay']['velocity'],[0,0,-2,0])
+        self.assertEqual(r['contact']['velocity'],[0,0,0,0])
+        self.assertEqual(r['selected']['velocity'],[0,0,-2,0])
+        args['bypass']=True
+        self.assertEqual(correct_linear_velocity(**args)['selected']['velocity'],[0,0,0,0])
+
+    def test_floor_is_not_followed_by_an_invented_second_clamp(self):
+        from engine.snow_velocity_correction import correct_linear_velocity
+        identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0]]
+        r=correct_linear_velocity([10,0,0,0],[1]*3,1,identity,identity,lambda _:0,
+                                  [0,0,1,0],1,1,True,[-5]*3,[5]*3,8,False)
+        self.assertEqual(r['contact']['velocity'],[0,0,0,0])
+        self.assertEqual(r['selected']['velocity'],[8,0,0,0])

@@ -1,0 +1,12 @@
+{
+  "cases": 256,
+  "bit_exact": true,
+  "scope": "Connected original velocity arithmetic through directional correction, clamps and speed-floor selection",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Runtime decay lookup intercepted with supplied synthetic scalar provider",
+    "Frames, rates and elapsed time supplied; no producer or native table identity proof",
+    "No native setter, downstream impulses or live attribution; configuration and clamp bounds supplied"
+  ],
+  "game_files_included": false
+}

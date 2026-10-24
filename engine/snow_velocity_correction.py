@@ -85,3 +85,17 @@ def contact_return_candidate(velocity, direction, duration, strength, disabled, 
         elif v[axis] > hi:v[axis]=hi
     v[3]=0.0
     return dict(velocity=v,adjusted_velocity=adjusted,correction_applied=applied)
+
+
+def correct_linear_velocity(original, rates, elapsed, to_frame, from_frame, sample_decay,
+                            direction, duration, strength, disabled, lower, upper, floor, bypass):
+    """Connected local arithmetic ending before the native linear setter.
+
+    Upstream activation, curves/configuration and subsequent impulses are external.
+    The stages deliberately preserve order: the floor may override correction
+    and clamps using the original velocity, not the intermediate direction.
+    """
+    decay=directional_velocity_decay(original,rates,elapsed,to_frame,from_frame,sample_decay)
+    contact=contact_return_candidate(decay['velocity'],direction,duration,strength,disabled,lower,upper)
+    selected=preserve_speed_floor(original,contact['velocity'],floor,bypass)
+    return dict(decay=decay,contact=contact,selected=selected)
