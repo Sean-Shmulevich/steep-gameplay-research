@@ -68,6 +68,39 @@ def assemble_velocity_decay_rates(base_rate, xy_curve_value, z_curve_value,
     return dict(rates=rates,contact_correction_disabled=disabled)
 
 
+def evaluate_velocity_decay_profile(immersion, alternate_immersion, selector_byte,
+                                    gain_argument, base_argument, xy_curve, z_curve,
+                                    gain_curve, base_curve, additive_rate,
+                                    suppression_vector):
+    """Curve evaluation and rate assembly after the protected profile gate.
+
+    Tables use reference.runtime_curve's compiled slope/intercept schema.
+    base_curve belongs to the separately resolved profile, not necessarily the
+    owner of the other three curves. A supplied None is allowed only when that
+    curve is not evaluated. This models the inner threshold, not routine entry.
+    Evidence: CENTRAL_IMPULSE.md, Velocity decay curve-selection composition.
+    """
+    from reference.runtime_curve import evaluate
+    if type(selector_byte) is not int or not 0 <= selector_byte <= 255:
+        raise ValueError('Raw uint8 selector required')
+    immersion,alternate_immersion=map(f32,(immersion,alternate_immersion))
+    selected=alternate_immersion if selector_byte == 1 else immersion
+    gain=evaluate(gain_argument,**gain_curve)
+    base_evaluated=immersion > f32(.01)
+    if base_evaluated:
+        if base_curve is None:
+            raise ValueError('Resolved base curve required above immersion threshold')
+        base=evaluate(base_argument,**base_curve)
+        base=0.0 if base < 0 else (1.0 if base > 1 else base)
+    else:
+        base=0.0
+    xy=evaluate(selected,**xy_curve)
+    z=evaluate(selected,**z_curve)
+    rates=assemble_velocity_decay_rates(base,xy,z,additive_rate,gain,suppression_vector)
+    return dict(**rates,selected_immersion=selected,base_curve_evaluated=base_evaluated,
+                base_rate=base,xy_gain=gain,xy_curve_value=xy,z_curve_value=z)
+
+
 def speed(vector):
     squares=[f32(x*x) for x in vector[:3]]
     return f32(sqrt(f32(squares[0]+f32(squares[1]+squares[2]))))

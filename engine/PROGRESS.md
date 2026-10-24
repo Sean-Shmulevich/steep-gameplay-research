@@ -7194,3 +7194,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   configuration selection. Both scalar outputs and flags match 384 original
   instruction cases without interception. Field semantics, earlier producers
   and live activation remain open; no blanket configuration override inferred.
+- Joined compiled curve selection to rate assembly. Exact-byte selection changes
+  XY/Z immersion sampling, while primary immersion still gates the separately
+  resolved base curve. Original curve calls and assembly match 320 supplied cases;
+  resolver and finite floor helper intercepted. Exposed diagnostics and missing
+  base-curve validation; protected reachability, profile ownership/population and
+  live input meanings remain open. Located resolver's maximum-score traversal
+  as the next ownership lead, without treating it as a live profile identity.

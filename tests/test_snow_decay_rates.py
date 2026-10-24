@@ -42,3 +42,27 @@ class DecayRateAssemblyTests(unittest.TestCase):
         self.assertFalse(normal['contact_correction_disabled'])
         self.assertTrue(suppressed['contact_correction_disabled'])
         self.assertEqual(suppressed['rates'],[f32(.02),f32(.02),f32(.01),0])
+
+
+class DecayProfileTests(unittest.TestCase):
+    def case(self,**changes):
+        from engine.snow_velocity_correction import evaluate_velocity_decay_profile
+        linear=dict(start=0,index_scale=1,segments=[(1,0)])
+        constant=dict(start=0,index_scale=1,segments=[(0,2)])
+        args=dict(immersion=.25,alternate_immersion=.75,selector_byte=0,
+                  gain_argument=0,base_argument=0,xy_curve=linear,z_curve=linear,
+                  gain_curve=constant,base_curve=linear,additive_rate=0,
+                  suppression_vector=[0]*4)
+        args.update(changes)
+        return evaluate_velocity_decay_profile(**args)
+
+    def test_selector_requires_exactly_one(self):
+        self.assertEqual(self.case(selector_byte=1)['rates'],[1.5,1.5,.75,0])
+        self.assertEqual(self.case(selector_byte=255)['rates'],[.5,.5,.25,0])
+
+    def test_primary_immersion_gates_base_even_when_alternate_selected(self):
+        result=self.case(immersion=f32(.01),selector_byte=1,base_curve=None)
+        self.assertFalse(result['base_curve_evaluated'])
+        self.assertEqual(result['rates'],[1.5,1.5,.75,0])
+        with self.assertRaises(ValueError):
+            self.case(immersion=.010001,base_curve=None)

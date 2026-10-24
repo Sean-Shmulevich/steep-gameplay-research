@@ -13493,3 +13493,49 @@ checks 384 original-instruction cases without intercepted calls. Both scalar
 outputs and both flags match exactly, with 95 direct overrides, 289 ordinary
 selections and 189 positive-input speed-floor bypasses. Upstream field producers,
 runtime selection and live activation remain open.
+
+### Velocity decay curve-selection composition
+
+`engine.snow_velocity_correction.evaluate_velocity_decay_profile` joins the
+compiled curve evaluator to rate assembly over RVA 0x13f7e13..0x13f7f40. It takes
+three curves from the already-selected damping profile and a separately resolved
+base curve. These owners must not be assumed identical.
+
+```text
+selected_immersion = alternate_immersion if selector_byte == 1 else immersion
+xy_gain = evaluate(gain_curve, gain_argument)
+# Native code resolves the base profile here, even if its curve will be skipped.
+if immersion > float32(0.01):
+    base_rate = clamp(evaluate(resolved_base_curve, base_argument), 0, 1)
+else:
+    base_rate = 0
+xy_curve_value = evaluate(xy_curve, selected_immersion)
+z_curve_value = evaluate(z_curve, selected_immersion)
+assemble rates using base_rate, both curve values, additive_rate and xy_gain
+```
+
+The selector requires exactly byte value 1; other nonzero values select primary
+immersion. The inner base threshold uses primary immersion even when the two
+other curves use the alternate. Equality at float32(0.01) skips base evaluation.
+This models an inner check after intervening calls; it does not establish that
+the whole routine is reachable below its separate entry immersion threshold.
+The API permits an absent base curve only when the inner evaluation is skipped;
+it neither invokes nor reproduces native resolver side effects.
+
+The separately resolved owner comes from RVA 0x1406000 and its base curve is at
+owner+0xab0, sampled at runtime+0xa00. The inspected resolver traverses the runtime
+container rooted at +0xab8 using 0x1c3cc30, compares node+0x28 against a running
+maximum starting at -1 and retains node+0x20 on greater-or-equal scores. Thus
+equal scores replace the prior choice in traversal order. This is a lead for
+reconstructing profile ownership; the container population and live identities
+have not been joined here. An empty resolver may return null; the public helper
+does not invent a default native profile or claim null dereference recovery.
+
+The [curve-selection receipt](../../native/snow_host/decay_profile_validation.json)
+checks 320 original-instruction cases through the final four rate lanes and
+contact-correction flag, using synthetic compiled curves. Native curve calls
+execute, while the base-profile resolver returns an explicitly supplied owner
+and the finite floor helper is intercepted. All cases match bitwise. The API
+exposes selected immersion and curve results for inspection. Native protected
+gate reachability, table construction/ownership and live input meanings remain
+separate from this arithmetic result.
