@@ -7294,3 +7294,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   320 native cases, half replaced; two curve calls supplied, trig/rsqrt observed.
   Replacement occurs after computation and preserves captured vector magnitudes;
   final axis 2 is not normalized. Earlier producers and live cadence remain open.
+- Recovered signed prepass direction gain: ordinary absolute-input curve versus
+  special negative-input interpolation and speed gain. Strict below--0.5 branch
+  skips speed evaluation; equality applies it. Gain/call order matches 400 native
+  fragments with supplied curve samples. Normal-Z table helper and projection
+  geometry, curve payloads and gameplay flag meanings remain unresolved.

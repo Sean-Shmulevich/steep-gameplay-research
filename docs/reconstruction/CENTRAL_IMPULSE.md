@@ -14325,3 +14325,53 @@ The portable model receives observed trig returns and rsqrt seeds. Curve argumen
 order is checked. Entry geometry, the earlier comparison's producer and live
 cadence remain outside the receipt. Unit tests also check the retained third-axis
 magnitude and that replacement does not suppress curve evaluation.
+
+
+### Signed prepass direction gain
+
+`engine.snow_prepass_gain.prepass_direction_gain` reconstructs
+RVA 0x13fb515..0x13fb5ab. This block is reached when runtime+0xa40's Z lane is
+below float32(0.999). At or above that earlier threshold, the prepass selects
+[0,0,1,0] instead of constructing this curve-driven direction. The input x is
+runtime+0xa60, special_byte is receiver+0x164, control_curve is config+8 and
+speed_curve is config+0x40. The latter samples the frame-owner scalar +0.
+These names are local roles; the input and flag's gameplay producers are open.
+
+The control curve is always sampled at zero first, even if its result will not
+contribute to the selected result. Let c0 denote that sample. Preserving
+separate float32 operations:
+
+```text
+c0 = control_curve(0)
+if special_byte != 0 and x <= 0:
+    if x < -0.5: gain = 1
+    else: gain = ((x+x) * (c0-1)) + c0
+else:
+    gain = control_curve(x if special_byte != 0 else abs(x))
+if special_byte != 0:
+    multiplier = 1 if x < -0.5 else speed_curve(speed_argument)
+    gain = gain * multiplier
+```
+
+Special mode interpolates from c0 at zero to 1 at -0.5 before the speed gain.
+Below -0.5 it uses 1 without evaluating the speed curve. At exactly -0.5 the
+speed gain does apply, so a discontinuity is possible unless that gain equals 1.
+The actual curve payload decides whether that discontinuity occurs in game.
+Ordinary mode samples absolute input and never applies this speed curve. No
+clamp is inserted. Both signed zeros take the special interpolation path, which
+samples the control curve only once; ordinary mode samples zero twice.
+
+This gain subsequently scales the output of a table helper at 0x14026c0,
+queried with runtime+0xa40's Z lane. The helper uses a 256-segment linear table;
+its initialization and angular meaning are not established by this receipt.
+The prepass multiplies that result by the gain and -0.5 before sine/cosine calls.
+Accordingly this gain is one ingredient of the direction producer, not yet its
+complete geometry or a proved steering attenuation formula.
+
+The [signed-gain receipt](../../native/snow_host/prepass_gain_validation.json)
+checks 400 original-fragment cases with explicitly intercepted curve calls that
+return finite synthetic samples. Gain bits and curve call order/arguments match.
+Both modes cover -0.5 and its neighboring float32 values, signed zero, and random
+inputs. Unit tests check the threshold's speed-curve suppression and sampling
+order. Finite inputs only; original curve contents, runtime flag meaning and
+live resulting orientations remain unresolved.

@@ -1,0 +1,15 @@
+{
+  "cases": 400,
+  "bit_exact": true,
+  "scope": "Original signed direction-gain selection, interpolation and curve call order",
+  "intercepted_services": [
+    "Curve calls use explicit finite synthetic samples"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "limits": [
+    "Entry assumes earlier normal-Z branch taken",
+    "Finite input domain; curve contents and flag/control producers unresolved",
+    "No live control interpretation or resulting orientation proof"
+  ],
+  "game_files_included": false
+}
