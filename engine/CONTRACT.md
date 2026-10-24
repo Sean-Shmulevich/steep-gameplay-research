@@ -506,3 +506,9 @@ in active group order. It does not repair indices or synchronize live memory.
 Counts above65535 are rejected to avoid the recovered layout's 16-bit truncation.
 The membership producer and numerical consumer are recovered separately; consistent
 retained membership connects them, while allocation-time mutation remains external.
+
+Secondary body application: `apply_pose_secondary_body_state` temporarily installs
+state XYZ pairs, invokes supplied virtual-slot+0x10 with exactly1.0, and restores
+all24 prior motion bytes on normal return. Other method effects persist. Count is
+captured while later slots/state reload. The method's native effects, exceptions,
+aliases and live ownership remain outside this contract.

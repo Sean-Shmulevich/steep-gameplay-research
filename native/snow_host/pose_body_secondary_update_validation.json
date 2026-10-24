@@ -1,0 +1,18 @@
+{
+  "schema": "pose-body-secondary-update-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline full native temporary body update with virtual method supplied as recording and mutating service",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19906b0",
+  "comparisons": [
+    "call order, raw temporary motion bytes and exact scalar argument",
+    "all retained body bytes after restoration",
+    "next-slot and next-state mutation visibility"
+  ],
+  "limits": [
+    "Virtual slot+0x10 implementation supplied; resulting transform/physical effects not proven.",
+    "Raw finite and nonfinite bit patterns copied, no arithmetic interpretation.",
+    "Normal-return path only; aliasing, exceptions, native ownership and concurrent mutation excluded."
+  ]
+}

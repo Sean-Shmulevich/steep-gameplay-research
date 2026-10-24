@@ -888,3 +888,49 @@ motion while preserving another body's state. Numerical categories beyond the
 supported primary/tangent rows, cross-group endpoints, allocation safety and live
 ownership remain unresolved. Earlier isolated buffer tests supplied index maps;
 this adapter closes that boundary for consistent retained groups only.
+
+### Secondary-pass temporary body update
+
+`engine.pose_body_secondary_update.apply_pose_secondary_body_state` reconstructs
+`0x19906b0` through its return at0x1990826. After the optional secondary solve,
+this helper uses the state region selected by context+0x174 and processes bodies
+in the supplied group-array order. It performs a temporary assignment around a
+virtual call, rather than retaining the secondary motion as ordinary writeback:
+
+```python
+count = entry_body_count
+for i in range(count):
+    body = reload_body_slot(i)
+    previous_motion = raw_bytes(body, 0x1a0, 24)
+    body.xyz_at_1a0 = raw_xyz(state[i], 0)
+    body.xyz_at_1ac = raw_xyz(state[i], 16)
+    body.virtual_slot_10(1.0)
+    raw_bytes(body, 0x1a0, 24) = previous_motion
+```
+
+The constant argument is exactly float32 `1.0`, loaded from RVA0x1df3150.
+Neither fourth state lane is copied. All six previous motion components are
+restored as raw bytes, including changes the method itself made to those fields.
+Other method effects survive. The method target is read from the current body's
+vtable before installing the temporary values; the body identity remains captured
+across the call. The array length is captured once, while later body slots and
+state records are reloaded. Repeated body identities are processed independently.
+The API supplies the selected virtual method through `update_body`; its normal
+return is required. It adds no exception-safe rollback.
+
+The caller at0x1993ed0 first performs ordinary solver feedback, then, if the
+secondary iteration field is nonzero, switches phase bits, zeroes the body-state
+region, builds secondary link rows and solves again. It rechecks the iteration
+field before invoking this temporary-update helper. The group poststep follows.
+This ordering suggests a separate correction application, but neither position
+correction nor a particular integration equation is established until the body
+virtual method is identified. The value1.0 alone does not establish a duration or
+an animation parameter.
+
+[512 full native helper comparisons](../../native/snow_host/pose_body_secondary_update_validation.json)
+match callback order, raw installed motion, exact scalar argument and all retained
+body bytes. The virtual method is a supplied recording/mutating service. Cases
+include zero through18 entries, repeated bodies, arbitrary raw float encodings,
+method-side motion overwrites and changes to later slots/state. The checks prove
+the temporary assignment and restoration around that service, not its native
+implementation or a complete secondary solve. No live game session was used.

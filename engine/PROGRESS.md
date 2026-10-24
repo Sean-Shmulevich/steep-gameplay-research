@@ -7701,3 +7701,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   128 offline original append→producer cases match without interception. Native
   whole-group execution, concurrency and unsupported row categories remain open;
   the adapter's validation policy is authored rather than recovered engine code.
+- Recovered the secondary-pass body application wrapper: solved motion is exposed
+  temporarily to a virtual method with1.0, then prior motion is restored. Added
+  the explicit method service and512 complete native wrapper comparisons with
+  callback mutations, repeated identities and raw-bit preservation. Method
+  implementation and physical correction semantics remain unresolved; this does
+  not claim the complete secondary pass is reconstructed.
