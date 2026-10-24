@@ -15262,3 +15262,41 @@ with no intercepted calls. Four-lane coefficient and gain match bit-for-bit.
 Finite nonsingular inputs only; zero-count division outside the near-zero branch
 and other exceptional arithmetic are explicitly excluded. Negative scalar
 threshold cases are included, not asserted to occur during gameplay.
+
+### Pose row angular helper
+
+`engine.snow_pose_angle.pose_row_angle` reconstructs RVA 0x19a1760 with an
+explicit atan2 service. Given axis A, reference R and target T, its arguments are:
+
+```text
+cross = A cross T
+numerator = R dot cross
+denominator = R dot T
+angle = atan2(numerator, denominator)
+```
+
+Each multiply/subtract rounds to float32. The dot reduction is
+float32(float32(x_product+y_product)+float32(z_product+0)), matching masked W
+and two horizontal adds. The routine does not normalize vectors or repair
+parallel/zero vectors. Its orientation is significant: Z axis, X reference and
+Y target yield a negative quarter-turn. The helper broadcasts the angle to four
+lanes. Native atan2 implementation RVA 0x1c88cec is still an external numerical
+service in the independent API; substituting platform math is approximate.
+
+`soft_pose_row_response` joins this helper to soft coefficient preparation and
+computes each angular term as float32(float32(angle*context_scalar)*angle_gain).
+The native soft-row builder writes this term at row+0x10 and the supplied axis at
+row+0x20. This join does not allocate rows or reconstruct their remaining fields.
+
+[384 complete native builder runs](../../native/snow_host/pose_soft_response_validation.json)
+execute the original angular/math helpers without substitution. Instrumentation
+observes atan2 arguments and output, which are supplied to the independent math
+service for comparison. Arguments, final coefficient, angular term and stored
+axis match bit-for-bit. Maximum native-angle versus platform atan2 difference in
+these cases is about 1.19e-7 radians; this is not a universal error bound or proof
+of interchangeable math libraries. Native mask initialization is executed first.
+
+The earlier prefix-only coefficient receipt remains valid; this newer receipt
+extends execution through the full builder while comparing selected reconstructed
+fields. It does not establish full-row equivalence, iterative solve behavior,
+context scalar units or physical body response.

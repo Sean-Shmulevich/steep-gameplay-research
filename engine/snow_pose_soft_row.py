@@ -31,3 +31,15 @@ def soft_pose_row_parameters(stiffness, damping, context_scalar, context_flags):
         if not math.isfinite(value) or not math.isfinite(gain):raise ValueError('Finite output required')
         coefficients.append(value);gains.append(gain)
     return dict(coefficient=coefficients,angle_gain=gains,near_zero=False,extracted_count=count)
+
+
+def soft_pose_row_response(stiffness, damping, context_scalar, context_flags,
+                           axis, reference, target, *, atan2):
+    """Compose soft coefficients with angular helper; no row allocation or solve."""
+    from .snow_pose_angle import pose_row_angle
+    result=soft_pose_row_parameters(stiffness,damping,context_scalar,context_flags)
+    angle=pose_row_angle(axis,reference,target,atan2)
+    scaled=f32(angle['angle']*f32(context_scalar))
+    result['angle']=angle
+    result['angle_term']=[f32(scaled*g) for g in result['angle_gain']]
+    return result

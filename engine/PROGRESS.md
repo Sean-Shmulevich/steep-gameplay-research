@@ -7410,3 +7410,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   otherwise ratio-based coefficient/gain formulas preserve float32 order. 384
   original-prefix cases match both layouts without interception. Scalar units,
   count semantics, angle helper and complete row generation remain unresolved.
+- Recovered signed pose-row angle from dot/cross products with explicit atan2,
+  then joined it to the soft-row coefficient/gain formula. 384 complete native
+  builder runs match angle arguments, selected coefficient/angular/axis fields;
+  native atan2 results observed and supplied for comparison. Full row allocation,
+  remaining fields, scalar units and body response stay unresolved.
