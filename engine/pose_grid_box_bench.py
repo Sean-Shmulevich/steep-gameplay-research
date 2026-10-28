@@ -8,7 +8,7 @@ from reference.central_impulse import f32
 from .pose_grid_box_contact import emit_grid_box_contacts
 
 
-def inspect(document):
+def prepare(document, *, capacity_limit=128):
     if document.get('schema')!='pose-grid-box-v1':raise ValueError('Unsupported schema')
     if document.get('provenance') not in ('authored_synthetic','caller_supplied_observation'):
         raise ValueError('Explicit provenance required')
@@ -35,7 +35,7 @@ def inspect(document):
         frames.append([vector(row,3) for row in data[key]])
     extents=vector(data['extents'],3)
     if min(extents)<=0:raise ValueError('Positive extents required')
-    capacity=integer(data['capacity'],0,128)
+    capacity=integer(data['capacity'],0,capacity_limit)
     for flag in ('preliminary','edge_enabled','filter_enabled'):
         if type(data[flag]) is not bool:raise ValueError('Boolean flags required')
     profiles=data['profiles']
@@ -59,6 +59,15 @@ def inspect(document):
     upper=[f32(f32(f32(n-1)*s)+o) for n,s,o in zip((width,height),spacing,origin)]
     struct.pack_into('<3f',resource,0x88,*upper,bounds[1])
     struct.pack_into('<2H',resource,0x9c,width-1,height-1)
+    return dict(data=data,resource=resource,samples=samples,frames=frames,
+                extents=extents,capacity=capacity)
+
+
+def inspect(document):
+    prepared=prepare(document)
+    data=prepared['data'];resource=prepared['resource'];samples=prepared['samples']
+    frames=prepared['frames'];extents=prepared['extents'];capacity=prepared['capacity']
+    terrain_profiles=data['terrain_profiles'];box_profile=data['box_profile'];profiles=data['profiles']
     output=bytearray(capacity*48)
     result=emit_grid_box_contacts(output,capacity,resource,samples,*frames,extents,
         terrain_profiles,box_profile,profiles=profiles,preliminary=data['preliminary'],

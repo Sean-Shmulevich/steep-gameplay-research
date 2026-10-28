@@ -7967,3 +7967,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Added a public actual-geometry contact/separation lifecycle test. A fixture buffer
   overlap in the first native attempt was corrected without runtime changes.
   Allocation/refill, solver rows and scheduled live integration remain open.
+- Added runnable terrain-cache sequence inspection with explicit payload/cache/
+  recycle buffers and synthetic contact/separate/recontact fixture. Output shows
+  payload reuse and retained bytes. Snapshot continuation matches uninterrupted
+  execution; input stays unchanged. Shared geometry input validation preserves
+  the existing standalone inspector's limits. No native allocator or solver claim.

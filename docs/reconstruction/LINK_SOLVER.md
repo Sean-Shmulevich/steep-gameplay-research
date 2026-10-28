@@ -3145,3 +3145,42 @@ fault without runtime changes. The receipt records only the completed comparison
 A public synthetic lifecycle test runs actual terrain generation, then moves the
 box above the terrain and verifies the zero-contact path clears and recycles its
 payload. No game files or native process are needed for that test.
+
+### Terrain-cache inspection CLI
+
+Run the connected inspection without game files:
+
+```sh
+python3 -m engine.pose_terrain_cache_bench engine/examples/pose_terrain_cache.json --output result.json
+```
+
+Schema `pose-terrain-cache-v1` requires provenance, explicit initial state, pair
+indices/entry flags/order/key width and1..64 geometry steps. Each step uses the
+terrain-contact inspection input layout, but capacity must be500 as in the native
+handoff. Both `terrain_box` and `box_terrain` orders are supported. Geometry packing
+and bounds checks share `pose_grid_box_bench.prepare`; its original standalone
+inspector keeps its128-record bound.
+
+Initial state provides an opaque owner ID, retained16-byte cache slots/count/capacity,
+recycled identity slots/count/capacity, complete288-byte payloads keyed by opaque ID,
+and all24000 output-buffer bytes. The command deep-copies that state. IDs are local
+inspection identities, not native heap addresses. Active identities must resolve
+to supplied payloads. Cache/recycler initial capacities are bounded to256 by the
+inspection adapter. Each geometry step still supplies its own frames and profiles.
+
+The included fixture is wholly authored synthetic data. It places a box against
+uneven terrain, moves it above the terrain, then restores contact. Generated/cache
+counts are[1,0,1], recycled counts[0,1,0], and the same payload ID is reused. Output
+includes per-step groups/retirements or cleared counts, active entries, complete
+retained output and payload hex, plus `final_state` suitable as a later invocation's
+`initial_state`. A continuation test confirms split and uninterrupted runs produce
+the same retained final state. This is independent snapshot continuation, not an
+original-game save state or reverse stepping.
+
+The CLI intentionally requires enough initial payloads and cache slots. Exhaustion
+raises an explicit missing-storage error; it does not manufacture a global allocator
+or batch-pool policy. Recycle-list growth still follows the reconstructed local
+policy using Python storage. Input guards, JSON representation, diagnostics and
+snapshot copying are authored interfaces. Numerical integration evidence remains
+the separate native terrain-cache receipt, not the fixture's successful execution.
+No solver, time advancement, native memory access or game launch occurs here.

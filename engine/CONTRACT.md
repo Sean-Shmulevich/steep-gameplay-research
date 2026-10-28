@@ -877,3 +877,10 @@ It preserves the complete500-record backing buffer, including inactive producer
 bytes. See LINK_SOLVER.md, "Terrain generation through contact-cache processing".
 Native terrain comparisons cover translated small synthetic grids with preallocated
 storage. Solver execution and live body ownership are not part of this API.
+
+Terrain-cache CLI: `python3 -m engine.pose_terrain_cache_bench INPUT` consumes
+schema pose-terrain-cache-v1 with complete initial retained storage and explicit
+geometry steps/pair metadata. It returns per-step inspection plus resumable final
+state. See LINK_SOLVER.md, "Terrain-cache inspection CLI". Snapshot copying and
+JSON bounds are authored; storage exhaustion errors rather than inventing native
+batch allocation. This command neither advances time nor executes a solver.

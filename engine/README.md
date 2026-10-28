@@ -1109,3 +1109,17 @@ python3 -m engine.pose_grid_box_bench engine/examples/pose_grid_box.json
 The synthetic example exposes profile gates, optional height contact and terrain
 filtering. It requires no game files. See [terrain-contact inspection](../docs/reconstruction/LINK_SOLVER.md#runnable-terrain-contact-inspection)
 for input fields and evidence limits.
+
+### Inspect persistent terrain contacts
+
+```sh
+python3 -m engine.pose_terrain_cache_bench engine/examples/pose_terrain_cache.json --output result.json
+```
+
+This synthetic sequence generates contact, separates the box, then recontacts using
+the recycled payload. Inspect per-step generated/cache counts, group identities,
+retained output/payload bytes and the resumable `final_state`. Initial buffers,
+profiles and terrain samples are explicit. The command needs no game files.
+It runs contact generation and cache processing, not body integration or the solver.
+See [terrain-cache inspection contract](../docs/reconstruction/LINK_SOLVER.md#terrain-cache-inspection-cli)
+for schema, storage boundaries and evidence distinctions.
