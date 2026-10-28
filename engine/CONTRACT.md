@@ -666,3 +666,9 @@ the transposed-frame calculation, adjacent-normal eligibility gates, short-axis
 rejection, orientation and strictly negative best-separation policy. Finite inputs
 and nonzero second-edge lengths are required. See LINK_SOLVER.md, "Contact
 edge-distance query". Descriptor validity and contact emission remain separate.
+
+Connected contact selection: `select_geometry_contact_axis` uses both recovered
+face/edge queries directly and returns the recovered kind/index/distance result.
+The explicit-service selector remains available. This is a geometry-query API,
+not contact emission or a live mod entry point. See LINK_SOLVER.md, "Connected
+geometry axis selection" for schemas and validation boundaries.

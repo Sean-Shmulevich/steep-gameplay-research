@@ -1,5 +1,5 @@
 import unittest
-from engine.pose_contact_axis_selection import select_contact_axis
+from engine.pose_contact_axis_selection import select_contact_axis, select_geometry_contact_axis
 from reference.central_impulse import f32
 
 class AxisSelectionTest(unittest.TestCase):
@@ -27,3 +27,13 @@ class AxisSelectionTest(unittest.TestCase):
         self.assertEqual(result['kind'],2)
         result,calls=self.run_case([-1,-1],0,False)
         self.assertEqual(result['kind'],1);self.assertEqual(len(calls),2)
+
+    def test_connected_geometry_separation_and_overlap(self):
+        frame=[[1,0,0],[0,1,0],[0,0,1],[0,0,0]]
+        shape={'planes':[[1,0,0,1],[-1,0,0,1]],
+               'vertices':[[-1,0,0],[1,0,0]],'edges':[]}
+        separated=frame[:3]+[[3,0,0]]
+        self.assertEqual(select_geometry_contact_axis(frame,shape,separated,shape),
+                         dict(kind=3,first=0,second=0xffffffff,distance=1))
+        self.assertEqual(select_geometry_contact_axis(frame,shape,frame,shape),
+                         dict(kind=1,first=0xffffffff,second=0,distance=-2))

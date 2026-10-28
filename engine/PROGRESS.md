@@ -7817,3 +7817,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   eligibility, axis orientation and negative-separation selection. 1024 complete
   native queries match result bits, with363 selecting a pair. Face and edge
   services now have implementations; descriptor setup and contact emission remain.
+- Connected both recovered geometry queries to axis selection through one API.
+  1024 uninterrupted original-selector/query cases match all16 output bytes and
+  include all four kinds. This removes supplied query responses from the tested
+  composition; producer descriptors, contact emission and live integration remain.

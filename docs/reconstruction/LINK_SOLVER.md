@@ -1924,3 +1924,36 @@ first-tie precedence, zero separation and resetting a prior seed. The supported
 API domain excludes zero second-edge length and nonfinite/overflow arithmetic.
 Both face and edge query implementations are now available for axis selection;
 producer descriptor setup and contact-record emission remain unresolved.
+
+### Connected geometry axis selection
+
+`select_geometry_contact_axis` in `engine.pose_contact_axis_selection` connects
+both recovered geometry queries to the selection policy. No caller-supplied query
+responses are needed. The service-oriented selector remains available for boundary
+inspection, while this entry point performs the complete local calculation.
+
+```python
+from engine.pose_contact_axis_selection import select_geometry_contact_axis
+result = select_geometry_contact_axis(
+    first_frame, first_shape, second_frame, second_shape,
+    edge_enabled=True,
+)
+# result has kind, first, second, distance
+```
+
+Each frame contains four XYZ rows: three basis rows followed by translation.
+Each supplied shape contains `vertices` XYZ, `planes` normal XYZ plus scalar,
+and `edges` as four indices vertex0/vertex1/plane0/plane1. Kind0 selects the first
+shape's face, kind1 the second face, kind2 an edge pair, and kind3 denotes a
+positive face separation. UINT_MAX remains the unused-index sentinel. Geometry
+must satisfy the query modules' finite/nondegenerate supported domains. These
+schemas and Python entry points are independent API choices, not original names.
+
+[1024 uninterrupted native composition cases](../../native/snow_host/pose_contact_axis_composition_validation.json)
+execute the original selector and both original queries with no interception.
+All16 result bytes match. Outcomes include155 first-face,154 second-face,35
+edge-pair and680 separation results, with edge querying both enabled and disabled.
+This supersedes the supplied-query boundary of the earlier selector receipt for
+this tested composition. Initialized XYZ mask remains supplied state, and random
+synthetic descriptors do not establish original-asset validity. Producer setup,
+contact-record emission and full live collision behavior remain unresolved.

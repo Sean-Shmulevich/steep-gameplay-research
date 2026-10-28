@@ -26,3 +26,17 @@ def select_contact_axis(first_frame,first_shape,second_frame,second_shape,*,
     if first>biased(second):
         return dict(kind=0,first=fi,second=0xffffffff,distance=first)
     return dict(kind=1,first=0xffffffff,second=si,distance=second)
+
+
+def select_geometry_contact_axis(first_frame,first_shape,second_frame,second_shape,*,edge_enabled=True):
+    """Run recovered geometry queries and selection without supplied responses.
+
+    Evidence: LINK_SOLVER.md, Connected geometry axis selection.
+    Shapes provide vertices, planes and edges as documented by query modules.
+    This returns a selected feature; it does not emit contact records.
+    """
+    from engine.pose_contact_face_query import query_contact_faces
+    from engine.pose_contact_edge_query import query_contact_edges
+    return select_contact_axis(first_frame,first_shape,second_frame,second_shape,
+                               edge_enabled=edge_enabled,face_query=query_contact_faces,
+                               edge_query=query_contact_edges)
