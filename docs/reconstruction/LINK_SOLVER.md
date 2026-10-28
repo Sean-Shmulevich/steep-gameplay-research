@@ -3561,3 +3561,30 @@ X-aligned normals exercising Y fallback. Default resource profiles and retained
 storage are supplied; native profile combiners execute. This completes local
 implementations of all four dispatch families, but does not establish connected
 dispatch execution, solver iteration, live lifetime or full-engine equivalence.
+
+### Unified build
+
+`pose_link_build.build_dispatched_pose_links` connects the recovered dispatcher to
+all four concrete builders. The public context holds six retained pools:
+`clear_primary`, `clear_secondary`, `clear_shared`, `paired_primary`,
+`paired_secondary`, `paired_shared`. Each contains `rows`, `count` and `base` (byte
+offset in a common abstract arena). Scalar context fields, result rows and the
+result counter are shared across all families. Bodies, links, payloads, resources
+and profiles are explicit mappings; no native heap pointer is required.
+
+The adapter preserves separate family counters while publishing each builder's
+updated global result count. Dispatch mode and metadata selection retain their
+existing captured-per-link behavior. Multi and single builders of one metadata
+family share the same primary pool. The API is nontransactional: if supplied
+storage or input fails, already performed row/payload writes and consumed counters
+are not rolled back. It does not allocate missing storage or force mode to select
+a preferred builder.
+
+[512 complete dispatch comparisons](../../native/snow_host/pose_link_unified_build_validation.json)
+execute original0x1994970 and all four original builder bodies uninterrupted,
+without recording-service substitutions. Every byte of six retained row pools,
+all payloads, the shared result buffer and all seven counters matches. Cases mix
+metadata families and1..4 contacts, all four context modes, disabled links/payloads,
+nonzero starting counters and all six profile modes. Synthetic preallocated arenas
+and default resource profiles are supplied. This proves the connected local build
+stage in that domain, not row solving, body integration or live engine lifetime.

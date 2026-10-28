@@ -1,0 +1,24 @@
+{
+  "schema": "pose-link-unified-build-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "Original dispatcher and all four builder bodies execute uninterrupted without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994970",
+  "comparisons": [
+    "All six retained row pools and counters",
+    "Shared result buffer and global result counter",
+    "All four payloads"
+  ],
+  "coverage": [
+    "All four context modes",
+    "Mixed metadata-clear and metadata-set links",
+    "One through four contacts, disabled links and disabled payloads",
+    "All six profile combination modes"
+  ],
+  "limits": [
+    "Synthetic preallocated arena and default resource profiles",
+    "Finite inputs and cached values",
+    "No solver iteration or live lifetime"
+  ]
+}

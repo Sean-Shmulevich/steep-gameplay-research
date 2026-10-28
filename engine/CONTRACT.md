@@ -943,3 +943,9 @@ and velocities contribute to primary and centroid motion. The shared accumulator
 is+0xe0, coefficient+0xf0; signed relative links target+0xe0. See LINK_SOLVER.md,
 "Connected paired multi builder". Unreached retained bytes are preserved. No full
 solver iteration, allocation or exceptional arithmetic behavior is supplied.
+
+Unified row build: `pose_link_build.build_dispatched_pose_links` supplies all four
+concrete builder services to the recovered dispatcher. Six explicit retained pools
+have rows/count/base; all share the context's result numbering. See LINK_SOLVER.md,
+"Unified build". Inputs retain original mode/metadata gates. Partial mutations are
+not rolled back on input/storage errors. No allocation or solver step is implied.

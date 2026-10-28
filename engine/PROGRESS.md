@@ -8018,3 +8018,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Recovered both-body centroid motion, opposite angular columns and signed links
   to shared+0xe0. All four local builder families now exist. Unified dispatcher
   integration and a complete solver iteration remain unvalidated.
+- Connected all four contact builders through recovered dispatch with six retained
+  pools and shared result numbering.512 uninterrupted original dispatcher runs
+  execute the builders themselves and match all rows, payloads, results and seven
+  counters, including mixed families and disabled gates. Public regression tests
+  cover shared numbering and mode selection. Solver consumption remains next.
