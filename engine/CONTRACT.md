@@ -891,3 +891,9 @@ and page-table reserve are explicit services. It updates pool counters/cursors b
 leaves payload bytes intact. See LINK_SOLVER.md, "Contact payload pool". Successful
 allocation and valid metadata are required; initialization and locking remain caller
 responsibilities, not silently implemented substitutes.
+
+Payload batches: `pose_contact_pool.supply_payload_batch` repeatedly acquires slots,
+clears only owner and active-row count, and sets flag bit0. Cached rows and all other
+bytes persist. See LINK_SOLVER.md, "Payload batch initialization boundary". Caller
+must serialize access; protected entry/exit services are outside the reconstructed
+core. Page allocation, table reserve and payload backing storage remain explicit.

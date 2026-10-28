@@ -36,3 +36,23 @@ def acquire_payload_slot(pool, payloads, *, allocate_page, reserve_pages):
         pool['slot_index']=0
     pool['active_count']=(pool['active_count']+1)&0xffffffff
     return identity
+
+
+def supply_payload_batch(pool, payloads, count, *, allocate_page, reserve_pages):
+    """Reached batch core after entry synchronization and before exit service.
+
+    Caller must serialize pool access. Only owner, active-row count and flag bit0
+    are initialized; cached row bytes and all other flags remain retained.
+    """
+    if type(count) is not int or not 0<=count<=0xffffffff:
+        raise ValueError('Unsigned batch count required')
+    result=[]
+    for _ in range(count):
+        identity=acquire_payload_slot(pool,payloads,allocate_page=allocate_page,
+                                      reserve_pages=reserve_pages)
+        payload=payloads[identity]
+        payload[0x114]|=1
+        struct.pack_into('<Q',payload,0,0)
+        struct.pack_into('<I',payload,0x110,0)
+        result.append(identity)
+    return result

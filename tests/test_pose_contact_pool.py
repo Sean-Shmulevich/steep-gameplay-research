@@ -35,3 +35,28 @@ class ContactPoolTest(unittest.TestCase):
         def forbidden(*args):raise AssertionError('Unexpected allocation')
         self.assertEqual(acquire_payload_slot(state,{},allocate_page=forbidden,reserve_pages=forbidden),1288)
         self.assertEqual((state['current_page'],state['page_index'],state['slot_index']),(2000,1,0))
+
+
+class ContactBatchTest(unittest.TestCase):
+    def test_freelist_links_are_consumed_before_owner_reset(self):
+        from engine.pose_contact_pool import supply_payload_batch
+        state=pool();state['free_head']=100
+        first=bytearray(b'X'*288);second=bytearray(b'Y'*288)
+        struct.pack_into('<Q',first,0,200);struct.pack_into('<Q',second,0,0)
+        before={100:bytes(first),200:bytes(second)};payloads={100:first,200:second}
+        def forbidden(*args):raise AssertionError('Unexpected allocation')
+        self.assertEqual(supply_payload_batch(state,payloads,2,allocate_page=forbidden,
+                                             reserve_pages=forbidden),[100,200])
+        self.assertEqual(state['free_head'],0);self.assertEqual(state['active_count'],2)
+        for identity in (100,200):
+            expected=bytearray(before[identity]);expected[:8]=bytes(8)
+            expected[0x110:0x114]=bytes(4);expected[0x114]|=1
+            self.assertEqual(payloads[identity],expected)
+
+    def test_zero_batch_does_not_acquire_or_initialize(self):
+        from engine.pose_contact_pool import supply_payload_batch
+        state=pool();before=state.copy()
+        def forbidden(*args):raise AssertionError('Unexpected allocation')
+        self.assertEqual(supply_payload_batch(state,{},0,allocate_page=forbidden,
+                                             reserve_pages=forbidden),[])
+        self.assertEqual(state,before)

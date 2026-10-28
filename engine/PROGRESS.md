@@ -7977,3 +7977,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   page allocations and256 free-list cases. Allocation and table reserve are supplied;
   slot contents remain untouched. Batch initialization and protected synchronization
   remain separate boundaries before replacing the inspector's explicit storage.
+- Connected pool slot acquisition to batch initialization.512 continuous original
+  batch-core comparisons match pool/page/output/payload bytes across0..20 slots and
+  page growth. Owner/count reset and flag-bit initialization preserve cached rows.
+  Allocator/table services are supplied; protected entry/exit synchronization remains
+  outside evidence. The inspection CLI still requires explicit preallocated payloads.

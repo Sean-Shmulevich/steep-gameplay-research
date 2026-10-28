@@ -3232,3 +3232,44 @@ buffers. Page-table reserve is responsible for capacity and storage changes.
 It rejects null allocation and uint16 capacity overflow as authored guards rather
 than reproducing invalid memory access. Neither opaque identities nor passing
 comparisons establish native pool ownership or a safe concurrent modding allocator.
+
+### Payload batch initialization boundary
+
+`pose_contact_pool.supply_payload_batch` connects repeated slot acquisition to the
+reached batch core0x18de07c..0x18de1bb. It returns identities in acquisition order.
+For each successful nonnull slot the original inlined pool code increments the
+pool's active allocation count and then performs exactly three initialization writes:
+
+```text
+payload.flag_byte_114 |= 1
+payload.owner_word_00 = 0
+payload.active_count_110 = 0
+output[next] = payload
+```
+
+All cached rows, feature IDs, cached-word bits, inactive padding and flag bits other
+than bit0 survive. On the free-list path, the old first word is read as the next
+link before owner initialization clears it. A batch of zero skips pool mutation
+and output writes, but this does not imply that the enclosing native function skips
+its entry/exit services.
+
+[512 continuous original batch-core comparisons](../../native/snow_host/pose_contact_pool_batch_validation.json)
+cover counts0..20, free-list prefixes, existing page traversal, fresh page allocation
+and page-table growth. All56 pool bytes, retained table slots, every supplied288-byte
+payload and output prefix/tail guards match. Allocator and table-reserve services
+are supplied; new page bytes are arbitrary fixture state. The comparison runs the
+original inlined acquisition and initialization loop without replacing those steps.
+
+The enclosing function calls protected entry service0x3f253d5 before the reached
+block and protected exit service0x3e278b9 after it. The loop reads the pool pointer
+from global0x3336bb0; entry/exit use the adjacent holder at0x3336bb8. These are static
+boundary observations. Their complete synchronization and lifetime contracts have
+not been established by this batch comparison. The independent API therefore
+requires caller-serialized pool access and does not invent a lock implementation.
+
+`supply_payload_batch` can now be bound as the contact acquisition's ten-item batch
+service when explicit pool state, page allocation, page-table reserve and payload
+buffers are supplied. This is a serial reconstruction path. The existing JSON
+inspector still uses preallocated payloads; it has not silently gained a native
+pool allocator or concurrent game integration. Allocation failure and invalid/null
+slots remain outside the successful-allocation domain inherited from slot acquisition.
