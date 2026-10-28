@@ -7774,3 +7774,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   match without interception. Sample stride and cell-row divisor stay distinct.
   This supplies local geometry from supplied grids; archive loading and full
   query/contact traversal remain unresolved.
+- Connected grid triangle identities to the consumer's XYZ0 vertex endpoint.
+  1024 native calls match all twelve output words with explicitly initialized
+  XYZ masking, both diagonals and both halves. The caller's edge/cross-product
+  preparation is identified; subsequent contact calculations remain unresolved.

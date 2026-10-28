@@ -1532,3 +1532,30 @@ Static callers of the cell method include0x18c3720 and the split routine around
 contracts remain unresolved. These methods supply geometry from an already
 available float grid, not archive decoding, selected map loading, collision
 broadphase or a complete terrain contact generator.
+
+### Grid triangle vertex consumer boundary
+
+The split caller segment at0x1996e98 first invokes0x18c2c70 to obtain three
+triangle vertices. It subtracts edges, forms cross-product terms and computes a
+reciprocal squared magnitude, then invokes the previously recovered sample-index
+method0x18c2760. Its later per-record contact calculations are not yet reconstructed.
+This establishes a consumer connection for the geometry endpoints, not completion
+of the caller's collision contract.
+
+`grid_triangle_vertices` in `engine.pose_grid_cell` implements0x18c2c70's output
+using the already recovered cell coordinates, diagonal and triangle-half rules.
+The native method computes the vertices independently rather than calling the
+cell helper. Each output is a16-byte XYZ0 vector. The original code masks its
+scratch fourth lane with the initialized XYZ mask at0x3336890; the independent
+API returns positive zero explicitly. This differs from the unspecified fourth
+lanes of the resource transform helper.
+
+[512 cases /1024 complete native vertex calls](../../native/snow_host/pose_grid_triangle_vertices_validation.json)
+validate both halves and both diagonal branches, including negative spacing and
+poisoned scratch/output storage. All twelve output words match bitwise and
+resource bytes remain unchanged. The validator explicitly supplies the XYZ mask
+as `[ffffffff,ffffffff,ffffffff,00000000]`; it does not execute its initialization
+producer. No native call is intercepted. The Python reuse of cell geometry is a
+validated equivalent composition within the finite, complete-cell domain, not a
+claim about original function boundaries. Asset sampling, invalid native reads,
+mask initialization and the remaining caller contact calculation stay separate.

@@ -601,3 +601,10 @@ decodes a uint32 triangle ID with separate cell divisor and sample stride, retai
 uint32 index wrapping. The byte58 diagonal branch is explicit. Storage guards are
 authored; sample loading and collision queries remain separate. See LINK_SOLVER.md,
 "Grid cell vertices and triangle identities".
+
+Triangle vertices: `pose_grid_cell.grid_triangle_vertices` maps a triangle ID to
+three XYZ0 vectors using the recovered grid rules. Its guarded reuse of cell
+geometry matches the separate native vertex method on complete finite cells.
+Positive-zero fourth lanes depend on the supplied initialized XYZ mask in native
+validation. This endpoint supplies geometry; it does not implement the consuming
+contact calculation. See LINK_SOLVER.md, "Grid triangle vertex consumer boundary".

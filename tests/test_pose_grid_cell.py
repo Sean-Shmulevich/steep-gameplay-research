@@ -1,6 +1,6 @@
 import struct
 import unittest
-from engine.pose_grid_cell import grid_cell_geometry, grid_triangle_sample_indices
+from engine.pose_grid_cell import grid_cell_geometry, grid_triangle_sample_indices, grid_triangle_vertices
 
 class GridCellTest(unittest.TestCase):
     def resource(self,flip):
@@ -30,3 +30,14 @@ class GridCellTest(unittest.TestCase):
             with self.assertRaises(ValueError):grid_cell_geometry(r,list(range(9)),col,row)
         struct.pack_into('<H',r,0x9c,0)
         with self.assertRaises(ValueError):grid_triangle_sample_indices(r,0)
+
+    def test_triangle_vertices_match_sample_identity_and_clear_fourth_lane(self):
+        samples=[-0.,1,2,3,4,5,6,7,8]
+        for flip in (0,1,255):
+            r=self.resource(flip)
+            for ident in range(8):
+                vertices=grid_triangle_vertices(r,samples,ident)
+                sample_ids=grid_triangle_sample_indices(r,ident)
+                self.assertEqual([v[2] for v in vertices],[samples[i] for i in sample_ids])
+                for v in vertices:self.assertEqual(struct.pack('<f',v[3]),bytes(4))
+        with self.assertRaises(ValueError):grid_triangle_vertices(r,samples,8)

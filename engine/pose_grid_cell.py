@@ -43,3 +43,22 @@ def grid_triangle_sample_indices(resource, triangle_id):
     topology = ([0,1,3,1,2,3] if resource[0x58] else [0,1,2,2,3,0])
     start = (triangle_id&1)*3
     return [cell[i]&0xffffffff for i in topology[start:start+3]]
+
+
+def grid_triangle_vertices(resource, samples, triangle_id):
+    """Return three XYZ0 rows for the consumer's triangle identity.
+
+    Evidence: LINK_SOLVER.md, Grid triangle vertex consumer boundary.
+    The fourth lane is positive zero under the supplied initialized XYZ mask.
+    This guarded composition is validated against the separate native method;
+    it is not a claim that the native method calls the cell helper.
+    """
+    if not 0 <= triangle_id <= 0xffffffff:
+        raise ValueError('uint32 triangle identity required')
+    divisor = struct.unpack_from('<H', resource, 0x9c)[0]
+    if not divisor:
+        raise ValueError('Nonzero cell-row divisor required')
+    row,column = divmod(triangle_id >> 1,divisor)
+    vertices,indices = grid_cell_geometry(resource,samples,column,row)
+    start = (triangle_id&1)*3
+    return [vertices[i]+[0.] for i in indices[start:start+3]]

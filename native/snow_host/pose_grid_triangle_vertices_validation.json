@@ -1,0 +1,33 @@
+{
+  "schema": "pose-grid-triangle-vertices-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "triangle_vertex_calls": 1024,
+  "method": "Offline complete native triangle vertex method; no interception; XYZ mask explicitly initialized",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18c2c70",
+  "initialization": {
+    "xyz_mask_rva": "0x3336890",
+    "words": [
+      "ffffffff",
+      "ffffffff",
+      "ffffffff",
+      "00000000"
+    ]
+  },
+  "comparisons": [
+    "all twelve float32 words including positive-zero fourth lanes",
+    "resource bytes unchanged"
+  ],
+  "coverage": [
+    "both triangle halves and both diagonal branches",
+    "negative spacing and offsets",
+    "poisoned output and scratch storage"
+  ],
+  "limits": [
+    "Mask initialization is supplied; its producer is not executed here.",
+    "Finite synthetic supplied grid, valid complete cells only.",
+    "Equivalent Python composition reuses cell geometry; native method independently computes each vertex.",
+    "Caller contact calculation remains unresolved."
+  ]
+}
