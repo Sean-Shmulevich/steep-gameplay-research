@@ -1,0 +1,23 @@
+{
+  "schema": "pose-link-patch-geometry-validation-v1",
+  "cases": 2048,
+  "passed": 2048,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "block": [
+    "0x19924a7",
+    "0x19925c4"
+  ],
+  "method": "Original multi-row builder centroid/spread block without interception",
+  "comparisons": [
+    "World point buffer, centroid-relative arm and spread including fourth lane"
+  ],
+  "coverage": [
+    "1..4 contact arms, arbitrary finite bases and world centers",
+    "Coincident and near-coincident contacts below the sum-distance clamp"
+  ],
+  "limits": [
+    "Supplied local arms and transformed body center; preceding primary rows not executed",
+    "Dispatcher normally selects multi family only above one contact",
+    "No complete shared-row packing or solver integration"
+  ]
+}

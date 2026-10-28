@@ -7997,3 +7997,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   across0..4 records and all six profile modes. Both-body angular terms and distinct
   secondary layout are preserved. Two single families are now reconstructed;
   both multi families and end-to-end solver execution remain open.
+- Began metadata-clear/multi family. Established one208-byte shared constraint plus
+  per-contact112-byte primary rows, and recovered world-centroid/spread geometry.
+  2048 original block comparisons match transformed points and spread; the distance
+  sum is clamped before count division. Shared orientation/packing, the paired multi
+  family and full solver integration remain open.

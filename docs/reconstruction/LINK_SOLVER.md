@@ -3398,3 +3398,48 @@ This closes the second of four dispatcher-selected builder families locally.
 Metadata-clear/multi0x1991da0 and metadata-set/multi0x1991110 remain unimplemented
 in this connected row-building API. Mode-driven family selection must remain
 explicit; do not force single-family mode merely to avoid missing multi builders.
+
+### Multi-row contact patch geometry
+
+The metadata-clear/multi builder0x1991da0 allocates one208-byte shared constraint
+using context base+0x50 and counter+0xb4. It also emits one112-byte primary row per
+payload contact. This is not repeated single-family construction: the later shared
+constraint uses aggregate contact geometry. Full shared-row semantics and packing
+remain under reconstruction.
+
+`pose_link_patch_geometry.contact_patch_geometry` reconstructs its centroid/spread
+block0x19924a7..0x19925c4. Inputs are the first-body basis, its already transformed
+local-offset center C, and1..4 local arms previously formed as point-offset128.
+For each arm A, with float32 arithmetic after each operation:
+
+```text
+P = (B2*A.z + (B1*A.y + B0*A.x)) + C
+sum_points += P
+count_float += 1
+inverse_count = 1 / count_float
+centroid = sum_points * inverse_count
+sum_distance = sum(length(P - centroid))
+centroid_arm = centroid - C
+spread = max(sum_distance, float32(0.001)) * inverse_count
+```
+
+The lower bound applies to the sum before dividing. Four coincident contacts
+therefore yield spread0.00025, not0.001. This is neither a maximum radius nor an
+unconditionally clamped mean. Preserve world-space addition/averaging before
+subtracting C, since simplifying to an average local arm changes float32 results
+at large translations. No physical unit or friction interpretation is assigned
+from this arithmetic alone.
+
+[2048 original block comparisons](../../native/snow_host/pose_link_patch_geometry_validation.json)
+match every transformed world point, centroid-relative arm and spread, including
+the zero fourth lane. Cases use general finite bases/world centers,1..4 arms,
+coincident points and near-coincident points below the sum clamp. Basis registers,
+local-arm scratch storage and initialized masks are supplied. The initial harness
+attempt omitted live basis registers at block entry; supplying the inspected entry
+state resolved that fixture failure without changing the recovered math.
+
+The native dispatcher normally reaches this family only for count>1 with mode0;
+one-contact cases test the local arithmetic domain. Zero contacts are rejected by
+the independent helper rather than inventing a zero-divisor fallback. Prior primary
+rows, later shared-row orientation/packing and full solver behavior are not covered
+by this reached-block receipt.

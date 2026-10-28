@@ -916,3 +916,10 @@ profiles/modes and the existing result/payload storage contract. See LINK_SOLVER
 "Connected paired single builder" for distinct primary/secondary angular layouts.
 It implements metadata-set/single only. Multi families, native allocation and solver
 iteration remain outside this contract; do not substitute112-byte rows.
+
+Multi-contact patch: `pose_link_patch_geometry.contact_patch_geometry` consumes
+explicit first-body basis/world offset-center and1..4 local offset-relative arms.
+It transforms and averages world points, returns the centroid-relative arm and
+`max(sum_distance, .001)/count` with inspected float32 order. See LINK_SOLVER.md,
+"Multi-row contact patch geometry". Shared208-byte row assembly is still separate;
+normal dispatcher gates must not be inferred from this helper's arithmetic domain.
