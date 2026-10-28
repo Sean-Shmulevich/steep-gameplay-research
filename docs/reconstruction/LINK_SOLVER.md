@@ -1483,3 +1483,52 @@ Z comes directly from each sample. Later topology/flag handling remains to be
 reconstructed. This supports the grid-backed description, but does not establish
 terrain archive decoding, selected map resources, triangle contact generation or
 broadphase insertion. Other resource kinds still need their bounds methods.
+
+### Grid cell vertices and triangle identities
+
+`engine.pose_grid_cell` reconstructs complete methods0x18c25d0 and0x18c2760.
+The former reads four float grid samples and emits four local XYZ vertices plus
+six triangle-local indices. With column c, row r and sample stride S at0x68:
+
+```text
+corners = [(c,r), (c+1,r), (c+1,r+1), (c,r+1)]
+vertex(x,y) = [float32(float32(float32(x)*spacing_x)+offset_x),
+               float32(float32(float32(y)*spacing_y)+offset_y),
+               samples[y*S+x]]
+indices = [0,1,2, 2,3,0] if byte58 == 0 else [0,1,3, 1,2,3]
+```
+
+Spacing is stored at0x70/0x74, XY offsets at0x7c/0x80, and the float-sample
+pointer at0x48. Z samples are used directly without scaling or offset in this
+method. Byte58 selects a diagonal, with every nonzero byte taking the same branch.
+No checkerboard/parity-dependent diagonal is selected here.
+
+The second method decodes a uint32 triangle identity:
+
+```text
+cell_id = triangle_id >> 1
+row, column = divmod(cell_id, u16(resource+0x9c))
+corner_samples = [row*S+column, row*S+column+1,
+                  (row+1)*S+column+1, (row+1)*S+column]
+half = triangle_id & 1
+result = corner_samples[indices[3*half : 3*half+3]]
+```
+
+Result indices use native uint32 wrapping. The divisor at0x9c is distinct from
+sample-row stride0x68; the implementation does not assume their relationship.
+The public cell API rejects missing samples and out-of-row columns as authored
+storage guards; the triangle-index API rejects a zero divisor. Those rejections
+are not recovered native validation behavior.
+
+[Offline native comparison](../../native/snow_host/pose_grid_cell_validation.json)
+passes512 cell evaluations and1536 triangle-identity evaluations without call
+replacement. It compares every vertex float bit, local index, global sample
+index and unchanged resource byte, using both diagonal branches, negative spacing
+and arbitrary uint32 triangle identities. Synthetic tests cross-check that cell
+triangles and triangle IDs select the same samples, including the last valid cell.
+
+Static callers of the cell method include0x18c3720 and the split routine around
+0x18c3ee9; a caller of the index method is0x1996e98. Their full query/contact
+contracts remain unresolved. These methods supply geometry from an already
+available float grid, not archive decoding, selected map loading, collision
+broadphase or a complete terrain contact generator.

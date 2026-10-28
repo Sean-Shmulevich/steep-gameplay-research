@@ -7769,3 +7769,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   callback replacement. Stored extents and height-center inputs remain distinct.
   Adjacent grid-sample vertex code is a new terrain lead; grid loading, topology,
   contact generation and other resource kinds remain open.
+- Recovered grid-cell vertex generation, both diagonal choices and triangle-ID
+  mapping to sample indices. 512 native cell calls and1536 native index calls
+  match without interception. Sample stride and cell-row divisor stay distinct.
+  This supplies local geometry from supplied grids; archive loading and full
+  query/contact traversal remain unresolved.

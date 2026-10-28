@@ -593,3 +593,11 @@ four XYZ rows. Float32 operations preserve the observed center rule without
 assuming midpoint centering or normalized basis. Input producers, grid topology,
 contact generation and other resource kinds remain unresolved. See LINK_SOLVER.md,
 "Kind-7 grid resource bounds".
+
+Grid cells: `pose_grid_cell.grid_cell_geometry` consumes retained resource fields,
+a supplied float sample sequence and valid cell coordinates, returning four local
+XYZ vertices and two triangle index triples. `grid_triangle_sample_indices`
+decodes a uint32 triangle ID with separate cell divisor and sample stride, retaining
+uint32 index wrapping. The byte58 diagonal branch is explicit. Storage guards are
+authored; sample loading and collision queries remain separate. See LINK_SOLVER.md,
+"Grid cell vertices and triangle identities".

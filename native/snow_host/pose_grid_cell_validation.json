@@ -1,0 +1,24 @@
+{
+  "schema": "pose-grid-cell-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "cell_calls": 512,
+  "triangle_identity_calls": 1536,
+  "method": "Offline complete native cell and triangle-index methods, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18c25d0",
+    "0x18c2760"
+  ],
+  "comparisons": [
+    "all twelve vertex float32 bit patterns",
+    "all six cell-local indices",
+    "all three sample indices for even, odd and arbitrary uint32 identities",
+    "resource bytes unchanged"
+  ],
+  "limits": [
+    "Synthetic supplied float grids; no archive decoding.",
+    "Cell API rejects invalid storage and coordinates as authored guards.",
+    "No collision query, contact generation or broadphase reconstruction claimed."
+  ]
+}
