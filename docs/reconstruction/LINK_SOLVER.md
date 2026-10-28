@@ -1301,3 +1301,64 @@ skips ordinary integration/resource refresh when group+0xa0 is nonzero. This is 
 lead toward group inactivity behavior, not yet a full live sleep/wake contract.
 The group aggregation, concrete slot+0x20 effects and reactivation path remain
 separate reconstruction work.
+
+### Group quiet aggregation and poststep integration gate
+
+`engine.pose_group_poststep` reconstructs group checker0x1958460, poststep0x19574f0
+and constructor-selected inactive method0x18bebd0. Constructor table0x29c99a8
+places the latter at virtual slot+0x20, the slot called by the group checker.
+
+The checker captures the body-array identity and count, runs the recovered
+low-motion timer on every body, and requires each resulting metadata low nibble
+to equal1. A failed aggregate does not short-circuit later timer updates. If all
+qualify, it reloads the body span, invokes slot+0x20 for each body, then writes
+1 to group+0xa0. An empty captured span passes. A failed aggregate leaves the
+existing group flag unchanged; it does not supply a reactivation path.
+
+For this constructed body class, the virtual action is:
+
+```python
+metadata.byte53 = (metadata.byte53 & 0xf2) | 2
+body.linear_motion = raw_positive_zero_xyz
+body.angular_motion = raw_positive_zero_xyz
+first = body.link_head80
+if first:
+    current = first
+    while True:
+        clear_link_payloads(current)
+        # Endpoint and successor are re-read after clearing.
+        current = current.next20 if current.first_body == body else current.next30
+        if current == first:
+            break
+```
+
+Getter0x12f2f20 reads body+0x80 directly. The clearing call is0x1958b90, whose
+payload-array behavior is documented in the earlier link-clearing research.
+Protected pool release remains an explicit service. The independent transition
+accepts retained link headers and `clear_link`; malformed-ring detection is an
+authored error after reached mutations, not native rollback. A valid circular
+ring is required. Timer28 and other body fields are preserved by this action.
+
+Poststep optionally runs the group checker, then reads group+0xa0. If nonzero it
+returns. Otherwise it integrates every body in a captured span through0x18befb0,
+then reloads the group span and calls resource refresh0x18bcee0 on every body.
+Within each traversal the array identity/count remain captured; slot values are
+read as each iteration is reached. `poststep_pose_group` exposes the integration,
+resource refresh and per-class inactive action as required services rather than
+assuming native class identity or inventing resource behavior.
+
+[384 complete native composition comparisons](../../native/snow_host/pose_group_poststep_validation.json)
+run poststep, aggregation, the original timer, the actual class-selected inactive
+method and the original link-head getter. Payload clearing, integration and
+resource refresh are supplied recording/mutating services. Call order/arguments
+and every retained group/body/metadata/link byte match. Native fixtures cover zero
+through five bodies, mixed eligibility, pre-existing group flags and one-link
+circular lists. Independent tests additionally cover multiple-link traversal,
+endpoint mutation after clearing and array replacement between integration and
+resource refresh. These service-mutation tests are not live concurrency evidence.
+
+This closes the previously open aggregation/action boundary for the inspected
+class. Full resource refresh, protected payload release, other virtual classes,
+reactivation and live synchronization remain unresolved. The observed behavior is
+consistent with a group inactivity transition, but no complete sleep/wake lifecycle
+or thread-safe mod API is claimed.

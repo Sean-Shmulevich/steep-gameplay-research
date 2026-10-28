@@ -561,3 +561,11 @@ threshold overrides, requires both motion magnitudes strictly below their limits
 accumulates scalar into timer28, and sets metadata state1 only beyond the duration
 limit. Inhibition or motion equality/excess resets timer and the low metadata
 nibble. Finite arithmetic only; group action and live sleep/wake are not supplied.
+
+Group poststep: `check_pose_group_quiet` updates every captured body's timer and
+transitions a reloaded span only if all metadata low nibbles equal1. Empty groups
+pass; failure preserves the existing flag. `transition_pose_body_inactive` marks
+state2, clears both motion vectors and traverses a valid circular link ring using
+an explicit payload-clear service. `poststep_pose_group` skips integration/refresh
+for nonzero group flag, otherwise integrates then reloads the refresh span.
+Resource release/refresh, other body classes and reactivation remain external.

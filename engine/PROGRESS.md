@@ -7747,3 +7747,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   including threshold equality and negative scalars. Group aggregation and the
   resulting virtual action are identified statically but remain separate work;
   this does not establish a complete live sleep/wake lifecycle.
+- Connected group quiet aggregation, constructor-selected state2 transition and
+  poststep's integration gate. The transition zeros motion and clears circular
+  link payloads. 384 full native composition cases match with payload clearing,
+  integration and resource refresh supplied as services. Failed checks do not
+  reactivate an already flagged group. Resource refresh/release, other classes
+  and the reactivation path remain open.
