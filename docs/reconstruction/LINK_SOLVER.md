@@ -2762,8 +2762,23 @@ match every retained byte for empty through64-record ranges, nonzero starts and
 arbitrary word patterns, with no interception. The independent API validates a
 complete record range. Native count/range construction is caller-owned.
 
-The adapter's complete zero-capacity behavior remains unvalidated: preliminary
-terrain success can return1 without a write, while this adapter then reverses one
-record based on that result. It would be incorrect to silently assume that all
-positive returned counts correspond to initialized records. A complete adapter
-comparison must preserve this distinction and valid caller backing storage.
+The complete adapter is now implemented as
+`engine.pose_grid_box_contact.emit_box_grid_contacts`. Its inputs put the box frame
+before the terrain frame; profiles, samples and flags retain their terrain-caller
+meaning. It calls the terrain-first producer, reverses the returned record range,
+and returns the same value. This supersedes the earlier unvalidated adapter boundary.
+
+[1024 complete adapter comparisons](../../native/snow_host/pose_box_grid_adapter_validation.json)
+match return values and every output/tail byte without intercepted calls. Cases use
+independent 3D rotations, both terrain diagonals, mapped profiles with high-bit
+masks, all caller gates and capacities zero through eight. Supplied initialization
+includes TLS, topology, masks and stack state. These small grids do not exercise
+allocator retry through the adapter.
+
+At zero capacity, preliminary terrain success returns one without producing a
+record, then the adapter reverses the existing first record. The independent API
+therefore requires at least one backing record even at zero capacity. This is an
+authored storage guard preserving the observed mutation, not evidence that the
+native caller checks storage. A positive return does not establish a newly produced
+contact. Tests preserve scalar/identifier words and trailing bytes in this case.
+Registration, dispatch ownership and downstream persistent grouping remain open.

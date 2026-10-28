@@ -1,0 +1,23 @@
+{
+  "schema": "pose-box-grid-adapter-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Complete native reverse adapter, terrain caller and helpers without interception; small-grid path",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x198a780",
+  "comparisons": [
+    "return count and all output/tail bytes"
+  ],
+  "returned_total": 956,
+  "positive_cases": 501,
+  "coverage": [
+    "both diagonals, sampled uneven terrain, independent3D rotated terrain/box frames",
+    "preliminary, edge and filter gates; capacity0..8",
+    "per-cell mapped profiles, high-bit directional masks"
+  ],
+  "limits": [
+    "Synthetic grids3..6 with no allocator retry; finite nonsingular frames",
+    "Initialized TLS/topology/XYZ/zero and stack state supplied",
+    "No live game or original-engine equivalence"
+  ]
+}

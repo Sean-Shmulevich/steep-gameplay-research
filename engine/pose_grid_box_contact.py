@@ -52,3 +52,22 @@ def emit_grid_box_contacts(output, capacity, resource, samples, terrain_frame,
         total+=count
         if total==capacity:break
     return total
+
+
+def emit_box_grid_contacts(output, capacity, resource, samples, box_frame,
+                           terrain_frame, extents, terrain_profiles, box_profile, *,
+                           profiles, preliminary=False, edge_enabled=True,
+                           filter_enabled=True):
+    """Reverse-order adapter with native post-return role reversal.
+
+    One backing record is required even at capacity0: preliminary success can
+    return1 and the adapter then reverses that retained record without production.
+    """
+    from .pose_contact_reverse import reverse_contact_records
+    if len(output)<max(1,capacity)*48:
+        raise ValueError('Backing storage for at least one retained record required')
+    count=emit_grid_box_contacts(output,capacity,resource,samples,terrain_frame,
+        box_frame,extents,terrain_profiles,box_profile,profiles=profiles,
+        preliminary=preliminary,edge_enabled=edge_enabled,filter_enabled=filter_enabled)
+    reverse_contact_records(output,0,count)
+    return count

@@ -7916,3 +7916,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   reversal helper.1024 complete native calls match all retained bytes. Triangle
   IDs persist through reversal. Complete adapter dispatch/zero-capacity semantics
   and the later bridge to payload grouping remain unresolved.
+
+- Connected the complete box-first terrain adapter. 1024 uninterrupted native
+  comparisons match returned values and all buffer bytes across rotated frames,
+  mapped profiles and caller flags. Zero-capacity preliminary success reverses
+  existing storage; it does not generate a contact. Added boundary tests and an
+  explicit backing-storage guard. Dispatch ownership, persistent grouping and
+  live integration remain open. No game launch or attachment.
