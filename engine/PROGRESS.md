@@ -7855,3 +7855,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   Synthetic rotated planar faces cover capacity, orientation and reduction modes.
   General-frame composition, producer descriptors and complete terrain collision
   integration remain open; no live/original-engine equivalence is claimed.
+- Reconstructed box/triangle producer descriptors, including corner/face winding,
+  edge adjacency and triangle plane arithmetic. 1024 native producer prefixes
+  match every geometry field. Table stores run natively with supplied initialized
+  TLS state; full producer dispatch and CRT initialization remain separate.

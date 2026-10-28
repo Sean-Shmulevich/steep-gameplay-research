@@ -2284,3 +2284,39 @@ broadened, and degenerate helper domains remain excluded.
 Face and edge emission now have executable implementations. The upstream producer's
 box/triangle descriptor construction and its complete connection to terrain
 candidate enumeration, profile gates and record filtering remain unresolved.
+
+### Box and triangle descriptors
+
+`engine.pose_contact_shapes` reconstructs the geometry descriptors built by the
+0x190f8b0 producer before contact-axis selection. `box_contact_shape` accepts the
+three scalar extents read from receiver fields0x40/44/48. Corner order is:
+
+```text
+(+x,-y,+z), (+x,-y,-z), (-x,-y,-z), (-x,-y,+z),
+(+x,+y,+z), (+x,+y,-z), (-x,+y,-z), (-x,+y,+z)
+```
+
+Face normals are +X,-Z,-X,+Z,-Y,+Y with plane scalars x,z,x,z,y,y.
+Face index lists in order are `(0,1,5,4)`, `(1,2,6,5)`, `(2,3,7,6)`,
+`(3,0,4,7)`, `(2,1,0,3)`, `(7,4,5,6)`. `BOX_EDGES` records the twelve
+native endpoint/adjacent-face tuples in their original order. These tables are
+geometry/topology findings, not an extracted mesh asset.
+
+`triangle_contact_shape(A,B,C)` stores the three vertices in argument order.
+It computes U=B-A and V=C-A, then their cross product with float32 rounding at
+each operation. Normalize with reciprocal multiplication, using squared-length
+sum `(ny*ny + nx*nx) + nz*nz`. The two planes are N and sign-negated N. Each plane
+scalar is separately computed as `(normal.y*A.y + normal.x*A.x) + normal.z*A.z`.
+The reverse scalar is not substituted by negating the forward scalar. Face
+windings are `(0,1,2)` and `(2,1,0)`; edges are `(0,1,0,1)`, `(1,2,0,1)`,
+`(2,0,0,1)`. Degenerate triangle rejection is an authored guard.
+
+[1024 producer-prefix comparisons](../../native/snow_host/pose_contact_shapes_validation.json)
+match all descriptor vertex/plane bytes, face index lists, edge adjacency and
+counts. The emulator runs the original producer to its selector call. The original
+constant-table store sequences execute separately before the trials; initialized
+TLS state is supplied to skip CRT once-initialization bookkeeping. This proves
+local descriptor construction for finite positive extents and nondegenerate
+synthetic triangles, not the initialization protocol or full producer execution.
+The next integration step is dispatching these descriptors through axis selection
+and the face/edge emitters, then validating the complete producer.

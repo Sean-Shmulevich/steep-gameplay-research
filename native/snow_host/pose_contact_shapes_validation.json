@@ -1,0 +1,16 @@
+{
+  "schema": "pose-contact-shapes-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Original producer prefix to selector call; actual topology initializer stores executed separately; TLS initialized-state supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x190f8b0",
+  "comparisons": [
+    "box/triangle vertex bytes, plane bytes, face index lists, edge adjacency and counts"
+  ],
+  "limits": [
+    "Stops before selector; not full producer validation",
+    "Finite positive box extents and nondegenerate synthetic triangles",
+    "CRT once-initialization protocol not reconstructed"
+  ]
+}

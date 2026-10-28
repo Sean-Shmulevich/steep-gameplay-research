@@ -730,3 +730,10 @@ Capacity limits writes after geometry; orientation swaps point roles and negates
 the normal. Separation is linear, unlike edge emission's squared field. All helper
 finite/nondegenerate and capacity domains apply. See LINK_SOLVER.md, "Connected
 face-contact emission". Upstream producer descriptors and live integration remain.
+
+Producer descriptors: `pose_contact_shapes.box_contact_shape` and
+`triangle_contact_shape` construct explicit vertices, planes, face indices and
+edge adjacency. Triangle normalization and plane-dot operation order match the
+native producer prefix. Degenerate triangles are authored rejections. See
+LINK_SOLVER.md, "Box and triangle descriptors". CRT initialization and complete
+producer dispatch remain separate.
