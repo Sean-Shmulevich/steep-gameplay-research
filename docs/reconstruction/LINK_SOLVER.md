@@ -3070,3 +3070,42 @@ The independent module is limited to48-byte records and explicit16/32-bit key wi
 These domain guards avoid exposing an unrelated generic native sorting API. The
 next integration can now use the recovered permutation before retirement,
 acquisition and per-group reduction instead of assuming stable sorting.
+
+### Connected nonempty contact-cache consumer
+
+`pose_contact_cache.process_contact_cache` connects the complete nonempty consumer
+0x198f910 for a supplied non-null recycler. It mutates records/cache/recycler and
+caller-owned payloads through the recovered sequence:
+
+1. Sort whole records with the selected detail comparator and native permutation.
+2. Retire stale groups with the persistent record cursor and swap-last semantics.
+3. Derive the paired-entry gate from each entry's raw flag byte.
+4. Scan contiguous equal-detail groups, acquire each cached/recycled payload,
+   replace flag bit0, optionally reduce to four records and update payload rows.
+
+Group boundaries use the original span, even when reduction overwrites its first
+four records. Inactive record tails stay in storage. Acquisition uses the selected
+16/32-bit group key, while individual record detail words remain unmodified.
+Returned group counts/identities and retired identities are authored diagnostics.
+Input is explicitly nonempty; the zero-contact wrapper uses pair clearing instead.
+Batch supply and cache append remain explicit storage services in the Python API.
+
+[512 complete original consumer comparisons](../../native/snow_host/pose_contact_consumer_validation.json)
+run0x198f910 from entry to return without call interception. Original sorting,
+retirement, lookup, append, grouping, four-record selection, scalar trig and payload
+update all execute. Every input record byte, retained cache/recycler slot and all64
+supplied payload buffers match the independent implementation. Cases cover1815
+groups,700 retired payloads and783 groups reduced to four records, under both key
+widths, mixed entry flags, duplicate cache keys and arbitrary cache ordering.
+
+These executions preallocate32 cache slots and supply32 recycled payloads, with
+1..36 incoming records. No allocator growth or batch refill is reached. Runtime
+XYZ/zero masks and scalar trig dispatch state are supplied. Geometry generation,
+no-recycler global allocation/locking and live scheduling remain separate boundaries.
+Earlier per-helper and reached-block receipts remain useful for those paths they
+cover, but they must not be presented as one uninterrupted allocating execution.
+
+A public synthetic lifecycle test creates a six-record group, reduces it to four,
+clears the pair, and recontacts using the same recycled payload. It checks owner,
+entry flag, active count and cleared cached-word eligibility. This demonstrates
+independent storage continuity without game assets or process access.

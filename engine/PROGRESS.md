@@ -7956,3 +7956,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   byte across counts0..500 and the8/9 algorithm boundary, without interception.
   Stable Python sorting would change equal-key order. Full contact consumer
   integration is still pending; this closes its sorting dependency locally.
+- Connected the complete nonempty contact-cache consumer.512 uninterrupted original
+  calls match all records, retained cache/recycle storage and64 payload buffers:
+  1815 groups,700 retirements and783 four-record reductions. Sorting through payload
+  updating runs continuously with preallocated storage. Added contact/clear/recontact
+  lifecycle test. Allocating paths and geometry-to-scheduled-solver integration remain.

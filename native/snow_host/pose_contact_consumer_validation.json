@@ -1,0 +1,22 @@
+{
+  "schema": "pose-contact-consumer-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x198f910",
+  "method": "Complete original nonempty consumer and helpers without interception; preallocated cache/recycler",
+  "groups": 1815,
+  "retired_payloads": 700,
+  "reduced_groups": 783,
+  "coverage": [
+    "Original sorting, retirement, lookup, cache append, record grouping, reduction, trig and payload update",
+    "16/32-bit keys, duplicate cache keys, arbitrary cache order, mixed entry flags",
+    "All input record bytes, retained cache/recycler storage and all64 supplied payloads"
+  ],
+  "limits": [
+    "Nonempty1..36 records, finite synthetic frames and points",
+    "Cache capacity32 and32 spare recycled payloads avoid allocation/refill paths",
+    "Initialized XYZ/zero masks and scalar trig dispatch supplied",
+    "No global no-recycler branch, concurrent ownership, geometry producer or live game"
+  ]
+}

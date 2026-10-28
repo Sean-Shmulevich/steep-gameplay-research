@@ -130,3 +130,38 @@ def retire_stale_contact_groups(collection, records, first, second, recycled, *,
                 retired.append(identity)
         index+=1
     return retired
+
+
+def process_contact_cache(collection, records, first, second, recycled, *, owner,
+                          payloads, first_frame, second_frame, first_flags,
+                          second_flags, key_width, supply_batch, append_entry):
+    """Connected nonempty consumer with non-null recycler and explicit services.
+
+    Mutates records, cache, recycler and payloads. Supplied batch/append services
+    retain allocation boundaries; diagnostics are authored return values.
+    """
+    from .pose_contact_sort import sort_contact_records
+    from .pose_link_pipeline import process_pose_link_record_group,paired_entry_flag
+    if not records:
+        raise ValueError('Nonempty contacts required; use clear_contact_pair for zero')
+    sort_contact_records(records,key_width=key_width)
+    retired=retire_stale_contact_groups(collection,records,first,second,recycled,
+                                       payloads=payloads,key_width=key_width)
+    flag=paired_entry_flag(first_flags,second_flags)
+    mask=(1<<key_width)-1
+    def detail(index):return struct.unpack_from('<I',records[index],44)[0]&mask
+    groups=[];start=0
+    while start<len(records):
+        key=detail(start);end=start+1
+        while end<len(records) and detail(end)==key:end+=1
+        identity=acquire_recycled_contact_payload(collection,first,second,key,recycled,
+            owner=owner,payloads=payloads,supply_batch=supply_batch,append_entry=append_entry)
+        result=process_pose_link_record_group(payloads[identity],records[start:end],
+            first_frame=first_frame,second_frame=second_frame,first_index=first,
+            second_index=second,entry_flag=flag)
+        payloads[identity][:]=result['payload']
+        records[start:end]=result['records']
+        groups.append({'detail':key,'payload':identity,'input_count':end-start,
+                       'active_count':result['count']})
+        start=end
+    return {'retired':retired,'groups':groups}

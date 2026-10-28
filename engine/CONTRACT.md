@@ -862,3 +862,11 @@ order with the recovered unstable sort and explicit16/32-bit comparator. Full ke
 use wrapped signed subtraction, not unsigned ordering. See LINK_SOLVER.md,
 "Contact record sort ordering". Whole record bytes persist; invalid record lengths
 or key widths are authored errors. No cache or solver work occurs in this helper.
+
+Connected contact consumer: `pose_contact_cache.process_contact_cache` accepts
+nonempty48-byte records, cache/recycler collections, payload storage, pair frames,
+indices and raw entry flags. It sorts, retires, acquires and updates groups in
+recovered order while preserving inactive tails. See LINK_SOLVER.md, "Connected
+nonempty contact-cache consumer". Supply batch initialization and cache append
+services explicitly. Native comparison covers preallocated storage, not allocator
+failure, global-pool locking or scheduled live integration.

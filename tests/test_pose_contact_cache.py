@@ -80,3 +80,36 @@ class ContactRetirementTest(unittest.TestCase):
     def test_detail_width_changes_membership(self):
         self.assertEqual(self.run_scan([1],[0x10001],16)[0],[])
         self.assertEqual(self.run_scan([1],[0x10001],32)[0],[10])
+
+
+class ConnectedContactCacheTest(unittest.TestCase):
+    def test_contact_clear_and_recontact_reuses_payload(self):
+        from engine.pose_contact_cache import process_contact_cache
+        frame={'basis':[[1,0,0],[0,1,0],[0,0,1]],'translation':[0,0,0]}
+        cache={'count':0,'slots':[bytes(16)]*8}
+        recycled={'count':1,'capacity':8,'slots':[10]+[0]*7}
+        payloads={10:bytearray(288)}
+        def supply(n):raise AssertionError('Existing recycler should suffice')
+        def append(c,a,b,d,p):c['slots'][c['count']]=row(a,b,d,p);c['count']+=1
+        def contact(count):
+            records=[]
+            for i in range(count):
+                r=struct.pack('<4f3fI3fI',0,0,1,-.1,i,i%2,0,i,i,i%2,0,7)
+                records.append(r)
+            result=process_contact_cache(cache,records,1,2,recycled,owner=99,
+                payloads=payloads,first_frame=frame,second_frame=frame,
+                first_flags=0x14,second_flags=0x14,key_width=32,
+                supply_batch=supply,append_entry=append)
+            return result,records
+        result,records=contact(6)
+        self.assertEqual(result['groups'],[{'detail':7,'payload':10,'input_count':6,'active_count':4}])
+        self.assertEqual(len(records),6)
+        self.assertEqual(struct.unpack_from('<Q',payloads[10])[0],99)
+        self.assertEqual(payloads[10][0x114]&1,1)
+        self.assertEqual(clear_contact_pair(cache,1,2,recycled,payloads=payloads),1)
+        self.assertEqual(recycled['count'],1)
+        result,_=contact(1)
+        self.assertEqual(result['groups'][0]['payload'],10)
+        self.assertEqual(struct.unpack_from('<I',payloads[10],0x110)[0],1)
+        self.assertEqual(struct.unpack_from('<I',payloads[10],0x40)[0],0)
+        self.assertEqual(cache['count'],1);self.assertEqual(recycled['count'],0)
