@@ -1,0 +1,21 @@
+{
+  "schema": "pose-contact-polygon-clip-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Complete offline native single-plane clip, no interception; supplied XYZ mask",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19980f0",
+  "comparisons": [
+    "returned count and all retained output bytes"
+  ],
+  "coverage": [
+    "1..128 vertices, arbitrary tags and planes",
+    "zero, signed zero, half tolerance and exact tolerance distances",
+    "native capacity argument zero with sufficient backing memory"
+  ],
+  "limits": [
+    "Finite synthetic inputs; not all polygons convex",
+    "Distinct buffers and capacity guards authored",
+    "Multi-plane composition remains unimplemented"
+  ]
+}

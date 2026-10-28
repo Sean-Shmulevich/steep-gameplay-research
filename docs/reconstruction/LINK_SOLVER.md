@@ -2079,3 +2079,48 @@ these comparisons validate the local arithmetic, not physical descriptor validit
 The offline emulator supplies the XYZ mask. A square fixture checks closing-edge
 order, translated plane scalars and the absence of post-transform normalization.
 Polygon clipping and complete face-contact emission remain unresolved.
+
+### Single-plane polygon clipping
+
+`engine.pose_contact_polygon_clip.clip_polygon_plane` reconstructs 0x19980f0.
+Inputs are distinct output/source buffers, a source count and a plane XYZ/scalar.
+Records contain XYZ float32 and uint32 feature tags. It returns the written count
+and preserves output bytes beyond those records.
+
+For each point, compute `distance = ((scalar - nx*x) - ny*y) - nz*z`, rounding
+every multiply and subtraction to float32. If `abs(distance) < float32(1e-5)`,
+replace distance with positive zero. Negative distances are rejected; zero and
+positive distances are retained. Snapping affects classification only, not stored
+point coordinates. The implementation requires finite inputs.
+
+Start with the last point as previous, then visit points in source order. If
+previous and current distances have different signs, emit an intersection before
+any retained current point. With previous distance A and current distance B:
+
+```text
+inverse = float32(1 / float32(A - B))
+intersection[j] = float32(
+    float32(float32(float32(current[j] - previous[j]) * A) * inverse)
+    + previous[j])
+tag = previous.tag if A < 0 else current.tag
+```
+
+The tag comes from the rejected endpoint. Retained points are copied byte for
+byte. The native capacity argument is unused; the independent API requires room
+for twice the input count before writing. It also requires 1..128 source records
+and distinct buffers. These are authored bounds, not recovered rejection paths.
+The native distance scratch array is finite, and zero source count reads before
+the source start. No empty-input native safety is claimed.
+
+[1024 uninterrupted native comparisons](../../native/snow_host/pose_contact_polygon_clip_validation.json)
+match counts and every output byte. Cases cover 1..128 points, arbitrary tags and
+planes, signed zero, half-tolerance and exact-tolerance distances. Native calls use
+capacity zero with sufficient backing memory, confirming that argument does not
+limit writes. The emulator supplies the XYZ mask. Synthetic polygons need not be
+convex, so this validates local execution rather than physical shape validity.
+
+The multi-plane wrapper at 0x1996bf0 clips into two alternating temporary buffers,
+returns zero if an intermediate result has fewer than three points, and writes
+the final stage back to the caller buffer. It unconditionally uses a first and
+final plane; zero/one-plane semantics must not be inferred from a generic loop.
+That wrapper and final contact-point selection remain unreconstructed.

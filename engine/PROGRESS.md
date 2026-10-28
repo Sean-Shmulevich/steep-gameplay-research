@@ -7833,3 +7833,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   local normalization, plane transforms and retained output. 1024 uninterrupted
   native comparisons match every output byte. Empty/degenerate geometry remains
   outside the API domain; polygon clipping and complete face emission remain open.
+- Reconstructed single-plane polygon clipping with tolerance snapping, exact
+  interpolation order and rejected-endpoint feature tags. 1024 complete native
+  comparisons match counts and all output bytes. Native capacity is unused;
+  independent guards are explicit. Multi-plane clipping and final emission remain.

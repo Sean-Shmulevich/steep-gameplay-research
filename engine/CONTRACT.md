@@ -694,3 +694,10 @@ without post-transform normalization. Empty lists, excess capacity and degenerat
 cross products are authored rejections. A later failure may retain earlier writes.
 See LINK_SOLVER.md, "Reference side-plane construction". Polygon clipping remains
 separate.
+
+Single-plane clipping: `pose_contact_polygon_clip.clip_polygon_plane` writes
+XYZ/tag records and returns their count. It preserves float32 plane evaluation,
+strict tolerance snapping, crossing order and rejected-endpoint tags. Inputs must
+be finite, buffers distinct, source count 1..128, and output capacity at least
+twice the source count. Capacity checks are authored. See LINK_SOLVER.md,
+"Single-plane polygon clipping". Multi-plane orchestration remains separate.
