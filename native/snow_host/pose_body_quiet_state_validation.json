@@ -1,0 +1,18 @@
+{
+  "schema": "pose-body-quiet-state-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "updates": 2048,
+  "method": "offline complete native body threshold/timer update, four sequential calls per case, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18c0190",
+  "comparisons": [
+    "all retained body bytes including accumulated timer",
+    "all metadata bytes including preserved high nibble"
+  ],
+  "limits": [
+    "Finite inputs; unordered floating-point and overflow semantics excluded.",
+    "Per-body quiet-state update only, not group-wide action or live sleep/wake lifecycle.",
+    "Scalar units and caller configuration remain separate evidence boundaries."
+  ]
+}

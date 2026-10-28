@@ -555,3 +555,9 @@ poststep fields. Every downstream operation is an explicit required service.
 Native-shaped tokens are opaque; retained storage, normal returns and nonwrapping
 address arithmetic are required. This is recovered orchestration with supplied
 operations, not a claim of complete group simulation or live synchronization.
+
+Body quiet-state update: `update_pose_body_quiet_state` resolves per-field-1.0
+threshold overrides, requires both motion magnitudes strictly below their limits,
+accumulates scalar into timer28, and sets metadata state1 only beyond the duration
+limit. Inhibition or motion equality/excess resets timer and the low metadata
+nibble. Finite arithmetic only; group action and live sleep/wake are not supplied.

@@ -1258,3 +1258,46 @@ native group simulation. The independently validated row solvers, body productio
 feedback, secondary refresh and integration can now be bound to this explicit
 ordering. Pose builders/feedback, poststep details, remaining link families and
 numerical categories still prevent a complete all-input group implementation.
+
+### Body low-motion timer and threshold overrides
+
+`engine.pose_body_quiet_state.update_pose_body_quiet_state` reconstructs complete
+routine0x18c0190, called by the group poststep's conditional checker0x1958460.
+Body+0x1c0 optionally points to three overrides in linear/angular/duration order.
+Each exact float32-1.0 independently selects the corresponding caller default.
+The inspected sentinel at0x1e023c8 is-1.0. For the supported finite domain:
+
+```python
+linear_limit, angular_limit, duration_limit = resolved_overrides_or_defaults
+if body.flagsaa & 2 or squared_length(linear_motion) >= linear_limit**2 \
+                      or squared_length(angular_motion) >= angular_limit**2:
+    body.timer28 = positive_zero
+    metadata.byte53 &= 0xf0
+else:
+    body.timer28 = float32(supplied_scalar + body.timer28)
+    if body.timer28 > duration_limit:
+        metadata.byte53 = (metadata.byte53 & 0xf1) | 1
+```
+
+Squares and sums retain float32 rounding and `(x²+y²)+z²` order. Both motion
+comparisons reject equality; the duration comparison requires strict greater-than.
+When motion remains below threshold but duration does not cross, the old metadata
+nibble is left untouched. Negative thresholds other than the sentinel are squared
+normally. A negative scalar decreases the timer; the routine does not clamp it.
+These are native arithmetic facts, not recommended parameter validation policy.
+No physical time unit is assigned solely from this accumulation.
+
+[512 cases with2048 sequential native updates](../../native/snow_host/pose_body_quiet_state_validation.json)
+match all retained body and metadata bytes without interception. Cases include
+missing/partial overrides, negative overrides, motion-threshold equality,
+inhibition, repeated accumulation and positive/negative scalars. Nonfinite or
+overflow arithmetic remains outside the independent API domain.
+
+The caller0x1958460 evaluates this routine for each captured body span, then checks
+whether every reached body's metadata low nibble equals1. If so, it reloads the
+group body span, invokes virtual slot+0x20 on each body and sets group+0xa0 to1.
+An empty captured body span also admits that branch. Poststep0x19574f0 subsequently
+skips ordinary integration/resource refresh when group+0xa0 is nonzero. This is a
+lead toward group inactivity behavior, not yet a full live sleep/wake contract.
+The group aggregation, concrete slot+0x20 effects and reactivation path remain
+separate reconstruction work.

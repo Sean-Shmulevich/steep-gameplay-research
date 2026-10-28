@@ -7742,3 +7742,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   body bound, phase transitions, state clearing and the repeated secondary gate
   are explicit. Downstream composition remains incomplete for pose/poststep and
   unsupported row families; no all-input native-group equivalence is claimed.
+- Recovered poststep's per-body low-motion timer and linear/angular/duration
+  overrides. 512 cases with2048 sequential native calls match without interception,
+  including threshold equality and negative scalars. Group aggregation and the
+  resulting virtual action are identified statically but remain separate work;
+  this does not establish a complete live sleep/wake lifecycle.
