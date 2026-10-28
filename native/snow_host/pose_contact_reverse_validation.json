@@ -1,0 +1,18 @@
+{
+  "schema": "pose-contact-reverse-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Complete native role reversal without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994f60",
+  "comparisons": [
+    "all retained bytes"
+  ],
+  "coverage": [
+    "empty to64-record ranges, nonzero starts",
+    "arbitrary word patterns including nonfinite representations"
+  ],
+  "limits": [
+    "Valid complete ranges supplied; caller dispatch/payload grouping separate"
+  ]
+}

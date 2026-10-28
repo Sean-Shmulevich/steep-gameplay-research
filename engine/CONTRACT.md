@@ -813,3 +813,9 @@ synthetic/observed grid samples and profiles, invokes the reconstructed caller a
 returns records plus retained storage. Return-value and record-count distinctions
 are preserved; separation is not assumed linear. See LINK_SOLVER.md, "Runnable
 terrain-contact inspection". Adapter limits/validation are authored.
+
+Contact role reversal: `pose_contact_reverse.reverse_contact_records` swaps point
+fields and flips normal bits over a retained record range while preserving all
+identifier/scalar words. See LINK_SOLVER.md, "Reversed contact pair adapter".
+Complete adapter dispatch, zero-capacity backing-storage behavior and downstream
+payload grouping remain separate from the validated reversal helper.

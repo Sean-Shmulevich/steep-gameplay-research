@@ -7912,3 +7912,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   fixture, explicit provenance/profiles, retained buffer hex and zero-capacity
   preliminary success reporting. Tests expose production versus filtering effects.
   This is contact inspection, not body simulation or live mod integration.
+- Traced reverse-order terrain contact adapter and reconstructed its shared record
+  reversal helper.1024 complete native calls match all retained bytes. Triangle
+  IDs persist through reversal. Complete adapter dispatch/zero-capacity semantics
+  and the later bridge to payload grouping remain unresolved.

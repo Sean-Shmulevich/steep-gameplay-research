@@ -2741,3 +2741,29 @@ include normals, point pairs, triangle IDs and exact hex. The scalar is named
 so the adapter does not mislabel every scalar as linear depth. Full output hex also
 includes inactive/discarded bytes. This command performs contact generation only;
 it does not advance bodies, invoke the solver, decode assets or attach to a game.
+
+### Reversed contact pair adapter
+
+Static caller tracing finds0x198a780 calling terrain/box routine0x19dde20. The
+adapter copies descriptor frame1 into frame0 and frame0 into frame1, swaps resource
+pointers0x80/88, and preserves flag bytes0x90/91/92. After generation it calls
+0x1994f60 over `[output, output+returned_count*48)` and returns the same count.
+This is an ordering adapter, not yet the bridge to persistent pose-link payloads.
+Its registration/dispatch and later grouping need further tracing.
+
+`engine.pose_contact_reverse.reverse_contact_records` reconstructs0x1994f60. It
+swaps the two XYZ point fields at0x10/20 and XORs each normal word with0x80000000.
+It preserves separation0x0c, feature word0x1c and triangle/detail word0x2c. Applying
+it twice restores every byte. Unlike terrain record conversion, it does not replace
+an identifier. Raw bit operations preserve signed-zero and NaN payload patterns.
+
+[1024 complete native reversal comparisons](../../native/snow_host/pose_contact_reverse_validation.json)
+match every retained byte for empty through64-record ranges, nonzero starts and
+arbitrary word patterns, with no interception. The independent API validates a
+complete record range. Native count/range construction is caller-owned.
+
+The adapter's complete zero-capacity behavior remains unvalidated: preliminary
+terrain success can return1 without a write, while this adapter then reverses one
+record based on that result. It would be incorrect to silently assume that all
+positive returned counts correspond to initialized records. A complete adapter
+comparison must preserve this distinction and valid caller backing storage.
