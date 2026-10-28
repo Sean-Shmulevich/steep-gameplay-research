@@ -629,3 +629,11 @@ four-lane threshold. All lanes control near-zero normalization; XYZ lanes contro
 strict rejection. It requires finite, nondegenerate inputs and recognized index
 differences. It does not supply unsupported prior scratch values or claim full
 record-filter equivalence. See LINK_SOLVER.md, "Grid edge rejection predicate".
+
+Grid record filter: `pose_grid_contact_filter.filter_grid_records` consumes a
+resource, supplied samples/frame/triangle, retained48-byte records and active
+count. It returns the remaining count after vertex/edge rejection and swap removal.
+Direction XYZ at0 and position XYZ at16 are transformed in the recovered operation
+order; other bytes remain opaque. Finite nondegenerate geometry and initialized
+XYZ mask semantics are required. It filters existing records, without generating
+contacts or asserting live ownership. See LINK_SOLVER.md, "Complete grid record filter".

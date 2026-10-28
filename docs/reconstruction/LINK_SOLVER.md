@@ -1676,3 +1676,49 @@ positions unchanged, so the predicate must not silently invent them. Zero-length
 normalizations and unordered/nonfinite IEEE behavior remain outside this validated
 domain. The full record filter's vertex branches, selection gates and swap-removal
 composition still need implementation and native comparison.
+
+### Complete grid record filter
+
+`engine.pose_grid_contact_filter.filter_grid_records` reconstructs0x1996e50,
+composing triangle vertices, sample identities, vertex neighborhoods and edge
+rejection. It mutates retained48-byte records and returns the remaining count.
+XYZ direction is at record+0; XYZ position at+16. Other bytes are copied opaquely.
+No records are generated. Zero count returns before geometry is consulted.
+
+For triangle vertices A/B/C, form `N=cross(B-A,C-A)` and `inv=1/dot(N,N)`.
+Transform each record position P with the supplied frame, in float32 order
+`((basis0*x + translation) + basis1*y) + basis2*z`. Transform its direction D as
+`(basis1*y + basis0*x) + basis2*z`, without translation. Then:
+
+```text
+WA = dot(cross(B-P,C-P),N) * inv
+WB = dot(cross(C-P,A-P),N) * inv
+WC = dot(cross(A-P,B-P),N) * inv
+if WA > upper: test vertex A
+else if WB > upper: test vertex B
+else if WC > upper: test vertex C
+else if WC < lower: test edge A,B
+else if WA < lower: test edge B,C
+else if WB < lower: test edge C,A
+else: retain
+```
+
+Upper is float32(.9999), lower float32(.0001). A vertex rejects if any ordered
+neighbor satisfies `dot(normalize(neighbor-vertex),D) > float32(.00001)`.
+An edge uses the recovered predicate with all four threshold lanes equal to
+float32(.00001). Comparisons are strict and branch order is retained. A rejection
+copies the last active48-byte record into the current slot, decrements count and
+retries that slot. Retention advances the cursor. Removed/tail storage is not
+cleared and the operation does not preserve original record order.
+
+[512 uninterrupted native comparisons](../../native/snow_host/pose_grid_contact_filter_validation.json)
+execute the full original filter with its actual geometry and rejection methods,
+without intercepted calls. They process3052 input records, retaining685. Returned
+counts and all record bytes, including removed and tail storage, match. Coverage
+includes both diagonal modes, all triangles in a5x5 grid, vertex/edge/centroid
+positions, displaced positions, zero-to-twelve records and translated frames.
+The XYZ mask is supplied as initialized state. Arbitrary rotation/scale and
+degenerate IEEE cases are not covered by this receipt. The public API rejects
+zero-length triangle/neighbor normalization rather than claiming native NaN
+behavior. Upstream record production, live ownership and broadphase integration
+remain outside this reconstructed filter.

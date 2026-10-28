@@ -7791,3 +7791,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   four-lane threshold. 1024 uninterrupted native cases match Boolean decisions,
   with587 rejects and437 retained. Near-zero and strict-comparison rules are
   preserved. Full record-filter composition and degenerate IEEE cases remain open.
+- Connected the complete grid record filter to recovered triangle, neighborhood
+  and edge-rejection methods. 512 uninterrupted native cases match returned counts
+  and all buffer bytes across3052 input records, retaining685. Vertex/edge gates,
+  transform order and repeated swap removal are implemented. Record production,
+  arbitrary-frame validation and degenerate IEEE behavior remain open.

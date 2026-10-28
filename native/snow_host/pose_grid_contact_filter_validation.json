@@ -1,0 +1,24 @@
+{
+  "schema": "pose-grid-contact-filter-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "input_records": 3052,
+  "retained_records": 685,
+  "method": "Offline full native record filter with native triangle, neighbor and edge methods; no interception; XYZ mask initialized",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1996e50",
+  "comparisons": [
+    "returned count",
+    "entire retained record storage including removed/tail bytes"
+  ],
+  "coverage": [
+    "zero to twelve records, repeated swap removal",
+    "all triangles in a 5x5 grid, both diagonal flags",
+    "vertex, edge, centroid and displaced positions",
+    "identity frame with optional translation"
+  ],
+  "limits": [
+    "Finite nondegenerate inputs only; arbitrary rotations/scales not included in this receipt.",
+    "Initialized XYZ mask supplied; no live execution or contact generation proved."
+  ]
+}
