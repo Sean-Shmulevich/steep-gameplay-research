@@ -686,3 +686,11 @@ operation order, ordinal wrapping and uint32 tag truncation. Capacity enforcemen
 is an authored guard. Frames, vertices and face indices are supplied explicitly;
 clipping and contact emission remain separate. See LINK_SOLVER.md, "Face polygon
 vertices and tags".
+
+Reference side planes: `pose_contact_side_planes.append_side_planes` appends one
+normal/scalar plane per indexed edge, beginning with the last-to-first edge.
+It normalizes the local cross product and preserves the native frame transform
+without post-transform normalization. Empty lists, excess capacity and degenerate
+cross products are authored rejections. A later failure may retain earlier writes.
+See LINK_SOLVER.md, "Reference side-plane construction". Polygon clipping remains
+separate.

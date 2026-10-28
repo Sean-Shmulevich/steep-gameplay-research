@@ -7829,3 +7829,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   vertices and packed feature tags. 512 complete native comparisons match every
   output byte. Both orientation flag values produce identical stored tags due to
   uint32 truncation. Clipping, point reduction and full face emission remain open.
+- Reconstructed reference side-plane construction with closing-edge order,
+  local normalization, plane transforms and retained output. 1024 uninterrupted
+  native comparisons match every output byte. Empty/degenerate geometry remains
+  outside the API domain; polygon clipping and complete face emission remain open.

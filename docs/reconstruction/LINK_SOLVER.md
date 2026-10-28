@@ -2043,9 +2043,9 @@ records, ordinal wrap, and both orientation flags. The XYZ mask is supplied to
 the offline emulator. Clipping, point reduction and complete face emission remain
 separate unresolved stages.
 
-#### Next dependency: reference side planes
+### Reference side-plane construction
 
-Static inspection of 0x18e3450 identifies the next geometry stage. It seeds
+`engine.pose_contact_side_planes.append_side_planes` reconstructs 0x18e3450. It seeds
 `previous` from the last indexed vertex, then visits indices in stored order.
 For each `current`, it computes the following with float32 operations:
 
@@ -2064,8 +2064,18 @@ previous = current
 The output uses the same sixteen-byte slot size and count at 0x800, but the fourth
 component is a plane scalar, not a feature tag. Normalization occurs before the
 frame transform; the routine does not renormalize the transformed normal. This
-is a static formula lead only, with no independent implementation or native
-comparison yet. Empty index lists are unsafe because the last index is read
-before the loop count check. Zero-length cross products also need an explicit
-fidelity boundary. These planes feed polygon clipping; their sign convention
+implementation rejects empty lists, excess capacity and degenerate cross
+products through authored guards. Native empty lists are unsafe because the last
+index is read before the loop count check. Degenerate IEEE behavior is excluded.
+A later degenerate edge can leave earlier appended planes in place; the API does
+not promise transactional failure. These planes feed polygon clipping; their sign convention
 must be checked against that consumer before describing inside/outside behavior.
+
+[1024 complete native comparisons](../../native/snow_host/pose_contact_side_planes_validation.json)
+match all plane normal/scalar fields, counts, existing records and unused bytes.
+Inputs include three to 98 vertices, nonzero initial counts, general finite frames
+and arbitrary finite face normals. Synthetic polygons need not be planar or convex;
+these comparisons validate the local arithmetic, not physical descriptor validity.
+The offline emulator supplies the XYZ mask. A square fixture checks closing-edge
+order, translated plane scalars and the absence of post-transform normalization.
+Polygon clipping and complete face-contact emission remain unresolved.

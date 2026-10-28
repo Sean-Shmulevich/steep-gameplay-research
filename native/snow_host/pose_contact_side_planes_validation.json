@@ -1,0 +1,21 @@
+{
+  "schema": "pose-contact-side-planes-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Offline complete native side-plane builder, no interception; XYZ mask supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e3450",
+  "comparisons": [
+    "all plane normal/scalar/count bytes and retained unused storage"
+  ],
+  "coverage": [
+    "three to98 vertices, nonzero existing counts",
+    "general finite frames and face normals",
+    "closing edge from last vertex to first"
+  ],
+  "limits": [
+    "Synthetic polygons are not necessarily planar or convex.",
+    "Empty lists, degenerate cross products and overflow excluded; independent guards authored.",
+    "Clipping and face-contact emission remain separate dependencies."
+  ]
+}
