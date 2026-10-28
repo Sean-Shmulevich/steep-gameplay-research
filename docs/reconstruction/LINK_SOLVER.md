@@ -2593,3 +2593,34 @@ lanes can contain signed zero; the independent XYZ frame interface does not expo
 those lanes, so this receipt does not claim full64-byte frame equality. A failed
 initial full-lane comparison identified that limitation. Bounds calculation and
 complete terrain caller execution remain separate validation work.
+
+### Box resource bounds query
+
+`engine.pose_box_resource_bounds.box_resource_bounds` reconstructs0x18c5420.
+Resource construction/copy path0x18c5370 sets kind0x8003, assigns table0x29c9ac8
+and copies the three extent fields0x40/44/48. That table's slot0x10 points to this
+bounds method. This identifies the box implementation of the virtual bounds
+service used by the terrain caller; other resource kinds remain separate.
+
+For each output axis j, with basis rows B0/B1/B2 and extents e:
+
+```text
+radius[j] = (abs(B0[j])*e.x + abs(B1[j])*e.y) + abs(B2[j])*e.z
+low[j] = translation[j] - radius[j]
+high[j] = radius[j] + translation[j]
+```
+
+Every multiply and add/subtract rounds to float32. The method writes six floats
+in lowXYZ/highXYZ order. In the terrain caller, the frame supplied here is the box
+frame expressed in terrain coordinates, so these are local query bounds for grid
+candidate enumeration. No geometric midpoint or arbitrary resource origin is
+added. Extents are assumed finite positive values in the validated composition.
+
+[2048 composed native prefix comparisons](../../native/snow_host/pose_box_resource_bounds_validation.json)
+execute terrain inverse/relative-frame construction and the actual virtual method
+through a constructed box resource's vtable. All frame XYZ bits and six bounds
+float bits match across general nonsingular bases, including shear, scale,
+reflection and translation. No service is intercepted. XYZ mask and resource
+identity are supplied; fourth SIMD lanes and later caller stages are outside this
+receipt. The construction/copy routine itself is static dispatch evidence, not
+validated allocation or object-lifetime behavior.

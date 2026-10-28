@@ -7891,3 +7891,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   prefixes match all XYZ fields for general nonsingular bases, including shear
   and reflection. Fourth SIMD signed-zero lanes are explicitly outside the XYZ
   API. Virtual bounds, allocation and complete terrain orchestration remain open.
+- Reconstructed kind3 box bounds and verified dispatch-table evidence.2048 native
+  caller prefixes including the actual virtual bounds method match all XYZ frame
+  fields and six bounds floats. Candidate allocation/retry and complete terrain
+  processing-loop composition remain open.

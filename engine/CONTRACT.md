@@ -788,3 +788,9 @@ inverse terrain and relative other frames as four XYZ rows each. It preserves
 cofactor inverse and float32 transform ordering. Singular rejection is authored;
 fourth SIMD lanes are not represented. See LINK_SOLVER.md, "Terrain inverse and
 relative frames". The subsequent virtual bounds call remains separate.
+
+Box resource bounds: `pose_box_resource_bounds.box_resource_bounds` returns six
+float32 lowXYZ/highXYZ values from extents and a supplied frame, preserving the
+absolute-basis sum order. See LINK_SOLVER.md, "Box resource bounds query". Composed
+validation uses the terrain caller's actual kind3 virtual method; other resource
+classes and object allocation/lifetime remain separate.
