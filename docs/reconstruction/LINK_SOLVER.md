@@ -2320,3 +2320,43 @@ local descriptor construction for finite positive extents and nondegenerate
 synthetic triangles, not the initialization protocol or full producer execution.
 The next integration step is dispatching these descriptors through axis selection
 and the face/edge emitters, then validating the complete producer.
+
+### Connected box-triangle producer
+
+`engine.pose_box_triangle_contact.emit_box_triangle_contacts` reconstructs the
+complete 0x190f8b0 producer. Inputs are box extents, box frame, three world-space
+triangle vertices, output capacity, reduction flag and edge-query flag. It builds
+the recovered box/triangle descriptors and uses an identity frame for the triangle.
+The independent API avoids native pointers and runtime TLS bookkeeping.
+
+Dispatch follows the recovered axis selector:
+
+| Kind | Action |
+| --- | --- |
+| 0 | Box is reference face; emit against triangle with flipped=false |
+| 1 | Triangle is reference face; emit against box with flipped=true |
+| 2 | Emit selected box/triangle edge pair |
+| 3 | Return zero for separation |
+
+Both face paths pass the reduction flag through. The edge flag controls whether
+the selector runs the edge query. Capacity limits record output, not descriptor
+construction or selection. The producer has no additional record mutation after
+its emitter returns. Helpers retain their finite/nondegenerate preconditions;
+no fallback geometry is invented for invalid inputs.
+
+[2048 complete native producer comparisons](../../native/snow_host/pose_box_triangle_contact_validation.json)
+match returned counts and every output/tail byte. Selection covers320 box-reference
+faces,493 triangle-reference faces,519 edges and716 separation results. There are
+1949 emitted records. Native execution runs the original descriptor construction,
+queries, selector, clipping, reduction and emitters without interception. The
+original constant-table stores execute before trials; initialized TLS state, XYZ
+mask, zero comparison vector and mapped stack-limit state are supplied. Scalar
+trig dispatch zero is validated. These conditions do not establish CRT once-init
+behavior or compatibility with another executable build.
+
+Synthetic cases use positive extents, nondegenerate triangles, z-axis rotations,
+translations, capacity0..8 and both flags. This is a connected local collision
+producer, not a complete terrain collision simulation. The upstream candidate
+iteration, per-triangle profile-mask gate, record-role conversion and optional
+terrain filtering still need to be composed and validated. Full 3D rotation
+coverage and degenerate native behavior remain separate validation work.

@@ -7859,3 +7859,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   edge adjacency and triangle plane arithmetic. 1024 native producer prefixes
   match every geometry field. Table stores run natively with supplied initialized
   TLS state; full producer dispatch and CRT initialization remain separate.
+- Connected the complete box-triangle contact producer. 2048 uninterrupted native
+  executions match counts and all output bytes across every selection kind,
+  including1949 emitted records. Runtime initialized-state remains supplied.
+  Terrain candidate/profile/filter orchestration and broader frame coverage remain.

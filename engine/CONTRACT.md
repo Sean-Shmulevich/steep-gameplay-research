@@ -737,3 +737,10 @@ edge adjacency. Triangle normalization and plane-dot operation order match the
 native producer prefix. Degenerate triangles are authored rejections. See
 LINK_SOLVER.md, "Box and triangle descriptors". CRT initialization and complete
 producer dispatch remain separate.
+
+Box-triangle producer: `pose_box_triangle_contact.emit_box_triangle_contacts`
+connects recovered descriptors, axis selection and face/edge emission. Triangle
+vertices are world-space; box geometry uses extents and a supplied frame. Flags
+control edge queries and face-point reduction. Capacity limits output records.
+See LINK_SOLVER.md, "Connected box-triangle producer" for dispatch and validation
+scope. Terrain candidate/profile/filter orchestration remains outside this API.
