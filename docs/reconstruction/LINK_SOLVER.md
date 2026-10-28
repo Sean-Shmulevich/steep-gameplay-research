@@ -2394,3 +2394,40 @@ again for inspection; it is not a live trace. CLI guards bound capacity to128 an
 reject nonfinite fields, nonpositive extents and nonboolean flags. Those guards
 are authored. The helper geometry domains still apply, and this command does not
 supply terrain, integration, a solver or a live mod entry point.
+
+### Terrain record roles
+
+`engine.pose_grid_contact_records.convert_grid_contact_records` reconstructs the
+reached conversion block at0x19de481..0x19de6d9 within caller0x19dde20. For every
+record just emitted by the box-triangle producer, it swaps twelve-byte point
+fields0x10 and0x20, XORs each normal component's raw bits with0x80000000, and writes
+the current triangle ID at0x2c. Separation0x0c and field0x1c persist. Conversion
+begins at the caller's existing accumulated record count, not at buffer zero.
+The helper accepts that start index explicitly.
+
+[1024 native block comparisons](../../native/snow_host/pose_grid_contact_records_validation.json)
+match the complete retained buffer for0..32 records, nonzero starts and arbitrary
+uint32 identifiers. Random raw words include nonfinite representations; the helper
+performs bitwise sign flips rather than float conversion, preserving payload bits.
+Both unrolled four-record and remainder loops execute in the native comparison.
+Entry registers are supplied. This is not validation of the complete caller.
+
+The surrounding caller chooses a terrain profile through resource map0xb0 indexed
+by `triangle_id >> 1`, then pointer table0xa0; absent map uses default pointer0x20.
+It admits a triangle when `(terrain.mask50 & other.mask48) |
+(other.mask50 & terrain.mask48)` is nonzero. These are 64-bit masks. This gate is
+currently a static lead, not part of the record conversion helper.
+
+After conversion, descriptor byte0x92 and terrain resource field0x40==2 jointly
+enable the recovered grid-record filter. The filter receives the inverse terrain
+frame, current triangle ID and just-produced record batch. Its returned count
+increments the accumulated count. Reaching capacity ends enumeration.
+
+Further inspection identifies an earlier optional branch controlled by descriptor
+byte0x90. It derives a query center from the box's local bounds and a scalar from
+the minimum of its three extents, calls0x19969e0, and can return1 before candidate
+enumeration. Its semantics remain unresolved; it must not be silently omitted
+when claiming full caller reconstruction. The caller also constructs a full inverse
+terrain frame, obtains box bounds through a virtual call and retries candidate
+collection when the initial count reaches128. Allocation ownership and these
+entry/query stages remain separate work.

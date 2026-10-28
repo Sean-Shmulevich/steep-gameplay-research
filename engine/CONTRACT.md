@@ -750,3 +750,9 @@ accepts explicit provenance and bounded synthetic/observed box-triangle geometry
 and returns decoded records, exact bytes and separation-kind labels. See
 LINK_SOLVER.md, "Runnable box-triangle inspection". This is an offline inspection
 API; no private binary, live pointer, terrain simulation or native session required.
+
+Terrain record conversion: `pose_grid_contact_records.convert_grid_contact_records`
+mutates a specified batch of48-byte records, swapping point roles, sign-flipping
+normal bits and setting triangle IDs while retaining scalar/other fields. Range
+and identifier guards are authored. See LINK_SOLVER.md, "Terrain record roles".
+This is a reached caller block, not full terrain collision orchestration.

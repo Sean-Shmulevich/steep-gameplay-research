@@ -7867,3 +7867,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   all counts/output bytes matching and3947 records emitted. Added a standalone
   JSON inspection command and synthetic fixture with explicit provenance and
   linear-versus-squared separation labels. Terrain orchestration remains open.
+- Reconstructed terrain caller record conversion;1024 native block comparisons
+  match all bytes across batch offsets, unrolled/remainder loops and arbitrary
+  bit patterns. Documented the64-bit profile gate and an earlier optional query
+  shortcut that remains unresolved. Full terrain caller integration is still open.
