@@ -7841,3 +7841,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   rejection. 1024 complete native wrapper/helper comparisons match counts and
   caller bytes, including540 surviving polygons and484 unchanged zero results.
   Point selection, face-record emission and producer descriptors remain open.
+- Reconstructed contact plane filtering and proximity removal. 1024 complete
+  native selection calls with optional reduction disabled match all point/scalar
+  bytes and counts, retaining33007 points. Four-point reduction, final face
+  emission and producer descriptor construction remain unresolved.

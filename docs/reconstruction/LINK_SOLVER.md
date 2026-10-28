@@ -2153,3 +2153,38 @@ rejection at first, middle and final stages, and two-plane intersection tag flow
 
 This connects plane-by-plane clipping only. Contact-point selection, final face
 record emission and complete box/triangle descriptor construction remain open.
+
+### Contact plane and proximity filtering
+
+`engine.pose_contact_point_filter` implements the first two stages of 0x19984f0.
+`filter_plane_points` reconstructs 0x19986e0 and `remove_near_points` reconstructs
+0x1998e80. Point buffers contain sixteen-byte XYZ/tag records; a separate buffer
+contains one float32 separation per retained point.
+
+Plane filtering computes `(((nx*x + -scalar) + ny*y) + nz*z)` with every operation
+rounded to float32. It tests the result's bits as a signed int32 and retains values
+whose signed bits are <=0. For finite values this keeps negative separation and
+both zeros. There is no tolerance snap here. Accepted points compact forward in
+source order, copying all sixteen bytes, while their computed separations fill
+the parallel output. Unwritten point and distance bytes persist. Count0 is valid;
+the independent API bounds the native distance scratch domain to128 points.
+
+Proximity filtering visits each current anchor i and candidates j=i+1 onward.
+For each candidate, compute float32 `residual = radius*radius`, then subtract
+`dx*dx`, `dy*dy`, `dz*dz` in order, rounding each operation. If residual>0, remove
+candidate j by copying the last active point and its separation into j, shrink
+the count, and retry the replacement. Equality retains the candidate. It does
+not average positions, combine tags, choose the deeper point, or preserve order.
+The caller supplies radius `float32(0.0001)`.
+
+[1024 complete native selection calls](../../native/snow_host/pose_contact_point_filter_validation.json)
+with optional reduction disabled match returned counts, entire point buffers and
+entire distance buffers. The native wrapper calls both actual helpers without
+interception. Synthetic cases cover 0..128 points, arbitrary tags/planes, exact
+duplicates and nearby clusters, retaining33007 points in total. Finite-input
+comparisons do not establish NaN behavior or physical contact validity.
+
+When reduction is enabled and more than four points remain, the wrapper calls
+0x19989d0 to select four indices, then gathers both points and separations into
+the first four slots. That selection policy remains unresolved. Final face-contact
+record emission and complete producer construction remain separate dependencies.

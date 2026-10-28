@@ -708,3 +708,10 @@ final stage. It returns zero below three points. The API requires 4096 bytes of
 storage and rejects intermediate counts above128. These capacity guards are
 authored. See LINK_SOLVER.md, "Multi-plane polygon clipping". Final point selection
 and face-record emission remain separate dependencies.
+
+Contact point filtering: `pose_contact_point_filter.filter_plane_points` compacts
+points at nonpositive plane separation and writes matching float32 scalars.
+`remove_near_points` removes later points strictly inside a supplied radius by
+swapping the last record and its scalar into the removed slot. Both retain unused
+bytes. Inputs are finite; plane-filter count is bounded to128. See LINK_SOLVER.md,
+"Contact plane and proximity filtering". Optional four-point reduction is open.
