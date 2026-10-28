@@ -33,3 +33,40 @@ def contact_patch_geometry(basis, center_world, local_arms):
     return dict(world_points=points,centroid_world=centroid,
                 centroid_arm=[f32(centroid[j]-center[j]) for j in range(3)],
                 distance_sum=distance_sum,spread=spread)
+
+
+def contact_patch_basis(normal, centroid_arm, motion1a0, motion1ac, spread):
+    """Shared constraint directions with componentwise fallback-axis tests."""
+    def vector(v):
+        if len(v)!=3:raise ValueError('Three components required')
+        result=[f32(x) for x in v]
+        if not all(math.isfinite(x) for x in result):raise ValueError('Finite components required')
+        return result
+    n,arm,linear,angular=map(vector,(normal,centroid_arm,motion1a0,motion1ac))
+    spread=f32(spread)
+    if not math.isfinite(spread) or spread<=0:raise ValueError('Positive finite spread required')
+    def cross(a,b):return [f32(f32(a[(i+1)%3]*b[(i+2)%3])-f32(b[(i+1)%3]*a[(i+2)%3])) for i in range(3)]
+    spin=cross(angular,arm);motion=[f32(linear[i]+spin[i]) for i in range(3)]
+    direction=[-x for x in n];candidate=cross(direction,motion);source='motion'
+    if all(abs(x)<f32(.001) for x in candidate):
+        candidate=cross(direction,[1.0,0.0,0.0]);source='axis_x'
+        if all(abs(x)<f32(.001) for x in candidate):
+            candidate=cross(direction,[0.0,1.0,0.0]);source='axis_y'
+    squared=[f32(x*x) for x in candidate]
+    length=f32(math.sqrt(f32(f32(squared[0]+squared[1])+f32(squared[2]+0.0))))
+    if not length or not math.isfinite(length):raise ValueError('Nondegenerate shared tangent required')
+    inverse=f32(1.0/length);first=[f32(x*inverse) for x in candidate]
+    second=cross(direction,first)
+    return dict(first=first,second=second,first_angular=cross(arm,first),
+                second_angular=cross(arm,second),spread_direction=[f32(x*spread) for x in direction],
+                point_motion=motion,source=source)
+
+
+def pack_contact_patch_directions(row, basis):
+    """Write reached shared-row fields10..7f, preserving all other bytes."""
+    import struct
+    if len(row)!=208:raise ValueError('Complete208-byte shared row required')
+    row[0x10:0x20]=bytes(16)
+    for axis in range(3):
+        struct.pack_into('<4f',row,0x20+16*axis,basis['first'][axis],basis['second'][axis],0.0,0.0)
+        struct.pack_into('<4f',row,0x50+16*axis,basis['first_angular'][axis],basis['second_angular'][axis],basis['spread_direction'][axis],0.0)

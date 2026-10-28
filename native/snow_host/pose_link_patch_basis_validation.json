@@ -1,0 +1,28 @@
+{
+  "schema": "pose-link-patch-basis-validation-v1",
+  "cases": 2048,
+  "passed": 2048,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "block": [
+    "0x19925b2",
+    "0x19927ca"
+  ],
+  "method": "Original shared-row orientation and transposed packing block without interception",
+  "branches": {
+    "motion": 1317,
+    "axis_x": 614,
+    "axis_y": 117
+  },
+  "comparisons": [
+    "All208 retained shared-row bytes, including untouched fields and signed zeros"
+  ],
+  "coverage": [
+    "Motion selection, X/Y fallback, near-threshold component tests",
+    "General nonzero normals, centroid arms, both motion fields and positive spread"
+  ],
+  "limits": [
+    "Supplied aggregate geometry and live-in SIMD registers",
+    "Coefficient/result/index fields outside this block are not assembled",
+    "No full multi-family builder or solver iteration"
+  ]
+}

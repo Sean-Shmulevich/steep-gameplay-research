@@ -8002,3 +8002,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   2048 original block comparisons match transformed points and spread; the distance
   sum is clamped before count division. Shared orientation/packing, the paired multi
   family and full solver integration remain open.
+
+- Recovered shared patch orientation and transposed direction packing.2048 original
+  block comparisons match all208 retained row bytes across motion and both axis
+  fallbacks. Tests distinguish component thresholds from length thresholds and
+  verify angular motion and untouched storage. Complete multi-family assembly,
+  paired multi construction and end-to-end solver integration remain open.

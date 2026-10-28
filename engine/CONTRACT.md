@@ -923,3 +923,9 @@ It transforms and averages world points, returns the centroid-relative arm and
 `max(sum_distance, .001)/count` with inspected float32 order. See LINK_SOLVER.md,
 "Multi-row contact patch geometry". Shared208-byte row assembly is still separate;
 normal dispatcher gates must not be inferred from this helper's arithmetic domain.
+
+Shared patch directions: `contact_patch_basis` takes explicit normal, centroid arm,
+linear/angular motion and positive spread. `pack_contact_patch_directions` modifies
+only+0x10..0x7f of a retained208-byte row. See LINK_SOLVER.md, "Shared patch
+orientation and packing" for component thresholds, fallback order and transpose.
+Coefficient/result fields and full multi-family assembly remain unresolved.

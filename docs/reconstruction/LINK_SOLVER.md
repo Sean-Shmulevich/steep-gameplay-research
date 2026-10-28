@@ -3443,3 +3443,38 @@ one-contact cases test the local arithmetic domain. Zero contacts are rejected b
 the independent helper rather than inventing a zero-divisor fallback. Prior primary
 rows, later shared-row orientation/packing and full solver behavior are not covered
 by this reached-block receipt.
+
+### Shared patch orientation and packing
+
+`contact_patch_basis` recovers the next block,0x19925b2..0x19927ca:
+
+```text
+direction = -normal
+motion = linear_motion + cross(angular_motion, centroid_arm)
+candidate = cross(direction, motion)
+if every(abs(candidate.xyz) < float32(.001)):
+    candidate = cross(direction, [1,0,0])
+    if every(abs(candidate.xyz) < float32(.001)):
+        candidate = cross(direction, [0,1,0])
+first = candidate * (1 / length(candidate))
+second = cross(direction, first)
+first_angular = cross(centroid_arm, first)
+second_angular = cross(centroid_arm, second)
+spread_direction = direction * spread
+```
+
+Each arithmetic operation rounds to float32. The fallback gate tests individual
+components, not vector length; equality does not trigger fallback. The supplied
+normal is not normalized. Finite inputs, positive spread and a nonzero resulting
+candidate are authored helper guards, not recovered exception behavior.
+
+`pack_contact_patch_directions` preserves a supplied208-byte row except+0x10..0x7f.
+It zeros+0x10..0x1f. For world axis j, row+0x20+16*j receives
+`[first[j], second[j], 0, 0]`, and row+0x50+16*j receives
+`[first_angular[j], second_angular[j], spread_direction[j], 0]`.
+
+[2048 original block comparisons](../../native/snow_host/pose_link_patch_basis_validation.json)
+match all208 retained bytes:1317 motion cases,614 X-axis fallbacks and117 Y-axis
+fallbacks. The comparison supplies aggregate geometry and live-in registers and
+executes the original block without interception. Shared coefficient/result/index
+fields and the complete multi-family builder remain outside this validation.
