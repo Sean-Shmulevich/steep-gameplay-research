@@ -652,3 +652,10 @@ reversed face arguments, positive-distance short circuits, seeded edge output,
 float32 bias and strict branch precedence. Result kind/index/distance fields are
 recovered; query geometry and contact emission remain dependencies. See
 LINK_SOLVER.md, "Contact producer axis selection".
+
+Contact face query: `pose_contact_face_query.query_contact_faces` transforms each
+plane, selects the opposite support vertex, and returns the first positive
+separation or greatest nonpositive separation with first-tie precedence. Shapes
+supply plane/vertex lists and frames supply XYZ rows. It does not normalize planes
+or substitute inverse-transpose transforms. Empty support for nonempty planes is
+an authored rejection. See LINK_SOLVER.md, "Contact face-distance query".

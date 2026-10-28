@@ -1843,3 +1843,37 @@ descriptor. These observations strengthen the box-versus-triangle interpretation
 but complete descriptor construction, TLS initialization, geometry queries and
 record emission still need reconstruction. The new module implements the proven
 selection policy without substituting guessed query results.
+
+### Contact face-distance query
+
+`engine.pose_contact_face_query.query_contact_faces` reconstructs0x19243e0.
+First-shape planes use20-byte stride at descriptor+8 and uint16 count+0x22.
+Second-shape vertices use12-byte stride at descriptor+0 and uint16 count+0x20.
+The public API exposes planes `[nx,ny,nz,d]` and vertices XYZ; unused descriptor
+fields remain outside the local query contract.
+
+For each plane in order, transform its normal as
+`N=(basis1*ny + basis0*nx)+basis2*nz` and its scalar as
+`D=dot(translation,N)+d`. Project `-N` onto each second-frame basis row to obtain
+a local support direction. Scan second-shape vertices for the greatest dot with
+that direction, using a strict comparison and therefore retaining the first tie.
+Transform that selected vertex V with the second frame in order
+`((basis0*V.x + translation)+basis1*V.y)+basis2*V.z`. Its separation is
+`dot(transformed_V,N)-D`.
+
+The first strictly positive separation returns immediately with its plane index.
+Otherwise, retain the greatest separation using a strict comparison; equal planes
+keep the first selected index. Empty plane lists return negative FLT_MAX and
+UINT_MAX. Nonempty planes with empty support vertices cause invalid native access;
+the independent API rejects that input as an authored guard. Every arithmetic
+operation uses float32, with dot reduction `(x+y)+(z+0)`. Normals are not normalized
+and no inverse-transpose substitution is made for nonrigid frames.
+
+[1024 complete native queries](../../native/snow_host/pose_contact_face_query_validation.json)
+match distance bits and plane indices without interception. Coverage includes
+zero-to-eight planes, one-to-twelve vertices, general finite basis/translation
+fields, duplicate planes and duplicate vertices. XYZ-mask initialization remains
+supplied state. Synthetic tests confirm first-positive early exit, plane tie
+precedence and composition into the axis selector with the real face query.
+This closes the selector's supplied-face boundary locally; the edge query,
+producer descriptor setup and contact emitters remain unresolved.

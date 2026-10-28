@@ -7809,3 +7809,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   services. 1024 native selector cases match query ordering, seeds and all output
   bytes across every kind. Box/triangle descriptor setup and downstream emitters
   are identified leads; their geometry remains unreconstructed.
+- Replaced the supplied contact face query with recovered transform/support and
+  separation calculations. 1024 complete native queries match float bits and
+  selected planes. Tests compose the real query into axis selection. Edge query,
+  descriptor setup and contact emission remain unresolved.
