@@ -2123,4 +2123,33 @@ The multi-plane wrapper at 0x1996bf0 clips into two alternating temporary buffer
 returns zero if an intermediate result has fewer than three points, and writes
 the final stage back to the caller buffer. It unconditionally uses a first and
 final plane; zero/one-plane semantics must not be inferred from a generic loop.
-That wrapper and final contact-point selection remain unreconstructed.
+The wrapper is implemented below; final contact-point selection remains open.
+
+
+### Multi-plane polygon clipping
+
+`engine.pose_contact_polygon_clip.clip_polygon_planes` reconstructs 0x1996bf0
+for at least two planes. It clips the caller polygon through the first plane into
+a temporary buffer. A result below three points returns zero immediately without
+writing caller storage. Each intermediate plane clips into the other temporary
+buffer, applies the same count check, then swaps temporary roles. The final plane
+writes directly into caller storage; the return count is zero if below three.
+The helper's capacity argument is unused throughout this composition.
+
+The independent implementation requires 4096 bytes of caller storage, 1..128
+initial points and at least two planes. It rejects intermediate counts above 128,
+the native temporary capacity. These guards are authored. The single-plane
+helper's finite-input and float32 rules apply. No zero/one-plane wrapper behavior,
+native overflow or NaN handling is claimed.
+
+[1024 complete native wrapper comparisons](../../native/snow_host/pose_contact_polygon_planes_validation.json)
+execute the actual clipping helpers without interception and match returned counts
+and all caller bytes. Fixtures cover 3..52 source vertices and 2..10 planes, with
+540 nonzero results and 484 zero results. All observed zero results preserve caller
+storage. The final count check occurs after the helper writes, but these tests do
+not demonstrate a partial-write zero result. The emulator supplies the XYZ mask
+and a mapped stack-limit value for the native stack probe. Tests also cover
+rejection at first, middle and final stages, and two-plane intersection tag flow.
+
+This connects plane-by-plane clipping only. Contact-point selection, final face
+record emission and complete box/triangle descriptor construction remain open.

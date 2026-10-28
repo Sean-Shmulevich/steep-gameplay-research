@@ -701,3 +701,10 @@ strict tolerance snapping, crossing order and rejected-endpoint tags. Inputs mus
 be finite, buffers distinct, source count 1..128, and output capacity at least
 twice the source count. Capacity checks are authored. See LINK_SOLVER.md,
 "Single-plane polygon clipping". Multi-plane orchestration remains separate.
+
+Multi-plane clipping: `pose_contact_polygon_clip.clip_polygon_planes` clips caller
+storage in place through at least two planes, using temporary buffers until the
+final stage. It returns zero below three points. The API requires 4096 bytes of
+storage and rejects intermediate counts above128. These capacity guards are
+authored. See LINK_SOLVER.md, "Multi-plane polygon clipping". Final point selection
+and face-record emission remain separate dependencies.

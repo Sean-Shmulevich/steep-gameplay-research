@@ -37,3 +37,29 @@ def clip_polygon_plane(output, source, count, plane):
             written += 1
         previous = i
     return written
+
+
+def clip_polygon_planes(storage, count, planes):
+    """Clip in place through at least two planes; return zero below three points.
+
+    Intermediate native scratch capacity is 128 records. This API rejects
+    larger intermediate results, and requires 4096 bytes of caller storage.
+    Early rejection preserves caller storage. The final count is checked after writing.
+    """
+    if len(planes) < 2 or len(storage) < 4096:
+        raise ValueError('At least two planes and 4096-byte storage required')
+    first, second = bytearray(4096), bytearray(4096)
+    count = clip_polygon_plane(first, storage, count, planes[0])
+    if count < 3:
+        return 0
+    if count > 128:
+        raise ValueError('Intermediate polygon exceeds native scratch capacity')
+    for plane in planes[1:-1]:
+        count = clip_polygon_plane(second, first, count, plane)
+        if count < 3:
+            return 0
+        if count > 128:
+            raise ValueError('Intermediate polygon exceeds native scratch capacity')
+        first, second = second, first
+    count = clip_polygon_plane(storage, first, count, planes[-1])
+    return count if count >= 3 else 0

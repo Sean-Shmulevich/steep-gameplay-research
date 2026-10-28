@@ -7837,3 +7837,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   interpolation order and rejected-endpoint feature tags. 1024 complete native
   comparisons match counts and all output bytes. Native capacity is unused;
   independent guards are explicit. Multi-plane clipping and final emission remain.
+- Connected multi-plane clipping with temporary-buffer alternation and early
+  rejection. 1024 complete native wrapper/helper comparisons match counts and
+  caller bytes, including540 surviving polygons and484 unchanged zero results.
+  Point selection, face-record emission and producer descriptors remain open.

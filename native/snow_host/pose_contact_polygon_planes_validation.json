@@ -1,0 +1,26 @@
+{
+  "schema": "pose-contact-polygon-planes-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Complete offline native multi-plane wrapper and actual clip helpers, no interception; supplied XYZ mask and stack-limit state",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1996bf0",
+  "comparisons": [
+    "returned count and all retained caller buffer bytes"
+  ],
+  "outcomes": {
+    "nonzero": 540,
+    "zero_changed": 0,
+    "zero_unchanged": 484
+  },
+  "coverage": [
+    "3..52 source vertices; 2..10 planes",
+    "early and final rejection; observed zero results preserve caller storage",
+    "native capacity zero with sufficient backing memory"
+  ],
+  "limits": [
+    "Finite synthetic polygons; intermediate counts remain within128",
+    "Zero/one-plane native behavior excluded; authored guards",
+    "Final point selection and emission remain separate"
+  ]
+}
