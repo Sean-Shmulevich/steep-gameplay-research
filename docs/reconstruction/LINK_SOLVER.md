@@ -1085,3 +1085,58 @@ getters execute without interception. Existing headers and row storage are suppl
 as test inputs. This establishes the refresh behavior, not their first-pass
 production or a whole secondary solve. Category1 numerical solving remains an
 explicit unsupported boundary in `solve_pose_link_rows`.
+
+### Paired-body primary numerical solver
+
+`engine.pose_paired_primary_solver` reconstructs preparation0x19e5310 and
+iteration0x19e5840. These use both uint16 body indices, the shared direction at
+row+0x20, first angular direction+0x30 and second angular direction+0x70. Rows
+are128 bytes, with any optional accumulator retained beyond that extent.
+
+Let `d` be the shared direction, `a/b` the two angular directions, `M1/M2` the
+body tensor mappings and `m1/m2` the body-data fourth vectors. The weighted
+updates are `L1=m1*d`, `L2=m2*(-d)`, `A1=M1*a`, `A2=M2*b`. XYZ dot products are
+masked and float32-rounded. Preparation writes the broadcast negative reciprocal:
+
+```python
+q = dot(d, d)
+k1 = dot(A1, a) + m1.x * q
+k2 = dot(A2, b) + m2.x * q
+inverse = -float32(1 / float32(float32(k1 + k2) + row60.x))
+```
+
+It then applies the cached result independently to both weighted updates.
+Iteration computes the combined motion in this exact grouping:
+
+```python
+angular = dot(b, state2.angular) + dot(a, state1.angular)
+linear = dot(-d, state2.linear) + dot(d, state1.linear)
+speed = linear + angular
+new_result = max(inverse * (speed + response) + old_result, positive_zero)
+delta = new_result - old_result
+```
+
+The last two equations operate lane-wise. Each body receives its weighted delta;
+row+0x50, when nonzero, identifies a row-relative16-byte accumulator to which the
+new result is added. The result record is then replaced. Existing operation order
+and float32 rounding are retained in code rather than algebraically simplified.
+
+Native code captures the second body's old motion before updating the first.
+When the two indices coincide, the second update therefore overwrites the first,
+using the captured state. The implementation preserves that behavior. It does not
+silently turn a repeated index into a summed self-constraint. Other buffer aliasing,
+nonfinite arithmetic and singular denominators remain outside its contract.
+
+[512 preparations and1536 iterations](../../native/snow_host/pose_paired_primary_solver_validation.json)
+match complete native routines without interception, checking all retained rows,
+states, results and unchanged data after each stage. Cases include distinct and
+coincident indices, nonuniform fourth data vectors and optional accumulators.
+
+`solve_pose_link_rows` now accepts `paired_primary_rows` and planned category1
+count from context+0x10c. It prepares and iterates category1 before category0,
+then category6 outside the special phase. Other populated categories still reject.
+[256 uninterrupted mixed-category wrapper comparisons](../../native/snow_host/pose_mixed_primary_solve_validation.json)
+match categories1/0/6 together across all four phase masks and zero through three
+iterations, including row, context and result bytes. This supersedes the earlier
+category1 numerical-solve boundary. Paired first-pass geometry production, paired
+tangent category7, other row categories and whole-group orchestration remain open.

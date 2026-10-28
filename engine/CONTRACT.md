@@ -533,3 +533,10 @@ position-error response, zeros row+0x50 and clears the existing indexed result.
 Geometry, headers and planned traversal counts persist. First-pass row storage,
 finite arithmetic and valid indices are required. Both refresh categories are
 recovered; category1 numerical solving is still unsupported.
+
+Paired primary solver: category1 now uses both body indices and angular directions,
+with opposite linear directions. Preparation includes both body responses;
+iteration clamps the shared result nonnegative and updates both states. Coincident
+indices retain native second-write-wins behavior. The connected solver runs
+category1 before0 and then6 when permitted by phase. Paired first-pass builders,
+category7 tangent rows and other numerical categories remain unsupported.

@@ -7725,3 +7725,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   comparisons match without interception. This connects the existing primary-row
   build to secondary solve preparation; category1 numerical solving and complete
   group orchestration remain unresolved.
+- Completed paired-body primary preparation/iteration and connected category1 to
+  the solver wrapper before category0. 512 native preparations and1536 iterations
+  match, including coincident indices and optional accumulators. Another256
+  uninterrupted wrapper comparisons validate categories1/0/6 together under all
+  phase masks. Paired row geometry production, paired tangents and remaining
+  categories are still open; no live sessions were used.
