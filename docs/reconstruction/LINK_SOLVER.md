@@ -1722,3 +1722,33 @@ degenerate IEEE cases are not covered by this receipt. The public API rejects
 zero-length triangle/neighbor normalization rather than claiming native NaN
 behavior. Upstream record production, live ownership and broadphase integration
 remain outside this reconstructed filter.
+
+### Grid filter transformed-frame validation and caller gates
+
+[1024 further uninterrupted native comparisons](../../native/snow_host/pose_grid_contact_filter_transforms_validation.json)
+exercise the complete filter with Z-axis rotations, translations, nonuniform
+signed axis scales and reflections. They process6129 records, retaining1308;
+returned counts and every retained-buffer byte match. Positions are generated
+near vertices, edges and centroids and mapped back into the supplied frame,
+with additional displaced cases. This extends the earlier identity/translation
+receipt without replacing it. It is sampled transform coverage, not an exhaustive
+affine or degenerate-input proof. A synthetic test independently checks matching
+selected record identities under an exactly representable quarter-turn, scaling,
+reflection and translation.
+
+Six static call sites lead back to routines beginning0x19dde20,0x19de7c0,
+0x19e0430,0x19e0e20,0x19e2600 and0x19e3460. In the inspected first caller,
+0x19de6d9..0x19de70d gates the filter on both a separate object's byte+0x92 being
+nonzero and the resource at R14 having dword+0x40 equal to2. It passes the current
+triangle identity in EBX, a local transform, the new record span and its count.
+The returned filtered count is added to the outer accumulated count. This is
+conditional filtering, not evidence that every generated contact uses this path.
+The identity/meaning of the separate gate object remains unresolved.
+
+Immediately preceding this call, an inspected branch swaps each new record's
+XYZ fields+0x10 and+0x20, negates direction XYZ at+0 by sign-bit XOR, and writes
+the triangle identity at+0x2c. This explains why the downstream filter must retain
+opaque record bytes and why naming+0x10 a universal world-space point would be
+premature. The branch condition, upstream record-generation call, remaining five
+callers and complete outer traversal remain to be reconstructed and validated.
+These caller observations are static evidence, not covered by the filter receipt.

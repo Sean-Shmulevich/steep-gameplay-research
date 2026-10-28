@@ -7796,3 +7796,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   and all buffer bytes across3052 input records, retaining685. Vertex/edge gates,
   transform order and repeated swap removal are implemented. Record production,
   arbitrary-frame validation and degenerate IEEE behavior remain open.
+- Extended full grid-filter validation to1024 rotated/scaled/reflected frame
+  cases and6129 input records, with all counts/buffer bytes matching. Located six
+  upstream callers and documented one caller's optional gate and pre-filter
+  point swap/direction flip. Those caller paths remain static leads; upstream
+  record generation and degenerate behavior are not yet reconstructed.

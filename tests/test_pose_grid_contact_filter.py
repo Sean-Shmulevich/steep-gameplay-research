@@ -22,3 +22,25 @@ class ContactFilterTest(unittest.TestCase):
         records=bytearray(b'abc')
         self.assertEqual(filter_grid_records(b'',[],[],0,records,0),0)
         self.assertEqual(records,b'abc')
+
+    def test_quarter_turn_and_signed_scale_preserve_selected_identities(self):
+        r=bytearray(0xc0);struct.pack_into('<2H',r,0x68,3,3)
+        struct.pack_into('<H',r,0x9c,2);struct.pack_into('<2f',r,0x70,1,1)
+        identity=[[1,0,0],[0,1,0],[0,0,1],[0,0,0]]
+        transformed=[[0,2,0],[1,0,0],[0,0,-.5],[3,-2,4]]
+        def make(frame_mode):
+            out=bytearray(48*3)
+            for i,(d,p) in enumerate([([1,0,0],[0,0,0]),([-1,0,0],[0,0,0]),([0,0,1],[.5,.25,0])]):
+                if frame_mode:
+                    d=[d[1]/2,d[0],-2*d[2]]
+                    p=[(p[1]+2)/2,p[0]-3,-2*(p[2]-4)]
+                struct.pack_into('<3f',out,48*i,*d)
+                struct.pack_into('<3f',out,48*i+16,*p)
+                struct.pack_into('<I',out,48*i+44,i)
+            return out
+        a,b=make(False),make(True)
+        na=filter_grid_records(r,[0.]*9,identity,0,a,3)
+        nb=filter_grid_records(r,[0.]*9,transformed,0,b,3)
+        self.assertEqual(na,nb)
+        self.assertEqual([a[i*48+44:i*48+48] for i in range(na)],
+                         [b[i*48+44:i*48+48] for i in range(nb)])
