@@ -1,0 +1,21 @@
+{
+  "schema": "pose-contact-handoff-validation-v1",
+  "cases": 84,
+  "passed": 84,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18e08a0",
+    "0x18e0980"
+  ],
+  "method": "Complete wrappers and original resource lookup; contact generation and grouping/clear services intercepted",
+  "coverage": [
+    "Ordered resource selection through indexed72-byte entries",
+    "Capacity500, counts0/1/2/4/128/499/500",
+    "16/32-bit grouping flag, pair indices, buffer and recycle forwarding",
+    "High-bit masked resource kinds"
+  ],
+  "limits": [
+    "Supplied handler and downstream services; no integrated geometry/cache execution",
+    "No allocation, concurrency or live game proof"
+  ]
+}

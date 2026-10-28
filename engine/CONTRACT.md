@@ -828,3 +828,10 @@ caller-owned handler identities and two raw uint16 kinds. It masks bit15, then
 selects `handlers[8 * first + second]`. Null remains null; there is no fallback.
 Out-of-table kinds are rejected by authored guards. See LINK_SOLVER.md, "Resource-pair
 dispatch lookup". Handler invocation, replacement and lifetime remain external.
+
+Contact handoff: `pose_contact_dispatch.dispatch_contact_pair` selects resources
+by explicit pair indices, calls the selected handler with500-record capacity,
+then calls supplied grouping for nonzero count or pair clearing for zero. Grouping
+key width must be16 or32 and is not inferred. See LINK_SOLVER.md, "Contact generation
+to persistent-group handoff". Cache allocation, recycling and lifetime are required
+external services; the returned count and input guards are authored diagnostics.

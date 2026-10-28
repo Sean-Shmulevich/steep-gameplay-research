@@ -7929,3 +7929,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   comparisons cover every valid pair and high-bit combination. Constructor
   allocation, handler replacement, invocation ownership and persistent grouping
   remain outside this receipt. No live session.
+- Traced contact dispatch into persistent grouping: two wrappers invoke the
+  selected virtual contact producer with capacity500 and then group nonzero
+  results or clear an empty pair. Implemented the handoff with explicit downstream
+  services.84 original-wrapper comparisons validate lookup, routing and forwarding;
+  geometry/grouping services are supplied, so this is not full cache integration.
+  Wrapper choice controls16/32-bit keys; upstream flag meanings remain open.

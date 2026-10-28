@@ -2828,3 +2828,53 @@ and concurrency contracts still need validation before a replacement API is safe
 This closes registration and selection for the two terrain orders. The specific
 call site invoking the selected contact method, subsequent record grouping/cache
 acquisition and scheduled solver ownership remain separate tracing targets.
+
+### Contact generation to persistent-group handoff
+
+Wrappers0x18e08a0 and0x18e0980 connect resource lookup and virtual contact production
+to the previously reconstructed record-group consumer0x198f910. Pair descriptor
+fields+0/+8 select two bodies; uint16 fields+0x10/+0x12 select their72-byte entries
+from body+0xb8. Each selected entry's+0x10 resource supplies the kind for lookup.
+The dispatch object is reached through context's first pointer, then owner+0x68.
+The selected handler's virtual+0x18 receives the supplied geometry descriptor,
+context+0x58 output buffer and fixed capacity500.
+
+Pseudocode for both wrappers:
+
+```text
+first_resource = pair.first_body.entries[pair.first_index].resource
+second_resource = pair.second_body.entries[pair.second_index].resource
+handler = dispatcher.lookup(first_resource, second_resource)
+count = handler.contact(geometry_descriptor, context.records, 500)
+if count != 0:
+    process_groups(cache, span(context.records, 500), count, pair,
+                   context.recycled, use_full_detail_key)
+else:
+    clear_pair(cache, pair.first_index, pair.second_index, context.recycled)
+```
+
+The first wrapper passes full-detail-key=true, the second false. Consumer0x198f910
+therefore sorts/groups record+0x2c using32 or16 bits, respectively. Upstream calls
+at0x18ddb54/5b choose the16-bit wrapper when the OR of two caller-local bytes is
+nonzero, otherwise the32-bit wrapper. The producers/meaning of those bytes remain
+unresolved; do not infer key width from sport or resource kind alone.
+
+`engine.pose_contact_dispatch.dispatch_contact_pair` reconstructs this handoff.
+Resources and handlers are supplied Python objects; grouping and clearing are
+required services. Its returned count is authored diagnostics, not a native wrapper
+return contract. It requires500 backing records and rejects missing handlers,
+out-of-range counts and invalid indices. The original wrappers dereference the
+selected handler without a null guard. Native downstream routines still own cache
+mutation, allocation and recycling; this adapter does not invent those policies.
+
+[84 complete wrapper comparisons](../../native/snow_host/pose_contact_handoff_validation.json)
+execute both original wrappers and original lookup. Supplied services intercept
+contact production, grouping and clearing. Checks cover selected resource entries,
+argument forwarding, buffer visibility, fixed capacity, both key widths, indices,
+high kind bits and returned counts0/1/2/4/128/499/500. They establish the orchestration
+boundary, not uninterrupted geometry-to-cache execution or live scheduling.
+
+This gives a static connection from registered terrain contact handlers to the
+persistent record-group consumer. Earlier notes leaving that invocation unknown
+are superseded. Full cache acquisition/removal and the caller's scheduling/lifetime
+contract remain open before this can be treated as an integrated physics update.
