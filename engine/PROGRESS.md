@@ -7787,3 +7787,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   rules. 6050 complete native cases match retained bytes across all endpoint pairs
   on grids1..5, including unsupported differences and reversed order. The edge
   rejection predicate and full record-filter composition remain unresolved.
+- Implemented grid edge rejection with its real neighbor helper and explicit
+  four-lane threshold. 1024 uninterrupted native cases match Boolean decisions,
+  with587 rejects and437 retained. Near-zero and strict-comparison rules are
+  preserved. Full record-filter composition and degenerate IEEE cases remain open.

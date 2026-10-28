@@ -1632,3 +1632,47 @@ byte matches. The public API requires valid endpoints and complete nonempty samp
 storage as authored guards. The native routine tests numeric differences, not
 full geometric adjacency, so matching a branch alone does not establish a valid
 mesh edge. The calling edge-rejection mathematics remains a separate boundary.
+
+### Grid edge rejection predicate
+
+`engine.pose_grid_edge_filter.reject_grid_edge` reconstructs0x1995800 with the
+actual grid edge-neighbor helper0x1996500. Let A/B be the supplied endpoint XYZ
+vectors, D the supplied record direction, N0/N1 the ordered neighbor positions,
+and T the four-lane threshold. The initialized XYZ mask clears fourth lanes.
+
+```text
+E = normalize(A - B)
+U = N0 - B
+V = N1 - A
+for X in [U,V]:
+    if not all(abs(X.xyz0[lane]) <= T[lane] for lane in 0..3):
+        X = normalize(X)
+first = dot(cross(cross(E,U),E), D)
+if all(first > T[lane] for lane in 0..2): return true
+second = dot(cross(E,cross(V,E)), D)
+return all(second > T[lane] for lane in 0..2)
+```
+
+All multiplies, additions/subtractions, reciprocal and square root round to
+float32. Dot reduction follows SIMD horizontal addition `(x+y)+(z+0)`.
+Cross products preserve the inspected operand order. The expressions can be
+interpreted as testing components perpendicular to the edge, but the implementation
+does not replace them with a differently rounded projection formula. Near-zero
+neighbor vectors are left unchanged, not forced to zero. Equality passes the
+near-zero gate but does not reject at the final strict threshold comparison.
+The caller's inspected constant at0x1e252b0 is a four-lane float32 value near1e-5;
+the API keeps thresholds explicit so the local helper contract stays inspectable.
+
+[1024 complete native comparisons](../../native/snow_host/pose_grid_edge_filter_validation.json)
+execute the predicate and neighbor helper without interception. Boolean outcomes
+match:587 rejected,437 retained. Cases include both diagonal modes, both triangle
+halves, all three edge positions, boundary fallback, reversed endpoints and
+nonuniform thresholds. The XYZ mask is initialized explicitly in the emulator.
+This receipt validates decisions, not every intermediate floating-point value.
+
+The API requires finite inputs, a nondegenerate edge and a recognized numeric
+index difference. Unsupported differences in the native helper leave scratch
+positions unchanged, so the predicate must not silently invent them. Zero-length
+normalizations and unordered/nonfinite IEEE behavior remain outside this validated
+domain. The full record filter's vertex branches, selection gates and swap-removal
+composition still need implementation and native comparison.

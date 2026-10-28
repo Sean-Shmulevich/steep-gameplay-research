@@ -622,3 +622,10 @@ select neighbor offsets; missing neighbors use the lower endpoint. Unsupported
 differences preserve prior positions, and reversed endpoint order still swaps
 them. Tail bytes persist. This is a geometry helper, not an adjacency validator
 or completed rejection predicate. See LINK_SOLVER.md, "Grid edge neighborhood".
+
+Grid edge rejection: `pose_grid_edge_filter.reject_grid_edge` combines the
+recovered edge-neighbor helper with float32 cross/dot tests and a supplied
+four-lane threshold. All lanes control near-zero normalization; XYZ lanes control
+strict rejection. It requires finite, nondegenerate inputs and recognized index
+differences. It does not supply unsupported prior scratch values or claim full
+record-filter equivalence. See LINK_SOLVER.md, "Grid edge rejection predicate".
