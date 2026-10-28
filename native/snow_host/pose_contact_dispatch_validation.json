@@ -1,0 +1,18 @@
+{
+  "schema": "pose-contact-dispatch-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "routine_rva": "0x18de680",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "method": "Complete original lookup without call interception",
+  "coverage": [
+    "All 64 pair indices and four combinations of raw kind bit15",
+    "Supplied random uint64 handler identities including zero slots"
+  ],
+  "limits": [
+    "No handler invocation or lifetime proof",
+    "Out-of-table kinds rejected by authored guard",
+    "Constructor registration examined statically, not executed in this comparison",
+    "No live game"
+  ]
+}

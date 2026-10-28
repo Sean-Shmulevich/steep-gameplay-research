@@ -7923,3 +7923,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   existing storage; it does not generate a contact. Added boundary tests and an
   explicit backing-storage guard. Dispatch ownership, persistent grouping and
   live integration remain open. No game launch or attachment.
+- Connected terrain adapter registration to an ordered8x8 resource-pair table.
+  Static constructor evidence assigns kind7/3 to terrain-box and kind3/7 to the
+  reverse adapter. Implemented masked-kind lookup;256 complete original-function
+  comparisons cover every valid pair and high-bit combination. Constructor
+  allocation, handler replacement, invocation ownership and persistent grouping
+  remain outside this receipt. No live session.

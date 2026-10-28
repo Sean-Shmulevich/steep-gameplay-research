@@ -822,3 +822,9 @@ adapter. It requires max(1, capacity) backing records: preliminary success at ze
 capacity reverses a retained record without generating one. This authored guard
 preserves the observed native mutation. Complete adapter comparisons cover small
 grids; dispatch ownership and downstream payload grouping remain unresolved.
+
+Resource-pair lookup: `pose_contact_dispatch.select_contact_handler` takes64
+caller-owned handler identities and two raw uint16 kinds. It masks bit15, then
+selects `handlers[8 * first + second]`. Null remains null; there is no fallback.
+Out-of-table kinds are rejected by authored guards. See LINK_SOLVER.md, "Resource-pair
+dispatch lookup". Handler invocation, replacement and lifetime remain external.

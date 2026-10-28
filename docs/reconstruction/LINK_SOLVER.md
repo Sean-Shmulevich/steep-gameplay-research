@@ -2782,3 +2782,49 @@ authored storage guard preserving the observed mutation, not evidence that the
 native caller checks storage. A positive return does not establish a newly produced
 contact. Tests preserve scalar/identifier words and trailing bytes in this case.
 Registration, dispatch ownership and downstream persistent grouping remain open.
+
+### Resource-pair dispatch lookup
+
+The terrain callers belong to an ordered 8x8 handler table. Lookup0x18de680 reads
+uint16 kind at resource+0x28 for each resource, masks each with0x7fff, then returns
+`table[8 * first_kind + second_kind]`. Storage starts at receiver+8. There is no
+swap, null fallback or range check in the original lookup. High bit15 does not
+participate in dispatch. Its other meaning is not established here.
+
+`engine.pose_contact_dispatch.select_contact_handler` implements that selection
+using supplied handler identities. It preserves empty slots and rejects masked
+kinds outside0..7 as an authored safety guard. It does not call the handler or
+pretend that a supplied identity establishes native lifetime.
+
+[256 original lookup comparisons](../../native/snow_host/pose_contact_dispatch_validation.json)
+cover all64 pairs with all four combinations of bit15, including zero and arbitrary
+64-bit handler identities. The complete original function executes without call
+interception. This receipt validates selection, not constructor allocation.
+
+Static constructor0x198cf70 clears512 bytes at receiver+8, then allocates8-byte
+handler objects through a supplied allocator, with alignment16 and argument10.
+It installs32 ordered entries. Rows2..5 have columns2..7; rows6..7 have columns2..5.
+All remaining slots stay zero. Allocation failure stores a zero slot. Two relevant
+registrations connect directly to the reconstructed contact callers:
+
+| Pair | Receiver slot | Handler vtable | Contact method at vtable+0x18 |
+| --- | --- | --- | --- |
+| kind7 terrain, kind3 box | +0x1e0 | 0x29cb350 | 0x19dde20 |
+| kind3 box, kind7 terrain | +0x100 | 0x29cb490 | 0x198a780 |
+
+Each table has five observed function entries. Names and full semantics of the
+other method slots remain unresolved. Resource kind naming comes from the earlier
+resource/bounds evidence; this lookup alone supplies only numeric kinds.
+
+The containing object has observed size0x208. Constructor callers0x18dc300 and
+0x1927590 install its vtable0x29ca780 and retain it at owner+0x68 and owner+0x10,
+respectively. These are static ownership links, not runtime lifetime guarantees.
+The vtable exposes lookup0x18de680 and replacement0x198f8b0. Replacement indexes
+raw numeric arguments as `8 * first + second`, calls the old handler's first
+virtual method with argument1 when nonzero, then stores the new handler. Unlike
+resource lookup, this method does not mask its numeric arguments. Its destruction
+and concurrency contracts still need validation before a replacement API is safe.
+
+This closes registration and selection for the two terrain orders. The specific
+call site invoking the selected contact method, subsequent record grouping/cache
+acquisition and scheduled solver ownership remain separate tracing targets.
