@@ -679,3 +679,10 @@ capacity. It preserves segment-clamping order, normal orientation, negative
 squared separation and fixed record fields. Finite nonparallel/nondegenerate
 geometry is required. This implements the edge emitter, not face emission or the
 complete collision pipeline. See LINK_SOLVER.md, "Edge contact record emission".
+
+Face polygon construction: `pose_contact_face_polygon.append_face_polygon` appends
+transformed XYZ/tag records to retained 128-slot storage. It preserves float32
+operation order, ordinal wrapping and uint32 tag truncation. Capacity enforcement
+is an authored guard. Frames, vertices and face indices are supplied explicitly;
+clipping and contact emission remain separate. See LINK_SOLVER.md, "Face polygon
+vertices and tags".

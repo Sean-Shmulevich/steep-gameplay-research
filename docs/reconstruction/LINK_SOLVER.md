@@ -2001,3 +2001,71 @@ frame fields. They are not all guaranteed to have been selected by the preceding
 query. XYZ mask initialization remains supplied. A synthetic endpoint case checks
 that two units of separation produce-4 in the squared-distance field.
 The face-contact emitter and complete producer descriptor construction remain open.
+
+
+### Face polygon vertices and tags
+
+`engine.pose_contact_face_polygon.append_face_polygon` reconstructs the complete
+polygon builder at 0x18e3980. It appends indexed vertices to retained storage with
+128 sixteen-byte slots and a uint32 count at 0x800. Each slot contains XYZ float32
+coordinates and a packed uint32 feature tag. Existing slots and unused bytes persist.
+
+The supplied frame contains three basis XYZ rows and a translation XYZ row.
+For each indexed vertex, the builder computes each world component in this order,
+rounding every multiply and add to float32:
+
+```text
+world[j] = ((basis[0][j] * x + translation[j]) + basis[1][j] * y)
+           + basis[2][j] * z
+feature = ordinal & 63
+prefix = feature | (0x180 if flipped else 0x80)
+tag = (((prefix << 12) | (incident_face & 0xfff)) << 12)
+      | (reference_face & 0xfff)
+store_uint32(tag)
+```
+
+Ordinal starts at zero for each call, independently of the existing count. It
+wraps after 63. The extra orientation bit in 0x180 falls beyond the stored 32 bits,
+so changing `flipped` produces the same stored tag. This is observed arithmetic,
+not evidence that orientation has no effect elsewhere in face emission.
+
+The native descriptor supplies vertices at pointer +0 with twelve-byte stride,
+planes at +8 with twenty-byte stride, and uint16 vertex indices at +0x18.
+The selected incident plane stores its index count at +0x10 and list offset at
++0x12. The independent API accepts these indices explicitly; it does not decode
+an asset or construct the shape descriptor. Its capacity rejection is authored;
+the native helper has no corresponding overflow check.
+
+[512 complete native comparisons](../../native/snow_host/pose_contact_face_polygon_validation.json)
+match the entire retained storage, including XYZ, tags, count and unused bytes.
+Synthetic cases include arbitrary finite frames, duplicate indices, existing
+records, ordinal wrap, and both orientation flags. The XYZ mask is supplied to
+the offline emulator. Clipping, point reduction and complete face emission remain
+separate unresolved stages.
+
+#### Next dependency: reference side planes
+
+Static inspection of 0x18e3450 identifies the next geometry stage. It seeds
+`previous` from the last indexed vertex, then visits indices in stored order.
+For each `current`, it computes the following with float32 operations:
+
+```text
+edge = current - previous
+raw = cross(edge, face_normal)
+normal = raw * (1 / sqrt(dot(raw, raw)))
+local_distance = dot(normal, previous)
+world_normal = (basis[1] * normal.y + basis[0] * normal.x)
+               + basis[2] * normal.z
+world_distance = dot(world_normal, translation) + local_distance
+append(world_normal.xyz, world_distance)
+previous = current
+```
+
+The output uses the same sixteen-byte slot size and count at 0x800, but the fourth
+component is a plane scalar, not a feature tag. Normalization occurs before the
+frame transform; the routine does not renormalize the transformed normal. This
+is a static formula lead only, with no independent implementation or native
+comparison yet. Empty index lists are unsafe because the last index is read
+before the loop count check. Zero-length cross products also need an explicit
+fidelity boundary. These planes feed polygon clipping; their sign convention
+must be checked against that consumer before describing inside/outside behavior.

@@ -7825,3 +7825,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   normal, closest points and negative squared separation. 1024 native calls
   match all record bytes/tails, with963 writes and61 zero-capacity returns.
   Face emission, descriptor construction and degenerate edge behavior remain open.
+- Reconstructed face polygon construction with retained storage, transformed
+  vertices and packed feature tags. 512 complete native comparisons match every
+  output byte. Both orientation flag values produce identical stored tags due to
+  uint32 truncation. Clipping, point reduction and full face emission remain open.
