@@ -547,3 +547,11 @@ iteration applies the lane-wise primary-result bound and old-minus-new updates.
 The connected solver order is1,0,7,6, with both tangent categories skipped in the
 special phase. This supersedes the earlier category7 unsupported boundary.
 Paired first-pass builders and all other numerical categories remain external.
+
+Group-step orchestration: `run_pose_group_step` captures group identity, reloads
+later array spans, sets phase bits, orders feedback, conditionally clears state
+and runs secondary work, rechecks the application gate, and supplies current
+poststep fields. Every downstream operation is an explicit required service.
+Native-shaped tokens are opaque; retained storage, normal returns and nonwrapping
+address arithmetic are required. This is recovered orchestration with supplied
+operations, not a claim of complete group simulation or live synchronization.

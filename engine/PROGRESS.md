@@ -7736,3 +7736,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   and1536 iterations match. Connected category7 before6; another256 uninterrupted
   original-wrapper cases validate all four supported categories across phase masks.
   Paired first-pass builders and remaining categories are still open.
+- Reconstructed complete group-step orchestration around required services.
+  384 native comparisons match call order, arguments and context at every stage;
+  192 include field mutations. Captured group identity, reloaded spans, initial
+  body bound, phase transitions, state clearing and the repeated secondary gate
+  are explicit. Downstream composition remains incomplete for pose/poststep and
+  unsupported row families; no all-input native-group equivalence is claimed.

@@ -1,0 +1,18 @@
+{
+  "schema": "pose-group-step-validation-v1",
+  "cases": 384,
+  "passed": 384,
+  "method": "offline complete original group-step orchestrator with downstream operations supplied as recording/mutating services",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1993ed0",
+  "comparisons": [
+    "service order and all native arguments",
+    "entire context at every service boundary and after return",
+    "retained group header after callback mutations"
+  ],
+  "limits": [
+    "Downstream services intercepted; this validates orchestration, not a complete native simulation.",
+    "192 cases mutate fields across service boundaries; normal-return behavior only.",
+    "No live pointer lifetime, locking, allocation or cross-thread safety claim."
+  ]
+}

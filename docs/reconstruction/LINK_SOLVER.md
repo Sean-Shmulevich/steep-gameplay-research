@@ -1195,3 +1195,66 @@ match native context, rows, states and results across all four phase masks and
 zero through three iterations. This closes the category7 numerical boundary;
 paired first-pass builders, multirow builder families, remaining numerical
 categories and complete group orchestration are still unresolved.
+
+### Group-step orchestration and phase transitions
+
+`engine.pose_group_step.run_pose_group_step` reconstructs the complete control
+flow at0x1993ed0. It requires explicit downstream services rather than supplying
+no-op defaults or substituting an incomplete numerical model. Its native-shaped
+arguments use opaque storage tokens; the adapter does not dereference live memory.
+The context is a retained byte array, and `groups` supplies retained raw headers.
+
+```text
+capture group from context+0x30
+build body data/state using captured offsets and bounded initial body count
+build link rows
+clear phase bit28; set phase bit27
+build pose rows
+solve
+write link feedback
+write body feedback
+write pose feedback
+if current secondary-iteration field is nonzero:
+    clear phase bit27; set phase bit28
+    zero body-state storage in32-byte blocks
+    refresh secondary link rows
+    solve
+if current secondary-iteration field is nonzero:
+    temporarily apply secondary body state
+poststep(captured_group, current_scalar10, current_flag30,
+         current_field24, current_field28, current_field2c)
+```
+
+The group identity is captured before any downstream call, even if a service
+later changes context+0x30. Its body/link/pose array pointer and count fields are
+reloaded before each subsequent span-taking service. The first body producer
+receives the smaller of the group count and
+`uint32(state_offset - data_offset) >> 6`, using a signed comparison for the group
+count. That initial bound does not constrain the later body-feedback span, which
+uses the then-current full group count.
+
+The first secondary gate follows pose feedback. It is re-evaluated separately
+before temporary state application; changes during row refresh or the second
+solve can suppress application. The second solve is unconditional once the first
+gate has admitted the refresh sequence. Scalar10 and poststep fields are read
+at the final call, rather than captured at entry. Phase writes preserve unrelated
+flags. Zero-fill uses successive32-byte blocks while the block start is below the
+result offset; the API requires backing storage for every reached block.
+
+The supplied services are `build_body_buffers`, `build_link_rows`,
+`build_pose_rows`, `solve`, `link_feedback`, `body_feedback`, `pose_feedback`,
+`refresh_secondary_rows`, `apply_secondary_state` and `poststep`. Their argument
+order follows the inspected calls. The initial producer receives data/state tokens,
+body-array token, selected count, scalar pointer token and vector pointer token.
+Span services receive the context token and begin/end tokens. The solver receives
+only the context token. The poststep signature is shown above.
+
+[384 complete native orchestration comparisons](../../native/snow_host/pose_group_step_validation.json)
+match call order, every argument, the entire context at every service boundary,
+and final context/group bytes. Downstream routines are supplied recording/mutating
+services in this validation;192 cases change fields between stages to distinguish
+captured state from reloaded state. This does not establish a fully connected
+native group simulation. The independently validated row solvers, body production,
+feedback, secondary refresh and integration can now be bound to this explicit
+ordering. Pose builders/feedback, poststep details, remaining link families and
+numerical categories still prevent a complete all-input group implementation.
