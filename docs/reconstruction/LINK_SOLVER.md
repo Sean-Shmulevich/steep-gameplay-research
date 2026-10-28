@@ -2981,3 +2981,58 @@ validation, not proof of pool initialization, locks or global owner lifetime.
 The previous contact handoff's nonempty service now has a reconstructed acquisition
 policy for a non-null recycler. Sorting, obsolete-key retirement, grouping and the
 already reconstructed row updater still need a continuous integration comparison.
+
+### Stale contact-group retirement scan
+
+`pose_contact_cache.retire_stale_contact_groups` reconstructs the reached scan at
+0x198f995..0x198fb1e before new group acquisition. It accepts already-sorted48-byte
+records, a retained cache collection, pair indices, explicit16/32-bit detail width,
+payload buffers and a recycler. This does not implement the preceding native sort.
+
+The scan walks cache indices forward. For each entry of the current pair it walks
+runs of equal record detail values, comparing the cache's full32-bit detail key
+against the selected16/32-bit record value. Missing keys are removed with the
+existing full-key swap-last helper; the scanned payload's active count is reset,
+and that identity is appended to the recycler with0->8/doubling capacity growth.
+
+Two cursor rules are observable and must not be replaced by a generic set filter:
+
+- The record cursor persists across cache entries. Matching leaves it at that
+  group's start; scanning a missing key exhausts it for subsequent entries.
+- The cache index increments even after swap-last removal. The moved entry at
+  that index is not revisited in this pass.
+
+For example, cache keys[2,1] against sorted record keys[1,2] retain key2 then retire
+key1, because the record cursor does not rewind. Cache keys[9,8,7] against records[1]
+retire9 and8 but leave the moved7 entry active. These are synthetic examples of
+local mechanics, not proof that normal game inputs violate a cache-order invariant.
+With duplicate cache keys, removal targets the last matching key while reset and
+recycling target the payload at the scanned index. Do not assume those identities
+must coincide without establishing uniqueness upstream.
+
+Pseudocode preserving the cursors:
+
+```text
+record_cursor = 0
+cache_index = 0
+while cache_index < cache.count:
+    entry = cache[cache_index]
+    if entry.pair == current_pair:
+        while record_cursor < record_count:
+            end = end_of_equal_detail_run(record_cursor)
+            if entry.detail == record_detail(record_cursor): break
+            record_cursor = end
+        if record_cursor == record_count:
+            remove_last_full_key_match(cache, entry.key)
+            entry.payload.active_count = 0
+            append_recycled(entry.payload)
+    cache_index += 1
+```
+
+[1024 uninterrupted original retirement-block comparisons](../../native/snow_host/pose_contact_retirement_validation.json)
+match all retained cache/recycle slots and all supplied payload bytes, including
+3894 retired payloads. They cover sorted records, arbitrary cache order, duplicates,
+unrelated pairs and both key widths. Original lookup/removal/reset helpers execute
+without interception; preallocated recycler capacity64 avoids allocator calls.
+The implementation's growth formula is inspected but not exercised by this receipt.
+No cache-order invariant, upstream sort equivalence or live scheduling is claimed.

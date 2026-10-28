@@ -7945,3 +7945,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   requests, including85 hits and290 refills. Original lookup/append run; batch and
   recycler allocation are supplied. Cache append growth, global pool locking and
   continuous sorting/retirement/group-update integration remain open.
+- Reconstructed stale-group retirement before acquisition.1024 uninterrupted
+  original-block comparisons match retained cache/recycle storage and payloads,
+  including3894 retirements. Preserved the non-rewinding record cursor and cache
+  index advance after swap-last removal. Synthetic adversarial cases establish
+  local behavior, not a game bug or violated runtime invariant. Sort and full
+  acquisition/update integration remain pending; no live game used.

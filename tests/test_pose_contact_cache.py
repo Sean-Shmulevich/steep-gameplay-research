@@ -53,3 +53,30 @@ class ContactAcquireTest(unittest.TestCase):
             self.assertEqual(payloads[expected],struct.pack('<Q',99)+b'X'*280)
         self.assertEqual(calls,[10]);self.assertEqual(recycle['capacity'],16)
         self.assertEqual(recycle['count'],8);self.assertEqual(recycle['slots'][:10],list(range(1,11)))
+
+
+class ContactRetirementTest(unittest.TestCase):
+    def run_scan(self,keys,record_keys,width=32):
+        from engine.pose_contact_cache import retire_stale_contact_groups
+        cache={'count':len(keys),'slots':[row(1,2,k,10+i) for i,k in enumerate(keys)]}
+        records=[]
+        for key in record_keys:
+            r=bytearray(48);struct.pack_into('<I',r,44,key);records.append(r)
+        payloads={10+i:bytearray(b'X'*288) for i in range(len(keys))}
+        recycle={'count':0,'capacity':0,'slots':[]}
+        result=retire_stale_contact_groups(cache,records,1,2,recycle,payloads=payloads,key_width=width)
+        return result,cache,payloads
+
+    def test_swap_last_entry_is_not_revisited(self):
+        retired,cache,_=self.run_scan([9,8,7],[1])
+        self.assertEqual(retired,[10,11])
+        self.assertEqual(cache['count'],1)
+        self.assertEqual(struct.unpack_from('<I',cache['slots'][0],4)[0],7)
+
+    def test_record_cursor_does_not_restart(self):
+        retired,cache,_=self.run_scan([2,1],[1,2])
+        self.assertEqual(retired,[11]);self.assertEqual(cache['count'],1)
+
+    def test_detail_width_changes_membership(self):
+        self.assertEqual(self.run_scan([1],[0x10001],16)[0],[])
+        self.assertEqual(self.run_scan([1],[0x10001],32)[0],[10])

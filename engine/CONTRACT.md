@@ -849,3 +849,10 @@ It writes only the selected miss payload's owner before the supplied append serv
 Batch supply owns initialization; cache append owns capacity. See LINK_SOLVER.md,
 "Nonempty-group payload acquisition through a recycler". The no-recycler global
 allocation/locking branch remains unavailable, rather than guessed.
+
+Stale-group retirement: `pose_contact_cache.retire_stale_contact_groups` takes
+already-sorted records and preserves the native forward record cursor across cache
+entries. It advances the cache index after swap-last removal, resets the scanned
+payload count and appends its identity for reuse. See LINK_SOLVER.md, "Stale
+contact-group retirement scan". Upstream order/uniqueness invariants remain unknown;
+do not replace this with set subtraction or automatically revisit moved entries.

@@ -89,3 +89,44 @@ def acquire_recycled_contact_payload(collection, first, second, detail, recycled
     struct.pack_into('<Q',payloads[identity],0,owner)
     append_entry(collection,first,second,detail,identity)
     return identity
+
+
+def retire_stale_contact_groups(collection, records, first, second, recycled, *,
+                                payloads, key_width):
+    """Reached retirement scan before acquisition; records are already sorted.
+
+    Preserve the forward record cursor across cache entries and advance the cache
+    index after swap-last removal. Neither cursor is restarted by this routine.
+    Return retired identities as authored diagnostics.
+    """
+    from .pose_link_record import remove_link_key
+    if key_width not in (16,32) or any(len(r)!=48 for r in records):
+        raise ValueError('48-byte records and explicit key width required')
+    mask=(1<<key_width)-1
+    def detail(index):
+        return struct.unpack_from('<I',records[index],0x2c)[0]&mask
+    cursor=0;index=0;retired=[]
+    while index<collection['count']:
+        row=collection['slots'][index]
+        a,b,key,identity=struct.unpack('<HHIQ',row)
+        if (a,b)==(first,second):
+            found=False
+            while cursor<len(records):
+                current=detail(cursor);end=cursor+1
+                while end<len(records) and detail(end)==current:end+=1
+                if key==current:
+                    found=True
+                    break
+                cursor=end
+            if not found:
+                remove_link_key(collection,first,second,key)
+                struct.pack_into('<I',payloads[identity],0x110,0)
+                if recycled['count']==recycled['capacity']:
+                    capacity=2*recycled['capacity'] if recycled['capacity'] else 8
+                    recycled['slots'].extend([0]*(capacity-len(recycled['slots'])))
+                    recycled['capacity']=capacity
+                recycled['slots'][recycled['count']]=identity
+                recycled['count']+=1
+                retired.append(identity)
+        index+=1
+    return retired
