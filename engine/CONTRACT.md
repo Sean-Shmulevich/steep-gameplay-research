@@ -769,3 +769,10 @@ admission plus optional48-byte output. Radius affects separation, not admission.
 Null output still permits true. See LINK_SOLVER.md, "Preliminary height contact".
 The query service is unresolved and must not be represented as recovered terrain
 interpolation. Finite inputs and existing frame conventions apply.
+
+Grid height query: `pose_grid_height_query.query_grid_height` computes biased floor
+cell selection and topology-dependent piecewise height, returning height and ID.
+Outside-grid queries preserve the caller's ID and return negative FLT_MAX. The
+orientation-zero half numbering differs from geometry enumeration and is retained.
+See LINK_SOLVER.md, "Grid height query". Samples are supplied; finite positive grid
+domains apply and exceptional conversion behavior is excluded.

@@ -7879,3 +7879,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   height/triangle service. 1024 native wrapper comparisons match arguments,
   booleans and output bytes;611 accepted. Height interpolation is intercepted and
   remains unresolved, along with complete terrain caller integration.
+- Reconstructed grid height query without supplied interpolation.4096 complete
+  native comparisons match height bits and IDs, including1218 outside cases.
+  Preserved biased boundary selection and orientation-zero ID discrepancy.
+  Composed height-contact validation and full terrain orchestration remain open.

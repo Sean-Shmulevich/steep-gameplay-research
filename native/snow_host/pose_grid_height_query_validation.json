@@ -1,0 +1,22 @@
+{
+  "schema": "pose-grid-height-query-validation-v1",
+  "cases": 4096,
+  "passed": 4096,
+  "method": "Complete native height query without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1997af0",
+  "comparisons": [
+    "height float bits and retained/updated triangle ID"
+  ],
+  "outside_cases": 1218,
+  "coverage": [
+    "both diagonal orientations; grids2..10",
+    "translated nonunit grid spacings and arbitrary heights",
+    "interior/exterior and exact supplied lower-bound coordinates"
+  ],
+  "limits": [
+    "Finite positive grid domains; int32 conversion exceptional cases excluded",
+    "Sample payload supplied; no asset decoding",
+    "Boundary triangle numbering differs from geometry enumeration for orientation zero"
+  ]
+}

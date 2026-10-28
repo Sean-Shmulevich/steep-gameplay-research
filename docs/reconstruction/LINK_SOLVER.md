@@ -2494,3 +2494,45 @@ coordinates, bounds rejection and topology-dependent piecewise interpolation.
 It can also return a triangle ID through an output pointer. Exact interpolation,
 boundary bias and outside-grid return semantics remain the next dependency to
 recover. The terrain caller's inverse/bounds and allocation paths remain separate.
+
+### Grid height query
+
+`engine.pose_grid_height_query.query_grid_height` reconstructs0x1997af0. It returns
+height and triangle ID from supplied grid samples. Width/height are uint16 fields
+0x68/6a, spacing is0x70/74, XY bounds start at0x7c/80 and end at0x88/8c.
+For each axis, compute with float32 at every operation:
+
+```text
+cell = floor(((coordinate - lower - 2^-23) * (dimension - 1)) / (upper - lower))
+```
+
+Reject cells outside0..dimension-2. Outside returns negative FLT_MAX and preserves
+the supplied triangle ID; the contact wrapper initializes that ID to0xffffffff.
+The coordinate bias applies before scaling, not to the final cell index. At exact
+lower bounds it can select-1. No clamp or extrapolation fallback is substituted.
+
+Within the cell, derive X0/X1/Y0/Y1 from index*spacing+origin using float32. Let
+A/B/C/D be heights at lower-left, lower-right, upper-right, upper-left. Let
+`tx=(x-X0)/spacingX`, `ty=(y-Y0)/spacingY`. The following formulas retain separate
+multiply/divide/add operations rather than replacing them with barycentric code:
+
+| Orientation and branch | Height | ID half |
+| --- | --- | --- |
+| zero, tx>ty | A+(B-A)*(x-X0)/(X1-X0)+(C-B)*(y-Y0)/(Y1-Y0) | 1 |
+| zero, tx<=ty | A+(C-D)*(x-X0)/(X1-X0)+(D-A)*(y-Y0)/(Y1-Y0) | 0 |
+| nonzero, 1-tx>ty | A+(B-A)*(x-X0)/(X1-X0)+(D-A)*(y-Y0)/(Y1-Y0) | 0 |
+| nonzero, 1-tx<=ty | C+(D-C)*(x-X1)/(X0-X1)+(B-C)*(y-Y1)/(Y0-Y1) | 1 |
+
+In every row, the first quotient is added to its base height before adding the
+second quotient. The ID is `2*(row*cell_width+column)+half`, where cell_width is
+field0x9c. For orientation zero, returned halves disagree with the triangle
+geometry enumerator's half ordering. This observed discrepancy is preserved;
+its downstream consequence is not resolved by renumbering the query output.
+
+[4096 uninterrupted native query comparisons](../../native/snow_host/pose_grid_height_query_validation.json)
+match height bits and retained/updated IDs, including1218 outside-grid cases.
+Inputs cover both orientations, dimensions2..10, nonunit spacings, translations,
+arbitrary heights and interior/exterior coordinates. The independent API requires
+finite inputs and positive complete grid geometry; native exceptional int32
+conversion and zero-span behavior are excluded. No original samples are included.
+The complete height-contact wrapper still needs an uninterrupted composed check.
