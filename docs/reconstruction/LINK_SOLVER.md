@@ -2687,3 +2687,28 @@ to the zero-capacity preliminary behavior. Initialized TLS/topology, XYZ/zero st
 and stack limit are supplied. Allocation retries, mapped profiles and general frame
 rotations have separate helper evidence but are not yet covered in this complete
 caller receipt. Live collision integration and broader resource pairs remain open.
+
+### Broader terrain-caller composition evidence
+
+[1024 rotated/mapped-profile native comparisons](../../native/snow_host/pose_grid_box_contact_rotated_validation.json)
+extend complete-caller validation to independently rotated terrain and box frames,
+uneven samples, both diagonal orientations, per-cell byte maps and high-bit profile
+masks. Every returned value and output/tail byte matches without interception.
+There are544 positive results summing to1057; this includes preliminary semantics
+and is not an emitted-record total. Small grids use the native stack-candidate path.
+
+[256 larger-grid retry comparisons](../../native/snow_host/pose_grid_box_contact_retry_validation.json)
+exercise the same caller on9..11 sample dimensions with larger boxes. All output
+bytes and returns match, with90 positive results summing to361. Every case requests
+one full-grid candidate allocation and later frees that exact buffer. The validator
+supplies allocation/free services, checking requested byte size and released pointer;
+all geometric routines, retry decisions and cleanup call sites execute natively.
+There are256 allocations and256 frees. Preliminary contact is disabled in this
+receipt to force candidate processing; edge/filter flags and capacity0..8 vary.
+
+These receipts close the earlier full-call rotation, mapped-profile and retry-policy
+validation gaps for the tested finite synthetic domains. They do not recover the
+allocator internals, asset samples, live scheduler integration, arbitrary resource
+pairs or degenerate arithmetic. Existing XYZ/TLS/topology/stack initialization and
+fixed-angle scalar-trig restrictions still apply. No implementation adjustment was
+needed for these expanded comparisons.

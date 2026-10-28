@@ -7903,3 +7903,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   executions match return values and all output bytes across profile and geometry
   gates. Preserved preliminary success at zero capacity without a write. Full-call
   retry allocation, mapped profiles, general rotations and live integration remain.
+- Broadened complete terrain-caller comparisons:1024 independently rotated/mapped
+  profile cases match without interception;256 larger-grid cases match with only
+  allocator/free services supplied. All256 retry buffers have matching free calls.
+  Geometry required no changes. Allocator internals, live integration and other
+  resource pairs remain outside the reconstructed caller's evidence.
