@@ -7887,3 +7887,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   native executions match booleans and all output bytes, including1682 accepted
   queries and1147 records. This removes supplied height responses from the
   composition; caller bounds/frame/allocation and terrain orchestration remain.
+- Reconstructed terrain inverse/relative frame arithmetic.2048 native caller
+  prefixes match all XYZ fields for general nonsingular bases, including shear
+  and reflection. Fourth SIMD signed-zero lanes are explicitly outside the XYZ
+  API. Virtual bounds, allocation and complete terrain orchestration remain open.

@@ -782,3 +782,9 @@ uses the recovered grid query directly, starting triangle identity at0xffffffff.
 It retains sentinel-height comparison and topology-specific IDs. See
 LINK_SOLVER.md, "Connected preliminary grid contact". Native comparisons include
 both routines without service interception; sample payloads remain caller supplied.
+
+Terrain frame conversion: `pose_grid_contact_frames.grid_contact_frames` returns
+inverse terrain and relative other frames as four XYZ rows each. It preserves
+cofactor inverse and float32 transform ordering. Singular rejection is authored;
+fourth SIMD lanes are not represented. See LINK_SOLVER.md, "Terrain inverse and
+relative frames". The subsequent virtual bounds call remains separate.

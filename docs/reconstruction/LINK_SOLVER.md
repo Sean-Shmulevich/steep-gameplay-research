@@ -2559,3 +2559,37 @@ FLT_MAX height sentinel flows into the ordinary center.z<=height comparison.
 Observed outside cases at ordinary finite heights reject; extreme-sentinel inputs
 and exceptional arithmetic are not covered by this receipt. Caller bounds/frame
 construction, allocation and complete terrain candidate orchestration remain open.
+
+### Terrain inverse and relative frames
+
+`engine.pose_grid_contact_frames.grid_contact_frames` reconstructs the frame
+arithmetic in0x19dde20 before its virtual bounds call at0x19de117. Input frames
+have three basis XYZ rows and a translation. It returns the inverse terrain frame
+and the other object's frame expressed in terrain coordinates.
+
+For terrain basis rows A,B,C, compute cofactors `cross(B,C)`, `cross(C,A)`,
+`cross(A,B)`. Determinant is `dot(A,cross(B,C))`. Scale each cofactor component by
+the float32 reciprocal determinant, then transpose those scaled rows into inverse
+basis rows I0/I1/I2. This is a full inverse, not a transpose-only shortcut.
+All products, differences, sums and reciprocal operations round to float32.
+
+```text
+transform_direction(v) = (I1*v.y + I0*v.x) + I2*v.z
+inverse_translation = transform_direction(-terrain_translation)
+relative_basis[k] = transform_direction(other_basis[k])
+relative_translation = ((I0*other_translation.x + inverse_translation)
+                        + I1*other_translation.y) + I2*other_translation.z
+```
+
+The translation grouping differs from the direction grouping and is preserved.
+The inverse feeds terrain filtering; the relative frame is passed to the other
+resource's virtual bounds query. Singular rejection is an authored guard.
+
+[2048 native prefix comparisons](../../native/snow_host/pose_grid_contact_frames_validation.json)
+match every XYZ float bit in both frames across general finite nonsingular bases,
+including scale, shear, reflection and translation. Execution stops before the
+virtual bounds call. XYZ mask initialization is supplied. The native fourth SIMD
+lanes can contain signed zero; the independent XYZ frame interface does not expose
+those lanes, so this receipt does not claim full64-byte frame equality. A failed
+initial full-lane comparison identified that limitation. Bounds calculation and
+complete terrain caller execution remain separate validation work.

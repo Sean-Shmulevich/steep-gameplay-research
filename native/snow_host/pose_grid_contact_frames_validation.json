@@ -1,0 +1,19 @@
+{
+  "schema": "pose-grid-contact-frames-validation-v1",
+  "cases": 2048,
+  "passed": 2048,
+  "method": "Original terrain caller prefix through frame arithmetic, stopped before virtual bounds call; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "start_rva": "0x19dde20",
+  "stop_rva": "0x19de117",
+  "comparisons": [
+    "all inverse and relative frame XYZ bytes"
+  ],
+  "coverage": [
+    "general finite nonsingular3D bases, scale/shear/reflection and translation"
+  ],
+  "limits": [
+    "Supplied XYZ mask; virtual bounds and remaining caller not executed",
+    "Singular/exceptional arithmetic excluded; synthetic frames; fourth lanes not represented"
+  ]
+}
