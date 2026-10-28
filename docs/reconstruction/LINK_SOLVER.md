@@ -3478,3 +3478,45 @@ match all208 retained bytes:1317 motion cases,614 X-axis fallbacks and117 Y-axis
 fallbacks. The comparison supplies aggregate geometry and live-in registers and
 executes the original block without interception. Shared coefficient/result/index
 fields and the complete multi-family builder remain outside this validation.
+
+### Connected multi builder
+
+`pose_link_multi_builder.build_multi_pose_link_rows` reconstructs the complete
+metadata-clear/multi routine0x1991da0. It uses the single-family profile and primary
+response formulas, but allocates one208-byte shared row first, followed by one
+112-byte primary row per contact. The shared row reserves the first result index;
+each primary then reserves one index and writes it to payload row+0x34. The shared
+result slot itself is left untouched by this builder.
+
+```text
+shared.result_index = allocate_result()
+accumulated = float32(0)
+for contact in payload order:
+    primary.result_index = allocate_result()
+    contact.feedback_index = primary.result_index
+    accumulated = float32(accumulated + contact.cached_value)
+    if seed_gate == 0:
+        results[primary.result_index] = broadcast(contact.cached_value)
+    primary.link50 = (address(shared + 0xb0) - address(primary)) >> 4
+shared.value_b0 = broadcast(accumulated)
+shared.coefficient_c0 = broadcast(combined_profile30)
+```
+
+The accumulation occurs even when the gate disables result seeding. The relative
+link is a signed64-bit count of16-byte units, not an absolute pointer or a result
+index. The independent API expresses arena addresses as explicit `primary_base`
+and `shared_base` byte offsets, with row strides112 and208 respectively. Bases
+must preserve16-byte alignment. The shared orientation uses the first contact's
+normal and the aggregate centroid/spread described above. Shared+0x80..0xaf and
+other unreached bytes retain their supplied contents.
+
+[512 uninterrupted original calls](../../native/snow_host/pose_link_multi_builder_validation.json)
+match every primary/shared row byte, complete payload and result buffers, and all
+three counters. Cases cover1..4 contacts, nonzero initial counters, general finite
+geometry, all six profile modes and finite cached values. Native profile combiners
+execute without interception. Indexed resource lookup has separate evidence; this
+receipt uses default profile resources. The normal dispatcher selects this family
+for multiple contacts and mode0. The helper's one-contact arithmetic test does not
+change that gate. Zero-count behavior, exceptional floating-point values, native
+allocation, paired multi construction and a complete solver iteration are not
+claimed by this contract.

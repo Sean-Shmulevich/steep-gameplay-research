@@ -8008,3 +8008,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   fallbacks. Tests distinguish component thresholds from length thresholds and
   verify angular motion and untouched storage. Complete multi-family assembly,
   paired multi construction and end-to-end solver integration remain open.
+- Completed metadata-clear/multi builder assembly.512 uninterrupted original calls
+  match all retained rows, results, payloads and counters. Primary rows link to the
+  shared accumulated value through signed16-byte-unit offsets; shared result
+  reservation precedes contact results. Paired multi and full solver integration
+  remain open. No live session was needed for this comparison.

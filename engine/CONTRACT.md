@@ -929,3 +929,10 @@ linear/angular motion and positive spread. `pack_contact_patch_directions` modif
 only+0x10..0x7f of a retained208-byte row. See LINK_SOLVER.md, "Shared patch
 orientation and packing" for component thresholds, fallback order and transpose.
 Coefficient/result fields and full multi-family assembly remain unresolved.
+
+Clear multi-family assembly: `build_multi_pose_link_rows` consumes the existing
+body/profile/payload contract plus retained112-byte primary rows,208-byte shared
+rows,16-byte results, counters and explicit aligned arena base offsets. It reserves
+one shared result then one per contact, writes signed relative links to shared+b0,
+and accumulates cached values independently of seeding. See LINK_SOLVER.md,
+"Connected multi builder". Supplied storage only; no allocator or solver iteration.
