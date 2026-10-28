@@ -1957,3 +1957,47 @@ This supersedes the supplied-query boundary of the earlier selector receipt for
 this tested composition. Initialized XYZ mask remains supplied state, and random
 synthetic descriptors do not establish original-asset validity. Producer setup,
 contact-record emission and full live collision behavior remain unresolved.
+
+### Edge contact record emission
+
+`engine.pose_contact_edge_emit.emit_edge_contact` reconstructs0x18e3aa0. Zero
+capacity returns0 before reading geometry. Otherwise it transforms the selected
+edge endpoints of both shapes, and the first edge's two adjacent plane normals.
+It computes closest points on the two segments with clamped parameters.
+
+Let U=A1-A0, V=B1-B0, W=A0-B0, and float32 dot products
+`a=U.U, b=V.U, c=V.V, d=U.W, e=V.W`. Define `det=c*a-b*b`.
+If `abs(det)<=a*float32(1e-5)`, seed s-numerator0 and t-numerator e with
+both denominators c. Otherwise seed `sN=e*b-d*c`, `tN=e*a-d*b` with denominator
+det; clamp sN to0/det and adjust tN/denominator to e/c or (e+b)/c.
+Then clamp t: below0 selects t=0 and clamps s=(-d)/a; above its denominator selects
+t=1 and clamps s=(-d+b)/a. Otherwise divide both numerators by their denominators.
+The code retains these branches and float32 arithmetic rather than substituting
+a generic geometry-library closest-points function.
+
+Closest points are `PA=A0+s*U` and `PB=B0+t*V`. The record normal is normalized
+`cross(U,V)`, negated when its dot with the sum of the first edge's transformed
+adjacent normals is negative. It writes:
+
+| Offset | Written value |
+| --- | --- |
+| 0x00 | normal XYZ |
+| 0x0c | negative squared length of `(s*U+W)-t*V` |
+| 0x10 | PA XYZ |
+| 0x1c | uint32 zero |
+| 0x20 | PB XYZ |
+| 0x2c | uint32 0xffff0000 |
+
+Return value is1 and storage beyond48 bytes persists. The value at0x0c has no
+square root and must not be described as ordinary linear penetration depth.
+The selected-axis distance is not copied into this record. Parallel/zero-length
+edge behavior remains outside the independent API domain because native normal
+construction can divide by zero; no invented fallback normal is supplied.
+
+[1024 complete native emitter comparisons](../../native/snow_host/pose_contact_edge_emission_validation.json)
+match return count, all record bytes and output tail, with963 emitted records
+and61 zero-capacity returns. Inputs use finite synthetic selected pairs and general
+frame fields. They are not all guaranteed to have been selected by the preceding
+query. XYZ mask initialization remains supplied. A synthetic endpoint case checks
+that two units of separation produce-4 in the squared-distance field.
+The face-contact emitter and complete producer descriptor construction remain open.

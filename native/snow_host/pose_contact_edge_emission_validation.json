@@ -1,0 +1,23 @@
+{
+  "schema": "pose-contact-edge-emission-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "emitted": 963,
+  "method": "Offline complete native edge emitter, no interception; XYZ mask supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e3aa0",
+  "comparisons": [
+    "returned record count",
+    "all 48 record bytes and preserved output tail"
+  ],
+  "coverage": [
+    "zero-capacity early return",
+    "general finite frames and nonparallel segments",
+    "segment endpoint/interior clamping"
+  ],
+  "limits": [
+    "Synthetic selected indices; not all pairs necessarily selected by the query.",
+    "Parallel/zero-length edges and nonfinite arithmetic excluded.",
+    "Face-contact emitter and producer descriptor setup remain unresolved."
+  ]
+}

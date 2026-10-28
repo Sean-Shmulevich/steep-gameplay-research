@@ -7821,3 +7821,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   1024 uninterrupted original-selector/query cases match all16 output bytes and
   include all four kinds. This removes supplied query responses from the tested
   composition; producer descriptors, contact emission and live integration remain.
+- Reconstructed edge contact emission, including segment clamping, oriented
+  normal, closest points and negative squared separation. 1024 native calls
+  match all record bytes/tails, with963 writes and61 zero-capacity returns.
+  Face emission, descriptor construction and degenerate edge behavior remain open.

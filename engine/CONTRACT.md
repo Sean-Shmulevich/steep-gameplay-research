@@ -672,3 +672,10 @@ face/edge queries directly and returns the recovered kind/index/distance result.
 The explicit-service selector remains available. This is a geometry-query API,
 not contact emission or a live mod entry point. See LINK_SOLVER.md, "Connected
 geometry axis selection" for schemas and validation boundaries.
+
+Edge contact emission: `pose_contact_edge_emit.emit_edge_contact` writes one48-byte
+record from selected edges and supplied frames/shapes, or returns0 for zero
+capacity. It preserves segment-clamping order, normal orientation, negative
+squared separation and fixed record fields. Finite nonparallel/nondegenerate
+geometry is required. This implements the edge emitter, not face emission or the
+complete collision pipeline. See LINK_SOLVER.md, "Edge contact record emission".
