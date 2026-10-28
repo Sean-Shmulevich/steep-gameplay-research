@@ -1099,3 +1099,13 @@ secondary-state wrapper. The synthetic example rotates/translates the body while
 preserving ordinary motion. Sine/cosine responses are explicit inputs checked
 against the requested half-angle. This does not run collision detection or the
 solver. See [the contract and native composition evidence](../docs/reconstruction/LINK_SOLVER.md#runnable-body-integration-inspection).
+
+For offline reconstructed terrain/box contacts, run:
+
+```sh
+python3 -m engine.pose_grid_box_bench engine/examples/pose_grid_box.json
+```
+
+The synthetic example exposes profile gates, optional height contact and terrain
+filtering. It requires no game files. See [terrain-contact inspection](../docs/reconstruction/LINK_SOLVER.md#runnable-terrain-contact-inspection)
+for input fields and evidence limits.

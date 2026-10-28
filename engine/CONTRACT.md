@@ -807,3 +807,9 @@ producer, record conversion and filtering. The preliminary flag also enables
 face reduction. A successful preliminary query returns1 even at capacity0 without
 writing, so return value is not always record count. See LINK_SOLVER.md, "Connected
 terrain-box contact caller" for composed evidence and remaining domains.
+
+Terrain inspection CLI: `python3 -m engine.pose_grid_box_bench INPUT` packs explicit
+synthetic/observed grid samples and profiles, invokes the reconstructed caller and
+returns records plus retained storage. Return-value and record-count distinctions
+are preserved; separation is not assumed linear. See LINK_SOLVER.md, "Runnable
+terrain-contact inspection". Adapter limits/validation are authored.

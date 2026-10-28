@@ -2712,3 +2712,32 @@ allocator internals, asset samples, live scheduler integration, arbitrary resour
 pairs or degenerate arithmetic. Existing XYZ/TLS/topology/stack initialization and
 fixed-angle scalar-trig restrictions still apply. No implementation adjustment was
 needed for these expanded comparisons.
+
+### Runnable terrain-contact inspection
+
+The independent complete caller can be exercised without original assets or a
+private executable:
+
+```sh
+python3 -m engine.pose_grid_box_bench engine/examples/pose_grid_box.json
+```
+
+Use `--output result.json` to save inspection output. The synthetic fixture supplies
+a3x3 uneven grid, box/terrain frames, extents, profile masks and caller flags.
+It produces15 contacts with filtering disabled. Enabling filtering retains zero
+for this particular fixture; discarded record bytes remain visible in output hex.
+This illustrates stage effects, not a calibrated game scene.
+
+The authored JSON adapter packs grid metadata from width/height, positive spacing,
+XY origin, supplied samples, enclosing Z bounds, orientation and filter mode. It
+requires explicit provenance, complete samples, resolvable profile maps and bounded
+capacity. Limits are64x64 samples and128 output slots. These are inspection guards,
+not native resource limits. Caller flags remain independently configurable.
+
+Output separates `return_value` from `retained_record_count` and reports
+`success_without_record` for preliminary success at zero capacity. Retained records
+include normals, point pairs, triangle IDs and exact hex. The scalar is named
+`separation_field`: final terrain records do not identify face versus edge origin,
+so the adapter does not mislabel every scalar as linear depth. Full output hex also
+includes inactive/discarded bytes. This command performs contact generation only;
+it does not advance bodies, invoke the solver, decode assets or attach to a game.

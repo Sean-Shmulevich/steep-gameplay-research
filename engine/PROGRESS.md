@@ -7908,3 +7908,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   allocator/free services supplied. All256 retry buffers have matching free calls.
   Geometry required no changes. Allocator internals, live integration and other
   resource pairs remain outside the reconstructed caller's evidence.
+- Added standalone terrain-contact JSON inspection with synthetic uneven-grid
+  fixture, explicit provenance/profiles, retained buffer hex and zero-capacity
+  preliminary success reporting. Tests expose production versus filtering effects.
+  This is contact inspection, not body simulation or live mod integration.
