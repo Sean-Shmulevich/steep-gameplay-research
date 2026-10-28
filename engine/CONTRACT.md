@@ -776,3 +776,9 @@ Outside-grid queries preserve the caller's ID and return negative FLT_MAX. The
 orientation-zero half numbering differs from geometry enumeration and is retained.
 See LINK_SOLVER.md, "Grid height query". Samples are supplied; finite positive grid
 domains apply and exceptional conversion behavior is excluded.
+
+Connected preliminary contact: `pose_grid_height_contact.query_sampled_grid_contact`
+uses the recovered grid query directly, starting triangle identity at0xffffffff.
+It retains sentinel-height comparison and topology-specific IDs. See
+LINK_SOLVER.md, "Connected preliminary grid contact". Native comparisons include
+both routines without service interception; sample payloads remain caller supplied.

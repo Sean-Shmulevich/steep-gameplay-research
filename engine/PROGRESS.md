@@ -7883,3 +7883,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   native comparisons match height bits and IDs, including1218 outside cases.
   Preserved biased boundary selection and orientation-zero ID discrepancy.
   Composed height-contact validation and full terrain orchestration remain open.
+- Connected preliminary contact to actual grid interpolation.4096 uninterrupted
+  native executions match booleans and all output bytes, including1682 accepted
+  queries and1147 records. This removes supplied height responses from the
+  composition; caller bounds/frame/allocation and terrain orchestration remain.

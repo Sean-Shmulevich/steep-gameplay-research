@@ -1,0 +1,23 @@
+{
+  "schema": "pose-sampled-grid-contact-validation-v1",
+  "cases": 4096,
+  "passed": 4096,
+  "method": "Complete native height-contact wrapper and actual height query, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19969e0",
+  "comparisons": [
+    "boolean result and all output/tail bytes"
+  ],
+  "outside_cases": 1270,
+  "accepted": 1682,
+  "written": 1147,
+  "coverage": [
+    "both grid diagonal orientations; dimensions2..10",
+    "general finite frames, nonunit spacings and arbitrary heights",
+    "above/equal/below height and outside grid; nullable output"
+  ],
+  "limits": [
+    "Finite positive grids and supplied sample payload",
+    "No terrain caller bounds/allocator or live integration"
+  ]
+}

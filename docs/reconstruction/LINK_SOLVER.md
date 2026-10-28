@@ -2536,3 +2536,26 @@ arbitrary heights and interior/exterior coordinates. The independent API require
 finite inputs and positive complete grid geometry; native exceptional int32
 conversion and zero-span behavior are excluded. No original samples are included.
 The complete height-contact wrapper still needs an uninterrupted composed check.
+
+### Connected preliminary grid contact
+
+`engine.pose_grid_height_contact.query_sampled_grid_contact` connects the recovered
+height interpolation to the preliminary contact wrapper. It accepts raw resource
+metadata and caller-supplied sample floats, plus frame, center, radius and optional
+output. The explicit-service wrapper remains available for isolated observations;
+this connected API uses `query_grid_height` directly with the native initial ID
+0xffffffff. No interpolation response is invented or supplied externally.
+
+[4096 uninterrupted native comparisons](../../native/snow_host/pose_sampled_grid_contact_validation.json)
+execute both original routines and match booleans plus all output/tail bytes.
+There are1682 accepted queries,1147 writes and1270 outside-grid coordinates. Cases
+include both orientations, dimensions2..10, nonunit spacing, translated grids,
+general finite frames, above/equal/below heights and null output. Unlike the earlier
+wrapper-only receipt, this comparison does not intercept the height service.
+
+The connected wrapper preserves the height query's orientation-zero triangle ID
+discrepancy. It also adds no explicit outside-grid rejection: the native negative
+FLT_MAX height sentinel flows into the ordinary center.z<=height comparison.
+Observed outside cases at ordinary finite heights reject; extreme-sentinel inputs
+and exceptional arithmetic are not covered by this receipt. Caller bounds/frame
+construction, allocation and complete terrain candidate orchestration remain open.

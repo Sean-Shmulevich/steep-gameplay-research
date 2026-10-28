@@ -29,3 +29,10 @@ def query_grid_height_contact(resource, frame, center, radius, output, *, height
             raise ValueError('Complete record storage and uint32 triangle ID required')
         struct.pack_into('<4f3fI3fI',output,0,*normal,separation,*first,0,*second,triangle_id)
     return True
+
+
+def query_sampled_grid_contact(resource, samples, frame, center, radius, output):
+    """Run recovered height interpolation and preliminary contact construction."""
+    from .pose_grid_height_query import query_grid_height
+    return query_grid_height_contact(resource, frame, center, radius, output,
+        height_query=lambda r,x,y: query_grid_height(r,samples,x,y))
