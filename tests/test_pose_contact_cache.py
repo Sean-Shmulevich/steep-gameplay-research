@@ -30,3 +30,26 @@ class ContactCacheTest(unittest.TestCase):
         cache={'count':1,'slots':[row(1,2,0,10)]}
         self.assertEqual(remove_pair_payload(cache,65537,2),0)
         self.assertEqual(cache['count'],1)
+
+
+class ContactAcquireTest(unittest.TestCase):
+    def test_hit_is_first_match_and_has_no_mutation(self):
+        from engine.pose_contact_cache import acquire_recycled_contact_payload
+        cache={'count':2,'slots':[row(1,2,3,10),row(1,2,3,20)]}
+        def forbidden(*args):raise AssertionError('service called on hit')
+        result=acquire_recycled_contact_payload(cache,65537,2,3,{},owner=99,
+            payloads={},supply_batch=forbidden,append_entry=forbidden)
+        self.assertEqual(result,10)
+
+    def test_refill_ten_pop_last_then_reuse_without_reset(self):
+        from engine.pose_contact_cache import acquire_recycled_contact_payload
+        cache={'count':0,'slots':[]};recycle={'count':0,'capacity':8,'slots':[88]*8}
+        payloads={i:bytearray(b'X'*288) for i in range(1,11)};calls=[]
+        def batch(n):calls.append(n);return list(range(1,11))
+        def append(c,a,b,d,p):c['slots'].append(row(a,b,d,p));c['count']+=1
+        for detail,expected in ((4,10),(5,9)):
+            self.assertEqual(acquire_recycled_contact_payload(cache,1,2,detail,recycle,
+                owner=99,payloads=payloads,supply_batch=batch,append_entry=append),expected)
+            self.assertEqual(payloads[expected],struct.pack('<Q',99)+b'X'*280)
+        self.assertEqual(calls,[10]);self.assertEqual(recycle['capacity'],16)
+        self.assertEqual(recycle['count'],8);self.assertEqual(recycle['slots'][:10],list(range(1,11)))

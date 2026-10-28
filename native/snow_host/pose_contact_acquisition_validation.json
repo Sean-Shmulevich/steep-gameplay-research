@@ -1,0 +1,24 @@
+{
+  "schema": "pose-contact-acquisition-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "block": [
+    "0x198fbcc",
+    "0x198fd21"
+  ],
+  "method": "Reached non-null recycler caller block with original full-key lookup and append; allocator and batch supply intercepted",
+  "cache_hits": 85,
+  "batch_refills": 290,
+  "comparisons": [
+    "Selected payload identity",
+    "Entire retained cache and recycle storage, counts and capacities",
+    "All supplied payload bytes",
+    "Growth requests and ten-item batch requests"
+  ],
+  "limits": [
+    "Cache append has preallocated capacity; its growth not exercised",
+    "Batch initialization, global no-recycler branch, locks and allocation failure remain external",
+    "Synthetic serial state; no live game"
+  ]
+}

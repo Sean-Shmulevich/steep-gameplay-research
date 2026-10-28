@@ -842,3 +842,10 @@ collection. It removes last matching pairs regardless of detail, resets only
 payload+0x110 and appends each nonzero identity. A removed null terminates the loop.
 See LINK_SOLVER.md, "Empty-pair cache recycling". Python owns storage growth;
 allocator failure, capacity overflow and concurrency are outside its domain.
+
+Recycled contact acquisition: `pose_contact_cache.acquire_recycled_contact_payload`
+finds the first full-key match or pops a recycler identity, refilling ten at a time.
+It writes only the selected miss payload's owner before the supplied append service.
+Batch supply owns initialization; cache append owns capacity. See LINK_SOLVER.md,
+"Nonempty-group payload acquisition through a recycler". The no-recycler global
+allocation/locking branch remains unavailable, rather than guessed.

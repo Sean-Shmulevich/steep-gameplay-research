@@ -7940,3 +7940,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   and capacities with allocator services supplied.3846 payload resets and739
   growth requests match. Null-payload termination and inactive bytes are preserved.
   Nonempty acquisition and integrated geometry-to-cache execution remain open.
+- Reconstructed full-key lookup and non-null recycler acquisition.512 original
+  caller-block comparisons match selected payloads, retained bytes and growth/batch
+  requests, including85 hits and290 refills. Original lookup/append run; batch and
+  recycler allocation are supplied. Cache append growth, global pool locking and
+  continuous sorting/retirement/group-update integration remain open.

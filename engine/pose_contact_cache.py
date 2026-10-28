@@ -47,3 +47,45 @@ def clear_contact_pair(collection, first, second, recycled, *, payloads):
         recycled['slots'][recycled['count']]=identity
         recycled['count']+=1
         processed+=1
+
+
+def find_contact_payload(collection, first, second, detail):
+    """Return first full-key match; lookup truncates keys to16/16/32 bits."""
+    from .pose_link_record import pack_link_key
+    key=pack_link_key(first,second,detail)
+    for row in collection['slots'][:collection['count']]:
+        if struct.unpack_from('<Q',row)[0]==key:
+            return struct.unpack_from('<Q',row,8)[0]
+    return 0
+
+
+def acquire_recycled_contact_payload(collection, first, second, detail, recycled,
+                                     *, owner, payloads, supply_batch, append_entry):
+    """Reached non-null recycler branch of contact-group acquisition.
+
+    Batch service supplies ten initialized payload identities. Append service owns
+    cache storage growth. Existing matches bypass both. The no-recycler global
+    allocation/locking branch is deliberately not represented by this function.
+    """
+    identity=find_contact_payload(collection,first,second,detail)
+    if identity:
+        return identity
+    if recycled['count']==0:
+        required=recycled['count']+10
+        if required>recycled['capacity']:
+            capacity=max(required,2*recycled['capacity'])
+            recycled['slots'].extend([0]*(capacity-len(recycled['slots'])))
+            recycled['capacity']=capacity
+        start=recycled['count']
+        recycled['count']+=10
+        identities=supply_batch(10)
+        if len(identities)!=10:
+            raise ValueError('Batch service must provide ten initialized identities')
+        recycled['slots'][start:start+10]=identities
+    recycled['count']-=1
+    identity=recycled['slots'][recycled['count']]
+    if not identity:
+        raise ValueError('Native acquisition would dereference a null payload')
+    struct.pack_into('<Q',payloads[identity],0,owner)
+    append_entry(collection,first,second,detail,identity)
+    return identity

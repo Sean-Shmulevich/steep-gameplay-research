@@ -2929,3 +2929,55 @@ This replaces the pair-clear service's numerical/storage policy with executable
 reconstruction. The nonempty path still needs cache lookup/acquisition and full
 integration with contact generation. Caller adapters may bind `payloads` explicitly
 to use `clear_contact_pair` as the handoff's clearing service.
+
+### Nonempty-group payload acquisition through a recycler
+
+Reached block0x198fbcc..0x198fd21 first calls lookup0x1958a40 with the pair and
+current detail key. Lookup packs low16(first), low16(second), low32(detail), scans
+forward and returns the first matching payload identity. Unlike pair removal,
+lookup truncates comparison arguments. A matching null payload is indistinguishable
+from a miss and does not cause the lookup to continue to later duplicates.
+
+On a nonzero hit the block preserves payload and recycler bytes and proceeds to
+the existing flag/reduction/update path. On a miss with a non-null recycler:
+
+```text
+if recycled.count == 0:
+    required = recycled.count + 10
+    if required > recycled.capacity:
+        grow(recycled, max(required, 2 * recycled.capacity))
+    start = recycled.count
+    recycled.count += 10
+    supply_initialized_payloads(recycled.slots + start, 10)
+recycled.count -= 1
+payload = recycled.slots[recycled.count]
+payload.owner = cache.owner
+append_key_and_payload(cache, first, second, detail, payload)
+```
+
+The count increment precedes batch supply. Pop leaves the inactive slot intact.
+A recycled payload's rows, active count and flags are not reset by this acquisition
+block. A fresh batch service separately initializes owner/count/flag bit0 before
+returning identities. The caller then replaces the selected payload's owner.
+Do not clear every reused payload or rebuild its cached rows at this boundary.
+
+`pose_contact_cache.find_contact_payload` and
+`acquire_recycled_contact_payload` implement lookup and the recycler branch.
+Python list growth replaces allocator execution. Batch supply must return ten
+initialized identities, and append is an explicit service responsible for cache
+storage capacity. A null popped identity is rejected as an authored guard; the
+original continues to an invalid dereference. The no-recycler branch instead uses
+global pool allocation and protected synchronization calls; that branch is not
+silently replaced by this API.
+
+[512 reached-block comparisons](../../native/snow_host/pose_contact_acquisition_validation.json)
+include original lookup and original append with preallocated cache capacity.
+Only recycler allocation/reallocation and batch supply are intercepted. All retained
+cache/recycle bytes, counts, capacities, supplied payload bytes, selected identities
+and growth/batch requests match. Cases include85 cache hits and290 ten-item refills.
+The remaining misses pop existing recycler entries. This is serial synthetic
+validation, not proof of pool initialization, locks or global owner lifetime.
+
+The previous contact handoff's nonempty service now has a reconstructed acquisition
+policy for a non-null recycler. Sorting, obsolete-key retirement, grouping and the
+already reconstructed row updater still need a continuous integration comparison.
