@@ -835,3 +835,10 @@ then calls supplied grouping for nonzero count or pair clearing for zero. Groupi
 key width must be16 or32 and is not inferred. See LINK_SOLVER.md, "Contact generation
 to persistent-group handoff". Cache allocation, recycling and lifetime are required
 external services; the returned count and input guards are authored diagnostics.
+
+Empty-pair recycling: `pose_contact_cache.clear_contact_pair` mutates retained
+16-byte cache entries, caller-supplied payload buffers and a recycled identity
+collection. It removes last matching pairs regardless of detail, resets only
+payload+0x110 and appends each nonzero identity. A removed null terminates the loop.
+See LINK_SOLVER.md, "Empty-pair cache recycling". Python owns storage growth;
+allocator failure, capacity overflow and concurrency are outside its domain.

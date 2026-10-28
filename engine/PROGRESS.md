@@ -7935,3 +7935,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   services.84 original-wrapper comparisons validate lookup, routing and forwarding;
   geometry/grouping services are supplied, so this is not full cache integration.
   Wrapper choice controls16/32-bit keys; upstream flag meanings remain open.
+- Reconstructed empty-pair cache clearing and payload recycling.512 complete
+  original clear calls match retained entries, all payload bytes, recycle ordering
+  and capacities with allocator services supplied.3846 payload resets and739
+  growth requests match. Null-payload termination and inactive bytes are preserved.
+  Nonempty acquisition and integrated geometry-to-cache execution remain open.

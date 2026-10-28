@@ -2878,3 +2878,54 @@ This gives a static connection from registered terrain contact handlers to the
 persistent record-group consumer. Earlier notes leaving that invocation unknown
 are superseded. Full cache acquisition/removal and the caller's scheduling/lifetime
 contract remain open before this can be treated as an integrated physics update.
+
+### Empty-pair cache recycling
+
+`engine.pose_contact_cache` reconstructs pair clearing0x19904e0 with removal helper
+0x1958fa0 and count reset0x1986020. Cache slots contain16 bytes: uint16 first/second
+indices, uint32 detail, uint64 payload identity. The removal helper scans backward
+for the last matching pair, ignoring detail, decrements count, copies the last
+active slot over the removed slot and returns the removed payload identity.
+Inactive storage remains intact. Comparison arguments are uint32; the helper does
+not truncate an out-of-range argument to the slot's16-bit field.
+
+Clearing repeats removal until it returns zero. For each nonzero payload it writes
+zero only to the uint32 active count at+0x110, leaving all cached rows, flags and
+other bytes untouched. It appends that identity to the recycled-pointer collection.
+When full, the collection grows from zero capacity to8, otherwise doubles capacity.
+Native allocation requests capacity*8 bytes with alignment16 and argument0x28;
+existing storage uses the reallocation service. No payload is freed here.
+
+A removed null payload and absence both return zero. Therefore a null matching
+entry is removed but terminates clearing before any remaining matches are visited.
+This is preserved rather than silently converted into a skip-null policy.
+
+```text
+while true:
+    payload = remove_last_pair_match(cache, first, second)
+    if payload == 0: return
+    payload.active_count = 0
+    if recycled.count == recycled.capacity:
+        grow(recycled, 8 if capacity == 0 else 2 * capacity)
+    recycled.slots[recycled.count] = payload
+    recycled.count += 1
+```
+
+The independent API accepts caller-owned payload buffers indexed by opaque integer
+identity. Python list growth replaces allocator execution. New reserved list slots
+are authored zero placeholders, not recovered native initialization. Its processed
+count return is diagnostic. Supplied cache/payload validity and serial mutation are
+preconditions; the implementation does not add an ownership or concurrency claim.
+
+[512 complete original clear comparisons](../../native/snow_host/pose_contact_cache_clear_validation.json)
+execute original removal and reset helpers with supplied allocator services.
+They match every retained cache slot, recycle slot/count/capacity, all288 payload
+bytes and allocation sizes. Cases process3846 payloads and exercise739 growth calls,
+including mixed details, unmatched pairs, empty collections and null termination.
+New allocator storage is zeroed fixture data. Allocation failure, overflow and
+runtime synchronization remain outside this validation.
+
+This replaces the pair-clear service's numerical/storage policy with executable
+reconstruction. The nonempty path still needs cache lookup/acquisition and full
+integration with contact generation. Caller adapters may bind `payloads` explicitly
+to use `clear_contact_pair` as the handoff's clearing service.

@@ -1,0 +1,21 @@
+{
+  "schema": "pose-contact-cache-clear-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "routine_rva": "0x19904e0",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "method": "Complete original pair-clear with original removal and reset helpers; allocator services supplied",
+  "processed_payloads": 3846,
+  "growth_calls": 739,
+  "comparisons": [
+    "Active counts and retained cache entries",
+    "Recycled count, capacity, order and retained slots",
+    "All288 bytes of each supplied payload",
+    "Allocation request sizes"
+  ],
+  "limits": [
+    "Synthetic serial cache; supplied in-place allocation preserving storage",
+    "No allocator failure, uint32 capacity overflow, locking or live lifetime validation",
+    "Zero-initialized new allocator bytes are fixture data, not a native initialization claim"
+  ]
+}
