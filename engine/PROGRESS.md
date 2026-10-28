@@ -7805,3 +7805,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   row order and odd-capacity stopping. 1024 complete native comparisons match
   counts and retained output bytes. Traced the caller's profile-mask gate and
   separate record producer as static leads; full production remains unresolved.
+- Recovered contact producer's four-way axis selection with explicit face/edge
+  services. 1024 native selector cases match query ordering, seeds and all output
+  bytes across every kind. Box/triangle descriptor setup and downstream emitters
+  are identified leads; their geometry remains unreconstructed.

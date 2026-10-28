@@ -1801,3 +1801,45 @@ reading receiver floats+0x40/+0x44/+0x48 and building signed corner combinations
 this is a box-like geometry lead, not yet a proved resource type or reconstructed
 contact generator. The caller's transform setup, allocation fallback and complete
 production/filtering traversal still need validation.
+
+### Contact producer axis selection
+
+`engine.pose_contact_axis_selection.select_contact_axis` reconstructs0x190f700,
+called by the record producer0x190f8b0. Face-query0x19243e0 and edge-query0x1923dd0
+remain explicit services. The first face query receives frame/shape pairs in input
+order; the second reverses the pairs. Each returns distance and feature index.
+
+```text
+F0,I0 = face_query(frame0,shape0,frame1,shape1)
+if F0 > 0: return {kind:3, first:I0, second:UINT_MAX, distance:F0}
+F1,I1 = face_query(frame1,shape1,frame0,shape0)
+if F1 > 0: return {kind:3, first:UINT_MAX, second:I1, distance:F1}
+bias(x) = float32(float32(x * float32(.98)) + float32(.01))
+if edge_enabled:
+    edge = {distance:-FLT_MAX, first:UINT_MAX, second:UINT_MAX}
+    edge_query(frame0,shape0,frame1,shape1,edge)
+    if edge.distance > bias(F0) and edge.distance > bias(F1):
+        return {kind:2, **edge}
+if F0 > bias(F1): return {kind:0, first:I0, second:UINT_MAX, distance:F0}
+return {kind:1, first:UINT_MAX, second:I1, distance:F1}
+```
+
+The comparisons are strict; equality favors the later face choice rather than
+edge selection. Constants are observed float32 values0.9800000190734863 and
+0.009999999776482582, not exact real-number arithmetic. An edge service receives
+initialized seed fields and can leave them unchanged. No contact distance units
+or query geometry are inferred from this selector alone.
+
+[1024 offline native selector comparisons](../../native/snow_host/pose_contact_axis_selection_validation.json)
+match query call order, reversed argument identities, edge seed bytes and all16
+result bytes. All four kinds occur. Only the face/edge query responses are supplied;
+this is not uninterrupted original geometry-query validation.
+
+The producer dispatches kind2 to0x18e3aa0; kinds0/1 to0x18e4060 with reversed
+shape/frame ordering and different orientation flags. Kind3 takes the zero-record
+return path. Before selection, it constructs eight signed corner combinations
+from receiver+0x40/+0x44/+0x48 and six plane descriptors, plus a two-sided triangle
+descriptor. These observations strengthen the box-versus-triangle interpretation,
+but complete descriptor construction, TLS initialization, geometry queries and
+record emission still need reconstruction. The new module implements the proven
+selection policy without substituting guessed query results.

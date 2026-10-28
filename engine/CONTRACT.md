@@ -645,3 +645,10 @@ order until positive capacity is reached. Output tails persist. Positive spacing
 nonempty cell dimensions and finite int32-convertible values are authored domain
 requirements. No per-triangle sample/contact test is implied. See LINK_SOLVER.md,
 "Grid triangle candidate enumeration".
+
+Contact axis selection: `pose_contact_axis_selection.select_contact_axis` consumes
+opaque frame/shape pairs and explicit face/edge query services. It preserves
+reversed face arguments, positive-distance short circuits, seeded edge output,
+float32 bias and strict branch precedence. Result kind/index/distance fields are
+recovered; query geometry and contact emission remain dependencies. See
+LINK_SOLVER.md, "Contact producer axis selection".
