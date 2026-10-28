@@ -7863,3 +7863,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   executions match counts and all output bytes across every selection kind,
   including1949 emitted records. Runtime initialized-state remains supplied.
   Terrain candidate/profile/filter orchestration and broader frame coverage remain.
+- Extended complete box-triangle validation to4096 full3D rotation cases, with
+  all counts/output bytes matching and3947 records emitted. Added a standalone
+  JSON inspection command and synthetic fixture with explicit provenance and
+  linear-versus-squared separation labels. Terrain orchestration remains open.

@@ -2360,3 +2360,37 @@ producer, not a complete terrain collision simulation. The upstream candidate
 iteration, per-triangle profile-mask gate, record-role conversion and optional
 terrain filtering still need to be composed and validated. Full 3D rotation
 coverage and degenerate native behavior remain separate validation work.
+
+### Full 3D producer validation
+
+[4096 additional complete native comparisons](../../native/snow_host/pose_box_triangle_contact_3d_validation.json)
+exercise arbitrary quaternion-derived box rotations and translations. Counts and
+all output bytes match across722 box-face selections,1022 triangle-face selections,
+1001 edge selections and1351 separation results, producing3947 records. This
+broadens the earlier z-axis-only composition evidence without changing the
+implementation. Supplied runtime state, finite synthetic geometry and scalar-trig
+dispatch restrictions remain. Scale/shear and native exceptional arithmetic are
+not established by these rotation fixtures.
+
+### Runnable box-triangle inspection
+
+Run the independent producer without a game executable or private validator:
+
+```sh
+python3 -m engine.pose_box_triangle_bench engine/examples/pose_box_triangle.json
+```
+
+Use `--output result.json` to save the result. The authored synthetic fixture places
+a unit-half-extent box across a triangle plane and produces four contacts. Inputs
+specify XYZ extents, four XYZ frame rows, three world-space triangle vertices,
+capacity and boolean reduction/edge flags. Provenance must be explicitly
+`authored_synthetic` or `caller_supplied_observation`; neither label claims native
+verification of the caller's data.
+
+Output contains selected kind/indices/distance, emitted count and decoded contact
+records with exact record hex. Each record labels its separation as `linear_plane`
+or `negative_squared`, preserving the face/edge distinction. Selection is computed
+again for inspection; it is not a live trace. CLI guards bound capacity to128 and
+reject nonfinite fields, nonpositive extents and nonboolean flags. Those guards
+are authored. The helper geometry domains still apply, and this command does not
+supply terrain, integration, a solver or a live mod entry point.

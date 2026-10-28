@@ -744,3 +744,9 @@ vertices are world-space; box geometry uses extents and a supplied frame. Flags
 control edge queries and face-point reduction. Capacity limits output records.
 See LINK_SOLVER.md, "Connected box-triangle producer" for dispatch and validation
 scope. Terrain candidate/profile/filter orchestration remains outside this API.
+
+Runnable producer inspection: `python3 -m engine.pose_box_triangle_bench INPUT`
+accepts explicit provenance and bounded synthetic/observed box-triangle geometry,
+and returns decoded records, exact bytes and separation-kind labels. See
+LINK_SOLVER.md, "Runnable box-triangle inspection". This is an offline inspection
+API; no private binary, live pointer, terrain simulation or native session required.

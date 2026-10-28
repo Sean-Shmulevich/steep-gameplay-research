@@ -1,0 +1,12 @@
+{
+  "schema": "pose-box-triangle-v1",
+  "provenance": "authored_synthetic",
+  "inputs": {
+    "extents": [1, 1, 1],
+    "box_frame": [[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0]],
+    "triangle": [[-3, -3, 0], [3, -3, 0], [0, 3, 0]],
+    "capacity": 8,
+    "reduce_to_four": true,
+    "edge_enabled": true
+  }
+}
