@@ -1,0 +1,23 @@
+{
+  "schema": "pose-grid-neighbors-validation-v1",
+  "cases": 5184,
+  "passed": 5184,
+  "method": "Offline full native neighbor helper, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19959e0",
+  "comparisons": [
+    "returned neighbor count",
+    "all ordered XYZ float bits",
+    "untouched output tail",
+    "unchanged resource bytes"
+  ],
+  "coverage": [
+    "every vertex of all grid dimensions 1..8 twice, both diagonal modes",
+    "corners, edges, interior, one-row and one-column grids",
+    "negative spacing and offsets"
+  ],
+  "limits": [
+    "Finite supplied grid; valid sample identities only.",
+    "Contact-filter rejection and edge helper remain separate boundaries."
+  ]
+}

@@ -7778,3 +7778,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   1024 native calls match all twelve output words with explicitly initialized
   XYZ masking, both diagonals and both halves. The caller's edge/cross-product
   preparation is identified; subsequent contact calculations remain unresolved.
+- Reconstructed ordered grid-vertex neighborhoods used by the contact filter.
+  5184 complete native helper cases match counts, vertex bits and output tails,
+  including narrow grids and boundaries. The caller is now identified as a
+  swap-removing filter over48-byte records. Its rejection policy and edge-neighbor
+  dependency still require implementation and validation.

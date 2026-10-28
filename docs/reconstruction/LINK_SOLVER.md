@@ -1559,3 +1559,42 @@ producer. No native call is intercepted. The Python reuse of cell geometry is a
 validated equivalent composition within the finite, complete-cell domain, not a
 claim about original function boundaries. Asset sampling, invalid native reads,
 mask initialization and the remaining caller contact calculation stay separate.
+
+### Grid vertex neighborhood and contact-filter lead
+
+`grid_vertex_neighbors` reconstructs helper0x19959e0. Its incoming context in RCX
+is unused. Resource width/height are uint16 fields0x68/0x6a; a sample identity is
+split into row/column using sample width, not the triangle-cell divisor0x9c.
+It emits up to six XYZ vertices, clipping individual neighbors at grid boundaries
+without sorting or changing order. Offsets relative to the selected column/row:
+
+```text
+byte58 == 0: [(0,+1),(+1,+1),(+1,0),(0,-1),(-1,-1),(-1,0)]
+byte58 != 0: [(0,+1),(+1,0),(+1,-1),(0,-1),(-1,0),(-1,+1)]
+```
+
+Each valid neighbor uses the same float32 spacing/offset and direct height-sample
+formula as the cell method. It does not include the selected vertex itself.
+The public API requires nonempty dimensions, a valid selected sample and complete
+storage as authored guards. Native invalid dimensions/identities are not modeled.
+
+[5184 uninterrupted native comparisons](../../native/snow_host/pose_grid_neighbors_validation.json)
+cover every vertex of every width/height combination1..8, repeated with both
+zero/nonzero diagonal modes. Counts, ordered vertex bits, untouched output tail
+and resource storage match. This includes isolated points, one-dimensional grids,
+corners, edges and full six-neighbor interiors.
+
+Further inspection identifies the caller's full entry at0x1996e50. It receives
+resource, transform, triangle ID, a mutable record array and count. Its loop uses
+48-byte records. A rejection decrements count, copies the last record into the
+current slot and retries that slot; accepted records advance the cursor. This
+is a filtering stage for existing records, not generation of new records.
+The method returns the remaining count and has a zero-count early exit.
+
+Static branch evidence: triangle-relative weights select a vertex neighborhood
+or an edge check. Vertex branches call0x19959e0, normalize neighbor-minus-vertex
+directions and compare dot products with the transformed record direction against
+a threshold. Edge branches call0x1995800, which in turn requests neighboring
+geometry through0x1996500. Exact weight thresholds, degenerate behavior, record
+semantics and the edge service still require reconstruction and native validation.
+No complete contact-filter implementation is claimed by the neighborhood receipt.

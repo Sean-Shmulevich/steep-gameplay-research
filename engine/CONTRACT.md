@@ -608,3 +608,10 @@ geometry matches the separate native vertex method on complete finite cells.
 Positive-zero fourth lanes depend on the supplied initialized XYZ mask in native
 validation. This endpoint supplies geometry; it does not implement the consuming
 contact calculation. See LINK_SOLVER.md, "Grid triangle vertex consumer boundary".
+
+Grid neighborhoods: `pose_grid_cell.grid_vertex_neighbors` returns ordered XYZ
+neighbors using sample dimensions0x68/0x6a and the diagonal flag. It clips neighbors
+at edges and keeps the native traversal order. Valid dimensions, sample identity
+and complete supplied grid are authored requirements. This implements a contact
+filter dependency, not the record-rejection policy itself. See LINK_SOLVER.md,
+"Grid vertex neighborhood and contact-filter lead".

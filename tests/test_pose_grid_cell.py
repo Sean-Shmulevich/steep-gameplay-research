@@ -1,6 +1,6 @@
 import struct
 import unittest
-from engine.pose_grid_cell import grid_cell_geometry, grid_triangle_sample_indices, grid_triangle_vertices
+from engine.pose_grid_cell import grid_cell_geometry, grid_triangle_sample_indices, grid_triangle_vertices, grid_vertex_neighbors
 
 class GridCellTest(unittest.TestCase):
     def resource(self,flip):
@@ -41,3 +41,14 @@ class GridCellTest(unittest.TestCase):
                 self.assertEqual([v[2] for v in vertices],[samples[i] for i in sample_ids])
                 for v in vertices:self.assertEqual(struct.pack('<f',v[3]),bytes(4))
         with self.assertRaises(ValueError):grid_triangle_vertices(r,samples,8)
+
+    def test_neighbor_order_and_edges(self):
+        r=self.resource(0);struct.pack_into('<H',r,0x6a,3)
+        samples=list(range(9))
+        self.assertEqual([v[2] for v in grid_vertex_neighbors(r,samples,4)],[7,8,5,1,0,3])
+        self.assertEqual([v[2] for v in grid_vertex_neighbors(r,samples,0)],[3,4,1])
+        r[0x58]=255
+        self.assertEqual([v[2] for v in grid_vertex_neighbors(r,samples,4)],[7,5,2,1,3,6])
+        self.assertEqual([v[2] for v in grid_vertex_neighbors(r,samples,0)],[3,1])
+        struct.pack_into('<2H',r,0x68,1,1)
+        self.assertEqual(grid_vertex_neighbors(r,[12],0),[])

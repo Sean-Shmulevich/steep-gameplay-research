@@ -62,3 +62,30 @@ def grid_triangle_vertices(resource, samples, triangle_id):
     vertices,indices = grid_cell_geometry(resource,samples,column,row)
     start = (triangle_id&1)*3
     return [vertices[i]+[0.] for i in indices[start:start+3]]
+
+
+def grid_vertex_neighbors(resource, samples, sample_id):
+    """Return ordered neighboring XYZ vertices for the contact filter.
+
+    Evidence: LINK_SOLVER.md, Grid vertex neighborhood and contact-filter lead.
+    Positive dimensions and an in-range vertex are authored API requirements.
+    The native helper's first context argument is unused.
+    """
+    width,height = struct.unpack_from('<2H',resource,0x68)
+    if not width or not height or not 0 <= sample_id < width*height:
+        raise ValueError('Valid vertex in a nonempty grid required')
+    if len(samples) < width*height:
+        raise ValueError('Complete sample storage required')
+    row,column = divmod(sample_id,width)
+    offsets = ([(0,1),(1,0),(1,-1),(0,-1),(-1,0),(-1,1)]
+               if resource[0x58] else
+               [(0,1),(1,1),(1,0),(0,-1),(-1,-1),(-1,0)])
+    sx,sy = struct.unpack_from('<2f',resource,0x70)
+    ox,oy = struct.unpack_from('<2f',resource,0x7c)
+    result=[]
+    for dx,dy in offsets:
+        x,y=column+dx,row+dy
+        if 0 <= x < width and 0 <= y < height:
+            result.append([f32(f32(f32(x)*sx)+ox),
+                           f32(f32(f32(y)*sy)+oy),f32(samples[y*width+x])])
+    return result
