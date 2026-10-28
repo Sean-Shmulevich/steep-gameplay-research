@@ -3184,3 +3184,51 @@ policy using Python storage. Input guards, JSON representation, diagnostics and
 snapshot copying are authored interfaces. Numerical integration evidence remains
 the separate native terrain-cache receipt, not the fixture's successful execution.
 No solver, time advancement, native memory access or game launch occurs here.
+
+### Contact payload pool
+
+`pose_contact_pool.acquire_payload_slot` reconstructs slot acquisition0x18dcff0
+for288-byte payload storage. The pool is distinct from the contact consumer's
+recycled-pointer list. Structural fields are:
+
+| Pool offset | Meaning in this routine |
+| --- | --- |
+| +0x08 | retained page-pointer array |
+| +0x10 / +0x12 | uint16 page count / capacity |
+| +0x18 | current page pointer |
+| +0x20 / +0x22 | uint16 current page index / next slot index |
+| +0x24 / +0x26 | uint16 slots per page / allocation alignment |
+| +0x28 | uint32 active allocation count |
+| +0x30 | free-list head |
+
+If free_head is nonzero, the helper returns that identity, replaces free_head with
+the first eight payload bytes and increments active_count modulo2^32. It does not
+change page cursors or overwrite the popped payload's former next link.
+
+Otherwise it uses the current page. If none exists, it sets page_index to the
+current page count, requests `slots_per_page * 288` bytes with the stored alignment
+and argument0x2c, and appends the returned page. A full page table requests capacity8
+when empty or twice its previous capacity through a separate reserve service.
+The helper returns `current_page + 288 * slot_index`, then increments the slot index.
+At page exhaustion it selects the next registered page if available; otherwise it
+clears current_page and page_index. Both cases reset slot_index to zero. Every
+successful acquisition increments active_count.
+
+These returned identities are raw slots. No owner/count/flag initialization occurs
+in this routine. The batch supplier separately sets owner zero, active row count
+zero and flag bit0 for nonnull slots. Separating these operations preserves reused
+payload bytes until the actual initialization boundary.
+
+[1024 complete original slot-acquisition comparisons](../../native/snow_host/pose_contact_pool_validation.json)
+match returned identity, all56 pool-state bytes, retained page-table slots and free
+payload bytes. They include358 page allocations and256 free-list cases. Page byte
+sizes, alignment, allocation argument and reserve-capacity requests also match.
+Page allocation and page-table reserve are supplied services. Positive page sizes,
+valid metadata and successful allocation are fixture preconditions; capacity
+overflow, allocation failure and synchronization are outside this receipt.
+
+The independent API uses caller-supplied integer identities/page bases and payload
+buffers. Page-table reserve is responsible for capacity and storage changes.
+It rejects null allocation and uint16 capacity overflow as authored guards rather
+than reproducing invalid memory access. Neither opaque identities nor passing
+comparisons establish native pool ownership or a safe concurrent modding allocator.

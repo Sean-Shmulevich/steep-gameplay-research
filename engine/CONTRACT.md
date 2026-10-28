@@ -884,3 +884,10 @@ geometry steps/pair metadata. It returns per-step inspection plus resumable fina
 state. See LINK_SOLVER.md, "Terrain-cache inspection CLI". Snapshot copying and
 JSON bounds are authored; storage exhaustion errors rather than inventing native
 batch allocation. This command neither advances time nor executes a solver.
+
+Payload pool slot acquisition: `pose_contact_pool.acquire_payload_slot` prioritizes
+free-list entries, otherwise takes288-byte slots from registered pages. Allocation
+and page-table reserve are explicit services. It updates pool counters/cursors but
+leaves payload bytes intact. See LINK_SOLVER.md, "Contact payload pool". Successful
+allocation and valid metadata are required; initialization and locking remain caller
+responsibilities, not silently implemented substitutes.

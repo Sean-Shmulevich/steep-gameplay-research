@@ -7972,3 +7972,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   payload reuse and retained bytes. Snapshot continuation matches uninterrupted
   execution; input stays unchanged. Shared geometry input validation preserves
   the existing standalone inspector's limits. No native allocator or solver claim.
+- Reconstructed288-byte payload pool slot acquisition.1024 complete original calls
+  match identities, retained pool/table bytes and service requests, including358
+  page allocations and256 free-list cases. Allocation and table reserve are supplied;
+  slot contents remain untouched. Batch initialization and protected synchronization
+  remain separate boundaries before replacing the inspector's explicit storage.

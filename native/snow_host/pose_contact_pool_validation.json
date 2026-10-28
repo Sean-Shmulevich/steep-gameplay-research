@@ -1,0 +1,21 @@
+{
+  "schema": "pose-contact-pool-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18dcff0",
+  "method": "Complete original slot-acquisition routine; page allocation and table-reserve services supplied",
+  "page_allocations": 358,
+  "free_list_cases": 256,
+  "comparisons": [
+    "Returned slot identity",
+    "All56 pool-state bytes and retained page-table slots",
+    "Free payload bytes remain unchanged",
+    "Page byte sizes, alignment, tag and reserve capacity requests"
+  ],
+  "limits": [
+    "Successful supplied allocation; table-reserve service substitutes native container allocation",
+    "Positive slots-per-page, valid metadata and non-overflowing page capacities",
+    "No payload initialization, locking, freeing or live ownership proof"
+  ]
+}
