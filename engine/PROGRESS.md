@@ -7845,3 +7845,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native selection calls with optional reduction disabled match all point/scalar
   bytes and counts, retaining33007 points. Four-point reduction, final face
   emission and producer descriptor construction remain unresolved.
+- Connected complete contact point selection to the existing four-index selector.
+  1024 uninterrupted native executions including matrix/scalar trig match all
+  point and separation bytes, with454 four-point outputs under reduction. This
+  closes optional reduction for the validated dispatch domain; face emission and
+  producer descriptors remain open.

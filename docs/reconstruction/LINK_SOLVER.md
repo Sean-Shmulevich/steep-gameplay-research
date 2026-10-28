@@ -2186,5 +2186,50 @@ comparisons do not establish NaN behavior or physical contact validity.
 
 When reduction is enabled and more than four points remain, the wrapper calls
 0x19989d0 to select four indices, then gathers both points and separations into
-the first four slots. That selection policy remains unresolved. Final face-contact
-record emission and complete producer construction remain separate dependencies.
+the first four slots. That selector is connected below. Final face-contact record emission and complete
+producer construction remain separate dependencies.
+
+
+### Complete contact point selection
+
+`engine.pose_contact_point_filter.select_contact_points` connects the complete
+0x19984f0 sequence: plane filtering, proximity removal, then optional reduction
+when the surviving count exceeds four. Reduction calls the same 0x19989d0 selector
+already implemented by `engine.pose_link_selection.select_pose_link_rows`. This
+caller uses sixteen-byte point records rather than the earlier forty-eight-byte
+link records. The selection normal comes from the supplied reference plane.
+
+The selector sums points in order with float32 rounding and divides by a float32
+count to obtain the center. For normal N=(x,y,z), it chooses a local tangent:
+
+```text
+if min(abs(x), abs(y)) - abs(z) < 0:
+    tangent = (z,0,-x) if abs(y)-abs(x) < 0 else (0,z,-y)
+else:
+    tangent = (y,-x,0)
+```
+
+After normalization, it rotates the tangent using the recovered quaternion-matrix
+path at fixed angle 0.6456422805786133. It finds low/high point positions along
+that axis relative to the center, choosing later ties. Let `span=low-high` and
+`cross_axis=cross(normal,span)`. A second scan selects the minimum and maximum
+projection indices along span, then minimum and maximum along cross_axis, again
+choosing later ties. There is no deepest-point preference or uniqueness check.
+The existing selector preserves float32 order, including the subtraction-based
+comparisons. See CENTRAL_IMPULSE.md, "Geometric four-record selection" and
+"Fixed-angle selector rotation" for the prior selector/rotation evidence.
+
+The contact wrapper snapshots all four selected point records and their matching
+separation scalars before copying them into slots0..3. Remaining point/distance
+bytes persist, including values written by the earlier filtering stage. If the
+reduction flag is false or at most four points survive, it returns the filtered
+count without invoking the selector. A nonzero finite normal is required only
+when the selector runs; no invented fallback is used for degenerate normals.
+
+[1024 complete native selection comparisons](../../native/snow_host/pose_contact_point_selection_validation.json)
+match returned counts and complete point/distance buffers with reduction on and
+off. There are454 four-point outputs with reduction enabled. Native execution
+includes the actual selector, quaternion matrix and scalar trigonometry without
+interception. XYZ mask and zero comparison state are supplied; the fixed-angle
+specialization is validated for scalar trig dispatch zero. Other dispatch paths,
+nonfinite geometry and full face-contact emission remain outside this evidence.

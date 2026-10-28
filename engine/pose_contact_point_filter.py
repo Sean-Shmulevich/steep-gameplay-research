@@ -44,3 +44,24 @@ def remove_near_points(distances, points, count, radius):
                 j += 1
         i += 1
     return count
+
+
+def select_contact_points(distances, points, count, plane, reduce_to_four=False):
+    """Filter, deduplicate, then optionally gather four geometric extrema.
+
+    Selection reuses the recovered fixed-angle selector. Nonzero finite plane
+    normal required when reduction runs; other stages keep their own contracts.
+    """
+    from .pose_link_selection import select_pose_link_rows
+    count = filter_plane_points(distances, points, count, plane)
+    count = remove_near_points(distances, points, count, 1e-4)
+    if reduce_to_four and count > 4:
+        indices = select_pose_link_rows(
+            [struct.unpack_from('<3f', points, i*16) for i in range(count)],
+            plane[:3])['indices']
+        selected_points = b''.join(bytes(points[i*16:(i+1)*16]) for i in indices)
+        selected_distances = b''.join(bytes(distances[i*4:(i+1)*4]) for i in indices)
+        points[:64] = selected_points
+        distances[:16] = selected_distances
+        return 4
+    return count

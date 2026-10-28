@@ -715,3 +715,10 @@ points at nonpositive plane separation and writes matching float32 scalars.
 swapping the last record and its scalar into the removed slot. Both retain unused
 bytes. Inputs are finite; plane-filter count is bounded to128. See LINK_SOLVER.md,
 "Contact plane and proximity filtering". Optional four-point reduction is open.
+
+Complete point selection: `pose_contact_point_filter.select_contact_points`
+connects plane filtering, proximity removal and optional four-index reduction.
+It reuses the recovered geometric selector and gathers matching point/tag and
+separation records before overwriting slots0..3. Later ties and duplicate indices
+are preserved. See LINK_SOLVER.md, "Complete contact point selection" for the
+fixed-angle/trigonometry domain. Final face emission remains separate.
