@@ -1,0 +1,22 @@
+{
+  "schema": "pose-link-paired-builder-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1992800",
+  "method": "Complete original metadata-set/single builder and profile helpers without interception",
+  "comparisons": [
+    "All retained128-byte primary/secondary rows and unused storage",
+    "All payload and result bytes",
+    "Primary, secondary and result counters"
+  ],
+  "coverage": [
+    "0..4 payload rows, nonzero initial counters, both-body motion and general finite frames",
+    "All six combination modes, seed gates, arbitrary cached bits"
+  ],
+  "limits": [
+    "Default-profile resources; initialized XYZ and zero masks",
+    "Finite nonsingular arithmetic only; no native allocation or solver iteration",
+    "Other multirow families and live ownership remain separate"
+  ]
+}

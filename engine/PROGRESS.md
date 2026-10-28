@@ -7992,3 +7992,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   Preserved float32 threshold/axis ties and paired positive-zero lane distinction.
   Added threshold and degenerate-input tests. Paired response and128-byte row
   assembly remain before a complete paired builder or solver integration claim.
+- Completed paired metadata-set/single builder.512 uninterrupted original calls
+  match every128-byte primary/secondary row, payload/result storage and counters,
+  across0..4 records and all six profile modes. Both-body angular terms and distinct
+  secondary layout are preserved. Two single families are now reconstructed;
+  both multi families and end-to-end solver execution remain open.

@@ -3350,3 +3350,51 @@ motion. The suite uses finite general frames/points and nonzero normals with
 initialized masks and default profiles. Complete row assembly, subsequent response
 selection and solver execution remain outside this receipt. Public tests cover
 projection/cross direction, signed-zero lane and a threshold crossing.
+
+### Connected paired single builder
+
+`pose_link_paired_builder.build_paired_pose_link_rows` connects the complete
+metadata-set/single family0x1992800. It shares inspected profile resolution and
+coefficient arithmetic with the earlier family, but uses both body offsets/motions
+and128-byte retained solver rows. Each payload row consumes one primary row, two
+secondary rows and three sequential result indices. Native counters are+0xa8/+0xc0
+for primary/secondary allocation and+0x180 for result indices.
+
+For arms r1/r2, world-point separation D, normal N and paired relative-motion
+projection q, the scalar response is the existing primary-response rule with q
+supplied from both-body motion. Let H=float32(0.5*D), L1=r1+H, L2=r2-H and direction
+U=-N. The row layout is:
+
+| Field | Primary | Secondary for tangent T |
+| --- | --- | --- |
+| +0x00/+0x02 | body indices | body indices |
+| +0x04 | primary result index | its own result index |
+| +0x10 | selected response broadcast | dot(D,T)*0 in XYZ, FLT_MAX in W |
+| +0x20 | U, negative-zero W | T with recovered W |
+| +0x30 | cross(L1,U), zero W | cross(r1,T), zero W |
+| +0x50 | eight zero bytes | cross(T,r2), zero W |
+| +0x60 | cache-seeding gate broadcast | primary result index in first word |
+| +0x70 | cross(U,L2), zero W | combined profile field30 broadcast |
+
+Unwritten bytes remain untouched, including+0x40..0x4f in all rows, primary+0x58..0x5f
+and secondary+0x64..0x6f. The payload publishes the primary result index in its
+feedback field. A zero seeding gate broadcasts the raw cached word into that result;
+a nonzero finite gate preserves the previous result bytes. This implementation does
+not interpret arbitrary cached bits as a measured impulse or invent solver output.
+
+[512 complete original paired-builder comparisons](../../native/snow_host/pose_link_paired_builder_validation.json)
+execute entry to return with original profile helpers and no call interception.
+Every retained128-byte row, unused row storage, complete payload, result buffer and
+all three counters match. Cases cover0..4 payload rows, nonzero initial counters,
+both-body motion, general finite frames, all six combination modes and both seed
+branches. Runtime masks are supplied and resources use the default-profile branch.
+Finite nonsingular arithmetic is required; indexed lookup has separate evidence.
+
+The public tests cover retained padding, zero-row behavior, both seed outcomes,
+second-body secondary angular storage, and builder-to-feedback composition with
+an explicitly supplied result. The latter is not a solver integration test.
+
+This closes the second of four dispatcher-selected builder families locally.
+Metadata-clear/multi0x1991da0 and metadata-set/multi0x1991110 remain unimplemented
+in this connected row-building API. Mode-driven family selection must remain
+explicit; do not force single-family mode merely to avoid missing multi builders.

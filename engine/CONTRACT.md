@@ -909,3 +909,10 @@ relative point motion against the supplied, unnormalized normal, applies the str
 float32 fallback threshold and returns both tangent directions plus first_lane3.
 See LINK_SOLVER.md, "Paired-builder tangent directions". Finite nondegenerate inputs
 are required; full paired response and row assembly are still separate boundaries.
+
+Paired single-family rows: `pose_link_paired_builder.build_paired_pose_link_rows`
+uses retained128-byte arrays, both body motion/offset fields, explicit resources/
+profiles/modes and the existing result/payload storage contract. See LINK_SOLVER.md,
+"Connected paired single builder" for distinct primary/secondary angular layouts.
+It implements metadata-set/single only. Multi families, native allocation and solver
+iteration remain outside this contract; do not substitute112-byte rows.
