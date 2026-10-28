@@ -7801,3 +7801,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   upstream callers and documented one caller's optional gate and pre-filter
   point swap/direction flip. Those caller paths remain static leads; upstream
   record generation and degenerate behavior are not yet reconstructed.
+- Reconstructed grid triangle candidate enumeration with clipping, truncation,
+  row order and odd-capacity stopping. 1024 complete native comparisons match
+  counts and retained output bytes. Traced the caller's profile-mask gate and
+  separate record producer as static leads; full production remains unresolved.

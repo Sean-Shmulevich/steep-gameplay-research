@@ -637,3 +637,11 @@ Direction XYZ at0 and position XYZ at16 are transformed in the recovered operati
 order; other bytes remain opaque. Finite nondegenerate geometry and initialized
 XYZ mask semantics are required. It filters existing records, without generating
 contacts or asserting live ownership. See LINK_SOLVER.md, "Complete grid record filter".
+
+Grid candidate enumeration: `pose_grid_candidates.write_grid_triangle_candidates`
+clips a query box to stored bounds, checks Z overlap, converts XY with float32
+reciprocal multiplication and truncation, then emits paired triangle IDs in row
+order until positive capacity is reached. Output tails persist. Positive spacings,
+nonempty cell dimensions and finite int32-convertible values are authored domain
+requirements. No per-triangle sample/contact test is implied. See LINK_SOLVER.md,
+"Grid triangle candidate enumeration".

@@ -1752,3 +1752,52 @@ opaque record bytes and why naming+0x10 a universal world-space point would be
 premature. The branch condition, upstream record-generation call, remaining five
 callers and complete outer traversal remain to be reconstructed and validated.
 These caller observations are static evidence, not covered by the filter receipt.
+
+### Grid triangle candidate enumeration
+
+`engine.pose_grid_candidates.write_grid_triangle_candidates` reconstructs
+0x18c4cc0. It intersects a supplied six-float query box with stored resource
+bounds0x7c..0x90 using float32 subtract-and-compare selection. Disjoint Z returns
+zero, with equality accepted. XY values are converted to cell ranges:
+
+```text
+start_x = max(trunc(float32((clipped_min_x-origin_x) * float32(1/spacing_x))),0)
+end_x = min(trunc(float32((clipped_max_x-origin_x) * float32(1/spacing_x))),cell_width-1)
+# Same for Y; each subtraction also rounds to float32.
+for row in inclusive(start_y,end_y):
+    for column in inclusive(start_x,end_x):
+        emit uint32(2*(row*cell_width+column))
+        if capacity reached: return written
+        emit uint32(2*(row*cell_width+column)+1)
+        if capacity reached: return written
+```
+
+Cell dimensions come from0x9c/0x9e, spacings0x70/0x74 and origins0x7c/0x80.
+The routine does not read height samples or test each triangle. Output ordering
+is rows, columns, then the two halves. Odd capacity can stop after the first half.
+The public API guards nonpositive capacity: native code writes before checking
+capacity, so a zero-capacity empty-output policy would invent behavior. Positive
+spacings, nonempty cell dimensions and finite int32-convertible coordinates are
+also explicit supported-domain requirements.
+
+[1024 uninterrupted native comparisons](../../native/snow_host/pose_grid_candidates_validation.json)
+match count and all output bytes, including untouched tails, with fractional
+spacings, dimensions1..9, capacities1..39 and overlapping/disjoint/inverted query
+boxes. Synthetic tests cover height separation, exact-boundary inclusion and
+capacity truncation between triangle halves.
+
+The first upstream caller0x19dde20 invokes this enumerator, selects the triangle's
+profile using map+0xb0 indexed by `triangle_id>>1` and table+0xa0, or default+0x20
+when no map exists. It admits a candidate when
+`(triangle_profile.mask50 & other_profile.mask48) |
+ (other_profile.mask50 & triangle_profile.mask48)` is nonzero. These are inspected
+static mask relationships, not yet a validated outer pipeline.
+
+The actual record producer is0x190f8b0. The caller supplies transformed triangle
+vertices, remaining record capacity, flags from the separate object's bytes0x90
+and0x91, and a receiver from that object's+0x88. The optional filtering flag+0x92
+is adjacent but its higher-level owner remains unknown. The producer begins by
+reading receiver floats+0x40/+0x44/+0x48 and building signed corner combinations;
+this is a box-like geometry lead, not yet a proved resource type or reconstructed
+contact generator. The caller's transform setup, allocation fallback and complete
+production/filtering traversal still need validation.
