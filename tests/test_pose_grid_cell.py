@@ -1,6 +1,6 @@
 import struct
 import unittest
-from engine.pose_grid_cell import grid_cell_geometry, grid_triangle_sample_indices, grid_triangle_vertices, grid_vertex_neighbors
+from engine.pose_grid_cell import grid_cell_geometry, grid_triangle_sample_indices, grid_triangle_vertices, grid_vertex_neighbors, write_grid_edge_neighbors
 
 class GridCellTest(unittest.TestCase):
     def resource(self,flip):
@@ -52,3 +52,17 @@ class GridCellTest(unittest.TestCase):
         self.assertEqual([v[2] for v in grid_vertex_neighbors(r,samples,0)],[3,1])
         struct.pack_into('<2H',r,0x68,1,1)
         self.assertEqual(grid_vertex_neighbors(r,[12],0),[])
+
+    def test_edge_fallback_reverse_and_retained_unsupported_output(self):
+        r=self.resource(0);struct.pack_into('<H',r,0x6a,3)
+        out=bytearray(28);out[24:]=b'TAIL'
+        write_grid_edge_neighbors(r,list(range(9)),0,1,out)
+        self.assertEqual(struct.unpack_from('<6f',out),(10,20,0,12,17,4))
+        write_grid_edge_neighbors(r,list(range(9)),1,0,out)
+        self.assertEqual(struct.unpack_from('<6f',out),(12,17,4,10,20,0))
+        self.assertEqual(out[24:],b'TAIL')
+        before=bytes(out)
+        write_grid_edge_neighbors(r,list(range(9)),0,8,out)
+        self.assertEqual(bytes(out),before)
+        write_grid_edge_neighbors(r,list(range(9)),8,0,out)
+        self.assertEqual(out[:24],before[12:24]+before[:12])

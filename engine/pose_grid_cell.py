@@ -89,3 +89,41 @@ def grid_vertex_neighbors(resource, samples, sample_id):
             result.append([f32(f32(f32(x)*sx)+ox),
                            f32(f32(f32(y)*sy)+oy),f32(samples[y*width+x])])
     return result
+
+
+def write_grid_edge_neighbors(resource, samples, first_id, second_id, output):
+    """Write two ordered XYZ edge-neighbor positions to retained 24-byte output.
+
+    Evidence: LINK_SOLVER.md, Grid edge neighborhood.
+    A missing neighbor falls back to the smaller endpoint's position. Unsupported
+    index differences preserve prior output, followed by the usual order swap.
+    Valid endpoints and complete nonempty storage are authored API requirements.
+    """
+    width,height = struct.unpack_from('<2H',resource,0x68)
+    if not width or not height or len(samples) < width*height or len(output) < 24:
+        raise ValueError('Complete grid and retained output required')
+    if not all(0 <= i < width*height for i in (first_id,second_id)):
+        raise ValueError('Valid endpoint identities required')
+    small,large = sorted((first_id,second_id))
+    row,column = divmod(small,width)
+    difference=large-small
+    offsets=None
+    if resource[0x58]:
+        if difference==1:offsets=[(1,-1),(0,1)]
+        elif difference==width:offsets=[(1,0),(-1,1)]
+        elif difference==width-1:offsets=[(0,1),(-1,0)]
+    else:
+        if difference==1:offsets=[(0,-1),(1,1)]
+        elif difference==width:offsets=[(1,1),(-1,0)]
+        elif difference==width+1:offsets=[(1,0),(0,1)]
+    if offsets is not None:
+        sx,sy=struct.unpack_from('<2f',resource,0x70)
+        ox,oy=struct.unpack_from('<2f',resource,0x7c)
+        for slot,(dx,dy) in enumerate(offsets):
+            x,y=column+dx,row+dy
+            if not (0 <= x < width and 0 <= y < height):x,y=column,row
+            struct.pack_into('<3f',output,slot*12,
+                             f32(f32(f32(x)*sx)+ox),
+                             f32(f32(f32(y)*sy)+oy),f32(samples[y*width+x]))
+    if first_id > second_id:
+        output[:24]=output[12:24]+output[:12]

@@ -1,0 +1,22 @@
+{
+  "schema": "pose-grid-edge-neighbors-validation-v1",
+  "cases": 6050,
+  "passed": 6050,
+  "method": "Offline complete native edge-neighbor helper; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1996500",
+  "comparisons": [
+    "all retained output bytes including tail and untouched unsupported cases",
+    "resource bytes unchanged"
+  ],
+  "coverage": [
+    "all ordered endpoint pairs in every grid dimension 1..5",
+    "both diagonal modes",
+    "equal endpoints, unsupported differences, reversed order, narrow grids, boundary fallback"
+  ],
+  "limits": [
+    "Finite supplied samples, valid endpoint identities only.",
+    "Recognized numeric differences are not proof of geometric adjacency.",
+    "Contact rejection using these positions remains unimplemented."
+  ]
+}

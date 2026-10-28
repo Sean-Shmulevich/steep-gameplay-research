@@ -1598,3 +1598,37 @@ a threshold. Edge branches call0x1995800, which in turn requests neighboring
 geometry through0x1996500. Exact weight thresholds, degenerate behavior, record
 semantics and the edge service still require reconstruction and native validation.
 No complete contact-filter implementation is claimed by the neighborhood receipt.
+
+### Grid edge neighborhood
+
+`write_grid_edge_neighbors` reconstructs0x1996500, the geometry dependency used
+by edge rejection helper0x1995800. Its first context argument is unused. It sorts
+the two sample identities numerically, decodes the lower identity into column c
+and row r using width0x68, and branches on their difference d. Height is0x6a.
+The two selected offsets relative to c/r are:
+
+| Diagonal flag | Difference, checked in this order | Neighbor offsets |
+| --- | --- | --- |
+| zero | 1 | (0,-1), (+1,+1) |
+| zero | width | (+1,+1), (-1,0) |
+| zero | width+1 | (+1,0), (0,+1) |
+| nonzero | 1 | (+1,-1), (0,+1) |
+| nonzero | width | (+1,0), (-1,+1) |
+| nonzero | width-1 | (0,+1), (-1,0) |
+
+Each out-of-grid neighbor becomes the lower endpoint's XYZ position. Every valid
+neighbor uses the established spacing/offset/direct-height formula. For an
+unrecognized difference, no position is written. Finally, if the original first
+identity was larger, the two retained XYZ outputs are swapped, even when no
+branch wrote them. The API therefore accepts mutable retained output rather than
+inventing an empty-result return. Tail bytes are preserved. Branch priority is
+significant for width1 and width2, where difference categories can coincide.
+
+[6050 complete native comparisons](../../native/snow_host/pose_grid_edge_neighbors_validation.json)
+cover all ordered endpoint pairs for every width/height combination1..5 and both
+diagonal modes, including equal endpoints, unsupported differences, narrow grids,
+boundary fallback and reversed order. Every output byte and unchanged resource
+byte matches. The public API requires valid endpoints and complete nonempty sample
+storage as authored guards. The native routine tests numeric differences, not
+full geometric adjacency, so matching a branch alone does not establish a valid
+mesh edge. The calling edge-rejection mathematics remains a separate boundary.

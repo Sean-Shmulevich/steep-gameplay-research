@@ -7783,3 +7783,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   including narrow grids and boundaries. The caller is now identified as a
   swap-removing filter over48-byte records. Its rejection policy and edge-neighbor
   dependency still require implementation and validation.
+- Completed grid edge-neighbor geometry with boundary fallback and output-order
+  rules. 6050 complete native cases match retained bytes across all endpoint pairs
+  on grids1..5, including unsupported differences and reversed order. The edge
+  rejection predicate and full record-filter composition remain unresolved.

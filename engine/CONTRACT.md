@@ -615,3 +615,10 @@ at edges and keeps the native traversal order. Valid dimensions, sample identity
 and complete supplied grid are authored requirements. This implements a contact
 filter dependency, not the record-rejection policy itself. See LINK_SOLVER.md,
 "Grid vertex neighborhood and contact-filter lead".
+
+Grid edge neighbors: `pose_grid_cell.write_grid_edge_neighbors` writes two XYZ
+positions into retained output. Numeric endpoint difference and diagonal flag
+select neighbor offsets; missing neighbors use the lower endpoint. Unsupported
+differences preserve prior positions, and reversed endpoint order still swaps
+them. Tail bytes persist. This is a geometry helper, not an adjacency validator
+or completed rejection predicate. See LINK_SOLVER.md, "Grid edge neighborhood".
