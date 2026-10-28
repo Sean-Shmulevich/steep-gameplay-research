@@ -3314,3 +3314,39 @@ captured by this prefix receipt.
 The public tests distinguish the two offsets, show common linear motion cancellation
 and retain input storage. This begins reconstruction of the missing paired builder;
 it does not yet connect terrain-generated payloads to paired solver iteration.
+
+### Paired-builder tangent directions
+
+`pose_link_paired_motion.paired_link_tangent_basis` continues the paired builder
+through0x1992f86. Given the recovered relative point motion V and supplied normal N:
+
+```text
+projection = dot(V, N)
+tangent = V - projection * N
+if float32(dot(tangent,tangent) - float32(1e-6)) < 0:
+    tangent = fallback_axis_perpendicular(N)
+first = tangent * float32(1 / sqrt(dot(tangent,tangent)))
+second = cross(N, first)
+```
+
+Each dot uses float32 pairwise `(x_product + y_product) + (z_product + 0)` order.
+The normal is not normalized by this path. For fallback, let ax/ay/az be absolute
+normal components. If `float32(min(ax,ay)-az)<0`, use `(z,0,-x)` when
+`float32(ay-ax)<0`, otherwise `(0,z,-y)`. Otherwise use `(y,-x,0)`.
+Strict comparisons preserve equality behavior; a zero resulting tangent is outside
+the independent finite/nondegenerate domain.
+
+The paired relative-motion fourth lane begins as positive zero. Its projection
+subtraction therefore differs from the single-family helper's negated-motion lane.
+The returned first_lane3 preserves that arithmetic; the second tangent's lane3 is
+positive zero in the compared domain. Do not reuse a single-family helper by merely
+negating its motion input if complete row bytes must agree.
+
+[1024 original paired-builder prefix comparisons](../../native/snow_host/pose_link_paired_tangent_validation.json)
+execute entry through both tangent directions, including original profile
+combiners, without interception. Both four-lane tangents and earlier world-center/
+relative-motion values match.205 cases take fallback; the others use projected
+motion. The suite uses finite general frames/points and nonzero normals with
+initialized masks and default profiles. Complete row assembly, subsequent response
+selection and solver execution remain outside this receipt. Public tests cover
+projection/cross direction, signed-zero lane and a threshold crossing.

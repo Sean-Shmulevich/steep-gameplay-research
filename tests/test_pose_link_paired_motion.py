@@ -31,3 +31,25 @@ class PairedPointMotionTest(unittest.TestCase):
         self.assertEqual(first,before)
         first['motion1ac'][0]=float('nan')
         with self.assertRaises(ValueError):paired_link_point_motion(first,body(),[0,0,0],[0,0,0])
+
+
+class PairedTangentTest(unittest.TestCase):
+    def test_relative_motion_projection_and_cross_direction(self):
+        import struct
+        from engine.pose_link_paired_motion import paired_link_tangent_basis
+        result=paired_link_tangent_basis([1,0,2],[0,0,1])
+        self.assertEqual(result['first'],[1,0,0]);self.assertEqual(result['second'],[0,1,0])
+        self.assertEqual(result['relative_motion_projection'],2)
+        self.assertFalse(result['fallback'])
+        self.assertEqual(struct.pack('<f',result['first_lane3']),bytes(4))
+
+    def test_threshold_crossing_changes_fallback(self):
+        from engine.pose_link_paired_motion import paired_link_tangent_basis
+        low=paired_link_tangent_basis([.0009999,0,0],[0,0,1])
+        high=paired_link_tangent_basis([.0010001,0,0],[0,0,1])
+        self.assertTrue(low['fallback']);self.assertFalse(high['fallback'])
+        self.assertEqual(low['first'],[0,1,0]);self.assertEqual(high['first'],[1,0,0])
+
+    def test_degenerate_normal_and_motion_rejected(self):
+        from engine.pose_link_paired_motion import paired_link_tangent_basis
+        with self.assertRaises(ValueError):paired_link_tangent_basis([0,0,0],[0,0,0])

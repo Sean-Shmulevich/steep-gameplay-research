@@ -903,3 +903,9 @@ both body frames/offset128 values and motion1a0/1ac pairs to compute offset-rela
 arms and second-minus-first point motion with float32 order. See LINK_SOLVER.md,
 "Paired-builder relative point motion". Only finite XYZ is represented; paired
 128-byte row assembly, SIMD padding and solver iteration remain separate work.
+
+Paired tangents: `pose_link_paired_motion.paired_link_tangent_basis` projects supplied
+relative point motion against the supplied, unnormalized normal, applies the strict
+float32 fallback threshold and returns both tangent directions plus first_lane3.
+See LINK_SOLVER.md, "Paired-builder tangent directions". Finite nondegenerate inputs
+are required; full paired response and row assembly are still separate boundaries.

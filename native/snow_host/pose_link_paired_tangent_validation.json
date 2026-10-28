@@ -1,0 +1,24 @@
+{
+  "schema": "pose-link-paired-tangent-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "block": [
+    "0x1992800",
+    "0x1992f86"
+  ],
+  "method": "Original paired-builder prefix through both tangent directions, no call interception",
+  "fallback_cases": 205,
+  "comparisons": [
+    "Both tangent vectors including fourth lanes",
+    "Paired world centers and relative point motion"
+  ],
+  "coverage": [
+    "General finite frames/points/motion and arbitrary nonzero normals",
+    "Zero-motion fallback and moving projection branches; original profile combiners"
+  ],
+  "limits": [
+    "First-row prefix only; full paired row assembly and solver not executed",
+    "Default profile setup, initialized masks and finite nondegenerate arithmetic"
+  ]
+}

@@ -31,3 +31,36 @@ def paired_link_point_motion(first, second, first_point, second_point):
         outputs.append(dict(center_world=world_center,arm=arm,point_motion=motion))
     return dict(first=outputs[0],second=outputs[1],
                 relative_motion=[f32(outputs[1]['point_motion'][i]-outputs[0]['point_motion'][i]) for i in range(3)])
+
+
+def paired_link_tangent_basis(relative_motion, normal):
+    """Project paired relative motion and select the inspected fallback tangent.
+
+    Normal is supplied, not normalized. The first tangent's fourth lane is exposed
+    because paired positive-zero motion differs from the single-family negation.
+    """
+    def vector(values):
+        if len(values)!=3:raise ValueError('Three components required')
+        result=[f32(v) for v in values]
+        if not all(math.isfinite(v) for v in result):raise ValueError('Finite components required')
+        return result
+    motion=vector(relative_motion);n=vector(normal)
+    def dot(a,b):
+        p=[f32(x*y) for x,y in zip(a,b)]
+        return f32(f32(p[0]+p[1])+f32(p[2]+0.0))
+    projection=dot(motion,n)
+    tangent=[f32(motion[i]-f32(projection*n[i])) for i in range(3)]
+    fallback=f32(dot(tangent,tangent)-f32(1e-6))<0
+    if fallback:
+        x,y,z=n;ax,ay,az=map(abs,n)
+        if f32(min(ax,ay)-az)<0:
+            tangent=[z,0.0,-x] if f32(ay-ax)<0 else [0.0,z,-y]
+        else:tangent=[y,-x,0.0]
+    length=f32(math.sqrt(dot(tangent,tangent)))
+    if not length or not math.isfinite(length):raise ValueError('Finite nonzero tangent required')
+    inverse=f32(1.0/length)
+    first=[f32(v*inverse) for v in tangent]
+    second=[f32(f32(n[(i+1)%3]*first[(i+2)%3])-f32(first[(i+1)%3]*n[(i+2)%3])) for i in range(3)]
+    lane3=0.0 if fallback else f32(0.0-f32(projection*0.0))
+    return dict(first=first,second=second,first_lane3=f32(lane3*inverse),
+                relative_motion_projection=projection,fallback=fallback)

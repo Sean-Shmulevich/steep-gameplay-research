@@ -7987,3 +7987,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   prefix comparisons match centers and relative motion in XYZ, with profile
   combiners executing. This cannot reuse the112-byte single-family row layout.
   Paired tangent/response/row assembly and full solver integration remain open.
+- Continued paired builder through tangent selection.1024 uninterrupted original
+  prefix comparisons match both four-lane directions, including205 fallback cases.
+  Preserved float32 threshold/axis ties and paired positive-zero lane distinction.
+  Added threshold and degenerate-input tests. Paired response and128-byte row
+  assembly remain before a complete paired builder or solver integration claim.
