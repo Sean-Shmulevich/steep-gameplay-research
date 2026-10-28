@@ -762,3 +762,10 @@ resolves a per-cell terrain profile or absent-map default and tests either
 64-bit directional mask overlap against the other resource's default profile.
 It returns identity and admission separately. Tokens/maps/profiles are supplied;
 field-width validation is authored. See LINK_SOLVER.md, "Terrain profile admission".
+
+Preliminary height contact: `pose_grid_height_contact.query_grid_height_contact`
+accepts an explicit height/triangle query service and reconstructs center-height
+admission plus optional48-byte output. Radius affects separation, not admission.
+Null output still permits true. See LINK_SOLVER.md, "Preliminary height contact".
+The query service is unresolved and must not be represented as recovered terrain
+interpolation. Finite inputs and existing frame conventions apply.

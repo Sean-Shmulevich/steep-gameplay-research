@@ -2464,3 +2464,33 @@ both triangle halves. Entry resource identities are supplied, so this validates
 the local lookup/gate rather than full caller reachability or object lifetime.
 Profile contents are synthetic. The optional preliminary query, local bounds,
 candidate allocation/retry and complete terrain batch orchestration remain open.
+
+### Preliminary height contact
+
+`engine.pose_grid_height_contact.query_grid_height_contact` reconstructs wrapper
+0x19969e0 with an explicit unresolved `height_query(resource,x,y)` service returning
+height H and triangle ID. It calls that service at center XY and returns false
+without output mutation unless center.z<=H. Radius R does not enter this admission
+test. On success, separation is `S=float32(float32(center.z-H)-R)`.
+
+Set local normal N=(0,0,1), Q=center and P=Q-N*S, retaining float32 operation order.
+Transform N with the frame basis and transform P/Q as points using the usual
+`((basis0*x+translation)+basis1*y)+basis2*z` order. If output is provided, write a
+48-byte record: normal at0, S at0x0c, transformed P at0x10, zero at0x1c, transformed
+Q at0x20 and the service's triangle ID at0x2c. Otherwise return true without writing.
+This is not a sphere-overlap admission test: a center above height is rejected even
+if its radius extends below the surface. No normalization or surface-slope normal
+is substituted for the transformed local +Z direction.
+
+[1024 native wrapper comparisons](../../native/snow_host/pose_grid_height_contact_validation.json)
+match boolean results, service arguments and all output bytes, with611 accepted
+cases. Height/ID results are supplied by intercepting0x1997af0. This evidence is
+explicitly weaker than uninterrupted full-query execution: it validates the
+wrapper's downstream behavior, not height interpolation or triangle selection.
+Cases cover general finite frames, above/equal/below heights and nullable output.
+
+Static inspection of0x1997af0 shows grid-cell selection using floored, biased XY
+coordinates, bounds rejection and topology-dependent piecewise interpolation.
+It can also return a triangle ID through an output pointer. Exact interpolation,
+boundary bias and outside-grid return semantics remain the next dependency to
+recover. The terrain caller's inverse/bounds and allocation paths remain separate.

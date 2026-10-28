@@ -7875,3 +7875,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   either-direction64-bit mask overlap. 2048 native block comparisons match profile
   identity and admission, including722 accepted cases. Full caller orchestration,
   optional preliminary query and allocation remain unresolved.
+- Recovered the preliminary below-height contact wrapper with explicit supplied
+  height/triangle service. 1024 native wrapper comparisons match arguments,
+  booleans and output bytes;611 accepted. Height interpolation is intercepted and
+  remains unresolved, along with complete terrain caller integration.
