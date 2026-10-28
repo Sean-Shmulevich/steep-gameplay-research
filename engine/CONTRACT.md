@@ -540,3 +540,10 @@ iteration clamps the shared result nonnegative and updates both states. Coincide
 indices retain native second-write-wins behavior. The connected solver runs
 category1 before0 and then6 when permitted by phase. Paired first-pass builders,
 category7 tangent rows and other numerical categories remain unsupported.
+
+Paired tangents: category7 uses angular direction+0x50, linked primary index+0x60
+and coefficient+0x70. Preparation omits the coefficient from its denominator;
+iteration applies the lane-wise primary-result bound and old-minus-new updates.
+The connected solver order is1,0,7,6, with both tangent categories skipped in the
+special phase. This supersedes the earlier category7 unsupported boundary.
+Paired first-pass builders and all other numerical categories remain external.

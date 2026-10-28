@@ -1140,3 +1140,58 @@ match categories1/0/6 together across all four phase masks and zero through thre
 iterations, including row, context and result bytes. This supersedes the earlier
 category1 numerical-solve boundary. Paired first-pass geometry production, paired
 tangent category7, other row categories and whole-group orchestration remain open.
+
+### Paired tangent numerical solver
+
+`engine.pose_paired_tangent_solver` reconstructs preparation0x19eeec0 and
+iteration0x19f1e00 for category7, with128-byte rows. Its layout differs from the
+paired primary row: the second angular direction is at+0x50, the linked primary
+result's uint32 index is at+0x60, and the four-lane limit coefficient is at+0x70.
+The direction+0x20, first angular direction+0x30 and inverse+0x40 retain their roles.
+Response storage+0x10 is not consumed by these numerical routines.
+
+Using `d`, angular directions `a/b`, tensor mappings `M1/M2`, and body fourth
+vectors `m1/m2`, preparation computes the following float32 sequence:
+
+```python
+L1 = m1 * d
+L2 = m2 * (-d)
+A1 = M1 * a
+A2 = M2 * b
+denominator = ((dot(A1, a) + dot(d, L1)) + dot(m2*d, d)) + dot(A2, b)
+inverse = 1 / (-denominator)
+```
+
+The inverse is broadcast, and the cached result is applied to both weighted
+body updates. The row limit coefficient is not added to the denominator.
+Iteration groups projected motion per body before adding the two contributions:
+
+```python
+first = dot(a, state1.angular) + dot(d, state1.linear)
+second = dot(b, state2.angular) + dot(-d, state2.linear)
+speed = first + second
+bound = row70 * linked_primary_result
+candidate = (-speed) * inverse + old_result
+new_result = max(min(candidate, bound), -bound)
+delta = old_result - new_result
+```
+
+The bound, candidate and clamp are lane-wise. Sequential native minimum/maximum
+operand selection is preserved at ties and inverted bounds; this is not a joint
+norm constraint. Both bodies receive their weighted delta with opposite linear
+directions. The coincident-index second-write-wins behavior is shared with the
+paired primary path. No optional accumulator is used here: row+0x50 is the second
+angular direction, not a pointer or accumulator index.
+
+[512 preparations and1536 iterations](../../native/snow_host/pose_paired_tangent_solver_validation.json)
+match the complete original routines without interception, including coincident
+indices, linked-result aliasing, inverted limits and retained row padding. Inputs
+are finite and nonsingular. The original body data and rows are supplied.
+
+The connected solver now accepts `paired_tangent_rows` from planned count+0x124
+and traverses categories1,0,7,6 in that order. Special phase0x10000000 skips both
+tangent categories. [256 uninterrupted four-category comparisons](../../native/snow_host/pose_four_category_solve_validation.json)
+match native context, rows, states and results across all four phase masks and
+zero through three iterations. This closes the category7 numerical boundary;
+paired first-pass builders, multirow builder families, remaining numerical
+categories and complete group orchestration are still unresolved.

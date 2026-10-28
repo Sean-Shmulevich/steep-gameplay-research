@@ -6,12 +6,13 @@ import struct
 from .pose_solver_control import run_pose_solver
 from .pose_primary_solver import prepare_pose_primary_row,iterate_pose_primary_row
 from .pose_paired_primary_solver import prepare_pose_paired_primary_row,iterate_pose_paired_primary_row
+from .pose_paired_tangent_solver import prepare_pose_paired_tangent_row,iterate_pose_paired_tangent_row
 from .pose_tangent_solver import prepare_pose_tangent_row,iterate_pose_tangent_row
 
 
 def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_rows,
-                         body_data, body_state, results, paired_primary_rows=()):
-    """Run native phase/count policy for the three supported row categories.
+                         body_data, body_state, results, paired_primary_rows=(), paired_tangent_rows=()):
+    """Run native phase/count policy for the four supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -19,20 +20,24 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,6)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,6,7)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
         raise ValueError('Insufficient retained solver rows')
+    paired_tangent_count=counts[7]
+    if paired_tangent_count>len(paired_tangent_rows):raise ValueError('Insufficient retained paired tangent rows')
     args=dict(body_data=body_data,body_state=body_state,results=results)
     def prepare(descriptor,cursor):
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:prepare_pose_primary_row(row,**args)
         if not descriptor['special']:
+            for row in paired_tangent_rows[:paired_tangent_count]:prepare_pose_paired_tangent_row(row,**args)
             for row in secondary_rows[:secondary_count]:prepare_pose_tangent_row(row,**args)
     def iterate(descriptor,cursor):
         for row in paired_primary_rows[:paired_count]:iterate_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:iterate_pose_primary_row(row,**args)
         if not descriptor['special']:
+            for row in paired_tangent_rows[:paired_tangent_count]:iterate_pose_paired_tangent_row(row,**args)
             for row in secondary_rows[:secondary_count]:iterate_pose_tangent_row(row,**args)
     run_pose_solver(context_bytes,base_token=base_token,prepare=prepare,iterate=iterate)

@@ -7731,3 +7731,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   uninterrupted wrapper comparisons validate categories1/0/6 together under all
   phase masks. Paired row geometry production, paired tangents and remaining
   categories are still open; no live sessions were used.
+- Reconstructed paired tangent preparation and bounded iteration, including its
+  distinct field layout and old-minus-new state update. 512 native preparations
+  and1536 iterations match. Connected category7 before6; another256 uninterrupted
+  original-wrapper cases validate all four supported categories across phase masks.
+  Paired first-pass builders and remaining categories are still open.
