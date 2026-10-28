@@ -897,3 +897,9 @@ clears only owner and active-row count, and sets flag bit0. Cached rows and all 
 bytes persist. See LINK_SOLVER.md, "Payload batch initialization boundary". Caller
 must serialize access; protected entry/exit services are outside the reconstructed
 core. Page allocation, table reserve and payload backing storage remain explicit.
+
+Paired link point motion: `pose_link_paired_motion.paired_link_point_motion` uses
+both body frames/offset128 values and motion1a0/1ac pairs to compute offset-relative
+arms and second-minus-first point motion with float32 order. See LINK_SOLVER.md,
+"Paired-builder relative point motion". Only finite XYZ is represented; paired
+128-byte row assembly, SIMD padding and solver iteration remain separate work.

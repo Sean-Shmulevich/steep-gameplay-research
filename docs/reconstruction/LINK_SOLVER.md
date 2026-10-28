@@ -3273,3 +3273,44 @@ buffers are supplied. This is a serial reconstruction path. The existing JSON
 inspector still uses preallocated payloads; it has not silently gained a native
 pool allocator or concurrent game integration. Allocation failure and invalid/null
 slots remain outside the successful-allocation domain inherited from slot acquisition.
+
+### Paired-builder relative point motion
+
+The metadata-set/single builder0x1992800 differs structurally from the previously
+reconstructed metadata-clear/single family. It allocates128-byte primary/secondary
+slots using context counters+0xa8/+0xc0 and bases+0x44/+0x5c. The clear family uses
+112-byte rows and different counters. Reusing its row packing for this family
+would overwrite the wrong layout.
+
+`pose_link_paired_motion.paired_link_point_motion` reconstructs the first paired
+row's offset-relative arms, world centers and relative point motion. For each body
+with basis rows B0/B1/B2, translation T, local offset C, payload point P and raw
+motion fields V=motion1a0 and W=motion1ac:
+
+```text
+rotate(x) = B2*x.z + (B0*x.x + B1*x.y)
+center_world = T + rotate(C)
+arm = rotate(P - C)
+point_motion = cross(W, arm) + V
+relative_motion = second.point_motion - first.point_motion
+```
+
+All multiplies, additions and subtractions retain the inspected float32 order.
+The code uses both offsets and both motion pairs. The earlier single-family
+helper projects opposite first-body motion; it must not be used as an equivalent
+paired-body motion rule. Structural names remain because complete units and all
+field producers are not established by this local formula.
+
+[1024 original paired-builder prefix comparisons](../../native/snow_host/pose_link_paired_motion_validation.json)
+execute entry0x1992800 through0x1992dce, including original profile combiners,
+without interception. Both world centers, first point motion and relative point
+motion match bit-for-bit in XYZ. Cases use general finite bases/translations,
+both offsets, varied local points and zero/nonzero motion. Initialized vector
+masks are supplied, and resource setup uses default profiles. Fourth SIMD lanes,
+later tangent/response branches and complete paired row assembly are excluded.
+The arm outputs follow the inspected intermediate arithmetic but are not separately
+captured by this prefix receipt.
+
+The public tests distinguish the two offsets, show common linear motion cancellation
+and retain input storage. This begins reconstruction of the missing paired builder;
+it does not yet connect terrain-generated payloads to paired solver iteration.

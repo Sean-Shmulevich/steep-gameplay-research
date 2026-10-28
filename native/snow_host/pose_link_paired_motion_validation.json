@@ -1,0 +1,23 @@
+{
+  "schema": "pose-link-paired-motion-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "block": [
+    "0x1992800",
+    "0x1992dce"
+  ],
+  "method": "Original paired-builder prefix through relative point motion; profile combiners execute without interception",
+  "comparisons": [
+    "Both world centers, first point motion and second-minus-first point motion, bit-exact XYZ"
+  ],
+  "coverage": [
+    "General finite body bases/translations, both local offsets, point coordinates and both motion fields",
+    "Zero/nonzero motion and original coefficient branches"
+  ],
+  "limits": [
+    "First row prefix only; no paired row assembly or solver",
+    "Default-profile resource setup and supplied initialized vector masks",
+    "XYZ values only; SIMD fourth lanes excluded; physical units unresolved"
+  ]
+}

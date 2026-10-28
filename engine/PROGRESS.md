@@ -7982,3 +7982,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   page growth. Owner/count reset and flag-bit initialization preserve cached rows.
   Allocator/table services are supplied; protected entry/exit synchronization remains
   outside evidence. The inspection CLI still requires explicit preallocated payloads.
+- Began missing metadata-set/single builder reconstruction. Established128-byte
+  row allocation and recovered both-body point-motion arithmetic.1024 original
+  prefix comparisons match centers and relative motion in XYZ, with profile
+  combiners executing. This cannot reuse the112-byte single-family row layout.
+  Paired tangent/response/row assembly and full solver integration remain open.
