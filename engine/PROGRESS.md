@@ -7753,3 +7753,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   integration and resource refresh supplied as services. Failed checks do not
   reactivate an already flagged group. Resource refresh/release, other classes
   and the reactivation path remain open.
+- Resolved ordinary-group finalization's virtual40 service to the constructor's
+  slot0x28 reset. 320 uninterrupted native finalizer cases now include the real
+  reset method with no interception and match body/metadata plus context arrays.
+  A composition test queues state2 links before reset and confirms poststep is
+  admitted afterward. Other classes, allocation growth and automatic/live
+  reactivation triggers remain unresolved.

@@ -1362,3 +1362,35 @@ class. Full resource refresh, protected payload release, other virtual classes,
 reactivation and live synchronization remain unresolved. The observed behavior is
 consistent with a group inactivity transition, but no complete sleep/wake lifecycle
 or thread-safe mod API is claimed.
+
+### Body reset and ordinary-group reactivation
+
+The previously supplied `virtual40` callback in `finalize_pose_group` means byte
+slot40 decimal, or0x28. Constructor table0x29c99a8 resolves it to0x18be770.
+`engine.pose_body_quiet_state.reset_pose_body_quiet_state` reconstructs its entire
+body: clear metadata+0x53's low nibble and write positive zero to body timer+0x28.
+Motion, transform and the metadata high nibble are preserved.
+
+The existing ordinary-group finalizer0x18e11b0 now has a concrete class-specific
+reset implementation. It first queues links whose first endpoint has metadata
+state2, before resetting those bodies. Its helper0x1957340 invokes slot+0x28 for
+every body and clears group+0xa0. The finalizer then removes the group from the
+context+0x428 collection with swap/index repair, appends it to context+0x418,
+and appends its bodies to the tracked-body array. The routine skips groups whose
+flag is already zero and the two special context group identities.
+
+[320 uninterrupted native reactivation-path comparisons](../../native/snow_host/pose_group_reactivation_validation.json)
+execute the original finalizer, original body-loop helper, actual constructor
+vtable reset and tracked-body append. Observation hooks record calls without
+replacing them. All body/metadata bytes, context/group headers and array contents
+match. Retained capacity suffices in every case, so growth allocation is not
+validated. This supersedes the earlier finalizer receipt's supplied body-virtual
+boundary for this class only.
+
+An independent composition test verifies state2 link queuing before reset,
+metadata/timer reset, group collection transfer and subsequent admission to
+poststep integration/resource refresh. That later poststep is not included in
+the uninterrupted native receipt. The observed reset and group transfer provide
+a concrete reactivation path; identifying all automatic triggers, other body
+classes and safe cross-thread entry points remains separate work. Clearing only
+a metadata nibble is not equivalent to this full group operation.

@@ -37,3 +37,14 @@ def update_pose_body_quiet_state(body, metadata, *, scalar, duration_threshold,
     struct.pack_into('<f',body,0x28,timer)
     if timer>duration:
         metadata[0x53]=(metadata[0x53]&0xf1)|1
+
+
+def reset_pose_body_quiet_state(body, metadata):
+    """Constructor-selected slot28 resets timer/state while preserving motion.
+
+    Evidence: LINK_SOLVER.md, Body reset and ordinary-group reactivation.
+    """
+    if len(body)<0x2c or len(metadata)<0x54:
+        raise ValueError('Retained timer and metadata required')
+    metadata[0x53]&=0xf0
+    body[0x28:0x2c]=bytes(4)

@@ -1,0 +1,22 @@
+{
+  "schema": "pose-group-reactivation-validation-v1",
+  "cases": 320,
+  "passed": 320,
+  "method": "offline complete original group finalizer with actual constructor-selected reset virtual method; observation only, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18e11b0",
+    "0x1957340",
+    "0x18be770"
+  ],
+  "comparisons": [
+    "all retained body and metadata bytes",
+    "complete context/group headers and arrays",
+    "ordered reset calls"
+  ],
+  "limits": [
+    "Sufficient retained capacity; allocation growth not reached.",
+    "Constructor-selected body class only; no automatic reactivation trigger or live synchronization proof.",
+    "Poststep integration after reactivation covered separately, not executed in this native check."
+  ]
+}

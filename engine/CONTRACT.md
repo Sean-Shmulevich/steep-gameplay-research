@@ -569,3 +569,10 @@ state2, clears both motion vectors and traverses a valid circular link ring usin
 an explicit payload-clear service. `poststep_pose_group` skips integration/refresh
 for nonzero group flag, otherwise integrates then reloads the refresh span.
 Resource release/refresh, other body classes and reactivation remain external.
+
+Body reset/reactivation: `reset_pose_body_quiet_state` implements constructor-selected
+slot0x28, clearing the state nibble and timer while preserving motion. It can supply
+the existing ordinary-group finalizer's virtual40 callback. Full finalization
+queues state2 links before resetting bodies, clears the group flag and transfers
+context collections. Growth, other classes and automatic/live trigger safety
+remain external; resetting one body alone is not full group reactivation.
