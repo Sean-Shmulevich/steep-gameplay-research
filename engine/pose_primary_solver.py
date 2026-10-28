@@ -52,11 +52,11 @@ def prepare_pose_primary_row(row,*,body_data,body_state,results):
     _apply(state,linear,angular,cached)
 
 
-def iterate_pose_primary_row(row,*,body_data,body_state,results):
+def iterate_pose_primary_row(row,*,body_data,body_state,results,arena=None,row_offset=0):
     """Update nonnegative result lanes and apply their increments to body state.
 
-    Nonzero row+50 is a row-relative16-byte slot index. If present, caller must
-    retain enough bytes after this row for its accumulator; no pointer is followed.
+    Nonzero row+50 is a signed row-relative16-byte slot index. An explicit arena
+    and row_offset allow targets before the row; without them, row is its arena.
     """
     data,state,result=_storage(row,body_data,body_state,results)
     old=_read(result,0);d,a,linear,angular=_weighted(row,data)
@@ -68,9 +68,17 @@ def iterate_pose_primary_row(row,*,body_data,body_state,results):
         updated.append(candidate if candidate>0 else 0.0)
     change=[f32(updated[i]-old[i]) for i in range(4)]
     _apply(state,linear,angular,change)
-    slot=struct.unpack_from('<Q',row,0x50)[0]
-    if slot:
-        offset=slot*16
-        old_accum=_read(row,offset)
-        struct.pack_into('<4f',row,offset,*[f32(old_accum[i]+updated[i]) for i in range(4)])
+    _accumulate_primary_result(row,updated,arena=arena,row_offset=row_offset)
     struct.pack_into('<4f',result,0,*updated)
+
+
+def _accumulate_primary_result(row,updated,*,arena=None,row_offset=0):
+    """Resolve the signed native relative link in caller-owned retained storage."""
+    slot=struct.unpack_from('<q',row,0x50)[0]
+    if not slot:return
+    storage=row if arena is None else arena
+    if arena is None and row_offset!=0:raise ValueError('Row offset requires explicit arena')
+    offset=row_offset+slot*16
+    if offset<0 or offset+16>len(storage):raise ValueError('Accumulator outside retained arena')
+    old=_read(storage,offset)
+    struct.pack_into('<4f',storage,offset,*[f32(old[i]+updated[i]) for i in range(4)])

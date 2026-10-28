@@ -3588,3 +3588,32 @@ metadata families and1..4 contacts, all four context modes, disabled links/paylo
 nonzero starting counters and all six profile modes. Synthetic preallocated arenas
 and default resource profiles are supplied. This proves the connected local build
 stage in that domain, not row solving, body integration or live engine lifetime.
+
+### Primary accumulator arena addressing
+
+Connecting multi builders exposed a storage limitation in the earlier primary
+solver helpers: row+0x50 was decoded unsigned and assumed to target bytes after the
+row. Both builders can encode negative offsets when shared storage precedes primary
+storage. Both primary iteration APIs now accept optional `arena` and `row_offset`
+arguments. A row may be a writable view into that arena. Resolution is:
+
+```text
+slot = signed_int64(row + 0x50)
+if slot != 0:
+    target = row_offset + 16*slot
+    arena[target] += updated_projected_result   # four float32 lanes
+```
+
+The addition uses the full newly projected result, not its difference from the old
+result. Only body-state updates use that difference. With no arena supplied, the
+row buffer remains the storage origin, preserving prior positive-link use. A
+negative/out-of-bounds target is rejected explicitly instead of allowing Python's
+negative indexing. The caller owns arena lifetime, row placement and aliasing;
+this helper does not allocate, relocate or clear accumulators between sweeps.
+
+[512 one-body comparisons](../../native/snow_host/pose_primary_arena_validation.json)
+and [512 paired-body comparisons](../../native/snow_host/pose_paired_primary_arena_validation.json)
+each execute original preparation and three iterations, with forward and backward
+links. Entire arenas, body states and result buffers match after every stage.
+These extend local primary solver evidence; shared-row solving and traversal
+integration with arena-backed rows remain separate requirements.

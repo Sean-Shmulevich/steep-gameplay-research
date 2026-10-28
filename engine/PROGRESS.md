@@ -8023,3 +8023,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   execute the builders themselves and match all rows, payloads, results and seven
   counters, including mixed families and disabled gates. Public regression tests
   cover shared numbering and mode selection. Solver consumption remains next.
+- Fixed the primary solver storage boundary exposed by multi builders: both primary
+  iteration APIs now resolve signed relative accumulator links into explicit arenas.
+  512 one-body and512 paired comparisons match complete arenas and state through
+  preparation plus three iterations, including targets before rows. Shared-row
+  numerical solving and traversal integration remain open.

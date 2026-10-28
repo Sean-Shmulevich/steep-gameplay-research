@@ -5,7 +5,7 @@ Evidence: LINK_SOLVER.md, Paired-body primary numerical solver.
 import math
 import struct
 from reference.central_impulse import f32
-from .pose_primary_solver import _read, _dot, _apply
+from .pose_primary_solver import _read, _dot, _apply, _accumulate_primary_result
 
 
 def _inputs(row,body_data,body_state,results):
@@ -49,7 +49,7 @@ def prepare_pose_paired_primary_row(row,*,body_data,body_state,results):
     _apply_pair(states,weights,_read(result,0))
 
 
-def iterate_pose_paired_primary_row(row,*,body_data,body_state,results):
+def iterate_pose_paired_primary_row(row,*,body_data,body_state,results,arena=None,row_offset=0):
     data,states,result,direction,axes,weights=_inputs(row,body_data,body_state,results)
     angular=f32(_dot(axes[1],_read(states[1],16))+_dot(axes[0],_read(states[0],16)))
     linear=f32(_dot([-x for x in direction],_read(states[1],0))+_dot(direction,_read(states[0],0)))
@@ -60,8 +60,5 @@ def iterate_pose_paired_primary_row(row,*,body_data,body_state,results):
         value=f32(f32(inverse[i]*f32(speed+response[i]))+old[i])
         updated.append(value if value>0 else 0.0)
     _apply_pair(states,weights,[f32(a-b) for a,b in zip(updated,old)])
-    slot=struct.unpack_from('<Q',row,0x50)[0]
-    if slot:
-        old_accum=_read(row,slot*16)
-        struct.pack_into('<4f',row,slot*16,*[f32(a+b) for a,b in zip(updated,old_accum)])
+    _accumulate_primary_result(row,updated,arena=arena,row_offset=row_offset)
     struct.pack_into('<4f',result,0,*updated)

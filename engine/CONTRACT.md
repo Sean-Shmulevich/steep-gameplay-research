@@ -949,3 +949,9 @@ concrete builder services to the recovered dispatcher. Six explicit retained poo
 have rows/count/base; all share the context's result numbering. See LINK_SOLVER.md,
 "Unified build". Inputs retain original mode/metadata gates. Partial mutations are
 not rolled back on input/storage errors. No allocation or solver step is implied.
+
+Primary accumulator storage: both primary iteration functions accept optional
+`arena` and `row_offset`, resolving signed64-bit row+0x50 in16-byte units from that
+row origin. Without an explicit arena the row buffer is the origin. Targets must
+fit retained storage. See LINK_SOLVER.md, "Primary accumulator arena addressing".
+Accumulation adds the full projected value; clearing between sweeps is not supplied.

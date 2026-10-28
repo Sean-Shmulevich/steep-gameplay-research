@@ -1,0 +1,24 @@
+{
+  "schema": "pose-paired-primary-arena-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "preparations": 512,
+  "iterations": 1536,
+  "method": "offline complete numerical preparation followed by three complete original iterations per case, without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19e5310",
+    "0x19e5840"
+  ],
+  "comparisons": [
+    "all retained arena bytes including negative and positive accumulator targets",
+    "all body-state lanes after every stage",
+    "all result lanes after every stage",
+    "unchanged body data and unrelated records"
+  ],
+  "limits": [
+    "Two-body primary family, including coincident indices; no tangent or whole-system convergence claim.",
+    "Finite synthetic arithmetic with nonsingular denominators and retained storage.",
+    "Retained body data supplied; no first-pass paired row producer in this check."
+  ]
+}
