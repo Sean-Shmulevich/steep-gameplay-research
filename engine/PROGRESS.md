@@ -7899,3 +7899,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases match IDs, capacities, allocation request sizes and ownership flags,
   including489 retries. Exact128 triggers a full query even when total is128.
   Allocator storage is supplied; full terrain caller integration remains open.
+- Connected the complete terrain-box caller.512 uninterrupted native small-grid
+  executions match return values and all output bytes across profile and geometry
+  gates. Preserved preliminary success at zero capacity without a write. Full-call
+  retry allocation, mapped profiles, general rotations and live integration remain.

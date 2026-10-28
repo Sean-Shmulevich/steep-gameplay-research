@@ -2652,3 +2652,38 @@ validates allocation requests and selection policy, not the allocator itself.
 Tests cover small grids, exactly128 triangles, larger grids and empty Z overlap.
 Python owns independent buffers. The API's positive bounded-grid guard is authored;
 zero dimensions, huge allocation behavior and full terrain orchestration remain open.
+
+### Connected terrain-box contact caller
+
+`engine.pose_grid_box_contact.emit_grid_box_contacts` connects caller0x19dde20 for
+a grid and kind3 box. It computes inverse/relative frames and box bounds, optionally
+runs preliminary height contact, collects candidate IDs, resolves profile masks,
+transforms each admitted triangle into world coordinates, generates box-triangle
+contacts, converts point roles/IDs and optionally filters the batch. It stops when
+the accumulated retained count reaches capacity. Python owns temporary buffers;
+native allocator internals are not reproduced.
+
+Descriptor byte0x90 controls both the preliminary path and face-point reduction.
+The preliminary center is the float32 midpoint of local box query bounds. Its
+radius is the minimum box extent, selected in native comparison order. On success
+this path returns1 immediately, before profile gating and candidate collection.
+With capacity0 it supplies a null output yet can still return1. Therefore the
+return value is not unconditionally a count of written records. The independent
+API preserves this behavior rather than forcing zero at zero capacity.
+
+Byte0x91 controls edge queries. Byte0x92 enables terrain record filtering only when
+resource field0x40==2. Filtering acts on each newly produced batch using inverse
+terrain coordinates. Discarded-tail bytes persist, including records written by
+production before filtering; later batches can overwrite that tail. The API uses
+views into the caller buffer to retain these effects.
+
+[512 complete native caller comparisons](../../native/snow_host/pose_grid_box_contact_validation.json)
+match returned values and entire output/tail buffers. The original caller executes
+all helpers without interception on synthetic3..6 grids, using its stack-candidate
+path. Cases include uneven samples, both diagonals, translated frames, default
+profile admission/rejection, all three flags and capacity0..8. There are157 positive
+results, summing to382; this sum is deliberately not labeled emitted records due
+to the zero-capacity preliminary behavior. Initialized TLS/topology, XYZ/zero state
+and stack limit are supplied. Allocation retries, mapped profiles and general frame
+rotations have separate helper evidence but are not yet covered in this complete
+caller receipt. Live collision integration and broader resource pairs remain open.

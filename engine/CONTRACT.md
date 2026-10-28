@@ -800,3 +800,10 @@ returns IDs and inspection metadata after a min(total,128) first query and exact
 retry at full-grid capacity. Python owns storage; native allocator behavior is not
 emulated. See LINK_SOLVER.md, "Terrain candidate collection and ownership". Positive
 bounded grid validation is authored; complete caller orchestration remains separate.
+
+Connected terrain-box caller: `pose_grid_box_contact.emit_grid_box_contacts`
+combines frame/bounds, optional preliminary height contact, candidates, profiles,
+producer, record conversion and filtering. The preliminary flag also enables
+face reduction. A successful preliminary query returns1 even at capacity0 without
+writing, so return value is not always record count. See LINK_SOLVER.md, "Connected
+terrain-box contact caller" for composed evidence and remaining domains.
