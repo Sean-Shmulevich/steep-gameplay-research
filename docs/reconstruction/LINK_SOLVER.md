@@ -3520,3 +3520,44 @@ for multiple contacts and mode0. The helper's one-contact arithmetic test does n
 change that gate. Zero-count behavior, exceptional floating-point values, native
 allocation, paired multi construction and a complete solver iteration are not
 claimed by this contract.
+
+### Connected paired multi builder
+
+`pose_link_paired_multi_builder.build_paired_multi_pose_link_rows` reconstructs
+metadata-set/multi routine0x1991110. Its shared row is256 bytes (context base+0x54,
+counter+0xb8); primary rows are128 bytes (base+0x44,counter+0xa8). It reserves one
+shared result index followed by one per contact, as in the clear multi family.
+Primary+0x50 instead links to shared+0xe0, still in signed16-byte units. Shared+0xe0
+holds the float32 sum of cached values; shared+0xf0 broadcasts combined profile30.
+The reserved shared result slot remains untouched. Each primary uses the paired
+single-family response and both angular terms, including its distinct+0x70 field.
+
+The aggregate centroid and spread still come from the first body's contact points.
+For centroid C, transformed offset centers C1/C2 and body motions V/W:
+
+```text
+arm1 = C - C1
+arm2 = C - C2
+motion1 = cross(W1, arm1) + V1
+motion2 = cross(W2, arm2) + V2
+candidate = cross(-normal, motion1 - motion2)
+```
+
+Selection, X/Y fallback and normalization follow the shared patch basis rules.
+Let t1/t2 be the resulting directions and S=(-normal)*spread. The shared row stores
+three transposed blocks, one four-float row per world axis j:
+
+```text
++0x20 + 16*j: [t1[j], t2[j], 0, 0]
++0x50 + 16*j: [cross(arm1,t1)[j], cross(arm1,t2)[j], S[j], 0]
++0x80 + 16*j: [cross(arm2,-t1)[j], cross(arm2,-t2)[j], -S[j], 0]
+```
+
+Shared+0x10 is zeroed; unreached storage, including+0xb0..0xdf, is retained.
+[512 uninterrupted original calls](../../native/snow_host/pose_link_paired_multi_builder_validation.json)
+match all retained rows, payloads, result storage and counters. Coverage includes
+1..4 contacts, all six profile modes, general finite frames/motion, zero motion and
+X-aligned normals exercising Y fallback. Default resource profiles and retained
+storage are supplied; native profile combiners execute. This completes local
+implementations of all four dispatch families, but does not establish connected
+dispatch execution, solver iteration, live lifetime or full-engine equivalence.

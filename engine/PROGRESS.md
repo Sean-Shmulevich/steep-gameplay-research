@@ -8013,3 +8013,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   shared accumulated value through signed16-byte-unit offsets; shared result
   reservation precedes contact results. Paired multi and full solver integration
   remain open. No live session was needed for this comparison.
+- Completed paired metadata-set/multi builder.512 uninterrupted native comparisons
+  match all128-byte primary/256-byte shared rows, payloads, results and counters.
+  Recovered both-body centroid motion, opposite angular columns and signed links
+  to shared+0xe0. All four local builder families now exist. Unified dispatcher
+  integration and a complete solver iteration remain unvalidated.

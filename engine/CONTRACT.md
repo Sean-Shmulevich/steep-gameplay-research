@@ -936,3 +936,10 @@ rows,16-byte results, counters and explicit aligned arena base offsets. It reser
 one shared result then one per contact, writes signed relative links to shared+b0,
 and accumulates cached values independently of seeding. See LINK_SOLVER.md,
 "Connected multi builder". Supplied storage only; no allocator or solver iteration.
+
+Paired multi-family assembly: `build_paired_multi_pose_link_rows` follows the clear
+multi API with128-byte primary and256-byte shared rows. Both bodies' offset centers
+and velocities contribute to primary and centroid motion. The shared accumulator
+is+0xe0, coefficient+0xf0; signed relative links target+0xe0. See LINK_SOLVER.md,
+"Connected paired multi builder". Unreached retained bytes are preserved. No full
+solver iteration, allocation or exceptional arithmetic behavior is supplied.

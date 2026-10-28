@@ -1,0 +1,17 @@
+{
+  "schema": "pose-link-paired-multi-builder-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "Uninterrupted original metadata-set/multi builder with original profile combiners and no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1991110",
+  "comparisons": [
+    "All retained primary and shared row bytes",
+    "Complete payload, result buffers and counters"
+  ],
+  "limits": [
+    "Synthetic retained arena and default profile resources",
+    "Finite cached values and nonsingular arithmetic",
+    "No solver iteration"
+  ]
+}
