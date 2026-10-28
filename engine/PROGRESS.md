@@ -7961,3 +7961,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   1815 groups,700 retirements and783 four-record reductions. Sorting through payload
   updating runs continuously with preallocated storage. Added contact/clear/recontact
   lifecycle test. Allocating paths and geometry-to-scheduled-solver integration remain.
+- Connected terrain generation through dispatch into persistent cache processing.
+  256 uninterrupted original wrapper calls match all24000 output bytes and retained
+  cache/recycler/payload storage, including both object orders and117 empty cases.
+  Added a public actual-geometry contact/separation lifecycle test. A fixture buffer
+  overlap in the first native attempt was corrected without runtime changes.
+  Allocation/refill, solver rows and scheduled live integration remain open.

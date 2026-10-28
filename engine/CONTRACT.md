@@ -870,3 +870,10 @@ recovered order while preserving inactive tails. See LINK_SOLVER.md, "Connected
 nonempty contact-cache consumer". Supply batch initialization and cache append
 services explicitly. Native comparison covers preallocated storage, not allocator
 failure, global-pool locking or scheduled live integration.
+
+Dispatch-to-cache integration: `pose_contact_dispatch.process_dispatched_contact_pair`
+connects a supplied geometry handler to recovered nonempty processing or pair clear.
+It preserves the complete500-record backing buffer, including inactive producer
+bytes. See LINK_SOLVER.md, "Terrain generation through contact-cache processing".
+Native terrain comparisons cover translated small synthetic grids with preallocated
+storage. Solver execution and live body ownership are not part of this API.

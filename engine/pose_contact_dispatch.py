@@ -50,3 +50,30 @@ def dispatch_contact_pair(handlers, first_resources, second_resources,
     else:
         clear_pair(cache, first_index, second_index, recycled)
     return count
+
+
+def process_dispatched_contact_pair(handlers, first_resources, second_resources,
+                                    first_index, second_index, descriptor, records, *,
+                                    cache, recycled, key_width, owner, payloads,
+                                    first_frame, second_frame, first_flags,
+                                    second_flags, supply_batch, append_entry):
+    """Connect recovered dispatch to cache processing or pair clearing.
+
+    Handlers supply descriptor-specific contact generation. Record storage remains
+    byte-oriented, including inactive tails. Services retain allocation boundaries.
+    """
+    from .pose_contact_cache import process_contact_cache,clear_contact_pair
+    diagnostics={}
+    def groups(c,buffer,count,first,second,r,width):
+        active=[bytes(buffer[i*48:(i+1)*48]) for i in range(count)]
+        diagnostics.update(process_contact_cache(c,active,first,second,r,owner=owner,
+            payloads=payloads,first_frame=first_frame,second_frame=second_frame,
+            first_flags=first_flags,second_flags=second_flags,key_width=width,
+            supply_batch=supply_batch,append_entry=append_entry))
+        buffer[:count*48]=b''.join(active)
+    def clear(c,first,second,r):
+        diagnostics['cleared_payloads']=clear_contact_pair(c,first,second,r,payloads=payloads)
+    count=dispatch_contact_pair(handlers,first_resources,second_resources,first_index,
+        second_index,descriptor,records,cache=cache,recycled=recycled,key_width=key_width,
+        process_groups=groups,clear_pair=clear)
+    return {'generated_count':count,**diagnostics}

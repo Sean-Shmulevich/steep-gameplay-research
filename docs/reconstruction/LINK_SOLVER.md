@@ -3109,3 +3109,39 @@ A public synthetic lifecycle test creates a six-record group, reduces it to four
 clears the pair, and recontacts using the same recycled payload. It checks owner,
 entry flag, active count and cleared cached-word eligibility. This demonstrates
 independent storage continuity without game assets or process access.
+
+### Terrain generation through contact-cache processing
+
+`pose_contact_dispatch.process_dispatched_contact_pair` connects handler lookup,
+contact generation and either the nonempty cache consumer or empty-pair clearing.
+It packs the generated span into retained48-byte records for the consumer and
+writes the resulting permutation/reduced records back to the same byte buffer.
+Bytes outside that generated span retain the producer's values. This matters when
+geometry filtering discarded contacts but left their bytes in inactive storage.
+
+Handlers remain caller-supplied bindings for descriptor-specific geometry. Binding
+the recovered terrain-box or box-terrain producer requires explicit terrain samples,
+profiles, frames and flags. Pair frames and entry flags for payload updating are
+also supplied; the adapter does not resolve native bodies or infer lifetime.
+Batch supply and cache append retain the previously documented service boundaries.
+
+[256 full original wrapper comparisons](../../native/snow_host/pose_terrain_cache_integration_validation.json)
+execute resource lookup, the selected terrain geometry routine, sorting, retirement,
+acquisition, reduction and payload updating, or zero-contact pair clearing, without
+call interception. They match all24000 output bytes, cache/recycle storage and all64
+supplied payload buffers. Both terrain/box orders and key widths are exercised;
+317 groups,208 nonempty-path retirements,4 reductions and117 zero-contact cases
+occur. These counts describe this fixture suite, not gameplay prevalence.
+
+The suite uses synthetic3x3 uneven grids, translated identity frames, matching
+profiles and varied preliminary/edge/filter flags. Storage is preallocated to avoid
+allocation/refill. TLS, topology and vector masks are supplied initialized state.
+This connects collision production to persistent contact records, but does not
+execute solver rows, advance bodies or prove scheduled live-game ownership.
+
+The first harness attempt failed because its newly expanded24000-byte output buffer
+overlapped synthetic body/pair storage. Relocating that fixture buffer resolved the
+fault without runtime changes. The receipt records only the completed comparisons.
+A public synthetic lifecycle test runs actual terrain generation, then moves the
+box above the terrain and verifies the zero-contact path clears and recycles its
+payload. No game files or native process are needed for that test.

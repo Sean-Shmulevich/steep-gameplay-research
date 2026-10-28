@@ -1,0 +1,26 @@
+{
+  "schema": "pose-terrain-cache-integration-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18e08a0",
+    "0x18e0980"
+  ],
+  "method": "Complete original dispatch wrappers through terrain geometry and cache consumer/clear without interception",
+  "groups": 317,
+  "retired_payloads": 208,
+  "reduced_groups": 4,
+  "empty_cases": 117,
+  "coverage": [
+    "Both terrain/box orders,16/32-bit keys, profile masks and geometry flags",
+    "All24000 output bytes, retained cache/recycler and64 payload buffers",
+    "Original lookup, geometry, sort, retirement, acquisition, reduction and updater or pair clear"
+  ],
+  "limits": [
+    "Synthetic3x3 uneven grids and translated identity frames",
+    "Preallocated cache/recycler avoids allocation and batch refill",
+    "Initialized TLS/topology/masks supplied",
+    "No solver execution, concurrency or live game"
+  ]
+}
