@@ -659,3 +659,10 @@ separation or greatest nonpositive separation with first-tie precedence. Shapes
 supply plane/vertex lists and frames supply XYZ rows. It does not normalize planes
 or substitute inverse-transpose transforms. Empty support for nonempty planes is
 an authored rejection. See LINK_SOLVER.md, "Contact face-distance query".
+
+Contact edge query: `pose_contact_edge_query.query_contact_edges` resets and mutates
+a distance/index result using explicit edge/plane/vertex descriptors. It preserves
+the transposed-frame calculation, adjacent-normal eligibility gates, short-axis
+rejection, orientation and strictly negative best-separation policy. Finite inputs
+and nonzero second-edge lengths are required. See LINK_SOLVER.md, "Contact
+edge-distance query". Descriptor validity and contact emission remain separate.

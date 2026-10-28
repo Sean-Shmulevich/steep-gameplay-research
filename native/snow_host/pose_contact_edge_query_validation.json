@@ -1,0 +1,22 @@
+{
+  "schema": "pose-contact-edge-query-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "selected_pairs": 363,
+  "method": "Offline complete native edge query without interception, XYZ mask supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1923dd0",
+  "comparisons": [
+    "distance bits, both edge indices, preserved output tail"
+  ],
+  "coverage": [
+    "zero to six edges per shape",
+    "arbitrary finite vertices, adjacent plane normals and frame bases",
+    "selected and rejected pairs"
+  ],
+  "limits": [
+    "Synthetic descriptors, not convex-asset validity proof.",
+    "Finite nonzero second-edge lengths; unordered/overflow behavior excluded.",
+    "Mask initialization supplied; actual contact emission remains unresolved."
+  ]
+}

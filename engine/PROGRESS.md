@@ -7813,3 +7813,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   separation calculations. 1024 complete native queries match float bits and
   selected planes. Tests compose the real query into axis selection. Edge query,
   descriptor setup and contact emission remain unresolved.
+- Recovered edge-distance query including relative-frame calculation, normal
+  eligibility, axis orientation and negative-separation selection. 1024 complete
+  native queries match result bits, with363 selecting a pair. Face and edge
+  services now have implementations; descriptor setup and contact emission remain.

@@ -1877,3 +1877,50 @@ supplied state. Synthetic tests confirm first-positive early exit, plane tie
 precedence and composition into the axis selector with the real face query.
 This closes the selector's supplied-face boundary locally; the edge query,
 producer descriptor setup and contact emitters remain unresolved.
+
+### Contact edge-distance query
+
+`engine.pose_contact_edge_query.query_contact_edges` reconstructs0x1923dd0.
+Each shape supplies vertices, planes and8-byte edges containing four uint16
+indices: vertex0, vertex1, plane0, plane1. Descriptor+0x10 points to edges and
+uint16+0x24 gives their count. The native query resets its output to negative
+FLT_MAX/UINT_MAX/UINT_MAX, regardless of incoming seed.
+
+It transposes the second frame basis and forms a relative first frame in that
+coordinate system. Translation uses the dot of negated second translation with
+each second basis row, followed by the transformed first translation. This is
+not a general inverse for arbitrary scaled/sheared matrices. First-shape edge
+endpoints and adjacent normals are transformed into that relative frame; second
+shape data remain local. Every operation preserves float32 rounding/order.
+
+For transformed first adjacent normals A/B, second normals C/D, and normalized
+second edge direction E = normalize(second_vertex0-second_vertex1):
+
+```text
+NA = -A; NB = -B
+N = cross(NB,NA)
+b = dot(NB,E); a = dot(NA,E)
+c = dot(N,C); d = dot(N,D)
+eligible = float32(b*c) > float32(1e-6)
+       and float32(d*c) < -float32(1e-6)
+       and float32(a*b) < -float32(1e-6)
+```
+
+Eligible pairs form `axis=cross(first_vertex0-first_vertex1,
+second_vertex0-second_vertex1)`. Length below float32(.001) gives no update.
+Otherwise divide each component by length and negate axis if
+`dot(A+B,axis)<0`. Separation is `dot(axis,second_vertex0)-dot(axis,first_vertex0)`.
+Only a strictly negative separation strictly greater than the running best
+updates the output indices. Thus zero/positive distances are not selected by
+this edge query, and equal results keep the first pair. The face query's positive
+separation early-exit policy is different.
+
+[1024 uninterrupted native edge queries](../../native/snow_host/pose_contact_edge_query_validation.json)
+match all distance/index bits and the untouched output tail;363 select a pair.
+Cases use zero-to-six edges, arbitrary finite frames, vertices and adjacent plane
+normals. These are synthetic descriptor tests, not a proof of convex-asset validity.
+XYZ mask initialization is supplied. Tests also cover an explicit eligible pair,
+first-tie precedence, zero separation and resetting a prior seed. The supported
+API domain excludes zero second-edge length and nonfinite/overflow arithmetic.
+Both face and edge query implementations are now available for axis selection;
+producer descriptor setup and contact-record emission remain unresolved.
