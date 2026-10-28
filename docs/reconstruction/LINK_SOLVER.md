@@ -3036,3 +3036,37 @@ unrelated pairs and both key widths. Original lookup/removal/reset helpers execu
 without interception; preallocated recycler capacity64 avoids allocator calls.
 The implementation's growth formula is inspected but not exercised by this receipt.
 No cache-order invariant, upstream sort equivalence or live scheduling is claimed.
+
+### Contact record sort ordering
+
+Before retirement, consumer0x198f910 calls sort0x1c8fd50 on48-byte records with
+comparator0x198f8f0 for full detail keys or0x198f900 for low16-bit keys.
+`engine.pose_contact_sort.sort_contact_records` reconstructs the sort's record
+permutation, including its unstable equal-key ordering. A stable Python sort would
+change the first record used for normal selection and geometric reduction.
+
+The16-bit comparator zero-extends each key before subtraction. The32-bit comparator
+subtracts modulo2^32 and interprets the result as signed32. For example, comparing
+key0 against0xffffffff returns+1, not a negative unsigned-order result. Arbitrary
+widely separated keys can violate comparator transitivity. The reconstruction
+preserves this behavior; it does not promise a globally ascending unsigned order.
+
+For ranges of at most8 records, helper0x1c8fc90 repeatedly finds the first strict
+maximum and swaps it with the last active slot. Equal keys do not replace the
+selected maximum. Three equal-key records with identities[0,1,2] consequently become
+[1,2,0]. Larger ranges select a middle pivot after low/middle/high comparisons,
+scan/partition while tracking a moved pivot, skip the equal-key region and process
+the smaller remaining range first while stacking the larger. Whole records move;
+field bytes are never normalized or regenerated.
+
+[1024 complete original sort comparisons](../../native/snow_host/pose_contact_sort_validation.json)
+match every record byte and trailing bytes for counts0,1,2,7,8,9,10,16,31,64,127,256,
+and500. Cases cover duplicates, ascending/descending/all-equal keys and arbitrary
+uint32 keys under both comparators. Original sort, small-range helper, comparator,
+indirect-call trampoline and security-cookie check all execute without interception.
+The receipt proves local permutation behavior, not integrated cache processing.
+
+The independent module is limited to48-byte records and explicit16/32-bit key width.
+These domain guards avoid exposing an unrelated generic native sorting API. The
+next integration can now use the recovered permutation before retirement,
+acquisition and per-group reduction instead of assuming stable sorting.

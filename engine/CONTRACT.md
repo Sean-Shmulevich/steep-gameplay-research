@@ -856,3 +856,9 @@ entries. It advances the cache index after swap-last removal, resets the scanned
 payload count and appends its identity for reuse. See LINK_SOLVER.md, "Stale
 contact-group retirement scan". Upstream order/uniqueness invariants remain unknown;
 do not replace this with set subtraction or automatically revisit moved entries.
+
+Contact sorting: `pose_contact_sort.sort_contact_records` mutates48-byte record
+order with the recovered unstable sort and explicit16/32-bit comparator. Full keys
+use wrapped signed subtraction, not unsigned ordering. See LINK_SOLVER.md,
+"Contact record sort ordering". Whole record bytes persist; invalid record lengths
+or key widths are authored errors. No cache or solver work occurs in this helper.

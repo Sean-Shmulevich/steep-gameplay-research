@@ -1,0 +1,21 @@
+{
+  "schema": "pose-contact-sort-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1c8fd50",
+  "comparators": [
+    "0x198f8f0",
+    "0x198f900"
+  ],
+  "method": "Complete original sort, small-range sort, comparators, indirect trampoline and cookie check without interception",
+  "coverage": [
+    "Counts0..500, including8/9 partition boundary",
+    "Duplicate, ascending, descending, all-equal and arbitrary uint32 keys",
+    "16/32-bit comparators; exact full record permutation and trailing bytes"
+  ],
+  "limits": [
+    "Synthetic48-byte records; no caller cache integration or live game",
+    "Wrapped32-bit subtraction can violate comparator transitivity; reproduced, not corrected"
+  ]
+}

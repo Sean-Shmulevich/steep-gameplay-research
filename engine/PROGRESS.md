@@ -7951,3 +7951,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   index advance after swap-last removal. Synthetic adversarial cases establish
   local behavior, not a game bug or violated runtime invariant. Sort and full
   acquisition/update integration remain pending; no live game used.
+- Reconstructed native contact-record sorting, including equal-key permutation and
+  wrapped signed32-bit comparison.1024 complete original sort calls match every
+  byte across counts0..500 and the8/9 algorithm boundary, without interception.
+  Stable Python sorting would change equal-key order. Full contact consumer
+  integration is still pending; this closes its sorting dependency locally.
