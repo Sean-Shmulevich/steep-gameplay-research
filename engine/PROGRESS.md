@@ -7895,3 +7895,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   caller prefixes including the actual virtual bounds method match all XYZ frame
   fields and six bounds floats. Candidate allocation/retry and complete terrain
   processing-loop composition remain open.
+- Reconstructed terrain candidate collection/retry policy.1024 reached native
+  cases match IDs, capacities, allocation request sizes and ownership flags,
+  including489 retries. Exact128 triggers a full query even when total is128.
+  Allocator storage is supplied; full terrain caller integration remains open.

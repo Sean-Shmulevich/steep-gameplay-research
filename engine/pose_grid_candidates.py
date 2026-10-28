@@ -38,3 +38,25 @@ def write_grid_triangle_candidates(resource,query,output,capacity):
                 count+=1
                 if count>=capacity:return count
     return count
+
+
+def collect_grid_triangle_candidates(resource, query):
+    """Run native caller's bounded first query and exact-128 full-grid retry.
+
+    Python owns buffers; native allocator identity/lifetime are not emulated.
+    Return candidate IDs plus query capacities for inspection.
+    """
+    width,height=struct.unpack_from('<2H',resource,0x9c)
+    total=2*width*height
+    if not 0<total<=0x1fffffff:
+        raise ValueError('Positive bounded grid candidate domain required')
+    capacity=min(128,total)
+    storage=bytearray(capacity*4)
+    count=write_grid_triangle_candidates(resource,query,storage,capacity)
+    capacities=[capacity]
+    if count==128:
+        storage=bytearray(total*4)
+        count=write_grid_triangle_candidates(resource,query,storage,total)
+        capacities.append(total)
+    return dict(ids=list(struct.unpack_from('<%dI'%count,storage)),
+                query_capacities=capacities,retried=len(capacities)==2)

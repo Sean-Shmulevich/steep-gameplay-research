@@ -2624,3 +2624,31 @@ reflection and translation. No service is intercepted. XYZ mask and resource
 identity are supplied; fourth SIMD lanes and later caller stages are outside this
 receipt. The construction/copy routine itself is static dispatch evidence, not
 validated allocation or object-lifetime behavior.
+
+### Terrain candidate collection and ownership
+
+`engine.pose_grid_candidates.collect_grid_triangle_candidates` reconstructs the
+query/retry policy in0x19de1f0..0x19de2f1. Total candidate capacity is twice the
+uint16 cell-width times cell-height. The first query uses min(total,128) entries.
+If and only if that query returns128, the caller allocates total*4 bytes and reruns
+the entire query from the beginning. It replaces the initial list, not appends to
+it. A grid with exactly128 triangles therefore queries twice at capacity128.
+The independent API returns IDs, queried capacities and whether retry occurred.
+
+Native initial allocation uses a marked temporary block. Because first capacity
+never exceeds128, its bytes never exceed512, so the observed branch uses stack
+storage with marker0x79cb0723. The generic alternate path for blocks above0x800
+bytes is not reached under these positive grid dimensions. Retry requests an
+unmarked full-grid buffer through0x18c9140 and clears the temporary ownership flag.
+Cleanup at0x19de729 releases a marked heap block only for marker0x79cb0724, leaves
+marked stack storage alone, or passes the retry buffer to0x18c8f50. The underlying
+allocator/free implementation and its lifetime guarantees are not reconstructed.
+
+[1024 reached native collection comparisons](../../native/snow_host/pose_grid_candidate_collection_validation.json)
+match candidate IDs/counts, query capacities, retry allocation size and ownership
+flag, including489 retries. Queries execute the actual enumerator. A hook supplies
+storage for the full-grid allocator; query hooks only observe arguments. This
+validates allocation requests and selection policy, not the allocator itself.
+Tests cover small grids, exactly128 triangles, larger grids and empty Z overlap.
+Python owns independent buffers. The API's positive bounded-grid guard is authored;
+zero dimensions, huge allocation behavior and full terrain orchestration remain open.

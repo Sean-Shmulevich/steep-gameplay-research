@@ -794,3 +794,9 @@ float32 lowXYZ/highXYZ values from extents and a supplied frame, preserving the
 absolute-basis sum order. See LINK_SOLVER.md, "Box resource bounds query". Composed
 validation uses the terrain caller's actual kind3 virtual method; other resource
 classes and object allocation/lifetime remain separate.
+
+Terrain candidate collection: `pose_grid_candidates.collect_grid_triangle_candidates`
+returns IDs and inspection metadata after a min(total,128) first query and exact128
+retry at full-grid capacity. Python owns storage; native allocator behavior is not
+emulated. See LINK_SOLVER.md, "Terrain candidate collection and ownership". Positive
+bounded grid validation is authored; complete caller orchestration remains separate.
