@@ -1,0 +1,27 @@
+{
+  "schema": "pose-body-bounds-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "Offline original refresh and transform helpers; resource virtual bounds method supplied as an explicit service",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18bcee0",
+    "0x18b2880",
+    "0x18c16e0"
+  ],
+  "comparisons": [
+    "callback resource identity and all twelve transform float32 bit patterns",
+    "all body, both metadata buffers and both resource arrays"
+  ],
+  "coverage": [
+    "zero to seven resources, null slots with at least one resource for nonempty spans",
+    "signed-zero bound ties",
+    "callback replacement of entry-array and metadata identities, transform and captured count"
+  ],
+  "limits": [
+    "Resource geometry/bounds implementation remains supplied, not reconstructed.",
+    "Finite arithmetic only; transform fourth lanes are unspecified scratch storage and not compared.",
+    "Nonempty all-null span is outside validated native domain; independent API rejects it.",
+    "Offline only; no live concurrency or broadphase insertion proven."
+  ]
+}

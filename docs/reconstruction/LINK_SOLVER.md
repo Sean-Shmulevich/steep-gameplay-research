@@ -1394,3 +1394,47 @@ the uninterrupted native receipt. The observed reset and group transfer provide
 a concrete reactivation path; identifying all automatic triggers, other body
 classes and safe cross-thread entry points remains separate work. Clearing only
 a metadata nibble is not equivalent to this full group operation.
+
+### Body resource bounds refresh
+
+`engine.pose_body_bounds.refresh_pose_body_bounds` reconstructs poststep's refresh
+routine0x18bcee0. It captures the body's uint16 resource count, traverses72-byte
+entries, skips null resources and composes each local transform with the current
+body transform. Each resource's virtual slot+0x10 supplies six bounds floats.
+The routine unions those bounds and writes metadata minima XYZ at+4 and maxima
+XYZ at+0x10. With zero entries, both endpoints equal body translation. A nonempty
+all-null span is outside the valid native domain: its search can read one past
+the span and then attempt a resource call. The independent API rejects it with
+an authored guard instead of inventing a fallback.
+
+For parent basis P, local basis L, and translations p/l, transform helpers
+0x18b2880 and0x18c16e0 implement the following. Every multiplication and addition
+rounds to float32; no fused operation is substituted.
+
+```text
+basis[i][j] = ((L[i].x * P[0][j]) + (L[i].y * P[1][j]))
+              + (L[i].z * P[2][j])
+translation[j] = (((l.x * P[0][j]) + (l.y * P[1][j]))
+                  + (l.z * P[2][j])) + p[j]
+for each later resource bounds:
+    min[j] = new_min[j] if float32(new_min[j] - min[j]) < 0 else min[j]
+    max[j] = new_max[j] if float32(new_max[j] - max[j]) >= 0 else max[j]
+```
+
+Equal minima retain the prior bits; equal maxima retain the new bits, including
+signed zero. Transform fourth lanes are unwritten scratch bytes, so the API
+exposes only the twelve meaningful floats. This is not a homogeneous4x4 matrix.
+The entry-array pointer is reloaded between resources, and final metadata is
+resolved after callbacks. Captured count persists even if a callback changes it.
+The public identity maps model these sequential mutations, not concurrent access.
+
+[512 offline native comparisons](../../native/snow_host/pose_body_bounds_validation.json)
+execute the original refresh and both transform helpers with only the resource
+bounds callback supplied. They compare all twelve transform float bit patterns,
+callback identities, all body bytes, both metadata buffers and both entry arrays.
+Cases cover empty spans, null slots, signed-zero ties and callback replacement of
+arrays, metadata, body translation and count. A separate composition test feeds
+body integration into resource refresh with a clearly supplied point-bounds
+service. No particular resource geometry, broadphase registration or live thread
+safety is established. Resource-specific bounds implementations remain the next
+consumer boundary to decode.

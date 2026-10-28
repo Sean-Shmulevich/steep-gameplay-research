@@ -7759,3 +7759,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   A composition test queues state2 links before reset and confirms poststep is
   admitted afterward. Other classes, allocation growth and automatic/live
   reactivation triggers remain unresolved.
+- Reconstructed poststep resource-transform composition and bounds refresh.
+  512 offline native comparisons match transform bits, resource call order and
+  retained storage, including callback replacement of arrays/metadata and
+  signed-zero union ties. Resource-specific bounds remain required services;
+  this does not establish geometry decoding or broadphase publication.

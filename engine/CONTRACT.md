@@ -576,3 +576,12 @@ the existing ordinary-group finalizer's virtual40 callback. Full finalization
 queues state2 links before resetting bodies, clears the group flag and transfers
 context collections. Growth, other classes and automatic/live trigger safety
 remain external; resetting one body alone is not full group reactivation.
+
+Body resource bounds: `pose_body_bounds.refresh_pose_body_bounds` accepts retained
+body storage and identity maps for entry arrays, transforms and metadata. A
+required resource callback supplies six finite bounds floats from twelve composed
+transform floats. Count is captured; arrays and destination metadata are reloaded.
+Zero entries produce a point at body translation; all-null nonempty spans are
+rejected as an authored guard. Resource geometry, scratch fourth lanes, concurrent
+mutation and broadphase updates remain outside this contract. See LINK_SOLVER.md,
+"Body resource bounds refresh".
