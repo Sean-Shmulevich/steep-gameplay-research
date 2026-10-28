@@ -1438,3 +1438,48 @@ body integration into resource refresh with a clearly supplied point-bounds
 service. No particular resource geometry, broadphase registration or live thread
 safety is established. Resource-specific bounds implementations remain the next
 consumer boundary to decode.
+
+### Kind-7 grid resource bounds
+
+Constructor0x18c1d50 writes kind7 to word+0x28 and installs table0x29ca138.
+Slot+0x10 is0x18c2390, the exact virtual slot used by body refresh.
+`engine.pose_grid_resource_bounds.grid_resource_bounds` implements that complete
+method, closing the supplied bounds boundary for this constructor-selected class.
+
+With stored `low = resource[0x7c:0x88]`, `high = resource[0x88:0x94]`:
+
+```text
+half_extent[i] = float32(float32(high[i] - low[i]) * 0.5)
+height_center = float32(float32(resource.f98 + resource.f94) * 0.5)
+world_radius[j] = abs(basis[0][j]) * half_extent.x
+                + abs(basis[1][j]) * half_extent.y
+                + abs(basis[2][j]) * half_extent.z
+world_center[j] = ((basis[0][j] + basis[1][j]) * 0
+                  + height_center * basis[2][j]) + translation[j]
+minimum[j] = world_center[j] - world_radius[j]
+maximum[j] = world_radius[j] + world_center[j]
+```
+
+Each operation rounds to float32, with radius sums evaluated left-to-right.
+Absolute value clears the sign bit. The zero product is retained because it can
+affect signed-zero results. This is not generic midpoint-based AABB transformation:
+XY center is zero, and stored Z extent and the separate height-center pair remain
+distinct inputs. Their initializer assumptions are still to be traced. The method
+does not normalize or check the frame's orthogonality.
+
+[512 uninterrupted native comparisons](../../native/snow_host/pose_grid_resource_bounds_validation.json)
+run the original body refresh, transform helpers and actual kind-7 vtable method.
+No callback is replaced. All body, metadata and entry-array bytes match for zero
+to three resources, null slots, arbitrary finite transforms and independent
+extent/height-center values. Synthetic tests cover asymmetric XY endpoints,
+rotation/scale and public body-refresh dispatch. Constructor/table association is
+static evidence; these runs initialize synthetic objects with that table, without
+loading original terrain assets.
+
+Adjacent routine0x18c25d0 is a concrete grid lead. It reads float samples from
+resource+0x48 at `row * u16(resource+0x68) + column`, then writes four XYZ vertices
+for neighboring positions. X/Y use spacings at0x70/0x74 and offsets at0x7c/0x80;
+Z comes directly from each sample. Later topology/flag handling remains to be
+reconstructed. This supports the grid-backed description, but does not establish
+terrain archive decoding, selected map resources, triangle contact generation or
+broadphase insertion. Other resource kinds still need their bounds methods.

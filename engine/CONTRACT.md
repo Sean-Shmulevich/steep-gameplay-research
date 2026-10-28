@@ -585,3 +585,11 @@ Zero entries produce a point at body translation; all-null nonempty spans are
 rejected as an authored guard. Resource geometry, scratch fourth lanes, concurrent
 mutation and broadphase updates remain outside this contract. See LINK_SOLVER.md,
 "Body resource bounds refresh".
+
+Kind-7 bounds: `pose_grid_resource_bounds.grid_resource_bounds(resource, frame)`
+provides the constructor-selected callback for body refresh. Retained raw resource
+storage supplies extents and a separate height-center pair; the frame contains
+four XYZ rows. Float32 operations preserve the observed center rule without
+assuming midpoint centering or normalized basis. Input producers, grid topology,
+contact generation and other resource kinds remain unresolved. See LINK_SOLVER.md,
+"Kind-7 grid resource bounds".

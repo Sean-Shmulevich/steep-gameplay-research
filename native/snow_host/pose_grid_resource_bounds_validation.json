@@ -1,0 +1,28 @@
+{
+  "schema": "pose-grid-resource-bounds-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "method": "Offline uninterrupted native body refresh through actual kind-7 table and bounds method; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18bcee0",
+    "0x18b2880",
+    "0x18c16e0",
+    "0x18c2390"
+  ],
+  "constructor_rva": "0x18c1d50",
+  "vtable_rva": "0x29ca138",
+  "comparisons": [
+    "all retained body, metadata and entry-array bytes after complete refresh"
+  ],
+  "coverage": [
+    "zero to three resources",
+    "arbitrary finite local/parent transforms and independent extent/height-center fields",
+    "null resource slots"
+  ],
+  "limits": [
+    "Stored extent and height-center producers are not validated.",
+    "No grid loading, contact generation or broadphase insertion is included.",
+    "Finite offline domain only; no live synchronization or other resource kinds claimed."
+  ]
+}

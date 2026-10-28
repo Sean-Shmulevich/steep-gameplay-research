@@ -7764,3 +7764,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   retained storage, including callback replacement of arrays/metadata and
   signed-zero union ties. Resource-specific bounds remain required services;
   this does not establish geometry decoding or broadphase publication.
+- Resolved kind-7's constructor table to its concrete resource bounds method.
+  512 uninterrupted native body-refresh cases now include that method without
+  callback replacement. Stored extents and height-center inputs remain distinct.
+  Adjacent grid-sample vertex code is a new terrain lead; grid loading, topology,
+  contact generation and other resource kinds remain open.
