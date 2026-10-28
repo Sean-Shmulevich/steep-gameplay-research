@@ -2431,3 +2431,36 @@ when claiming full caller reconstruction. The caller also constructs a full inve
 terrain frame, obtains box bounds through a virtual call and retries candidate
 collection when the initial count reaches128. Allocation ownership and these
 entry/query stages remain separate work.
+
+### Terrain profile admission
+
+`engine.pose_grid_profile_gate.grid_triangle_profile_gate` reconstructs the reached
+lookup/admission block at0x19de310..0x19de355. It returns the selected terrain profile
+identity and a boolean admission result. Resource/profile tokens are explicit
+caller-owned identities, not saved native heap pointers.
+
+```text
+if terrain.mapb0 is absent:
+    terrain_profile = terrain.default20
+else:
+    cell = triangle_id >> 1
+    terrain_profile = terrain.tablea0[terrain.mapb0[cell]]
+other_profile = other.default20
+admit = ((terrain_profile.mask50 & other_profile.mask48)
+         | (other_profile.mask50 & terrain_profile.mask48)) != 0
+```
+
+The map entry is uint8 and masks are uint64. Both halves of a grid cell share the
+same profile selection. Either direction suffices; this is not a requirement for
+mutual overlap. No kind discriminator is checked in this reached terrain caller,
+and the other resource always uses its default profile. An absent map falls back;
+an empty present map does not. The independent API validates unsigned field widths
+and lets missing map/table/profile entries fail rather than inventing defaults.
+
+[2048 native block comparisons](../../native/snow_host/pose_grid_profile_gate_validation.json)
+match the selected profile pointer identity and mask result, with722 admitted
+cases. Inputs cover absent/present maps, sparse/dense masks, high32-bit overlap and
+both triangle halves. Entry resource identities are supplied, so this validates
+the local lookup/gate rather than full caller reachability or object lifetime.
+Profile contents are synthetic. The optional preliminary query, local bounds,
+candidate allocation/retry and complete terrain batch orchestration remain open.

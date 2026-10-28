@@ -7871,3 +7871,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   match all bytes across batch offsets, unrolled/remainder loops and arbitrary
   bit patterns. Documented the64-bit profile gate and an earlier optional query
   shortcut that remains unresolved. Full terrain caller integration is still open.
+- Reconstructed terrain profile lookup/admission with per-cell byte maps and
+  either-direction64-bit mask overlap. 2048 native block comparisons match profile
+  identity and admission, including722 accepted cases. Full caller orchestration,
+  optional preliminary query and allocation remain unresolved.

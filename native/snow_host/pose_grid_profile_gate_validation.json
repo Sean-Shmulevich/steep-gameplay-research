@@ -1,0 +1,23 @@
+{
+  "schema": "pose-grid-profile-gate-validation-v1",
+  "cases": 2048,
+  "passed": 2048,
+  "method": "Offline exact lookup/mask caller block; entry resource identities supplied",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "start_rva": "0x19de310",
+  "stop_rva": "0x19de355",
+  "comparisons": [
+    "selected terrain profile identity",
+    "64-bit mask admission result"
+  ],
+  "admitted": 722,
+  "coverage": [
+    "present and absent byte maps",
+    "sparse and dense64-bit masks, high bits",
+    "both triangle halves per cell"
+  ],
+  "limits": [
+    "Reached block only, not full caller",
+    "Profiles/maps are synthetic; allocation and lifetime not reconstructed"
+  ]
+}

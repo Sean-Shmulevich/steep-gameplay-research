@@ -756,3 +756,9 @@ mutates a specified batch of48-byte records, swapping point roles, sign-flipping
 normal bits and setting triangle IDs while retaining scalar/other fields. Range
 and identifier guards are authored. See LINK_SOLVER.md, "Terrain record roles".
 This is a reached caller block, not full terrain collision orchestration.
+
+Terrain profile admission: `pose_grid_profile_gate.grid_triangle_profile_gate`
+resolves a per-cell terrain profile or absent-map default and tests either
+64-bit directional mask overlap against the other resource's default profile.
+It returns identity and admission separately. Tokens/maps/profiles are supplied;
+field-width validation is authored. See LINK_SOLVER.md, "Terrain profile admission".
