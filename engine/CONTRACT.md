@@ -722,3 +722,11 @@ It reuses the recovered geometric selector and gathers matching point/tag and
 separation records before overwriting slots0..3. Later ties and duplicate indices
 are preserved. See LINK_SOLVER.md, "Complete contact point selection" for the
 fixed-angle/trigonometry domain. Final face emission remains separate.
+
+Face emission: `pose_contact_face_emit.emit_face_contacts` connects incident-face
+selection, polygon/side-plane construction, clipping, point selection and48-byte
+record emission. Shapes supply vertices, planes and per-face vertex indices.
+Capacity limits writes after geometry; orientation swaps point roles and negates
+the normal. Separation is linear, unlike edge emission's squared field. All helper
+finite/nondegenerate and capacity domains apply. See LINK_SOLVER.md, "Connected
+face-contact emission". Upstream producer descriptors and live integration remain.

@@ -2233,3 +2233,54 @@ includes the actual selector, quaternion matrix and scalar trigonometry without
 interception. XYZ mask and zero comparison state are supplied; the fixed-angle
 specialization is validated for scalar trig dispatch zero. Other dispatch paths,
 nonfinite geometry and full face-contact emission remain outside this evidence.
+
+### Connected face-contact emission
+
+`engine.pose_contact_face_emit.emit_face_contacts` reconstructs 0x18e4060 with
+explicit frames and shape descriptors. A shape supplies vertices, four-component
+planes and a list of vertex indices for each face. Frames supply three basis XYZ
+rows and translation. Capacity limits emitted records; unlike the edge emitter,
+zero capacity does not bypass geometry work.
+
+Transform the selected reference plane with the same normal/scalar arithmetic as
+the side-plane builder. Project its world normal onto each incident-frame basis
+row. Choose the incident plane having the smallest dot product of its local normal
+with that projected normal. The first plane seeds the minimum; strict comparisons
+retain the first tie. Incident planes must be nonempty.
+
+Build the chosen incident polygon in world coordinates, build reference side
+planes, clip the polygon against all side planes, then run complete point selection
+against the transformed reference plane. These stages use the reconstructed helpers
+directly; no supplied query responses stand in for their arithmetic.
+
+For each selected point Q and separation S, compute `P[j]=Q[j]-N[j]*S` with
+float32 multiplication and subtraction. Emit up to capacity records:
+
+| Offset | Value |
+| --- | --- |
+| 0x00 | N XYZ, or sign-negated N if flipped |
+| 0x0c | S, the linear plane-separation scalar |
+| 0x10 | P XYZ, or Q if flipped |
+| 0x1c | uint32 zero |
+| 0x20 | Q XYZ, or P if flipped |
+| 0x2c | uint32 0xffff0000 |
+
+The final record does not copy the polygon feature tag. The edge emitter's field
+at0x0c contains negative squared separation; this face emitter stores S directly.
+Normals are not renormalized here, and no division by squared normal length is
+added to the point projection. All output beyond the emitted records persists.
+
+[1024 complete native emitter comparisons](../../native/snow_host/pose_contact_face_emission_validation.json)
+match counts and every output/tail byte, including1622 emitted records in448
+nonzero cases. The native routine executes all polygon, side-plane, clipping,
+selection, rotation and scalar-trig helpers without interception. Synthetic cases
+cover 3..11 reference vertices, 3..13 incident vertices, z-axis rotated/translated
+frames, both orientation modes, reduction on/off, tied incident plane scores and
+capacity0..9. These are local planar fixtures, not complete game collision scenes.
+XYZ mask, zero comparison state and mapped stack-limit state are supplied; trig
+dispatch zero is the validated path. General-frame composition remains to be
+broadened, and degenerate helper domains remain excluded.
+
+Face and edge emission now have executable implementations. The upstream producer's
+box/triangle descriptor construction and its complete connection to terrain
+candidate enumeration, profile gates and record filtering remain unresolved.

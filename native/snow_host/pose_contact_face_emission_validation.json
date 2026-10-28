@@ -1,0 +1,24 @@
+{
+  "schema": "pose-contact-face-emission-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "method": "Complete offline face emitter with all geometry/clipping/selection/trig helpers; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e4060",
+  "comparisons": [
+    "returned count and all record/tail bytes"
+  ],
+  "emitted_records": 1622,
+  "nonzero_cases": 448,
+  "coverage": [
+    "3..11 reference and3..13 incident vertices",
+    "rotated translated frames; separated and overlapping faces",
+    "capacity0..9, both orientation flags and reduction modes",
+    "tied incident plane scores"
+  ],
+  "limits": [
+    "Synthetic planar polygons and z-axis rotations, no live validation",
+    "XYZ mask/zero and stack-limit state supplied; scalar trig dispatch zero",
+    "Finite nondegenerate helper domains; producer descriptor construction remains separate"
+  ]
+}

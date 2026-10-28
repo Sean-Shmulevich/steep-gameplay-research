@@ -7850,3 +7850,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   point and separation bytes, with454 four-point outputs under reduction. This
   closes optional reduction for the validated dispatch domain; face emission and
   producer descriptors remain open.
+- Connected complete face-contact emission. 1024 uninterrupted native executions
+  match all output bytes and counts, including1622 records in448 nonzero cases.
+  Synthetic rotated planar faces cover capacity, orientation and reduction modes.
+  General-frame composition, producer descriptors and complete terrain collision
+  integration remain open; no live/original-engine equivalence is claimed.
