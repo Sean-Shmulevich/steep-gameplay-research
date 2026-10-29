@@ -8334,3 +8334,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   retirement across two group visits.587 pose tests include allocator growth
   ordering. Allocator internals, joined damping, concurrency and upstream batch
   selection remain outside this checkpoint; atan2 remains supplied.
+- Reconstructed active-group ordering and batch construction above the worker.
+  Zero-work groups remain admitted, batches accumulate at least one work unit per
+  group to threshold25, and worker requests cap at32.512 native wrapper comparisons
+  execute original partition/sort and match retained bytes plus dispatch snapshots.
+  Sorting ties, native growth, dispatcher synchronization, job initialization and
+  completed-group transfer remain explicit boundaries. No live session was used.

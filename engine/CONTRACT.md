@@ -1347,3 +1347,12 @@ both worker routes to retained numerical APIs and allocator services. See
 LINK_SOLVER.md, "Free-motion worker branch" and "Joined numerical batch worker".
 Scratch growth/reuse follows required layout size; ownership, allocator internals,
 thread-safe claims, upstream admission and alternative classes remain external.
+
+Group batch construction: `run_pose_group_batches` reads the active group span,
+partitions zero-work groups to its tail, requests sorting of the nonzero prefix,
+and forms contiguous batches with a signed work threshold of25. Each group costs
+at least one after uint32 contact-plus-pose addition. Worker count is bounded by
+batch count, dispatcher capacity and32. See LINK_SOLVER.md, "Group batch formation".
+Sorting, storage growth, dispatch and completed-group transfer are explicit
+services. Dispatch must finish consuming batch records before returning; this API
+requires that ordering but does not reconstruct the native dispatcher's join.

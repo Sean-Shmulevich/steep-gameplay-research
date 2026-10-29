@@ -6174,3 +6174,81 @@ not validate allocator internals, live concurrency, damping inside the joined
 worker, other body/resource classes or earlier active-list selection. Public tests
 also cover a larger later group causing release-before-growth, but that growth
 scenario is not part of the joined native receipt.
+
+## Group batch formation
+
+Binary-derived behavior: wrapper `0x18e2fb0`, ordering helper `0x18e2d00`,
+comparator `0x18e19a0`. Independent implementation:
+`engine/pose_group_batches.py`. Validation receipt:
+[`pose_group_batches_validation.json`](../../native/snow_host/pose_group_batches_validation.json).
+
+The source is the context's active group array, not a scan of every allocated
+group. The wrapper captures its active count before reordering. The reorder helper
+partitions groups whose uint32 contact-plus-pose sum is zero to the tail by swapping
+with the last unpartitioned slot. It sorts only the nonzero prefix, then repairs
+**every** active group's stored index. Zero-work groups remain active and receive
+batch entries. The worker can therefore reach their free-motion branch.
+
+For ordinary small counts, nonzero groups sort by descending work. The exact
+comparator is signed32(uint32(work(second)-work(first))), where each work value is
+itself a uint32 sum. Overflow is not equivalent to an unbounded integer comparison.
+Equal-key order depends on the native CRT sorting implementation; our API requires
+a sorting service instead of silently promising Python's stable order.
+
+```python
+original_count = context.active_count
+partition_zero_work_to_tail()
+sort_nonzero_prefix(descending_wrapped_work_comparator)
+repair_all_active_group_indices()
+context.batch_count = 0
+index = 0
+while index < original_count:
+    if context.batch_count == context.batch_capacity:
+        grow_batches(8 if capacity == 0 else uint32(2 * capacity))
+    batch = append_batch(pointer_to_active_slot(index))
+    accumulated = 0
+    while index < original_count:
+        group = active_groups[index]
+        work = uint32(group.contact_count + group.pose_count)
+        batch.count += 1
+        accumulated = uint32(accumulated + max(1, work))
+        index += 1
+        if signed32(accumulated) >= 25:
+            break
+workers = min(dispatcher.worker_capacity, context.batch_count, 32)
+for job in first_worker_jobs(workers):
+    job.scalar = scalar
+    job.settings = settings
+context.claim_counter = 0
+if workers:
+    dispatch(workers, worker_thunk, context.job_table)
+context.batch_count = 0
+transfer_completed_groups(context)
+```
+
+For example, work values `[13,12,1,0,0]` produce batches of two and three groups.
+The first reaches25; the second costs3 because zero-work groups still cost one.
+A group of work40 occupies one batch by itself.26 zero-work groups produce batches
+of25 and1. These values are scheduling weights, not simulation substeps or elapsed
+milliseconds. Large wrapped values can make the signed accumulator negative;
+public tests preserve this branch rather than imposing a new upper bound.
+
+Batch records contain a count and a pointer into the active group array. They do
+not copy group identities. Callers connecting these records to the retained worker
+must provide views of that array at each batch's starting address. Storage must
+remain valid through dispatch. This wrapper writes scalar/settings fields in
+existing worker jobs; it does not initialize their owner pointers. It resets the
+claim counter even if the dispatcher admits zero workers, clears the batch count
+after dispatch returns, and then invokes completed-group transfer. These are
+observed sequencing rules, not proof of the dispatcher's synchronization internals.
+
+The512-case offline comparison executes the original partition, original CRT sort
+and complete retained-capacity wrapper. Only dispatch and completed-group transfer
+are recording services. Every context/group/array/batch byte matches, including
+unused padding and unused job fields. The comparison also checks state at dispatch,
+before the final batch-count reset. Cases use0–80 groups, distinct small nonzero
+weights, zero-work tails, seven worker capacities and three scalar signs. No live
+game was launched. Public tests cover growth requests, wrapped counts, signed
+accumulation and worker limits. Native allocation growth, equal-key CRT ordering,
+concurrent dispatch, job construction and completed-group transfer remain outside
+this validation.
