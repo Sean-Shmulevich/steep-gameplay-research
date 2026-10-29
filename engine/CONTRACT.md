@@ -1125,3 +1125,9 @@ all four inverse lanes. These variants use tangent preparation and bounded-scala
 iteration, with no extra denominator term. See LINK_SOLVER.md, "Bounded scalar
 rows without added response". Both are connected to normal traversal, skipped in
 special phase. Four numerical categories and remaining producers/lifecycle are open.
+
+Late primary pools: categories2/3 reuse recovered primary kernels with distinct
+bases/counts and normal-only execution. See LINK_SOLVER.md, "Late primary
+categories and remaining numerical kernels". `late_primary_rows` and
+`paired_late_primary_rows` require explicit retained rows. Only numerical
+categories22/23 remain unsupported; broader producer/lifecycle gaps persist.

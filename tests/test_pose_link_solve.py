@@ -90,3 +90,19 @@ class LinkSolveTests(unittest.TestCase):
         c,args=self.fixture();struct.pack_into('<I',c,0x12c,1)
         with self.assertRaisesRegex(ValueError,'constraint primary'):
             solve_pose_link_rows(c,**args)
+
+    def test_late_primary_categories_normal_only(self):
+        for flags,expected in [(12,(10,0,-2)),(0x10030000,(10,0,0))]:
+            c,args=self.fixture(flags)
+            struct.pack_into('<I',c,0x108,0);struct.pack_into('<I',c,0x120,0)
+            struct.pack_into('<I',c,0x110,1)
+            args['late_primary_rows']=args['primary_rows'];args['primary_rows']=[]
+            before=bytes(args['late_primary_rows'][0])
+            solve_pose_link_rows(c,**args)
+            self.assertEqual(struct.unpack_from('<3f',args['body_state'][7]),expected)
+            if flags==0x10030000:self.assertEqual(bytes(args['late_primary_rows'][0]),before)
+
+    def test_late_paired_storage_is_required(self):
+        c,args=self.fixture();struct.pack_into('<I',c,0x114,1)
+        with self.assertRaisesRegex(ValueError,'late primary'):
+            solve_pose_link_rows(c,**args)

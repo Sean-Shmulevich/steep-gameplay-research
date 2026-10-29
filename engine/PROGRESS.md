@@ -8166,3 +8166,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   iteration. Preserved the nonzero fourth inverse lane.512 preparations and1536
   iterations match native bytes;256 mixed twenty-one-category comparisons pass.
   Four numerical categories and remaining builders/lifecycle remain unfinished.
+- Connected categories2/3 after verifying original primary-kernel reuse and their
+  late normal-only placement.256 twenty-three-category original wrapper checks
+  pass with backward accumulator links and shared body states. Remaining numerical
+  categories22/23 have distinct256/352-byte matrix rows; producers and lifecycle
+  remain separate unfinished work.

@@ -4536,3 +4536,30 @@ populated and all retained buffers matching across four phase masks and zero
 through three iterations. Four numerical categories remain unsupported, along
 with unfinished row builders and group lifecycle. This is numerical traversal
 coverage for supplied rows, not a full-engine fidelity measurement.
+
+## Late primary categories and remaining numerical kernels
+
+Original traversal calls the paired primary preparation/iteration routines
+0x19e5310/0x19e5840 for category3 and the clear routines0x19e55d0/0x19e5710 for
+category2. These are the same kernels used by categories1/0 and9/8. This is
+observed call reuse, not an assumption based on similar row sizes. Categories3/2
+execute late in the normal-only section, after categories23/22 and before1/0.
+Their row strides are128/112 bytes. Context114/110 supplies counts, and context4c/48
+supplies arena bases. Special phase skips both.
+
+`solve_pose_link_rows` exposes `paired_late_primary_rows` and `late_primary_rows`
+for these pools. "Late" describes observed execution order, not original class
+names or physical semantics. Signed accumulator links use each pool's own base.
+[Twenty-three-category comparison](../../native/snow_host/pose_twenty_three_category_solve_validation.json)
+executes256 uninterrupted original wrappers with all supported categories
+populated. All context, row, body-data/state and result bytes match across four
+phase masks and zero through three iterations, including backward accumulator
+links from the new pools. Public tests verify normal-only execution and required
+row storage.
+
+Remaining numerical categories are22 and23. Category22 uses256-byte rows,
+preparation0x19edd10 and iteration0x19ee580. Category23 uses352-byte rows,
+preparation0x19ed4d0 and iteration0x19ee190. Both occur before categories3/2 in
+normal phase and remain explicitly rejected by the independent mixed solver.
+Completing those kernels will not by itself supply row production, group lifecycle,
+concurrency or original gameplay ownership.
