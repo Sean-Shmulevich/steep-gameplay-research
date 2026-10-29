@@ -1176,3 +1176,11 @@ supplied sample directly; other modes scale and clamp sample-reference before
 negation. Response W is impulse_bound.X times context10. See LINK_SOLVER.md,
 "Angular drive row producer". Caller provides endpoint indices and cached-result
 lifecycle. These field names describe arithmetic, not established physical units.
+
+Kind3 angle inputs: `select_pose_angle_interval` preserves the strict all-XYZ
+outside-range gate, one-revolution candidate selection and four-lane output.
+It does not normalize repeatedly or clamp to bounds. `pose_constraint_drive_sample`
+retains the original subtract-and-compare scalar selection from d0/d4/dc. See
+LINK_SOLVER.md, "Kind3 angle interval selection". The existing signed-angle helper
+remains reusable with an explicit atan2 service; platform bit equivalence is not
+claimed. The arena drive API now delegates to the earlier detached drive builder.

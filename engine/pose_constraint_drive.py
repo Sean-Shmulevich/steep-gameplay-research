@@ -1,8 +1,8 @@
 """Drive row production; LINK_SOLVER.md, Angular drive row producer."""
 import math
 import struct
-from reference.central_impulse import f32
 from .pose_constraint_limit import _vector
+from .snow_pose_drive_row import build_pose_drive_row
 
 
 def build_pose_angular_drive_row(context, *, single, mode, axis, sample,
@@ -25,22 +25,13 @@ def build_pose_angular_drive_row(context, *, single, mode, axis, sample,
     row = u32(0x16c)+16*((u32(0x40+4*category)+count*(stride//16))&0xffffffff)
     if row+stride > len(context):
         raise ValueError('Complete retained angular drive row required')
-    response = sample
-    if mode != 2:
-        reference, cap = map(_vector, (reference, rate_bound))
-        response = [f32(f32(x-r)*scalar) for x,r in zip(sample,reference)]
-        # SSE MAX/MIN return their second operand on equality.
-        response = [x if x > -c else -c for x,c in zip(response,cap)]
-        response = [x if x < c else c for x,c in zip(response,cap)]
-    response = [-x for x in response]
-    response[3] = f32(bound[0]*scale)
-    struct.pack_into('<I', context, count_offset, (count+1)&0xffffffff)
-    index = u32(0x180)
-    struct.pack_into('<I', context, 0x180, (index+1)&0xffffffff)
-    struct.pack_into('<I', context, row+4, index)
-    struct.pack_into('<4f', context, row+0x10, *response)
-    struct.pack_into('<4f', context, row+0x20, 0.,0.,0.,0.)
-    struct.pack_into('<4f', context, row+0x30, *axis)
-    if not single:
-        struct.pack_into('<4f', context, row+0x50, *[-x for x in axis])
+    built = build_pose_drive_row(
+        bytes(context[row:row+stride]), class_byte=int(bool(single)),
+        base_row=u32(0x40+4*category), class_count=count,
+        row_region_offset=u32(0x16c), result_count=u32(0x180), mode=mode,
+        context_scalar=scalar, context_scale=scale, axis=axis, target=sample,
+        current=reference, cap=rate_bound, strength=bound)
+    context[row:row+stride] = built['row']
+    struct.pack_into('<I', context, count_offset, built['next_class_count'])
+    struct.pack_into('<I', context, 0x180, built['next_result_count'])
     return row

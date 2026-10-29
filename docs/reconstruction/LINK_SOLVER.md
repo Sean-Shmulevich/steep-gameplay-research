@@ -4956,3 +4956,69 @@ This closes the drive-row helper dependency identified in kind3. Its upstream
 sample getter, mode configuration, angle calculation, cleanup and optional body
 notification still need composition into the complete builder. No new completed
 top-level builder is claimed by this helper alone.
+
+## Kind3 angle interval selection
+
+Cross-checking earlier research resolves an apparent gap: signed angle helper
+0x19a1760 is already implemented by `engine.snow_pose_angle.pose_row_angle`,
+with an explicit atan2 service. See [Pose row angular helper](CENTRAL_IMPULSE.md#pose-row-angular-helper).
+The earlier statement that this whole helper remained unrecovered was too broad.
+Its float32 input arithmetic is recovered; the native transcendental implementation
+and its integration into the complete kind3 builder remain separate boundaries.
+The formula is:
+
+```text
+y = dotXYZ(reference, cross(axis,target))
+x = dotXYZ(reference,target)
+angle = float32(atan2(y,x))
+```
+
+No input normalization or degeneracy repair is added. Kind3 passes its transformed
+axis/reference vectors, then sends the broadcast angle through0x19f3860 before
+producing limit rows. That interval selector is now implemented as
+`engine.pose_constraint_angle.select_pose_angle_interval`.
+
+Let a,lo,hi be four-lane angle and bounds and tau=float32(2*pi), exactly
+6.2831854820251465. If neither `allXYZ(hi<a)` nor `allXYZ(a<lo)` holds, the helper
+returns a unchanged. Strict equality does not trigger the branch. Once the XYZ
+gate triggers, every lane, including W, follows:
+
+```text
+plus  = float32(a+tau) if float32(a-hi)<0 else a
+minus = float32(a-tau) if float32(lo-a)<0 else a
+difference = float32(float32(lo-minus) - float32(plus-hi))
+selected = minus if difference<0 else plus
+```
+
+This selects between representations near the supplied interval. It is not a
+clamp, does not sort bounds and does not repeatedly wrap arbitrary angles into
+one revolution. For bounds[-1,1], angle6 becomes approximately-0.28318548;
+angle20 becomes approximately13.716815, not a value inside[-1,1]. A nonuniform
+XYZ vector can suppress selection even when individual lanes are outside.
+
+The source drive sample getter0x1942bb0 is also reconstructed as
+`pose_constraint_drive_sample`. It reads lower=d0, upper=d4 and current=dc:
+
+```text
+selected = lower if float32(lower-current)>=0 else current
+result = selected if float32(upper-selected)>=0 else upper
+```
+
+For ordinary finite ordered values this clamps current between lower and upper.
+The implementation preserves subtraction/comparison ordering, reversed bounds
+and signed-zero selection instead of replacing it with an abstract clamp.
+Getter0x1942bf0 returns the inline configuration at constraint70. The cleanup
+callee0x075e600 reached by kind3 is a bare return in the analyzed image.
+
+[Input validation](../../native/snow_host/pose_constraint_angle_validation.json)
+compares2048 interval selections and2048 scalar getter calls without interception.
+All output bits and source bytes match. Coverage includes broadcast/nonuniform
+vectors, reversed bounds, bound equality, signed zeros and angles beyond one
+revolution. This does not prove the full kind3 builder or native atan2 equivalence.
+
+Earlier research also already contains a detached drive-row implementation in
+`engine.snow_pose_drive_row`. The newer arena-mutating drive API now delegates to
+it, and its1024-case native comparison was rerun successfully. The newer limit
+producer additionally covers the finite-response branch; the earlier detached
+limit helper models the hard-response branch only. These APIs are not silently
+interchangeable across that branch boundary.

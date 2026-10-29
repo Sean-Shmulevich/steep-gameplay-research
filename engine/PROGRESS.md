@@ -8200,3 +8200,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   bypass, signed-zero clamp ties and signed bounds. Public tests connect an emitted
   row to bounded iteration. Full kind3 composition, angle production and the
   optional body notification remain open; physical drive units are unestablished.
+- Reused the earlier signed-angle helper instead of duplicating it. Recovered
+  kind3's adjacent-revolution interval selection and bounded drive-sample getter;
+  2048 native comparisons each match output bits and unchanged source storage.
+  Consolidated the arena drive adapter onto the existing detached implementation
+  and reran1024 native checks. Full kind3 geometry/row composition and optional
+  notification remain unfinished; atan2 is still an explicit external service.

@@ -1,0 +1,28 @@
+{
+  "schema": "pose-constraint-angle-input-validation-v1",
+  "interval_cases": 2048,
+  "drive_sample_cases": 2048,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19f3860",
+    "0x1942bb0"
+  ],
+  "method": "Offline uninterrupted original interval selector and scalar getter; no interception",
+  "comparisons": [
+    "all four selected angle lanes",
+    "scalar result bits",
+    "unchanged source bytes and interval return address"
+  ],
+  "coverage": [
+    "broadcast and nonuniform vectors",
+    "reversed bounds",
+    "exact bound equality",
+    "signed zeros",
+    "angles beyond one revolution"
+  ],
+  "limits": [
+    "Finite synthetic inputs.",
+    "Does not validate atan2 implementation or complete kind3 composition."
+  ]
+}
