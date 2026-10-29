@@ -8218,3 +8218,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   planned-count publication and six-kind counting were already reconstructed;
   remaining work is lifecycle composition, especially the differing count/build
   eligibility gates, rather than an invented post-build counter copy.
+- Recovered kind6 primary-row construction with midpoint angular coefficients,
+  center-relative motion inputs and the actual zero motion-response multiplier.
+  512 native builder comparisons match all retained bytes. Connected kind6 to
+  the dispatcher and reran its512-case comparison including both endpoint layouts.
+  Four top-level builders are now reconstructed; kinds2/5 and complete group
+  lifecycle remain open. No physical damping or player ownership is inferred.

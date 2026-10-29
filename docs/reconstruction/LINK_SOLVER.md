@@ -5158,3 +5158,72 @@ local gates. The inspected count loop invokes the kind query without the builder
 loop's metadata52 skip checks. Do not repair this difference by inventing count
 compaction or assuming ignored rows are zero. Recover the enclosing lifecycle
 contract before composing arbitrary skipped entries into a full group solve.
+
+## Motion-aware primary constraint producer
+
+Kind6 dispatch reaches0x19e9510. The independent implementation is
+`engine.pose_constraint_motion.build_pose_motion_constraint`. "Motion-aware"
+describes its reads, not a recovered original type name or damping claim.
+Constraint80/90 supply local attachment points and a0 supplies a four-lane normal.
+Both body frames and indices are required. Metadata50 bit15 on the second body
+selects category2,112 bytes when clear, or category3,128 bytes when set. These
+are the late primary pools, already connected to numerical traversal.
+
+For the first body and, when paired, the second body:
+
+```text
+center_world = translation + R*local_center128
+arm = R*(local_anchor-local_center128)
+point_velocity = linear1a0 + cross(angular1ac,arm)
+```
+
+The single-endpoint branch instead uses second translation as its center,
+R2*anchor2 as its arm, and zero second velocity. It does not read second-body
+center or motion for this calculation. XYZ body fields are masked before math;
+normal W is retained in the written direction.
+
+With first point=arm1+center1, second point=center2+arm2, define:
+
+```text
+delta = second_point-first_point
+direction = -normal
+half_delta = 0.5*delta
+angular1 = cross(half_delta+arm1,direction)
+angular2 = cross(direction,arm2-half_delta)  # paired only
+positional = (dotXYZ(delta,direction)+context1c) * (-context_c)
+```
+
+The second angular coefficient has the reversed cross-product order. The resulting
+row has direction at20, angular1 at30, angular2 at70 for paired rows, zero
+accumulator link at50 and zero added response at60. It reserves a result index
+and writes both body indices, preserving the inverse-response field and other
+untouched bytes. The row's response at10 broadcasts the selected scalar.
+
+The scalar selection retains a motion calculation even though its coefficient is
+zero in this routine:
+
+```text
+speed = dotXYZ(normal,point_velocity2-point_velocity1)
+motion_term = speed*0 if speed<0 else +0
+response = motion_term if abs(positional)-abs(motion_term)<0 else positional
+```
+
+Finite ordinary inputs therefore do not receive a restitution or damping
+response from this term. The implementation preserves the calculation and zero
+sign behavior instead of inventing a configurable coefficient. No phase-mask
+condition gates this builder's positional response. All arithmetic follows the
+observed float32 ordering; no normal normalization is added.
+
+[Kind6 comparison](../../native/snow_host/pose_motion_constraint_validation.json)
+executes512 uninterrupted original calls. All context, constraint, body and
+metadata bytes and return values match across both branches, general frames,
+nonzero centers, anchors, normals and linear/angular motion. Public tests verify
+midpoint coefficients, context bias, zero motion gain and the ignored second-body
+fields in the single branch.
+
+Kind6 is now connected to `build_pose_constraints`. The
+[dispatcher comparison](../../native/snow_host/pose_constraint_dispatch_validation.json)
+was expanded and rerun with kinds1/3/4/6 and unknown7. All512 cases pass. Kinds2/5
+remain explicit external dependencies. Numerical solving already supports the
+emitted categories; complete group lifecycle and active gameplay ownership remain
+unresolved.

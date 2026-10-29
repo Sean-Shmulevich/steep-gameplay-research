@@ -1200,3 +1200,11 @@ See LINK_SOLVER.md, "Constraint builder eligibility and dispatch". The selected
 constraint token is retained across the kind query. Planned-count publication
 already exists in `initialize_pose_solver_storage`; integrating prepass, builder
 eligibility and lifecycle remains unfinished, not the local publication formula.
+
+Kind6 builder: `build_pose_motion_constraint` emits category2/3 from retained
+frames, anchors, normal and body motion. It constructs midpoint-relative angular
+coefficients and a positional response; the reached motion term has a zero
+multiplier. See LINK_SOLVER.md, "Motion-aware primary constraint producer".
+Single-endpoint construction ignores second-body center/motion fields. Kind6 is
+connected to the eligibility dispatcher; only kinds2/5 remain external builders.
+Finite retained inputs and bounded storage define the supported domain.

@@ -13,14 +13,14 @@
     "angle inputs and notification arguments"
   ],
   "coverage": [
-    "kinds1,3,4 and unknown7",
+    "kinds1,3,4,6 and unknown7",
     "first and second endpoint skip gates",
     "single and paired rows",
     "phase and drive selection"
   ],
   "limits": [
     "One retained list entry per native case.",
-    "Kinds2,5,6 are explicit dependencies, not implemented by this adapter.",
+    "Kinds2,5 are explicit dependencies, not implemented by this adapter.",
     "Native atan2 output supplied to independent service; notification effects excluded.",
     "No full group lifecycle claim."
   ]

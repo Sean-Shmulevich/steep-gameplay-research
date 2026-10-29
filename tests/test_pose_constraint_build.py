@@ -35,7 +35,7 @@ class ConstraintDispatchTests(unittest.TestCase):
             self.assertEqual(bytes(c),before)
 
     def test_missing_builder_is_explicit(self):
-        for kind in (2,5,6):
+        for kind in (2,5):
             c,args=self.fixture()
             with self.assertRaisesRegex(ValueError,f'Kind{kind}'):
                 build_pose_constraints(c,[1],get_kind=lambda t:kind,**args)
