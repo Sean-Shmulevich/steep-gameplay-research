@@ -1,0 +1,39 @@
+{
+  "schema": "pose-kind5-builder-validation-v1",
+  "cases": 512,
+  "scalar_target_inverse_cases": 2048,
+  "scalar_target_inverse_rva": "0x18c1480",
+  "scalar_target_inverse_comparisons": [
+    "all XYZ output bits",
+    "preserved destination padding",
+    "unchanged source bytes"
+  ],
+  "scalar_target_inverse_coverage": [
+    "general nonsingular frames",
+    "near-unit determinant scaling threshold"
+  ],
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19e8350",
+  "method": "Complete original kind5 builder with nested math; native atan2 results supplied to explicit independent service, only notification intercepted",
+  "comparisons": [
+    "entire arena, constraint, bodies and metadata",
+    "all signed-angle arguments and call counts",
+    "return byte and notification arguments"
+  ],
+  "coverage": [
+    "both endpoint layouts",
+    "all phase masks",
+    "swap flag",
+    "one or five angular limit rows",
+    "optional target preparation and vector drive",
+    "finite-response and hard-limit branches",
+    "notification gates",
+    "general finite frames"
+  ],
+  "limits": [
+    "Finite synthetic inputs with nonsingular frames and positive angular extents.",
+    "Independent atan2 arithmetic and notification effects remain external.",
+    "No full group lifecycle or active gameplay ownership claim."
+  ]
+}

@@ -1244,3 +1244,12 @@ frame, and applies elliptical and secondary angular bounds. See LINK_SOLVER.md,
 "Bounded drive target frame". Atan2 remains an explicit service. Later angle
 measurements retain original working vectors after output correction. This is
 one preparation stage, not a complete kind5 builder or active rig contract.
+
+Kind5 composition: `build_pose_cone_constraint` emits point, swing-limit, optional
+four secondary limits and optional quaternion-drive rows. See LINK_SOLVER.md,
+"Kind5 constraint composition". Cone is an authored descriptive name. Target
+preparation uses explicit atan2 and reached notification requires a callback.
+Target inversion has a retained near-unit determinant shortcut; body-frame
+inversion is separate. Kinds1/3/4/5/6 now run directly through the dispatcher;
+only kind2 remains external. Full group lifecycle and active rig ownership remain
+open; callback-driven mutation is outside the validated contract.

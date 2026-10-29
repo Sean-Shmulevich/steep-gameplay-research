@@ -8250,3 +8250,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   inputs. Covers elliptical correction, secondary angle correction, swapped
   measurement frame and fallback axis. Native atan2 outputs remain an explicit
   supplied dependency; complete kind5 row composition is still unfinished.
+- Completed kind5 point/limit/vector-drive composition and connected dispatch.
+  512 complete native builders match retained bytes and explicit service inputs;
+  2048 additional target-inverse checks match scalar output and padding. Corrected
+  drive-frame argument order and recovered true target inversion on swap, including
+  its near-unit determinant shortcut. Five of six known constraint kinds now have
+  independent builders; kind2 and full group lifecycle remain open. Atan2 output
+  arithmetic and notification effects remain supplied services.

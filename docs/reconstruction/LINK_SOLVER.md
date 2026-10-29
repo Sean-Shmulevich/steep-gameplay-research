@@ -5519,3 +5519,80 @@ A synthetic native-checked sign regression starts with a1-radian Z rotation and
 produces approximately1.25radians after correction with its supplied reference
 axes. Thus these local signed-bound formulas are not a universal world-angle
 clamp. Caller frame conventions and valid authored configuration still matter.
+
+## Kind5 constraint composition
+
+`engine/pose_constraint_cone.py::build_pose_cone_constraint` reconstructs the
+complete RVA19e8350 builder. "Cone" is our descriptive name, not an established
+original class or active player-joint identity. It emits one category10/11 point
+row, one category8/9 angular-limit row, four additional category8/9 rows when
+config68 is nonzero, and one category12/13 drive row when config70 is nonzero.
+Configuration offsets below are relative to constraint+70.
+
+The point-row construction is identical to the recovered kind1 producer and
+reuses it. Endpoint layout follows second-body metadata50 bit15. Frames and
+translations mask their W lanes. With body frames A/B and config axes20/30 and
+references40/50, define u=A*axis20, v=B*axis30, p=A*reference40, q=B*reference50.
+The swing axis starts as cross(u,v). If its length is strictly below1e-4, replace
+it by cross(v,worldX); if still below threshold, use cross(v,worldY). Normalize
+with a rounded reciprocal. There is no final zero-axis recovery.
+
+Measure swing=signed_angle(axis,u,v). Its negation supplies the radius input to
+`pose_angular_limit_geometry`. Azimuth is signed_angle(v,q,axis) normally, or
+signed_angle(u,p,axis) when constraint59 is nonzero. Geometry uses config60/64
+as extents, the normalized axis as its initial correction axis, and u normally
+or v when swapped as its rotation axis. Emit the resulting limit with coordinate
+=geometry error, sign=1, offset=0, response term=configc4 and mix=configc8.
+
+When config68 is nonzero, rotate q around the swing axis by the original swing
+angle, then measure twist=signed_angle(u,p,rotated_q). Emit four limit rows in
+this order: axis u/sign+1, axis u/sign-1, axis v/sign+1, axis v/sign-1. All four
+share twist, offset=config6c, response term=configcc and mix=configd0. Every row
+receives the retained endpoint indices after helper allocation.
+
+When config70 is nonzero, prepare the target using the live inline configuration
+and current swap byte through `prepare_pose_target_frame`. The surrounding
+builder keeps its earlier configuration snapshot for gains and flags. If the
+retained swap byte was nonzero, apply the scalar target inverse RVA18c1480 to
+the prepared frame. This is not simply a transpose. That inverse computes
+cofactors with scalar operation ordering, evaluates its determinant along the
+first row, and skips reciprocal scaling when abs(det-1)<=float32(1e-6).
+The independent `_inverse_target` preserves this near-unit branch. The separate
+SIMD inverse used for body frame B retains its own ordering and always divides.
+
+Compute relative=inverse(B)*A. The vector-drive helper receives:
+
+| Argument | Source |
+| --- | --- |
+| frame A | Prepared target, inverted when swapped |
+| frame B | Relative body frame |
+| output frame | Body frame A |
+| cap | Broadcast config74 |
+| strength | Broadcast config78 |
+| gain | Broadcast configc0 |
+| additive | Four lanes at configb0 |
+
+The order of target and relative frames is consequential for quaternion error
+sign. Finally, only inside the enabled-drive branch, config71==0 permits the
+same body notification shape seen in kind3: first body's field10 must be nonzero,
+as must its metadata field20, then notify(first_body,2). Reached notification
+requires an explicit service. The original cleanup helper returns without work.
+The builder returns1. It does not initialize result caches or publish traversal
+counts.
+
+[Complete kind5 comparison](../../native/snow_host/pose_kind5_builder_validation.json)
+records512 original builder calls with all nested geometry and drive helpers.
+All arena, constraint, body and metadata bytes match, together with angle-service
+arguments/call counts, return byte and notification arguments. Native atan2
+outputs are supplied to the explicit independent service. Only notification is
+intercepted in native execution. Another2048 uninterrupted scalar target-inverse
+calls match XYZ output and preserved padding, including determinants near1.
+Inputs are finite synthetic retained records with nonsingular frames and positive
+angular extents. Callback mutation, notification side effects, original atan2
+arithmetic, active rig ownership and full group lifecycle remain unproven.
+
+Kind5 is connected to `build_pose_constraints`. Reconstructed builders now cover
+kinds1/3/4/5/6; kind2 remains an explicit supplied dependency. Public tests compare
+kind5 dispatch to direct construction, exercise row-count combinations and
+notification gates, and retain the target-inverse near-unit rule. This is a local
+six-kind dispatch milestone, not an engine-wide coverage percentage.
