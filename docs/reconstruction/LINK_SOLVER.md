@@ -4644,3 +4644,100 @@ checks256 original wrappers with every supported category populated, all four
 phase masks and zero through three iterations. All retained buffers match.
 Category23 remains rejected. Remaining builders, full group lifecycle and live
 scheduler behavior are separate unresolved boundaries.
+
+## Two-stage paired constraint
+
+Category23 uses352-byte rows, preparation0x19ed4d0 and iteration0x19ee190.
+`engine.pose_paired_two_stage_solver` provides preparation and iteration APIs.
+The first256 bytes have the same roles as category22, with a second ushort body
+index at02. Additional columns at100/110/120 form the second coupled coefficient
+matrix B; columns130/140/150 form its angular coefficient matrix D. The first
+endpoint still uses A and C. Both endpoints use their own tensor T and linear
+response M. No coefficient producer or original constraint-class name is inferred.
+
+Preparation constructs, in order:
+
+```text
+Q = diag(M1)
+Q += A*T1*transpose(A)
+Q = diag(M2) + Q
+Q += B*T2*transpose(B)
+K = inverse(Q)
+
+hy = 1 / (dotXYZ(cy,T1*cy) + dotXYZ(dy,T2*dy))
+hz = 1 / (dotXYZ(cz,T1*cz) + dotXYZ(dz,T2*dz))
+H  = diag(0,hy,hz)
+```
+
+Here cy,cz and dy,dz are the corresponding Y/Z matrix rows, with W zero.
+The coupled inverse uses the full matrix. The angular stage retains only two
+reciprocals, with no cross-axis inverse terms. Finite nonsingular inputs define
+the independent implementation's domain.
+
+Applying a coupled impulse p performs these writes sequentially:
+
+```text
+v1 += M1*p
+w1 += T1*transpose(A)*p
+v2 -= M2*p
+w2 += T2*transpose(B)*p
+```
+
+Applying an angular impulse q updates w1 by T1*transpose(C)*q, then w2 by
+T2*transpose(D)*q. Both angular contributions are added; any sign encoded in
+B or D is supplied by the row. Transpose products use four-lane dot products,
+then zero torque W. If endpoint indices coincide, writes accumulate on the same
+state; they are not computed from two snapshots with the second replacing the
+first. Preparation applies the external coupled cache, then the row's angular
+cache, preserving both caches.
+
+Iteration performs:
+
+```text
+speed = (((A*w1 + v1) - v2) + B*w2) + coupled_response
+p = -(K*speed)
+external_updated = external_cache + p
+apply_coupled(p)
+
+speed = (D*w2 + C*w1) + angular_response  # updated angular states
+q = -(H*speed)
+apply_angular(q)
+angular_cache = angular_cache + q
+external_cache = external_updated
+```
+
+Both increments are unbounded. The arithmetic retains float32 intermediate
+rounding and the documented ordering. With identity coefficient matrices and
+tensors, unit linear responses, zero states/caches and coupled responseXYZ
+(4,8,12), p=(-1,-2,-3). The first stage gives opposite linear states and equal
+angular states. With zero angular response, q=(0,2,3) leaves each angular state
+(-1,0,0), while linear states stay opposite.
+
+[Paired kernel validation](../../native/snow_host/pose_paired_two_stage_validation.json)
+compares512 preparations and1536 iterations with every retained byte matching.
+It includes general coefficient matrices, off-diagonal tensors, fourth lanes,
+nonzero caches and coincident endpoints. No routine interception is used.
+
+## Complete numerical category traversal
+
+`solve_pose_link_rows` now accepts `paired_two_stage_rows` for category23,
+with context164 counts and context9c arena bases. All25 numerical categories
+are implemented and connected. Normal preparation and each iteration follow:
+
+```text
+24,13,12,9,8,11,10,17,16,19,18,21,20,15,14,23,22,3,2,1,0,5,4,7,6
+```
+
+Special phase still runs only1/0. Append counters do not drive traversal; the
+caller must supply complete retained storage for each populated traversal count.
+[Full-category comparison](../../native/snow_host/pose_twenty_five_category_solve_validation.json)
+executes256 uninterrupted original wrapper calls with all25 categories populated.
+All context, row, body-data/state and result bytes match across four phase masks
+and zero through three iterations. The new paired row includes coincident indices
+in selected cases and shares body states with the other families.
+
+This closes numerical category dispatch for supplied rows within each kernel's
+stated domain. It does not close the five remaining kind-dispatched non-contact
+builders, damping response, complete group lifecycle, exceptional floating-point
+behavior, concurrency or gameplay ownership. A runnable API that receives rows
+is not yet an engine that produces every row from authored constraints.

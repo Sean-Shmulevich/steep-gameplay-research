@@ -42,7 +42,7 @@ class LinkSolveTests(unittest.TestCase):
         solve_pose_link_rows(c,**args)
         self.assertEqual(struct.unpack_from('<3f',args['body_state'][7]),(10,0,0))
 
-    def test_unsupported_categories_fail_explicitly(self):
+    def test_populated_paired_pool_without_storage_fails_explicitly(self):
         c,args=self.fixture();struct.pack_into('<I',c,0x10c,1)
         with self.assertRaises(ValueError):solve_pose_link_rows(c,**args)
 

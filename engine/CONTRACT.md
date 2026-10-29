@@ -1142,3 +1142,14 @@ producers, physical units and gameplay ownership remain unresolved.
 `two_stage_rows` supplies category22 with its normal-only gate and placement
 between14 and3. Category23 is the sole unsupported numerical category. This does
 not close row production, physical ownership or full group lifecycle.
+
+Two-stage paired constraint: category23 retains 352-byte rows, two body indices,
+one external coupled cache and an internal angular cache. Endpoint updates are
+sequential, including coincident indices. The second stage reads both updated
+angular states and computes two diagonal responses from summed endpoint
+contributions. See LINK_SOLVER.md, "Two-stage paired constraint". Finite
+nonsingular inputs are required; coefficient producers, units and gameplay
+ownership remain unknown. The `paired_two_stage_rows` pool runs before category22
+in normal phase and is skipped in special phase. All 25 numerical categories are
+now connected, with synthetic native comparisons. This closes the supported-row
+numerical traversal boundary, not row production or full engine integration.

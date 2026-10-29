@@ -8177,3 +8177,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   256 mixed twenty-four-category wrapper comparisons pass. Public tests distinguish
   updated-state consumption, both caches and phase gating. Category23 remains the
   numerical gap; row production and full lifecycle still require reconstruction.
+- Recovered category23 paired two-stage preparation and iteration.512 preparations
+  and1536 iterations match native bytes, including coincident endpoints and both
+  caches. Connected the final numerical family;256 uninterrupted full-category
+  wrapper comparisons pass with all25 categories populated. Numerical traversal
+  for supplied rows is now complete within the kernels' stated domains. Remaining
+  non-contact builders, damping and full lifecycle composition stay unresolved.
