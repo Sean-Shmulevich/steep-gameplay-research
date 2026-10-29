@@ -1340,3 +1340,10 @@ LINK_SOLVER.md, "Group batch worker admission". Claim and numerical operations a
 explicit services. `claim_pose_batch_serial` is not thread-safe. Inactive group
 flags are not tested at this boundary; earlier collection selection and batch
 construction remain separate from the validated worker loop.
+
+Numerical worker composition: `advance_pose_free_motion` implements the direct
+motion branch with explicit damping response. `run_retained_pose_worker` binds
+both worker routes to retained numerical APIs and allocator services. See
+LINK_SOLVER.md, "Free-motion worker branch" and "Joined numerical batch worker".
+Scratch growth/reuse follows required layout size; ownership, allocator internals,
+thread-safe claims, upstream admission and alternative classes remain external.

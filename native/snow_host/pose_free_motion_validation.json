@@ -1,0 +1,25 @@
+{
+  "schema": "pose-free-motion-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1957590",
+  "method": "Complete original free-motion routine;384 cases with no damping call interception and128 admitting explicit damping response service",
+  "comparisons": [
+    "all body and metadata bytes",
+    "unchanged pointer arrays, scalar/vector and damping records",
+    "damping arguments and call order"
+  ],
+  "coverage": [
+    "zero through six body entries",
+    "repeated identities",
+    "fixed-body and external-force suppression flags",
+    "zero, negative and positive scalar",
+    "damping present and absent"
+  ],
+  "limits": [
+    "Damping-library arithmetic remains supplied when reached.",
+    "Finite retained inputs; callback-driven scalar/vector mutation and concurrent ownership excluded.",
+    "This routine changes motion, not transforms or group membership."
+  ]
+}

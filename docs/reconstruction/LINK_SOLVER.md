@@ -6120,3 +6120,57 @@ bypass bytes0/1/2, wrapped count sums, fixed-body shortcut and poststep bytes0/1
 These are worker-control comparisons, not a concurrent scheduler proof or an
 uninterrupted worker-plus-numerical-solve receipt. The branch target0x1957590 is
 free-motion update; its raw body arithmetic and batch formation remain next leads.
+
+## Free-motion worker branch
+
+`engine.pose_free_motion.advance_pose_free_motion` reconstructs RVA0x1957590.
+Before traversing the retained body span it computes float32 delta=scalar*vectorXYZ.
+A body with metadata52 bit3 is skipped. Otherwise its optional damping record
+supplies four values. If the damping pointer is nonzero and scalar is nonzero,
+the explicit library service receives base=1-damping and the scalar, producing
+four multipliers. Without that call the multipliers are all1.
+
+```text
+applied = (0,0,0) if body.flagsaa bit3 else delta
+linearXYZ = float32(float32(linearXYZ + applied) * multiplierXYZ)
+angularXYZ = float32(angularXYZ * multiplierW)
+```
+
+The routine preserves transforms, metadata and other body fields. Duplicate body
+tokens update repeatedly in array order. It does not integrate position itself;
+that happens through the worker's subsequent poststep call. Scalar/vector inputs
+are constant finite values in the independent contract. Damping-library arithmetic
+remains explicit; no platform power function is silently substituted.
+
+[512 native free-motion comparisons](../../native/snow_host/pose_free_motion_validation.json)
+match all body/metadata bytes and damping service arguments.384 cases run without
+a damping interception;128 allow the supplied response. Cases cover repeated
+identities, empty spans, flags, zero/negative/positive scalars and pointer presence.
+
+## Joined numerical batch worker
+
+`engine.pose_worker_runtime.run_retained_pose_worker` binds the worker to fresh
+retained parsing, group preparation, mixed numerical runtime and the free-motion
+routine. It requires explicit claim, allocator, poststep and other reached
+services. The allocator returns a token registered in the caller's buffer map.
+For each solver group, required size comes from the recovered count/layout policy.
+If it exceeds scratch capacity, the old buffer is released before allocation;
+otherwise the existing buffer is reused. The worker releases its final buffer.
+This adapter supports normal-return, sufficient nonwrapping storage and stable
+class/resource views. It is not a concurrent mod host or native allocator.
+
+[256 joined native worker comparisons](../../native/snow_host/pose_numerical_worker_validation.json)
+run the original batch worker with two successive visits to a retained group.
+Both solver and bypass routes execute their original numerical routines, including
+poststep and box bounds. Complete retained numerical/group/body/link/resource
+bytes, claim counters, allocation sizes, reuse, final release, contact retirement
+and angle-service arguments match. Allocator storage, byte-fill and protected pool
+return are supplied. Atan2 outputs remain explicit reconstruction inputs. Native
+scalar sine/cosine is independently reproduced.
+
+The repeated group is a synthetic fixture for worker scratch and state behavior,
+not evidence that normal batch construction repeats groups. This receipt does
+not validate allocator internals, live concurrency, damping inside the joined
+worker, other body/resource classes or earlier active-list selection. Public tests
+also cover a larger later group causing release-before-growth, but that growth
+scenario is not part of the joined native receipt.

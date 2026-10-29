@@ -8328,3 +8328,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   poststep arguments and final release. The worker does not gate on group inactive
   flags; source collection admission is earlier. Atomic concurrency, batch
   formation and the free-motion numerical branch remain separate work.
+- Reconstructed direct free-motion updates with512 native comparisons, then bound
+  both batch-worker branches to numerical implementations.256 joined worker cases
+  match retained outputs, claims, scratch allocation/reuse/release and contact
+  retirement across two group visits.587 pose tests include allocator growth
+  ordering. Allocator internals, joined damping, concurrency and upstream batch
+  selection remain outside this checkpoint; atan2 remains supplied.
