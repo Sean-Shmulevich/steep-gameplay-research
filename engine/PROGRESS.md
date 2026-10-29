@@ -8088,3 +8088,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   comparisons with317 independently computed trig pairs; all arena/payload/body bytes
   match without replaying native results. Wider cosine reduction starts earlier
   than sine and remains explicit, alongside damping and full group/poststep gaps.
+- Added runnable JSON inspection for the complete contact/correction slice, with an
+  authored two-contact fixture and exact byte outputs. CLI runs without private
+  files; tests cover input immutability, stage separation, mode-dependent row
+  families and explicit damping/index rejection. This is an inspection interface,
+  not evidence of terrain generation or a complete simulation tick.

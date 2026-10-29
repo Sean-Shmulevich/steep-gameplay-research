@@ -3961,3 +3961,30 @@ previous composition receipt for these cases. Damping remains disabled, getter
 initialization is supplied, and complete group/poststep/live lifetime remain open.
 Large-argument reduction, alternate CPU dispatch, nonfinite handling and status
 flags remain outside the scalar API contract.
+
+### Contact inspector
+
+Run the independent contact pipeline without an executable or private harness:
+
+```sh
+python3 -m engine.pose_contact_bench engine/examples/pose_contact_pass.json --output result.json
+```
+
+Schema `pose-contact-pass-v1` takes explicit provenance, ordered body/link tokens,
+retained raw body/payload hex, symbolic resource/profile mappings, metadata fields,
+context controls and body scalar/external vector. The authored adapter plans and
+zero-initializes an arena using recovered count/layout helpers, produces body
+buffers, builds and solves contacts, writes feedback and applies gated secondary
+correction using independently recovered scalar trig. Input documents are copied,
+not mutated. Raw body indices must match supplied order; damping is rejected rather
+than approximated. Bounds on bodies, payload visits and iterations are authored
+inspection limits, not native limits.
+
+Output separates before, first-pass motion and post-correction transforms. It also
+includes all six row pools, results, payloads and raw bodies as exact bytes. The
+included two-point patch is authored synthetic data, not a native capture or a
+calibrated rider model. It demonstrates shared-row construction and correction
+without implying terrain generation, walking, skiing or a complete game tick.
+Contacts and membership are supplied; pose constraints, damping and group poststep
+remain outside the CLI. This adapter composes the individually and jointly validated
+operations above; it is not itself an original engine entry point.

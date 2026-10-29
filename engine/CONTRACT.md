@@ -1027,3 +1027,10 @@ finite float32 magnitudes below500000 via split-pi/2 reduction and cancellation
 correction. It can supply integration without recorded responses. See LINK_SOLVER.md,
 "Scalar trig range reduction and independent composition". Wider/nonfinite inputs
 and alternate dispatch remain unsupported; no libm fallback is silently selected.
+
+Runnable contact inspection: `python3 -m engine.pose_contact_bench` accepts schema
+pose-contact-pass-v1 and explicit provenance/raw inputs. It allocates authored
+zero-filled storage through the recovered count/layout plan and returns exact row,
+result, payload/body bytes plus stage summaries. See LINK_SOLVER.md, "Contact
+inspector". Supplied contacts, disabled damping and explicit body-class/trig bounds;
+not a full game tick or native savepoint.
