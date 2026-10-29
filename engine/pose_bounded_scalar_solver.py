@@ -7,8 +7,8 @@ from .pose_paired_primary_solver import _apply_pair
 from .pose_paired_angular_solver import _transform
 
 
-def _inputs(row,body_data,body_state,results,paired):
-    if len(row)!=(112 if paired else 96):raise ValueError('Complete bounded scalar row required')
+def _inputs(row,body_data,body_state,results,paired,added_response=True):
+    if len(row)!=(112 if paired else 96)-(0 if added_response else 16):raise ValueError('Complete bounded scalar row required')
     a,b,index=struct.unpack_from('<HHI',row)
     indices=[a,b] if paired else [a]
     data=[body_data[i] for i in indices];states=[body_state[i] for i in indices]
@@ -28,26 +28,26 @@ def _apply_all(states,weights,amount,paired):
     else:_apply(states[0],*weights[0],amount)
 
 
-def prepare_pose_bounded_scalar_row(row,*,body_data,body_state,results,paired=False):
-    data,states,result,direction,axes,weights=_inputs(row,body_data,body_state,results,paired)
+def prepare_pose_bounded_scalar_row(row,*,body_data,body_state,results,paired=False,added_response=True):
+    data,states,result,direction,axes,weights=_inputs(row,body_data,body_state,results,paired,added_response)
     # Both denominator linear terms use the positive direction before squaring.
     linear=[_dot(direction,[f32(m*v) for m,v in zip(_read(d,48),direction)]) for d in data]
     denominator=f32(_dot(weights[0][1],axes[0])+linear[0])
     if paired:
         denominator=f32(denominator+linear[1])
         denominator=f32(denominator+_dot(weights[1][1],axes[1]))
-    softness=_read(row,0x60 if paired else 0x50)
+    softness=_read(row,0x60 if paired else 0x50) if added_response else None
     inverse=[]
     for j in range(4):
-        value=f32(denominator+softness[j])
+        value=f32(denominator+softness[j]) if added_response else denominator
         if not value or not math.isfinite(value):raise ValueError('Finite nonsingular scalar response required')
-        inverse.append(f32(1./-value) if j<3 else 0.)
+        inverse.append(f32(1./-value) if j<3 or not added_response else 0.)
     struct.pack_into('<4f',row,64,*inverse)
     _apply_all(states,weights,_read(result,0),paired)
 
 
-def iterate_pose_bounded_scalar_row(row,*,body_data,body_state,results,paired=False):
-    data,states,result,direction,axes,weights=_inputs(row,body_data,body_state,results,paired)
+def iterate_pose_bounded_scalar_row(row,*,body_data,body_state,results,paired=False,added_response=True):
+    data,states,result,direction,axes,weights=_inputs(row,body_data,body_state,results,paired,added_response)
     speed=f32(_dot(axes[0],_read(states[0],16))+_dot(direction,_read(states[0],0)))
     if paired:
         second=f32(_dot(axes[1],_read(states[1],16))+_dot([-v for v in direction],_read(states[1],0)))

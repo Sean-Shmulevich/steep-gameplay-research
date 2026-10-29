@@ -8162,3 +8162,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   match native bytes.256 mixed nineteen-category wrapper comparisons pass after
   integration. Six numerical categories, remaining producers and full lifecycle
   remain unfinished; added-response physical units are not established.
+- Recovered categories14/15 by proving tangent preparation feeds bounded-scalar
+  iteration. Preserved the nonzero fourth inverse lane.512 preparations and1536
+  iterations match native bytes;256 mixed twenty-one-category comparisons pass.
+  Four numerical categories and remaining builders/lifecycle remain unfinished.

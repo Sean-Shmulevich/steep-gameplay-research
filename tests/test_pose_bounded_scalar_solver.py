@@ -52,3 +52,23 @@ class BoundedScalarTests(unittest.TestCase):
         struct.pack_into('<I',c,0x148,1)
         with self.assertRaisesRegex(ValueError,'bounded scalar'):
             solve_pose_link_rows(c,base_token=0,primary_rows=[],secondary_rows=[],**args)
+
+    def test_plain_variant_preserves_fourth_inverse_lane(self):
+        row,args=self.fixture();del row[-16:];args['added_response']=False
+        prepare_pose_bounded_scalar_row(row,**args)
+        self.assertEqual(struct.unpack_from('<4f',row,64),(-1,-1,-1,-1))
+        iterate_pose_bounded_scalar_row(row,**args)
+        self.assertEqual(struct.unpack_from('<4f',args['results'][0]),(-1,-1,-1,-1))
+
+    def test_plain_variants_normal_and_special_traversal(self):
+        from engine.pose_link_solve import solve_pose_link_rows
+        for paired in (False,True):
+            for special in (False,True):
+                row,args=self.fixture(paired);del row[-16:];args.pop('paired')
+                c=bytearray(0x190);struct.pack_into('<I',c,0x144 if paired else 0x140,1)
+                struct.pack_into('<I',c,0x38,0x10010000 if special else 4)
+                rows={'paired_plain_bounded_rows' if paired else 'plain_bounded_rows':[row]}
+                before=bytes(row)
+                solve_pose_link_rows(c,base_token=0,primary_rows=[],secondary_rows=[],**rows,**args)
+                if special:self.assertEqual(bytes(row),before)
+                else:self.assertLess(struct.unpack_from('<f',args['results'][0])[0],0)

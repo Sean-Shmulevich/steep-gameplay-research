@@ -1119,3 +1119,9 @@ with a per-lane denominator addition and unchanged iteration rules. "Softened" i
 an authored mathematical label, not a recovered physical unit. Both variants are
 connected to normal traversal and skipped in special phase. See LINK_SOLVER.md,
 "Angular axes with added response terms". Six numerical categories remain open.
+
+Plain bounded rows: `added_response=False` selects categories14/15 and preserves
+all four inverse lanes. These variants use tangent preparation and bounded-scalar
+iteration, with no extra denominator term. See LINK_SOLVER.md, "Bounded scalar
+rows without added response". Both are connected to normal traversal, skipped in
+special phase. Four numerical categories and remaining producers/lifecycle are open.

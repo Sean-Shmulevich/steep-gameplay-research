@@ -26,8 +26,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
                          constraint_primary_rows=(), paired_constraint_primary_rows=(),
                          point_rows=(), paired_point_rows=(), bounded_rows=(),
                          paired_bounded_rows=(), axis_angular_rows=(), paired_axis_angular_rows=(),
-                         softened_axis_rows=(), paired_softened_axis_rows=(), arena=None):
-    """Run native phase/count policy for the nineteen supported row categories.
+                         softened_axis_rows=(), paired_softened_axis_rows=(),
+                         plain_bounded_rows=(), paired_plain_bounded_rows=(), arena=None):
+    """Run native phase/count policy for the twenty-one supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -35,7 +36,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,10,11,12,13,16,17,18,19,20,21,24)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
@@ -65,6 +66,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     softened_count,paired_softened_count=counts[20],counts[21]
     if softened_count>len(softened_axis_rows) or paired_softened_count>len(paired_softened_axis_rows):
         raise ValueError('Insufficient retained softened angular rows')
+    plain_count,paired_plain_count=counts[14],counts[15]
+    if plain_count>len(plain_bounded_rows) or paired_plain_count>len(paired_plain_bounded_rows):
+        raise ValueError('Insufficient retained plain bounded rows')
     def location(category,index,stride):
         if arena is None:return {}
         start=struct.unpack_from('<I',context_bytes,0x16c)[0]+16*struct.unpack_from('<I',context_bytes,0x40+4*category)[0]
@@ -86,6 +90,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in axis_angular_rows[:axis_count]:prepare_pose_axis_angular_row(row,**args)
             for row in paired_softened_axis_rows[:paired_softened_count]:prepare_pose_axis_angular_row(row,paired=True,softened=True,**args)
             for row in softened_axis_rows[:softened_count]:prepare_pose_axis_angular_row(row,softened=True,**args)
+            for row in paired_plain_bounded_rows[:paired_plain_count]:prepare_pose_bounded_scalar_row(row,paired=True,added_response=False,**args)
+            for row in plain_bounded_rows[:plain_count]:prepare_pose_bounded_scalar_row(row,added_response=False,**args)
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:prepare_pose_primary_row(row,**args)
         if not descriptor['special']:
@@ -109,6 +115,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in axis_angular_rows[:axis_count]:iterate_pose_axis_angular_row(row,**args)
             for row in paired_softened_axis_rows[:paired_softened_count]:iterate_pose_axis_angular_row(row,paired=True,softened=True,**args)
             for row in softened_axis_rows[:softened_count]:iterate_pose_axis_angular_row(row,softened=True,**args)
+            for row in paired_plain_bounded_rows[:paired_plain_count]:iterate_pose_bounded_scalar_row(row,paired=True,added_response=False,**args)
+            for row in plain_bounded_rows[:plain_count]:iterate_pose_bounded_scalar_row(row,added_response=False,**args)
         for i,row in enumerate(paired_primary_rows[:paired_count]):iterate_pose_paired_primary_row(row,**args,**location(1,i,128))
         for i,row in enumerate(primary_rows[:primary_count]):iterate_pose_primary_row(row,**args,**location(0,i,112))
         if not descriptor['special']:

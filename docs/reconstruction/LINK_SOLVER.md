@@ -4503,3 +4503,36 @@ executes256 uninterrupted original wrappers. Every retained buffer matches acros
 four phase masks and zero through three iterations with all nineteen families
 populated. Six numerical categories remain unsupported, alongside unresolved
 builders and full group lifecycle. The category count is not overall fidelity.
+
+## Bounded scalar rows without added response
+
+Categories14/15 use80-byte single and96-byte paired rows. Their preparation calls
+are0x19ef170 and0x19eeec0, the same numerical preparation used by the tangent
+families. Iteration uses the bounded scalar calls0x19ef510 and0x19ef2b0, not the
+tangent result-coupling routines. `added_response=False` selects these layouts in
+the bounded-scalar API.
+
+These preparations omit the extra denominator field present in categories16/17.
+They also broadcast the negative reciprocal into all four lanes, whereas the
+extended variants mask inverse W to zero. Thus supplying a zero extra field is
+not a bitwise equivalent replacement. Direction, angular weights, cached-result
+application, paired snapshot semantics and single-body add/subtract rounding
+retain their previously recovered formulas. Iteration still clamps each increment
+symmetrically and allows signed accumulated results.
+
+[Plain bounded comparison](../../native/snow_host/pose_plain_bounded_scalar_validation.json)
+compares512 preparations and1536 iterations across both layouts, with all bytes
+matching. The extended variant comparison was rerun after the shared implementation
+change. Public tests distinguish the fourth inverse lane and cover both phase gates.
+
+## Twenty-one-category numerical traversal
+
+Mixed traversal accepts `plain_bounded_rows` and `paired_plain_bounded_rows`,
+with context140/144 counts for categories14/15. Normal supported order is
+24,13,12,9,8,11,10,17,16,19,18,21,20,15,14,1,0,5,4,7,6. Special phase skips14/15.
+[Mixed comparison](../../native/snow_host/pose_twenty_one_category_solve_validation.json)
+executes256 original wrappers without interception, all twenty-one categories
+populated and all retained buffers matching across four phase masks and zero
+through three iterations. Four numerical categories remain unsupported, along
+with unfinished row builders and group lifecycle. This is numerical traversal
+coverage for supplied rows, not a full-engine fidelity measurement.
