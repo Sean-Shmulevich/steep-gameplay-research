@@ -1,0 +1,31 @@
+{
+  "schema": "pose-group-integrated-validation-v1",
+  "cases": 384,
+  "passed": 384,
+  "active_groups": 137,
+  "inactive_groups": 247,
+  "method": "Offline uninterrupted original poststep including quiet checks, inactive transition, integration, scalar trig, transform composition and actual box resource bounds; no hooks or replayed values",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19574f0",
+    "0x1958460",
+    "0x18c0190",
+    "0x18bebd0",
+    "0x18befb0",
+    "0x18bcee0"
+  ],
+  "comparisons": [
+    "all group, body, metadata, entry array, local transform and box resource bytes"
+  ],
+  "coverage": [
+    "zero through five bodies",
+    "zero through two box resources per body",
+    "active motion and angular integration",
+    "quiet transitions and preexisting inactive flag"
+  ],
+  "limits": [
+    "Synthetic finite states, constructor-selected body and box resource classes only.",
+    "Link rings are empty; payload release remains supplied.",
+    "No live lifecycle, broadphase publication or full group solve demonstrated."
+  ]
+}

@@ -8093,3 +8093,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   files; tests cover input immutability, stage separation, mode-dependent row
   families and explicit damping/index rejection. This is an inspection interface,
   not evidence of terrain generation or a complete simulation tick.
+- Connected group poststep to recovered integration and bounds refresh.384 original
+  uninterrupted offline poststeps match all retained bytes, including actual trig
+  and box bounds with no intercepted calls or replayed responses.137 active and247
+  inactive outcomes cover quiet gating and zero through two resources per body.
+  Nonempty link release, other classes, broadphase publication and full group solve
+  remain outside this composition receipt.

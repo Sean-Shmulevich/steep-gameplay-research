@@ -3988,3 +3988,33 @@ without implying terrain generation, walking, skiing or a complete game tick.
 Contacts and membership are supplied; pose constraints, damping and group poststep
 remain outside the CLI. This adapter composes the individually and jointly validated
 operations above; it is not itself an original engine entry point.
+
+## Integrated group poststep
+
+`engine/pose_group_poststep.py::poststep_integrated_pose_group` connects the recovered
+poststep ordering to the constructor-selected inactive transition, body integration
+and resource bounds refresh. It checks quiet state first when enabled. An inactive
+group skips both integration and bounds. An active group integrates its captured
+body span, then reloads the span for bounds refresh. Bounds therefore use the
+updated transform. Zero-resource bodies publish point bounds at that translation.
+
+The caller supplies retained body/metadata identity maps, resource entries and local
+transforms, link release, resource-specific bounds and half-angle trig. The existing
+box bounds and scalar trig implementations satisfy the latter two services for
+their supported domains. Quiet metadata and bounds metadata must share storage
+when their native identities coincide. This is in-place composition, without
+invented rollback or concurrent lifetime protection.
+
+[Integrated validation](../../native/snow_host/pose_group_integrated_validation.json)
+runs384 uninterrupted original poststeps offline. It includes actual integration,
+scalar trig and box virtual bounds calls, with no interception or response replay.
+All group, body, metadata, entry-array, transform and resource bytes match for137
+active and247 inactive outcomes. Fixtures use zero through five bodies and zero
+through two box resources per body. Public tests check updated-transform bounds,
+quiet suppression and zero-resource point bounds.
+
+This supersedes the supplied integration/refresh boundary of the earlier poststep
+orchestration comparison for these tested classes. Link rings are empty in this
+composition receipt. Nonempty payload release, other body/resource classes, live
+reactivation, broadphase publication and complete group solving remain separate
+boundaries. Synthetic comparison is not evidence of an entire original game tick.

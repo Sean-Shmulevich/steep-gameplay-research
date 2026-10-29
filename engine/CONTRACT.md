@@ -1034,3 +1034,10 @@ zero-filled storage through the recovered count/layout plan and returns exact ro
 result, payload/body bytes plus stage summaries. See LINK_SOLVER.md, "Contact
 inspector". Supplied contacts, disabled damping and explicit body-class/trig bounds;
 not a full game tick or native savepoint.
+
+Integrated group poststep: `poststep_integrated_pose_group` composes quiet checking,
+constructor-selected inactive transition, ordinary integration and bounds refresh.
+See LINK_SOLVER.md, "Integrated group poststep". Callers provide matching retained
+metadata identities and explicit trig/resource/release services. Box bounds and
+scalar trig can use recovered implementations. No concurrent lifetime guarantee,
+other-class dispatch or full group-solve claim is supplied.

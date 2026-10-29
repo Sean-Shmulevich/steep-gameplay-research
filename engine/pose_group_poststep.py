@@ -67,3 +67,41 @@ def poststep_pose_group(group, *, bodies, scalar, check_enabled,
     for i in range(count):integrate(slots[i],scalar)
     slots,count=group['slots'],group['count']
     for i in range(count):refresh(slots[i])
+
+
+def poststep_integrated_pose_group(group, *, bodies, scalar, check_enabled,
+                                  duration_threshold, linear_threshold,
+                                  angular_threshold, links, clear_link,
+                                  entry_arrays, transforms, metadata,
+                                  resource_bounds, half_angle_trig):
+    """Compose poststep for the recovered constructor-selected body class.
+
+    Evidence: LINK_SOLVER.md, Integrated group poststep. Body records retain the
+    quiet-check metadata view; metadata maps identities used by bounds refresh.
+    These must reference the same storage when their native identities coincide.
+    Resource bounds, link release and trig are explicit services. Mutations are
+    in place, with no rollback; this does not provide concurrent lifetime safety.
+    """
+    from .pose_body_integration import integrate_pose_body
+    from .pose_body_bounds import refresh_pose_body_bounds
+
+    def inactive(token):
+        record = bodies[token]
+        transition_pose_body_inactive(token, record['storage'], record['metadata'],
+                                      links=links, clear_link=clear_link)
+
+    def integrate(token, step):
+        integrate_pose_body(bodies[token]['storage'], step,
+                            half_angle_trig=half_angle_trig)
+
+    def refresh(token):
+        refresh_pose_body_bounds(bodies[token]['storage'], entry_arrays=entry_arrays,
+                                 transforms=transforms, metadata=metadata,
+                                 resource_bounds=resource_bounds)
+
+    poststep_pose_group(group, bodies=bodies, scalar=scalar,
+                       check_enabled=check_enabled,
+                       duration_threshold=duration_threshold,
+                       linear_threshold=linear_threshold,
+                       angular_threshold=angular_threshold,
+                       set_inactive=inactive, integrate=integrate, refresh=refresh)
