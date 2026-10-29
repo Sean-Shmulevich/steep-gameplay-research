@@ -8028,3 +8028,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   512 one-body and512 paired comparisons match complete arenas and state through
   preparation plus three iterations, including targets before rows. Shared-row
   numerical solving and traversal integration remain open.
+- Recovered complete one-body shared-row iteration.512 original comparisons with
+  three iterations each match accumulator clearing, coupled vector projection,
+  body state and result lanes. Added strict-gate and repeated-without-reaccumulation
+  tests. Shared inverse response preparation, paired shared iteration and complete
+  solver traversal integration remain open.

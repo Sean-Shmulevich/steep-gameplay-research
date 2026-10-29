@@ -3617,3 +3617,42 @@ each execute original preparation and three iterations, with forward and backwar
 links. Entire arenas, body states and result buffers match after every stage.
 These extend local primary solver evidence; shared-row solving and traversal
 integration with arena-backed rows remain separate requirements.
+
+### Shared patch iteration
+
+`pose_shared_solver.iterate_pose_shared_row` reconstructs the complete one-body
+shared208-byte row iteration0x19f1c20. It requires a prepared inverse response
+matrix at+0x80/+0x90/+0xa0. Preparation0x19f1430 remains to be reconstructed.
+The row uses its first body index and result index. Let L/A be the transposed
+linear/angular blocks, K the supplied inverse response block and old the result:
+
+```text
+limit = row.coefficient_c0 * row.accumulator_b0
+row.accumulator_b0 = [0,0,0,0]
+speed = L * body.linear_state + A * body.angular_state
+candidate = old + K * (-speed)
+length = sqrt(candidate.x^2 + candidate.y^2 + candidate.z^2)
+if all(limit.xyz < length):
+    candidate *= limit / length
+change = candidate - old
+result = old + change
+```
+
+All operations retain float32 order. Each matrix/vector transform evaluates
+`z*row2 + (y*row1 + x*row0)`. Projection uses a shared XYZ length, not independent
+axis clamps; all three strict comparisons must hold. Limits scale each of four
+lanes when the gate is taken. The final add-back is preserved rather than directly
+storing candidate, because subtraction/addition can round differently.
+
+Body linear change is formed by dotting each L world-axis row against
+`body_data.mass_lanes * change`; angular change is the body tensor applied to the
+three dot products of A rows with change. These dot products include all four lanes
+and use pairwise summation. XYZ masks clear the assembled fourth component before
+state addition. No universal physical meaning is assigned to arbitrary fourth lanes.
+
+[512 cases,1536 uninterrupted original iterations](../../native/snow_host/pose_shared_iteration_validation.json)
+match all208 row bytes, all body-state/result lanes and unchanged body data after
+each iteration. The accumulator reset means a repeated iteration without primary
+reaccumulation has zero limits; the caller must preserve native traversal order.
+Inputs are finite synthetic prepared rows with supplied K. This establishes local
+iteration, not matrix preparation, paired shared solving or system convergence.

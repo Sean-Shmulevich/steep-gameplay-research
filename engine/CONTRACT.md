@@ -955,3 +955,9 @@ Primary accumulator storage: both primary iteration functions accept optional
 row origin. Without an explicit arena the row buffer is the origin. Targets must
 fit retained storage. See LINK_SOLVER.md, "Primary accumulator arena addressing".
 Accumulation adds the full projected value; clearing between sweeps is not supplied.
+
+One-body shared iteration: `pose_shared_solver.iterate_pose_shared_row` consumes a
+prepared208-byte row,64-byte body data,32-byte body state and16-byte result. It
+consumes/clears the accumulator, projects a coupled XYZ result and applies its
+change. Inverse response matrix remains supplied. See LINK_SOLVER.md, "Shared patch
+iteration". No preparation, paired variant or complete traversal is implied.
