@@ -4899,3 +4899,60 @@ endpoint has metadata52 bit0 set. Eligible constraints reach0x19905f0's six-way
 virtual-kind dispatch. Neither inspected routine publishes append counters into
 traversal counts. That publication must be traced separately; it must not be
 inferred by copying counters in this helper.
+
+## Angular drive row producer
+
+Kind3's optional drive path calls0x19f3750. The independent function
+`engine.pose_constraint_drive.build_pose_angular_drive_row` now reconstructs
+this helper. It produces category14/15, the bounded scalar rows without an added
+response term. This identifies a producer for those kernels; it does not prove
+that player controls directly invoke this drive.
+
+Native arguments are RCX context, DL single-endpoint selector, R8D mode, R9 axis,
+then pointers at entry stack28/30/38/40. Their authored names are sample,
+reference, rate_bound and impulse_bound. Nonzero DL selects category14,80 bytes;
+zero selects category15,96 bytes. The helper appends to the selected pool, reserves
+a result index and returns the row address. Endpoint indices and the prepared
+inverse remain untouched. Its caller writes the endpoint indices afterward.
+
+```text
+row.direction20 = 0
+row.angular30 = axis
+row.angular50 = -axis  # paired only
+
+if mode == 2:
+    value = sample
+else:
+    value = float32((sample-reference) * context_c)
+    value = SSE_MIN(SSE_MAX(value, -rate_bound), rate_bound)
+
+row.response.xyz = -value.xyz
+row.response.w = float32(impulse_bound.x * context10)
+```
+
+Each subtraction and multiplication rounds to float32. Clamp equality selects
+the second operand, including its zero sign. No assumption that bounds are
+positive is added by the builder. The independent finite-input API does not
+emulate NaN cases. Mode2 does not dereference reference or rate_bound; the API
+allows those arguments to be absent in that mode. All other uint32 modes take
+the same scaled-difference path.
+
+The cap is separate from the sample clamp. For sample=(3,-3,1), reference=(1,1,0),
+context_c=2 and rate_bound=(2,3,4), responseXYZ becomes(-2,3,-2). With mode2 it is
+(-3,3,-1). In both cases impulse_bound.X=8 and context10=0.25 give responseW=2.
+The bounded scalar solver consumes W as a symmetric per-iteration increment cap,
+not a cap on the accumulated impulse. Zero direction keeps this drive angular-only.
+A paired row uses opposite angular axes, while endpoint write semantics remain
+those of the bounded scalar kernel.
+
+[Native builder comparison](../../native/snow_host/pose_angular_drive_builder_validation.json)
+checks1024 uninterrupted calls with all context bytes, input vectors and return
+addresses matching. Coverage includes both layouts, modes0/1/2/3, signed-zero
+clamp ties, signed bounds/scalars and nonzero append/result counts. Public tests
+also connect an emitted row to the bounded solver and distinguish per-iteration
+limits from accumulated limits.
+
+This closes the drive-row helper dependency identified in kind3. Its upstream
+sample getter, mode configuration, angle calculation, cleanup and optional body
+notification still need composition into the complete builder. No new completed
+top-level builder is claimed by this helper alone.

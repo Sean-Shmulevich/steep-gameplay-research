@@ -8195,3 +8195,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native comparisons match all arena bytes and returned row addresses. The full
   kind3 builder, angle helper and optional drive remain open; this is a recovered
   producer dependency, not a third completed top-level constraint builder.
+- Recovered the optional angular-drive helper into category14/15.1024 native
+  comparisons match complete arenas and returned row addresses, including mode2
+  bypass, signed-zero clamp ties and signed bounds. Public tests connect an emitted
+  row to bounded iteration. Full kind3 composition, angle production and the
+  optional body notification remain open; physical drive units are unestablished.

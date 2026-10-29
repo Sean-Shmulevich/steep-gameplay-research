@@ -1169,3 +1169,10 @@ strict XYZ response-threshold test, all-four-lane nonnegative test, phase gate a
 iteration-dependent response arithmetic. Caller supplies body indices afterward.
 See LINK_SOLVER.md, "Angular limit row producer". Finite inputs and nonzero reached
 divisors are required; physical units and upstream angle production remain open.
+
+Angular drive row helper: `build_pose_angular_drive_row` produces category14/15
+with zero linear direction and opposite paired angular axes. Mode2 negates the
+supplied sample directly; other modes scale and clamp sample-reference before
+negation. Response W is impulse_bound.X times context10. See LINK_SOLVER.md,
+"Angular drive row producer". Caller provides endpoint indices and cached-result
+lifecycle. These field names describe arithmetic, not established physical units.
