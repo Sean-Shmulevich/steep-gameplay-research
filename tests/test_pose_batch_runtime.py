@@ -4,6 +4,7 @@ from functools import cmp_to_key
 from tests.test_pose_worker_runtime import worker_fixture
 from engine.pose_batch_runtime import RetainedPointerArrays, run_retained_pose_batch_pass
 from engine.pose_dispatch import pose_dispatch_serial_atomics
+from engine.pose_context_init import initialize_pose_jobs, bind_pose_jobs
 
 
 class BatchRuntimeTests(unittest.TestCase):
@@ -33,11 +34,9 @@ class BatchRuntimeTests(unittest.TestCase):
         struct.pack_into('<QII',world,0x438,13000,0,8)
         services['batches']={13000+i*16:bytearray(16) for i in range(8)}
         world[0x44c]=1;settings[0x14]=1;struct.pack_into('<3f',settings,0x34,.1,100.,100.)
-        jobs={}
-        for i in range(2):
-            offset=8+i*24;struct.pack_into('<Q',world,offset,400)
-            jobs[400+offset]=memoryview(world)[offset:offset+24]
-        arrays[400+0x308]=list(jobs)
+        initialize_pose_jobs(world,context_token=400)
+        binding=bind_pose_jobs(world,context_token=400)
+        jobs=binding['jobs'];arrays[binding['table_token']]=binding['arguments']
         dispatcher=bytearray(0x728);struct.pack_into('<I',dispatcher,0x10,2)
         cas,add=pose_dispatch_serial_atomics(dispatcher);queue=[]
         def no_growth(*args):self.fail('unexpected growth')

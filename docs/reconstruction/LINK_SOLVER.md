@@ -6443,3 +6443,70 @@ Run the public composition tests with:
 ```sh
 python3 -m unittest discover -s tests -p 'test_pose_batch_runtime.py'
 ```
+
+## Context job construction
+
+The pose context constructor begins at `0x18e0ca0`. Its job-initialization loop is
+`0x18e0dda..0x18e0e17`, after special-group creation and collection initialization.
+`engine/pose_context_init.py` reconstructs that loop and the visible constructor
+tail beginning at `0x18e0d46`. This narrows the earlier job-construction gap: owner
+pointers and argument-table relationships are now directly evidenced. Earlier
+allocation, protected calls and vtable assignment remain outside the new API.
+
+For every index from0 through31, the loop performs these writes:
+
+```python
+job_offset = 8 + 24 * index
+context.job_at(job_offset).owner = context_token
+context.job_at(job_offset).index = index
+context.argument_table[index] = context_token + job_offset
+```
+
+Within each24-byte job, owner occupies bytes0–7 and index occupies bytes8–11.
+Bytes12–15 hold scalar and bytes16–23 hold settings, but **this constructor loop
+does not initialize them**. Batch submission fills those fields for admitted
+workers. The argument table begins at context+0x308 and contains32 pointers to the
+same records, not copies. Native pose dispatch ignores its caller-thread flag and
+uses the job owner to enter the already reconstructed worker.
+
+The preceding visible tail clears active/inactive/batch descriptors and other
+observed collection fields, clears the batch claim counter, and sets transfer-enable
+byte+0x44c to1. It then calls the inactive-marking helper for each of the two special
+groups already stored at+0x408 and+0x410, before initializing jobs. Padding is not
+blanket-zeroed. The independent tail accepts inactive marking as an explicit
+service; it must only be applied during construction, not to an active context.
+
+`bind_pose_jobs` is an authored convenience adapter. It returns a map of job tokens
+to memoryviews and a pointer-table sequence that reads the retained bytes on every
+access. Thus batch writes are visible to worker invocation, and later pointer-table
+changes are visible without rebuilding a copied list. The storage must outlive
+these views and cannot be resized while they exist. Example wiring:
+
+```python
+initialize_pose_jobs(context, context_token=context_token)
+binding = bind_pose_jobs(context, context_token=context_token)
+arrays[binding['table_token']] = binding['arguments']
+# Supply binding['jobs'] as jobs to run_retained_pose_batch_pass.
+```
+
+[`pose_context_init_validation.json`](../../native/snow_host/pose_context_init_validation.json)
+records512 comparisons of the original tail and original inactive-marking helper,
+with no instruction interception. The two special groups use the previously
+validated group constructor and have zero body entries. Every context and special
+group byte matches, including randomized untouched job scalar/settings fields and
+padding. This does not test inactive marking on populated special groups or the
+constructor's earlier protected allocation paths.
+
+The joined256-case batch comparison was rerun using the new initializer and aliased
+pointer-table adapter; every prior comparison still passes. Public tests cover all32
+job identities, final job scalar/settings aliasing, pointer-table rereads, callback
+order, second special-pointer reload and untouched padding. The local construction
+join is now covered; concurrent ownership and live lifetime are still unresolved.
+
+A newly inspected upstream caller at `0x18b9710` places batch execution inside a
+larger stage. It sets its own phase field to3, performs several preparation calls,
+passes changed membership to the context, publishes pending links to another
+interface, obtains settings and calls the batch wrapper. Afterward, if active groups
+remain, it calls a downstream interface and finally resets its phase field to0.
+This is a static lead for the next integration boundary, not yet an implemented or
+native-compared outer stage.

@@ -1378,3 +1378,11 @@ alias the context fields updated by batching, with owner pointers initialized.
 Queue/atomic/growth/class services remain explicit. Interior pointer-array views
 reference live retained slots instead of copied group lists. This serial reference
 composition does not establish a concurrent host or native job construction.
+
+Pose context constructor tail: `initialize_pose_context_tail` clears the observed
+collection descriptors, enables completed-group transfer, marks both already
+constructed special groups inactive through an explicit service, and initializes32
+job owners/indices and argument-table pointers. See LINK_SOLVER.md, "Context job
+construction". It excludes allocation and protected constructor calls. Scalar and
+settings job fields remain untouched until batch submission. `bind_pose_jobs`
+returns authored views that alias these retained records and the raw pointer table.

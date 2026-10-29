@@ -1,0 +1,24 @@
+{
+  "schema": "pose-context-init-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_range": "0x18e0d46..0x18e0e17",
+  "method": "Original constructor tail and original special-group inactive helper with empty freshly constructed groups; no instruction interception",
+  "comparisons": [
+    "every retained context byte including untouched fields and padding",
+    "both special-group records"
+  ],
+  "coverage": [
+    "32 owner pointers, indices and argument-table entries",
+    "varied context alignment",
+    "random preexisting scalar/settings/padding bytes preserved",
+    "collection defaults and transfer-enable byte",
+    "both empty special groups marked inactive"
+  ],
+  "limits": [
+    "Begins after special-group allocations/construction and excludes protected constructor calls and vtable assignment.",
+    "Special groups contain no bodies; body virtual calls are outside this check.",
+    "Offline storage only; no live construction or lifetime proof."
+  ]
+}

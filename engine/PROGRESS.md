@@ -8359,3 +8359,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   tests confirm exclusion after retirement. Caller-thread execution, explicit
   platform/allocator services, supplied atan2 and synthetic empty groups limit
   this result; native job construction and concurrent/live ownership remain open.
+- Recovered context collection defaults and all32 job owner/index/table writes.
+  The constructor leaves job scalar/settings untouched until batch submission.
+ 512 original-tail comparisons match every byte with no instruction interception;
+  the joined256-case batch check still matches using the new initializer and aliased
+  table adapter. Earlier protected allocation/construction, populated special-group
+  callbacks and live/concurrent lifetime remain open. The upstream phase3 stage is
+  now identified as the next orchestration lead.
