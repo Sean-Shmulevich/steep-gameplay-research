@@ -5410,3 +5410,62 @@ and exterior points, both near-axis branches and signed coordinates. The public
 regressions include one synthetic native-output fixture that reaches the cap.
 No game payload is included. Full kind5 geometry, allocation and lifecycle remain
 separate work.
+
+## Composed angular-limit geometry
+
+`engine/pose_constraint_limit_geometry.py` reconstructs RVA19e9060. Its inputs
+are four-lane radius, angle, X/Y extents, initial correction axis and rotation
+axis. It returns a correction axis and error vector. These names describe the
+local geometry, not established units or anatomical axes. No solver row is
+allocated here. The original local-static initializer supplies epsilon=1e-4;
+the independent function uses that value directly and excludes initializer locks.
+
+Branch ordering and lane semantics are significant:
+
+1. If every lane of abs(extentX-extentY)<=epsilon, preserve the initial axis
+   including W and return extentX-radius, lane by lane. This precedes radius checks.
+2. If all XYZ radius lanes are strictly below epsilon, preserve the axis and
+   return four positive zeros. This is not an absolute-magnitude comparison.
+3. Otherwise use only radius.X, angle.X and the two extent.X values for geometry.
+   Compute point=(cos(angle)*radius,sin(angle)*radius) with scalar float32 math.
+4. If both absolute extents exceed epsilon, use the reconstructed ellipse
+   projection and normal helpers. Otherwise clamp point coordinates to each
+   signed extent pair, form point-projection, and normalize that difference.
+   If its squared length is <=epsilon, preserve the initial axis and zero error.
+
+For the continuing path, let point=(x,y), projection=(px,py), and normal=(nx,ny).
+The remaining formulas are:
+
+```text
+inverse_radius = 1/radius
+turn = ((inverse_radius*y)*nx) - ((inverse_radius*x)*ny)
+correction = asin(clamp(turn,-1,1))
+q.xyz = rotation_axis.xyz * sin(correction*0.5)
+q.w = cos(correction*0.5)
+rotated_axis = quaternion_basis(q) * initial_axis.xyz
+error = ((py-y)*ny) + ((px-x)*nx)
+return (rotated_axis.xyz,0), broadcast(error)
+```
+
+There is no normalization of the supplied rotation axis. The matrix transform
+sums X contribution plus Y contribution, then Z contribution, with rounding
+at each operation. This differs from some SIMD transform helpers' association.
+The general result always clears axis.W, unlike early returns. The error's sign
+is retained; no absolute value or extra penetration clamp is added.
+
+The implementation reuses reconstructed dispatch-zero scalar sine/cosine,
+finite-domain arcsine, quaternion-basis arithmetic, ellipse projection and
+ellipse normal. All arithmetic functions execute independently; none receives
+observed native results as a service. Supported inputs are finite, use positive
+radii when the ellipse branch is reached, nonzero scalar radius when division is
+reached, and remain within the scalar-trig implementation's supported range.
+
+[Geometry comparison](../../native/snow_host/pose_limit_geometry_validation.json)
+records2048 uninterrupted original calls including all nested math helpers.
+All eight output lanes and unchanged source bytes match. Synthetic setup supplies
+initialized TLS/static epsilon and trig dispatch zero. Cases cover all-lane
+extent equality, W-only extent mismatch, small-radius skip, exact threshold,
+elliptical projection, degenerate extents, negligible residual and general axes.
+No interception or substituted math output is used. Static initialization
+concurrency, CRT status effects, complete kind5 composition and gameplay ownership
+remain outside this evidence.

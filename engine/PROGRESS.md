@@ -8240,3 +8240,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   iteration-cap cases. Preserved near-axis branches and the final evaluated
   denominators. Existing quaternion-basis and scalar-trig kernels can be reused
   for the remaining angular geometry; complete kind5 composition remains open.
+- Composed kind5 angular-limit geometry using independently reconstructed math,
+  including ellipse/clamp branches and correction-axis rotation.2048 uninterrupted
+  native calls match all eight output lanes without substituted helper outputs.
+  Preserved all-lane extent equality, XYZ radius gating and early-return W behavior.
+  Full kind5 builder composition and group lifecycle remain open.

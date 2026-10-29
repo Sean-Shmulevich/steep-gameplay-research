@@ -1230,3 +1230,10 @@ kind5 limit-geometry helpers with positive finite radii. See LINK_SOLVER.md,
 points, preserves near-axis tie/sign choices, and uses last-evaluated denominators
 at the19-update cap. Complete angular geometry and constraint composition remain
 open; no player joint ownership is implied.
+
+Angular-limit geometry: `pose_angular_limit_geometry` composes equal-extent and
+small-radius shortcuts, ellipse/clamp projection, normal construction, arcsine
+correction and quaternion axis rotation. See LINK_SOLVER.md, "Composed angular-limit
+geometry". Four-lane extent equality, XYZ radius gating and scalar-X geometry
+remain distinct. Early returns preserve axis.W; the rotated result clears it.
+Native initializer synchronization and full kind5 row composition are excluded.

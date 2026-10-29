@@ -1,0 +1,32 @@
+{
+  "schema": "pose-limit-geometry-validation-v1",
+  "cases": 2048,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19e9060",
+  "method": "Uninterrupted original geometry and all math/ellipse helpers, dispatch-zero trig and initialized TLS/static epsilon; no interception",
+  "branch_hits": {
+    "0x19e910a": 256,
+    "0x19e94a2": 1792,
+    "0x19e9258": 768,
+    "0x19e9320": 1277,
+    "0x19e91ef": 768
+  },
+  "comparisons": [
+    "all correction-axis and error bits",
+    "unchanged input bytes"
+  ],
+  "coverage": [
+    "equal extents across all lanes",
+    "W-only extent mismatch",
+    "small radius skip and threshold equality",
+    "elliptical projection",
+    "degenerate-extent clamp and negligible residual",
+    "general supplied axes and signed angles"
+  ],
+  "limits": [
+    "Finite synthetic inputs, positive ellipse radii and nonzero reached radius.",
+    "Static initializer concurrency and CRT status effects excluded.",
+    "No complete kind5 builder, active rig ownership or group lifecycle claim."
+  ]
+}
